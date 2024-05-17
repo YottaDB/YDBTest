@@ -1,25 +1,16 @@
 # YottaDB Test System
 
-All software in this package is part of YottaDB (<https://yottadb.com>) each
-file of which identifies its copyright holders. The software is made available
-to you under the terms of a license. Refer to the [LICENSE](LICENSE) file for details.
-
-Homepage: <https://gitlab.com/YottaDB/DB/YDB>
-
-Documentation: <https://yottadb.com/resources/documentation/>
-
+All software in this package is part of YottaDB (<https://yottadb.com>) each file of which identifies its copyright holders. The software is made available to you under the terms of a license. Refer to the [License section](#License) and [LICENSE file](LICENSE) for details.
 
 # Overview
 
-Documentation on usage is under development as time permits and will be released from time to time. For the present, please read the shell scripts. The .csh files are shell scripts written for the tcsh shell. There is now a Dockerfile, and that is probably the easiest way to run the test system. The instructions are at the bottom of this README.
+This test system is the regression test suite for YottaDB. It is a collection of shell scripts written for the tcsh shell on Linux. It is a complex system that enables simultaneous testing across servers (but may also be used locally), and offers randomized selection of a variety of settings that cannot be tested exhaustively in every permutation every time.
 
-## Pre-commit hooks
+The documentation for the test system is what follows, and help for the primary test command may be obtained with the command `gtmtest -help` (`gtmtest` is named after the upstream software, GT.M, of which YottaDB is a superset fork).
 
-To install the pre-commit hooks, run the following:
+The test system assumes a particular directory structure and a large number of environment variables, which specify that directory structure and various other parameters.
 
-```sh
-ln -s ../../pre-commit .git/hooks
-```
+Because the set-up process is fairly involved, the repository supplies a Dockerfile, which is probably the easiest way to run the test system. Instructions are available in the [dockerfile section](#using-the-test-system-with-docker) below.
 
 ## License
 
@@ -29,25 +20,49 @@ Simple aggregation or bundling of this package with another for distribution doe
 
 Should you receive this package not integrated with a YottaDB distribution, and missing a COPYING file, you may create a file called COPYING from the GNU Affero General Public License Version 3 or later (<https://www.gnu.org/licenses/agpl.txt>) and use this package under the terms of that license.
 
-## Pre-requisites
+# Setup
 
-The following binaries are required to run the test system:
+## Pre-commit hooks
 
-- ksh
-- gawk
-- sed
-- lsof
-- bc
-- sort
-- fuser
-- strace
-- expect
-- eu-elflint
-- ss
-- nc
-- gdb
+You should install pre-commit hooks before committing to this repository. To install the pre-commit hooks, run the following from the directory of the cloned repository:
 
-Currently tcsh is the only supported shell, make sure that tcsh is properly installed and that you can switch to it with the following command:
+```sh
+ln -s ../../pre-commit .git/hooks
+```
+
+## Prerequisites
+
+To run tests without using the [Dockerfile](#using-the-test-system-with-docker), required binaries include:
+
+- tcsh, ksh, gawk, sed, lsof, bc, strace, expect, gdb, ssh
+- sort, fuser, eu-elflint, ss, nc
+
+If you are using a Debian or Ubuntu based distribution, you can ensure that all required packages to build and test YottaDB, are installed with the following command:
+
+```sh
+sudo apt-get install -y --no-install-recommends \
+    tcsh ksh gawk sed lsof bc strace expect gdb ssh \
+    coreutils psmisc elfutils iproute2 netcat-traditional \
+    file cmake make gcc pkg-config git libconfig-dev \
+    libelf-dev libgcrypt-dev libgpg-error-dev libgpgme11-dev libicu-dev libncurses-dev libssl-dev \
+    libreadline-dev zlib1g-dev unzip wget ca-certificates psmisc vim rsyslog \
+    locales net-tools valgrind \
+    python3 python3-venv python3-dev python3-setuptools \
+    golang curl default-jdk libffi-dev \
+```
+
+Make sure syslog is running and readable:
+
+```sh
+ps aux | grep -q "[r]syslogd" || sudo rsyslogd # runs syslogd if not already running
+sudo chmod g+r /var/log/syslog                 # enable read permissions on syslog
+sudo adduser `whoami` adm; newgrp -   # necessary on Debian for user to read syslog
+```
+
+Only if you're setting up a **minimal docker image**, you'll also need to remove kernel logging to prevent warnings when starting `rsyslogd` with:
+    `sudo sed -i -Ee 's/^(module.*imklog.*)/#\1/' /etc/rsyslog.conf`
+
+Currently **tcsh** is the only supported shell. Make sure that tcsh is properly installed and that you can run it with the following command:
 
 ```sh
 tcsh
@@ -59,147 +74,97 @@ A symbolic link of tcsh is also needed in the local bin
 sudo ln -s /usr/bin/tcsh /usr/local/bin/tcsh
 ```
 
-Make a directory to store all YottaDB related files taken from the repository
+Setup **password-less SSH** to yourself (required for some tests):
 
 ```sh
-sudo mkdir /testing
+apt install ssh
+[ -e /.dockerenv ] && /etc/init.d/ssh start   # Only needed/runs on docker images
+cd ~/.ssh
+[ ! -e id_rsa.pub ] && ssh-keygen -f id_rsa -N ''
+cat id_rsa.pub >>authorized_keys
+chmod 600 authorized_keys
+cd ..
 ```
+
+Now check that you can run ``ssh `hostname` `` without having to enter a password.
 
 ## Environment variables
 
-Create or edit the `.cshrc` file inside your home directory and add the following lines:
+Merge this [.cshrc template](com/.cshrc) into your own `.cshrc` in your home directory. Edit it, and find the section headed "User-specific locations" and **edit the variable values** to match your own contact details and available directories on your machine.
 
-```csh
-set autolist
-set backslash_quote
-set dextract
-set dunique
-set filec
-set history=10000
-set lineedit
-set matchbeep=nomatch
-set savehist
-setenv LC_ALL_C
-unset autologout
-unset glob
+Note: If you now try to run tcsh, without having first fetched [YDBTest (below)](#getting-the-ydbtest-repository), it will produced a "no such file" error since the `.cshrc` file tries to source `YDBTest/com/set_env.csh` to set up additional environment variables for `gtmtest`.
 
-alias s 'source ${HOME}/.cshrc-int'
-alias S s
+Various testing aliases are defined by `YDBTest/com/set_env.csh`. If you wish to override any of these on your local system, redefined them in your `.cshrc` after it sources `YDBTest/com/set_env.csh`.
 
-set HOST=$HOST:r
-setenv HOST $HOST:r
-```
-
-Create a `.cshrc-int` file inside the home directory with the following lines.
-
-```csh
-setenv mailid user@mail.com # Replace with your email here
-
-setenv verno R133
-setenv gtm_root /usr/library	# Can be replaced with any directory
-setenv gtm_test $gtm_root/gtm_test
-setenv ydb_dist $gtm_root/$verno/pro
-setenv gtm_dist $ydb_dist
-setenv gtm_exe $gtm_dist ; setenv gtmroutines ". $gtm_dist"
-setenv gtm_tools $gtm_root/$verno/tools
-setenv gtm_inc $gtm_root/$verno/inc
-setenv gtm_source $gtm_root/$verno/src
-setenv gtm_verno $verno
-setenv gtm_ver $gtm_root/$verno
-setenv gtm_obj $gtm_exe/obj
-setenv gtm_log $gtm_ver/log
-setenv gtm_testver T133
-setenv gtm_curpro /usr/local/lib/yottadb/r134	# This needs to be set to a current release version of YottaDB
-setenv gtm_com ""
-setenv gtm_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
-setenv tst_dir /testarea1	# Can be replaced with any directory
-
-alias gtmtest $gtm_test/$gtm_testver/com/gtmtest.csh -report on -noencrypt -env eall_noinverse=1 $*
-```
-
-## Install YottaDB
-
-Instructions to install YottaDB: <https://gitlab.com/YottaDB/DB/YDB/-/blob/master/README.md>
-
-Before installing YottaDB, create a directory to store the build inside `$gtm_root`:
+The following of these environment variables, defined in `.cshrc` will be referenced in the documentation below:
 
 ```sh
-cd $gtm_root
-sudo mkdir $verno ; cd $verno
-sudo mkdir dbg pro
+setenv build_id 996                # Your build number: any 9xx no.; assigned by YottaDB on their servers: avoids clobbering others' builds
+setenv verno V${build_id}_R139     # Change Rxxx to match the revision of yottadb you will install and test aginst
+setenv work_dir ~/work             # Where you wish to check out YDB, YDBTest, etc.
+setenv gtm_root /usr/library       # Where your (and others') installed binaries go
+setenv gtm_test $gtm_root/gtm_test # Where to hold a temporary copy of the tester code to run; it needn't be under $gtm_root
+setenv tst_dir /testarea1/`whoami`    # Where to put the output of your test
+setenv r ~/.gtmresults             # Where to create symlink that points to latest test results directory; short name for easy access
 ```
 
-Install the pro version in `$gtm_root/$verno/pro` and the dbg version in `$gtm_root/$verno/dbg`
+You should change the above locations in your `.cshrc` to reference directories on your machine that your user has access to.
+However, ***IF*** you wish to use the `.cshrc` template verbatim (using a default YottaDB directory structure) you will need to create the above directories as follows:
+
+```sh
+sudo groupadd gtc
+sudo adduser `whoami` gtc
+sudo mkdir -p /testarea1/`whoami` /usr/library/gtm_test
+sudo chown -R `whoami`:gtc /testarea1/ /testarea1/`whoami` /usr/library/gtm_test
+```
+
+[Install](https://yottadb.com/product/get-started/) or [build](#building-yottadb) the current production release of YottaDB into `$gtm_test/<version>` because some tests use it to create databases. Make sure your `.cshrc` sets `$gtm_curpro` to `<version>`. For example, append `setenv gtm_curpro r200` to your local `.cshrc` if your current production release is installed in `$gtm_test/r200`.
 
 ## Getting the YDBTest repository
-
-Go into `$gtm_root` and create the `gtm_test` directory where the files for the test repository will be stored
-
-```sh
-cd $gtm_root
-sudo mkdir gtm_test ; cd gtm_test
-sudo mkdir T133
-```
-
-Create a simple script within the `testing` directory that will sync files to the specified test version
-
-```sh
-$ cat testing/synctest
-#!/usr/bin/tcsh -f
-if ("" == "$1") then
-        echo "missing Test directory to sync"
-        exit 1
-endif
-if (! -e $gtm_test/$1) then
-        echo "Test library $gtm_test/$1 does not exist"
-        exit 1
-endif
-sudo rsync -av --delete /testing/YDBTest/ $gtm_test/$1 # Change to wherever YDBTest repository is stored
-```
 
 Get a clone of the YDBTest repository:
 
 ```sh
+cd $work_dir
 git clone https://gitlab.com/YottaDB/DB/YDBTest.git
 ```
 
-Before syncing the test repository, the system log file is not needed to run tests locally, any reference to it should be commented out or removed
+Create a `gtm_test` directory to hold a copy of the test code that is to be run, and copy the source to it:
 
 ```sh
-cat testing/YDBTest/com/check_setup_dependencies.csh
-...
-# make sure system log file is readable
-#set syslog_file=`$grep -v '^#' $gtm_test_serverconf_file | $tst_awk '$1 == "'$hostn'" {print $8}'`
-#if ("" == $syslog_file) then
-#	echo "TEST-E-UTILITY problem getting system log file for $hostn from $gtm_test_serverconf_file ;"
-#	@ error++
-#else
-#	if (! -r $syslog_file) then
-#		echo "TEST-E-UTILITY $syslog_file is not readable ;"
-#		@ error++
-#	endif
-#endif
-#endif
-...
+mkdir -p $gtm_root/gtm_test/T${build_id}
+tsync
 ```
 
-Now the test repository can be synced
+`tsync` is an alias (defined by `.cshrc` via `test_env.csh`), that copies your test source directory to the directory you just made. Your test source directory is taken to be the git repository of your current directory. Strictly, you need to run `tsync` before running a test, every time you change the source code; but the test-running aliases defined in `test_env.csh` will do this for you. Here is a simplified version of `tsync`:
 
 ```sh
-../synctest T133
+alias tsync 'rsync -av --delete `git rev-parse --show-toplevel`/ $gtm_test/$gtm_testver/'
 ```
 
-## Setting up the build
+## Building YottaDB
 
-Make sure to switch to tcsh. If you recently created or edited your `.cshrc` file, make sure you start a new tcsh shell. Then run the following command to set the environment variables in your `.cshrc-int` file:
+Either build YottaDB with the [YDBDevOps repository](https://gitlab.com/YottaDB/Util/YDBDevOps) if you work for YottaDB and have access to it, otherwise use the following instructions (which are somewhat dated so may or may not work).
+
+Create directories to store the YottaDB builds to be tested, and the  (explanation of environment variables [here](#environment-variables)):
 
 ```sh
-S
+mkdir -p $gtm_root/$verno/pro   # Where to store a production build
+mkdir -p $gtm_root/$verno/dbg   # Where to store a debug build
 ```
+
+Get a clone of the YDB repository:
+
+```sh
+cd $work_dir
+git clone https://gitlab.com/YottaDB/DB/YDB.git
+```
+
+Make sure to switch to tcsh.
 
 Create and run a `build.csh` file in the parent directory of your local YDB repository.
 
-```csh
+```sh
 #!/usr/bin/tcsh
 if (! -d $gtm_dist/obj) then
         set sudostr = "sudo mkdir $gtm_dist/obj"
@@ -267,32 +232,31 @@ foreach ext (c s msg h si)
 end
 ```
 
-## Create output directory
+# Running a test
 
-Before the test system can be run, the output needs to be stored in an output directory. Create an output directory with the proper permissions:
+There are two methods to run a test: [monolithic testing](#monolithic-testing-with-gtmtest), using the `gtmtest` alias, and [modular testing](#modular-testing), described below. Monolithic testing is the canonical method used by YottaDB continuous integration. The modular testing method is for debugging tests and enables the developer to run tests directly, without going through the script layers of `gtmtest`.
 
-```sh
-mkdir /testarea1	# The name of this directory should be the same as whatever $tst_dir is set to
-cd /testarea1 ; sudo mkdir $user
-sudo chown -R $user.gtc $user
-```
+Either testing method may be used on any platform (YottaDB servers, or on your localhost). Use in the docker image is not yet possible (it would require `.cshrc` template to be merged into the docker's `cshrc`).
 
-## Running a test
-To run a test make sure that the shell is `tcsh` and source `.cshrc-int` with `s`
+For errors, see [troubleshooting](#troubleshooting) below.
 
-Run a test by using `gtmtest`. The following arguments are needed to run the gtmtest properly:
+## Monolithic testing with gtmtest
 
-1. `-s`: Calls a specific test version's `gtmtest.csh`
-2. `-t`: Tells the test system to run a specific test
-3. `-st`: An optional argument that will run a specific subtest
-4. `-replic`: An optional argument that runs the test with replication turned on
+To run a test make sure that the shell is `tcsh`, then run `gtmtest`. See `gtmtest -h` for detailed option help, but the following arguments are common:
 
-An example of how to run the test system
+1. `-s`: Calls a specific test version's `gtmtest.csh`.
+2. `-t`: Make the test system run all subtests of the given test name. If no test name is matched, run a subtest matching the given substring. Tab completion is available.
+3. `-st`: An optional argument that will select comma-separated subtests of a test specified with `-t`.
+4. `-replic`: An optional argument that runs the test with replication turned on.
+
+An example of how to run the test system:
 
 ```sh
-gtmtest -s T133 -t basic
-gtmtest -s T133 -t basic -replic
+gtmtest -s r200 -t basic
+gtmtest -s r200 -t basic -replic
 ```
+
+Where `r200` names a particular version of YDBTest source code that you have copied into `$gtm_test/r200`.
 
 ### Other useful arguments
 
@@ -308,13 +272,94 @@ gtmtest -s T133 -t basic -replic
     3. `-stdout 2`: prints diff file for each failed subtest
     4. `-stdout 3`: prints verbose output; default
 
+The results of the latest test may be found in various sub-directories of `$r` to let you create aliases such as the `difftest` example below.
+
+### Cleanup
+
+Since `gtmtest` stores a new set of test results every time you run it, you may wish to clean up historical test results. The **`cleantest`** alias will remove test results older than one day but keep at least the most recent test. You can run this into your `.cshrc` if you like.
+
+## Modular Testing
+
+Using the monolithic `gtmtest` has the difficulty that test bugs are difficult to find and diagnose because there are many script layers between running `gtmtest` and the sub-test itself being run. Eight layers, in fact:
+
+* `gtmtest.csh` => `submit.csh` => `submit.awk` => `$submit_tests` (built by submit.awk)
+   => `submit_test.csh` => \<testname\>`.csh` => `submit_subtest.csh` => \<subtest\>`.csh`
+
+This means the developer cannot get easily "divide and conquer" to locate the offending code.
+
+The solution is to use `settest` which sets up all the environment variables just like the above script layers, ready for the developer to directly invoke any specific test script.
+
+* `settest` alias takes the same arguments as `gtmtest`, e.g. `-t <test> and -st <subtest>`
+
+This sets the environment so the developer can jump in at any of the layers mentioned above, as follows:
+
+* \<subtest\>`.csh` scripts can be run directly, though it leaves its artifacts in the current directory
+* `runscript <script.csh>` alias invokes any specified test script directly, except collect its artifacts into `$r`
+* `runtest` alias invokes `submit_test.csh` to run the test selected by `settest`, leaving artifacts in `$r`
+* `runsubtest` similar to `runtest` but skips `submit_test.csh` and goes straight to `submit_subtest.csh` (fewer tester layers). Cannot run an entire test suite: only the subtest selected by `settest -st`.
+* `YDBTest/com/*.csh` scripts can also be run directly (or with `runscript` to collate artifacts)
+* `gtmtest` run a set of tests (see gtmtest -h), e.g. `gtmtest -t <test> and -st <subtest>`
+
+To run a test script at any one of the above configurations, simply invoke the `settest` alias. It takes the same arguments specified by `gtmtest -help`, e.g. `-t <test>`, `-st <subtest>`.
+
+### Examples
+
+```sh
+settest -help                        # show arguments help
+settest -t xcall -st ydbtypes        # select test xcall/ydbtypes
+settest -t ydbty                     # do the same as above using substring search
+runtest                              # run xcall/ydbtypes selected above via submit_test.csh script
+runsubtest                           # run xcall/ydbtypes but skip submit_test.csh: go straight to submit_subtest.csh
+runscript xcall/u_inref/ydbtypes.csh # get output of a test script directly to terminal without gtmtest wrapping
+```
+
+### Viewing results
+
+Once the test has run, you can find the results immediately in the subdirectory `$r` (typically set to `~/.results` in `.cshrc`). By way of example, you can graphically diff the most recent subtest failure using the following `difftest` alias:
+
+```sh
+alias difftest 'meld $work_dir/YDBTest/$tst/outref/$_subtest.txt $r/$subtest/$subtest.log'
+```
+
+The above also lets you conveniently merge any test differences back into the git source of your test `outref` with a few mouse clicks. (The .cshrc template has a more sophisticated example of the `difftest` alias that uses your `git config diff.tool` and lets you pass a subtest name as an optional parameter, among other things.)
+
+As you can see, you may use the following environment variables in your own aliases:
+
+* `$r` points to the test results directly (short name for easy access)
+* `$tst` the name of the test specified by `settest -t`
+* `$subtests` the space-delineated names of all subtests specified by `settest -st test1[,test2[,…]]`
+* `$subtest` the last subtest listed in `$subtests` (or the last failed subtest after running `gtmtest`)
+
+### Debugging
+
+The `debug` alias switches on a `tcsh` tracing debugger that reports when a script invokes or sources a new script. This can be very helpful when you don't know where the bug happens. For example, to get a trace of which scripts are run:
+
+```sh
+> settest -t ydbtypes
+Selecting test 'xcall', subtest 'ydbtypes' for 'runtest' to invoke. Results will go into $r
+> debug
+> runsubtest
+   # Sourcing: $gtm_test_com_individual/tsync.csh --info=stats0,flist0 ; tcsh -fc "cd $tst_working_dir/$subtest; source $gtm_test_com_individual/submit_subtest.csh"
+   # Spawning: /home/berwyn/projects/ydb/YDBTest-dev/com/tsync.csh --info=stats0,flist0
+   # Spawning: /tmp/tst/T996/com/check_space.csh
+...
+PASS from ydbtypes
+   # Spawning: /tmp/tst/T996/com/zip_output.csh /tmp/tst/tst_V996_R201_dbg_00_240510_192901/xcall_0/ydbtypes
+> debug stop
+
+```
+
+You'll also find that when you type `debug stop` it provides an *attempt* at identifying which line numbers each script exited or produced an error (its numbering is far from perfect). Read `debug -h` for more information.
+
+Happy debugging!
+
 ### Warnings
 
-Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the [YDBGo] repository and multi-system tests will not work without setting up a multi-system environment.
-
-[YDBGo]: https://gitlab.com/YottaDB/Lang/YDBGo
+* Currently not all tests will run properly on the local test system, even with the `gtmtest` method. For example, none of the Go tests will run without the [YDBGo](https://gitlab.com/YottaDB/Lang/YDBGo) repository, and multi-system tests will not work without setting up a multi-system environment. Even fewer tests run when using the `settest` method, but it should be adequate for you to debug most tests.
+* Be aware that the default `settest` alias switches off all randomization in order to make errors reproducible. This may mean that errors which occasionally occur with `gtmtest` will never occur with `settest`, unless you change the alias to reintroduce randomness or specifically turn on the offending setting. Random settings for `gtmtest` are defined in `YDBTest/com/do_random_settings.csh`.
 
 ## Using the Test System with Docker
+
 The file `docker/Dockerfile` is used to build the test system and YDB for each
 commit. Normally, you don't need to use it to build the test system, but can
 simply pull `registry.gitlab.com/yottadb/db/ydbtest`:
@@ -344,10 +389,10 @@ docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
 not pass any arguments, you will get the output of `gtmtest.csh -h`.
 
-To run against a copy of YDBTest on your file system, you can do this; the
-volume (-v) argument left hand side is the full path of the YDBTest git
+To run against a copy of YDBTest on your file system, you can do the following (the
+volume `-v` argument's left hand side is the full path of the YDBTest git
 repository, the right hand side of the colon is a fixed path that is known by
-the docker scripts which you must not change:
+the docker scripts which you must not change):
 
 ```sh
 docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
@@ -371,3 +416,39 @@ cd YDB
 docker build -f Dockerfile-test -t ydbtest2 .
 docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest2 -t r200
 ```
+
+## Troubleshooting
+
+If gtmtest gives the following error, you may need to turn off the sticky bit on the given path with `chmod -x <path>`:
+
+```
+YDB-MUMPS[23439]: %YDB-E-INVLINKTMPDIR, Value for $ydb_linktmpdir/$gtm_linktmpdir is either not found or not a directory(/tmp/relinkdir/yourname) - Reverting to default value -- generated from 0x00007F15E3CED431.
+```
+
+# Making new tests
+
+The YottaDB developers have adopted the following de-facto standard for naming new tests and MRs. This is non-binding if you have a reason to buck the trend:
+
+**Test names** are of the form `<test>/<subtest>`, where:
+
+* This maps to directory path: `YDBTest/<test>/u_inref/<subtest>.csh`
+* `<test>` should name the version of YDB (rXYY) or GT.M (vXYZZZ) that introduced the feature under test (without punctuation, and lower case). Unless it is a major feature, in which case a more human name may be used.
+* `<subtest>` should be in the form `<human_name>-<feature_issue>`, where:
+  * `human_name` should be short: words separated by underscores
+  * `<feature_issue>` should be the YDB or GT.M issue number that *first* recorded added this feature or change (without punctuation, and lower case).
+  * `YDBTest/<test>/instream.csh` should have a comment line at the start, of the form:
+      `# <subtest>                     [author] Description of test`
+  * `<subtest>` should ideally be 29 or less characters (to align tab stops in `instream.csh` comments, if alignment desired).
+
+**MR titles** for a new test should be of the form `[<issue>] New <test>/<subtest> <description>`, where:
+
+* `<issue>` is preferably `#num` to supply the YDBTest issue number (or, failing that, `YDB#num`) of the issue addressed by this MR.
+* the word 'New' will obviously not be included when the MR is a fix for an existing test.
+* `<test>/<subtest>` is as specified above.
+
+## Examples
+
+| Test Names                    | MR titles                                                    |
+| ----------------------------- | ------------------------------------------------------------ |
+| r200/tcp_listen-ydb996        | [YDB#996] New r140/tcp_listen-ydb996 subtest to test that LISTENING TCP sockets can be passed |
+| v70003/mupip_order-gtmf134692 | [#596] New v70003/mupip_order-gtmf134692 to test MUPIP INTEG / MUPIP DUMPFHEAD user-specified region order |

@@ -113,13 +113,14 @@ if !($?tst_src) then
 endif
 
 # Reset gtm_test_com_individual based on $tst_src above
-if ($?gtm_test_com_individual_set) setenv gtm_test_com_individual $gtm_test/${tst_src}/com
+if ($?gtm_test_com_individual_set) setenv gtm_test_com_individual $gtm_test/$tst_src/com
 
-if ( $0 !~ *$tst_src* ) then
+if ( $0 !~ *$tst_src* && ! "$?force_gtm_test_com_individual" ) then
 	echo "TEST-I-GTMTEST_VERSION, Since the test version $tst_src will be used, it is best to use its gtmtest.csh"
-	echo "This script will now call: $gtm_test/$tst_src/com/gtmtest.csh $argv"
+	echo "This script will now call: $gtm_tst/com/gtmtest.csh $argv"
+	echo '(Avoid this redirection with `setenv force_gtm_test_com_individual`)'
 	echo "################################################################################"
-	$gtm_test/$tst_src/com/gtmtest.csh $argv
+	$gtm_tst/com/gtmtest.csh $argv
 	set stat = $status
 	echo "################################################################################"
 	echo "TEST-I-EXIT_STATUS, The exit status from the gtmtest.csh call was: $stat"
@@ -129,7 +130,7 @@ endif
 
 # Source the actual test version's defaults
 # remove the rm commands since such cleanup has already been done.
-$grep -v "rm " $gtm_test/$tst_src/com/defaults_csh >! ${TMP_FILE_PREFIX}_defaults_csh
+$grep -v "rm " $gtm_tst/com/defaults_csh >! ${TMP_FILE_PREFIX}_defaults_csh
 source $gtm_test_com_individual/defaults.csh ${TMP_FILE_PREFIX}_defaults_csh
 if ($status) exit $status
 

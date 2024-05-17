@@ -27,8 +27,10 @@ if (! $?gtmroutines) then
 	setenv LC_ALL_C
 	setenv HOST $HOST:r
 	setenv verno V999_R999
+	setenv gtm_testver T999
 	setenv gtm_root /usr/library
 	setenv gtm_test $gtm_root/gtm_test
+	setenv gtm_tst $gtm_test/$gtm_testver
 	setenv gtm_dist $gtm_root/$verno/dbg # change later
 	setenv gtm_exe $gtm_dist
 	setenv ydb_environment_init
@@ -40,7 +42,6 @@ if (! $?gtmroutines) then
 	setenv gtm_ver $gtm_root/$verno
 	setenv gtm_obj $gtm_exe/obj
 	setenv gtm_log $gtm_ver/log
-	setenv gtm_testver T999
 	setenv gtm_curpro $verno
 	setenv tst_dir /testarea1
 	setenv gtm_com ""

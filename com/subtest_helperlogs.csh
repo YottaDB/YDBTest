@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                     #
 #								#
 #	This source code contains the intellectual property	#
@@ -49,7 +49,9 @@ source $gtm_tst/com/set_specific.csh
 if (! -e helperlogs_env.csh) then
 	set envtxt = `find . -name env.txt |& head -1`	# BYPASSOK head
 	if ("" != "$envtxt") then
-		$grep -E "^gtm|^tst|^test" $envtxt | sed 's/^/setenv /;s/=/ "/;s/$/"/' >&! helperlogs_env.csh
+		# Output single quotes in sed below so that variables containing $ and " (e.g. gtm_etrap)
+		# will not cause the script to bomb out. Don't try to replace "'" with \' as it causes problems.
+		$grep -E "^gtm|^tst|^test" $envtxt | sed 's/^/setenv /;s/=/ '"'"'/;s/$/'"'"'/' >&! helperlogs_env.csh
 	endif
 endif
 if (-e helperlogs_env.csh) then

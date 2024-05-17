@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -60,10 +63,11 @@ else
 endif
 # whenever we switch gtm_chset the old compiled routines in the test directory will be complaining of incompatability
 # so delete them. Take a log what is getting deleted - might help in debugging for failed tests
+# use find instead of rm to prevent tcsh errors when there are no files found
 setenv timeswitch `date +%H_%M_%S`
 pwd >&! switch_chset_$timeswitch.log
-ls -l *.o >>&! switch_chset_$timeswitch.log
-\rm *.o >&! /dev/null
+find -name "*.o" -print -delete >>&! switch_chset_$timeswitch.log
+
 # settings.csh will be used by scripts like mupip_set_version.csh etc. and someother  random decision taken.
 # since the test flow starts with some gtm_chset value which is different now after the current switch,
 # we need to record this piece of information in settings.csh as well, so that we override the correct value of gtm_chset

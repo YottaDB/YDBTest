@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,6 +63,8 @@ if ($?test_gtm_gtcm) then
 	endif
 endif
 #########################################################################
+# First ensure settings.csh exists to avoid errors
+touch $tst_working_dir/settings.csh
 # If instream has modified settings.csh, it should be reflected in all the subtests' settings.csh file
 # So, copy it from the subtest(i.e tmp now) directory to the test directory
 # If instream.csh hasn't modified it, it will be the same as the copy in the test directory. So copy it without any checks
@@ -120,7 +122,7 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 			set rmtdirs = "$SEC_DIR"
 			if ("$test_remote_jnldir" != "$SEC_DIR") set rmtdirs = "$rmtdirs $test_remote_jnldir"
 			if ("$test_remote_bakdir:h" != "$SEC_DIR") set rmtdirs = "$rmtdirs $test_remote_bakdir"
-			$sec_shell "mkdir $rmtdirs ; chmod g+w $rmtdirs"
+			$sec_shell "mkdir -p $rmtdirs ; chmod g+w $rmtdirs"
 		endif
 	else if ("GT.CM" == $test_gtm_gtcm) then
 		setenv PRI_DIR         "$PRI_DIR:h/$sub_test"
@@ -130,9 +132,9 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 		setenv SEC_DIR_GTCM_2  "$SEC_DIR_GTCM_1:h/$sub_test"
 		$sec_shell "SEC_SHELL_GTCM mkdir -p SEC_DIR_GTCM ; chmod g+w SEC_DIR_GTCM"
 	endif
-	mkdir $tst_working_dir
-	if ("$test_jnldir"   != "$tst_working_dir") mkdir $test_jnldir
-	if ("$test_bakdir:h" != "$tst_working_dir") mkdir $test_bakdir
+	mkdir -p $tst_working_dir
+	if ("$test_jnldir"   != "$tst_working_dir") mkdir -p $test_jnldir
+	if ("$test_bakdir:h" != "$tst_working_dir") mkdir -p $test_bakdir
 	cd $tst_working_dir
 	# Copy the settings.csh file from test directory to this subtest directory
 	cp $settings_file_to_copy $tst_working_dir/settings.csh
@@ -426,7 +428,7 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 						 $sec_shell "$sec_getenv; \$rm -rf $otherdir >& /dev/null"
 					 endif
 				 end
-				 $sec_shell "$sec_getenv; cd $SEC_DIR/..; \$rm -rf $SEC_DIR >& ${sub_test}.rm; mkdir $SEC_DIR"
+				 $sec_shell "$sec_getenv; cd $SEC_DIR/..; \$rm -rf $SEC_DIR >& ${sub_test}.rm; mkdir -p $SEC_DIR"
 			 else
 				foreach instx (`echo $gtm_test_msr_oneinstperhost | sed 's/INST1 //g;s/INST1$//g'`)
 					$MSR RUN RCV=$instx SRC=INST1 'set msr_dont_trace; cd ..; $rm -rf * >& /dev/null'

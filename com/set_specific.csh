@@ -49,7 +49,7 @@ $uptime >&! /dev/null
 if ($status) setenv uptime "echo COULD NOT GET LOAD INFORMATION BY uptime"
 setenv gtmtest1 "gtmtest1"
 
-setenv tst_tcsh "tcsh -f"
+if ! ( $?tst_tcsh ) setenv tst_tcsh "tcsh -f"   # let cshdebug.csh predefine this as "tcsh" for debugging purposes
 setenv tst_awk "env LC_ALL=C gawk"
 setenv tst_od "od"
 setenv tst_ls "ls"

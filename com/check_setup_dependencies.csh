@@ -33,7 +33,7 @@ source $tst_com/set_specific.csh
 # have to fork another tcsh since parent was run with -f
 
 set backdef=`/usr/local/bin/tcsh -c 'if $?backslash_quote echo defined'`
-if ("defined" != $backdef) then
+if ("defined" != "$backdef") then
 	echo "TEST-E-UTILITY expected" '$backslash_quote' "to be set in .cshrc ;"
 	@ error++
 endif

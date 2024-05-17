@@ -123,8 +123,9 @@ setenv switch_chset "source $gtm_tst/com/switch_chset.csh"	# this needs to be do
 if !($?test_norandomsettings) then
 	source $gtm_tst/com/do_random_settings.csh
 else
-	echo "do_random_settings not being called"  >>&! $tst_general_dir/settings.csh
 	setenv ydb_test_4g_db_blks 0	# Define this env var so we don't need to use "$?ydb_test_4g_db_blks" in all later usages
+	# If not created by do_random_settings.csh above, do so here to avoid errors
+	touch $tst_general_dir/settings.csh
 endif
 
 # Now set some environment variables based on the random settings done above
@@ -756,7 +757,7 @@ endif
 # take care of the renaming (test assignments) in cleanup.csh:
 
 sed 's,\(_[0-9][0-9][0-9][0-9][0-9][0-9]\)/,\1/*__,;s,^ [ ]*,,g' $cleanup_script >! ${TMP_FILE_PREFIX}_cleanup_csh
-$tst_awk '{ print; if ($0 ~ /(rm|chmod) /) {gsub("\\*__","");print}}' ${TMP_FILE_PREFIX}_cleanup_csh | uniq >! $cleanup_script
+$tst_awk '{ print; if ($0 ~ /(rm|chmod) /) {gsub("*__","");print}}' ${TMP_FILE_PREFIX}_cleanup_csh | uniq >! $cleanup_script
 
 #########################################################################
 # check if there is enough space, and exit if not

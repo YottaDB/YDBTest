@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -508,19 +508,47 @@ case "-f":
 	    set skip
 breaksw
 case "-t":
-	    ##HELP_SCREEN The next argument is the name of the test requested
-	    #test given at command line
-	    # setenv tst_suite "$tst_suite _1_$argv[$argc1]"
-	    #check if next argument is a valid test name, maybe
-	    echo "-t" $argv[$argc1] >>! $test_list
+	    ##HELP_SCREEN The next argument selects all tests/subtests in the form [test/]pattern.
+	    ##HELP_SCREEN If [test/] is omitted and pattern exactly matches a test, select only test <pattern>.
+	    ##HELP_SCREEN Otherwise return all subtests matching *pattern* where test defaults to '*'.
 	    set skip
+	    set testlist = `$gtm_test_com_individual/tstmatch.csh $argv[$argc1]`
+	    if ( "$testlist" == "" ) echo "No test found matching specification '-t $argv[$argc1]'" `false` || exit 5
+
+	    # if argument exactly matches a test name
+	    setenv tst "$testlist[1]:h"   # tst also used by -st below (if supplied)
+	    echo "-t $tst" >>! $test_list
+	    if ( "$testlist" !~ "*/*" ) breaksw
+
+	    setenv gtm_test_st_list ""
+	    foreach t ( $testlist )
+		if ( "$t:h" != "$tst" ) then
+			echo "Error: more than one parent test directory for subtests matching '-t $argv[$argc1]': $testlist"
+			exit 5
+		endif
+		if ( "$gtm_test_st_list" != "" ) setenv gtm_test_st_list "$gtm_test_st_list,"   # add comma
+		setenv gtm_test_st_list "${gtm_test_st_list}${t:t}"
+	    end
 breaksw
 case "-st":
 case "-subtest":
 	    ##HELP_SCREEN The next argument is the name of the subtests requested (comma seperated)
 	    ##HELP_SCREEN Only those subtests requested will be run
+	    ##HELP_SCREEN All subtests that start with the supplied names will be included
+	    ##HELP_SCREEN The subtest's parent test must first be specified with -t
 	    ##HELP_SCREEN No logs will be kept of this run (forced -nolog)
-	    setenv gtm_test_st_list $argv[$argc1]
+	    # Verify that each subtest supplied actually exists
+	    # Expand each subtest name prefix to subtest*
+	    setenv gtm_test_st_list ""
+	    if ! ( $?tst ) echo "No test specified with -t prior to subtest specification '$argv[$argc1]'" `false` || exit 5
+	    foreach subname (${argv[$argc1]:as/,/ /})
+		set resolved_names = `find $gtm_tst/${tst:l}/u_inref/ -iname "$subname*.csh" -printf "%f "`
+		set resolved_names = "$resolved_names"   # turn array into string
+		if ( "$resolved_names" == "" ) echo "Could not find subtest '$tst/$subname'" `false` || exit 5
+		if ( "$gtm_test_st_list" != "" ) setenv gtm_test_st_list "$gtm_test_st_list,"   # add comma
+		setenv gtm_test_st_list "${gtm_test_st_list}${resolved_names:as/.csh /,/:as/.csh//}"
+	    end
+	    if ( "$gtm_test_st_list" == "" ) unsetenv gtm_test_st_list
 	    set skip
 breaksw
 case "-x":
@@ -563,7 +591,7 @@ breaksw
 case "-h":
 case "-help":
 	   ##HELP_SCREEN Print help and exit
-           $tst_awk -f $gtm_test_com_individual/help_screen.awk $gtm_test_com_individual/arguments.csh |more
+           $tst_awk -f $gtm_test_com_individual/help_screen.awk $gtm_test_com_individual/arguments.csh | less -F
 	   exit 5
 breaksw
 case "-dbglvl":

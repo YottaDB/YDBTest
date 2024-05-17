@@ -20,7 +20,7 @@
 
 set curdir = $PWD
 setenv JAVA_HOME `$tst_awk '$1 == "'$HOST:ar'" {print $10}' $gtm_test_serverconf_file`
-if ("NA" == $JAVA_HOME) then
+if ("NA" == "$JAVA_HOME" || "" == "$JAVA_HOME") then
 	# Check if /usr/lib/jvm/* directory can be found such that it contains libjava.so. If so use that.
 	# There might be multiple versions. In that case, choose the last one in a sort (to get the latest)
 	# Note: sort requires -V to sort by numerical value rather (i.e. so that 10 sorts as bigger than 9)

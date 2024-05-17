@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -41,7 +41,7 @@ echo
 echo '# Checking syslog for expected TIMERHANDLER warning given during drive of non-SIGSAFE routine'
 $gtm_tst/com/getoper.csh "$syslog_start" "" syslog.xtr "" ""
 set ourpid = `cat tmrhndlrpid.txt`      # Written out by a zsystem driven process inside gtm7952 (@ hangtest^gtm7952)
-$grep $ourpid syslog.xtr | $grep -E "YDB-W-TIMERHANDLER|GTM-W-TIMERHANDLER"
+$grep "$ourpid" syslog.xtr | $grep -E "YDB-W-TIMERHANDLER|GTM-W-TIMERHANDLER"
 echo
 $echoline
 echo
