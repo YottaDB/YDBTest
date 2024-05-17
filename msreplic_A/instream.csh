@@ -76,10 +76,6 @@ if ($?gtm_test_noggusers || $?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list log_error"
 endif
 
-if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list "$subtest_exclude_list activate_deactivate"
-endif
-
 $gtm_tst/com/submit_subtest.csh
 
 echo "Part A of multisite_replic tests DONE."
