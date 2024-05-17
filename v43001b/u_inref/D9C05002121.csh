@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,6 +16,13 @@ setenv > setenv.out
 unsetenv GTM_BAKTMPDIR
 unsetenv TMPDIR
 setenv gtm_test_sprgde_exclude_reglist DEFAULT	# No globals to DEFAULT region, to maintain consistent output
+
+# Disable debug-only huge db scheme as "dbcreate_base.csh" call inside the $SEC_SIDE call to "init_gld.csh" below will
+# use "-nostats" to create databases in the secondary side (because "test_replic" env var is defined) but this test
+# relies on stats in "v43001b/inref/wait.m" (which is invoked by "v43001b/u_inref/D9C05002121b.csh" even on the secondary
+# side) by doing a $VIEW("GVSTATS","AREG") to check if some SETS have happened.
+setenv ydb_test_4g_db_blks 0
+
 if ($?test_replic) then
 	#this test handles it's own replication
 	setenv v43001b_test_replic
