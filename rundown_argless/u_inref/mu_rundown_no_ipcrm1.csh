@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,9 +91,8 @@ $grep $SEC_DIR mupip_rundown1.logx | $grep '.dat' | $tst_awk 'sub(/ [0-9]+/," xx
 $grep -E "$PRI_DIR|$SEC_DIR" mupip_rundown1.logx | $grep '.dat' | $grep $dbmessage >&! checkcount.logx
 
 set regioncnt = `wc -l checkcount.logx | $tst_awk '{print $1}'`
-# 8 regions on the primary will already be rundown due to the prior call to "com/primary_crash.csh" invoking "$DSE" inside
-# "com/imptp_crash_helpdb_semclean.csh". Therefore only 8 regions on the secondary will be rundown so expect 8 rundown messages.
-if (8 != $regioncnt) echo "Expected count: 8 Actual count: "$regioncnt
+# 8 regions on the primary + 8 regions on the secondary = 16 regions
+if (16 != $regioncnt) echo "Expected count: 16 Actual count: "$regioncnt
 
 if (1 == $movefiles) then
 	mv ./save/*  .
@@ -107,8 +106,8 @@ if (1 == $movefiles) then
 	$grep -E "$PRI_DIR|$SEC_DIR" mupip_rundown2.logx | $grep '.dat' | $grep MUFILRNDWNSUC >>&! checkcount.logx
 
 	set regioncnt = `wc -l checkcount.logx | $tst_awk '{print $1}'`
-	# Expect no more and no less messages from the argumentless rundown than what was seen in the prior rundown.
-	if (8 != $regioncnt) echo "Expected count: 8 Actual count: "$regioncnt
+	# 8 regions on the primary + 8 regions on the secondary = 16 regions
+	if (16 != $regioncnt) echo "Expected count: 16 Actual count: "$regioncnt
 endif
 
 # Remove stray rctl shared memory segments.
