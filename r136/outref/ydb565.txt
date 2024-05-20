@@ -107,34 +107,40 @@ Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Un
 #######################################################################
 # Test that if O parameter of type ydb_buffer_t * using the default external call package,
 # if no preallocation specified, a default-package ZCNOPREALLOUTPAR error is issued
-$ZSTATUS="150381162,preallocO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call <DEFAULT>.preallocO is an output only parameter requiring pre-allocation"
+ZSTATUS=preallocO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call <DEFAULT>.preallocO is an output only parameter requiring pre-allocation
 # Test that if O parameter of type ydb_buffer_t * using a custom external call package,
 # if no preallocation specified, a custom-package ZCNOPREALLOUTPAR error is issued
-$ZSTATUS="150381162,preallocCustomO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call package1.preallocO is an output only parameter requiring pre-allocation"
+ZSTATUS=preallocCustomO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call package1.preallocO is an output only parameter requiring pre-allocation
 # Test that if IO parameter of type ydb_buffer_t * has no preallocation specified, no ZCNOPREALLOUTPAR error is issued
 io="a"
-# Test that if RETURN value of type ydb_buffer_t * is NULL, M string returned is the empty string
-ret=""
-# Test that if O parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string
-o=""
-# Test that if IO parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string
-io=""
+# Test that if RETURN value of type ydb_buffer_t * is NULL, M raises an error and doesn't change string
+ZSTATUS=ydb565+19^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test1
+ret="ab"
+# Test that if O parameter of type ydb_buffer_t * has NULL value, M raises an error and doesn't change string
+ZSTATUS=ydb565+24^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test2
+o="ab"
+# Test that if IO parameter of type ydb_buffer_t * has NULL value, M raises an error and doesn't change string
+ZSTATUS=ydb565+29^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test3
+io="abc"
 # Test that if O parameter of type ydb_buffer_t * has NULL value is not passed by reference, M string returned is NOT the empty string
 o="abcd"
 # Test that if IO parameter of type ydb_buffer_t * has NULL value is not passed by reference, M string returned is NOT the empty string
 io="abcde"
 # Test that for O ydb_buffer_t * parameter, if output length is greater than 1MiB, a MAXSTRLEN error is issued
-$ZSTATUS="150373290,maxstrlenO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+ZSTATUS=maxstrlenO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 # Test that for IO ydb_buffer_t * parameter, if output length is greater than 1MiB, a MAXSTRLEN error is issued
-$ZSTATUS="150373290,maxstrlenIO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+ZSTATUS=maxstrlenIO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 # Test that for RETURN ydb_buffer_t * parameter, if return length is greater than 1MiB, a MAXSTRLEN error is issued
-$ZSTATUS="150373290,maxstrlenRET+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
-# Test that if RETURN type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
-ret=""
-# Test that if O parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
-o=""
-# Test that if IO parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
-io=""
+ZSTATUS=maxstrlenRET+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded
+# Test that if RETURN type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string
+ZSTATUS=ydb565+56^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test7
+ret="abcd"
+# Test that if O parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string
+ZSTATUS=ydb565+61^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test8
+o="abcd"
+# Test that if IO parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string
+ZSTATUS=ydb565+66^ydb565,%YDB-E-XCRETNULLREF, Returned null reference from external call xc_test9
+io="abcd"
 # Test that if RETURN type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
 ret=""
 # Test that if O parameter of type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
@@ -142,7 +148,7 @@ o=""
 # Test that if IO parameter of type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
 io=""
 # Test that for O ydb_buffer_t * parameter, if return length is greater than pre-alloc length, a EXCEEDSPREALLOC error is issued.
-$ZSTATUS="150384402,exceedsPrealloc+1^ydb565,%YDB-E-EXCEEDSPREALLOC, Preallocated size 10 for M external call label test13 exceeded by string of length 11"
+ZSTATUS=exceedsPrealloc+1^ydb565,%YDB-E-EXCEEDSPREALLOC, Preallocated size 10 for M external call label test13 exceeded by string of length 11
 # Test one complete case where ydb_buffer_t * is used in I, IO, O and Return parameters
 i="ab"
 io="gh"

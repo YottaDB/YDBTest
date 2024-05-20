@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -14,8 +14,7 @@
 ; Helper M program used by r136/u_inref/ydb565.csh for the call-outs/external-call portion of the test
 ;
 ydb565	;
-	set $etrap="zwrite $zstatus set $ecode="""""
-
+	set $ztrap="goto incrtrap^incrtrap"
 	write "# Test that if O parameter of type ydb_buffer_t * using the default external call package,",!
 	write "# if no preallocation specified, a default-package ZCNOPREALLOUTPAR error is issued",!
 	set o=""
@@ -31,17 +30,17 @@ ydb565	;
 	do preallocIO(io)
 	zwrite io
 
-	write "# Test that if RETURN value of type ydb_buffer_t * is NULL, M string returned is the empty string",!
+	write "# Test that if RETURN value of type ydb_buffer_t * is NULL, M raises an error and doesn't change string",!
 	set ret="ab"
 	set ret=$&test1
 	zwrite ret
 
-	write "# Test that if O parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string",!
+	write "# Test that if O parameter of type ydb_buffer_t * has NULL value, M raises an error and doesn't change string",!
 	set o="ab"
 	do &test2(.o)
 	zwrite o
 
-	write "# Test that if IO parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string",!
+	write "# Test that if IO parameter of type ydb_buffer_t * has NULL value, M raises an error and doesn't change string",!
 	set io="abc"
 	do &test3(.io)
 	zwrite io
@@ -68,17 +67,17 @@ ydb565	;
 	set ret="abc"
 	do maxstrlenRET(.ret)
 
-	write "# Test that if RETURN type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string",!
+	write "# Test that if RETURN type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string",!
 	set ret="abcd"
 	set ret=$&test7
 	zwrite ret
 
-	write "# Test that if O parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string",!
+	write "# Test that if O parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string",!
 	set o="abcd"
 	do &test8(.o)
 	zwrite o
 
-	write "# Test that if IO parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string",!
+	write "# Test that if IO parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M raises an error and doesn't change string",!
 	set io="abcd"
 	do &test9(.io)
 	zwrite io
