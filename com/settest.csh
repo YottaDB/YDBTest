@@ -22,11 +22,13 @@ unsetenv ydb_chset
 unsetenv gtm_chset
 unsetenv ydb_readline
 
-if ! ( -f $gtm_tools/gtm_env.csh ) echo "Can't find $gtm_tools/gtm_env.csh. Did you build it with YDBDevOps?" `false` || exit 1
-if ! ( -d $gtm_tst/com ) echo "Can't find directory \$gtm_tst/com. Have you copied it using 'tsync' alias?" `false` || exit 1
-source $gtm_tools/gtm_env.csh || exit $?
-source $gtm_tst/com/set_specific.csh || exit $?
-source $gtm_tst/com/set_icu_version.csh || exit $?
+set __save_ver=`alias ver`   # save/restore `ver` alias because gtm_env.csh overwrites it
+
+if ! ( -f $gtm_tools/gtm_env.csh ) echo "Can't find $gtm_tools/gtm_env.csh. Did you build it with YDBDevOps?" `false` || goto fail
+if ! ( -d $gtm_tst/com ) echo "Can't find directory \$gtm_tst/com. Have you copied it using 'tsync' alias?" `false` || goto fail
+source $gtm_tools/gtm_env.csh || goto restore_ver_fail
+source $gtm_tst/com/set_specific.csh || goto fail
+source $gtm_tst/com/set_icu_version.csh || goto fail
 setenv gtm_ver $gtm_root/$verno
 setenv tst_ver $gtm_verno   # may be overridden by: gtmtest -v
 setenv gtm_ver_noecho
@@ -52,13 +54,13 @@ setenv run_all  ${TMP_FILE_PREFIX}_run_all
 
 # Settings from defaults_common_csh
 setenv gtm_test_st_list   # clear any vestiges of a previous settest run
-source $gtm_test_com_individual/defaults.csh $gtm_test_com_individual/defaults_common_csh || exit $?
+source $gtm_test_com_individual/defaults.csh $gtm_test_com_individual/defaults_common_csh || goto fail
 # Process caller's command line arguments
-source $gtm_test_com_individual/arguments.csh $argv || exit $?
+source $gtm_test_com_individual/arguments.csh $argv || goto fail
 # Source the actual test version's defaults (imports default_csh and default_options_csh)
 # per gtmtest, remove rm commands, which delete argument settings, (cleanup already done by defaults_common_csh above)
 
-$grep -v "rm " $gtm_test_com_individual/defaults_csh | source $gtm_test_com_individual/defaults.csh - || exit $?
+$grep -v "rm " $gtm_test_com_individual/defaults_csh | source $gtm_test_com_individual/defaults.csh - || goto fail
 
 # Settings from gtmtest.csh
 if ( -e $gtm_tools/check_utf8_support.csh ) setenv gtm_test_unicode_support `$gtm_tools/check_utf8_support.csh`
@@ -67,7 +69,7 @@ setenv tst_dir_fstype `$gtm_test_com_individual/get_filesystem_type.csh $tst_dir
 setenv tmp_dir_fstype `$gtm_test_com_individual/get_filesystem_type.csh /tmp`
 setenv is_tst_dir_cmp_fs `$gtm_test_com_individual/is_curdir_compressed_fs.csh $tst_dir`   # $tst_dir on compressed filesystem?
 set encrypt_supported = `$gtm_tst/com/is_encrypt_support.csh $tst_ver $tst_image`
-source $gtm_tst/com/set_fips_support.csh || exit $?
+source $gtm_tst/com/set_fips_support.csh || goto fail
 setenv gtm_test_noggusers 1
 setenv gtm_test_noggtoolsdir 1
 setenv gtm_test_noIGS 1
@@ -84,8 +86,8 @@ setenv gtm_tst_out `echo $gtm_tst_out | sed -e "s|$tst_dir/||"`   # gtm_tst_out 
 
 # Settings from submit.csh
 limit coredumpsize unlimited
-if ( ! -e $gtm_exe/mumps ) echo "No 'mumps' executable found at gtm_exe '$gtm_exe'. Is it built?" `false` || exit 1
-source $gtm_tst/com/set_gtm_machtype.csh || exit $?
+if ( ! -e $gtm_exe/mumps ) echo "No 'mumps' executable found at gtm_exe '$gtm_exe'. Is it built?" `false` || goto fail
+source $gtm_tst/com/set_gtm_machtype.csh || goto fail
 setenv test_pid_file /tmp/__${USER}_test_suite_$$.pid
 echo $tst_dir/$gtm_tst_out >>! $test_pid_file
 setenv gtm_test_debuglogs_dir $ggdata/tests/debuglogs/$gtm_tst_out
@@ -95,7 +97,7 @@ mkdir -p $gtm_test_local_debugdir
 touch $gtm_test_local_debugdir/excluded_subtests.list
 touch $gtm_test_local_debugdir/test_subtest.info
 
-source $gtm_tst/com/set_java_supported.csh >>! $gtm_test_local_debugdir/set_java_supported.log || exit $?
+source $gtm_tst/com/set_java_supported.csh >>! $gtm_test_local_debugdir/set_java_supported.log || goto fail
 
 # Create symlink to test results directory
 setenv tst   # default avoids "tst: Undefined variable" errors
@@ -131,7 +133,7 @@ setenv DSE "$gtm_exe/dse"
 setenv GDE "$gtm_exe/mumps -run GDE"
 setenv GDE_SAFE "$gtm_tst/com/pre_V54002_safe_gde.csh"
 setenv tst_tslog_filter
-source $gtm_tst/com/set_gtmroutines.csh "M" || exit $?
+source $gtm_tst/com/set_gtmroutines.csh "M" || goto fail
 setenv echoline 'echo ###################################################################'  # output generator
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_crash 0
@@ -156,7 +158,7 @@ setenv switch_chset "source $gtm_tst/com/switch_chset.csh"
 setenv test_collation "NON_COLLATION"	# The default
 setenv test_collation_value "default"
 setenv test_collation_no 0
-source $gtm_tst/com/collation_setup.csh || exit $?
+source $gtm_tst/com/collation_setup.csh || goto fail
 setenv gtm_test_fake_enospc 0   # Don't fake ENOSPC (disk out-of-space) error (gtmtest sets this randomly)
 
 # Set path as submit_test.csh does
@@ -168,5 +170,17 @@ set path = ($original_path $gtm_tst/$tst/inref $gtm_tst/$tst/u_inref $gtm_tst/co
 set setup_status = `source $gtm_test_com_individual/check_setup_dependencies.csh $gtm_test_com_individual`
 if ( "$setup_status" != "0" ) then
   echo "TEST-E-SETUP. Some setup dependency is missing. The check failed with $setup_status"
-  exit 1
+  goto fail
 endif
+goto success
+
+fail:
+unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
+alias ver "$__save_ver"   # restore ver alias
+unset __save_ver
+exit 1  # fail
+
+success:
+unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
+alias ver "$__save_ver"   # restore ver alias
+unset __save_ver

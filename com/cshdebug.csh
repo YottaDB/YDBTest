@@ -94,8 +94,10 @@ if ( "$1" == "stop" ) then
 			printf "\033[0m"
 		endif
 		# grep colours the output line number to terminals
-		grep --color=auto -P "(?<=[ /])[^ :/]+:[0-9]*:" ~/.cshdebug/log
-		if ( ! $?__quiet ) printf "\033[33m   # This report may be searched at ~/.cshdebug/log if you specified -k.\033[0m\n"
+		if ( ! $?__quiet ) then
+			grep --color=auto -P "(?<=[ /])[^ :/]+:[0-9]*:" ~/.cshdebug/log
+			printf "\033[33m   # This report may be searched at ~/.cshdebug/log if you specified -k.\033[0m\n"
+		endif
 	endif
 	if ! ( $?__keeptrace ) rm ~/.cshdebug -rf   # do this if you want to clean up debug artifacts after debug stops
 	unset __errors __line __source __sourcename __maybe_source __quotecount __cmdline

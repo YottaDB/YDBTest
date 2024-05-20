@@ -52,7 +52,7 @@ if ( "$arg" !~ "*/*" ) set test = "*"   # if no '/' in pattern, match all tests
 
 # The following grep is made faster by being fairly explicit
 # Note: '\x7f' is appended to end of line as a unique line delimeter since command substitution replaces newlines with spaces.
-# (To observe the problem when lines are all concatenated one, run 'tstmatch.csh env')
+# (To observe the problem when lines are all concatenated into one, run 'tstmatch.csh env' with the '\x7f' ending removed)
 set testlist = `grep -EH 'setenv[ \t]+(subtest_list_[^ \t]|unicode_testlist).*'$subtest $searchdir/$test/instream.csh | sed -Ee 's/(.*)/\1\x7f/'`
 if ( $? != 0 ) exit 0
 

@@ -53,6 +53,7 @@ alias egrep 'egrep --color=auto'
 # Handy git shortcuts
 alias gitlog 'git log --graph --pretty=format:"%C(auto)%ad %h%d %s" --date="short"'
 alias gitup 'git fetch upstream && git rebase upstream/master'
+alias gitsquash 'git log --pretty=format:"%C(auto)%h%d:%n%B" origin/master..HEAD && git reset --soft origin/master && git status && echo "Squashed to origin/master. Now check and commit."'
 
 # USER-SPECIFIC LOCATIONS for YottaDB's gtmtest
 setenv mailid berwyn@yottadb.com   # Replace with your email here
@@ -74,7 +75,7 @@ if ! ($?gtm_curpro) setenv gtm_curpro $verno   # Subst for current production re
 # set args for gtmtest alias -- select useful ones for a developer
 setenv gtmtest_args "-fg -noencrypt -k -nomail -dontzip -stdout 2"
 # TEMPLATE: to prevent randomized test settings, use the following for settest_args and/or gtmtest_args
-#   (all settings are necessary to avoid test errors)
+#   (all settings are necessary to avoid test errors when --norandomsettings is included)
 setenv settest_args "$gtmtest_args -norandomsettings -nospanreg -noco -jnl nobefore -env eall_noinverse=1"
 
 # The following settings are only used if you build using YDBDevOps (private to Yottadb developers)
@@ -95,7 +96,8 @@ endif
 setenv GIT_BRANCH "sh -c 'git branch --no-color 2> /dev/null' | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ [\1]/'"
 alias precmd 'set prompt="%{\033[34m%}%n@%B%m%b %B%{\033[31m%}%~%b%{\033[36m%}`$GIT_BRANCH`%{\033[0m%}%# "'
 set promptchars=">#"   # use '>' prompt for users; '#' for root
-# Avoid loss of history if you close your terminal window with your mouse by:
+
+# Optionally uncomment this to avoid loss of history if you close your terminal window with your mouse by:
 #   Merging history every minute (at next command) so that history from concurrent terminal window is saved
 #   It would be better to save every user command, but avoid precmd or postcmd for reasons given here:
 #   cf. https://unix.stackexchange.com/questions/88838/preserve-tcsh-history-in-multiple-terminal-windows

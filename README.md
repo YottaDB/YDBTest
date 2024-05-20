@@ -4,7 +4,7 @@ All software in this package is part of YottaDB (<https://yottadb.com>) each fil
 
 # Overview
 
-This test system is the regression test suite for YottaDB. It is a collection of shell scripts written for the tcsh shell on Linux. It is a complex system that enables simultaneous testing across servers (but may also be used locally), and offers randomized selection of a variety of settings that cannot be tested exhaustively in every permutation every time.
+This test system is the regression test suite for YottaDB. It is a collection of shell scripts written for the tcsh shell on Linux. It is a complex system that enables simultaneous testing across servers (but may also be used locally), and offers a randomized selection of a variety of settings that cannot be tested exhaustively in every permutation every time.
 
 The documentation for the test system is what follows, and help for the primary test command may be obtained with the command `gtmtest -help` (`gtmtest` is named after the upstream software, GT.M, of which YottaDB is a superset fork).
 
@@ -37,7 +37,7 @@ To run tests without using the [Dockerfile](#using-the-test-system-with-docker),
 - tcsh, ksh, gawk, sed, lsof, bc, strace, expect, gdb, ssh
 - sort, fuser, eu-elflint, ss, nc
 
-If you are using a Debian or Ubuntu based distribution, you can ensure that all required packages to build and test YottaDB, are installed with the following command:
+If you are using a Debian or Ubuntu based distribution, the following command will install all required packages to build and test YottaDB:
 
 ```sh
 sudo apt-get install -y --no-install-recommends \
@@ -68,7 +68,7 @@ Currently **tcsh** is the only supported shell. Make sure that tcsh is properly 
 tcsh
 ```
 
-A symbolic link of tcsh is also needed in the local bin
+A symbolic link to tcsh is also needed in local bin:
 
 ```sh
 sudo ln -s /usr/bin/tcsh /usr/local/bin/tcsh
@@ -87,6 +87,13 @@ cd ..
 ```
 
 Now check that you can run ``ssh `hostname` `` without having to enter a password.
+
+Make sure coredumps appear in your current directory, which is required by a number of tests. Read the current setting with ``sysctl kernel.core_pattern`. If it does not say `core*` then do the following:
+
+```sh
+echo kernel.core_pattern=core | sudo tee -a /etc/sysctl.conf
+sysctl -p   # apply the change to the currently running kernel
+```
 
 ### Optional setup for *perf*ormance tests
 
@@ -120,7 +127,14 @@ Merge this [.cshrc template](com/.cshrc) into your own `.cshrc` in your home dir
 
 Note: If you now try to run tcsh, without having first fetched [YDBTest (below)](#getting-the-ydbtest-repository), it will produced a "no such file" error since the `.cshrc` file tries to source `YDBTest/com/set_env.csh` to set up additional environment variables for `gtmtest`.
 
-Various testing aliases are defined by `YDBTest/com/set_env.csh`. If you wish to override any of these on your local system, redefined them in your `.cshrc` after it sources `YDBTest/com/set_env.csh`.
+Various **handy testing aliases** are defined by `YDBTest/com/set_env.csh`. If you wish to override any of these on your local system, redefined them in your `.cshrc` after it sources `YDBTest/com/set_env.csh`. Notably, `.cshrc` includes the following aliases (type `alias <name>` to remind yourself what of they do):
+
+```sh
+gitlog    # pretty-print the git log in one line format (or you might prefer to install the more powerful `tig`)
+gitup     # update your git directory from upstream/master using rebase
+gitsquash # squash all commits since origin/master and prepare them, ready for commit.
+precmd    # shows the git branch in your prompt
+```
 
 The following of these environment variables, defined in `.cshrc` will be referenced in the documentation below:
 
@@ -130,12 +144,12 @@ setenv verno V${build_id}_R139     # Change Rxxx to match the revision of yottad
 setenv work_dir ~/work             # Where you wish to check out YDB, YDBTest, etc.
 setenv gtm_root /usr/library       # Where your (and others') installed binaries go
 setenv gtm_test $gtm_root/gtm_test # Where to hold a temporary copy of the tester code to run; it needn't be under $gtm_root
-setenv tst_dir /testarea1/`whoami`    # Where to put the output of your test
+setenv tst_dir /testarea1/`whoami` # Where to put the output of your test
 setenv r ~/.gtmresults             # Where to create symlink that points to latest test results directory; short name for easy access
 ```
 
 You should change the above locations in your `.cshrc` to reference directories on your machine that your user has access to.
-However, ***IF*** you wish to use the `.cshrc` template verbatim (using a default YottaDB directory structure) you will need to create the above directories as follows:
+However, ***IF*** you wish to use the `.cshrc` template's default locations (using a directory structure used internally by YottaDB developers) you will need to create the above directories as follows:
 
 ```sh
 sudo groupadd gtc
@@ -153,14 +167,14 @@ cd $work_dir
 git clone https://gitlab.com/YottaDB/DB/YDBTest.git
 ```
 
-Create a `gtm_test` directory to hold a copy of the test code that is to be run, and copy the source to it:
+`gtmtest` runs from a copy of the test source that must be at `$gtm_test`. Make this copy as follows:
 
 ```sh
 mkdir -p $gtm_root/gtm_test/T${build_id}
 tsync
 ```
 
-`tsync` is an alias (defined by `.cshrc` via `test_env.csh`), that copies your test source directory to the directory you just made. Your test source directory is taken to be the git repository of your current directory. Strictly, you need to run `tsync` before running a test, every time you change the source code; but the test-running aliases defined in `test_env.csh` will do this for you. Here is a simplified version of `tsync`:
+`tsync` is an alias (defined by `.cshrc` via `test_env.csh`), that creates a copy of your test source directory. Your test source directory is taken to be the git repository of your current directory. Strictly, you need to run `tsync` before running a test, every time you change the source code; but the test-running aliases (e.g. `gtmtest`) that are defined in `test_env.csh` will do this for you. Here is a simplified version of `tsync`:
 
 ```sh
 alias tsync 'rsync -av --delete `git rev-parse --show-toplevel`/ $gtm_test/$gtm_testver/'
