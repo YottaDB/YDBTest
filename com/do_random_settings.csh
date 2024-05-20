@@ -1268,7 +1268,15 @@ setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
 # we never use the chosen version as it may be overriden (on or off) in the test itself which we cannot
 # know at this point.
 if (! $?gtm_test_v6_dbcreate_rand_ver) then
-	setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
+	if ($?gtm_test_nopriorgtmver) then
+		setenv gtm_test_v6_dbcreate_rand_ver $verno
+	else
+		setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
+		if ( $? ) then
+			echo "$gtm_test_v6_dbcreate_rand_ver"  # display the offending error
+			exit 1
+		endif
+	endif
 endif
 echo '# Random V6 version used to create V6 mode databases (when enabled)'			>>&! $settingsfile
 echo "setenv gtm_test_v6_dbcreate_rand_ver $gtm_test_v6_dbcreate_rand_ver"			>>&! $settingsfile

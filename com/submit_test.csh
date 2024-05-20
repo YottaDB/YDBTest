@@ -121,7 +121,7 @@ unset verbose
 setenv switch_chset "source $gtm_tst/com/switch_chset.csh"	# this needs to be done BEFORE the do_random_settings.csh call
 								# as that might need this variable defined in some cases.
 if !($?test_norandomsettings) then
-	source $gtm_tst/com/do_random_settings.csh
+	source $gtm_tst/com/do_random_settings.csh || exit $?
 else
 	setenv ydb_test_4g_db_blks 0	# Define this env var so we don't need to use "$?ydb_test_4g_db_blks" in all later usages
 	# If not created by do_random_settings.csh above, do so here to avoid errors
