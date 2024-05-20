@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -132,9 +132,6 @@ endif
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7312 gtm7294 inst_freeze_enospc"
-endif
-if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7413"
 endif
 # Disable certain time-sensitive tests on single-cpu systems
 if ($gtm_test_singlecpu) then
