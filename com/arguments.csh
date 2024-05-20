@@ -512,18 +512,22 @@ case "-t":
 	    ##HELP_SCREEN If [test/] is omitted and pattern exactly matches a test, select only test <pattern>.
 	    ##HELP_SCREEN Otherwise return all subtests matching *pattern* where test defaults to '*'.
 	    set skip
-	    set testlist = `$gtm_test_com_individual/tstmatch.csh $argv[$argc1]`
-	    if ( "$testlist" == "" ) echo "No test found matching specification '-t $argv[$argc1]'" `false` || exit 5
+	    set testarray = `$gtm_test_com_individual/tstmatch.csh $argv[$argc1]`
+	    if ( "$testarray" == "" ) echo "No test found matching specification '-t $argv[$argc1]'" `false` || exit 5
 
-	    # if argument exactly matches a test name
-	    setenv tst "$testlist[1]:h"   # tst also used by -st below (if supplied)
-	    echo "-t $tst" >>! $test_list
-	    if ( "$testlist" !~ "*/*" ) breaksw
+	    # See if argument exactly matches a test name
+	    if ( "$testarray" !~ "*/*" ) then
+		    setenv tst "$testarray[1]"   # tst also used by -st below (if supplied)
+		    echo "-t $tst" >>! $test_list
+		    breaksw
+	    endif
 
+	    # If we get to here, $testarray is an array of entries in the form: test/subtest
+	    setenv tst "$testarray[1]:h"
 	    setenv gtm_test_st_list ""
-	    foreach t ( $testlist )
+	    foreach t ( $testarray )
 		if ( "$t:h" != "$tst" ) then
-			echo "Error: more than one parent test directory for subtests matching '-t $argv[$argc1]': $testlist"
+			echo "Error: more than one parent test directory for subtests matching '-t $argv[$argc1]': $testarray"
 			exit 5
 		endif
 		if ( "$gtm_test_st_list" != "" ) setenv gtm_test_st_list "$gtm_test_st_list,"   # add comma
@@ -534,19 +538,12 @@ case "-st":
 case "-subtest":
 	    ##HELP_SCREEN The next argument is the name of the subtests requested (comma seperated)
 	    ##HELP_SCREEN Only those subtests requested will be run
-	    ##HELP_SCREEN All subtests that start with the supplied names will be included
-	    ##HELP_SCREEN The subtest's parent test must first be specified with -t
 	    ##HELP_SCREEN No logs will be kept of this run (forced -nolog)
-	    # Verify that each subtest supplied actually exists
-	    # Expand each subtest name prefix to subtest*
-	    setenv gtm_test_st_list ""
+	    setenv gtm_test_st_list $argv[$argc1]
 	    if ! ( $?tst ) echo "No test specified with -t prior to subtest specification '$argv[$argc1]'" `false` || exit 5
-	    foreach subname (${argv[$argc1]:as/,/ /})
-		set resolved_names = `find $gtm_tst/${tst:l}/u_inref/ -iname "$subname*.csh" -printf "%f "`
-		set resolved_names = "$resolved_names"   # turn array into string
-		if ( "$resolved_names" == "" ) echo "Could not find subtest '$tst/$subname'" `false` || exit 5
-		if ( "$gtm_test_st_list" != "" ) setenv gtm_test_st_list "$gtm_test_st_list,"   # add comma
-		setenv gtm_test_st_list "${gtm_test_st_list}${resolved_names:as/.csh /,/:as/.csh//}"
+	    # Verify that each subtest supplied actually exists
+	    foreach subname (${gtm_test_st_list:as/,/ /})
+		if ( ! -e "$gtm_tst/$tst/u_inref/${subname}.csh" ) echo "Could not find subtest '$tst/$subname'" `false` || exit 5
 	    end
 	    if ( "$gtm_test_st_list" == "" ) unsetenv gtm_test_st_list
 	    set skip
