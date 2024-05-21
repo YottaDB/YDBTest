@@ -143,15 +143,15 @@ tls: {
 		key: "$PWD/demoCA/private/client.key";
 	};
 
-	client2: {				# for CASE 2
-		# cipher-list: " " ;		# clientcipher
-		# verify-level: "CHECK";	# client2verifylevel
+	client2: {						# for CASE 2
+		# cipher-list: "TLS_AES_128_CCM_8_SHA256";	# clientcipher
+		# verify-level: "CHECK";			# client2verifylevel
 	};
 
 	server: {
-		verify-mode: "SSL_VERIFY_PEER";		# goodverifymode
-		verify-level: "CHECK";			# serververifylevel
-		# cipher-list: "DEFAULT:! :!ADH:!LOW:!EXP:!MD5:@STRENGTH";	# servercipher
+		verify-mode: "SSL_VERIFY_PEER";			# goodverifymode
+		verify-level: "CHECK";				# serververifylevel
+		# cipher-list: "TLS_CHACHA20_POLY1305_SHA256";	# servercipher
 		format: "PEM";
 		cert: "$PWD/demoCA/server.pem";		# servercert
 		key: "$PWD/demoCA/private/server.key";	# serverkey
@@ -243,21 +243,8 @@ echo
 echo "TEST CASE 2: Check cipher-list option by excluding cipher from server list which is only one for client."
 # ^expected(2,"device")="1,error:1408A0C1:SSL routines:SSL3_GET_CLIENT_HELLO:no shared cipher"
 echo
-# only include first cipher for client and omit from server
-# Secure Remote Password ciphers are not supported by GT.M
-# Ubuntu 12.04 OpenSSL 1.0.1 lists ECDHE-RSA-AES256-GCM-SHA384 first
-# but unlike other platforms, client gets no ciphers available error
-# AIX and Solaris 1.0.1e also have this problem though Solaris lists
-# DHE-RSA-AES256-GCM-SHA384 first.  Some 1.0.1e versions work as
-# expected so the test should not be on the OpenSSL version.
-if (("$HOSTOS" == "Linux" && { $grep -q 12.04 /etc/issue } ) || ("$HOSTOS" == "SunOS") || ("$HOSTOS" == "AIX")) then
-	# Gave up on trying to get a usable cipher first so force it
-	set omitcipher = '"'DHE-RSA-AES256-SHA'"'
-else
-	set omitcipher = '"'`openssl ciphers 'DEFAULT:\\!SRP' |cut -d: -f 1`'"'
-endif
-$tst_awk ' /clientcipher/ {$0 = $2 " " $3 '$omitcipher' $4 " "  $5 " " $6 " " $7} {print}' $gtmcrypt_config.starting >! $gtmcrypt_config.omitclient
-$tst_awk ' /servercipher/ {$0 = $2 " " $3'$omitcipher' $4 " "  $5 " " $6} {print}' $gtmcrypt_config.omitclient >! $gtmcrypt_config
+$tst_awk ' /clientcipher/ { sub("# ","") } { print $0; }' $gtmcrypt_config.starting >! $gtmcrypt_config.omitclient
+$tst_awk ' /servercipher/ { sub("# ","") } { print $0; }' $gtmcrypt_config.omitclient >! $gtmcrypt_config
 cp -p $gtmcrypt_config $gtmcrypt_config.ciphermismatch
 # client should try to enable tls but fail
 # special case code in tsocerrors.m depends on case 2
