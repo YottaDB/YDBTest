@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -196,20 +196,23 @@ dotls(expected,tlsid)
 	. . if $$FUNC^%HD(verifymode)'=5 do error("reneg",$text(+0)_"-E-FAILED verify-mode expected 05 got "_verifymode)
 	. set ret=0
 	. ; Exchange data with client looking for RENTOT changes
-	. for i=1:1:5 do  quit:ret!(rentotb4<rentotafter)
-	. . write i_" afterreneg",!
-	. . set ret=$$renegcheckerr(^case,"renegserv",$device)
-	. . if ret set ^checkjob(^case,"write","afterreneg"_i)=$device quit
-	. . read somedata:60
-	. . set ^checkjob(^case,"zsocket","afterreneg","server"_i)=$zsocket("","TLS",,"all,internal")_"<data:"_$get(somedata)
-	. . set ret=$$renegcheckerr(^case,"renegserv",$device)
-	. . if ret do  quit
-	. . . set ^checkjob(^case,"read","afterreneg"_i)=$device
-	. . . do checkerror(^case_".renegserv.reneg",$get(^reneg("expected")))
-	. . set rentotchk=^checkjob(^case,"zsocket","afterreneg","server"_i)
-	. . set rentotstart=$find(rentotchk,"RENTOT:")
-	. . set rentotafter=+$extract(rentotchk,rentotstart,99)
-	. if (ret=0)&(rentotb4'<rentotafter) do error("server",$text(+0)_"-E-FAILED RENTOT unchanged")
+	. ; Note that from TLS 1.3 onwards, there is no renegotiation that happens (see YDB@44931460 commit message for details).
+	. ; Therefore, in that case, we expect to see RENTOT as 0 all the time.
+	. do:'$ztrnlnm("ydb_test_tls13_plus")
+	. . for i=1:1:5 do  quit:ret!(rentotb4<rentotafter)
+	. . . write i_" afterreneg",!
+	. . . set ret=$$renegcheckerr(^case,"renegserv",$device)
+	. . . if ret set ^checkjob(^case,"write","afterreneg"_i)=$device quit
+	. . . read somedata:60
+	. . . set ^checkjob(^case,"zsocket","afterreneg","server"_i)=$zsocket("","TLS",,"all,internal")_"<data:"_$get(somedata)
+	. . . set ret=$$renegcheckerr(^case,"renegserv",$device)
+	. . . if ret do  quit
+	. . . . set ^checkjob(^case,"read","afterreneg"_i)=$device
+	. . . . do checkerror(^case_".renegserv.reneg",$get(^reneg("expected")))
+	. . . set rentotchk=^checkjob(^case,"zsocket","afterreneg","server"_i)
+	. . . set rentotstart=$find(rentotchk,"RENTOT:")
+	. . . set rentotafter=+$extract(rentotchk,rentotstart,99)
+	. . if (ret=0)&(rentotb4'<rentotafter) do error("server",$text(+0)_"-E-FAILED RENTOT unchanged")
 	quit
 renegcheckerr(case,side,device)
 	new caller,ret set caller=$stack($stack-1,"PLACE")
@@ -311,20 +314,21 @@ tsocclnt(wanttls,gettls,clntid)	;client
 	. . if ret set ^checkjob(^case,"write","clntb4reneg"_i)=$device quit
 	. if somedata="prep4reneg" write "ok2reneg",!
 	. set ret=0
-	. for i=1:1:9 do  quit:ret!(somedata["afterreneg")!$zeof
-	. . read somedata:60 quit:$zeof
-	. . set ret=$$renegcheckerr(^case,"renegclnt",$device)
-	. . if ret set ^checkjob(^case,"read","clntafterreneg"_i)=$device quit
-	. . write i_" just some data",!
-	. . set ret=$$renegcheckerr(^case,"renegclnt",$device)
-	. . if ret set ^checkjob(^case,"write","clntafterreneg"_i)=$device quit
-	. . set ^checkjob(^case,"zsocket","tsoclnt","afterreneg"_i)=$zsocket("","TLS",,"all,internal")_"<data:"_somedata
-	. . set rentotchk=^checkjob(^case,"zsocket","tsoclnt","afterreneg"_i)
-	. . set rentotstart=$find(rentotchk,"RENTOT:")
-	. . if rentotstart=0 do
-	. . . set rentotafter=0	; client may not have session so no RENTOT:0 even
-	. . else  set rentotafter=+$extract(rentotchk,rentotstart,99)
-	. if (ret=0)&(rentotb4'<$get(rentotafter)) do error("client",$TEXT(+0)_"-E-FAIL RENTOT unchanged")
+	. do:'$ztrnlnm("ydb_test_tls13_plus")
+	. . for i=1:1:9 do  quit:ret!(somedata["afterreneg")!$zeof
+	. . . read somedata:60 quit:$zeof
+	. . . set ret=$$renegcheckerr(^case,"renegclnt",$device)
+	. . . if ret set ^checkjob(^case,"read","clntafterreneg"_i)=$device quit
+	. . . write i_" just some data",!
+	. . . set ret=$$renegcheckerr(^case,"renegclnt",$device)
+	. . . if ret set ^checkjob(^case,"write","clntafterreneg"_i)=$device quit
+	. . . set ^checkjob(^case,"zsocket","tsoclnt","afterreneg"_i)=$zsocket("","TLS",,"all,internal")_"<data:"_somedata
+	. . . set rentotchk=^checkjob(^case,"zsocket","tsoclnt","afterreneg"_i)
+	. . . set rentotstart=$find(rentotchk,"RENTOT:")
+	. . . if rentotstart=0 do
+	. . . . set rentotafter=0	; client may not have session so no RENTOT:0 even
+	. . . else  set rentotafter=+$extract(rentotchk,rentotstart,99)
+	. . if (ret=0)&(rentotb4'<$get(rentotafter)) do error("client",$TEXT(+0)_"-E-FAIL RENTOT unchanged")
 	l +^ok2close
 	c tcpdev
 	l -^ok2close
