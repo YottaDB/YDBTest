@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -198,13 +198,13 @@ s ^config("hostname")="$randhost"
 h
 EOF
 
+cp -p $gtmcrypt_config  $gtmcrypt_config.starting
 
 echo
 echo "TEST CASE 1a: Both certificate and key in the same file should work."
 echo "			both cert and key name the same file."
 echo
 
-cp -p $gtmcrypt_config  $gtmcrypt_config.starting
 cat $PWD/demoCA/private/server.key $PWD/demoCA/server.pem >$PWD/serverboth.pem
 $tst_awk -v 'cert="'$PWD/serverboth.pem'";' ' /server\.(pem|key)/ {$2=cert} {print}' $gtmcrypt_config.starting >&! $gtmcrypt_config
 $GTM << EOF
@@ -314,14 +314,6 @@ echo "TEST CASE 6: Test client without config file."
 echo
 # need libconfig9 aka version 1.4.x for config_read_string - it also define LIBCONFIG_VER
 #	RedHat 6 and Ubuntu 12.04 are known to have libconfig8 aka 1.3.x
-set newconfig = 0
-foreach include (/usr/local/include /usr/include)
-	if ( -e $include/libconfig.h) then
-		if { $grep -q LIBCONFIG_VER_MAJOR $include/libconfig.h } set newconfig = 1
-		break
-	endif
-end
-if ( $newconfig ) then
 # with default verify-level "CHECK" a config file or argument is needed
 # to provide CAfile or turn CHECK off for our testsystem.
 # Special case in tsocerrors.m.
@@ -332,18 +324,6 @@ EOF
 $GTM << EOF
 d fail^tsocerrors("6b.cunset","server","not found in",1,0,"nonsuch")
 EOF
-else	# libconfig is too old
-	echo
-	echo "YDB>"
-	echo "  PASSED: 6a.cunset"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 6b.cunset"
-	echo
-	echo "YDB>"
-endif	# newconfig
 echo
 echo "TEST CASE 7: Test config file options."
 echo
@@ -424,7 +404,6 @@ EOF
 echo
 echo "TEST CASE 9: Test providing config file options on WRITE /TLS."
 echo
-if ( $newconfig ) then
 # libconfig 1.4.x has config_read_string so really do tests
 # not indented due to here docs
 # no config file - pass all of server section
@@ -481,83 +460,6 @@ $GTM <<EOF
 do buildconfig^tsocerrors("session-id-hex","string","abcdef123456")
 do succeed^tsocerrors("9g","server")
 EOF
-else	# libconfig is too old
-# libconfig 1.3.x does not have config_read_string so fake test output
-# echo expected output so test passes - ^expected and ^checkjob record if actually did CASE 9
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9a"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9b"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9c"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9d"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9e"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9f"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 9g"
-	echo
-	echo "YDB>"
-endif	# newconfig
 
 echo
 echo "TEST CASE 10: Test WRITE /TLS RENEGOTIATION."
@@ -581,7 +483,6 @@ $GTM << EOF
 set ^reneg="success",^reneg("tlsid")="reneg"
 do succeed^tsocerrors("10b","server")
 EOF
-if ( $newconfig ) then
 $GTM << EOF
 kill ^reneg("tlsid")
 set ^reneg="success",^reneg("opts")="verify-depth: 6;"
@@ -593,12 +494,10 @@ set ^reneg="success",^reneg("opts")=^sconfig kill ^sconfig
 set ^reneg("tlsid")="reneg"
 do succeed^tsocerrors("10d","server")
 EOF
-endif	# newconfig
 # gtmcrypt_config.renegverifymode needed later even if old libconfig
 # check option overrides config file with and without tlsid
 $tst_awk ' /renegverifymode/ {$0 = $2 " " $3 " " $4 " "  $5 " " $6} {print}' $gtmcrypt_config.case10 >! $gtmcrypt_config
 cp -p $gtmcrypt_config $gtmcrypt_config.renegverifymode
-if ( $newconfig ) then
 $GTM << EOF
 do buildconfig^tsocerrors("verify-mode","string","SSL_VERIFY_PEER:SSL_VERIFY_CLIENT_ONCE")
 set ^reneg="success",^reneg("opts")=^sconfig kill ^sconfig
@@ -611,50 +510,6 @@ set ^reneg="success",^reneg("opts")=^sconfig kill ^sconfig
 kill ^reneg("tlsid")
 do succeed^tsocerrors("10f","server")
 EOF
-else	# libconfig is too old
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 10c"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 10d"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 10e"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo
-	echo "YDB>"
-	echo "  PASSED: 10f"
-	echo
-	echo "YDB>"
-endif	# newconfig
 # test verify client once in config file
 $tst_awk ' /renegverifyonce/ {$0 = $2 " " $3 " " $4 " "  $5 " " $6} {print}' $gtmcrypt_config.case10 >! $gtmcrypt_config
 cp -p $gtmcrypt_config $gtmcrypt_config.renegverifyonce
