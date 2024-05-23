@@ -1,0 +1,492 @@
+# *****************************************************************
+# GTM-F135169 - Test the following release note
+# *****************************************************************
+#
+# Release Note says:
+#
+# > The OPEN and USE commands for SOCKET devices support
+# > assigning characteristics maintained with the POSIX
+# > setsockopt() service using the OPTIONS deviceparameter
+# > for the newly created socket or the current socket.
+# >
+# > OPTIONS=expr  Applies to: SOC
+# >
+# > The argument (expr) is a string which contains a comma
+# > separated list of setsockopt options. If the option takes
+# > a value, it is given after an equal sign (=) following
+# > the option. The supported options are:
+# >
+# > - KEEPALIVE   - a positive value enables SO_KEEPALIVE.
+# >                 A zero value disables SO_KEEPALIVE.
+# > - KEEPIDLE    - sets the TCP_KEEPIDLE socket value.
+# > - KEEPCNT     - sets the TCP_KEEPCNT socket value.
+# > - KEEPINTVL   - sets the TCP_KEEPINTVL socket value.
+# > - SNDBUF      - sets the size of the socket's network send
+# >                 buffer (SO_SNDBUF) in bytes.
+# >
+# > Examples:
+# >
+# > USE dev:OPTIONS="KEEPALIVE=1,KEEPIDLE=50"
+# > This enables SO_KEEPALIVE and set TCP_KEEPIDLE to 50 seconds.
+# >
+# > USE dev:OPTIONS="KEEPALIVE=0"
+# > This disables SO_KEEPALIVE.
+# >
+# > _Note_
+# > _For more information on the use of these options, please review_
+# > _the man page for setsockopt . On Linux, "man 7 socket" and _
+# > _"man 7 tcp" provide additional information._
+# >
+# > The $ZSOCKET() function supports an "OPTIONS" keyword which takes
+# > an index argument and returns a string of the OPTIONS previously
+# > specified for the selected socket. The string may not exactly
+# > match the string originally specified but has the same meanings.
+# >
+# > The new keywords "KEEPALIVE", "KEEPCNT", "KEEPIDLE", "KEEPINTVL",
+# > and "SNDBUF" return the individual items. If the system's current
+# > value for the item doesn't match the value previously specified
+# > with the OPTIONS device parameter, both values are returned
+# > separated by a semicolon (";"): "uservalue;systemvalue".
+# >
+# > The "ZIBFSIZE" keyword may return the system value for SO_RCVBUF
+# > in addition to the value from the ZIBFSIZE device parameter. Note
+# > that the operating system may modify the values specified for
+# > SO_RCVBUF and SO_SNDBUF so the returned values for those options
+# > obtained with POSIX getsockopt() service may be different than
+# > those specified using setsockopt(). (GTM-F135169)
+#
+# See http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-003_Release_Notes.html#GTM-F135169
+
+# ---- Executing KEEPALIVE=0 tests ----
+# For details, see MRs:
+# - Fix socket OPEN error: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1524
+# - Fix socket USE error: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1525
+#
+# keepalive-1: open "socket":(listen=port_":TCP":ioerror="TRAP":options="KEEPINTVL=0")::"SOCKET"
+ test passed - error: %GTM-E-SETSOCKOPTERR, Setting the socket attribute TCP_KEEPINTVL failed: (errno == 22) Invalid argument
+# keepalive-2: open "socket":(listen=port_":TCP":ioerror="NOTRAP":options="KEEPINTVL=0")::"SOCKET"
+ test passed - error: %GTM-E-SETSOCKOPTERR, Setting the socket attribute TCP_KEEPINTVL failed: (errno == 22) Invalid argument
+# keepalive-3: open "socket":(listen=port_":TCP":ioerror="TRAP")::"SOCKET" use "socket":(options="KEEPINTVL=0")
+ test passed - error: %GTM-E-SETSOCKOPTERR, Setting the socket attribute TCP_KEEPINTVL failed: (errno == 22) Invalid argument
+# keepalive-4: open "socket":(listen=port_":TCP":ioerror="NOTRAP")::"SOCKET" use "socket":(options="KEEPINTVL=0")
+ test passed - $DEVICE error: Invalid argument
+
+# ---- Test of normal path and various DEVICEOPTION error code paths ----
+# devopt-1: command="OPEN", mistake="UNKNOWN", options="KEEPTHECHANGE_UNKNOWN_OPTION=82"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPTHECHANGE_UNKNOWN_OPTION on OPEN command: unrecognized option
+# devopt-2: command="USE", mistake="UNKNOWN", options="KEEPTHECHANGE_UNKNOWN_OPTION=84"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPTHECHANGE_UNKNOWN_OPTION on USE command: unrecognized option
+# devopt-3: command="OPEN", mistake="NONE", options="KEEPALIVE=1" - expecting NO error
+ test passed, no error
+# devopt-4: command="OPEN", mistake="INVALID", options="KEEPALIVE=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on OPEN command: unrecognized option
+# devopt-5: command="OPEN", mistake="MISSING", options="KEEPALIVE"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on OPEN command: value required
+# devopt-6: command="OPEN", mistake="MULTI", options="KEEPALIVE=1KEEPALIVE=1"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on OPEN command: only one value allowed
+# devopt-7: command="OPEN", mistake="OVERFLOW", options="KEEPALIVE=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on OPEN command: invalid number
+# devopt-8: command="USE", mistake="NONE", options="KEEPALIVE=1" - expecting NO error
+ test passed, no error
+# devopt-9: command="USE", mistake="INVALID", options="KEEPALIVE=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on USE command: unrecognized option
+# devopt-10: command="USE", mistake="MISSING", options="KEEPALIVE"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on USE command: value required
+# devopt-11: command="USE", mistake="MULTI", options="KEEPALIVE=1KEEPALIVE=1"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on USE command: only one value allowed
+# devopt-12: command="USE", mistake="OVERFLOW", options="KEEPALIVE=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPALIVE on USE command: invalid number
+# devopt-13: command="OPEN", mistake="NONE", options="KEEPCNT=2" - expecting NO error
+ test passed, no error
+# devopt-14: command="OPEN", mistake="INVALID", options="KEEPCNT=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on OPEN command: unrecognized option
+# devopt-15: command="OPEN", mistake="MISSING", options="KEEPCNT"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on OPEN command: value required
+# devopt-16: command="OPEN", mistake="MULTI", options="KEEPCNT=2KEEPCNT=2"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on OPEN command: only one value allowed
+# devopt-17: command="OPEN", mistake="OVERFLOW", options="KEEPCNT=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on OPEN command: invalid number
+# devopt-18: command="USE", mistake="NONE", options="KEEPCNT=2" - expecting NO error
+ test passed, no error
+# devopt-19: command="USE", mistake="INVALID", options="KEEPCNT=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on USE command: unrecognized option
+# devopt-20: command="USE", mistake="MISSING", options="KEEPCNT"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on USE command: value required
+# devopt-21: command="USE", mistake="MULTI", options="KEEPCNT=2KEEPCNT=2"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on USE command: only one value allowed
+# devopt-22: command="USE", mistake="OVERFLOW", options="KEEPCNT=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPCNT on USE command: invalid number
+# devopt-23: command="OPEN", mistake="NONE", options="KEEPIDLE=3" - expecting NO error
+ test passed, no error
+# devopt-24: command="OPEN", mistake="INVALID", options="KEEPIDLE=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on OPEN command: unrecognized option
+# devopt-25: command="OPEN", mistake="MISSING", options="KEEPIDLE"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on OPEN command: value required
+# devopt-26: command="OPEN", mistake="MULTI", options="KEEPIDLE=3KEEPIDLE=3"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on OPEN command: only one value allowed
+# devopt-27: command="OPEN", mistake="OVERFLOW", options="KEEPIDLE=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on OPEN command: invalid number
+# devopt-28: command="USE", mistake="NONE", options="KEEPIDLE=3" - expecting NO error
+ test passed, no error
+# devopt-29: command="USE", mistake="INVALID", options="KEEPIDLE=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on USE command: unrecognized option
+# devopt-30: command="USE", mistake="MISSING", options="KEEPIDLE"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on USE command: value required
+# devopt-31: command="USE", mistake="MULTI", options="KEEPIDLE=3KEEPIDLE=3"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on USE command: only one value allowed
+# devopt-32: command="USE", mistake="OVERFLOW", options="KEEPIDLE=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPIDLE on USE command: invalid number
+# devopt-33: command="OPEN", mistake="NONE", options="KEEPINTVL=4" - expecting NO error
+ test passed, no error
+# devopt-34: command="OPEN", mistake="INVALID", options="KEEPINTVL=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on OPEN command: unrecognized option
+# devopt-35: command="OPEN", mistake="MISSING", options="KEEPINTVL"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on OPEN command: value required
+# devopt-36: command="OPEN", mistake="MULTI", options="KEEPINTVL=4KEEPINTVL=4"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on OPEN command: only one value allowed
+# devopt-37: command="OPEN", mistake="OVERFLOW", options="KEEPINTVL=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on OPEN command: invalid number
+# devopt-38: command="USE", mistake="NONE", options="KEEPINTVL=4" - expecting NO error
+ test passed, no error
+# devopt-39: command="USE", mistake="INVALID", options="KEEPINTVL=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on USE command: unrecognized option
+# devopt-40: command="USE", mistake="MISSING", options="KEEPINTVL"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on USE command: value required
+# devopt-41: command="USE", mistake="MULTI", options="KEEPINTVL=4KEEPINTVL=4"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on USE command: only one value allowed
+# devopt-42: command="USE", mistake="OVERFLOW", options="KEEPINTVL=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option KEEPINTVL on USE command: invalid number
+# devopt-43: command="OPEN", mistake="NONE", options="SNDBUF=22" - expecting NO error
+ test passed, no error
+# devopt-44: command="OPEN", mistake="INVALID", options="SNDBUF=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on OPEN command: unrecognized option
+# devopt-45: command="OPEN", mistake="MISSING", options="SNDBUF"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on OPEN command: value required
+# devopt-46: command="OPEN", mistake="MULTI", options="SNDBUF=22SNDBUF=22"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on OPEN command: only one value allowed
+# devopt-47: command="OPEN", mistake="OVERFLOW", options="SNDBUF=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on OPEN command: invalid number
+# devopt-48: command="USE", mistake="NONE", options="SNDBUF=22" - expecting NO error
+ test passed, no error
+# devopt-49: command="USE", mistake="INVALID", options="SNDBUF=,,"
+ test passed - error: %GTM-E-DEVICEOPTION, Option  on USE command: unrecognized option
+# devopt-50: command="USE", mistake="MISSING", options="SNDBUF"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on USE command: value required
+# devopt-51: command="USE", mistake="MULTI", options="SNDBUF=22SNDBUF=22"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on USE command: only one value allowed
+# devopt-52: command="USE", mistake="OVERFLOW", options="SNDBUF=1234567890123456789012345"
+ test passed - error: %GTM-E-DEVICEOPTION, Option SNDBUF on USE command: invalid number
+
+# executing write-readback tests (displaying results later)
+
+# ---- Write-readback test with strace logs ----
+# The server sets options with OPEN or USE, then reading
+# back the value with $ZSOCKET(). If the option is simple,
+# $ZSOCKET() simply reports its value. If the option has
+# constraints, e.g. buffer size has a high or low limit,
+# $ZSOCKET() may report both user value (which has been
+# set) and system value (the effective value). If user
+# value and system value are different, $ZSOCKET()
+# reports both value in "uservalue;sysvalue" format. If
+# they are same, it reports only one value.
+# wrtest-1-indv: starting test case, options="KEEPALIVE=101;2:KEEPALIVE=102", command="OPEN", readback="indv"
+# wrtest-1-indv: listening, set options with OPEN: OPTIONS="KEEPALIVE=101"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="2", value="KEEPALIVE=102"
+# wrtest-1-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPALIVE",0): "101;1"
+ get option with $ZSOCKET(s,"KEEPALIVE",1): "101;1"
+ get option with $ZSOCKET(s,"KEEPALIVE",2): "102;1"
+# wrtest-1: filtered trace-1-indv.out
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+# wrtest-1-opts: starting test case, options="KEEPALIVE=101;2:KEEPALIVE=102", command="OPEN", readback="opts"
+# wrtest-1-opts: listening, set options with OPEN: OPTIONS="KEEPALIVE=101"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="2", value="KEEPALIVE=102"
+# wrtest-1-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPALIVE=101"
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPALIVE=101"
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=102"
+# wrtest-1: filtered trace-1-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
+#
+# wrtest-2-indv: starting test case, options="KEEPALIVE=101;2:KEEPALIVE=102", command="USE", readback="indv"
+# wrtest-2-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPALIVE=101"
+ set OPTIONS with USE: index="2", value="KEEPALIVE=102"
+# wrtest-2-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPALIVE",0): "101;1"
+ get option with $ZSOCKET(s,"KEEPALIVE",2): "102;1"
+# wrtest-2: filtered trace-2-indv.out
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+# wrtest-2-opts: starting test case, options="KEEPALIVE=101;2:KEEPALIVE=102", command="USE", readback="opts"
+# wrtest-2-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPALIVE=101"
+ set OPTIONS with USE: index="2", value="KEEPALIVE=102"
+# wrtest-2-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPALIVE=101"
+ get option with $ZSOCKET(s,"OPTIONS",1): ""
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=102"
+# wrtest-2: filtered trace-2-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
+#
+# wrtest-skip: options="1:KEEPALIVE=0,KEEPIDLE=99;2:KEEPALIVE=2,KEEPIDLE=2", command="OPEN" - same as next one
+#
+# wrtest-3-indv: starting test case, options="1:KEEPALIVE=0,KEEPIDLE=99;2:KEEPALIVE=2,KEEPIDLE=2", command="USE", readback="indv"
+# wrtest-3-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPALIVE=0,KEEPIDLE=99"
+ set OPTIONS with USE: index="2", value="KEEPALIVE=2,KEEPIDLE=2"
+# wrtest-3-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPALIVE",1): "0"
+ get option with $ZSOCKET(s,"KEEPALIVE",2): "2;1"
+ get option with $ZSOCKET(s,"KEEPIDLE",1): "99"
+ get option with $ZSOCKET(s,"KEEPIDLE",2): "2"
+# wrtest-3: filtered trace-3-indv.out
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [0], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [99], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [2], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [2], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [0], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [99], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [2], <masked>) = 0
+# wrtest-3-opts: starting test case, options="1:KEEPALIVE=0,KEEPIDLE=99;2:KEEPALIVE=2,KEEPIDLE=2", command="USE", readback="opts"
+# wrtest-3-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPALIVE=0,KEEPIDLE=99"
+ set OPTIONS with USE: index="2", value="KEEPALIVE=2,KEEPIDLE=2"
+# wrtest-3-opts: get options using "OPTIONS"
+# notice: when KEEPALIVE is zero, OPTIONS does not report KEEPIDLE
+ get option with $ZSOCKET(s,"OPTIONS",0): ""
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPALIVE=0"
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=2,KEEPIDLE=2"
+# wrtest-3: filtered trace-3-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [0], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [99], <masked>) = 0
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [2], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [2], <masked>) = 0
+#
+# wrtest-skip: options="1:KEEPCNT=101;2:KEEPCNT=102", command="OPEN" - same as next one
+#
+# wrtest-4-indv: starting test case, options="1:KEEPCNT=101;2:KEEPCNT=102", command="USE", readback="indv"
+# wrtest-4-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPCNT=101"
+ set OPTIONS with USE: index="2", value="KEEPCNT=102"
+# wrtest-4-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPCNT",1): "101"
+ get option with $ZSOCKET(s,"KEEPCNT",2): "102"
+# wrtest-4: filtered trace-4-indv.out
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [102], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [102], <masked>) = 0
+# wrtest-4-opts: starting test case, options="1:KEEPCNT=101;2:KEEPCNT=102", command="USE", readback="opts"
+# wrtest-4-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPCNT=101"
+ set OPTIONS with USE: index="2", value="KEEPCNT=102"
+# wrtest-4-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): ""
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPCNT=101"
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPCNT=102"
+# wrtest-4: filtered trace-4-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [102], <masked>) = 0
+#
+# wrtest-5-indv: starting test case, options="0:KEEPINTVL=202;1:KEEPINTVL=208", command="OPEN", readback="indv"
+# wrtest-5-indv: listening, set options with OPEN: OPTIONS="KEEPINTVL=202"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPINTVL=208"
+# wrtest-5-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPINTVL",0): "202"
+ get option with $ZSOCKET(s,"KEEPINTVL",1): "208"
+ get option with $ZSOCKET(s,"KEEPINTVL",2): "202"
+# wrtest-5: filtered trace-5-indv.out
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+# wrtest-5-opts: starting test case, options="0:KEEPINTVL=202;1:KEEPINTVL=208", command="OPEN", readback="opts"
+# wrtest-5-opts: listening, set options with OPEN: OPTIONS="KEEPINTVL=202"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPINTVL=208"
+# wrtest-5-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPINTVL=202"
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPINTVL=208"
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPINTVL=202"
+# wrtest-5: filtered trace-5-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+#
+# wrtest-6-indv: starting test case, options="0:KEEPINTVL=202;1:KEEPINTVL=208", command="USE", readback="indv"
+# wrtest-6-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPINTVL=202"
+ set OPTIONS with USE: index="1", value="KEEPINTVL=208"
+# wrtest-6-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPINTVL",0): "202"
+ get option with $ZSOCKET(s,"KEEPINTVL",1): "208"
+# wrtest-6: filtered trace-6-indv.out
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+# wrtest-6-opts: starting test case, options="0:KEEPINTVL=202;1:KEEPINTVL=208", command="USE", readback="opts"
+# wrtest-6-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPINTVL=202"
+ set OPTIONS with USE: index="1", value="KEEPINTVL=208"
+# wrtest-6-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPINTVL=202"
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPINTVL=208"
+ get option with $ZSOCKET(s,"OPTIONS",2): ""
+# wrtest-6: filtered trace-6-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
+#
+# wrtest-7-indv: starting test case, options="KEEPCNT=3,SNDBUF=304", command="OPEN", readback="indv"
+# wrtest-7-indv: listening, set options with OPEN: OPTIONS="KEEPCNT=3,SNDBUF=304"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+# wrtest-7-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPCNT",0): "3"
+ get option with $ZSOCKET(s,"KEEPCNT",1): "3"
+ get option with $ZSOCKET(s,"KEEPCNT",2): "3"
+ get option with $ZSOCKET(s,"SNDBUF",0): "304;[sysvalue>0:masked]"
+ get option with $ZSOCKET(s,"SNDBUF",1): "304;[sysvalue>0:masked]"
+ get option with $ZSOCKET(s,"SNDBUF",2): "304;[sysvalue>0:masked]"
+# wrtest-7: filtered trace-7-indv.out
+# notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
+ setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, <masked>, <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, <masked>, <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, <masked>, <masked>) = 0
+# wrtest-7-opts: starting test case, options="KEEPCNT=3,SNDBUF=304", command="OPEN", readback="opts"
+# wrtest-7-opts: listening, set options with OPEN: OPTIONS="KEEPCNT=3,SNDBUF=304"
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+# wrtest-7-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPCNT=3,SNDBUF=304"
+ get option with $ZSOCKET(s,"OPTIONS",1): "KEEPCNT=3,SNDBUF=304"
+ get option with $ZSOCKET(s,"OPTIONS",2): "KEEPCNT=3,SNDBUF=304"
+# wrtest-7: filtered trace-7-opts.out
+# notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+#
+# wrtest-8-indv: starting test case, options="KEEPCNT=3,SNDBUF=304", command="USE", readback="indv"
+# wrtest-8-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPCNT=3,SNDBUF=304"
+# wrtest-8-indv: get options using individual option names
+ get option with $ZSOCKET(s,"KEEPCNT",0): "3"
+ get option with $ZSOCKET(s,"SNDBUF",0): "304;[sysvalue>0:masked]"
+# wrtest-8: filtered trace-8-indv.out
+# notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
+ setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+ getsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, <masked>, <masked>) = 0
+# wrtest-8-opts: starting test case, options="KEEPCNT=3,SNDBUF=304", command="USE", readback="opts"
+# wrtest-8-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="0", value="KEEPCNT=3,SNDBUF=304"
+# wrtest-8-opts: get options using "OPTIONS"
+ get option with $ZSOCKET(s,"OPTIONS",0): "KEEPCNT=3,SNDBUF=304"
+ get option with $ZSOCKET(s,"OPTIONS",1): ""
+ get option with $ZSOCKET(s,"OPTIONS",2): ""
+# wrtest-8: filtered trace-8-opts.out
+# notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
+#
+# wrtest-skip: options="1:KEEPALIVE=1;2:ZIBFSIZE=401,KEEPCNT=402;2:KEEPINTVL=403", command="OPEN" - same as next one
+#
+# wrtest-9-indv: starting test case, options="1:KEEPALIVE=1;2:ZIBFSIZE=401,KEEPCNT=402;2:KEEPINTVL=403", command="USE", readback="indv"
+# wrtest-9-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPALIVE=1"
+ set OPTIONS with USE: index="2", value="KEEPCNT=402,KEEPINTVL=403"
+ error during setting option: Invalid argument
+ set ZIBFSIZE with USE: index="2", value="401"
+ error during setting option: Invalid argument
+# wrtest-9: filtered trace-9-indv.out
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [402], <masked>) = -1 EINVAL (Invalid argument)
+ setsockopt(<masked>, SOL_SOCKET, SO_RCVBUF, [401], <masked>) = 0
+# wrtest-9-opts: starting test case, options="1:KEEPALIVE=1;2:ZIBFSIZE=401,KEEPCNT=402;2:KEEPINTVL=403", command="USE", readback="opts"
+# wrtest-9-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="1", value="KEEPALIVE=1"
+ set OPTIONS with USE: index="2", value="KEEPCNT=402,KEEPINTVL=403"
+ error during setting option: Invalid argument
+ set ZIBFSIZE with USE: index="2", value="401"
+ error during setting option: Invalid argument
+# wrtest-9: filtered trace-9-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [402], <masked>) = -1 EINVAL (Invalid argument)
+ setsockopt(<masked>, SOL_SOCKET, SO_RCVBUF, [401], <masked>) = 0
+#
+# wrtest-skip: options="2:KEEPCNT=509", command="OPEN" - same as next one
+#
+# wrtest-10-indv: starting test case, options="2:KEEPCNT=509", command="USE", readback="indv"
+# wrtest-10-indv: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="2", value="KEEPCNT=509"
+ error during setting option: Invalid argument
+# wrtest-10: filtered trace-10-indv.out
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [509], <masked>) = -1 EINVAL (Invalid argument)
+# wrtest-10-opts: starting test case, options="2:KEEPCNT=509", command="USE", readback="opts"
+# wrtest-10-opts: listening, no OPEN options set
+ server received incoming connection, index=1
+ server received incoming connection, index=2
+ set OPTIONS with USE: index="2", value="KEEPCNT=509"
+ error during setting option: Invalid argument
+# wrtest-10: filtered trace-10-opts.out
+# notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
+ setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [509], <masked>) = -1 EINVAL (Invalid argument)
+#
