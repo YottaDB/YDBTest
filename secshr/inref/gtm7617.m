@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013 Fidelity Information Services, Inc		;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -43,6 +43,12 @@ gtm7617
 test(dist,path)
 	new retval,env,expected
 	set retval=$&ydbposix.setenv("gtm_dist",path,1,.errno)
+	new retval2
+	; Now that we set "gtm_dist" env var to a random string, make sure "ydb_dist" also has the same value
+	; as otherwise it would override "gtm_dist". Also check the case where "ydb_dist" is unset. Both cases
+	; should behave the same so randomly choose one of the two cases.
+	if $random(2) set retval2=$&ydbposix.setenv("ydb_dist",path,1,.errno)
+	else          set retval2=$&ydbposix.unsetenv("ydb_dist",.errno)
 	set env=$ztrnlnm("gtm_dist")
 	set expected=""
 	if $piece(path,$char(0),1)'=env write "TEST-W-WARN",! zwrite path,env

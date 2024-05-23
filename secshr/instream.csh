@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,9 +42,6 @@ setenv subtest_exclude_list	""
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then
 	setenv subtest_exclude_list "$subtest_exclude_list basic"
-endif
-if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7617"
 endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
