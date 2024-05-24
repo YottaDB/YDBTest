@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,10 @@ set short_host="$HOST:r:r:r:r"
 set loglinestat = $1
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestamp = `date +"$format"`
-if ( "$loglinestat" =~ "NOTRUN*" ) then
+# Depending on where in submit_test.csh, this script is called, it is possible "test_time" env var has not yet been set.
+# For example, if "do_random_settings.csh" fails with an error, it is very early in "submit_test.csh".
+# In that case, treat it as if it was a NOTRUN case and initialize "tim" to 0s instead of accessing "$test_time".
+if (( "$loglinestat" =~ "NOTRUN*") || (0 == $?test_time)) then
 	set tim = "00:00:00:00"
 else
 	set tim = "$test_time"
