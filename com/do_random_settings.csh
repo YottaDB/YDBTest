@@ -1269,12 +1269,17 @@ setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
 # know at this point.
 if (! $?gtm_test_v6_dbcreate_rand_ver) then
 	if ($?gtm_test_nopriorgtmver) then
-		setenv gtm_test_v6_dbcreate_rand_ver $verno
+		# This system has already been noted by the test framework as having no older versions.
+		# Therefore, use the current version to create the database inside "dbcreate.csh"
+		setenv gtm_test_v6_dbcreate_rand_ver $gtm_verno
 	else
 		setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
-		if ( $? ) then
-			echo "$gtm_test_v6_dbcreate_rand_ver"  # display the offending error
-			exit 1
+		if ($status) then
+			# This system has older versions. But it does not have any pure GT.M V6 build.
+			# For example an AARCH64/ARMV7L system can contain older YottaDB builds but will
+			# not have any pure GT.M build (since GT.M is not supported on that architecture).
+			# In that case too, use the current version to create the database inside "dbcreate.csh"
+			setenv gtm_test_v6_dbcreate_rand_ver $gtm_verno
 		endif
 	endif
 endif
