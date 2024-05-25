@@ -398,6 +398,13 @@ the docker scripts which you must not change):
 docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
+To run the "sudo" subtests, some of which need to be able to alter the OS system
+time, you will need to add the `SYS_TIME` capability when running the container:
+
+```sh
+docker run --init -it -v <local directory>:/testarea1/ --rm --cap-add=SYS_TIME registry.gitlab.com/yottadb/db/ydbtest -t sudo
+```
+
 To debug problems, instead of passing `gtmtest.csh` arguments, pass either
 `-shell` to go to the `gtmtest` user id in a way so that you are ready to run tests, or
 `-rootshell` to log-in as `root`. If you log-in using `-shell`, you will be given instructions

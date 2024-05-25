@@ -18,22 +18,22 @@
 # a major release. All of these tests require 'sudo' to run.         #
 ######################################################################
 #
-# sourceInstall		[mmr]		Test that ydbinstall.sh when sourced will give an error then exit
-# diffDir		[mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
-# ydb306		[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
-# gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
-# plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
-# ydb783		[sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
-# gtm7759	 	[estess]	Test that expected log message do and don't show up depending on restrict.txt setting
-# ydb894		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
-# ydb880		[jv]		Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
-# ydb910		[jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
-# ydb924		[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
-# gtm8517		[estess]	Test that install permissions and checksum files are created by install and are non-zero
-# olderversion		[sam]		Test to see if ydbinstall can successfully install older versions
-# gtm9324		[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
-# gtm9408		[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
-# configure_rmfile-gtmde201825		[pooh]		Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
+# sourceInstall	[mmr]		Test that ydbinstall.sh when sourced will give an error then exit
+# diffDir	[mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
+# ydb306	[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
+# gtm9116	[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
+# plugins	[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
+# ydb783	[sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
+# gtm7759	[estess]	Test that expected log message do and don't show up depending on restrict.txt setting
+# ydb894	[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
+# ydb880	[jv]		Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
+# ydb910	[jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
+# ydb924	[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
+# gtm8517	[estess]	Test that install permissions and checksum files are created by install and are non-zero
+# olderversion	[sam]		Test to see if ydbinstall can successfully install older versions
+# gtm9324	[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
+# gtm9408	[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
+# configure_rmfile-gtmde201825	[pooh]	Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
 
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
@@ -70,11 +70,11 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
 	endif
 else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
-        # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
+	# olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
 	setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 else if ("suse" == $gtm_test_linux_distrib) then
-        # olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
-        if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
+	# olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
+	if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 	endif
 endif

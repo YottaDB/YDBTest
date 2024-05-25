@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 # This source code contains the intellectual property           #
@@ -74,7 +74,11 @@ RUN apt-get update && \
                     iproute2 \
                     openjdk-17-jdk \
                     golang \
-		    screen \
+                    screen \
+                    sudo \
+                    bison \
+                    flex \
+                    libsodium-dev \
                     && \
                     apt-get clean
 
@@ -83,7 +87,9 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     update-locale LANG=en_US.UTF-8
 RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
     groupadd gtc && \
-    useradd gtmtest -G gtc,adm -m -s /usr/local/bin/tcsh
+    useradd gtmtest -G gtc,adm,sudo -m -s /usr/local/bin/tcsh
+# Allow gtmtest as a member of the sudo group to use sudo with no password for the sudo tests
+RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
 COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
 COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
 RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
