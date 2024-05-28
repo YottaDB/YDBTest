@@ -885,13 +885,13 @@ endif
 # Reset the gtmroutines value based on the gtm_chset value chosen.
 if ($?gtm_chset) then
 	if ("UTF-8" == $gtm_chset) then
-		source $gtm_tst/com/set_gtmroutines.csh "UTF8"
+		source $gtm_tst/com/set_gtmroutines.csh "UTF8" || exit $status
 	else
-		source $gtm_tst/com/set_gtmroutines.csh "M"
+		source $gtm_tst/com/set_gtmroutines.csh "M" || exit $status
 	endif
 else
 	# If gtm_chset is not set, gtmroutines should point to the M objects/sources and not UTF-8.
-	source $gtm_tst/com/set_gtmroutines.csh "M"
+	source $gtm_tst/com/set_gtmroutines.csh "M" || exit $status
 endif
 
 setenv tst_random_all "$tst_random_all gtm_test_autorelink_dirs"
