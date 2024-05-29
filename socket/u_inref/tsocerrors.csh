@@ -408,13 +408,20 @@ EOF
 # ^expected("8d.dotls","device")="1,Environment variable gtmtls_passwd_server must be a valid hexadecimal string "
 $GTM << EOF
 set ^spasswd="012345G789"
-d fail^tsocerrors("8d","server","valid hexa",1,0)
+d fail^tsocerrors("8d","server","tls_passwd_server must be a valid hexadecimal string",1,0)
 EOF
 # try with no tlsid
 # ^expected("8e","zstatus")="150383618,dotls+7^tsocerrors,%YDB-E-TLSPARAM, TLS parameter passphrase requires TLSID"
 $GTM << EOF
 set ^spasswd="$gtmtls_passwd_server"
 d fail^tsocerrors("8e","","requires TLSID",1,0)
+EOF
+# try with undefined env var
+# ^expected("8f.dotls","device")="1,Environment variable ydb_tls_passwd_server/gtmtls_passwd_server not set"
+$GTM << EOF
+view "unsetenv":"ydb_tls_passwd_server"
+view "unsetenv":"gtmtls_passwd_server"
+d fail^tsocerrors("8f","server","Environment variable ydb_tls_passwd_server/gtmtls_passwd_server not set",1,0)
 EOF
 
 echo
