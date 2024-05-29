@@ -285,9 +285,9 @@ EOF
 $GTM << EOF
 d fail^tsocerrors("3c","","no TLSID")
 EOF
-# ^expected("3d.clnt","device")="1,TLSID notclient not found in configuration file."
+# It is okay for client "notclient" to not have an entry under the "tls" section in the config file (YDBEncrypt#6).
 $GTM << EOF
-d fail^tsocerrors("3d","server","not found",1,0,"notclient")
+d succeed^tsocerrors("3d","server","notclient")
 EOF
 # Just to specify a tlsid for the client
 $GTM << EOF
@@ -336,9 +336,9 @@ echo
 $GTM << EOF
 d succeed^tsocerrors("6a.cunset","server")
 EOF
-# ^expected("6b.cunset.clnt","device")="1,TLSID nonsuch not found in configuration file."
+# It is okay for client "nonsuch" to not have an entry under the "tls" section in the config file (YDBEncrypt#6).
 $GTM << EOF
-d fail^tsocerrors("6b.cunset","server","not found in",1,0,"nonsuch")
+d succeed^tsocerrors("6b.cunset","server","nonsuch")
 EOF
 echo
 echo "TEST CASE 7: Test config file options."
