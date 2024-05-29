@@ -346,6 +346,27 @@ YDB>
   PASSED: 10h
 
 YDB>
+
+TEST CASE 11: Test YottaDB/Util/YDBEncrypt#6
+
+# 11a : It is okay for client "ydbencrypt6a" to have a "format:" line but not "cert:" line
+
+YDB>
+  PASSED: 11a
+
+YDB>
+# 11b : It is okay for client "ydbencrypt6b" to have a "key:" line but not "cert:" line
+
+YDB>
+  PASSED: 11b
+
+YDB>
+# 11c : It is okay for client "ydbencrypt6c" to have a "key:" line and "format:" line but not "cert:" line
+
+YDB>
+  PASSED: 11c
+
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

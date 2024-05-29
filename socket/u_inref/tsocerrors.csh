@@ -148,6 +148,22 @@ tls: {
 		# verify-level: "CHECK";			# client2verifylevel
 	};
 
+	ydbencrypt6a: {
+		format: "PEM";
+		# CAfile: "$PWD/calist.pem";
+	};
+
+	ydbencrypt6b: {
+		key: "$PWD/demoCA/private/client.key";
+		# CAfile: "$PWD/calist.pem";
+	};
+
+	ydbencrypt6c: {
+		format: "PEM";
+		key: "$PWD/demoCA/private/client.key";
+		# CAfile: "$PWD/calist.pem";
+	};
+
 	server: {
 		verify-mode: "SSL_VERIFY_PEER";			# goodverifymode
 		verify-level: "CHECK";				# serververifylevel
@@ -525,6 +541,26 @@ $GTM << EOF
 kill ^reneg set ^reneg="fail",^reneg("tlsid")="reneg"
 set ^reneg("expected")="peer did not return"
 do succeed^tsocerrors("10h","server","client2")
+EOF
+
+echo
+echo "TEST CASE 11: Test YottaDB/Util/YDBEncrypt#6"
+echo
+# Randomly comment out the CAfile line (under "ydbencrypt6a", "ydbencrypt6b" and "ydbencrypt6c" sections
+# in the configuration file to ensure that does not affect the outcome of the test
+$tst_awk 'BEGIN { srand () } /CAfile/ { if (int(rand() * 2)) sub("# ",""); } { print $0; }' $gtmcrypt_config.starting >! $gtmcrypt_config.omitclient
+cp -p $gtmcrypt_config $gtmcrypt_config.encrypt10
+echo '# 11a : It is okay for client "ydbencrypt6a" to have a "format:" line but not "cert:" line'
+$GTM << EOF
+d succeed^tsocerrors("11a","server","ydbencrypt6a")
+EOF
+echo '# 11b : It is okay for client "ydbencrypt6b" to have a "key:" line but not "cert:" line'
+$GTM << EOF
+d succeed^tsocerrors("11b","server","ydbencrypt6b")
+EOF
+echo '# 11c : It is okay for client "ydbencrypt6c" to have a "key:" line and "format:" line but not "cert:" line'
+$GTM << EOF
+d succeed^tsocerrors("11c","server","ydbencrypt6c")
 EOF
 
 $gtm_tst/com/dbcheck.csh -extract
