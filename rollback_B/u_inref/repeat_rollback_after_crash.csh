@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,7 +42,7 @@ echo "# Multi-Process GTM Process starts in background... : GTM_TEST_DEBUGINFO :
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
 source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
-sleep 120
+sleep 15
 setenv tst_seqno `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/cur_jnlseqno.csh 1 < /dev/null"`
 $gtm_tst/com/endtp.csh >>&! endtp.out
 
@@ -62,16 +62,16 @@ source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 #
 echo "# First Switch ... : GTM_TEST_DEBUGINFO : `date`"
 $gtm_tst/com/rand_jnl_on.csh ; $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/rand_jnl_on.csh"
-set num = `date | $tst_awk '{srand(); print (1 + int(rand() * 120))}'` ; sleep $num 	## Random wait
+set num = `date | $tst_awk '{srand(); print (1 + int(rand() * 20))}'` ; sleep $num 	## Random wait
 echo "# Second Switch ... : GTM_TEST_DEBUGINFO : `date`"
 $gtm_tst/com/rand_jnl_on.csh ; $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/rand_jnl_on.csh"
-set num = `date | $tst_awk '{srand(); print (1 + int(rand() * 120))}'` ; sleep $num 	## Random wait
+set num = `date | $tst_awk '{srand(); print (1 + int(rand() * 20))}'` ; sleep $num 	## Random wait
 ###
 echo "# Secondary Crash ... : GTM_TEST_DEBUGINFO : `date`"
 $gtm_tst/com/rfstatus.csh "BEFORE_SEC_B_CRASH:"
 $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh"
 # Following sleep should be enough to take A ahead of B
-sleep 60
+sleep 10
 ###
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 echo "# Primary Crash ... : GTM_TEST_DEBUGINFO : `date`"

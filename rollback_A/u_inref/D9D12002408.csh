@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,18 +14,17 @@
 #								#
 #################################################################
 #
-# reduce epoch interval for 32 bit systems to reduce required memory
-# default epoch_interval is 300 for pro and 30 for dbg
-if ("pro" == "$tst_image" && "HOST_LINUX_IX86" == "$gtm_test_os_machtype") then
-	setenv tst_jnl_str "$tst_jnl_str,epoch_interval=100"
-endif
+# Reduce epoch interval to reduce required memory.
+# Default epoch_interval is 300 for pro and 30 for dbg.
+setenv tst_jnl_str "$tst_jnl_str,epoch_interval=18"
+
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
-setenv test_sleep_sec 90
-setenv test_sleep_sec_short 30
+setenv test_sleep_sec 15
+setenv test_sleep_sec_short 5
 
 echo "GTM Process starts in background..."
 setenv gtm_test_jobcnt 3
