@@ -1,0 +1,18 @@
+###########################################################################################################
+# Test that relinkctl file shared memory latch is salvaged/recovered after crash in 1 second (not 30 seconds)
+###########################################################################################################
+# Create ydb1083crash.m to do a [write 1]
+# While inside gdb, execute [do ^x] with gtmroutines=".*". This will open relinkctl shared memory.
+# As part of that it will invoke [grab_latch()] and then [rel_latch()].
+# Set a breakpoint in [rel_latch()] and kill the process when it reaches there.
+# This will basically create a latch holder pid that is dead.
+# Below is the gdb log (pasted to ensure the breakpoint is reached and the process is killed)
+Breakpoint 1 (rel_latch) pending.
+##TEST_AWKBreakpoint 1, rel_latch .*
+##TEST_AWK.*Inferior 1 \[process [0-9]*\] will be killed.
+# Now try [do ^x] without the debugger. This should recognize the dead latch holder pid and salvage it.
+# This should only take 1 second or so (not 30 seconds)
+# We allow for a max of 4 seconds (in case of a loaded system etc.) but nothing more than that.
+# Without the YDB#1083 fixes, the time taken has been seen to be anywhere from 30 seconds to 2 minutes.
+# PASS is printed if time taken is less than 4 seconds and FAIL otherwise.
+PASS

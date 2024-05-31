@@ -19,14 +19,19 @@
 # zshow_tt_host_conv-ydb1068	[pooh]	Test ZSHOW "D" output for TTSYNC, NOTTSYNC, HOSTSYNC, NOHOSTSYNC, CONVERT and NOCONVERT
 # empty_socket_assert-ydb1076	[pooh]	Test if empty host string in socket connection parameter causing assertion failure
 # xcretnull-ydb1007		[berwyn] Ensure that external calls that return invalid values produce errors
+# relinkctl_crash-ydb1083	[nars]  Test that relinkctl file latch is salvaged in 1 second (not 1 minute) after crash
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065 mupip_verbose-ydb1060 zshow_tt_host_conv-ydb1068"
-setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb1076 xcretnull-ydb1007"
+setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_verbose-ydb1060"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_tt_host_conv-ydb1068"
+setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb1076"
+setenv subtest_list_non_replic	"$subtest_list_non_replic xcretnull-ydb1007"
+setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_crash-ydb1083"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -41,6 +46,8 @@ setenv subtest_exclude_list ""
 if ("pro" == "$tst_image") then
 	# Disable the below subtest because it is a white-box test.
 	setenv subtest_exclude_list "$subtest_exclude_list rlsiglongjmp-ydb1065"
+	# Disable the below subtest because it uses "gdb" to set breakpoints but does not work on some systems (not clear why).
+	setenv subtest_exclude_list "$subtest_exclude_list relinkctl_crash-ydb1083"
 endif
 
 if ("dbg" == "$tst_image") then
