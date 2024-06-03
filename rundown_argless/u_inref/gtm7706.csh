@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,17 +28,22 @@ $sec_shell "$sec_getenv ; cd $SEC_SIDE; $MUPIP ftok mumps.dat" >&! sec_db_ipcs.o
 
 # Get the journal and receive pool shared memory and semaphore IDs on both primary and secondary.
 set srcjpshmid = `cat pri_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Shm Id"),!'`
-set srcjpsemid = `cat pri_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Sem Id"),!'`
 set rcvjpshmid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Shm Id"),!'`
-set rcvjpsemid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Sem Id"),!'`
 set rcvshmid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Receive Pool Shm Id"),!'`
-set rcvsemid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Receive Pool Sem Id"),!'`
 set srcdbshmid = `$tst_awk '/mumps.dat/ {print $6}' pri_db_ipcs.out`
-set srcdbsemid = `$tst_awk '/mumps.dat/ {print $3}' pri_db_ipcs.out`
 set rcvdbshmid = `$tst_awk '/mumps.dat/ {print $6}' sec_db_ipcs.out`
+
+set ipcshmids = ($srcjpshmid $rcvjpshmid $rcvshmid $srcdbshmid $rcvdbshmid)
+echo $ipcshmids >&! ipcshmids-to-be-removed.out
+
+set srcjpsemid = `cat pri_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Sem Id"),!'`
+set rcvjpsemid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Journal Pool Sem Id"),!'`
+set rcvsemid = `cat sec_replinst.out | $gtm_exe/mumps -run %XCMD 'do ^replinst write fields("HDR","Receive Pool Sem Id"),!'`
+set srcdbsemid = `$tst_awk '/mumps.dat/ {print $3}' pri_db_ipcs.out`
 set rcvdbsemid = `$tst_awk '/mumps.dat/ {print $3}' sec_db_ipcs.out`
-set ipcids = ($srcjpshmid $srcjpsemid $rcvjpshmid $rcvjpsemid $rcvshmid $rcvsemid $srcdbshmid $srcdbsemid $rcvdbshmid $rcvdbsemid)
-echo $ipcids >&! ipcs-to-be-removed.out
+
+set ipcsemids = ($srcjpsemid $rcvjpsemid $rcvsemid $srcdbsemid $rcvdbsemid)
+echo $ipcsemids >&! ipcsemids-to-be-removed.out
 
 # Crash the primary and secondary leaving IPCs lying around
 $gtm_tst/com/primary_crash.csh NO_IPCRM
@@ -50,12 +58,20 @@ endif
 $MUPIP rundown -override >&! rundown.outx
 
 # Verify that the IPCs corresponding to the source and receiver server are gone.
-echo "==IPCS check begins=="
 $gtm_tst/com/ipcs -a | $grep $USER >&! ipcs.out
-foreach ipc ($ipcids)
-	$tst_awk -v ipc=$ipc '$2==ipc {print}' ipcs.out
+foreach id (shmid semid)
+	echo "==IPCS $id check begins=="
+	if ($id == "shmid") then
+		foreach ipc ($ipcshmids)
+			grep '^m' ipcs.out | $tst_awk -v ipc=$ipc '$2==ipc {print}'
+		end
+	else
+		foreach ipc ($ipcsemids)
+			grep '^s' ipcs.out | $tst_awk -v ipc=$ipc '$2==ipc {print}'
+		end
+	endif
+	echo "==IPCS $id check ends=="
 end
-echo "==IPCS check ends=="
 
 # Since the replication servers are all gone, pass -noshut to dbcheck and manually release the reserved ports
 $sec_shell "$sec_getenv ; cd $SEC_SIDE; source $gtm_tst/com/portno_release.csh"
