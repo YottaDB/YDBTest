@@ -18,6 +18,7 @@
 # Default epoch_interval is 300 for pro and 30 for dbg.
 setenv tst_jnl_str "$tst_jnl_str,epoch_interval=18"
 
+setenv gtm_test_forward_rollback 0	# This test causes disk full situation due to multiple backups of db/jnl taken by mupip_rollback.csh if set to 1
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000
@@ -41,8 +42,12 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 
 # PRIMARY SIDE (A) UP
-$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip"
-$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+# #######################################################################
+# The following lines are commented out as they sometimes have been seen to take up a lot of disk space.
+# They can be re-enabled in case of a test failure for analysis and hence are left around.
+#	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip"
+#	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+# #######################################################################
 #
 echo "Primary:mupip_rollback.csh -losttrans=lost1.glo *"
 echo "$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo " >>&! rollback1.log
