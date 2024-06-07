@@ -524,6 +524,7 @@ case "-t":
 
 	    # If we get to here, $testarray is an array of entries in the form: test/subtest
 	    setenv tst "$testarray[1]:h"
+	    echo "-t $tst" >>! $test_list
 	    setenv gtm_test_st_list ""
 	    foreach t ( $testarray )
 		if ( "$t:h" != "$tst" ) then
