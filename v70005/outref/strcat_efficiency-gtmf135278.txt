@@ -1,0 +1,12 @@
+# Check that concatenating strings that already happen to be at the end of the stringpool
+# produces very fast concatenation operations. For v70005 we expect CPU instructions under 150,000,000.
+# (Max instructions used by v70005 is 69,020,710 on armv6l dbg; min is 14,714,225 on x86_64 pro.)
+# (max instructions used by v70004 is 2,735,479,421 on armv6l dbg; min is 529,709,305 on x86_64 pro.)
+
+# Test1: fast concatenating of strings that already exist at the end of stringpool
+##TEST_AWKCPU instructions=[0-9]+
+PASS: Took less than 150000000 instructions
+
+# Test2: fast concatenating of existing stringpool strings plus an appended string
+##TEST_AWKCPU instructions=[0-9]+
+PASS: Took less than 150000000 instructions
