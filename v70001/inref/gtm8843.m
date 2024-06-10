@@ -1048,8 +1048,7 @@ cliRwTest(verb) ;
 ; waitRw - Verify non-blocking mode WRITE /WAIT
 
 waitRw(side,verb) ;
-        hang 0.5 ; wait some time for message delivery
-        write /wait(0,verb)
+        write /wait(2,verb)
         set d=$device
         set code=$piece(d,",",1)
         set message=$piece(d,",",2)
