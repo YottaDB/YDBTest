@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -48,7 +51,7 @@ $grep -E "open.*mumps.mjl.*SYNC" truss_rundown.txt > /dev/null
 if ($status) then
 	# For OSF1 : there's a reporting issue with trace that prevent us from getting the O_SYNC flag, let the test pass.
 	# For HOST_HP-UX_PA_RISC : Until tusc is installed on lester, let the test pass.
-	if (("osf1" != "$gtm_test_osname") && (("HOST_HP-UX_PA_RISC" != "$gtm_test_os_machtype") || ("`which tusc`" != "tusc: Command not found."))) then
+	if (("osf1" != "$gtm_test_osname") && (("HOST_HP-UX_PA_RISC" != "$gtm_test_os_machtype") || (! `which tusc >/dev/null; echo $?`))) then
 		echo "MUPIP rundown didn't open mumps.mjl with O_SYNC.  Check truss_rundown.txt."
 	endif
 endif

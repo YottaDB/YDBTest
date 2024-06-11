@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+#	Copyright 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 #########################################
 # D9J02002719_1.csh  test for mupip integ #
@@ -34,7 +47,7 @@ endif
 set target_ratio = 10
 
 # For HOST_HP-UX_PA_RISC : Until tusc is installed on lester, let the test pass.
-if (($ratio < $target_ratio) && (("HOST_HP-UX_PA_RISC" != "$gtm_test_os_machtype") || ("`which tusc`" != "tusc: Command not found."))) then
+if (($ratio < $target_ratio) && (("HOST_HP-UX_PA_RISC" != "$gtm_test_os_machtype") || (! `which tusc >/dev/null; echo $?`))) then
 	echo "Fast integ used $nb_read_fast read() system calls, which is too much compared to non-fast integ ($nb_read calls)."
 else
 	echo "Fast integ uses at least $target_ratio times less read() system calls than non-fast integ."
