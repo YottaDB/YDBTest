@@ -46,6 +46,9 @@ endif
 # the value of testname will be triggers_0_1,triggers_0_2 etc which won't match gtm_test_triggers_1_exclude_list.
 # Setting gtm_test_triggers_exclude_list "trig2notrig" would still work in that case.
 
+# Save this for parent script submit_test.csh so it doesn't expect PASS line from these tests
+echo $subtest_exclude_list_merged >! $tst_general_dir/subtest_exclude_list
+
 foreach sub_test ($subtest_exclude_list_merged)
 	# We double all space in the sed command so multiple occurence of the same ' $sub_test ' will all be removed.
 	# We add a space at the start and end of $subtest_list so ' $sub_test ' can be matched in those position.

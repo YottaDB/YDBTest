@@ -85,6 +85,7 @@ BEGIN {
 	tst_remote_host_2 = ENVIRON[ "tst_remote_host_2"]
 	envir["LFE"] = ENVIRON[ "LFE" ]
 	gt_ld_shl_suffix = ENVIRON[ "gt_ld_shl_suffix" ]
+	excluded_subtests = ENVIRON[ "subtest_exclude_list" ]
 	no_options = split(ENVIRON[ "tst_options_all" ], option_names, " ")
 	for (i in option_names)
 	{
@@ -663,7 +664,8 @@ FILENAME ~/outref/ {
 				print out_file[nr_outref]
 		}
 		else
-			print;
+			if (("PASS" != $1) || ("from" != $2) || (excluded_subtests !~ "\\<"$3"\\>"))
+				print;
 		nr_outref++
 		nr_outref+= gtcm_chunk_line_no*no_gtcm_hosts
 	}

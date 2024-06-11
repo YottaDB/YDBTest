@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -18,16 +18,18 @@
 # It creates "outstream.cmp" based on the reference file and the actual test output.
 # If the test run excluded one or more of the specified subtests then do not include them in the "outstream.cmp" file.
 # This is taken care of by checking the "PASS from <subtest>" lines in the output and seeing if "<subtest>" (i.e. $3)
-# is one of the specified subtests in the "-st" option (env var "gtm_test_st_list") and if so include that "PASS from <subtest>"
-# line and otherwise exclude it. Any line that does not have a "PASS from ..." will be automatically included.
+# is one of the specified subtests in the "-st" option ($gtm_test_st_list) and is not in $subtest_exclude_list
+# then include that "PASS from <subtest>" line and otherwise exclude it.
+# Any line that does not have a "PASS from ..." will be automatically included.
 # The below logic implements this.
 
 BEGIN	{
 		num=split(gtm_test_st_list, st, ",");
 		for (i = 1; i <= num; i++)
 			subtests[st[i]];
+		excluded_subtests = ENVIRON[ "subtest_exclude_list" ]
 	}
 {
-	if (("PASS" != $1) || ("from" != $2) || ($3 in subtests))
+	if (("PASS" != $1) || ("from" != $2) || ($3 in subtests && excluded_subtests !~ "\\<"$3"\\>") )
 		print
 }
