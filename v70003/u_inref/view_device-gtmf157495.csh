@@ -20,7 +20,7 @@ echo_text
 
 echo '# test1: Print status of split $ZPIN and $ZPOUT device type TERMINAL as OPEN.'
 echo '#        Does not test CLOSE as it is impossible to close $principal.'
-$gtm_dist/mumps -run viewTerminal^viewDevice </dev/tty >zpout.log
+(expect -d $gtm_tst/$tst/u_inref/view_device-gtmf157495.exp > expect.out) >& expect.dbg
 cat zpout.log
 echo
 
