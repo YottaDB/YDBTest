@@ -79,6 +79,7 @@ RUN apt-get update && \
                     bison \
                     flex \
                     libsodium-dev \
+                    lsb-release \
                     && \
                     apt-get clean
 

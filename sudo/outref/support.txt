@@ -1,0 +1,33 @@
+# This tests that ydb_support.sh successfully gathers the correct support information without issues
+# It tests -h|--help, -o|--outdir, -p|--pid, -n|--no-logs, -l|--logs-since, -u|--logs-until, and uses -f|--force
+###################################################################
+# Installing ydb_support.sh with ydbinstall --support
+ydbinstall with options --support was successful.
+###################################################################
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+##TEST_AWKRunning ydb_support.sh with -h option|Running ydb_support.sh with --help option
+###################################################################
+##TEST_AWKRunning ydb_support.sh with -o support_dir option|Running ydb_support.sh with --outdir support_dir option
+###################################################################
+##TEST_AWKRunning ydb_support.sh with --force -p .* option|Running ydb_support.sh with --force --pid .* option
+##TEST_AWKSTOP issued to process .*
+###################################################################
+##TEST_AWKRunning ydb_support.sh with --force -n option|Running ydb_support.sh with --force --no-logs option
+###################################################################
+##TEST_AWKRunning ydb_support.sh with -f -.* .* option|This option doesn't work in a container
+###################################################################
+##TEST_AWKRunning ydb_support.sh with -f -.* .* option|This option doesn't work in a container
+###################################################################
+# Checking database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+##TEST_AWK# Test that 5 of 5 tests succeeded|# Test that 3 of 3 tests succeeded
+# Test succeeded.

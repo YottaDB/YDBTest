@@ -34,10 +34,25 @@
 # gtm9324	[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
 # gtm9408	[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
 # configure_rmfile-gtmde201825	[pooh]	Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
+# support	[david]		Test that ydb_support.sh gathers the correct support information without issues
 
-setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
-setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
-setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324 gtm9408 configure_rmfile-gtmde201825"
+setenv subtest_list_common "sourceInstall"
+setenv subtest_list_common "$subtest_list_common diffDir"
+setenv subtest_list_common "$subtest_list_common ydb306"
+setenv subtest_list_common "$subtest_list_common gtm9116"
+setenv subtest_list_common "$subtest_list_common plugins"
+setenv subtest_list_common "$subtest_list_common ydb783"
+setenv subtest_list_non_replic "gtm7759"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb894"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb880"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb910"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb924"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8517"
+setenv subtest_list_non_replic "$subtest_list_non_replic olderversion"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm9324"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm9408"
+setenv subtest_list_non_replic "$subtest_list_non_replic configure_rmfile-gtmde201825"
+setenv subtest_list_non_replic "$subtest_list_non_replic support"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
@@ -93,6 +108,14 @@ endif
 if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype)			\
 		|| (("ubuntu" != $gtm_test_linux_distrib) && ("debian" != $gtm_test_linux_distrib))) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9408"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	# We intentionally produce cores in the support test; with ASAN enabled,
+	# the cores become very large files that fill up the disk
+	# Therefore, disable cores if ASAN is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list support"
 endif
 
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
