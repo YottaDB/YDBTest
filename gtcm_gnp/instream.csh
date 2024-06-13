@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,7 @@
 # 	 	    updates are made in the client
 # triggers	[S7KK] Test that GT.CM Server skips triggers
 
-echo "Testing GT.CM..."
+echo "GT.CM tests start..."
 
 setenv tst_gtcm_trace 1
 setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
@@ -30,4 +30,4 @@ else
 endif
 
 $gtm_tst/com/submit_subtest.csh
-echo "Done..."
+echo "Tests done."

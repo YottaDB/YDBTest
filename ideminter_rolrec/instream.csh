@@ -1,10 +1,24 @@
 #!/usr/local/bin/tcsh -f
-echo "IDEMPOTENT/INTERRUPTED/MUPIP_STOP'd RECOVER and ROLLBACK tests"
+#################################################################
+#								#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+echo "IDEMPOTENT/INTERRUPTED/MUPIP_STOP'd RECOVER and ROLLBACK tests start"
 
 #
 # This test can only run with BG access method, so let's make sure that's what we have
 source $gtm_tst/com/gtm_test_setbgaccess.csh
-# If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore 
+# If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 setenv gtm_test_tp TP	# do TP transactions in imptp.m
 
@@ -47,4 +61,4 @@ setenv subtest_list "idemp_rollback_or_recover interrupted_rollback_or_recover m
 
 $gtm_tst/com/submit_subtest.csh
 
-echo "IDEMPOTENT/INTERRUPTED/MUPIP_STOP'd RECOVER and ROLLBACK tests ends"
+echo "IDEMPOTENT/INTERRUPTED/MUPIP_STOP'd RECOVER and ROLLBACK tests end"
