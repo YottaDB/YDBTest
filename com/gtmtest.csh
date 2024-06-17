@@ -671,9 +671,9 @@ if ("ATL" != "$gtm_server_location") then
 	setenv gtm_test_port_range `expr $gtm_test_server_serial_no - 40`
 endif
 if (0 > $gtm_test_port_range) setenv gtm_test_port_range 00
-setenv gtm_tst_out tst_${tst_ver}_${gtm_exe:t}_${gtm_test_server_serial_no}_${test_dirn}
+setenv gtm_tst_out `mktemp -d $tst_dir/tst_${tst_ver}_${gtm_exe:t}_${gtm_test_server_serial_no}_${test_dirn}_XXX`  # unique
+setenv gtm_tst_out `echo $gtm_tst_out | sed -e "s|$tst_dir/||"`   # gtm_tst_out shouldn't have $tst_dir/ on the front
 
-mkdir -p $tst_dir/$gtm_tst_out
 if ($status == 0) then
 	echo "Created ${tst_dir}/$gtm_tst_out"
 	chmod g+w $tst_dir/$gtm_tst_out

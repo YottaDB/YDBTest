@@ -78,7 +78,8 @@ setenv gtm_test_autorelink_support 1
 setenv gtmtest_noxendian 1
 set gtm_test_server_serial_no = 00
 set test_dirn = `date +%y%m%d_%H%M%S`
-setenv gtm_tst_out tst_${tst_ver}_${gtm_exe:t}_${gtm_test_server_serial_no}_${test_dirn}
+setenv gtm_tst_out `mktemp -d $tst_dir/tst_${tst_ver}_${gtm_exe:t}_${gtm_test_server_serial_no}_${test_dirn}_XXX`  # unique
+setenv gtm_tst_out `echo $gtm_tst_out | sed -e "s|$tst_dir/||"`   # gtm_tst_out shouldn't have $tst_dir/ on the front
 
 # Settings from submit.csh
 limit coredumpsize unlimited
