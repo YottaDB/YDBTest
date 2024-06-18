@@ -88,6 +88,32 @@ cd ..
 
 Now check that you can run ``ssh `hostname` `` without having to enter a password.
 
+### Optional setup for *perf*ormance tests
+
+Some tests (e.g. v70005/strcat_efficiency) use `perf` to measure performance features (CPU instructions) for certain database functions. These tests are skipped if `perf` is not installed, but `perf` requires specific setup if installed:
+
+Install `perf` as follows to match your OS:
+
+```sh
+apt install linux-tools-common  # Ubuntu
+apt install linux-tools-<kernel-version>-generic  # Ubuntu if you updated the kernel
+apt install linux-perf          # Debian
+yum install perf                # RHEL
+```
+
+If `perf` returns an access error including a message `perf_event_paranoid setting is 4` then you need to set it to 2 as follows:
+
+```sh
+# set permissions for now until reboot
+echo 2 | sudo tee /proc/sys/kernel/perf_event_paranoid
+
+# For permanence, this adds or /etc/sysctl.conf or edits the line if the setting already exists
+# (explanation at https://stackoverflow.com/a/49852337/1232094)
+sudo sed -Ei \
+    -e '/^\s*#?\s*(kernel.perf_event_paranoid\s*=\s*).*/{s//\12 # enable perf/;:a;n;ba;q}' \
+    -e '$akernel.perf_event_paranoid=2 # enable perf' /etc/sysctl.conf
+```
+
 ## Environment variables
 
 Merge this [.cshrc template](com/.cshrc) into your own `.cshrc` in your home directory. Edit it, and find the section headed "User-specific locations" and **edit the variable values** to match your own contact details and available directories on your machine.
