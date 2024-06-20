@@ -1,0 +1,18 @@
+# Make sure that ydb stats count the number of triggers invoked
+# for each type of trigger: SET, KILL, and ZTRIGGER
+
+# Create 3 SETs (STG), 2 KILLs (KTG), and one ZTRIGGER (ZTG)
+Added SET and/or Non-SET trigger on ^a named atrig
+
+Raw stats:
+##TEST_AWKZSHOWstats\("G",0\)=.*
+##TEST_AWKYGBLSTATs=.*
+
+Extracted ZSHOW stats:
+STG:3
+KTG:2
+ZTG:1
+Ordered YGBLSTAT stats:
+STG:3
+KTG:2
+ZTG:1

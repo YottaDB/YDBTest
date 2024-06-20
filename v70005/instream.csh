@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # strcat_efficiency-gtmf135278	[berwyn] Test the new string pool concatenation optimisations
+# trigger_stats-gtm135406	[berwyn] Test the new trigger stats feature of v70005
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -23,6 +24,7 @@ echo "v70005 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic strcat_efficiency-gtmf135278"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_stats-gtmf135406"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
@@ -31,22 +33,12 @@ else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 
+# Add tests to space-separated $subtest_exclude_list to disable them, e.g. on a particular host or OS
 setenv subtest_exclude_list ""
 
-# Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
-endif
-
-if ("dbg" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
-endif
-
-# Only run tests if not running an asan build (because it slows down the test)
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
-
-# Only run tests that use perf if perf exists
+# Only run tests that use perf if perf exists and db is not an asan build (slow)
 set perf_missing = `which perf >/dev/null; echo $status`
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
 if ($perf_missing || $gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list strcat_efficiency-gtmf135278"
 endif
