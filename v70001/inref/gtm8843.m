@@ -1016,7 +1016,10 @@ err38	;
 ; srvRwTest - Verify non-blocking mode WRITE /WAIT(parm) server side
 
 srvRwTest(verb) ;
+	set chkplog=0
+	;
         do srvStart("haltOnTrap")
+	do checkpoint("client",1,"server start")
         do srvRecvReq(2)
         use "server":(socket=conn)
         write /block("off")
@@ -1024,7 +1027,12 @@ srvRwTest(verb) ;
         .use $principal
         .write "server: timeout on waiting for request"
         .halt
+	;
+	do checkpoint("server",2,"cli->srv: foo?")
         do srvSendResp("bar!")
+	do checkpoint("server",3,"srv->cli: bar!")
+	;
+	do checkpoint("server",4,"cli->srv: zeex")
         use "server":(socket=conn)
         do waitRw("server",verb)
         hang 9999
@@ -1034,14 +1042,23 @@ srvRwTest(verb) ;
 ; cliRwTest - Verify non-blocking mode WRITE /WAIT client side
 
 cliRwTest(verb) ;
+	set chkplog=0
+	;
+	do checkpoint("client",1,"server start")
         do cliConnect
+	;
         use "client"
         write /block("off")
         do cliSendReq("foo?")
+	do checkpoint("client",2,"cli->srv: foo?")
+	;
+	do checkpoint("client",3,"srv->cli: bar!")
         use "client"
         do waitRw("client",verb)
+	;
         do cliSendReq("zeex")
-        hang 0.5 ; give some time for message delivery
+	do checkpoint("client",4,"cli->srv: zeex")
+        hang 2 ; give some time for message delivery
         quit
 
 ;##############################################################################
@@ -1532,15 +1549,16 @@ client	;
 ; Checkpoint mechanism for server and client to wait each other
 
 checkpoint(actor,id,comment) ;
+	set chkplog=$get(chkplog,1)
         set comment=$get(comment,"")
         if comment'="" set comment=" - "_comment
         use $principal
-        write "# ",actor," entered checkpoint ",id,comment,!
+        if chkplog write "# ",actor," entered checkpoint ",id,comment,!
         lock +(^checkpoint(port))
         set ^checkpoint(port,id)=1+$get(^checkpoint(port,id),0)
         lock -(^checkpoint(port))
         for  quit:^checkpoint(port,id)=2  hang 0.1
-        write "# ",actor," left checkpoint ",id,comment,!
+        if chkplog write "# ",actor," left checkpoint ",id,comment,!
         quit
 
 ;##############################################################################
