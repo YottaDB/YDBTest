@@ -20,6 +20,7 @@
 # empty_socket_assert-ydb1076	[pooh]	Test if empty host string in socket connection parameter causing assertion failure
 # xcretnull-ydb1007		[berwyn] Ensure that external calls that return invalid values produce errors
 # relinkctl_crash-ydb1083	[nars]  Test that relinkctl file latch is salvaged in 1 second (not 1 minute) after crash
+# max_truncate_to_error-ydb1048	[david]	Test that command utilities with input that is too long, return errors, rather than truncate
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -32,6 +33,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_tt_host_conv-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb1076"
 setenv subtest_list_non_replic	"$subtest_list_non_replic xcretnull-ydb1007"
 setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_crash-ydb1083"
+setenv subtest_list_non_replic	"$subtest_list_non_replic max_truncate_to_error-ydb1048"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

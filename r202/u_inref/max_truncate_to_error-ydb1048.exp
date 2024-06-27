@@ -1,0 +1,90 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set chset [lindex $argv 0]
+
+# The tty line limit is 4096
+set under_4k [string repeat x 4080]
+set at_4k [string repeat x 4095]
+set over_4k [string repeat x 8192]
+
+puts "#\n#### LKE/DSE/MUPIP %YDB-W-ARGSLONGLINE Test (interactive) ####\n#"
+
+puts "# Spawning LKE...\n"
+    spawn -noecho $::env(gtm_dist)/lke
+    expect "LKE>"
+    puts "\n"
+    puts "# send a command shorter than 4k\n"
+    send "bad_command $under_4k\r"
+    expect "%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND"
+    expect "LKE>"
+    puts "\n"
+    puts "# send a command around 4k\n"
+    send "bad_command $at_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "LKE>"
+    puts "\n"
+    puts "# send a command longer than 4k\n"
+    send "bad_command $over_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "LKE>"
+    puts "\n"
+    send "exit\r"
+puts "# ...LKE exited\n"
+puts "###################################################################\n#"
+
+puts "# Spawning DSE...\n"
+    spawn -noecho $::env(gtm_dist)/dse
+    expect "DSE>"
+    puts "\n"
+    puts "# send a command shorter than 4k\n"
+    send "bad_command $under_4k\r"
+    expect "%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND"
+    expect "DSE>"
+    puts "\n"
+    puts "# send a command around 4k\n"
+    send "bad_command $at_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "DSE>"
+    puts "\n"
+    puts "# send a command longer than 4k\n"
+    send "bad_command $over_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "DSE>"
+    puts "#\n"
+    send "exit\r"
+puts "# ...DSE exited\n"
+puts "###################################################################\n#"
+
+puts "# Spawning MUPIP...\n"
+    spawn -noecho $::env(gtm_dist)/mupip
+    expect "MUPIP>"
+    puts "\n"
+    puts "# send a command shorter than 4k\n"
+    send "bad_command $under_4k\r"
+    expect "%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND"
+    expect "MUPIP>"
+    puts "\n"
+    puts "# send a command around 4k\n"
+    send "bad_command $at_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "MUPIP>"
+    puts "\n"
+    puts "# send a command longer than 4k\n"
+    send "bad_command $over_4k\r"
+    expect "%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed"
+    expect "MUPIP>"
+    puts "\n"
+    send "exit\r"
+puts "# ...MUPIP exited\n"
+puts "###################################################################"

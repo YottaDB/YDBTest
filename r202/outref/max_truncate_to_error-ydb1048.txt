@@ -1,0 +1,388 @@
+# Test that command utilities with input that is too long, return errors, rather than truncate
+# This tests LKE, DSE, and MUPIP interactively, with readline off (r200/ydb88_08 tests them with readline)
+# It tests LKE, DSE, MUPIP, GTCM_GNP_SERVER, and YOTTADB with readline on and off, from the command line
+# It tests everything using the UTF-8 charset and the M charset, as well as multiple commands, very long and random strings
+#
+##### Test with readline off, using gtm_chset equal to UTF-8 #####
+#
+#### LKE/DSE/MUPIP/GTCM_GNP_SERVER/YOTTADB %YDB-E-CLIERR and %YDB-W-ARGSLONGLINE Test (command line) ####
+#
+# Running LKE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+LKE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...LKE finished
+###################################################################
+#
+# Running DSE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+DSE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...DSE finished
+###################################################################
+#
+# Running MUPIP...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+MUPIP> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...MUPIP finished
+###################################################################
+#
+# Running GTCM_GNP_SERVER...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized option : BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...GTCM_GNP_SERVER finished
+###################################################################
+#
+# Running YOTTADB...
+# send a command around 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command shorter than 32k via %XCMD
+%YDB-E-INVCMD, Invalid command keyword encountered
+# send a command around 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...YOTTADB finished
+###################################################################
+#
+#### LKE/DSE/MUPIP %YDB-W-ARGSLONGLINE Test (interactive) ####
+#
+# Spawning LKE...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...LKE exited
+###################################################################
+#
+# Spawning DSE...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...DSE exited
+###################################################################
+#
+# Spawning MUPIP...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...MUPIP exited
+###################################################################
+#
+##### Test with readline on, using gtm_chset equal to UTF-8 #####
+#
+#### LKE/DSE/MUPIP/GTCM_GNP_SERVER/YOTTADB %YDB-E-CLIERR and %YDB-W-ARGSLONGLINE Test (command line) ####
+#
+# Running LKE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+LKE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...LKE finished
+###################################################################
+#
+# Running DSE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+DSE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...DSE finished
+###################################################################
+#
+# Running MUPIP...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+MUPIP> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random UTF-8 string around 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# send a random UTF-8 string longer than 320k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33021)
+# ...MUPIP finished
+###################################################################
+#
+# Running GTCM_GNP_SERVER...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized option : BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...GTCM_GNP_SERVER finished
+###################################################################
+#
+# Running YOTTADB...
+# send a command around 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command shorter than 32k via %XCMD
+%YDB-E-INVCMD, Invalid command keyword encountered
+# send a command around 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...YOTTADB finished
+###################################################################
+#
+##### Test with readline off, using gtm_chset equal to M #####
+#
+#### LKE/DSE/MUPIP/GTCM_GNP_SERVER/YOTTADB %YDB-E-CLIERR and %YDB-W-ARGSLONGLINE Test (command line) ####
+#
+# Running LKE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+LKE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...LKE finished
+###################################################################
+#
+# Running DSE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+DSE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...DSE finished
+###################################################################
+#
+# Running MUPIP...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+MUPIP> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...MUPIP finished
+###################################################################
+#
+# Running GTCM_GNP_SERVER...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized option : BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...GTCM_GNP_SERVER finished
+###################################################################
+#
+# Running YOTTADB...
+# send a command around 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command shorter than 32k via %XCMD
+%YDB-E-INVCMD, Invalid command keyword encountered
+# send a command around 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...YOTTADB finished
+###################################################################
+#
+#### LKE/DSE/MUPIP %YDB-W-ARGSLONGLINE Test (interactive) ####
+#
+# Spawning LKE...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...LKE exited
+###################################################################
+#
+# Spawning DSE...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...DSE exited
+###################################################################
+#
+# Spawning MUPIP...
+# send a command shorter than 4k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# send a command longer than 4k
+##TEST_AWK%YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed .*
+# ...MUPIP exited
+###################################################################
+#
+##### Test with readline on, using gtm_chset equal to M #####
+#
+#### LKE/DSE/MUPIP/GTCM_GNP_SERVER/YOTTADB %YDB-E-CLIERR and %YDB-W-ARGSLONGLINE Test (command line) ####
+#
+# Running LKE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+LKE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+LKE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...LKE finished
+###################################################################
+#
+# Running DSE...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+DSE> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+DSE> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...DSE finished
+###################################################################
+#
+# Running MUPIP...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send multiple commands, two longer than 32k, one shorter, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+MUPIP> %YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+# send a random M string around 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 32k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# send a random M string longer than 320k, redirect from file
+MUPIP> %YDB-W-ARGSLONGLINE, Entered line is greater than maximum characters allowed (33022)
+# ...MUPIP finished
+###################################################################
+#
+# Running GTCM_GNP_SERVER...
+# send a command shorter than 32k
+%YDB-E-CLIERR, Unrecognized option : BAD_COMMAND
+# send a command around 32k
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...GTCM_GNP_SERVER finished
+###################################################################
+#
+# Running YOTTADB...
+# send a command around 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k directly
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command shorter than 32k via %XCMD
+%YDB-E-INVCMD, Invalid command keyword encountered
+# send a command around 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# send a command longer than 32k via %XCMD
+%YDB-E-CLIERR, Command line too long (33023 maximum)
+# ...YOTTADB finished
+###################################################################
