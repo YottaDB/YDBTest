@@ -1,0 +1,89 @@
+# *****************************************************************
+# GTM-F135383 - Test the following release note
+# *****************************************************************
+#
+# Release Note (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F135383) says:
+#
+# > When the restriction file specifies AD_ENABLE, DSE establishes
+# > a connection via a socket, to a logger/listener process, and
+# > sends all commands, designating src=6, and using the socket
+# > to the listener for audit logging. If sending succeeds, DSE
+# > executes the command. If the connection or the send fail, DSE
+# > issues a RESTRICTEDOP error and does not execute the command.
+# > AD_ENABLE supports TCP, TLS or UNIX socket types. By default,
+# > DSE commands execute without logging. Previously, DSE did not
+# > provide an audit logging option. (GTM-F135383)
+
+# ---- startup ----
+# prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# allocate a port number for TCP and TLS modes
+# set Unix socket filename
+# set crypt config file path and name
+# set-up crypt config file for section clicert
+# create database
+# get group ID for restrict.txt
+
+# ---- test tcp logging ----
+# setup restrict.txt: audit logging with tcp
+# attempt to execute a DSE command (filtered output), but no audit listener is running
+Region	DEFAULT
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+# launch tcp audit_listener
+# wait for pidfile
+# execute a DSE command (filtered output), will be logged as well
+Region	DEFAULT
+# wait for entries added to log
+# show log captured (should be the DSE command):
+<timestamp_masked>; dist=<masked>; src=6; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# execute a DSE command (filtered output), will be not logged
+Region	DEFAULT
+# wait for entries added to log (won't happen)
+# show log captured (should be empty):
+# stop audit_listener and wait for finish
+
+# ---- test tls logging ----
+# setup restrict.txt: audit logging with tls
+# attempt to execute a DSE command (filtered output), but no audit listener is running
+Region	DEFAULT
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+# launch tls audit_listener
+# wait for pidfile
+# execute a DSE command (filtered output), will be logged as well
+Region	DEFAULT
+# wait for entries added to log
+# show log captured (should be the DSE command):
+<timestamp_masked>; dist=<masked>; src=6; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# execute a DSE command (filtered output), will be not logged
+Region	DEFAULT
+# wait for entries added to log (won't happen)
+# show log captured (should be empty):
+# stop audit_listener and wait for finish
+
+# ---- test unix_socket logging ----
+# setup restrict.txt: audit logging with unix_socket
+# attempt to execute a DSE command (filtered output), but no audit listener is running
+Region	DEFAULT
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+# launch unix_socket audit_listener
+# wait for pidfile
+# execute a DSE command (filtered output), will be logged as well
+Region	DEFAULT
+# wait for entries added to log
+# show log captured (should be the DSE command):
+<timestamp_masked>; dist=<masked>; src=6; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# execute a DSE command (filtered output), will be not logged
+Region	DEFAULT
+# wait for entries added to log (won't happen)
+# show log captured (should be empty):
+# stop audit_listener and wait for finish
+
+# ---- cleanup ----
+# shutdown database
+# release port number

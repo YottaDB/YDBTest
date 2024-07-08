@@ -17,6 +17,7 @@
 # strcat_efficiency-gtmf135278	[berwyn] Test the new string pool concatenation optimisations
 # trigger_stats-gtm135406	[berwyn] Test the new trigger stats feature of v70005
 # audit_lke_facility-gtmf135370	[ern0]	 Test Audit LKE facility
+# audit_dse_facility-gtmf135383 [ern0] 	 Test Audit DSE facility
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -27,6 +28,7 @@ setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic strcat_efficiency-gtmf135278"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_stats-gtmf135406"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_lke_facility-gtmf135370"
+setenv subtest_list_non_replic	"$subtest_list_non_replic audit_dse_facility-gtmf135383"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
