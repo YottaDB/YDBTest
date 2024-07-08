@@ -130,7 +130,7 @@ foreach param ( \
 		-duration 1
 
 	echo "# show log captured (should be the LKE command):"
-	cat $aulogfile | $gtm_dist/mumps -run filter^gtmf135370
+	cat $aulogfile | $gtm_dist/mumps -run "filter^auditlogfilter"
 
 	echo "# reset log by sending SIGHUP to the audit listener"
 	kill -HUP $pid
@@ -147,7 +147,7 @@ foreach param ( \
 	sleep 1
 
 	echo "# show log captured (should be empty):"
-	cat $aulogfile | $gtm_dist/mumps -run filter^gtmf135370
+	cat $aulogfile | $gtm_dist/mumps -run "filter^auditlogfilter"
 
 	echo "# stop audit_listener and wait for finish"
 	kill -TERM $pid
