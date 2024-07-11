@@ -1,0 +1,17 @@
+# Several attempts to produce STACKCRIT and STACKOVER error in one hit
+# Should produce STACKOVER error and should not segfault like it does in GTM versions
+
+# Running M with a function that sets variable names a1000-a1000
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a1500
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a2000
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a2500
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a3000
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a3500
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
+# Running M with a function that sets variable names a1000-a4000
+##TEST_AWK%GTM-F-STACKOFLOW, Stack overflow|%GTM-E-STACKCRIT, Stack space critical|Good: exit code 0
