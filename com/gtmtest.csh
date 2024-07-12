@@ -672,6 +672,7 @@ if ("ATL" != "$gtm_server_location") then
 endif
 if (0 > $gtm_test_port_range) setenv gtm_test_port_range 00
 setenv gtm_tst_out `mktemp -d $tst_dir/tst_${tst_ver}_${gtm_exe:t}_${gtm_test_server_serial_no}_${test_dirn}_XXX`  # unique
+chmod 755 $gtm_tst_out   # ensures directory is accessible by other userids in the same group (e.g. gtmtest1)
 setenv gtm_tst_out `echo $gtm_tst_out | sed -e "s|$tst_dir/||"`   # gtm_tst_out shouldn't have $tst_dir/ on the front
 
 if ($status == 0) then
