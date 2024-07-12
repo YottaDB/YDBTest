@@ -1,14 +1,14 @@
 #!/usr/local/bin/tcsh
 #################################################################
-#                                                               #
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 $echoline
 echo "Verify a few of the more interesting (larger/complex) object files in ydb_dist with eu-elflint"
