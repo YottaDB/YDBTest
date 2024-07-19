@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -1999,7 +1999,7 @@ zero(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	. if rand=11 set ret="($$Always0)"
 	. if rand=12 set ret="('$$Always1)"
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(43)
+	set rand=$random(47)
 	if rand=0 quit "("_$$one(depth1)_"="_$$zero(depth2)_")"
 	if rand=1 quit "("_$$zero(depth1)_"="_$$one(depth2)_")"
 	if rand=2 quit "("_$$zero(depth1)_"'="_$$zero(depth2)_")"
@@ -2046,6 +2046,10 @@ zero(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 							; MUMPS_INT (instead of the usual MUMPS_EXPR/MUMPS_NUM/MUMPS_STR).
 							; This tests bool2mint()/OC_COMINT whereas all the previous test paths
 							; test bool2mval()/OC_COMVAL
+	if rand=43 quit "("_$$one(depth1)_"="""")"
+	if rand=44 quit "("_$$zero(depth1)_"="""")"
+	if rand=45 quit "(""""="_$$one(depth1)_")"
+	if rand=46 quit "(""""="_$$zero(depth1)_")"
 	quit
 
 one(depth)	; Returns a random boolean expression that is guaranteed to evaluate to 1
@@ -2066,7 +2070,7 @@ one(depth)	; Returns a random boolean expression that is guaranteed to evaluate 
 	. if rand=11 set ret="($$Always1)"
 	. if rand=12 set ret="('$$Always0)"
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(43)
+	set rand=$random(47)
 	if rand=0 quit "("_$$zero(depth1)_"="_$$zero(depth2)_")"
 	if rand=1 quit "("_$$one(depth1)_"="_$$one(depth2)_")"
 	if rand=2 quit "("_$$one(depth1)_"'="_$$zero(depth2)_")"
@@ -2113,6 +2117,10 @@ one(depth)	; Returns a random boolean expression that is guaranteed to evaluate 
 							; MUMPS_INT (instead of the usual MUMPS_EXPR/MUMPS_NUM/MUMPS_STR).
 							; This tests bool2mint()/OC_COMINT whereas all the previous test paths
 							; test bool2mval()/OC_COMVAL
+	if rand=43 quit "("_$$one(depth1)_"'="""")"
+	if rand=44 quit "("_$$zero(depth1)_"'="""")"
+	if rand=45 quit "(""""'="_$$one(depth1)_")"
+	if rand=46 quit "(""""'="_$$zero(depth1)_")"
 	quit
 
 null(depth)	; Returns a random boolean expression that is guaranteed to evaluate to $ZYSQLNULL
@@ -2138,7 +2146,7 @@ null(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	. if rand=16 set ret="('$$AlwaysNull)"
 	. ; Note: $$incrementhelper cannot be used in `null` like it is used in `zero` and `one` due to ZYSQLNULLNOTVALID error
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(34)
+	set rand=$random(38)
 	if rand=0 quit $$nullhelper("=",depth1,depth2)
 	if rand=1 quit $$nullhelper("'=",depth1,depth2)
 	if rand=2 quit $$nullhelper(">",depth1,depth2)
@@ -2173,6 +2181,10 @@ null(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	if rand=31 quit "(@^inull@("_$$zero(depth1)_"))"
 	if rand=32 quit "('@^inull@("_$$zero(depth1)_"))"
 	if rand=33 quit "($$RetSame("_$$null(depth1)_","_depth2_"))"
+	if rand=34 quit "("_$$null(depth1)_"="""")"
+	if rand=35 quit "("_$$null(depth1)_"'="""")"
+	if rand=36 quit "(""""="_$$null(depth1)_")"
+	if rand=37 quit "(""""'="_$$null(depth1)_")"
 	quit
 
 nullhelper(operator,depth1,depth2)
