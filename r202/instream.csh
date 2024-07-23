@@ -21,6 +21,7 @@
 # xcretnull-ydb1007		[berwyn] Ensure that external calls that return invalid values produce errors
 # relinkctl_crash-ydb1083	[nars]  Test that relinkctl file latch is salvaged in 1 second (not 1 minute) after crash
 # max_truncate_to_error-ydb1048	[david]	Test that command utilities with input that is too long, return errors, rather than truncate
+# bool_expr_equnul-ydb777       [nars]  Test that s="" and s'="" in simple boolean expressions are fast
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -34,6 +35,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic xcretnull-ydb1007"
 setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_crash-ydb1083"
 setenv subtest_list_non_replic	"$subtest_list_non_replic max_truncate_to_error-ydb1048"
+setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_equnul-ydb777"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

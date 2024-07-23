@@ -1,0 +1,637 @@
+###########################################################################################################
+# Test various aspects of YDB#777 where s="" and s'="" in simple boolean expressions were speeded up
+###########################################################################################################
+
+# ---------------------------------------------------------------------------
+# Test1 : Verify correctness of various s= and s'= simple boolean expressions
+# ---------------------------------------------------------------------------
+# Run [mumps -run ydb777] to generate [boolexpr.m] with various simple boolean expressions
+# Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file
+
+Stepping STARTED
++2^boolexpr         : set s="" set actual=-1 set:(s="") actual=100 zwrite actual
+actual=100
++3^boolexpr         : set s="" set actual=-1 set actual=(s="") zwrite actual
+actual=1
++4^boolexpr         : set s="" set actual=-1 set:'(s="") actual=100 zwrite actual
+actual=-1
++5^boolexpr         : set s="" set actual=-1 set actual='(s="") zwrite actual
+actual=0
++6^boolexpr         : set s="" set actual=-1 set:''(s="") actual=100 zwrite actual
+actual=100
++7^boolexpr         : set s="" set actual=-1 set actual=''(s="") zwrite actual
+actual=1
++8^boolexpr         : set s="" set actual=-1 set:'''(s="") actual=100 zwrite actual
+actual=-1
++9^boolexpr         : set s="" set actual=-1 set actual='''(s="") zwrite actual
+actual=0
++10^boolexpr        : set s="" set actual=-1 set:''''(s="") actual=100 zwrite actual
+actual=100
++11^boolexpr        : set s="" set actual=-1 set actual=''''(s="") zwrite actual
+actual=1
++12^boolexpr        : set s="" set actual=-1 set:(""=s) actual=100 zwrite actual
+actual=100
++13^boolexpr        : set s="" set actual=-1 set actual=(""=s) zwrite actual
+actual=1
++14^boolexpr        : set s="" set actual=-1 set:'(""=s) actual=100 zwrite actual
+actual=-1
++15^boolexpr        : set s="" set actual=-1 set actual='(""=s) zwrite actual
+actual=0
++16^boolexpr        : set s="" set actual=-1 set:''(""=s) actual=100 zwrite actual
+actual=100
++17^boolexpr        : set s="" set actual=-1 set actual=''(""=s) zwrite actual
+actual=1
++18^boolexpr        : set s="" set actual=-1 set:'''(""=s) actual=100 zwrite actual
+actual=-1
++19^boolexpr        : set s="" set actual=-1 set actual='''(""=s) zwrite actual
+actual=0
++20^boolexpr        : set s="" set actual=-1 set:''''(""=s) actual=100 zwrite actual
+actual=100
++21^boolexpr        : set s="" set actual=-1 set actual=''''(""=s) zwrite actual
+actual=1
++22^boolexpr        : set s="" set actual=-1 set:(s'="") actual=100 zwrite actual
+actual=-1
++23^boolexpr        : set s="" set actual=-1 set actual=(s'="") zwrite actual
+actual=0
++24^boolexpr        : set s="" set actual=-1 set:'(s'="") actual=100 zwrite actual
+actual=100
++25^boolexpr        : set s="" set actual=-1 set actual='(s'="") zwrite actual
+actual=1
++26^boolexpr        : set s="" set actual=-1 set:''(s'="") actual=100 zwrite actual
+actual=-1
++27^boolexpr        : set s="" set actual=-1 set actual=''(s'="") zwrite actual
+actual=0
++28^boolexpr        : set s="" set actual=-1 set:'''(s'="") actual=100 zwrite actual
+actual=100
++29^boolexpr        : set s="" set actual=-1 set actual='''(s'="") zwrite actual
+actual=1
++30^boolexpr        : set s="" set actual=-1 set:''''(s'="") actual=100 zwrite actual
+actual=-1
++31^boolexpr        : set s="" set actual=-1 set actual=''''(s'="") zwrite actual
+actual=0
++32^boolexpr        : set s="" set actual=-1 set:(""'=s) actual=100 zwrite actual
+actual=-1
++33^boolexpr        : set s="" set actual=-1 set actual=(""'=s) zwrite actual
+actual=0
++34^boolexpr        : set s="" set actual=-1 set:'(""'=s) actual=100 zwrite actual
+actual=100
++35^boolexpr        : set s="" set actual=-1 set actual='(""'=s) zwrite actual
+actual=1
++36^boolexpr        : set s="" set actual=-1 set:''(""'=s) actual=100 zwrite actual
+actual=-1
++37^boolexpr        : set s="" set actual=-1 set actual=''(""'=s) zwrite actual
+actual=0
++38^boolexpr        : set s="" set actual=-1 set:'''(""'=s) actual=100 zwrite actual
+actual=100
++39^boolexpr        : set s="" set actual=-1 set actual='''(""'=s) zwrite actual
+actual=1
++40^boolexpr        : set s="" set actual=-1 set:''''(""'=s) actual=100 zwrite actual
+actual=-1
++41^boolexpr        : set s="" set actual=-1 set actual=''''(""'=s) zwrite actual
+actual=0
++42^boolexpr        : set s=0 set actual=-1 set:(s="") actual=100 zwrite actual
+actual=-1
++43^boolexpr        : set s=0 set actual=-1 set actual=(s="") zwrite actual
+actual=0
++44^boolexpr        : set s=0 set actual=-1 set:'(s="") actual=100 zwrite actual
+actual=100
++45^boolexpr        : set s=0 set actual=-1 set actual='(s="") zwrite actual
+actual=1
++46^boolexpr        : set s=0 set actual=-1 set:''(s="") actual=100 zwrite actual
+actual=-1
++47^boolexpr        : set s=0 set actual=-1 set actual=''(s="") zwrite actual
+actual=0
++48^boolexpr        : set s=0 set actual=-1 set:'''(s="") actual=100 zwrite actual
+actual=100
++49^boolexpr        : set s=0 set actual=-1 set actual='''(s="") zwrite actual
+actual=1
++50^boolexpr        : set s=0 set actual=-1 set:''''(s="") actual=100 zwrite actual
+actual=-1
++51^boolexpr        : set s=0 set actual=-1 set actual=''''(s="") zwrite actual
+actual=0
++52^boolexpr        : set s=0 set actual=-1 set:(""=s) actual=100 zwrite actual
+actual=-1
++53^boolexpr        : set s=0 set actual=-1 set actual=(""=s) zwrite actual
+actual=0
++54^boolexpr        : set s=0 set actual=-1 set:'(""=s) actual=100 zwrite actual
+actual=100
++55^boolexpr        : set s=0 set actual=-1 set actual='(""=s) zwrite actual
+actual=1
++56^boolexpr        : set s=0 set actual=-1 set:''(""=s) actual=100 zwrite actual
+actual=-1
++57^boolexpr        : set s=0 set actual=-1 set actual=''(""=s) zwrite actual
+actual=0
++58^boolexpr        : set s=0 set actual=-1 set:'''(""=s) actual=100 zwrite actual
+actual=100
++59^boolexpr        : set s=0 set actual=-1 set actual='''(""=s) zwrite actual
+actual=1
++60^boolexpr        : set s=0 set actual=-1 set:''''(""=s) actual=100 zwrite actual
+actual=-1
++61^boolexpr        : set s=0 set actual=-1 set actual=''''(""=s) zwrite actual
+actual=0
++62^boolexpr        : set s=0 set actual=-1 set:(s'="") actual=100 zwrite actual
+actual=100
++63^boolexpr        : set s=0 set actual=-1 set actual=(s'="") zwrite actual
+actual=1
++64^boolexpr        : set s=0 set actual=-1 set:'(s'="") actual=100 zwrite actual
+actual=-1
++65^boolexpr        : set s=0 set actual=-1 set actual='(s'="") zwrite actual
+actual=0
++66^boolexpr        : set s=0 set actual=-1 set:''(s'="") actual=100 zwrite actual
+actual=100
++67^boolexpr        : set s=0 set actual=-1 set actual=''(s'="") zwrite actual
+actual=1
++68^boolexpr        : set s=0 set actual=-1 set:'''(s'="") actual=100 zwrite actual
+actual=-1
++69^boolexpr        : set s=0 set actual=-1 set actual='''(s'="") zwrite actual
+actual=0
++70^boolexpr        : set s=0 set actual=-1 set:''''(s'="") actual=100 zwrite actual
+actual=100
++71^boolexpr        : set s=0 set actual=-1 set actual=''''(s'="") zwrite actual
+actual=1
++72^boolexpr        : set s=0 set actual=-1 set:(""'=s) actual=100 zwrite actual
+actual=100
++73^boolexpr        : set s=0 set actual=-1 set actual=(""'=s) zwrite actual
+actual=1
++74^boolexpr        : set s=0 set actual=-1 set:'(""'=s) actual=100 zwrite actual
+actual=-1
++75^boolexpr        : set s=0 set actual=-1 set actual='(""'=s) zwrite actual
+actual=0
++76^boolexpr        : set s=0 set actual=-1 set:''(""'=s) actual=100 zwrite actual
+actual=100
++77^boolexpr        : set s=0 set actual=-1 set actual=''(""'=s) zwrite actual
+actual=1
++78^boolexpr        : set s=0 set actual=-1 set:'''(""'=s) actual=100 zwrite actual
+actual=-1
++79^boolexpr        : set s=0 set actual=-1 set actual='''(""'=s) zwrite actual
+actual=0
++80^boolexpr        : set s=0 set actual=-1 set:''''(""'=s) actual=100 zwrite actual
+actual=100
++81^boolexpr        : set s=0 set actual=-1 set actual=''''(""'=s) zwrite actual
+actual=1
++82^boolexpr        : set s=1 set actual=-1 set:(s="") actual=100 zwrite actual
+actual=-1
++83^boolexpr        : set s=1 set actual=-1 set actual=(s="") zwrite actual
+actual=0
++84^boolexpr        : set s=1 set actual=-1 set:'(s="") actual=100 zwrite actual
+actual=100
++85^boolexpr        : set s=1 set actual=-1 set actual='(s="") zwrite actual
+actual=1
++86^boolexpr        : set s=1 set actual=-1 set:''(s="") actual=100 zwrite actual
+actual=-1
++87^boolexpr        : set s=1 set actual=-1 set actual=''(s="") zwrite actual
+actual=0
++88^boolexpr        : set s=1 set actual=-1 set:'''(s="") actual=100 zwrite actual
+actual=100
++89^boolexpr        : set s=1 set actual=-1 set actual='''(s="") zwrite actual
+actual=1
++90^boolexpr        : set s=1 set actual=-1 set:''''(s="") actual=100 zwrite actual
+actual=-1
++91^boolexpr        : set s=1 set actual=-1 set actual=''''(s="") zwrite actual
+actual=0
++92^boolexpr        : set s=1 set actual=-1 set:(""=s) actual=100 zwrite actual
+actual=-1
++93^boolexpr        : set s=1 set actual=-1 set actual=(""=s) zwrite actual
+actual=0
++94^boolexpr        : set s=1 set actual=-1 set:'(""=s) actual=100 zwrite actual
+actual=100
++95^boolexpr        : set s=1 set actual=-1 set actual='(""=s) zwrite actual
+actual=1
++96^boolexpr        : set s=1 set actual=-1 set:''(""=s) actual=100 zwrite actual
+actual=-1
++97^boolexpr        : set s=1 set actual=-1 set actual=''(""=s) zwrite actual
+actual=0
++98^boolexpr        : set s=1 set actual=-1 set:'''(""=s) actual=100 zwrite actual
+actual=100
++99^boolexpr        : set s=1 set actual=-1 set actual='''(""=s) zwrite actual
+actual=1
++100^boolexpr       : set s=1 set actual=-1 set:''''(""=s) actual=100 zwrite actual
+actual=-1
++101^boolexpr       : set s=1 set actual=-1 set actual=''''(""=s) zwrite actual
+actual=0
++102^boolexpr       : set s=1 set actual=-1 set:(s'="") actual=100 zwrite actual
+actual=100
++103^boolexpr       : set s=1 set actual=-1 set actual=(s'="") zwrite actual
+actual=1
++104^boolexpr       : set s=1 set actual=-1 set:'(s'="") actual=100 zwrite actual
+actual=-1
++105^boolexpr       : set s=1 set actual=-1 set actual='(s'="") zwrite actual
+actual=0
++106^boolexpr       : set s=1 set actual=-1 set:''(s'="") actual=100 zwrite actual
+actual=100
++107^boolexpr       : set s=1 set actual=-1 set actual=''(s'="") zwrite actual
+actual=1
++108^boolexpr       : set s=1 set actual=-1 set:'''(s'="") actual=100 zwrite actual
+actual=-1
++109^boolexpr       : set s=1 set actual=-1 set actual='''(s'="") zwrite actual
+actual=0
++110^boolexpr       : set s=1 set actual=-1 set:''''(s'="") actual=100 zwrite actual
+actual=100
++111^boolexpr       : set s=1 set actual=-1 set actual=''''(s'="") zwrite actual
+actual=1
++112^boolexpr       : set s=1 set actual=-1 set:(""'=s) actual=100 zwrite actual
+actual=100
++113^boolexpr       : set s=1 set actual=-1 set actual=(""'=s) zwrite actual
+actual=1
++114^boolexpr       : set s=1 set actual=-1 set:'(""'=s) actual=100 zwrite actual
+actual=-1
++115^boolexpr       : set s=1 set actual=-1 set actual='(""'=s) zwrite actual
+actual=0
++116^boolexpr       : set s=1 set actual=-1 set:''(""'=s) actual=100 zwrite actual
+actual=100
++117^boolexpr       : set s=1 set actual=-1 set actual=''(""'=s) zwrite actual
+actual=1
++118^boolexpr       : set s=1 set actual=-1 set:'''(""'=s) actual=100 zwrite actual
+actual=-1
++119^boolexpr       : set s=1 set actual=-1 set actual='''(""'=s) zwrite actual
+actual=0
++120^boolexpr       : set s=1 set actual=-1 set:''''(""'=s) actual=100 zwrite actual
+actual=100
++121^boolexpr       : set s=1 set actual=-1 set actual=''''(""'=s) zwrite actual
+actual=1
++122^boolexpr       : set s="a" set actual=-1 set:(s="") actual=100 zwrite actual
+actual=-1
++123^boolexpr       : set s="a" set actual=-1 set actual=(s="") zwrite actual
+actual=0
++124^boolexpr       : set s="a" set actual=-1 set:'(s="") actual=100 zwrite actual
+actual=100
++125^boolexpr       : set s="a" set actual=-1 set actual='(s="") zwrite actual
+actual=1
++126^boolexpr       : set s="a" set actual=-1 set:''(s="") actual=100 zwrite actual
+actual=-1
++127^boolexpr       : set s="a" set actual=-1 set actual=''(s="") zwrite actual
+actual=0
++128^boolexpr       : set s="a" set actual=-1 set:'''(s="") actual=100 zwrite actual
+actual=100
++129^boolexpr       : set s="a" set actual=-1 set actual='''(s="") zwrite actual
+actual=1
++130^boolexpr       : set s="a" set actual=-1 set:''''(s="") actual=100 zwrite actual
+actual=-1
++131^boolexpr       : set s="a" set actual=-1 set actual=''''(s="") zwrite actual
+actual=0
++132^boolexpr       : set s="a" set actual=-1 set:(""=s) actual=100 zwrite actual
+actual=-1
++133^boolexpr       : set s="a" set actual=-1 set actual=(""=s) zwrite actual
+actual=0
++134^boolexpr       : set s="a" set actual=-1 set:'(""=s) actual=100 zwrite actual
+actual=100
++135^boolexpr       : set s="a" set actual=-1 set actual='(""=s) zwrite actual
+actual=1
++136^boolexpr       : set s="a" set actual=-1 set:''(""=s) actual=100 zwrite actual
+actual=-1
++137^boolexpr       : set s="a" set actual=-1 set actual=''(""=s) zwrite actual
+actual=0
++138^boolexpr       : set s="a" set actual=-1 set:'''(""=s) actual=100 zwrite actual
+actual=100
++139^boolexpr       : set s="a" set actual=-1 set actual='''(""=s) zwrite actual
+actual=1
++140^boolexpr       : set s="a" set actual=-1 set:''''(""=s) actual=100 zwrite actual
+actual=-1
++141^boolexpr       : set s="a" set actual=-1 set actual=''''(""=s) zwrite actual
+actual=0
++142^boolexpr       : set s="a" set actual=-1 set:(s'="") actual=100 zwrite actual
+actual=100
++143^boolexpr       : set s="a" set actual=-1 set actual=(s'="") zwrite actual
+actual=1
++144^boolexpr       : set s="a" set actual=-1 set:'(s'="") actual=100 zwrite actual
+actual=-1
++145^boolexpr       : set s="a" set actual=-1 set actual='(s'="") zwrite actual
+actual=0
++146^boolexpr       : set s="a" set actual=-1 set:''(s'="") actual=100 zwrite actual
+actual=100
++147^boolexpr       : set s="a" set actual=-1 set actual=''(s'="") zwrite actual
+actual=1
++148^boolexpr       : set s="a" set actual=-1 set:'''(s'="") actual=100 zwrite actual
+actual=-1
++149^boolexpr       : set s="a" set actual=-1 set actual='''(s'="") zwrite actual
+actual=0
++150^boolexpr       : set s="a" set actual=-1 set:''''(s'="") actual=100 zwrite actual
+actual=100
++151^boolexpr       : set s="a" set actual=-1 set actual=''''(s'="") zwrite actual
+actual=1
++152^boolexpr       : set s="a" set actual=-1 set:(""'=s) actual=100 zwrite actual
+actual=100
++153^boolexpr       : set s="a" set actual=-1 set actual=(""'=s) zwrite actual
+actual=1
++154^boolexpr       : set s="a" set actual=-1 set:'(""'=s) actual=100 zwrite actual
+actual=-1
++155^boolexpr       : set s="a" set actual=-1 set actual='(""'=s) zwrite actual
+actual=0
++156^boolexpr       : set s="a" set actual=-1 set:''(""'=s) actual=100 zwrite actual
+actual=100
++157^boolexpr       : set s="a" set actual=-1 set actual=''(""'=s) zwrite actual
+actual=1
++158^boolexpr       : set s="a" set actual=-1 set:'''(""'=s) actual=100 zwrite actual
+actual=-1
++159^boolexpr       : set s="a" set actual=-1 set actual='''(""'=s) zwrite actual
+actual=0
++160^boolexpr       : set s="a" set actual=-1 set:''''(""'=s) actual=100 zwrite actual
+actual=100
++161^boolexpr       : set s="a" set actual=-1 set actual=''''(""'=s) zwrite actual
+actual=1
++162^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:(s="") actual=100 zwrite actual
+actual=-1
++163^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=(s="") zwrite actual
+actual=$ZYSQLNULL
++164^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'(s="") actual=100 zwrite actual
+actual=-1
++165^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='(s="") zwrite actual
+actual=$ZYSQLNULL
++166^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''(s="") actual=100 zwrite actual
+actual=-1
++167^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''(s="") zwrite actual
+actual=$ZYSQLNULL
++168^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'''(s="") actual=100 zwrite actual
+actual=-1
++169^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='''(s="") zwrite actual
+actual=$ZYSQLNULL
++170^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''''(s="") actual=100 zwrite actual
+actual=-1
++171^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''''(s="") zwrite actual
+actual=$ZYSQLNULL
++172^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:(""=s) actual=100 zwrite actual
+actual=-1
++173^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=(""=s) zwrite actual
+actual=$ZYSQLNULL
++174^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'(""=s) actual=100 zwrite actual
+actual=-1
++175^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='(""=s) zwrite actual
+actual=$ZYSQLNULL
++176^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''(""=s) actual=100 zwrite actual
+actual=-1
++177^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''(""=s) zwrite actual
+actual=$ZYSQLNULL
++178^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'''(""=s) actual=100 zwrite actual
+actual=-1
++179^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='''(""=s) zwrite actual
+actual=$ZYSQLNULL
++180^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''''(""=s) actual=100 zwrite actual
+actual=-1
++181^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''''(""=s) zwrite actual
+actual=$ZYSQLNULL
++182^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:(s'="") actual=100 zwrite actual
+actual=-1
++183^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=(s'="") zwrite actual
+actual=$ZYSQLNULL
++184^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'(s'="") actual=100 zwrite actual
+actual=-1
++185^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='(s'="") zwrite actual
+actual=$ZYSQLNULL
++186^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''(s'="") actual=100 zwrite actual
+actual=-1
++187^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''(s'="") zwrite actual
+actual=$ZYSQLNULL
++188^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'''(s'="") actual=100 zwrite actual
+actual=-1
++189^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='''(s'="") zwrite actual
+actual=$ZYSQLNULL
++190^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''''(s'="") actual=100 zwrite actual
+actual=-1
++191^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''''(s'="") zwrite actual
+actual=$ZYSQLNULL
++192^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:(""'=s) actual=100 zwrite actual
+actual=-1
++193^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=(""'=s) zwrite actual
+actual=$ZYSQLNULL
++194^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'(""'=s) actual=100 zwrite actual
+actual=-1
++195^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='(""'=s) zwrite actual
+actual=$ZYSQLNULL
++196^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''(""'=s) actual=100 zwrite actual
+actual=-1
++197^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''(""'=s) zwrite actual
+actual=$ZYSQLNULL
++198^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:'''(""'=s) actual=100 zwrite actual
+actual=-1
++199^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual='''(""'=s) zwrite actual
+actual=$ZYSQLNULL
++200^boolexpr       : set s=$ZYSQLNULL set actual=-1 set:''''(""'=s) actual=100 zwrite actual
+actual=-1
++201^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''''(""'=s) zwrite actual
+actual=$ZYSQLNULL
++202^boolexpr       : quit
+##SUSPEND_OUTPUT PRO
+
+# ---------------------------------------------------------------------------
+# Test2 : Verify that all generated s= and s'= simple boolean expressions in boolexpr.m get optimized
+# with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing
+# ---------------------------------------------------------------------------
+# Run [mumps -machine -lis=boolexpr.lis boolexpr.m]
+# Run [grep -E OC_ boolexpr.lis | grep -vE OC_LINESTART|OC_EXTCALL|OC_LINEFETCH|OC_JMPEQU|OC_STOLIT|OC_LVZWRITE|OC_SVGET|OC_LITC|OC_RET | awk '{print $NF}']
+# Expect to see only OC_EQUNUL_RETMVAL, OC_NEQUNUL_RETMVAL, OC_EQUNUL_RETBOOL or OC_NEQUNUL_RETBOOL opcodes
+# Do not expect to see any OC_BOOL* opcodes (implies optimization did not happen)
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+;OC_EQUNUL_RETBOOL
+;OC_EQUNUL_RETMVAL
+;OC_NEQUNUL_RETBOOL
+;OC_NEQUNUL_RETMVAL
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD
+
+# ---------------------------------------------------------------------------
+# Test3 : Test the actual number of instructions for a s="" and s'="" test case
+# ---------------------------------------------------------------------------
+# This is a test of https://gitlab.com/YottaDB/DB/YDB/-/issues/777#note_2008124130
+# [limit] variable contains number of instructions (from perf) when tested with the YDB#777 fixes.
+# The test allows for up to 5% more instructions. And signals failure if it exceeds even that.
+PASS: Test of [s x=$zlength(s)]
+PASS: Test of [s x=(s="")]
+PASS: Test of [s x=(s'="")]
+PASS: Test of [s:(s="") x=1]
+PASS: Test of [s:(s'="") x=1]
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD
