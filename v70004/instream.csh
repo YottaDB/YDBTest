@@ -21,6 +21,7 @@
 # socket_open_mupip_stop-gtmde297205   [nars]   MUPIP STOP in the midst of SOCKET OPEN does not produce GTMASSERT2 fatal error
 # dollar_ztslate_stp_gcol-gtmde305529  [nars]   $ZTSLATE value is protected amidst garbage collection
 # socket_use_ioerror_sig11-gtmde307442 [nars]   SOCKET USE command with CONNECT/LISTEN and IOERROR="T" does not SIG-11
+# retry_norm-gtmf166755                [pooh]   MUPIP BACKUP retry normalization
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
@@ -36,6 +37,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic restrict_lke_clear-gtmf
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_open_mupip_stop-gtmde297205"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_ztslate_stp_gcol-gtmde305529"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_ioerror_sig11-gtmde307442"
+setenv subtest_list_non_replic	"$subtest_list_non_replic retry_norm-gtmf166755"
 
 setenv subtest_list_replic	""
 

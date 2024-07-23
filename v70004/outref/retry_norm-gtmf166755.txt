@@ -1,0 +1,80 @@
+# ********************************************************************************************
+# GTM-F166755 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-F166755)
+# 
+# By default, the MUPIP BACKUP -DATABASE retries file copy operation once if the first attempt fails for a retriable reason;
+# this is equivalent to -RETRY=1. -RETRY=0 prevents any retries, so if the copy fails MUPIP immediately reports an error.
+# Additionally, any copy failure error messages include region information when displaying OS service error codes.
+# Previously, while the default was equivalent to -RETRY=1 that incorrectly meant one BACKUP attempt, -RETRY=0 did not perform
+# a backup, and error reports did not identify the region associated with the failure. (GTM-F166755)
+
+# According to release note, There are 4 cases that will need to be tested
+# 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
+# 2) -RETRY=0 will perform backup without any retries
+# 3) RETRY=1 fails the first attempt but succeeds in the retry
+# 4) Copy failure error messages include region information when displaying OS service error codes
+
+# But some tests already tested (Discussion in https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2043#note_201410428)
+
+# From the discussion, We concluded that this test will only test 2 topics from release note.
+# 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
+# 2) -RETRY=0 will perform backup without any retries
+
+# And topics will NOT get tested in this test:
+# 3) RETRY=1 fails the first attempt but succeeds in the retry (Tested in v70001/gtm9424)
+# 4) Copy failure error messages include region information when displaying OS service error codes (Tested in v70001/gtm9424)
+
+# Creating database file region DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Test 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
+# This means both MUPIP BACKUP -DATABASE and MUPIP BACKUP -DATABASE -RETRY=1 will retry only once
+# Previously, This will perform backup 1 attempt without any retries
+# Expected same amount of retry (1 retry) for both MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
+
+# Create temporary destination file
+# Create destination file
+
+# Change the permission to make this file not writable (This will cause BKUPFILEPERM error)
+# Perform  MUPIP BACKUP -DATABASE for region DEFAULT
+# Expected 1 retry
+# Need to use [-replace] to be able to overwrite an existing target file
+%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Perform MUPIP BACKUP -DATABASE "DEFAULT" -RETRY=1 for region DEFAULT
+# Also expected 1 retry
+%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Test 2) -RETRY=0 will perform backup without any retries.
+# Previously, This will not perform backup and and error reports will not identify the region associated with the failure
+
+# Note : There is an issue in the GT.M version older than V7.0-004 which says "Backup completed successfully"
+# Even though it not doing any backup at all, which is wrong. So, the output is not matched with release note message below:
+# "Error reports will not identify the region associated with the failure"
+# Discussion in https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2043#note_2033422017
+
+# Create temporary destination file
+
+# Change the permission to make this file not writable
+
+# Now Perform backup region DEFAULT with -RETRY=0
+# Expected no retry attempt
+%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak2/mumps.dat does not have write permission
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Check for database integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
