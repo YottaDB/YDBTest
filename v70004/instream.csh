@@ -19,6 +19,7 @@
 # select_op_order-gtmde308470         [berwyn] Preserve left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
 # restrict_lke_clear-gtmf135380       [ern0]   Verify LKE restrictions file behaviour for LKE CLEAR command
 # socket_open_mupip_stop-gtmde297205  [nars]   MUPIP STOP in the midst of SOCKET OPEN does not produce GTMASSERT2 fatal error
+# dollar_ztslate_stp_gcol-gtmde305529 [nars]   $ZTSLATE value is protected amidst garbage collection
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
@@ -32,6 +33,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic select_boolean_assert-g
 setenv subtest_list_non_replic	"$subtest_list_non_replic select_op_order-gtmde308470"
 setenv subtest_list_non_replic	"$subtest_list_non_replic restrict_lke_clear-gtmf135380"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_open_mupip_stop-gtmde297205"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_ztslate_stp_gcol-gtmde305529"
 
 setenv subtest_list_replic	""
 

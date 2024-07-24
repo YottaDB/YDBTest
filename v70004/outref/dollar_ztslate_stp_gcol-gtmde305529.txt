@@ -1,0 +1,30 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE305529)
+# 
+# GT.M maintains the correct value of $ZTSLATE. Previously, garbage collection could mishandle the ISV
+# resulting in values not consistent with proper application execution (GTM-DE305529)
+# 
+# Create database (needed for trigger install)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [mumps -run gtmde305529]
+# Install a SET trigger on [^x] to invoke [trigger^gtmde305529]
+Added SET trigger on ^x named x
+# Do an update [set ^x=1] to fire a trigger that in turn invokes [trigger^gtmde305529]
+# Set $ZTSLATE to the string [bbbbb]
+# Set lvns x(1) to x(1000) to 100 byte strings containing [aaaaaa...]
+# Invoke garbage collection using [view "STP_GCOL"]
+# Write value of $ZTSLATE while still inside the trigger
+# We expect it to still hold the value [bbbbb]
+# Without the fixes in GTM-DE305529, it would hold garbage values
+$ZTSLATE="bbbbb"
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
