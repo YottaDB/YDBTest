@@ -14,20 +14,25 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# sub_level_map_hide-gtmde270421	[ern0]		Correct navigation when subscript-level mapping "hides" data
-# select_boolean_assert-gtmde308470	[ern0]		GTMASSERT2 fatal error when ydb_side_effects/gtm_side_effects env var is 1 and $SELECT is used in a boolean expression
-# select_op_order-gtmde308470		[berwyn]	Preserve left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
-# restrict_lke_clear-gtmf135380		[ern0]		Verify LKE restrictions file behaviour for LKE CLEAR command
+# sub_level_map_hide-gtmde270421      [ern0]   Correct navigation when subscript-level mapping "hides" data
+# select_boolean_assert-gtmde308470   [ern0]   GTMASSERT2 fatal error when ydb_side_effects/gtm_side_effects env var is 1 and $SELECT is used in a boolean expression
+# select_op_order-gtmde308470         [berwyn] Preserve left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
+# restrict_lke_clear-gtmf135380       [ern0]   Verify LKE restrictions file behaviour for LKE CLEAR command
+# socket_open_mupip_stop-gtmde297205  [nars]   MUPIP STOP in the midst of SOCKET OPEN does not produce GTMASSERT2 fatal error
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"sub_level_map_hide-gtmde270421"
+
+setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic sub_level_map_hide-gtmde270421"
 setenv subtest_list_non_replic	"$subtest_list_non_replic select_boolean_assert-gtmde308470"
 setenv subtest_list_non_replic	"$subtest_list_non_replic select_op_order-gtmde308470"
 setenv subtest_list_non_replic	"$subtest_list_non_replic restrict_lke_clear-gtmf135380"
+setenv subtest_list_non_replic	"$subtest_list_non_replic socket_open_mupip_stop-gtmde297205"
+
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

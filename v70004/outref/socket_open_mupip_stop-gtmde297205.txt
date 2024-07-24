@@ -1,0 +1,20 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE297205)
+# 
+# GT.M processes shut down gracefully when they receive a MUPIP STOP while preforming an OPEN of a SOCKET
+# device. Previously, these conditions could cause a GT.M process to issue a GTMASSERT2 error. (GTM-DE297205)
+# 
+# Details of test at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/608#note_2014313187
+# Run [mumps -run gtmde297205] in the background
+# This M program does SOCKET OPEN and CLOSE:(DESTROY) in an indefinite FOR loop
+# While the SOCKET OPEN is running in the background, send a MUPIP STOP to the M program
+# We do not expect to see any GTMASSERT2 messages below
+# GT.M V7.0-003 PRO build used to terminate abnormally with such messages 10% of the time
+##TEST_AWKSTOP issued to process [0-9]*
+# Wait for M program in the background to stop
+# Examine the output of the M program to make sure no unexpected/fatal/GTMASSERT2 errors
+##TEST_AWK\[[0-9]*\] [0-9]*
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
