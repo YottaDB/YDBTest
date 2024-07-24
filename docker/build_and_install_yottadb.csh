@@ -1,4 +1,4 @@
-#!/bin/tcsh
+#!/bin/tcsh -e
 #################################################################
 #								#
 # Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
