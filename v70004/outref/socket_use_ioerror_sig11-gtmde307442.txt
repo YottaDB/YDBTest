@@ -1,0 +1,59 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE307442)
+# 
+# SOCKET device USE handles errors associated with device parameters CONNECT or LISTEN and IOERROR="T"
+# appropriately. Previously, such errors could cause odd behavior including segmentation violation
+# (SIG-11). This was only seen in development and not reported by a customer. (GTM-DE307442)
+# 
+# ********************************************************************************************
+# Test SOCKET USE device parameter errors (details at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/611#note_2016600532)
+# We expect a graceful %GTM-E-SOCKBIND error (Address already in use) below.
+# GT.M V7.0-003 used to SIG-11 in PRO builds and Assert fail in DBG builds
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-SOCKBIND, Error in binding socket
+%SYSTEM-E-ENO98, Address already in use
+
+GTM>
+# ********************************************************************************************
+# Test SOCKET OPEN device parameter errors (details at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/611#note_2016610296)
+# We expect a graceful %GTM-E-SOCKBIND error below followed by a DESC=4 in the socketgood line of the zshow d output.
+# GT.M V7.0-003 used to show DESC=7 instead which indicated a file descriptor leak in the OPEN commands that errored out.
+
+GTM>
+
+GTM>
+
+GTM>
+%GTM-E-SOCKBIND, Error in binding socket
+%SYSTEM-E-ENO98, Address already in use
+
+GTM>
+%GTM-E-SOCKBIND, Error in binding socket
+%SYSTEM-E-ENO98, Address already in use
+
+GTM>
+%GTM-E-SOCKBIND, Error in binding socket
+%SYSTEM-E-ENO98, Address already in use
+
+GTM>
+
+GTM>
+
+GTM>
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+socket OPEN SOCKET TOTAL=2 CURRENT=1 
+##TEST_AWK        SOCKET\[0\]=h[0-9]* DESC=3 LISTENING PASSIVE  TRAP  REMOTE= LOCAL=socketbad 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[1\]=h[[0-9]* DESC=4 LISTENING PASSIVE  TRAP  REMOTE= LOCAL=socketgood 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+
+GTM>
