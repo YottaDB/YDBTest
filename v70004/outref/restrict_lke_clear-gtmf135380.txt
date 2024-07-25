@@ -1,0 +1,168 @@
+# Release note (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-F135380) says:
+#
+# > The LKECLEAR keyword in the GT.M restrictions file prevents
+# > the use of the LKE CLEAR command by unauthorized users,
+# > while the LKE keyword prevents any unauthorized use of the
+# > LKE utility. Previously the only way to restrict the use of
+# > LKE was by setting the authorizations on the executable; there
+# > was no way to allow the use of LKE while blocking the use of
+# > LKE CLEAR. (GTM-F135380)
+
+# prepare read-write $gtm_dist directory
+# create database
+# Start background process (LOCK ^global(1)..^global(20))
+
+# -------- case 1 --------
+# restrict.txt does not exist
+# not executing LKE
+# attempt to lock ^global(1), which is locked
+attempt to lock ^global(1) - lock failed - test succeed
+
+# -------- case 2 --------
+# restrict.txt (read-only):
+LKE
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(2)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE --generated from 0x<value_masked>
+# attempt to lock ^global(2), which is locked
+attempt to lock ^global(2) - lock failed - test succeed
+
+# -------- case 3 --------
+# restrict.txt (read-only):
+LKECLEAR
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(3)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR --generated from 0x<value_masked>
+# attempt to lock ^global(3), which is locked
+attempt to lock ^global(3) - lock failed - test succeed
+
+# -------- case 4 --------
+# restrict.txt (read-only):
+LKE
+LKECLEAR
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(4)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE --generated from 0x<value_masked>
+# attempt to lock ^global(4), which is locked
+attempt to lock ^global(4) - lock failed - test succeed
+
+# -------- case 5 --------
+# restrict.txt (read-only):
+LKE:##EXGID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(5)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE --generated from 0x<value_masked>
+# attempt to lock ^global(5), which is locked
+attempt to lock ^global(5) - lock failed - test succeed
+
+# -------- case 6 --------
+# restrict.txt (read-only):
+LKECLEAR:##EXGID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(6)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR --generated from 0x<value_masked>
+# attempt to lock ^global(6), which is locked
+attempt to lock ^global(6) - lock failed - test succeed
+
+# -------- case 7 --------
+# restrict.txt (read-only):
+LKE:##EXGID##  # substituted
+LKECLEAR:##EXGID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(7)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE --generated from 0x<value_masked>
+# attempt to lock ^global(7), which is locked
+attempt to lock ^global(7) - lock failed - test succeed
+
+# -------- case 8 --------
+# restrict.txt (read-only):
+LKE:##GID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(8)
+DEFAULT
+Lock removed : ^global(8)
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(8), which is cleared
+attempt to lock ^global(8) - lock succeed - test succeed
+
+# -------- case 9 --------
+# restrict.txt (read-only):
+LKECLEAR:##GID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(9)
+DEFAULT
+Lock removed : ^global(9)
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(9), which is cleared
+attempt to lock ^global(9) - lock succeed - test succeed
+
+# -------- case 10 --------
+# restrict.txt (read-only):
+LKE:##GID##  # substituted
+LKECLEAR:##GID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(10)
+DEFAULT
+Lock removed : ^global(10)
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(10), which is cleared
+attempt to lock ^global(10) - lock succeed - test succeed
+
+# -------- case 11 --------
+# restrict.txt (read-only):
+LKE:##GID##  # substituted
+LKECLEAR:##EXGID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(11)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKECLEAR --generated from 0x<value_masked>
+# attempt to lock ^global(11), which is locked
+attempt to lock ^global(11) - lock failed - test succeed
+
+# -------- case 12 --------
+# restrict.txt (read-only):
+LKE:##EXGID##  # substituted
+LKECLEAR:##GID##  # substituted
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(12)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE
+# checking strace output for errors in syslog messages
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: LKE --generated from 0x<value_masked>
+# attempt to lock ^global(12), which is locked
+attempt to lock ^global(12) - lock failed - test succeed
+
+# -------- case 13 --------
+# restrict.txt does not exist
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(13)
+DEFAULT
+Lock removed : ^global(13)
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(13), which is cleared
+attempt to lock ^global(13) - lock succeed - test succeed
+
+# -------- case 14 --------
+# restrict.txt (read-only):
+HALT
+# execute LKE command: CLEAR -NOINTERACTIVE -LOCK=^global(14)
+DEFAULT
+Lock removed : ^global(14)
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(14), which is cleared
+attempt to lock ^global(14) - lock succeed - test succeed
+
+# -------- case 15 --------
+# restrict.txt (read-only):
+LKECLEAR:##EXGID##  # substituted
+# execute LKE command: EXIT
+# checking strace output for errors in syslog messages
+# attempt to lock ^global(15), which is locked
+attempt to lock ^global(15) - lock failed - test succeed
+
+# ---- cleanup ----
+# send stop request to background process
+# wait background process to finish
+# attempt to lock ^global(16), got released when bacground process has terminated
+attempt to lock ^global(16) - lock succeed - test succeed
+# shutdown database
