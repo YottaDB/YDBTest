@@ -1,0 +1,25 @@
+# Issue description says:
+#
+# > This is an issue that was reported at https://groups.google.com/g/comp.lang.mumps/c/ziaED-gM8wM?pli=1
+# > Based on that report, I was able to come up with the following
+# > simple test case that demonstrates the issue.
+# >
+# > While trying this test case out with upstream releases (GT.M
+# > versions), I noticed that the above test fails similarly in
+# > all upstream releases except the latest GT.M V7.0-004. It
+# > turns out to have been fixed there.
+# >
+# > Release notes http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE270421 says:
+# >
+# >> GT.M handles $ORDER(), $ZPREVIOUS(), $QUERY(), $NEXT(),
+# >> and MERGE operations which traverse subscript-level mappings
+# >> correctly. Previously, these operations could return gvns
+# >> which should have been excluded by the global directory. In
+# >> the case of MERGE, the target could contain data from excluded
+# >> subtrees. (GTM-DE270421)
+
+# This is an automated test of the test case described at
+# https://gitlab.com/YottaDB/DB/YDB/-/issues/960#description.
+# The output expected below is g="^a(2,1)".
+# Before YDB#960, one used to instead see a GVUNDEF error.
+g="^a(2,1)"
