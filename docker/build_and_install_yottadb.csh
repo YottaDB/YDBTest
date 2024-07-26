@@ -81,7 +81,13 @@ foreach file (sr_*/release_name.h)
 end
 
 mkdir -p $gtm_root/$verno
+
+# We need to set nonomatch here bacause we're not sure that 
+# $gtm_root/$verno have anything inside already just we want to clean it first
+# then we will set nomatch back after this line is done
+set nonomatch
 rm -rf $gtm_root/$verno/*
+set nomatch
 
 mkdir -p /Distrib/YottaDB/$verno/dbg
 cd /Distrib/YottaDB/$verno/dbg
@@ -109,16 +115,49 @@ foreach ext (c s msg h si)
                 set dir = "src"
         endif
 	mkdir -p $gtm_ver/$dir
-        cp -pa sr_port/*.$ext $gtm_ver/$dir/
-        cp -pa sr_port_cm/*.$ext $gtm_ver/$dir/
-        cp -pa sr_unix/*.$ext $gtm_ver/$dir/
-        cp -pa sr_unix_cm/*.$ext $gtm_ver/$dir/
-        cp -pa sr_unix_gnp/*.$ext $gtm_ver/$dir/
+
+	# Check if file extension exists first then do cp
+	set filecount=`find "sr_port/ "-maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_port/*.$ext $gtm_ver/$dir/
+	endif
+
+	set filecount=`find "sr_port_cm/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_port_cm/*.$ext $gtm_ver/$dir/
+	endif
+
+        set filecount=`find "sr_unix/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_unix/*.$ext $gtm_ver/$dir/
+	endif
+
+        set filecount=`find "sr_unix_cm/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_unix_cm/*.$ext $gtm_ver/$dir/
+	endif
+
+        set filecount=`find "sr_unix_gnp/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_unix_gnp/*.$ext $gtm_ver/$dir/
+	endif
+
         if (${machtype} == "x86_64") then
-                cp -pa sr_x86_regs/*.$ext $gtm_ver/$dir/
-        endif
-        cp -pa sr_${machtype}/*.$ext $gtm_ver/$dir/
-        cp -pa sr_linux/*.$ext $gtm_ver/$dir/
+		set filecount=`find "sr_x86_regs/ "-maxdepth 1 -name "*.$ext" | wc -l`
+		if ($filecount > 0) then
+			cp -pa sr_x86_regs/*.$ext $gtm_ver/$dir/
+		endif
+	endif
+
+	set filecount=`find "sr_${machtype}/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_${machtype}/*.$ext $gtm_ver/$dir/
+	endif
+
+	set filecount=`find "sr_linux/" -maxdepth 1 -name "*.$ext" | wc -l`
+	if ($filecount > 0) then
+		cp -pa sr_linux/*.$ext $gtm_ver/$dir/
+	endif
 end
 
 # TODO: All the plugin installs are re-installed in the YottaDB pipeline.
@@ -148,6 +187,10 @@ else
 endif
 cp $java_path_script .
 setenv HOSTOS `uname -s`
+# gtm_test_serverconf_file and gtm_dist variables are needed for installing GTMJI Plugin
+setenv gtm_test_serverconf_file /usr/library/gtm_test/T999/docker/serverconf.txt
+setenv gtm_dist $ydb_dist
+
 source set_java_paths.csh
 make install && make clean
 cd ..

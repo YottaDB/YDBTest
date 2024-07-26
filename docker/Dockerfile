@@ -92,6 +92,9 @@ RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
 # Allow gtmtest as a member of the sudo group to use sudo with no password for the sudo tests
 RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
 COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
+# serverconf.txt file is needed for installing GTMJI Plugin so we need to copy it into the conatainer first.
+# Otherwise build_and_install_yottadb.csh script will fail.
+COPY docker/serverconf.txt /usr/library/gtm_test/T999/docker/serverconf.txt
 COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
 RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh
