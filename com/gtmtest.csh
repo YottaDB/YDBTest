@@ -414,7 +414,7 @@ if ( ($?exclude_servers) && !($?gtm_test_nomultihost) ) then
 endif
 
 ############
-# Exclude "go" test if ASAN is enabled and CLANG is the compiler (not GCC).
+# Exclude "go" test if ASAN is enabled, CLANG is the compiler (not GCC), Go version is less than 1.18 or Linux distribution is RHEL.
 # --------------------------------------------------------------------------
 # In this case we get errors like the following from a "go build".
 #	/usr/bin/ld: dbg/libyottadb.so: undefined reference to `__asan_stack_free_7'
@@ -425,8 +425,16 @@ endif
 # is to use LD_PRELOAD which sounds risky and so I am not going there for now.
 # Also https://go-review.googlesource.com/c/go/+/368834/2/doc/go1.18.html seems to suggest a new "-asan" option in "go build"
 # which will let it interoperate with C code compiled with the address sanitizer.
-# Therefore, we disable all "go" tests if ASAN is enabled AND YottaDB was built with CLANG.
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+#
+# Therefore, we disable all "go" test when:
+# 1) ASAN is enabled
+# 2) YottaDB was build with CLANG
+# 3) Go version is less than 1.18
+# 4) Linux distribution is RHEL
+# For the discussion why we need to disable go tests for RHEL
+# Discussion in https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2053#note_2043556763
+#
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
 	echo "-x go" >>! $test_list
 endif
 

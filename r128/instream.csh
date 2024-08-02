@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,7 +43,7 @@ if ("pro" != "$tst_image") then
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
 	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb478"
 endif

@@ -132,10 +132,16 @@ setenv GO111MODULE off	# Keep this off as we rely on this for "go build" command
 			# GO111MODULE=on irrespective of the env var setting but we handle that separately later.
 set gotest = "go test"
 
+# If ASAN enabled and Go version < 1.18, using go build flag `-fsanitize=address`
+# But if ASAN enabled and Go version >= 1.18, using `-asan` flag instead
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with asan enabled. Do the same with the go executables.
-	set asanflags = "-asan"
+	if ($ydb_test_gover_lt_118_or_rhel) then
+		set asanflags = "'-fsanitize=address'"
+	else
+		set asanflags = "-asan"
+	endif
 	set gobuild = "$gobuild $asanflags"
 	set gotest = "$gotest $asanflags"
 endif

@@ -215,5 +215,16 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 		setenv ydb_test_openssl3_plus 1
 	endif
 endif
+
+# Determine Go version if it less than 1.18 or not. Go version less than 1.18
+# combined with ASAN and CLANG will causing error in some tests.
+# We also disabled ASAN+CLANG combination for all go tests in all RHEL machine.
+set go_version = `go version | $tst_awk -F " go" '{print $2}' | $tst_awk -F "." '{print $1"."$2}'`
+if (( `expr $go_version \< "1.18"` ) || ("rhel" == $gtm_test_linux_distrib)) then
+	setenv ydb_test_gover_lt_118_or_rhel 1
+else
+	setenv ydb_test_gover_lt_118_or_rhel 0
+endif
+
 set anyerror
 ##### HOST SPECIFIC FUNNIES ####
