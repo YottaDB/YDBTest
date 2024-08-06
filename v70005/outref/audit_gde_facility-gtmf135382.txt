@@ -1,0 +1,192 @@
+# *****************************************************************
+# GTM-F135383 - Test the following release note
+# *****************************************************************
+#
+# Release Note says:
+#
+# > When LGDE is specified as an option for the AZA_ENABLE
+# > facility, GDE logs all commands. For example, an entry like
+# > the following in $gtm_dist/restrict.txt enables GDE logging
+# > via a local socket:
+# >
+# > AZA_ENABLE:LGDE:/path/to/sock/file/audit.sock
+# > The AZA_ENABLE facility enables the use of the $ZAUDITLOG()
+# > function which GDE uses for logging commands. Refer to
+# > GTM-F170998 for information on the $ZAUDITLOG() function and
+# > for other possible use in application audit logging.
+# > Previously, GDE did not provide an audit logging option.
+# > (GTM-F135382)
+
+# ---- startup ----
+# prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# allocate a port number for TCP and TLS modes
+# set Unix socket filename
+# set crypt config file path and name
+# set-up crypt config file for section clicert
+# create database
+# create GDE script
+# get group ID for restrict.txt
+
+# ---- test tcp logging ----
+# setup restrict.txt: audit logging with tcp
+# attempt to execute a GDE command - should fail, due to logging fail
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# show errors from syslog, from strace output:
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+# launch tcp audit_listener
+# wait for pidfile
+# attempt to execute a GDE command - should succeed and logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log
+# show log captured, should show the GDE commands:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -name anonymous
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -template
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -map
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=add -gblname myglob -collation=0
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=delete -gblname myglob
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# show errors from syslog, from strace output:
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# attempt to execute a GDE command - should succeed, but not logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log - won't happen
+# show log captured - should be empty:
+# show errors from syslog, from strace output - should be none:
+# stop audit_listener and wait for finish
+
+# ---- test tls logging ----
+# setup restrict.txt: audit logging with tls
+# attempt to execute a GDE command - should fail, due to logging fail
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# show errors from syslog, from strace output:
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+# launch tls audit_listener
+# wait for pidfile
+# attempt to execute a GDE command - should succeed and logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log
+# show log captured, should show the GDE commands:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -name anonymous
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -template
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -map
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=add -gblname myglob -collation=0
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=delete -gblname myglob
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# show errors from syslog, from strace output:
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# attempt to execute a GDE command - should succeed, but not logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log - won't happen
+# show log captured - should be empty:
+# show errors from syslog, from strace output - should be none:
+# stop audit_listener and wait for finish
+
+# ---- test unix_socket logging ----
+# setup restrict.txt: audit logging with unix_socket
+# attempt to execute a GDE command - should fail, due to logging fail
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# show errors from syslog, from strace output:
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+# launch unix_socket audit_listener
+# wait for pidfile
+# attempt to execute a GDE command - should succeed and logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log
+# show log captured, should show the GDE commands:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -name anonymous
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -template
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=verify -map
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=add -gblname myglob -collation=0
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=delete -gblname myglob
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=show -gblname
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# show errors from syslog, from strace output:
+# reset log by sending SIGHUP to the audit listener
+# setup restrict.txt: no audit logging
+# attempt to execute a GDE command - should succeed, but not logged
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-OBJNOTFND, Name anonymous does not exist
+%GDE-I-VERIFY, Verification OK
+%GDE-I-VERIFY, Verification OK
+*** GBLNAMES ***
+Global Coll Ver
+------------------------------------------------------------------------------
+myglob 0 0
+%GDE-I-VERIFY, Verification OK
+%GDE-I-GDUPDATE, Updating Global Directory file
+# wait for entries added to log - won't happen
+# show log captured - should be empty:
+# show errors from syslog, from strace output - should be none:
+# stop audit_listener and wait for finish
+
+# ---- cleanup ----
+# shutdown database
+# release port number
