@@ -1,0 +1,1394 @@
+# *****************************************************************
+# Test the behaviour mentioned in the comment
+# *****************************************************************
+#
+# This comment explains a regression:
+# https://gitlab.com/YottaDB/DB/YDB/-/issues/780#note_1937891232
+#
+# > While trying to identify all scenarios which need
+# > documentation (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2007#note_1937772663
+# > for details on one scenario that was found as lacking
+# > documentation), I noticed a regression in GT.M V7.0-000.
+# >
+# > https://docs.yottadb.com/AdminOpsGuide/basicops.html#configuring-the-restriction-facility
+# > says the following.
+# >
+# >> If the file exists, a process that has:
+# >> * write authorization to restrict.txt has no restrictions;
+# >
+# > And this was true in GT.M V6.3-014, but it is not in
+# > GT.M V7.0-000.
+#
+# If restrict.txt have *write* permission, it should be ignored,
+# even if it contains invalid group name, which, with no *write*
+# permission, considered as syntax error, and all features are
+# disabled.
+
+# set group IDs for restrict.txt
+# prepare read-write $gtm_dist directory
+# create database
+# create test cases
+
+# ---- restrict.txt (does not exist) ----
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+ 25
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+ 25
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE is empty (disabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+ ...HALT failed
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (ro) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to execute HALT instruction in M program
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# check direct mode
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+# attempt to launch DSE
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##MYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##MYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##INVALIDGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##INVALIDGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##NOTMYGID##
+HALT:##INVALIDGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##MYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##MYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##MYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# ---- restrict.txt (rw) ----
+ZCMDLINE:##INVALIDGID##
+HALT:##NOTMYGID##
+DIRECT_MODE:##NOTMYGID##
+DSE:##NOTMYGID##
+# attempt to print $ZCMDLINE in M program
+ $ZCMDLINE="Hello, world" (enabled)
+# attempt to execute HALT instruction in M program
+ HALT...
+# check direct mode
+ 25
+# attempt to launch DSE
+Region	DEFAULT
+
+# shutdown database
