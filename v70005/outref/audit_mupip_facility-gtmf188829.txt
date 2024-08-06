@@ -1,0 +1,73 @@
+# *****************************************************************
+# GTM-F188829 - Test the following release note
+# *****************************************************************
+#
+# Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F188829 says:
+#
+# > When the restriction file contains a line specifying
+# > AM_ENABLE, commands typed at the MUPIP prompt (MUPIP>) are
+# > audit logged and executed the same as MUPIP shell commands.
+# > Note that MUPIP returns to the shell after each command.
+# > Previously, when this facility was enabled, all commands
+# > typed at the MUPIP prompt (MUPIP>) produced the RESTRICTEDOP
+# > error. (GTM-F188829)
+
+# ---- startup ----
+# prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# allocate a port number for TCP and TLS modes
+# set Unix socket filename
+# set crypt config file path and name
+# set-up crypt config file for section clicert
+# get group ID for restrict.txt
+
+# ---- test tcp logging ----
+# setup restrict.txt: audit logging with tcp
+# attempt to execute MUPIP shell commands
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# launch tcp audit_listener
+# wait for pidfile
+# attempt to execute MUPIP shell commands
+Error issuing INTRPT to process 1: Operation not permitted
+# wait for entries added to log
+# show log captured (should be the MUPIP commands):
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# ---- test tls logging ----
+# setup restrict.txt: audit logging with tls
+# attempt to execute MUPIP shell commands
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# launch tls audit_listener
+# wait for pidfile
+# attempt to execute MUPIP shell commands
+Error issuing INTRPT to process 1: Operation not permitted
+# wait for entries added to log
+# show log captured (should be the MUPIP commands):
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# ---- test unix_socket logging ----
+# setup restrict.txt: audit logging with unix_socket
+# attempt to execute MUPIP shell commands
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+# launch unix_socket audit_listener
+# wait for pidfile
+# attempt to execute MUPIP shell commands
+Error issuing INTRPT to process 1: Operation not permitted
+# wait for entries added to log
+# show log captured (should be the MUPIP commands):
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
+<timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# ---- cleanup ----
+# release port number

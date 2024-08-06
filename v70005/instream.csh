@@ -22,6 +22,7 @@
 # stack_over-gtmf135319           [berwyn] Tests for correct error when a single operation exceeds both STACKCRIT and STACKOFLOW
 # audit_gde_facility-gtmf135382	  [ern0]   Test Audit GDE facility
 # zauditlog-gtmf170998            [ern0]   Test $ZAUDITLOG() function for possible application audit logging, and audit GDE facility
+# audit_mupip_facility-gtmf188829 [ern0]   Test Audit MUPIP facility
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -37,6 +38,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic namelevel_zprevious-gtm
 setenv subtest_list_non_replic	"$subtest_list_non_replic stack_over-gtmf135319"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_gde_facility-gtmf135382"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zauditlog-gtmf170998"
+setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_facility-gtmf188829"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
