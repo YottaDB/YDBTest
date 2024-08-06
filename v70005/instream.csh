@@ -21,6 +21,7 @@
 # namelevel_zprevious-gtmde327593 [nars]   Test that name-level $zprevious does not return input global name
 # stack_over-gtmf135319           [berwyn] Tests for correct error when a single operation exceeds both STACKCRIT and STACKOFLOW
 # audit_gde_facility-gtmf135382	  [ern0]   Test Audit GDE facility
+# zauditlog-gtmf170998            [ern0]   Test $ZAUDITLOG() function for possible application audit logging, and audit GDE facility
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -35,6 +36,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic audit_dse_facility-gtmf
 setenv subtest_list_non_replic	"$subtest_list_non_replic namelevel_zprevious-gtmde327593"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stack_over-gtmf135319"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_gde_facility-gtmf135382"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zauditlog-gtmf170998"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then

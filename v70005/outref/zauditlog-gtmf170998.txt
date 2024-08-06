@@ -1,0 +1,289 @@
+# *****************************************************************
+# GTM-F170998 - Test the following release note
+# *****************************************************************
+#
+# Release note (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F170998) says:
+#
+# > The $ZAUDITLOG() function establishes a connection via a
+# > socket and sends its argument to a logger/listener process.
+# > It requires setting the AZA_ENABLE audit logging facility in
+# > the $gtm_dist/restrict.txt file. The format for the
+# > $ZAUDITLOG() function is:
+# >
+# > ZAUDITLOG(expr)
+# >
+# > expr specifies the string to send for audit logging
+# >
+# > $ZAUDITLOG() identifies its message with src=4, and like
+# > other GT.M logging facilities, records the location of GT.M
+# > distribution, uid, euid, pid, tty, and the
+# > command / argument(s).
+# >
+# > A return of: TRUE (1) indicates successful logging,
+# > FALSE (0) indicates logging is not enabled; a trappable
+# > RESTRICTEDOP error indicates logging is enabled but not
+# > working.
+# >
+# > If LGDE is specified as an option for the AZA_ENABLE facility,
+# > GDE logs all commands. GT.M ignores this option if specified
+# > with other A\*\_ENABLE audit logging facilities. When it fails
+# > to log a command, GDE issues a GDELOGFAIL error. The following
+# > table characterizes $ZAUDITLOG() and GDE audit logging behavior:
+# >
+# > **$ZAUDITLOG() / GDE logging Characteristics**
+# >
+# > | AZA_ENABLE   | LGDE   | Logging success   | GDE audit logging   | $ZAUDITLOG() result  |
+# > |--------------|--------|-------------------|---------------------|-----------------------|
+# > | Yes          | Yes    | Yes               | Yes                 | 1                     |
+# > | Yes          | No     | Yes               | No                  | 1                     |
+# > | Yes          | Yes    | No                | GDELOGFAIL error    | RESTRICTEDOP error    |
+# > | Yes          | No     | No                | No                  | RESTRICTEDOP error    |
+# > | No           | N/A    | N/A               | No                  | 0                     |
+# >
+# > Previously, GT.M did not support the $ZAUDITLOG() function.
+# > (GTM-F170998)
+
+# ---- startup ----
+# prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# set Unix socket filename
+# set ydb_crypt_config file path and name
+# set-up crypt_config file for section clicert
+# create database
+# get group ID for restrict.txt
+
+# ---- connection: tcp, restrict.txt: AZA_ENABLE:LGDE:127.0.0.1:##PORTNO## ----
+# allocate a port number
+# setup restrict.txt
+# launch tcp audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log
+# show GDE log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+# release port number
+
+# ---- connection: tcp, restrict.txt: AZA_ENABLE::127.0.0.1:##PORTNO## ----
+# allocate a port number
+# setup restrict.txt
+# launch tcp audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+# release port number
+
+# ---- connection: none, restrict.txt: AZA_ENABLE:LGDE:127.0.0.1:##PORTNO## ----
+# allocate a port number
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+# release port number
+
+# ---- connection: none, restrict.txt: AZA_ENABLE::127.0.0.1:##PORTNO## ----
+# allocate a port number
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+# release port number
+
+# ---- connection: tls, restrict.txt: AZA_ENABLE:LGDE,TLS:127.0.0.1:##PORTNO##:clicert ----
+# allocate a port number
+# setup restrict.txt
+# launch tls audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log
+# show GDE log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+# release port number
+
+# ---- connection: tls, restrict.txt: AZA_ENABLE:TLS:127.0.0.1:##PORTNO##:clicert ----
+# allocate a port number
+# setup restrict.txt
+# launch tls audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+# release port number
+
+# ---- connection: none, restrict.txt: AZA_ENABLE:LGDE,TLS:127.0.0.1:##PORTNO##:clicert ----
+# allocate a port number
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+# release port number
+
+# ---- connection: none, restrict.txt: AZA_ENABLE:TLS:127.0.0.1:##PORTNO##:clicert ----
+# allocate a port number
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+# release port number
+
+# ---- connection: unix_socket, restrict.txt: AZA_ENABLE:LGDE:audit.sock ----
+# setup restrict.txt
+# launch unix_socket audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log
+# show GDE log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
+# reset log
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+
+# ---- connection: unix_socket, restrict.txt: AZA_ENABLE::audit.sock ----
+# setup restrict.txt
+# launch unix_socket audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 1 - successful logging
+# wait for $ZAUDITLOG() entry added to log
+# show $ZAUDITLOG() log captured:
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=rock'n'roll
+# reset log
+# stop audit_listener and wait for finish
+
+# ---- connection: none, restrict.txt: AZA_ENABLE:LGDE:audit.sock ----
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-E-GDELOGFAIL, GDE failed to log command. Check operator log for more information
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+
+# ---- connection: none, restrict.txt: AZA_ENABLE::audit.sock ----
+# setup restrict.txt
+# do not launch audit_listener
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+
+# ---- connection: tcp, restrict.txt: LIBRARY:##GID## ----
+# notice:
+#  case where there's no AZA_ENABLE in restrict.txt,
+#  only a neutral entry, e.g. LIBRARY
+# setup restrict.txt
+# launch tcp audit_listener
+# wait for pidfile
+# attempt to execute a GDE command
+%GDE-I-LOADGD, Loading Global Directory file
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory
+# wait for GDE entry added to log (won't happen)
+# show GDE log captured (should be empty):
+# attempt to execute a M script with $ZAUDITLOG()
+result: 0 - logging is not enabled
+# wait for $ZAUDITLOG() entry added to log (won't happen)
+# show $ZAUDITLOG() log captured (should be empty):
+# stop audit_listener and wait for finish
+
+# ---- cleanup ----
+# shutdown database
