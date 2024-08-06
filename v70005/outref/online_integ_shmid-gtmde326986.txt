@@ -1,0 +1,41 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-DE326986)
+# 
+# GT.M processes detach from shared memory associated with MUPIP INTEG snapshots correctly. Previously,
+# relatively idle GT.M processes could remain attached to such shared memory segments on unjournaled
+# regions or when the journal file switched while the snapshot was active, which prevented GT.M process
+# rundown from removing shared memory. The workaround was to use MUPIP RUNDOWN. (GTM-DE326986)
+# 
+# Disable journaling in this test as it is easy to test the unjournaled region case in the release note
+# Create 2-region database (AREG and DEFAULT)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Execute [mumps -run gtmde326986] to start mumps processes that update AREG in background
+; Start 8 child jobs to attach to AREG region while MUPIP INTEG -ONLINE is concurrently running
+; Induce a random sleep in child before update to AREG (using ^a global) in child^gtmde3269786 to
+; ensure more chances of a job's update to AREG happening while a MUPIP INTEG -ONLINE is in progress
+# Run [mupip integ -online -dbg -reg areg] in the foreground in a loop until a snapshot shmid created by the integ
+# is seen to exist even after the integ process terminated. That implies a concurrent mumps process
+# attached to this snapshot shmid as part of its update to AREG.
+# Now that we have a snapshot shmid that exists even after the online integ terminated, wait for 1 minute
+# for the mumps process to detach from the shmid. That should completely remove the shmid from the system
+# (the online integ would have only marked the shmid for deletion when the last process attached to the
+# shm detaches from it).
+# In GT.M V7.0-004, the shmid would stay on for ever (i.e. even after 1 minute) whereas in GT.M V7.0-005
+# the shmid would go away after approximately a 1 minute wait.
+# Therefore sleep for about 65 seconds (including a 5 second buffer) before checking if shmid exists on system
+# Now that sleep is done, check if snapshot shmid still exists (it should not)
+##TEST_AWKTEST-S-PASS : snapshot shmid \[[0-9]*\] no longer exists in system \(as expected\)
+# Signal background mumps process to stop now that test is done
+# Wait for background jobs to terminate
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

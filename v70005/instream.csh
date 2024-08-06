@@ -23,6 +23,7 @@
 # audit_gde_facility-gtmf135382	  [ern0]   Test Audit GDE facility
 # zauditlog-gtmf170998            [ern0]   Test $ZAUDITLOG() function for possible application audit logging, and audit GDE facility
 # audit_mupip_facility-gtmf188829 [ern0]   Test Audit MUPIP facility
+# online_integ_shmid-gtmde326986  [nars]   Test that relatively idle GT.M processes detach from snapshot shmid in a timely fashion
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -39,6 +40,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic stack_over-gtmf135319"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_gde_facility-gtmf135382"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zauditlog-gtmf170998"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_facility-gtmf188829"
+setenv subtest_list_non_replic	"$subtest_list_non_replic online_integ_shmid-gtmde326986"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
