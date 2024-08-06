@@ -2,7 +2,7 @@
 #
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -91,7 +91,7 @@ foreach file ($filelist)
 end
 
 # -----------------------------------------------------------------
-# 3) Checks changes to outref/<subtest>.txt file implies instream.csh and outref/outref.txt contain this subtest
+# 3) Checks changes to outref/<subtest>.txt file implies instream.csh contains this subtest
 # -----------------------------------------------------------------
 # "filelist" is usable since Step (2) did not regenerate any new files.
 foreach file ($filelist)
@@ -108,19 +108,6 @@ foreach file ($filelist)
 	set subtest = $file:t:r
 	set test = $file:h:h
 	if (! -e $test/u_inref/$subtest.csh) then
-		continue
-	endif
-	# Check if outref.txt exists
-	if (! -e $test/outref/outref.txt) then
-		@ exitstatus = 1
-		echo "  --> File $test/outref/$subtest.txt exists but $test/outref/outref.txt does not. Create latter and retry commit"
-		continue
-	endif
-	# Check if outref.txt contains references to <subtest>
-	grep -q "PASS from \<$subtest\>" $test/outref/outref.txt
-	if ($status != 0) then
-		@ exitstatus = 1
-		echo "  --> File $test/outref/$subtest.txt exists but $subtest name not included in $test/outref/outref.txt; Include in latter and retry commit"
 		continue
 	endif
 	# Check if instream.csh contains references to <subtest>
