@@ -24,6 +24,7 @@
 # bool_expr_equnul-ydb777       		[nars]    Test that s="" and s'="" in simple boolean expressions are fast
 # bad_query_res_on_mapped_sub_lvl-ydb960	[ern0]    Test that $QUERY(gvn) returns correct results when global names are mapped at the subscript level
 # ignore_restrict_on_write_auth-ydb1085		[ern0]    Test that restrict.txt is completely ignored if it has write auth
+# zextract_utf8_literal-ydb1093                 [nars]    Test that $ZEXTRACT does not behave like $EXTRACT in UTF-8 mode for literal parameters
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic max_truncate_to_error-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_equnul-ydb777"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bad_query_res_on_mapped_sub_lvl-ydb960"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ignore_restrict_on_write_auth-ydb1085"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zextract_utf8_literal-ydb1093"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
