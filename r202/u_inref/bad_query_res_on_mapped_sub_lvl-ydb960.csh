@@ -34,11 +34,6 @@ Issue description says:
 CAT_EOF
 echo ''
 
-unset ydb_gbldir
-unset ydb_routines
-
-setenv gtmroutines ". $ydb_dist"
-
 setenv gtmgbldir "1reg.gld"
 rm -f $gtmgbldir
 $ydb_dist/mumps -run GDE >& gde1.out << GDE1_EOF
