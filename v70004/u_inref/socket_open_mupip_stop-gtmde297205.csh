@@ -30,6 +30,13 @@ echo '# Run [mumps -run gtmde297205] in the background'
 echo '# This M program does SOCKET OPEN and CLOSE:(DESTROY) in an indefinite FOR loop'
 ($gtm_dist/mumps -run gtmde297205 & ; echo $! >&! bg.pid) >&! bg.out
 
+# The reference file for this test relies on MUPIP STOP of the backgrounded mumps process logging a FORCEDHALT message.
+# But that requires that the process has finished initializing its signal handlers.
+# Towards that, the M program logs a line saying so. Wait for that line to show up BEFORE sending the MUPIP STOP.
+# This avoids rare test failures where if the background process has started but not yet initialized its signal handlers
+# and we send a MUPIP STOP, we don't see a FORCEDHALT message in the output.
+$gtm_tst/com/wait_for_log.csh -log bg.out -message "Signal handler initialization done" -waitcreation
+
 echo '# While the SOCKET OPEN is running in the background, send a MUPIP STOP to the M program'
 echo '# We do not expect to see any GTMASSERT2 messages below'
 echo '# GT.M V7.0-003 PRO build used to terminate abnormally with such messages 10% of the time'

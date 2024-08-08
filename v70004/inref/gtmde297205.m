@@ -11,6 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 gtmde297205	;
+	write "Signal handler initialization done",! ; signal to caller script that MUPIP STOP signal handler has been established
         set s="socket"
         for  do
         . open s:::"SOCKET"
