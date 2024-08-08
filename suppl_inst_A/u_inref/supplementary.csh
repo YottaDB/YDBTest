@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,6 +18,18 @@
 #
 # Set gtm_test_spanreg to 0 so we avoid random mappings that can cause this test to fail.
 setenv gtm_test_spanreg 0
+
+if ($gtm_test_trigger) then
+	# This tests A->P with imptp.csh (with SLOWFILL) invoked on both sides. If -trigupdate is enabled,
+	# it would cause updates made inside the trigger on A to be played on P and in turn cause more updates
+	# on P due to local trigger definitions for the same update (possible because test framework has enabled
+	# trigger definitions due to $gtm_test_trigger being non-zero) and because SLOWFILL invocation causes
+	# "slowfill.trg" triggers to be loaded in A and P in that case. This can cause nodes like
+	# ^%slowfill("trigger") to have different values on A and P (1 and 2 respectively) because the SET trigger
+	# for such nodes does a "set $ztvalue=$ztvalue+1" causing the final value to be 1 more than the original value.
+	# This would result in a test failure with a "TEST-E-FAILED: RF_EXTR failed" symptom. Hence disable -trigupdate.
+	source $gtm_tst/com/gtm_test_trigupdate_disabled.csh
+endif
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 # 50% chances of using custom instance node name
