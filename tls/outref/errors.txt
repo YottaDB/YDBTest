@@ -46,7 +46,7 @@ Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 ----------
 ----------
 Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-##TEST_AWK%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*:(PEM|DECODER) routines:(PEM_read_bio|get_header_and_data|):(bad end line|unsupported)
+##TEST_AWK%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*:(PEM|DECODER) routines:(PEM_read_bio|get_header_and_data|PEM_read_bio_ex|):(bad end line|unsupported|bad base64 decode)
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
