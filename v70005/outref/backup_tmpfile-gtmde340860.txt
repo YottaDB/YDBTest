@@ -1,0 +1,49 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-DE340860)
+# 
+# MUPIP BACKUP does not leave temporary files when there in an error during the copy phase for a
+# multi-region backup. Previously, MUPIP BACKUP incorrectly left temporary files when there was an error
+# during the copy phase for any region except the first. (GTM-DE340860)
+# 
+# Create 2-region database (AREG and DEFAULT)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# We want to induce an error in the copy phase of the second region. Towards that we let AREG database
+# file stay in the current directory and keep DEFAULT database file in /tmp (see Test 1c in
+# v70001/u_inref/gtm9424.csh for more details).
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Recreate DEFAULT database to point to /tmp
+##TEST_AWK%GTM-I-DBFILECREATED, Database file /tmp/mumps_.*.dat created
+# Now attempt a mupip backup on both AREG and DEFAULT where the target is [bkpdir] a subdirectory in the current directory.
+# AREG backup should work fine but we would see an EXDEV error while trying to backup DEFAULT database.
+# In GT.M V7.0-004 and older versions, this would cause temporary files to be left over and an [Error removing temp dir]
+# error message displayed. In GT.M V7.0-005 and above, this error would not show up.
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bkpdir/a.dat
+%GTM-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
+%GTM-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
+##TEST_AWK%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT \(database file: /tmp/mumps_.*.dat\). Attempt: #2 of 2
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file /tmp/mumps_.*.dat backed up in file ##TEST_PATH##/bkpdir/mumps_.*.dat
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+# Check the contents of [bkpdir] to ensure no leftover temporary files.
+# Run [ls -la bkpdir]. We only expect to see a.dat and mumps.dat. Nothing else.
+# When run with GT.M V7.0-004, we would see subdirectories like [DEFAULT_64441__1.tmp/] show up.
+a.dat
+##TEST_AWKmumps_.*.dat
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

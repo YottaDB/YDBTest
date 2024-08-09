@@ -24,6 +24,7 @@
 # zauditlog-gtmf170998            [ern0]   Test $ZAUDITLOG() function for possible application audit logging, and audit GDE facility
 # audit_mupip_facility-gtmf188829 [ern0]   Test Audit MUPIP facility
 # online_integ_shmid-gtmde326986  [nars]   Test that relatively idle GT.M processes detach from snapshot shmid in a timely fashion
+# backup_tmpfile-gtmde340860      [nars]   Test that MUPIP BACKUP cleans up temporary files when multi-region backup copy errors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -41,6 +42,8 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic audit_gde_facility-gtmf
 setenv subtest_list_non_replic	"$subtest_list_non_replic zauditlog-gtmf170998"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_facility-gtmf188829"
 setenv subtest_list_non_replic	"$subtest_list_non_replic online_integ_shmid-gtmde326986"
+setenv subtest_list_non_replic	"$subtest_list_non_replic backup_tmpfile-gtmde340860"
+
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
@@ -57,6 +60,18 @@ set perf_missing = `which perf >/dev/null; echo $status`
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
 if ($perf_missing || $gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list strcat_efficiency-gtmf135278"
+endif
+
+# Skip the backup_tmpfile-gtmde340860 subtest test for the exact same conditions that "Test (1c)" is skipped in
+# "v70001/u_inref/gtm9424.csh" since both try to recreate the EXDEV error. The below logic is copied over from there.
+set exclude_backup_tmpfile_subtest = 1
+if (($ydb_test_copy_file_range_avail) && (("ubuntu" != $gtm_test_linux_distrib) || ("20.04" != $gtm_test_linux_version))) then
+	if (($tst_dir_fstype != $tmp_dir_fstype) && ("armv6l" != `uname -m`) && ("aarch64" != `uname -m`)) then
+		set exclude_backup_tmpfile_subtest = 0
+	endif
+endif
+if ($exclude_backup_tmpfile_subtest) then
+	setenv subtest_exclude_list "$subtest_exclude_list backup_tmpfile-gtmde340860"
 endif
 
 # Submit the list of subtests
