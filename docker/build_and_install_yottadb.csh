@@ -82,12 +82,12 @@ end
 
 mkdir -p $gtm_root/$verno
 
-# We need to set nonomatch here bacause we're not sure that 
+# We need to set nonomatch here bacause we're not sure that
 # $gtm_root/$verno have anything inside already just we want to clean it first
-# then we will set nomatch back after this line is done
+# then we will unset nonomatch after this line is done
 set nonomatch
 rm -rf $gtm_root/$verno/*
-set nomatch
+unset nonomatch
 
 mkdir -p /Distrib/YottaDB/$verno/dbg
 cd /Distrib/YottaDB/$verno/dbg
