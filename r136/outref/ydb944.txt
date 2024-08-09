@@ -4,15 +4,23 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-# Test that no %YDB-E-TPFAIL error (eeee) when cnl->tp_hint is almost 2GiB
+# Test that no %YDB-E-TPFAIL error (eeee) when cnl->tp_hint is almost 2**31 (for V6) or 2**63 (V7)
 # This test is based on https://gitlab.com/YottaDB/DB/YDB/-/issues/944#note_1152977733
-# Start gdb so we can set cnl->tp_hint = 0x7ffffffe and then run ydb944.m
-(gdb) (gdb) $1 = 0x7ffffffe
-# Entered ydb944.m. At this point, cnl->tp_hint would be 0x7ffffffe (2 short of 2GiB)
+# Start gdb so we can set cnl->tp_hint = 0x7ffffffe (for V6) or 0x7ffffffffffffffe (for V7) and then run ydb944.m
+# Entered ydb944.m. At this point, cnl->tp_hint would be 0x7ffffffe (2 short of 2**31 if V6 == 4-byte db block)
+# OR 0x7ffffffffffffffe (2 short of 2**63 if V7 == 8-byte db block)
 # Now run 100 TP transactions that each allocate a new block
-# Before the YDB#944 fixes, cnl->tp_hint would reach 2GiB and we would get a TPFAIL error (eeee)
-# After the YDB#944 fixes, cnl->tp_hint would be reset to an actual block number so will not reach 2GiB
-# And therefore, we would not get any error (which is what we expect to see below)
+#
+# Before the YDB#944 fixes, cnl->tp_hint would reach 2**31 and we would get a TPFAIL error (eeee)
+# After the YDB#944 fixes, cnl->tp_hint would be reset to an actual block number so will not reach 2**31
+#
+# Before the GTM-DE345399 fixes (e.g. GT.M V7.0-004), cnl->tp_hint would reach 2**63 and we would get an
+# assert failure in a Debug GT.M build
+# After the GTM-DE345399 fixes (e.g. GT.M V7.0-005), cnl->tp_hint would reach 2**63 and would be reset to
+# an actual block number so will not reach 2**63
+#
+# That is, we do not expect to see any error below
+#
 # Run dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
