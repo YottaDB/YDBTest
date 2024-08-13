@@ -19,12 +19,13 @@
 # zshow_tt_host_conv-ydb1068			[pooh]	  Test ZSHOW "D" output for TTSYNC, NOTTSYNC, HOSTSYNC, NOHOSTSYNC, CONVERT and NOCONVERT
 # empty_socket_assert-ydb1076			[pooh]	  Test if empty host string in socket connection parameter causing assertion failure
 # xcretnull-ydb1007				[berwyn]  Ensure that external calls that return invalid values produce errors
-# relinkctl_crash-ydb1083			[nars]    Test that relinkctl file latch is salvaged in 1 second (not 1 minute) after crash
+# relinkctl_crash-ydb1083			[nars]	  Test that relinkctl file latch is salvaged in 1 second (not 1 minute) after crash
 # max_truncate_to_error-ydb1048			[david]	  Test that command utilities with input that is too long, return errors, rather than truncate
-# bool_expr_equnul-ydb777       		[nars]    Test that s="" and s'="" in simple boolean expressions are fast
-# bad_query_res_on_mapped_sub_lvl-ydb960	[ern0]    Test that $QUERY(gvn) returns correct results when global names are mapped at the subscript level
-# ignore_restrict_on_write_auth-ydb1085		[ern0]    Test that restrict.txt is completely ignored if it has write auth
-# zextract_utf8_literal-ydb1093                 [nars]    Test that $ZEXTRACT does not behave like $EXTRACT in UTF-8 mode for literal parameters
+# bool_expr_equnul-ydb777			[nars]	  Test that s="" and s'="" in simple boolean expressions are fast
+# bad_query_res_on_mapped_sub_lvl-ydb960	[ern0]	  Test that $QUERY(gvn) returns correct results when global names are mapped at the subscript level
+# ignore_restrict_on_write_auth-ydb1085		[ern0]	  Test that restrict.txt is completely ignored if it has write auth
+# zextract_utf8_literal-ydb1093			[nars]	  Test that $ZEXTRACT does not behave like $EXTRACT in UTF-8 mode for literal parameters
+# relinkctl_perm_umask-ydb1087			[nars]	  Test that relinkctl file is writable by any userid that can read the routine object directory
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -42,6 +43,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_equnul-ydb777
 setenv subtest_list_non_replic	"$subtest_list_non_replic bad_query_res_on_mapped_sub_lvl-ydb960"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ignore_restrict_on_write_auth-ydb1085"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zextract_utf8_literal-ydb1093"
+setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_perm_umask-ydb1087"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

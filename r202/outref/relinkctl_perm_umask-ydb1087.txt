@@ -1,0 +1,24 @@
+###########################################################################################################
+# Test that relinkctl file is writable by any userid that can read the routine object directory
+###########################################################################################################
+# Randomly change the current umask value and make sure that does not affect the permission of the
+# relinkctl files created inside the [mumps -run ydb1097] invocation.
+# This also tests https://gitlab.com/YottaDB/DB/YDB/-/issues/1087#note_1990208203
+# Run [mumps -run ydb1097]
+# Test case 1 : Routine object directory has userWritePerm=0, groupReadPerm=0, otherReadPerm=0
+Relinkctl file permissions : Expected = -rw------- : Actual = -rw-------
+# Test case 2 : Routine object directory has userWritePerm=0, groupReadPerm=0, otherReadPerm=1
+Relinkctl file permissions : Expected = -rw----rw- : Actual = -rw----rw-
+# Test case 3 : Routine object directory has userWritePerm=0, groupReadPerm=1, otherReadPerm=0
+Relinkctl file permissions : Expected = -rw-rw---- : Actual = -rw-rw----
+# Test case 4 : Routine object directory has userWritePerm=0, groupReadPerm=1, otherReadPerm=1
+Relinkctl file permissions : Expected = -rw-rw-rw- : Actual = -rw-rw-rw-
+# Test case 5 : Routine object directory has userWritePerm=1, groupReadPerm=0, otherReadPerm=0
+Relinkctl file permissions : Expected = -rw------- : Actual = -rw-------
+# Test case 6 : Routine object directory has userWritePerm=1, groupReadPerm=0, otherReadPerm=1
+Relinkctl file permissions : Expected = -rw----rw- : Actual = -rw----rw-
+# Test case 7 : Routine object directory has userWritePerm=1, groupReadPerm=1, otherReadPerm=0
+Relinkctl file permissions : Expected = -rw-rw---- : Actual = -rw-rw----
+# Test case 8 : Routine object directory has userWritePerm=1, groupReadPerm=1, otherReadPerm=1
+Relinkctl file permissions : Expected = -rw-rw-rw- : Actual = -rw-rw-rw-
+
