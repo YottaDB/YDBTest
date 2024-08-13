@@ -26,6 +26,7 @@
 # ignore_restrict_on_write_auth-ydb1085		[ern0]	  Test that restrict.txt is completely ignored if it has write auth
 # zextract_utf8_literal-ydb1093			[nars]	  Test that $ZEXTRACT does not behave like $EXTRACT in UTF-8 mode for literal parameters
 # relinkctl_perm_umask-ydb1087			[nars]	  Test that relinkctl file is writable by any userid that can read the routine object directory
+# lots_of_lvns_assert-ydb1088			[nars]	  Test that lots of lvns usage does not assert fail in lv_getslot.c
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -44,6 +45,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bad_query_res_on_mapped
 setenv subtest_list_non_replic	"$subtest_list_non_replic ignore_restrict_on_write_auth-ydb1085"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zextract_utf8_literal-ydb1093"
 setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_perm_umask-ydb1087"
+setenv subtest_list_non_replic	"$subtest_list_non_replic lots_of_lvns_assert-ydb1088"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
