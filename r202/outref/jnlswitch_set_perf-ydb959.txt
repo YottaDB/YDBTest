@@ -1,0 +1,79 @@
+###########################################################################################################
+# Test no dramatic loss of global SET performance during jnl file switch
+###########################################################################################################
+# This test is based on https://gitlab.com/YottaDB/DB/YDB/-/issues/959#description
+# But this test case is trimmed down to take only 1/100th of the time of that test case
+# And yet demonstrate the original issue
+# This test verifies gvstats increase linearly with journal file switch
+# Before YDB#959 code fix, the gvstats would explode 10x times or even more when closer to journal file switch
+# See https://gitlab.com/YottaDB/DB/YDB/-/issues/959#note_2049535577 for the actual gvstats that are looked at
+# Run [dbcreate.csh]
+# Run [mumps -run ydb959] for 10 iterations.
+# This will check various gvstats that they increase linearly with each iteration.
+# Before YDB#959 code fixes, gvstats like DWT used to increase non-linearly (10x or more increase instead of 1x)
+# in every 4th iteration. After the YDB#959 code fixes, all of them increase linearly all iterations.
+# Run [mumps -run ydb959 0]. Do gvstat verification too each iteration.
+# Run [mumps -run ydb959 1]. Do gvstat verification too each iteration.
+Iteration 1 : DWT gvstat : PASS
+Iteration 1 : DFS gvstat : PASS
+Iteration 1 : JFL gvstat : PASS
+Iteration 1 : JFS gvstat : PASS
+Iteration 1 : JFB gvstat : PASS
+Iteration 1 : JFW gvstat : PASS
+# Run [mumps -run ydb959 2]. Do gvstat verification too each iteration.
+Iteration 2 : DWT gvstat : PASS
+Iteration 2 : DFS gvstat : PASS
+Iteration 2 : JFL gvstat : PASS
+Iteration 2 : JFS gvstat : PASS
+Iteration 2 : JFB gvstat : PASS
+Iteration 2 : JFW gvstat : PASS
+# Run [mumps -run ydb959 3]. Do gvstat verification too each iteration.
+Iteration 3 : DWT gvstat : PASS
+Iteration 3 : DFS gvstat : PASS
+Iteration 3 : JFL gvstat : PASS
+Iteration 3 : JFS gvstat : PASS
+Iteration 3 : JFB gvstat : PASS
+Iteration 3 : JFW gvstat : PASS
+# Run [mumps -run ydb959 4]. Do gvstat verification too each iteration.
+Iteration 4 : DWT gvstat : PASS
+Iteration 4 : DFS gvstat : PASS
+Iteration 4 : JFL gvstat : PASS
+Iteration 4 : JFS gvstat : PASS
+Iteration 4 : JFB gvstat : PASS
+Iteration 4 : JFW gvstat : PASS
+# Run [mumps -run ydb959 5]. Do gvstat verification too each iteration.
+Iteration 5 : DWT gvstat : PASS
+Iteration 5 : DFS gvstat : PASS
+Iteration 5 : JFL gvstat : PASS
+Iteration 5 : JFS gvstat : PASS
+Iteration 5 : JFB gvstat : PASS
+Iteration 5 : JFW gvstat : PASS
+# Run [mumps -run ydb959 6]. Do gvstat verification too each iteration.
+Iteration 6 : DWT gvstat : PASS
+Iteration 6 : DFS gvstat : PASS
+Iteration 6 : JFL gvstat : PASS
+Iteration 6 : JFS gvstat : PASS
+Iteration 6 : JFB gvstat : PASS
+Iteration 6 : JFW gvstat : PASS
+# Run [mumps -run ydb959 7]. Do gvstat verification too each iteration.
+Iteration 7 : DWT gvstat : PASS
+Iteration 7 : DFS gvstat : PASS
+Iteration 7 : JFL gvstat : PASS
+Iteration 7 : JFS gvstat : PASS
+Iteration 7 : JFB gvstat : PASS
+Iteration 7 : JFW gvstat : PASS
+# Run [mumps -run ydb959 8]. Do gvstat verification too each iteration.
+Iteration 8 : DWT gvstat : PASS
+Iteration 8 : DFS gvstat : PASS
+Iteration 8 : JFL gvstat : PASS
+Iteration 8 : JFS gvstat : PASS
+Iteration 8 : JFB gvstat : PASS
+Iteration 8 : JFW gvstat : PASS
+# Run [mumps -run ydb959 9]. Do gvstat verification too each iteration.
+Iteration 9 : DWT gvstat : PASS
+Iteration 9 : DFS gvstat : PASS
+Iteration 9 : JFL gvstat : PASS
+Iteration 9 : JFS gvstat : PASS
+Iteration 9 : JFB gvstat : PASS
+Iteration 9 : JFW gvstat : PASS
+# Run [dbcheck.csh]
