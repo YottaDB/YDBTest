@@ -63,7 +63,7 @@ set gid=`id -gn`
 # set existing GID which the actual user is not member of
 # (may vary by distro, usually it's "root")
 set uid=`id -un`
-set exgid=`cat /etc/group | grep -v $uid | head -1 | cut -d":" -f1`
+set exgid=`cat /etc/group | grep -vw $uid | head -n1 | cut -d':' -f1`
 
 # initialize automatic test ID
 @ t = 1

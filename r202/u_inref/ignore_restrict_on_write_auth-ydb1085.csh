@@ -45,7 +45,7 @@ setenv ydb_msgprefix "GTM"
 
 echo "# set group IDs for restrict.txt"
 set mygid=`id -gn`
-set notmygid="root"
+set notmygid=`cat /etc/group | grep -vw $mygid | head -n1 | cut -d':' -f1`
 set invalidgid="WhiteCrows"
 
 echo '# prepare read-write $gtm_dist directory'
