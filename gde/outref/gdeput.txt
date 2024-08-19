@@ -1,86 +1,33 @@
-Begin write tests of gde...
-undefined and doesn't exist - set to same...
+# This verifies that gde will write to the appropriate .gld file
+# Case 1: test when gtmgbldir is undefined:
+#         GDE issues ZGBLDIRUNDEF error
+#
+# Case 2:test when gtmgbldir is defined and:
+#     Case 2a) .gld does not exist then setgd=same, make change
+#     Case 2b) .gld exists then setgd=same, make change
+#     Case 2c)                  setgd=new, make change
+#  All 3 subtests above should not produce any errors and should create the .gld file(s)
+#
+# ------------------------------------------------
+# Case 1) : Begin write tests of gde...
+# ------------------------------------------------
+# Undefined gtmgbldir env var. Expect GDE to issue ZGBLDIRUNDEF error
 ls: No match.
 gtmgbldir is not defined: 0
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
-	##TEST_PATH##/$ydb_gbldir.gld
-
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDCREATE, Creating Global Directory file 
-	##TEST_PATH##/$ydb_gbldir.gld
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
-	##TEST_PATH##/acct.gld
-
-GDE> 
-GDE> 
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDCREATE, Creating Global Directory file 
-	##TEST_PATH##/acct.gld
-the *.gld's are:
-$ydb_gbldir.gld
-acct.gld
-undefined and does exist - set to same...
-$ydb_gbldir.gld
-acct.gld
-%GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/$ydb_gbldir.gld
-%GDE-I-VERIFY, Verification OK
-
-
-GDE> 
-%GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/acct.gld
-%GDE-I-VERIFY, Verification OK
-
-
-GDE> 
-GDE> 
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDUPDATE, Updating Global Directory file 
-	##TEST_PATH##/acct.gld
-the *.gld's are:
-$ydb_gbldir.gld
-acct.gld
-undefined create new .gld set to same make change...
-$ydb_gbldir.gld
-acct.gld
-%GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/$ydb_gbldir.gld
-%GDE-I-VERIFY, Verification OK
-
-
-GDE> 
-%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
-	##TEST_PATH##/mumps.gld
-
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDCREATE, Creating Global Directory file 
-	##TEST_PATH##/mumps.gld
-%GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/acct.gld
-%GDE-I-VERIFY, Verification OK
-
-
-GDE> 
-GDE> 
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDUPDATE, Updating Global Directory file 
-	##TEST_PATH##/acct.gld
-the *.gld's are:
-$ydb_gbldir.gld
-acct.gld
-mumps.gld
-defined and doesn't exist - set to same...
+%YDB-F-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+# The *.gld's are: Expect no output below
+# Expect GDEDUMP.DMP to be created
+GDEDUMP.DMP
+# Verify ZGBLDIRUNDEF error shows up in GDEDUMP.DMP
+abortzs="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined"
+gdeerr("ZGBLDIRUNDEF")=151028122
+$ZSTATUS="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined"
+# Create dump.out to be GDEDUMP.DMP minus the ZGBLDIRUNDEF error lines
+# We expect no other errors in this file. If so, test framework will catch it at end.
+# Hence the .out extension for this file
+# ------------------------------------------------
+# Case 2a) defined and doesn't exist - set to same...
+# ------------------------------------------------
 gtmgbldir is defined : acct.gld (1)
 ls: No match.
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -103,9 +50,11 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/acct.gld
-the *.gld's are:
+# The *.gld's are: Expect 1 .gld file [acct.gld] in output below
 acct.gld
-defined and exists set to same...
+# ------------------------------------------------
+# Case 2b) defined and exists set to same...
+# ------------------------------------------------
 acct.gld
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/acct.gld
@@ -125,9 +74,11 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/acct.gld
-the *.gld's are:
+# The *.gld's are: Expect 1 .gld file [acct.gld] in output below
 acct.gld
-defined create new .gld set to same make change...
+# ------------------------------------------------
+# Case 2c) defined create new .gld set to same make change...
+# ------------------------------------------------
 acct.gld
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/acct.gld
@@ -155,7 +106,7 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/acct.gld
-the *.gld's are:
+# The *.gld's are: Expect 2 .gld file [acct.gld and mumps.gld] in output below
 acct.gld
 mumps.gld
 End write tests of gde...

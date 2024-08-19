@@ -1,89 +1,95 @@
 #!/usr/local/bin/tcsh -f
-# this verifies that gde will write to the appropriate .gld file
-# cases: test when gtmgbldir is undefined and:
-#               .gld does not exist then setgd=same, make change
-#		.gld exists then setgd=same, make change
-#				setgd=new, make change
-#
-#	 test when gtmgbldir is defined and:
-#               .gld does not exist then setgd=same, make change
-#               .gld exists then setgd=same, make change
-#                               setgd=new, make change
-#
-#	tests should not produce write errors and should create the .gld's
-#
-echo "Begin write tests of gde..."
-unsetenv gtmgbldir 
-echo "undefined and doesn't exist - set to same..."
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+echo "# This verifies that gde will write to the appropriate .gld file"
+echo "# Case 1: test when gtmgbldir is undefined:"
+echo "#         GDE issues ZGBLDIRUNDEF error"
+echo "#"
+echo "# Case 2:test when gtmgbldir is defined and:"
+echo "#     Case 2a) .gld does not exist then setgd=same, make change"
+echo "#     Case 2b) .gld exists then setgd=same, make change"
+echo "#     Case 2c)                  setgd=new, make change"
+echo "#  All 3 subtests above should not produce any errors and should create the .gld file(s)"
+echo "#"
+
+echo "# ------------------------------------------------"
+echo "# Case 1) : Begin write tests of gde..."
+echo "# ------------------------------------------------"
+unsetenv gtmgbldir
+echo "# Undefined gtmgbldir env var. Expect GDE to issue ZGBLDIRUNDEF error"
 ls *.gld
 echo gtmgbldir is not defined: $?gtmgbldir
-$gtm_exe/mumps -run GDE << \_GDE_EOF 
-setgd -f="acct.gld"
-change -segment DEFAULT -file_name=acct.dat
-change -region DEFAULT -key_size=100
-\_GDE_EOF
+$gtm_exe/mumps -run GDE << _GDE_EOF
+exit
+_GDE_EOF
 
-echo "the *.gld's are:"
-ls *.gld
+echo "# The *.gld's are: Expect no output below"
+ls -1 | grep -w gld
 
-echo "undefined and does exist - set to same..."
-ls *.gld
-$gtm_exe/mumps -run GDE << \_GDE_EOF 
-setgd -f="acct.gld"
-change -segment DEFAULT -file_name=acct.dat
-change -region DEFAULT -key_size=100
-\_GDE_EOF
+echo "# Expect GDEDUMP.DMP to be created"
+ls -1 GDEDUMP.DMP
 
-echo "the *.gld's are:"
-ls *.gld
+echo "# Verify ZGBLDIRUNDEF error shows up in GDEDUMP.DMP"
+mv GDEDUMP.DMP dump.outx
+$grep ZGBLDIRUNDEF dump.outx
+echo "# Create dump.out to be GDEDUMP.DMP minus the ZGBLDIRUNDEF error lines"
+echo "# We expect no other errors in this file. If so, test framework will catch it at end."
+echo "# Hence the .out extension for this file"
+$grep -v ZGBLDIRUNDEF dump.outx > dump.out
 
-echo "undefined create new .gld set to same make change..."
-ls *.gld
-$gtm_exe/mumps -run GDE << \_GDE_EOF
-setgd -f="mumps.gld"
-setgd -f="acct.gld"
-change -segment DEFAULT -file_name=acct.dat
-change -region DEFAULT -key_size=100
-\_GDE_EOF
-
-echo "the *.gld's are:"
-ls *.gld
-
-echo "defined and doesn't exist - set to same..."
-rm *.gld
+echo "# ------------------------------------------------"
+echo "# Case 2a) defined and doesn't exist - set to same..."
+echo "# ------------------------------------------------"
 setenv gtmgbldir "acct.gld"
 echo "gtmgbldir is defined : $gtmgbldir ($?gtmgbldir)"
 ls *.gld
-$gtm_exe/mumps -run GDE << \_GDE_EOF 
+$gtm_exe/mumps -run GDE << _GDE_EOF
 setgd -f="acct.gld"
 change -segment DEFAULT -file_name=acct.dat
 change -region DEFAULT -key_size=100
-\_GDE_EOF
+_GDE_EOF
 
-echo "the *.gld's are:"
+echo "# The *.gld's are: Expect 1 .gld file [acct.gld] in output below"
 ls *.gld
 
-echo "defined and exists set to same..."
+echo "# ------------------------------------------------"
+echo "# Case 2b) defined and exists set to same..."
+echo "# ------------------------------------------------"
 ls *.gld
-$gtm_exe/mumps -run GDE << \_GDE_EOF
+$gtm_exe/mumps -run GDE << _GDE_EOF
 setgd -f="acct.gld"
 change -segment DEFAULT -file_name=acct.dat
 change -region DEFAULT -key_size=100
-\_GDE_EOF
+_GDE_EOF
 
-echo "the *.gld's are:"
+echo "# The *.gld's are: Expect 1 .gld file [acct.gld] in output below"
 ls *.gld
 
-echo "defined create new .gld set to same make change..."
+echo "# ------------------------------------------------"
+echo "# Case 2c) defined create new .gld set to same make change..."
+echo "# ------------------------------------------------"
 ls *.gld
-$gtm_exe/mumps -run GDE << \_GDE_EOF
+$gtm_exe/mumps -run GDE << _GDE_EOF
 setgd -f="mumps.gld"
 setgd -f="acct.gld"
 change -segment DEFAULT -file_name=acct.dat
 change -region DEFAULT -key_size=100
-\_GDE_EOF
+_GDE_EOF
 
-echo "the *.gld's are:"
+echo "# The *.gld's are: Expect 2 .gld file [acct.gld and mumps.gld] in output below"
 ls *.gld
 
 echo "End write tests of gde..."
