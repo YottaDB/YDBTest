@@ -29,6 +29,7 @@
 # lots_of_lvns_assert-ydb1088			[nars]	  Test that lots of lvns usage does not assert fail in lv_getslot.c
 # jnlswitch_set_perf-ydb959			[nars]	  Test no dramatic loss of global SET performance during jnl file switch
 # zgbldirundef-ydb999				[nars]    Test ZGBLDIRUNDEF error is issued when ydb_gbldir env var is undefined or set to ""
+# shebang-ydb1084				[nars]	  Test shebang support of yottadb
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -50,6 +51,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_perm_umask-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic lots_of_lvns_assert-ydb1088"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlswitch_set_perf-ydb959"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgbldirundef-ydb999"
+setenv subtest_list_non_replic	"$subtest_list_non_replic shebang-ydb1084"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

@@ -3,7 +3,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -386,6 +386,11 @@ BEGIN {
 	gsub("^.YDB-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..", "##FILTERED##YDB-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..");
 	# QDBRUNDOWN is randomly true or false
 	gsub(/HDR Quick database rundown is active                 ...../,"HDR Quick database rundown is active                 .....");
+	########################################################
+	# ydbsh temporary object directory filters
+	strexp	="ydbsh......\\("
+	strrep	="ydbsh##OBJ##("
+	gsub(strexp,strrep)
 	########################################################
 	#-------------------------------------------------------
 	print;

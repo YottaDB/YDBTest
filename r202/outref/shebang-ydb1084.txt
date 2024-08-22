@@ -1,0 +1,164 @@
+###########################################################################################################
+# Test shebang support of yottadb
+###########################################################################################################
+# Add [$gtm_dist] to PATH so .m programs can be found when invoked from the shell
+# Run [dbcreate.csh]
+# Set [gtmroutines=..] to ensure . is not part of gtmroutines for the rest of the test
+# Set [gtm_tmp=.] to ensure temporary object subdirectory gets created under current directory
+-------------------------------------------------------------------
+# Test 1 : Invoke shebang with NO path. Expect output of [^x=1]
+# Also test that even though $filename cannot be found in $ZROUTINES, no error issued
+# And a temporary object directory is created and added to $ZROUTINES at process startup
+# And the source directory (current directory) is also added to $ZROUTINES
+# Also verify correct PATH of ydb1084.m was chosen by looking at $zroutines
+^x=1
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ..(..)"
+# Verify that .o file does NOT get created in current directory
+Verification PASS
+-------------------------------------------------------------------
+# Test 2 : Invoke shebang with RELATIVE path. Expect output of [^x=2]
+# Also test that even though $filename cannot be found in $ZROUTINES, no error issued
+# And a temporary object directory is created and added to $ZROUTINES at process startup
+# And the source directory (current directory) is also added to $ZROUTINES
+# Also verify correct PATH of ydb1084.m was chosen by looking at $zroutines
+^x=2
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ..(..)"
+# Verify that .o file does NOT get created in current directory
+Verification PASS
+-------------------------------------------------------------------
+# Test 3 : Invoke shebang with ABSOLUTE path. Expect output of [^x=3]
+# Also test that even though $filename cannot be found in $ZROUTINES, no error issued
+# And a temporary object directory is created and added to $ZROUTINES at process startup
+# And the source directory (current directory) is also added to $ZROUTINES
+# Also verify correct PATH of ydb1084.m was chosen by looking at $zroutines
+^x=3
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(##TEST_PATH##) ..(..)"
+# Verify that .o file does NOT get created in current directory
+Verification PASS
+-------------------------------------------------------------------
+# Test 4 : Verify shebang line is accepted in M program as the first line even if not invoked through shebang
+# This also tests that [ydbsh] when invoked outside of shebang also treats it as a shebang invocation.
+# Run [ydbsh ydb1084.m]. Expect no errors.
+^x=4
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ..(..)"
+-------------------------------------------------------------------
+# Test 5 : Test that [yottadb ydb1084.m] also works fine even it has a shebang line and is not invoked through ydbsh
+# Run [yottadb ydb1084.m]. Expect no errors.
+^x=5
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ..(..)"
+-------------------------------------------------------------------
+# Test 6 : Verify [ydbsh] issues error if .m has only one shebang line that is not in the first line
+# Run [ydb10846.m]. Expect LSEXPECTED error.
+	#!/usr/bin/env ydbsh
+	^-----
+		At column 0, line 2, source module ##TEST_PATH##/ydb10846.m
+%YDB-E-LSEXPECTED, A line separator is expected here
+Error occurred: 150373250,+2^ydb10846,%YDB-E-LSEXPECTED, A line separator is expected here
+-------------------------------------------------------------------
+# Test 7 : Verify [ydbsh] issues error if .m has more than one shebang line
+# Run [ydb10847.m]. Expect LSEXPECTED error.
+	#!/usr/bin/env ydbsh
+	^-----
+		At column 0, line 3, source module ##TEST_PATH##/ydb10847.m
+%YDB-E-LSEXPECTED, A line separator is expected here
+Dummy line before the runtime LSEXPECTED error
+Error occurred: 150373250,+3^ydb10847,%YDB-E-LSEXPECTED, A line separator is expected here
+-------------------------------------------------------------------
+# Test 8 : Verify [ydbsh ydb10847.m] issues error if ydb10847.m does not have xecute permissions
+# Run [ydbsh ydb10847.m]. Expect RUNPARAMERR error.
+%YDB-E-RUNPARAMERR, Error accessing parameter for run command
+-------------------------------------------------------------------
+# Test 9 : Verify [ydbsh ydb10847.m] issues error even if ydb10847.m has xecute permissions because PATH env var
+# does not include the path where ydb10847.m can be located
+# Run [ydbsh ydb10847.m]. Expect RUNPARAMERR error.
+%YDB-E-RUNPARAMERR, Error accessing parameter for run command
+-------------------------------------------------------------------
+# Test 10 : Test a runtime error in shebang M program results in process termination (and not direct mode)
+# Also test that the exit status is non-zero after ydbsh returns to the shell
+# Run [ydbsh ydb108410.m]. Expect RUNPARAMERR error.
+# Run [ydbsh ydb108410.m]. Expect LVUNDEF error.
+Error occurred: 150373850,+2^ydb108410,%YDB-E-LVUNDEF, Undefined local variable: x
+PASS: LVUNDEF error exit code of [218] was expected and seen
+-------------------------------------------------------------------
+# Test 11 : Test that error inside shebang invocation is controlled by ydb_etrap or gtm_etrap if either
+# is set before the ydbsh invocation. Also test that the process does not terminate like it otherwise would
+# if those env vars are not defined if the ydb_etrap/gtm_etrap error trap does not cause a termination.
+# Run [ydbsh ydb108410.m]. Expect NO error.
+PASS: ydb_etrap/gtm_etrap executed as expected
+PASS: Exit code of [0] was expected and seen
+-------------------------------------------------------------------
+# Test 12 : Test that if ydb108412.m is shebanged from current directory but $gtmroutines has a subdirectory
+# ahead of current directory and ydb108412.m is found in the subdirectory too, then $zroutines inside the shebang
+# execution shows a temporary object directory is created and added to $ZROUTINES at process startup
+# And the source directory (current directory) is also added to $ZROUTINES
+# Run [ydb108412.m]
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) tmp_12(tmp_12) .(.)"
+-------------------------------------------------------------------
+# Test 13 : Test that if object file of ydb108412.m can be found in a shared library in $gtmroutines,
+# the shebanged copy of ydb108412.m is picked up and not the shared library version even if a later directory in
+# $gtmroutines contains the source directory corresponding to ydb108412.m. Also check that
+# no error is issued but a temporary object directory is created and added to $ZROUTINES at process startup
+# And the source directory (current directory) is also added to $ZROUTINES ahead of the shared library
+# Run [ydb108412.m]
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ydb108412##TEST_SHL_SUFFIX## .(.)"
+-------------------------------------------------------------------
+# Test 14 : Test of $ZCMDLINE when absolute path is specified in shebang invocation
+# Expect to see absolute path of ydb108414.m as first word in $ZCMDLINE
+# Run [##TEST_PATH##/ydb108414.m]
+$ZCMDLINE="##TEST_PATH##/ydb108414.m"
+# Run [##TEST_PATH##/ydb108414.m param1 param2]
+# Also expect to see [param1 param2] as remaining part of $ZCMDLINE
+$ZCMDLINE="##TEST_PATH##/ydb108414.m param1 param2"
+-------------------------------------------------------------------
+# Test 15 : Test of $ZCMDLINE when absolute path is NOT specified in shebang invocation
+# Expect to see ydb108414.m without any path as first word in $ZCMDLINE
+# Run [ydb108414.m]
+$ZCMDLINE="ydb108414.m"
+# Run [ydb108414.m param1 param2]
+# Also expect to see [param1 param2] as remaining part of $ZCMDLINE
+$ZCMDLINE="ydb108414.m param1 param2"
+-------------------------------------------------------------------
+# Test 16 : Test SHEBANGMEXT error is issued if there is no .m extension in the M program name
+# Run [ydb108414.nom]. Expect a SHEBANGMEXT error.
+%YDB-E-SHEBANGMEXT, ydb108414.nom needs a .m extension to be a valid shebang script
+# Run [ydb108414.nom]. Expect a SHEBANGMEXT error.
+%YDB-E-SHEBANGMEXT, ydb108414.nom needs a .m extension to be a valid shebang script
+# Run [ydb108414.nom]. Expect a SHEBANGMEXT error.
+%YDB-E-SHEBANGMEXT, ydb108414.nom needs a .m extension to be a valid shebang script
+-------------------------------------------------------------------
+# Test 17 : Test NOTMNAME error is issued if there are underscores in M program name
+# Run [ydb108414_17.m]. Expect a NOTMNAME error.
+%YDB-E-NOTMNAME, ydb108414_17 is not a valid M name
+-------------------------------------------------------------------
+# Test 18 : Test NOTMNAME error is issued if the M program name is longer than 31 characters
+# Run [abcdefghijklmnopqrstuvwxyz789012.m]. Expect a NOTMNAME error as routine name is 32 characters long.
+%YDB-E-NOTMNAME, abcdefghijklmnopqrstuvwxyz789012 is not a valid M name
+# Run [abcdefghijklmnopqrstuvwxyz78901.m]. Expect no NOTMNAME error (but instead $ZCMDLINE output) as routine name is 31 characters long.
+$ZCMDLINE="abcdefghijklmnopqrstuvwxyz78901.m"
+-------------------------------------------------------------------
+# Test 19 : Test $ZROUTINES when M program source directory is in $gtmroutines
+# Verify that $ZROUTINES is identical to $gtmroutines in that no new temporary object
+# directory or the M program source directory got added to it
+# Run [ydb108419.m]
+$ZROUTINES=".(.)"
+-------------------------------------------------------------------
+# Test 20 : Test $ZROUTINES when M program source directory is NOT in $gtmroutines
+# Verify that $ZROUTINES is different from $gtmroutines in that it contains temporary object
+# directory and the M program source directory added to it
+# Run [ydb108419.m]
+$ZROUTINES="##TEST_PATH##/ydbsh##OBJ##(.) ..(..)"
+-------------------------------------------------------------------
+# Test 21 : Test that temporary object directory is /tmp if ydb_tmp/gtm_tmp are not set
+# Run [ydb108419.m]
+$ZROUTINES="/tmp/ydbsh##OBJ##(.) ..(..)"
+-------------------------------------------------------------------
+# Test 22 : Test case where shebang M program does a [do] of another M program [helper.m] and that is linked in fine
+# This is to test that deleting the temporary object directory before starting shebang execution of ydb108422.m
+# (happens in YDB, search for "rm -rf" in YDB/sr_unix/jobchild_init.c) does not interfere with zlink of other
+# M programs as needed. Also test that the object directory does not exist at start of ydb108422.m execution.
+# Run [ydb108422.m]
+$ZROUTINES="./ydbsh##OBJ##(.) tmp(tmp)"
+Object directory path is [] : Expect to see empty string here.
+PASS: In helper.m as expected
+
+# Run [dbcheck.csh]
