@@ -23,6 +23,7 @@
 # socket_use_ioerror_sig11-gtmde307442 [nars]   SOCKET USE command with CONNECT/LISTEN and IOERROR="T" does not SIG-11
 # retry_norm-gtmf166755                [pooh]   MUPIP BACKUP retry normalization
 # support_v6_database-gtmf167559       [ern0]   Verify that GT.M V7 versions support the ability to create database files compatible with GT.M V6.3-014
+# audit_mupip_nw_error-gtmf135381      [pooh]   MUPIP facility and improved handling of network errors by the audit facility
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_ztslate_stp_gcol
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_ioerror_sig11-gtmde307442"
 setenv subtest_list_non_replic	"$subtest_list_non_replic retry_norm-gtmf166755"
 setenv subtest_list_non_replic	"$subtest_list_non_replic support_v6_database-gtmf167559"
+setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_nw_error-gtmf135381"
 
 setenv subtest_list_replic	""
 

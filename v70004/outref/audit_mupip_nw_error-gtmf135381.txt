@@ -1,0 +1,130 @@
+# ********************************************************************************************
+# GTM-F135381 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-F135381)
+# 
+# When the Audit MUPIP facility (AM_ENABLE) is enabled, MUPIP establishes a connection (via a UNIX/TCP/TLS socket)
+# to a logger/listener process, and sends any MUPIP shell command through the socket to the listener for logging.
+# If sending is successful, MUPIP executes the command. If the connection is not successful or sending of the command fails,
+# then MUPIP produces an error and does not execute the command. When this facility is enabled, all commands typed at
+# the MUPIP prompt (MUPIP>) produce the RESTRICTEDOP error. When this facility is disabled, which it is by default,
+# MUPIP commands execute as usual.In addition, the APD_ENABLE facility displays the appropriate network error messages
+# and exits the process gracefully. Previously, certain network errors could result in a segmentation fault without
+# reporting the reason. (GTM-F135381)
+# 
+# This test only contains test below :
+# - Test New error message : AUDINITFAIL, AUDCONNFAIL and AUDLOGFAIL
+# 
+# Notes:
+# 1) Audit MUPIP facility already tested in v70005/audit_mupip_facility-gtmf188829
+# (https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2052) so this will not be tested here
+# 2) APD_ENABLE Facility mentioned in later part of release note will not tested in this test
+# because there is not enough description of the use case to come up with a test case.
+# 
+
+# Prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# allocate a port number for TCP and TLS modes
+# set Unix socket filename
+# set crypt config file path and name
+# set-up crypt config file for section clicert
+# get group ID for restrict.txt
+
+# Test 1) :  Test new error message : AUDINITFAIL, AUDCONNFAIL and AUDLOGFAIL
+# 1.1) AUDINITFAIL : This message will show up in syslog when restriction file format is invalid
+# AUDLOGFAIL will also show up in syslog as YottaDB/GT.M unable to send the to-be-logged activitiy to logger
+# We will test for all mode including TCP, TLS, UNIX Socket by just setting up restrict.txt with invalid format
+# Testing mode : tcp
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+##SUSPEND_OUTPUT UNICODE_MODE
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWK%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen(.*)
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Check if AUDINITFAIL and AUDLOGFAIL message exist in syslog from strace output
+GTM-E-AUDINITFAIL
+##SUSPEND_OUTPUT UNICODE_MODE
+GTM-E-AUDLOGFAIL
+##ALLOW_OUTPUT UNICODE_MODE
+
+# Testing mode : tls
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+##SUSPEND_OUTPUT UNICODE_MODE
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWK%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen(.*)
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Check if AUDINITFAIL and AUDLOGFAIL message exist in syslog from strace output
+GTM-E-AUDINITFAIL
+##SUSPEND_OUTPUT UNICODE_MODE
+GTM-E-AUDLOGFAIL
+##ALLOW_OUTPUT UNICODE_MODE
+
+# Testing mode : unix_socket
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+##SUSPEND_OUTPUT UNICODE_MODE
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWK%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen(.*)
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Check if AUDINITFAIL and AUDLOGFAIL message exist in syslog from strace output
+GTM-E-AUDINITFAIL
+##SUSPEND_OUTPUT UNICODE_MODE
+GTM-E-AUDLOGFAIL
+##ALLOW_OUTPUT UNICODE_MODE
+
+
+# 1.2) AUDCONNFAIL : Facility for logging activity is enabled
+# but is unable to form a connection with its configured logging program
+# AUDLOGFAIL will also show up here
+# We will test for all mode including TCP, TLS, UNIX Socket by setting up appropriate restrict.txt
+# But we will not start audit listener so that AUDCONNFAIL error will show up (also AUDLOGFAIL)
+
+# Testing mode : tcp
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+
+# Testing mode : tls
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+
+# Testing mode : unix_socket
+# setup restrict.txt: for audit logging
+
+# This will show RESTRICTEDOP error in stdout/stderr
+%GTM-F-RESTRICTEDOP, Attempt to perform a restricted operation: MUPIP
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+
+GTM-E-AUDCONNFAIL
+GTM-E-AUDLOGFAIL
+
+
+# release port number
