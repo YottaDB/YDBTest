@@ -1,0 +1,105 @@
+# *****************************************************************
+# GTM-F135418 - Test the following release note
+# *****************************************************************
+#
+# Release note (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F135418) says:
+#
+# > The GT.M restrictions facility recognizes ZLINK, ZRUPDATE and
+# > SET $ZROUTINES. When an explicit ZLINK (not auto-zlink),
+# > ZRUPDATE, or SET $ZROUTINES restriction conditions are
+# > configured, the restricted command issues a RESTRICTEDOP error
+# > message. Previously, the restrictions facility did not support
+# > ZLINK, ZRUPDATE, or SET $ZROUTINES. (GTM-F135418)
+
+# ---- startup ----
+# prepare read-write $gtm_dist directory
+# get group IDs for restrict.txt
+
+# ---- test ZLINK ----
+
+# restrict.txt does not exist
+
+# attempt to ZLINK a non-existent file (expect file not found errors)
+%GTM-E-ZLINKFILE, Error while zlinking "NoCodeIsBuglessCode"
+%GTM-E-FILENOTFND, File NoCodeIsBuglessCode.m not found
+%GTM-E-FILENOTFND, File NoCodeIsBuglessCode.o not found
+
+# create and ZLINK a M program (expect no error)
+# files:
+w4x4.m
+w4x4.o
+
+# create restrict.txt with ZLINK allowed
+
+# attempt to ZLINK a non-existent file (expect file not found error)
+%GTM-E-ZLINKFILE, Error while zlinking "NoCodeIsBuglessCode"
+%GTM-E-FILENOTFND, File NoCodeIsBuglessCode.m not found
+%GTM-E-FILENOTFND, File NoCodeIsBuglessCode.o not found
+
+# create and ZLINK a M program (expect no error)
+# files:
+w5x5.m
+w5x5.o
+
+# create restrict.txt with ZLINK disabled
+
+# attempt to ZLINK a non-existent file (expect RESTRICTEDOP error)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZLINK
+
+# create and ZLINK a M program (expect RESTRICTEDOP error)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZLINK
+# files:
+w6x6.m
+
+# ---- test ZRUPDATE ----
+
+# restrict.txt does not exist
+
+# attempt to ZRUPDATE a non-existent file (expect file not found error)
+ls: No match.
+
+# create restrict.txt with ZRUPDATE allowed
+
+# create, ZLINK and ZRUPDATE a M program (expect no error)
+#  ZLINK:
+#  ZRUPDATE:
+# files:
+w4x4.m
+w4x4.o
+
+# create restrict.txt with ZRUPDATE allowed
+
+# create, ZLINK and ZRUPDATE a M program (expect no error)
+#  ZLINK:
+#  ZRUPDATE:
+# files:
+w5x5.m
+w5x5.o
+
+# create restrict.txt with ZRUPDATE disabled
+
+# attempt to ZRUPDATE a non-existent file (expect RESTRICTEDOP error)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZRUPDATE
+
+# create, ZLINK and ZRUPDATE a M program (expect RESTRICTEDOP error)
+#  ZLINK:
+#  ZRUPDATE:
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZRUPDATE
+# files:
+w6x6.m
+w6x6.o
+
+# ---- test SET $ZROUTINES ----
+
+# restrict.txt does not exist
+# attempt to SET $ZROUTINES (expect no error)
+
+# create restrict.txt with ZROUTINES allowed
+# attempt to SET $ZROUTINES (expect no error)
+
+# create restrict.txt with ZROUTINES disabled
+# attempt to SET $ZROUTINES (expect RESTRICTEDOP error)
+%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZROUTINES
+
+# ---- cleanup ----
+# release port number
