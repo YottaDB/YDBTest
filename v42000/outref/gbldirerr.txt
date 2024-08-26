@@ -13,14 +13,12 @@ YDB>
 YDB>
 
 YDB>
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/*.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
 
 YDB>
 
 YDB>
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
 
 YDB>
 
@@ -64,13 +62,8 @@ setenv gtmgbldir foo.gld
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/foo.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 unsetenv gtmgbldir
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
-%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$ydb_gbldir.gld.  Cannot continue.
-%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
