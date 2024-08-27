@@ -28,6 +28,7 @@
 # relinkctl_perm_umask-ydb1087			[nars]	  Test that relinkctl file is writable by any userid that can read the routine object directory
 # lots_of_lvns_assert-ydb1088			[nars]	  Test that lots of lvns usage does not assert fail in lv_getslot.c
 # jnlswitch_set_perf-ydb959			[nars]	  Test no dramatic loss of global SET performance during jnl file switch
+# zgbldirundef-ydb999				[nars]    Test ZGBLDIRUNDEF error is issued when ydb_gbldir env var is undefined or set to ""
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -48,6 +49,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zextract_utf8_literal-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic relinkctl_perm_umask-ydb1087"
 setenv subtest_list_non_replic	"$subtest_list_non_replic lots_of_lvns_assert-ydb1088"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlswitch_set_perf-ydb959"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zgbldirundef-ydb999"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

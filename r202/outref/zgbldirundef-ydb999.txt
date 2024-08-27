@@ -1,0 +1,14 @@
+###########################################################################################################
+# Test ZGBLDIRUNDEF error is issued when ydb_gbldir env var is undefined or set to ""
+###########################################################################################################
+# Run [dbcreate.csh]
+
+# Test 1 : Global reference when [gtmgbldir] is undefined should issue a ZGBLDIRUNDEF error
+# Expect a ZGBLDIRUNDEF error below
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+
+# Test 2 : Global reference when [gtmgbldir] is set to "" should issue a ZGBLDIRUNDEF error
+# Expect a ZGBLDIRUNDEF error below
+%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+
+# Run [dbcheck.csh]
