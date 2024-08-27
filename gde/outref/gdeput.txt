@@ -14,14 +14,14 @@
 # Undefined gtmgbldir env var. Expect GDE to issue ZGBLDIRUNDEF error
 ls: No match.
 gtmgbldir is not defined: 0
-%YDB-F-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined
+%YDB-F-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtmgbldir is undefined
 # The *.gld's are: Expect no output below
 # Expect GDEDUMP.DMP to be created
 GDEDUMP.DMP
 # Verify ZGBLDIRUNDEF error shows up in GDEDUMP.DMP
-abortzs="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined"
+abortzs="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtmgbldir is undefined"
 gdeerr("ZGBLDIRUNDEF")=151028122
-$ZSTATUS="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtm_gbldir is undefined"
+$ZSTATUS="151028122,message+1^GDE,%YDB-E-ZGBLDIRUNDEF, Global Directory env var $ydb_gbldir/$gtmgbldir is undefined"
 # Create dump.out to be GDEDUMP.DMP minus the ZGBLDIRUNDEF error lines
 # We expect no other errors in this file. If so, test framework will catch it at end.
 # Hence the .out extension for this file
