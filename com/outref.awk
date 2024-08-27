@@ -448,6 +448,15 @@ BEGIN {
 	else
 		envir[no_options] = "4G_BELOW_DB_BLKS"
 	#
+	option_names[++no_options] = "gtm_trace_gbl_name"
+	# Note: "gtm_trace_gbl_name" env var is either undefined or set to "" in com/do_random_settings.csh.
+	# ENVIRON["gtm_trace_gbl_name"] will evaluate to 0 and "" respectively in both the cases.
+	# Hence the below check of "0 != " will do the trick.
+	if (0 != ENVIRON["gtm_trace_gbl_name"])
+		envir[no_options] = "MPROF_ON"
+	else
+		envir[no_options] = "MPROF_OFF"
+	#
 	option_names[++no_options] = "gtm_statshare"
 	if (0 != ENVIRON["gtm_statshare"])
 		envir[no_options] = "STATSHARE"

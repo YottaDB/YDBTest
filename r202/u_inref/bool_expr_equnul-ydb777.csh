@@ -45,12 +45,13 @@ endif
 # Only run the below perf related stage of the subtest if "perf" executable exists and is the YottaDB
 # build is not a DBG or ASAN build (both are slow). Also restrict the test to only be on x86_64 linux.
 # And only with GCC builds (not CLANG builds which use up 10% more instructions, greater than the 5% allowance).
-# This lets us keep strong limits for performance comparison. That helps # us quickly determine if any
-# performance regression occurs.
+# This lets us keep strong limits for performance comparison. That helps us quickly determine if any
+# performance regression occurs. Also restrict the test to run only if M-profiling is not turned on by
+# the test framework (i.e. gtm_trace_gbl_name env var is not defined) as otherwise a lot more instructions get used.
 set perf_missing = `which perf >/dev/null; echo $status`
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
 if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_image") && ("x86_64" == `uname -m`)	\
-		&& ("GCC" == $gtm_test_yottadb_compiler)) then
+		&& ("GCC" == $gtm_test_yottadb_compiler) && ! $?gtm_trace_gbl_name) then
 	echo ""
 	echo "# ---------------------------------------------------------------------------"
 	echo '# Test3 : Test the actual number of instructions for a s="" and s\'="" test case'
