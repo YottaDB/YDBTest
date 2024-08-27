@@ -400,10 +400,6 @@ BEGIN {
 	else
 		envir[no_options] = "ASAN_DISABLED"
 	#
-	option_names[++no_options] = "ydb_test_gover_lt_118_or_rhel"
-	if (("1" == ENVIRON["gtm_test_libyottadb_asan_enabled"]) && ("clang" == ENVIRON["gtm_test_asan_compiler"]) && ("1" == ENVIRON["ydb_test_gover_lt_118_or_rhel"]))
-		envir[no_options] = "ASAN_CLANG_GOVER_LESS_THAN_118_OR_RHEL"
-	#
 	option_names[++no_options] = "clang_major_ver"
 	if (("14" == ENVIRON["clangmajorver"]) || ("15" == ENVIRON["clangmajorver"]))
 		envir[no_options] = "CLANG14_OR_15"

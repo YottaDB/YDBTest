@@ -137,7 +137,7 @@ set gotest = "go test"
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with asan enabled. Do the same with the go executables.
-	if ($ydb_test_gover_lt_118_or_rhel) then
+	if ($ydb_test_gover_lt_118) then
 		set asanflags = "'-fsanitize=address'"
 	else
 		set asanflags = "-asan"

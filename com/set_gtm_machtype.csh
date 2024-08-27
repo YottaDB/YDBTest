@@ -226,5 +226,11 @@ else
 	setenv ydb_test_gover_lt_118_or_rhel 0
 endif
 
+if ( `expr $go_version \< "1.18"` ) then
+	setenv ydb_test_gover_lt_118 1
+else
+	setenv ydb_test_gover_lt_118 0
+endif
+
 set anyerror
 ##### HOST SPECIFIC FUNNIES ####
