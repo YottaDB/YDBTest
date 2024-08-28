@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -11,10 +11,11 @@
 #								#
 #################################################################
 
-echo "# Backing up ydb and gtm symlinks under /usr/local/bin (if any)"
+echo "# Backing up ydb, gtm and ydbsh symlinks under /usr/local/bin (if any)"
 cd /usr/local/bin
 existing_ydb=`readlink ydb`
 existing_gtm=`readlink gtm`
+existing_ydbsh=`readlink ydbsh`
 echo ""
 echo ""
 
@@ -33,12 +34,16 @@ echo ""
 cd /usr/local/bin
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 default_gtm=`readlink -f gtm`
+default_ydbsh=`readlink -f ydbsh`
 
-echo "# Current ydb and gtm symlinks under /usr/local/bin point to install/dir1"
+echo "# Current ydb, gtm and ydbsh symlinks under /usr/local/bin point to install/dir1"
 echo $current_ydb
 echo $current_gtm
 echo $default_gtm
+echo $current_ydbsh
+echo $default_ydbsh
 echo ""
 echo ""
 
@@ -63,10 +68,12 @@ echo ""
 cd /usr/local/bin
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# Current ydb and gtm symlinks under /usr/local/bin now point to install/dir2"
+echo "# Current ydb, gtm and ydbsh symlinks under /usr/local/bin now point to install/dir2"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -84,9 +91,9 @@ echo ""
 
 #############################################################
 
-echo "# Deleting current ydb and gtm symlinks to check that --linkexec creates symlinks if none exist"
+echo "# Deleting current ydb, gtm and ydbsh symlinks to check that --linkexec creates symlinks if none exist"
 cd /usr/local/bin
-sudo rm gtm ydb
+sudo rm gtm ydb ydbsh
 echo ""
 echo ""
 
@@ -97,10 +104,12 @@ echo ""
 cd /usr/local/bin
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# ydb and gtm symlinks created under /usr/local/bin point to install/dir1"
+echo "# ydb, gtm and ydbsh symlinks created under /usr/local/bin point to install/dir1"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -110,10 +119,12 @@ echo ""
 
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# Current ydb and gtm symlinks under /usr/local/bin now point to install/dir2"
+echo "# Current ydb, gtm and ydbsh symlinks under /usr/local/bin now point to install/dir2"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -123,10 +134,12 @@ echo ""
 
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# Current ydb and gtm symlinks under /usr/local/bin still point to install/dir2"
+echo "# Current ydb, gtm and ydbsh symlinks under /usr/local/bin still point to install/dir2"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -192,10 +205,12 @@ echo ""
 cd $5
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# Current ydb and gtm symlinks under tmpbin/ point to install/dir1"
+echo "# Current ydb, gtm and ydbsh symlinks under tmpbin/ point to install/dir1"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -206,10 +221,12 @@ echo ""
 cd $5
 current_ydb=`readlink ydb`
 current_gtm=`readlink gtm`
+current_ydbsh=`readlink ydbsh`
 
-echo "# Current ydb and gtm symlinks under tmpbin/ now point to install/dir2"
+echo "# Current ydb, gtm and ydbsh symlinks under tmpbin/ now point to install/dir2"
 echo $current_ydb
 echo $current_gtm
+echo $current_ydbsh
 echo ""
 echo ""
 
@@ -254,6 +271,8 @@ echo ""
 cd /usr/local/bin
 ls ydb
 readlink gtm
+ls ydbsh
+readlink ydbsh
 echo ""
 echo ""
 
@@ -275,6 +294,8 @@ echo ""
 cd $5
 ls ydb
 readlink gtm
+ls ydbsh
+readlink ydbsh
 echo ""
 echo ""
 
@@ -292,13 +313,16 @@ echo ""
 ########################################################
 
 cd /usr/local/bin
-echo "# Restoring ydb and gtm symlinks under /usr/local/bin to their original state"
-sudo rm gtm ydb
+echo "# Restoring ydb, gtm and ydbsh symlinks under /usr/local/bin to their original state"
+sudo rm gtm ydb ydbsh
 if [ "$existing_ydb" != "" ]; then
     sudo ln -s $existing_ydb ydb
 fi
 if [ "$existing_gtm" != "" ]; then
     sudo ln -s $existing_gtm gtm
+fi
+if [ "$existing_ydbsh" != "" ]; then
+    sudo ln -s $existing_ydbsh ydbsh
 fi
 echo ""
 echo ""

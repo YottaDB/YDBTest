@@ -1,6 +1,6 @@
 # Tests the ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec,
 # and --copyenv command line options
-# Backing up ydb and gtm symlinks under /usr/local/bin (if any)
+# Backing up ydb, gtm and ydbsh symlinks under /usr/local/bin (if any)
 
 
 # Backing up ydb_env_set, ydb_env_unset, and gtmprofile symlinks under /usr/local/etc (if any)
@@ -9,10 +9,12 @@
 # Installing YottaDB in install/dir1 without --linkexec and --linkenv options
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir1
 
-# Current ydb and gtm symlinks under /usr/local/bin point to install/dir1
+# Current ydb, gtm and ydbsh symlinks under /usr/local/bin point to install/dir1
 ##TEST_PATH##/install/dir1/ydb
 ##TEST_PATH##/install/dir1/gtm
 ##TEST_PATH##/install/dir1/ydb
+##TEST_PATH##/install/dir1/ydbsh
+##TEST_PATH##/install/dir1/yottadb
 
 
 # Current ydb_env_set, ydb_env_unset, and gtmprofile symlinks under /usr/local/etc point to install/dir1
@@ -25,9 +27,10 @@
 # Installing YottaDB in install/dir2 without --linkexec and --linkenv options
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir2
 
-# Current ydb and gtm symlinks under /usr/local/bin now point to install/dir2
+# Current ydb, gtm and ydbsh symlinks under /usr/local/bin now point to install/dir2
 ##TEST_PATH##/install/dir2/ydb
 ##TEST_PATH##/install/dir2/gtm
+##TEST_PATH##/install/dir2/ydbsh
 
 
 # Current ydb_env_set, ydb_env_unset, and gtmprofile symlinks under /usr/local/etc now point to install/dir2
@@ -36,31 +39,34 @@
 ##TEST_PATH##/install/dir2/gtmprofile
 
 
-# Deleting current ydb and gtm symlinks to check that --linkexec creates symlinks if none exist
+# Deleting current ydb, gtm and ydbsh symlinks to check that --linkexec creates symlinks if none exist
 
 
 # Installing YottaDB in install/dir1 with --linkexec option
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir1
 
-# ydb and gtm symlinks created under /usr/local/bin point to install/dir1
+# ydb, gtm and ydbsh symlinks created under /usr/local/bin point to install/dir1
 ##TEST_PATH##/install/dir1/ydb
 ##TEST_PATH##/install/dir1/gtm
+##TEST_PATH##/install/dir1/ydbsh
 
 
 # Installing YottaDB in install/dir2 with --linkexec option
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir2
 
-# Current ydb and gtm symlinks under /usr/local/bin now point to install/dir2
+# Current ydb, gtm and ydbsh symlinks under /usr/local/bin now point to install/dir2
 ##TEST_PATH##/install/dir2/ydb
 ##TEST_PATH##/install/dir2/gtm
+##TEST_PATH##/install/dir2/ydbsh
 
 
 # Installing YottaDB in install/dir1 with --nolinkexec option
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir1
 
-# Current ydb and gtm symlinks under /usr/local/bin still point to install/dir2
+# Current ydb, gtm and ydbsh symlinks under /usr/local/bin still point to install/dir2
 ##TEST_PATH##/install/dir2/ydb
 ##TEST_PATH##/install/dir2/gtm
+##TEST_PATH##/install/dir2/ydbsh
 
 
 # Deleting current ydb_env_set, ydb_env_unset, and gtmprofile symlinks to check that --linkenv creates symlinks if none exist
@@ -96,17 +102,19 @@
 # Installing YottaDB in install/dir1 with --linkexec tmpbin/
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir1
 
-# Current ydb and gtm symlinks under tmpbin/ point to install/dir1
+# Current ydb, gtm and ydbsh symlinks under tmpbin/ point to install/dir1
 ##TEST_PATH##/install/dir1/ydb
 ##TEST_PATH##/install/dir1/gtm
+##TEST_PATH##/install/dir1/ydbsh
 
 
 # Installing YottaDB in install/dir2 with --linkexec tmpbin/
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install/dir2
 
-# Current ydb and gtm symlinks under tmpbin/ now point to install/dir2
+# Current ydb, gtm and ydbsh symlinks under tmpbin/ now point to install/dir2
 ##TEST_PATH##/install/dir2/ydb
 ##TEST_PATH##/install/dir2/gtm
+##TEST_PATH##/install/dir2/ydbsh
 
 
 # Installing YottaDB in install/dir1 with --linkenv tmpetc/
@@ -132,6 +140,8 @@
 
 ydb
 ./ydb
+ydbsh
+./yottadb
 
 
 # Installing YottaDB in install/dir2 with --copyenv option
@@ -147,6 +157,8 @@ ydb_env_unset
 
 ydb
 ./ydb
+ydbsh
+./yottadb
 
 
 # Installing YottaDB in install/dir2 with --copyenv tmpetc/
@@ -157,7 +169,7 @@ ydb_env_unset
 ./ydb_env_set
 
 
-# Restoring ydb and gtm symlinks under /usr/local/bin to their original state
+# Restoring ydb, gtm and ydbsh symlinks under /usr/local/bin to their original state
 
 
 # Restoring ydb_env_set, ydb_env_unset, and gtmprofile symlinks under /usr/local/etc to their original state
