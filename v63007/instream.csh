@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,13 +21,14 @@
 # gtm9043		[mmr]		Test that YDB detects more concatenations than allowed when parsing source code and not at code generation
 # gtm9056		[mmr]		Test that MUPIP SET takes switches -TRIGGER_FLUSH=n and -WRITES_PER_FLUSH=n and that MUPIP DUMPFHEAD shows -TRIGGER_FLUSH setting
 # gtm9071		[mmr]		Test that ZMESSAGE with a boolean expression does not sig11
+# gtm7318		[pooh]		Test for Audit Principal Device
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63007 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "gtm8665"
-setenv subtest_list_non_replic "gtm8130 gtm8626 gtm9047 gtm9043 gtm9056 gtm9071"
+setenv subtest_list_non_replic "gtm8130 gtm8626 gtm9047 gtm9043 gtm9056 gtm9071 gtm7318"
 setenv subtest_list_replic     ""
 
 

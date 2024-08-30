@@ -1,0 +1,226 @@
+# Issue description says:
+# > According to this comment https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2074#note_2080933469,
+# > Test for Audit Principal Device (APD) facility didn't exist yet even though this was introduced in GT.M V6.3-007.
+#
+# Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-007_Release_Notes.html#GTM-7318 says:
+#
+# > GT.M supports the ability to log actions initiated from a principal device
+# > including MUMPS commands typed interactively, or piped in by a script or redirect,
+# > from the principal device ($PRINCIPAL) and / or any information entered in response
+# > to a READ from $PRINCIPAL. An action initiated from $PRINCIPAL executes as usual when
+# > Audit Principal Device is disabled, which it is by default. However, when
+# > Audit Principal Device is enabled, GT.M attempts to send the action out for logging
+# > before acting on it. Additionally, the $ZAUDIT Intrinsic Special Variable (ISV)
+# > provides a Boolean value that indicates whether Audit Principal Device is enabled.
+# > Please see the Additional information for GTM-7318 - Audit Principal Device
+# > in this document for details. (GTM-7318)
+
+# Prepare read-write $gtm_dist directory
+# compile audit_listener utility
+# allocate a port number for TCP and TLS modes
+# set Unix socket filename
+# set crypt config file path and name
+# set-up crypt config file for section clicert
+# get group ID for restrict.txt
+
+# Note:
+# 1) RD means enable logging of all responses READ from $PRINCIPAL which captures input that might be XECUTEd
+# which will resulting in command=TEST in log output
+# 2) $ZAUDIT ISV also tested here. This ISV will be 0 when APD is disabled and 1 when APD is enabled
+
+# Testing mode: tcp
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch tcp audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# Testing mode: tls
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch tls audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# Testing mode: unix_socket
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch unix_socket audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# Testing mode: tcp+RD
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch tcp audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=TEST
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# Testing mode: tls+RD
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch tls audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=TEST
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# Testing mode: unix_socket+RD
+# Run mumps -dir without restriction.txt
+# Expected to be working fine with $ZAUDIT=0
+$ZAUDIT: 0
+TEST
+
+# setup restrict.txt: for audit logging
+# Run mumps -dir with restriction.txt but not started audit listener process yet
+# Expected to be error with E-APDLOGFAIL
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+%GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity
+
+# launch unix_socket audit_listener
+# wait for pidfile
+# Run mumps -dir with restriction.txt and audit listener process started
+# Expected to be working fine with $ZAUDIT=1
+$ZAUDIT: 1
+TEST
+
+# wait for entries added to log
+# delete restrict.txt before printing audit log otherwise filtering will fail as it also uses mumps -run
+# show log captured (should be the MUMPS -DIR commands):
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE "$ZAUDIT: ",$ZAUDIT
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=READ X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=TEST
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=WRITE X
+<timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
+# reset log by sending SIGHUP to the audit listener
+# stop audit_listener and wait for finish
+
+# release port number
