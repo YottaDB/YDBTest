@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -153,7 +156,12 @@ exit_stat=0
 # STEP 1: First generate the private key.
 keyfile=${out%.*}.key
 if [ -f $CADIR/private/$keyfile ]; then echo "Private key file $keyfile already exists in $CADIR/private"; exit 1; fi
-$RSA -des3 -passout pass:$passwd -out $CADIR/private/$keyfile $keysize
+if [ "$passwd" != "" ]; then
+	passout_args="-des3 -passout pass:$passwd"
+else
+	passout_args=""
+fi
+$RSA $passout_args -out $CADIR/private/$keyfile $keysize
 if [ $? -ne 0 ]; then echo "OpenSSL private key generation failed." ; exit 1; fi
 
 # STEP 2: Generate a certificate request.

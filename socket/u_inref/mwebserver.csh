@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,9 +49,18 @@ if ($status) then
 	exit -1
 endif
 
+set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 1`      # choose 1 random number between 0 and 1 (both included)
+if (0 == $rand) then
+	# Test server certificates with key password
+	set keypass = "--pass ydbrocks"
+else
+	# Test server certificates with no key password (YDB#377)
+	set keypass = ""
+endif
+
 # Generate server certificate (signed by rootca)
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=GT.M/CN=$HOST/emailAddress=ydbtest@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 4096 --pass ydbrocks 	\
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 4096 \
 					--subj "$subj" --signca rootca.pem --signpass ydbrocks	>&! server-cert.log
 if ($status) then
 	echo "Failed to generate server certificate. See server-cert.log. Exiting"
@@ -87,9 +96,16 @@ database: {
 	} );
 };
 EOF
+
 setenv gtmgbldir mumps.gld
 $gtm_tst/com/dbcreate.csh mumps
 source $gtm_tst/com/portno_acquire.csh >>& portno.out
+
+if ("" == "$keypass") then
+	# If key was generated without password, unset corresponding env var too.
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_tls_passwd_server gtmtls_passwd_server
+endif
+
 $GTM << EOF
 SET ^VPRHTTP(0,"port")=$portno
 h
