@@ -26,6 +26,7 @@
 # online_integ_shmid-gtmde326986  [nars]   Test that relatively idle GT.M processes detach from snapshot shmid in a timely fashion
 # backup_tmpfile-gtmde340860      [nars]   Test that MUPIP BACKUP cleans up temporary files when multi-region backup copy errors
 # extend_restr_zlink-gtmf135418   [ern0]   Test extending restriction facility for ZLINK, ZRUPDATE & SET $ZROUTINES
+# audit_logging-gtmf171004	  [ern0]   Test audit logger features
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70005 test starts..."
@@ -45,6 +46,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_facility-gt
 setenv subtest_list_non_replic	"$subtest_list_non_replic online_integ_shmid-gtmde326986"
 setenv subtest_list_non_replic	"$subtest_list_non_replic backup_tmpfile-gtmde340860"
 setenv subtest_list_non_replic	"$subtest_list_non_replic extend_restr_zlink-gtmf135418"
+setenv subtest_list_non_replic	"$subtest_list_non_replic audit_logging-gtmf171004"
 setenv subtest_list_replic	""
 
 if ($?test_replic) then
