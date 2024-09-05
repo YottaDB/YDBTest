@@ -1,0 +1,101 @@
+# *****************************************************************
+# GTM-F167559 - Test the following release note
+# *****************************************************************
+#
+# Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-F167559 says:
+#
+# > MUPIP CREATE creates V6 (V6.3-014) database files when the
+# > environment variable gtm_db_create_ver is defined as [V]6,
+# > or when the command line specifies: -V6. The -NOV6 command
+# > line option allowing overrides a gtm_db_create_ver and creates
+# > a V7 database file. This means this V7 release can operate
+# > seamlessly with V6 databases. Prior V7 versions did not have
+# > this support. (GTM-F167559)
+
+# ---- case none ----
+# set $gtmgbldir = none.gld
+# execute: GDE change -segment default -file=none.dat
+# execute: mupip create
+# check whether db file none.dat is created:
+none.dat
+# display db version of none.dat, should be v7:
+7 - pass
+
+# ---- case env_7 ----
+# set $gtmgbldir = env_7.gld
+# set $<gtm|ydb>_db_create_ver = 7
+# execute: GDE change -segment default -file=env_7.dat
+# execute: mupip create
+# check whether db file env_7.dat is created:
+env_7.dat
+# display db version of env_7.dat, should be v7:
+7 - pass
+
+# ---- case env_v7 ----
+# set $gtmgbldir = env_v7.gld
+# set $<gtm|ydb>_db_create_ver = V7
+# execute: GDE change -segment default -file=env_v7.dat
+# execute: mupip create
+# check whether db file env_v7.dat is created:
+env_v7.dat
+# display db version of env_v7.dat, should be v7:
+7 - pass
+
+# ---- case env_6 ----
+# set $gtmgbldir = env_6.gld
+# set $<gtm|ydb>_db_create_ver = 6
+# execute: GDE change -segment default -file=env_6.dat
+# execute: mupip create
+# check whether db file env_6.dat is created:
+env_6.dat
+# display db version of env_6.dat, should be v6:
+6 - pass
+
+# ---- case env_v6 ----
+# set $gtmgbldir = env_v6.gld
+# set $<gtm|ydb>_db_create_ver = V6
+# execute: GDE change -segment default -file=env_v6.dat
+# execute: mupip create
+# check whether db file env_v6.dat is created:
+env_v6.dat
+# display db version of env_v6.dat, should be v6:
+6 - pass
+
+# ---- case cli_v6 ----
+# set $gtmgbldir = cli_v6.gld
+# execute: GDE change -segment default -file=cli_v6.dat
+# execute: mupip create -V6
+# check whether db file cli_v6.dat is created:
+cli_v6.dat
+# display db version of cli_v6.dat, should be v6:
+6 - pass
+
+# ---- case env_7_cli_v6 ----
+# set $gtmgbldir = env_7_cli_v6.gld
+# set $<gtm|ydb>_db_create_ver = 7
+# execute: GDE change -segment default -file=env_7_cli_v6.dat
+# execute: mupip create -V6
+# check whether db file env_7_cli_v6.dat is created:
+env_7_cli_v6.dat
+# display db version of env_7_cli_v6.dat, should be v6:
+6 - pass
+
+# ---- case env_6_cli_nov6 ----
+# set $gtmgbldir = env_6_cli_nov6.gld
+# set $<gtm|ydb>_db_create_ver = 6
+# execute: GDE change -segment default -file=env_6_cli_nov6.dat
+# execute: mupip create -NOV6
+# check whether db file env_6_cli_nov6.dat is created:
+env_6_cli_nov6.dat
+# display db version of env_6_cli_nov6.dat, should be v7:
+7 - pass
+
+# ---- case env_v6_cli_nov6 ----
+# set $gtmgbldir = env_v6_cli_nov6.gld
+# set $<gtm|ydb>_db_create_ver = V6
+# execute: GDE change -segment default -file=env_v6_cli_nov6.dat
+# execute: mupip create -NOV6
+# check whether db file env_v6_cli_nov6.dat is created:
+env_v6_cli_nov6.dat
+# display db version of env_v6_cli_nov6.dat, should be v7:
+7 - pass

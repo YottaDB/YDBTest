@@ -22,6 +22,7 @@
 # dollar_ztslate_stp_gcol-gtmde305529  [nars]   $ZTSLATE value is protected amidst garbage collection
 # socket_use_ioerror_sig11-gtmde307442 [nars]   SOCKET USE command with CONNECT/LISTEN and IOERROR="T" does not SIG-11
 # retry_norm-gtmf166755                [pooh]   MUPIP BACKUP retry normalization
+# support_v6_database-gtmf167559       [ern0]   Verify that GT.M V7 versions support the ability to create database files compatible with GT.M V6.3-014
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
@@ -38,6 +39,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic socket_open_mupip_stop-
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_ztslate_stp_gcol-gtmde305529"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_ioerror_sig11-gtmde307442"
 setenv subtest_list_non_replic	"$subtest_list_non_replic retry_norm-gtmf166755"
+setenv subtest_list_non_replic	"$subtest_list_non_replic support_v6_database-gtmf167559"
 
 setenv subtest_list_replic	""
 
