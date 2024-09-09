@@ -17,5 +17,5 @@
 
 mkdir $1
 cp -r $ydb_dist/* $1/ >>& $1/not_copied.txt
-setenv ydb_dist $1
+setenv ydb_dist `pwd`/$1
 setenv gtm_dist $ydb_dist
