@@ -1,0 +1,38 @@
+###########################################################################################################
+# Test FALLINTOFLST error is issued even when falling through dotted DO lines
+###########################################################################################################
+# Running [mumps -run ydb1097a]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location sub1+2^ydb1097a
+
+YDB>
+# Running [mumps -run ydb1097b]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location sub1+2^ydb1097b
+
+YDB>
+# Running [mumps -run ydb1097c]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location ydb1097c+3^ydb1097c
+
+YDB>
+# Running [mumps -run ydb1097d]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location ydb1097d+5^ydb1097d
+
+YDB>
+# Running [mumps -run ydb1097e]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location ydb1097e+5^ydb1097e
+
+YDB>
+# Running [mumps -run ydb1097f]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location ydb1097e+6^ydb1097f
+
+YDB>
+# Running [mumps -run ydb1097g]. Expecting a FALLINTOFLST error.
+%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location ydb1097e+5^ydb1097g
+
+YDB>

@@ -30,6 +30,7 @@
 # jnlswitch_set_perf-ydb959			[nars]	  Test no dramatic loss of global SET performance during jnl file switch
 # zgbldirundef-ydb999				[nars]    Test ZGBLDIRUNDEF error is issued when ydb_gbldir env var is undefined or set to ""
 # shebang-ydb1084				[nars]	  Test shebang support of yottadb
+# fallintoflst-ydb1097				[nars]	  Test FALLINTOFLST error is issued even when falling through dotted DO lines
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -52,6 +53,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic lots_of_lvns_assert-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlswitch_set_perf-ydb959"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgbldirundef-ydb999"
 setenv subtest_list_non_replic	"$subtest_list_non_replic shebang-ydb1084"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1097"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
