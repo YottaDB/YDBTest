@@ -52,9 +52,9 @@ ZSTATUS=pipeopenfn+4^gtm8877,%YDB-E-IONOTOPEN, Attempt to USE an I/O device whic
 ##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. 150374450,recpipefilter\+4\^gtm8877,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed -- generated from 0x.*
 
 # No label specified in filters
-ydb_temp_dist/mumps -run zsystemfn^gtm8877
+##TEST_PATH##/ydb_temp_dist/mumps -run zsystemfn^gtm8877
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run pipeopenfn^gtm8877
+##TEST_PATH##/ydb_temp_dist/mumps -run pipeopenfn^gtm8877
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
 unset echo
 # Checking the syslog

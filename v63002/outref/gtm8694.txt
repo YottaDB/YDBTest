@@ -1,6 +1,6 @@
 # TESTING EACH FUNCTION RESTRICTED BY RESTRICT.TXT (with readonly permissions)
 
--r--r--r-- ydb_temp_dist/restrict.txt
+-r--r--r-- ##TEST_PATH##/ydb_temp_dist/restrict.txt
 # TESTING BREAK
 Break command successfully ignored
 # TESTING ZBREAK
@@ -30,20 +30,20 @@ YDB>#<CTRL-C>
 
 # Not testing cenable, since this should restrict direct mode, which is necessary for testing cenable
 # Randomly choosing what is listed as restricted, since everything should get restricted regardless
----------- ydb_temp_dist/restrict.txt
-ydb_temp_dist/mumps -run breakfn^gtm8694
+---------- ##TEST_PATH##/ydb_temp_dist/restrict.txt
+##TEST_PATH##/ydb_temp_dist/mumps -run breakfn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run zbreakfn^gtm8694
+##TEST_PATH##/ydb_temp_dist/mumps -run zbreakfn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run zcmdlnefn^gtm8694 ZCMDLNE was not ignored
+##TEST_PATH##/ydb_temp_dist/mumps -run zcmdlnefn^gtm8694 ZCMDLNE was not ignored
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run zeditfn^gtm8694
+##TEST_PATH##/ydb_temp_dist/mumps -run zeditfn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run zsystemfn^gtm8694
+##TEST_PATH##/ydb_temp_dist/mumps -run zsystemfn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run pipefn^gtm8694
+##TEST_PATH##/ydb_temp_dist/mumps -run pipefn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
-ydb_temp_dist/mumps -run trigmodfn^gtm8694
+##TEST_PATH##/ydb_temp_dist/mumps -run trigmodfn^gtm8694
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
 unset echo
 # TESTING DIRECTMODE
@@ -57,7 +57,7 @@ unset echo
 # TESTING EACH FUNCTION WHEN RESTRICT.TXT LISTS OUR GROUP NAME (with readonly permissions)
 
 
--r--r--r-- ydb_temp_dist/restrict.txt
+-r--r--r-- ##TEST_PATH##/ydb_temp_dist/restrict.txt
 # TESTING BREAK
 %YDB-I-BREAK, Break instruction encountered
 		At M source location breakfn+2^gtm8694
@@ -101,7 +101,7 @@ YDB>#<CTRL-C>
 # TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
 # Randomly choosing what gets restricted, since nothing should end up restricted
 
--rw-rw-r-- ydb_temp_dist/restrict.txt
+-rw-rw-r-- ##TEST_PATH##/ydb_temp_dist/restrict.txt
 # TESTING BREAK
 %YDB-I-BREAK, Break instruction encountered
 		At M source location breakfn+2^gtm8694
@@ -144,7 +144,7 @@ YDB>#<CTRL-C>
 
 TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP (with read only permissions)
 
--r--r--r-- ydb_temp_dist/restrict.txt
+-r--r--r-- ##TEST_PATH##/ydb_temp_dist/restrict.txt
 BREAK acted as expected
 ZBREAK acted as expected
 ZCMDLINE acted as expected
@@ -159,6 +159,6 @@ TRIGGER_MOD acted as expected
 
 TESTING A RANDOM FUNCTION WHEN THERE IS A SYNTAX ERROR IN RESTRICT.TXT AND CHECKING THE SYSLOG
 
--r--r--r-- ydb_temp_dist/restrict.txt
+-r--r--r-- ##TEST_PATH##/ydb_temp_dist/restrict.txt
 # CHECKING THE SYSLOG
 ##TEST_AWK%YDB-E-RESTRICTSYNTAX, Syntax error in file ##TEST_PATH##/ydb_temp_dist/restrict.txt at line number 1. All facilities restricted for process. -- generated from 0x.*
