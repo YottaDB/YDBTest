@@ -207,6 +207,9 @@ foreach param ( \
 						set name_norm="${name_mo}/${name_da}/${name_ye} ${name_ho}:${name_mi}:${name_se}"
 						set name_epoch=`date --date="$name_norm" -u +"%s"`
 
+						# Adjusting BEFORE value - see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
+						@ before_epoch--
+
 						if (($before_epoch <= $name_epoch ) && ( $name_epoch <= $after_epoch )) then
 							echo "filename check: pass"
 						else
@@ -256,6 +259,9 @@ foreach param ( \
 				echo "# check if log timestamp falls between before-after checkpoints"
 				set log_stamp=`cat $aulogfile | tail -n1 | cut -d';' -f1`
 				set log_epoch=`date -u --date="$log_stamp" +%s`
+
+				# Adjusting BEFORE value - see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
+				@ before_epoch--
 				if (($before_epoch <= $log_epoch ) && ( $log_epoch <= $after_epoch )) then
 					echo "stamp check: pass"
 				else
