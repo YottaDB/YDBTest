@@ -1,0 +1,526 @@
+###########################################################################################################
+# Test that MUMPS -MACHINE -LIS does not assert fail if more than 128 errors (test of YDB@4d509b3e)
+###########################################################################################################
+# Below is a test case from the commit message of YDB@4d509b3e
+# Generate M program [test.m] with 129 compile time errors
+# Run [mumps -machine -lis=test.lis test.m]
+# We expect lots of SPOREOL errors followed by ZLINKFILE and ZLNOOBJECT errors
+# Before YDB@4d509b3e, we used to see assert failures (instead of ZLINKFILE/ZLNOOBJECT) with a Debug build of YottaDB
+	 s x='a'
+	       ^-----
+		At column 8, line 1, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 2, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 3, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 4, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 5, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 6, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 7, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 8, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 9, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 10, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 11, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 12, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 13, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 14, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 15, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 16, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 17, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 18, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 19, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 20, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 21, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 22, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 23, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 24, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 25, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 26, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 27, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 28, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 29, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 30, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 31, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 32, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 33, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 34, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 35, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 36, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 37, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 38, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 39, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 40, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 41, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 42, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 43, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 44, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 45, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 46, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 47, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 48, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 49, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 50, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 51, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 52, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 53, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 54, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 55, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 56, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 57, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 58, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 59, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 60, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 61, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 62, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 63, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 64, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 65, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 66, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 67, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 68, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 69, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 70, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 71, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 72, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 73, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 74, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 75, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 76, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 77, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 78, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 79, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 80, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 81, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 82, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 83, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 84, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 85, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 86, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 87, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 88, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 89, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 90, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 91, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 92, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 93, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 94, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 95, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 96, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 97, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 98, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 99, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 100, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 101, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 102, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 103, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 104, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 105, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 106, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 107, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 108, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 109, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 110, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 111, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 112, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 113, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 114, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 115, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 116, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 117, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 118, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 119, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 120, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 121, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 122, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 123, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 124, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 125, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 126, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 127, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 128, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 s x='a'
+	       ^-----
+		At column 8, line 129, source module ##TEST_PATH##/test.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-ZLINKFILE, Error while zlinking "##TEST_PATH##/test.m"
+%YDB-E-ZLNOOBJECT, No object module was produced
