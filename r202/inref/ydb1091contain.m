@@ -10,7 +10,7 @@
 ;                                                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ydb777	;
+ydb1091contain	;
 	set null("")=1
 	set null(0)=0
 	set null(1)=0
@@ -20,7 +20,7 @@ ydb777	;
 	write " do ^sstep",!
 	set subs1="" for  do  set subs1=$order(null(subs1))  quit:subs1=""
 	. set subs2="" for  do  set subs2=$order(null(subs2))  quit:subs2=""
-	. . for boolexpr="subs1=subs2","subs2=subs1","subs1'=subs2","subs2'=subs1" do
+	. . for boolexpr="subs1[subs2","subs2[subs1","subs1'[subs2","subs2'[subs1" do
 	. . . for j=0:1:4 do
 	. . . . if j=0 set boolexpr="("_boolexpr_")"
 	. . . . else   set boolexpr="'"_boolexpr

@@ -5,7 +5,7 @@
 # ---------------------------------------------------------------------------
 # Test1 : Verify correctness of various y=z and y'=z simple boolean expressions
 # ---------------------------------------------------------------------------
-# Run [mumps -run ydb1091] to generate [boolexpr.m] with various simple boolean expressions
+# Run [mumps -run ydb1091equ] to generate [boolexpr.m] with various simple boolean expressions
 # Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file
 
 Stepping STARTED
@@ -2013,7 +2013,7 @@ actual=$ZYSQLNULL
 ##SUSPEND_OUTPUT PRO
 
 # ---------------------------------------------------------------------------
-# Test2 : Verify that all generated s= and s'= simple boolean expressions in boolexpr.m get optimized
+# Test2 : Verify that all generated y=z and y'=z simple boolean expressions in boolexpr.m get optimized
 # with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing
 # ---------------------------------------------------------------------------
 # Run [mumps -machine -lis=boolexpr.lis boolexpr.m]

@@ -1,0 +1,3034 @@
+###########################################################################################################
+# Test various aspects of YDB#1091 where y[z and y'[z in simple boolean expressions were speeded up
+###########################################################################################################
+
+# ---------------------------------------------------------------------------
+# Test1 : Verify correctness of various y[z and y'[z simple boolean expressions
+# ---------------------------------------------------------------------------
+# Run [mumps -run ydb1091contain] to generate [boolexpr.m] with various simple boolean expressions
+# Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file
+
+Stepping STARTED
++2^boolexpr         : set subs1="",subs2="" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++3^boolexpr         : set subs1="",subs2="" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++4^boolexpr         : set subs1="",subs2="" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++5^boolexpr         : set subs1="",subs2="" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++6^boolexpr         : set subs1="",subs2="" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++7^boolexpr         : set subs1="",subs2="" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++8^boolexpr         : set subs1="",subs2="" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++9^boolexpr         : set subs1="",subs2="" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++10^boolexpr        : set subs1="",subs2="" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++11^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++12^boolexpr        : set subs1="",subs2="" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++13^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++14^boolexpr        : set subs1="",subs2="" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++15^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++16^boolexpr        : set subs1="",subs2="" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++17^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++18^boolexpr        : set subs1="",subs2="" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++19^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++20^boolexpr        : set subs1="",subs2="" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++21^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++22^boolexpr        : set subs1="",subs2="" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++23^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++24^boolexpr        : set subs1="",subs2="" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++25^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++26^boolexpr        : set subs1="",subs2="" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++27^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++28^boolexpr        : set subs1="",subs2="" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++29^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++30^boolexpr        : set subs1="",subs2="" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++31^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++32^boolexpr        : set subs1="",subs2="" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++33^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++34^boolexpr        : set subs1="",subs2="" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++35^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++36^boolexpr        : set subs1="",subs2="" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++37^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++38^boolexpr        : set subs1="",subs2="" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++39^boolexpr        : set subs1="",subs2="" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++40^boolexpr        : set subs1="",subs2="" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++41^boolexpr        : set subs1="",subs2="" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++42^boolexpr        : set subs1="",subs2=0 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++43^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++44^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++45^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++46^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++47^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++48^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++49^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++50^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++51^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++52^boolexpr        : set subs1="",subs2=0 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++53^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++54^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++55^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++56^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++57^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++58^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++59^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++60^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++61^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++62^boolexpr        : set subs1="",subs2=0 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++63^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++64^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++65^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++66^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++67^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++68^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++69^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++70^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++71^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++72^boolexpr        : set subs1="",subs2=0 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++73^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++74^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++75^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++76^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++77^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++78^boolexpr        : set subs1="",subs2=0 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++79^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++80^boolexpr        : set subs1="",subs2=0 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++81^boolexpr        : set subs1="",subs2=0 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++82^boolexpr        : set subs1="",subs2=1 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++83^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++84^boolexpr        : set subs1="",subs2=1 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++85^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++86^boolexpr        : set subs1="",subs2=1 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++87^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++88^boolexpr        : set subs1="",subs2=1 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++89^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++90^boolexpr        : set subs1="",subs2=1 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++91^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++92^boolexpr        : set subs1="",subs2=1 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++93^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++94^boolexpr        : set subs1="",subs2=1 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++95^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++96^boolexpr        : set subs1="",subs2=1 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++97^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++98^boolexpr        : set subs1="",subs2=1 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++99^boolexpr        : set subs1="",subs2=1 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++100^boolexpr       : set subs1="",subs2=1 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++101^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++102^boolexpr       : set subs1="",subs2=1 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++103^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++104^boolexpr       : set subs1="",subs2=1 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++105^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++106^boolexpr       : set subs1="",subs2=1 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++107^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++108^boolexpr       : set subs1="",subs2=1 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++109^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++110^boolexpr       : set subs1="",subs2=1 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++111^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++112^boolexpr       : set subs1="",subs2=1 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++113^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++114^boolexpr       : set subs1="",subs2=1 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++115^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++116^boolexpr       : set subs1="",subs2=1 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++117^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++118^boolexpr       : set subs1="",subs2=1 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++119^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++120^boolexpr       : set subs1="",subs2=1 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++121^boolexpr       : set subs1="",subs2=1 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++122^boolexpr       : set subs1="",subs2="a" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++123^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++124^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++125^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++126^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++127^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++128^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++129^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++130^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++131^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++132^boolexpr       : set subs1="",subs2="a" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++133^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++134^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++135^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++136^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++137^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++138^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++139^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++140^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++141^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++142^boolexpr       : set subs1="",subs2="a" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++143^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++144^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++145^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++146^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++147^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++148^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++149^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++150^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++151^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++152^boolexpr       : set subs1="",subs2="a" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++153^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++154^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++155^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++156^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++157^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++158^boolexpr       : set subs1="",subs2="a" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++159^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++160^boolexpr       : set subs1="",subs2="a" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++161^boolexpr       : set subs1="",subs2="a" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++162^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++163^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++164^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++165^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++166^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++167^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++168^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++169^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++170^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++171^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++172^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++173^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++174^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++175^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++176^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++177^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++178^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++179^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++180^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++181^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++182^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++183^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++184^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++185^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++186^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++187^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++188^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++189^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++190^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++191^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++192^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++193^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++194^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++195^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++196^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++197^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++198^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++199^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++200^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++201^boolexpr       : set subs1="",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++202^boolexpr       : set subs1=0,subs2="" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++203^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++204^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++205^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++206^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++207^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++208^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++209^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++210^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++211^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++212^boolexpr       : set subs1=0,subs2="" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++213^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++214^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++215^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++216^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++217^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++218^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++219^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++220^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++221^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++222^boolexpr       : set subs1=0,subs2="" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++223^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++224^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++225^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++226^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++227^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++228^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++229^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++230^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++231^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++232^boolexpr       : set subs1=0,subs2="" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++233^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++234^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++235^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++236^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++237^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++238^boolexpr       : set subs1=0,subs2="" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++239^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++240^boolexpr       : set subs1=0,subs2="" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++241^boolexpr       : set subs1=0,subs2="" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++242^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++243^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++244^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++245^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++246^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++247^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++248^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++249^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++250^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++251^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++252^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++253^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++254^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++255^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++256^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++257^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++258^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++259^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++260^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++261^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++262^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++263^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++264^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++265^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++266^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++267^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++268^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++269^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++270^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++271^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++272^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++273^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++274^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++275^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++276^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++277^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++278^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++279^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++280^boolexpr       : set subs1=0,subs2=0 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++281^boolexpr       : set subs1=0,subs2=0 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++282^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++283^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++284^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++285^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++286^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++287^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++288^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++289^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++290^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++291^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++292^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++293^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++294^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++295^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++296^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++297^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++298^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++299^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++300^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++301^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++302^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++303^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++304^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++305^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++306^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++307^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++308^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++309^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++310^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++311^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++312^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++313^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++314^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++315^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++316^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++317^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++318^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++319^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++320^boolexpr       : set subs1=0,subs2=1 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++321^boolexpr       : set subs1=0,subs2=1 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++322^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++323^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++324^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++325^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++326^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++327^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++328^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++329^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++330^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++331^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++332^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++333^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++334^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++335^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++336^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++337^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++338^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++339^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++340^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++341^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++342^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++343^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++344^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++345^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++346^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++347^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++348^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++349^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++350^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++351^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++352^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++353^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++354^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++355^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++356^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++357^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++358^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++359^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++360^boolexpr       : set subs1=0,subs2="a" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++361^boolexpr       : set subs1=0,subs2="a" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++362^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++363^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++364^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++365^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++366^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++367^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++368^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++369^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++370^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++371^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++372^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++373^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++374^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++375^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++376^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++377^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++378^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++379^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++380^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++381^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++382^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++383^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++384^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++385^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++386^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++387^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++388^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++389^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++390^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++391^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++392^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++393^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++394^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++395^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++396^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++397^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++398^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++399^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++400^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++401^boolexpr       : set subs1=0,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++402^boolexpr       : set subs1=1,subs2="" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++403^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++404^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++405^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++406^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++407^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++408^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++409^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++410^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++411^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++412^boolexpr       : set subs1=1,subs2="" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++413^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++414^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++415^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++416^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++417^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++418^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++419^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++420^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++421^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++422^boolexpr       : set subs1=1,subs2="" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++423^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++424^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++425^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++426^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++427^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++428^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++429^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++430^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++431^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++432^boolexpr       : set subs1=1,subs2="" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++433^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++434^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++435^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++436^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++437^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++438^boolexpr       : set subs1=1,subs2="" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++439^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++440^boolexpr       : set subs1=1,subs2="" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++441^boolexpr       : set subs1=1,subs2="" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++442^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++443^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++444^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++445^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++446^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++447^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++448^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++449^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++450^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++451^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++452^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++453^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++454^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++455^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++456^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++457^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++458^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++459^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++460^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++461^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++462^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++463^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++464^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++465^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++466^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++467^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++468^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++469^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++470^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++471^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++472^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++473^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++474^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++475^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++476^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++477^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++478^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++479^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++480^boolexpr       : set subs1=1,subs2=0 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++481^boolexpr       : set subs1=1,subs2=0 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++482^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++483^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++484^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++485^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++486^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++487^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++488^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++489^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++490^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++491^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++492^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++493^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++494^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++495^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++496^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++497^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++498^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++499^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++500^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++501^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++502^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++503^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++504^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++505^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++506^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++507^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++508^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++509^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++510^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++511^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++512^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++513^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++514^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++515^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++516^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++517^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++518^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++519^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++520^boolexpr       : set subs1=1,subs2=1 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++521^boolexpr       : set subs1=1,subs2=1 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++522^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++523^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++524^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++525^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++526^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++527^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++528^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++529^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++530^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++531^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++532^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++533^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++534^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++535^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++536^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++537^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++538^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++539^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++540^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++541^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++542^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++543^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++544^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++545^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++546^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++547^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++548^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++549^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++550^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++551^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++552^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++553^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++554^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++555^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++556^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++557^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++558^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++559^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++560^boolexpr       : set subs1=1,subs2="a" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++561^boolexpr       : set subs1=1,subs2="a" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++562^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++563^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++564^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++565^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++566^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++567^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++568^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++569^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++570^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++571^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++572^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++573^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++574^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++575^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++576^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++577^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++578^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++579^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++580^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++581^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++582^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++583^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++584^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++585^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++586^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++587^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++588^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++589^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++590^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++591^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++592^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++593^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++594^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++595^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++596^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++597^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++598^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++599^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++600^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++601^boolexpr       : set subs1=1,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++602^boolexpr       : set subs1="a",subs2="" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++603^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++604^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++605^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++606^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++607^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++608^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++609^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++610^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++611^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++612^boolexpr       : set subs1="a",subs2="" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++613^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++614^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++615^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++616^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++617^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++618^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++619^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++620^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++621^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++622^boolexpr       : set subs1="a",subs2="" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++623^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++624^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++625^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++626^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++627^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++628^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++629^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++630^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++631^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++632^boolexpr       : set subs1="a",subs2="" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++633^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++634^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++635^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++636^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++637^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++638^boolexpr       : set subs1="a",subs2="" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++639^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++640^boolexpr       : set subs1="a",subs2="" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++641^boolexpr       : set subs1="a",subs2="" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++642^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++643^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++644^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++645^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++646^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++647^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++648^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++649^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++650^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++651^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++652^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++653^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++654^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++655^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++656^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++657^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++658^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++659^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++660^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++661^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++662^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++663^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++664^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++665^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++666^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++667^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++668^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++669^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++670^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++671^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++672^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++673^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++674^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++675^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++676^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++677^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++678^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++679^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++680^boolexpr       : set subs1="a",subs2=0 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++681^boolexpr       : set subs1="a",subs2=0 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++682^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++683^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=0
++684^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=100
++685^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=1
++686^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++687^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=0
++688^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=100
++689^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=1
++690^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++691^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=0
++692^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++693^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=0
++694^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=100
++695^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=1
++696^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++697^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=0
++698^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=100
++699^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=1
++700^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++701^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=0
++702^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=100
++703^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=1
++704^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++705^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=0
++706^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++707^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=1
++708^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++709^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=0
++710^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++711^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=1
++712^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=100
++713^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=1
++714^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++715^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=0
++716^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++717^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=1
++718^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++719^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=0
++720^boolexpr       : set subs1="a",subs2=1 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++721^boolexpr       : set subs1="a",subs2=1 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=1
++722^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=100
++723^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=1
++724^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++725^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=0
++726^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=100
++727^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=1
++728^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++729^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=0
++730^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=100
++731^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=1
++732^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=100
++733^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=1
++734^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++735^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=0
++736^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=100
++737^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=1
++738^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++739^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=0
++740^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=100
++741^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=1
++742^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++743^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=0
++744^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=100
++745^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=1
++746^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++747^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=0
++748^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=100
++749^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=1
++750^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++751^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=0
++752^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++753^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=0
++754^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=100
++755^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=1
++756^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++757^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=0
++758^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=100
++759^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=1
++760^boolexpr       : set subs1="a",subs2="a" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++761^boolexpr       : set subs1="a",subs2="a" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=0
++762^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++763^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++764^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++765^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++766^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++767^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++768^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++769^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++770^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++771^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++772^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++773^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++774^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++775^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++776^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++777^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++778^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++779^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++780^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++781^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++782^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++783^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++784^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++785^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++786^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++787^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++788^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++789^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++790^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++791^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++792^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++793^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++794^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++795^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++796^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++797^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++798^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++799^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++800^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++801^boolexpr       : set subs1="a",subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++802^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++803^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++804^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++805^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++806^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++807^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++808^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++809^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++810^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++811^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++812^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++813^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++814^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++815^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++816^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++817^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++818^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++819^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++820^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++821^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++822^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++823^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++824^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++825^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++826^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++827^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++828^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++829^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++830^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++831^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++832^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++833^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++834^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++835^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++836^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++837^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++838^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++839^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++840^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++841^boolexpr       : set subs1=$ZYSQLNULL,subs2="" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++842^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++843^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++844^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++845^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++846^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++847^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++848^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++849^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++850^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++851^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++852^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++853^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++854^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++855^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++856^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++857^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++858^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++859^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++860^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++861^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++862^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++863^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++864^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++865^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++866^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++867^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++868^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++869^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++870^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++871^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++872^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++873^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++874^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++875^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++876^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++877^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++878^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++879^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++880^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++881^boolexpr       : set subs1=$ZYSQLNULL,subs2=0 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++882^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++883^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++884^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++885^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++886^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++887^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++888^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++889^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++890^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++891^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++892^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++893^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++894^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++895^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++896^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++897^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++898^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++899^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++900^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++901^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++902^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++903^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++904^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++905^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++906^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++907^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++908^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++909^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++910^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++911^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++912^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++913^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++914^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++915^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++916^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++917^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++918^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++919^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++920^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++921^boolexpr       : set subs1=$ZYSQLNULL,subs2=1 set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++922^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++923^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++924^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++925^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++926^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++927^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++928^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++929^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++930^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++931^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++932^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++933^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++934^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++935^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++936^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++937^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++938^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++939^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++940^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++941^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++942^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++943^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++944^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++945^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++946^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++947^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++948^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++949^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++950^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++951^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++952^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++953^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++954^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++955^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++956^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++957^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++958^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++959^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++960^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++961^boolexpr       : set subs1=$ZYSQLNULL,subs2="a" set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++962^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:(subs1[subs2) actual=100 zwrite actual
+actual=-1
++963^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++964^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'(subs1[subs2) actual=100 zwrite actual
+actual=-1
++965^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++966^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++967^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++968^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++969^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++970^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1[subs2) actual=100 zwrite actual
+actual=-1
++971^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1[subs2) zwrite actual
+actual=$ZYSQLNULL
++972^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:(subs2[subs1) actual=100 zwrite actual
+actual=-1
++973^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++974^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'(subs2[subs1) actual=100 zwrite actual
+actual=-1
++975^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++976^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++977^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++978^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++979^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++980^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2[subs1) actual=100 zwrite actual
+actual=-1
++981^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2[subs1) zwrite actual
+actual=$ZYSQLNULL
++982^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++983^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++984^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++985^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++986^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++987^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++988^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++989^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++990^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''''(subs1'[subs2) actual=100 zwrite actual
+actual=-1
++991^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs1'[subs2) zwrite actual
+actual=$ZYSQLNULL
++992^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++993^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++994^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++995^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++996^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++997^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++998^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:'''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++999^boolexpr       : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual='''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++1000^boolexpr      : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set:''''(subs2'[subs1) actual=100 zwrite actual
+actual=-1
++1001^boolexpr      : set subs1=$ZYSQLNULL,subs2=$ZYSQLNULL set actual=-1 set actual=''''(subs2'[subs1) zwrite actual
+actual=$ZYSQLNULL
++1002^boolexpr      : quit
+##SUSPEND_OUTPUT PRO
+
+# ---------------------------------------------------------------------------
+# Test2 : Verify that all generated y[z and y'[z simple boolean expressions in boolexpr.m get optimized
+# with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing
+# ---------------------------------------------------------------------------
+# Run [mumps -machine -lis=boolexpr.lis boolexpr.m]
+# Run [grep -E OC_ boolexpr.lis | grep -vE OC_LINESTART|OC_EXTCALL|OC_LINEFETCH|OC_JMPEQU|OC_STOLIT|OC_LVZWRITE|OC_SVGET|OC_LITC|OC_RET | awk '{print $NF}']
+# Expect to see only OC_CONTAIN_RETMVAL, OC_NCONTAIN_RETMVAL, OC_CONTAIN_RETBOOL or OC_NCONTAIN_RETBOOL opcodes
+# Do not expect to see any OC_BOOL* opcodes (implies optimization did not happen)
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+;OC_CONTAIN_RETBOOL
+;OC_CONTAIN_RETMVAL
+;OC_NCONTAIN_RETBOOL
+;OC_NCONTAIN_RETMVAL
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+
+# ---------------------------------------------------------------------------
+# Test3 : Test the actual number of instructions for a y[z and y'[z test case
+# ---------------------------------------------------------------------------
+# [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes.
+# The test allows for up to 5% more instructions. And signals failure if it exceeds even that.
+PASS: Test of [s x=(y[z)]
+PASS: Test of [s x=(y'[z)]
+PASS: Test of [s:(y[z) x=1]
+PASS: Test of [s:(y'[z) x=1]

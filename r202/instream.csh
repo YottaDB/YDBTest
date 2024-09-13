@@ -33,6 +33,7 @@
 # fallintoflst-ydb1097				[nars]	  Test FALLINTOFLST error is issued even when falling through dotted DO lines
 # mumps_machine_lis-assertfailure		[nars]	  Test that MUMPS -MACHINE -LIS does not assert fail if more than 128 errors (test of YDB@4d509b3e)
 # bool_expr_equ-ydb1091				[nars]	  Test that x=y and x'=y in simple boolean expressions are fast
+# bool_expr_contain-ydb1091			[nars]	  Test that x[y and x'[y in simple boolean expressions are fast
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -58,6 +59,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic shebang-ydb1084"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1097"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mumps_machine_lis-assertfailure"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_equ-ydb1091"
+setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_contain-ydb1091"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
