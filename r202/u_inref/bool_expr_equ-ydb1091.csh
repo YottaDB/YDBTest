@@ -24,6 +24,9 @@ echo "# ------------------------------------------------------------------------
 echo "# Run [mumps -run ydb1091equ] to generate [boolexpr.m] with various simple boolean expressions"
 $gtm_dist/mumps -run ydb1091equ > boolexpr.m
 echo "# Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file"
+echo '# The output in the reference file was verified as correct by comparing it against the output with $gtm_curpro'
+echo '# Using $gtm_curpro would have avoided a huge reference file but I chose not to because the pipeline currently'
+echo '# does not have $gtm_curpro available which would make this subtest fail there.'
 $gtm_dist/mumps -run boolexpr
 
 # Only run Test2 if Debug build. As mumps -machine -lis only works with Debug builds.

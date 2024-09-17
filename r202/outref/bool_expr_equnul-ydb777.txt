@@ -7,6 +7,9 @@
 # ---------------------------------------------------------------------------
 # Run [mumps -run ydb777] to generate [boolexpr.m] with various simple boolean expressions
 # Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file
+# The output in the reference file was verified as correct by comparing it against the output with $gtm_curpro
+# Using $gtm_curpro would have avoided a huge reference file but I chose not to because the pipeline currently
+# does not have $gtm_curpro available which would make this subtest fail there.
 
 Stepping STARTED
 +2^boolexpr         : set s="" set actual=-1 set:(s="") actual=100 zwrite actual

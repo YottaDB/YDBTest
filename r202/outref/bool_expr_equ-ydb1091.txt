@@ -7,6 +7,9 @@
 # ---------------------------------------------------------------------------
 # Run [mumps -run ydb1091equ] to generate [boolexpr.m] with various simple boolean expressions
 # Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file
+# The output in the reference file was verified as correct by comparing it against the output with $gtm_curpro
+# Using $gtm_curpro would have avoided a huge reference file but I chose not to because the pipeline currently
+# does not have $gtm_curpro available which would make this subtest fail there.
 
 Stepping STARTED
 +2^boolexpr         : set subs1="",subs2="" set actual=-1 set:(subs1=subs2) actual=100 zwrite actual
@@ -3032,3 +3035,4 @@ PASS: Test of [s x=(y=z)]
 PASS: Test of [s x=(y'=z)]
 PASS: Test of [s:(y=z) x=1]
 PASS: Test of [s:(y'=z) x=1]
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
