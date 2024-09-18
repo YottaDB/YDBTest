@@ -213,6 +213,7 @@ actual=-1
 +101^boolexpr       : set subs1=$ZYSQLNULL set actual=-1 set actual=''''(subs1'?."1") zwrite actual
 actual=$ZYSQLNULL
 +102^boolexpr       : quit
+##SUSPEND_OUTPUT PRO
 
 # ---------------------------------------------------------------------------
 # Test2 : Verify that all generated y?."1" and y'?."1" simple boolean expressions in boolexpr.m get optimized
@@ -330,8 +331,8 @@ actual=$ZYSQLNULL
 # ---------------------------------------------------------------------------
 # [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes.
 # The test allows for up to 5% more instructions. And signals failure if it exceeds even that.
-PASS: Test of [s x=(y?z)]
-PASS: Test of [s x=(y'?z)]
-PASS: Test of [s:(y?z) x=1]
-PASS: Test of [s:(y'?z) x=1]
+PASS: Test of [s x=(y?."1")]
+PASS: Test of [s x=(y'?."1")]
+PASS: Test of [s:(y?."1") x=1]
+PASS: Test of [s:(y'?."1") x=1]
 ##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON

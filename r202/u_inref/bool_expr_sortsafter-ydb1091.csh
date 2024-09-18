@@ -14,15 +14,15 @@
 set backslash_quote	# needed for backslash usages in various places below
 
 echo "###########################################################################################################"
-echo '# Test various aspects of YDB#1091 where y]z and y\']z in simple boolean expressions were speeded up'
+echo '# Test various aspects of YDB#1091 where y]]z and y\']]z in simple boolean expressions were speeded up'
 echo "###########################################################################################################"
 
 echo ""
 echo "# ---------------------------------------------------------------------------"
-echo "# Test1 : Verify correctness of various y]z and y']z simple boolean expressions"
+echo "# Test1 : Verify correctness of various y]]z and y']]z simple boolean expressions"
 echo "# ---------------------------------------------------------------------------"
-echo "# Run [mumps -run ydb1091follow] to generate [boolexpr.m] with various simple boolean expressions"
-$gtm_dist/mumps -run ydb1091follow > boolexpr.m
+echo "# Run [mumps -run ydb1091sortsafter] to generate [boolexpr.m] with various simple boolean expressions"
+$gtm_dist/mumps -run ydb1091sortsafter > boolexpr.m
 echo "# Run [mumps -run boolexpr] and verify the output of the various boolean expressions against the reference file"
 echo '# The output in the reference file was verified as correct by comparing it against the output with $gtm_curpro'
 echo '# Using $gtm_curpro would have avoided a huge reference file but I chose not to because the pipeline currently'
@@ -33,14 +33,14 @@ $gtm_dist/mumps -run boolexpr
 if ("dbg" == "$tst_image") then
 	echo ""
 	echo "# ---------------------------------------------------------------------------"
-	echo "# Test2 : Verify that all generated y]z and y']z simple boolean expressions in boolexpr.m get optimized"
+	echo "# Test2 : Verify that all generated y]]z and y']]z simple boolean expressions in boolexpr.m get optimized"
 	echo "# with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing"
 	echo "# ---------------------------------------------------------------------------"
 	echo "# Run [mumps -machine -lis=boolexpr.lis boolexpr.m]"
 	$gtm_dist/mumps -machine -lis=boolexpr.lis boolexpr.m
 	set filter = "OC_LINESTART|OC_EXTCALL|OC_LINEFETCH|OC_JMPEQU|OC_STOLIT|OC_LVZWRITE|OC_SVGET|OC_LITC|OC_RET"
 	echo '# Run [grep -E OC_ boolexpr.lis | grep -vE '$filter' | awk \'{print $NF}\']'
-	echo '# Expect to see only OC_FOLLOW_RETMVAL, OC_NFOLLOW_RETMVAL, OC_FOLLOW_RETBOOL or OC_NFOLLOW_RETBOOL opcodes'
+	echo '# Expect to see only OC_SORTSAFTER_RETMVAL, OC_NSORTSAFTER_RETMVAL, OC_SORTSAFTER_RETBOOL or OC_NSORTSAFTER_RETBOOL opcodes'
 	echo '# Do not expect to see any OC_BOOL* opcodes (implies optimization did not happen)'
 	$grep -E "OC_" boolexpr.lis | $grep -vE $filter | $tst_awk '{print $NF}'
 endif
@@ -58,15 +58,15 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		&& ("GCC" == $gtm_test_yottadb_compiler) && ! $?gtm_trace_gbl_name) then
 	echo ""
 	echo "# ---------------------------------------------------------------------------"
-	echo '# Test3 : Test the actual number of instructions for a y]z and y\']z test case'
+	echo '# Test3 : Test the actual number of instructions for a y]]z and y\']]z test case'
 	echo "# ---------------------------------------------------------------------------"
 	echo "# [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes."
 	# Note: 1 and 2 are r2.02 values, 3 and 4 are V70005 values (as they are 3% better than r2.02 values)
-	set limit = (3178280956 3178277369 3116500695 3166500866)
+	set limit = (3933344652 3933345899 3876452073 3826452418)
 	echo "# The test allows for up to 5% more instructions. And signals failure if it exceeds even that."
 	# Allow for 5% more than this.
 	@ cnt = 1
-	foreach cmd ('s x=(y]z)' 's x=(y\']z)' 's:(y]z) x=1' 's:(y\']z) x=1')
+	foreach cmd ('s x=(y]]z)' 's x=(y\']]z)' 's:(y]]z) x=1' 's:(y\']]z) x=1')
 		set maxlimit = `$gtm_dist/mumps -run %XCMD 'write '$limit[$cnt]'*1.05\1'`
 		@ cnt = $cnt + 1
 		set fullcmd = "s y=\$justify(1,10),z=\"1\" for i=1:1:10000000 $cmd"
