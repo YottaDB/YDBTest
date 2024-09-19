@@ -330,7 +330,10 @@ actual=$ZYSQLNULL
 # Test3 : Test the actual number of instructions for a y?."1" and y'?."1" test case
 # ---------------------------------------------------------------------------
 # [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes.
-# The test allows for up to 5% more instructions. And signals failure if it exceeds even that.
+# The test allows for up to 10% more instructions. And signals failure if it exceeds even that.
+# Note that other "r202/bool_expr*" subtests allow for only up to 5% more instructions. But this
+# subtest has been noticed to show as much as a 6% difference across different x86_64 system processors.
+# Not sure why so we allow for up to 10% in just this subtest.
 PASS: Test of [s x=(y?."1")]
 PASS: Test of [s x=(y'?."1")]
 PASS: Test of [s:(y?."1") x=1]

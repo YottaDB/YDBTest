@@ -62,11 +62,14 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo "# ---------------------------------------------------------------------------"
 	echo "# [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes."
 	set limit = (5144301344 5144307466 5024303185 5094307197)
-	echo "# The test allows for up to 5% more instructions. And signals failure if it exceeds even that."
-	# Allow for 5% more than this.
+	echo "# The test allows for up to 10% more instructions. And signals failure if it exceeds even that."
+	echo "# Note that other \"r202/bool_expr*\" subtests allow for only up to 5% more instructions. But this"
+	echo "# subtest has been noticed to show as much as a 6% difference across different x86_64 system processors."
+	echo "# Not sure why so we allow for up to 10% in just this subtest."
+	# Allow for 10% more than this.
 	@ cnt = 1
 	foreach cmd ('s x=(y?."1")' 's x=(y\'?."1")' 's:(y?."1") x=1' 's:(y\'?."1") x=1')
-		set maxlimit = `$gtm_dist/mumps -run %XCMD 'write '$limit[$cnt]'*1.05\1'`
+		set maxlimit = `$gtm_dist/mumps -run %XCMD 'write '$limit[$cnt]'*1.10\1'`
 		@ cnt = $cnt + 1
 		set fullcmd = "s y=\$justify(1,10) for i=1:1:10000000 $cmd"
 		set instructions = `echo "$fullcmd" | perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -direct`
