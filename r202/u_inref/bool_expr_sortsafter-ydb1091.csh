@@ -61,8 +61,7 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo '# Test3 : Test the actual number of instructions for a y]]z and y\']]z test case'
 	echo "# ---------------------------------------------------------------------------"
 	echo "# [limit] variable contains number of instructions (from perf) when tested with the YDB#1091 fixes."
-	# Note: 1 and 2 are r2.02 values, 3 and 4 are V70005 values (as they are 3% better than r2.02 values)
-	set limit = (3933344652 3933345899 3876452073 3826452418)
+	set limit = (3466121251 3466120084 3516126827 3476127436)
 	echo "# The test allows for up to 5% more instructions. And signals failure if it exceeds even that."
 	# Allow for 5% more than this.
 	@ cnt = 1
