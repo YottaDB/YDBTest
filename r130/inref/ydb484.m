@@ -1999,7 +1999,7 @@ zero(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	. if rand=11 set ret="($$Always0)"
 	. if rand=12 set ret="('$$Always1)"
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(47)
+	set rand=$random(65)
 	if rand=0 quit "("_$$one(depth1)_"="_$$zero(depth2)_")"
 	if rand=1 quit "("_$$zero(depth1)_"="_$$one(depth2)_")"
 	if rand=2 quit "("_$$zero(depth1)_"'="_$$zero(depth2)_")"
@@ -2050,6 +2050,24 @@ zero(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	if rand=44 quit "("_$$zero(depth1)_"="""")"
 	if rand=45 quit "(""""="_$$one(depth1)_")"
 	if rand=46 quit "(""""="_$$zero(depth1)_")"
+	if rand=47 quit "("_$$one(depth1)_"="_$$zero(depth1)_")"
+	if rand=48 quit "("_$$zero(depth1)_"="_$$one(depth1)_")"
+	if rand=49 quit "("_$$one(depth1)_"'="_$$one(depth1)_")"
+	if rand=50 quit "("_$$zero(depth1)_"'="_$$zero(depth1)_")"
+	if rand=51 quit "("_$$one(depth1)_"["_$$zero(depth1)_")"
+	if rand=52 quit "("_$$zero(depth1)_"["_$$one(depth1)_")"
+	if rand=53 quit "("_$$one(depth1)_"'["_$$one(depth1)_")"
+	if rand=54 quit "("_$$zero(depth1)_"'["_$$zero(depth1)_")"
+	if rand=55 quit "("_$$zero(depth1)_"]]"_$$one(depth1)_")"
+	if rand=56 quit "("_$$one(depth1)_"']]"_$$zero(depth1)_")"
+	if rand=57 quit "("_$$zero(depth1)_"?1""1"")"
+	if rand=58 quit "("_$$zero(depth1)_"'?1""0"")"
+	if rand=59 quit "("_$$zero(depth1)_"]"_$$one(depth1)_")"
+	if rand=60 quit "("_$$one(depth1)_"']"_$$zero(depth1)_")"
+	if rand=61 quit "("_$$zero(depth1)_">"_$$one(depth1)_")"
+	if rand=62 quit "("_$$one(depth1)_"'>"_$$zero(depth1)_")"
+	if rand=63 quit "("_$$one(depth1)_"<"_$$zero(depth1)_")"
+	if rand=64 quit "("_$$zero(depth1)_"'<"_$$one(depth1)_")"
 	quit
 
 one(depth)	; Returns a random boolean expression that is guaranteed to evaluate to 1
@@ -2070,7 +2088,7 @@ one(depth)	; Returns a random boolean expression that is guaranteed to evaluate 
 	. if rand=11 set ret="($$Always1)"
 	. if rand=12 set ret="('$$Always0)"
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(47)
+	set rand=$random(65)
 	if rand=0 quit "("_$$zero(depth1)_"="_$$zero(depth2)_")"
 	if rand=1 quit "("_$$one(depth1)_"="_$$one(depth2)_")"
 	if rand=2 quit "("_$$one(depth1)_"'="_$$zero(depth2)_")"
@@ -2121,6 +2139,24 @@ one(depth)	; Returns a random boolean expression that is guaranteed to evaluate 
 	if rand=44 quit "("_$$zero(depth1)_"'="""")"
 	if rand=45 quit "(""""'="_$$one(depth1)_")"
 	if rand=46 quit "(""""'="_$$zero(depth1)_")"
+	if rand=47 quit "("_$$one(depth1)_"'="_$$zero(depth1)_")"
+	if rand=48 quit "("_$$zero(depth1)_"'="_$$one(depth1)_")"
+	if rand=49 quit "("_$$one(depth1)_"="_$$one(depth1)_")"
+	if rand=50 quit "("_$$zero(depth1)_"="_$$zero(depth1)_")"
+	if rand=51 quit "("_$$one(depth1)_"'["_$$zero(depth1)_")"
+	if rand=52 quit "("_$$zero(depth1)_"'["_$$one(depth1)_")"
+	if rand=53 quit "("_$$one(depth1)_"["_$$one(depth1)_")"
+	if rand=54 quit "("_$$zero(depth1)_"["_$$zero(depth1)_")"
+	if rand=55 quit "("_$$zero(depth1)_"']]"_$$one(depth1)_")"
+	if rand=56 quit "("_$$one(depth1)_"]]"_$$zero(depth1)_")"
+	if rand=57 quit "("_$$zero(depth1)_"'?1""1"")"
+	if rand=58 quit "("_$$zero(depth1)_"?1""0"")"
+	if rand=59 quit "("_$$zero(depth1)_"']"_$$one(depth1)_")"
+	if rand=60 quit "("_$$one(depth1)_"]"_$$zero(depth1)_")"
+	if rand=61 quit "("_$$zero(depth1)_"'>"_$$one(depth1)_")"
+	if rand=62 quit "("_$$one(depth1)_">"_$$zero(depth1)_")"
+	if rand=63 quit "("_$$one(depth1)_"'<"_$$zero(depth1)_")"
+	if rand=64 quit "("_$$zero(depth1)_"<"_$$one(depth1)_")"
 	quit
 
 null(depth)	; Returns a random boolean expression that is guaranteed to evaluate to $ZYSQLNULL
@@ -2146,7 +2182,7 @@ null(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	. if rand=16 set ret="('$$AlwaysNull)"
 	. ; Note: $$incrementhelper cannot be used in `null` like it is used in `zero` and `one` due to ZYSQLNULLNOTVALID error
 	set depth1=$random(depth),depth2=$random(depth)
-	set rand=$random(38)
+	set rand=$random(61)
 	if rand=0 quit $$nullhelper("=",depth1,depth2)
 	if rand=1 quit $$nullhelper("'=",depth1,depth2)
 	if rand=2 quit $$nullhelper(">",depth1,depth2)
@@ -2185,6 +2221,32 @@ null(depth)	; Returns a random boolean expression that is guaranteed to evaluate
 	if rand=35 quit "("_$$null(depth1)_"'="""")"
 	if rand=36 quit "(""""="_$$null(depth1)_")"
 	if rand=37 quit "(""""'="_$$null(depth1)_")"
+	if rand=38 quit "("_$$null(depth1)_"="_$$zero(depth1)_")"
+	if rand=39 quit "("_$$zero(depth1)_"="_$$null(depth1)_")"
+	if rand=39 quit "("_$$null(depth1)_"="_$$null(depth1)_")"
+	if rand=40 quit "("_$$one(depth1)_"'="_$$null(depth1)_")"
+	if rand=41 quit "("_$$null(depth1)_"'="_$$one(depth1)_")"
+	if rand=41 quit "("_$$null(depth1)_"'="_$$null(depth1)_")"
+	if rand=42 quit "("_$$one(depth1)_"["_$$null(depth1)_")"
+	if rand=43 quit "("_$$null(depth1)_"["_$$null(depth1)_")"
+	if rand=44 quit "("_$$one(depth1)_"'["_$$null(depth1)_")"
+	if rand=45 quit "("_$$null(depth1)_"'["_$$null(depth1)_")"
+	if rand=46 quit "("_$$null(depth1)_"]]"_$$one(depth1)_")"
+	if rand=47 quit "("_$$zero(depth1)_"']]"_$$null(depth1)_")"
+	if rand=48 quit "("_$$null(depth1)_"?1""1"")"
+	if rand=49 quit "("_$$null(depth1)_"'?1""0"")"
+	if rand=50 quit "("_$$null(depth1)_"]"_$$one(depth1)_")"
+	if rand=51 quit "("_$$null(depth1)_"]"_$$null(depth1)_")"
+	if rand=51 quit "("_$$zero(depth1)_"']"_$$null(depth1)_")"
+	if rand=52 quit "("_$$null(depth1)_"']"_$$null(depth1)_")"
+	if rand=53 quit "("_$$null(depth1)_">"_$$null(depth1)_")"
+	if rand=54 quit "("_$$null(depth1)_">"_$$one(depth1)_")"
+	if rand=55 quit "("_$$zero(depth1)_"'>"_$$null(depth1)_")"
+	if rand=56 quit "("_$$null(depth1)_"'>"_$$null(depth1)_")"
+	if rand=57 quit "("_$$null(depth1)_"<"_$$null(depth1)_")"
+	if rand=58 quit "("_$$null(depth1)_"<"_$$one(depth1)_")"
+	if rand=59 quit "("_$$zero(depth1)_"'<"_$$null(depth1)_")"
+	if rand=60 quit "("_$$null(depth1)_"'<"_$$null(depth1)_")"
 	quit
 
 nullhelper(operator,depth1,depth2)
