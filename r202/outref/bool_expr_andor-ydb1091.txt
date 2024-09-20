@@ -1,0 +1,40 @@
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+# ---------------------------------------------------------------------------
+# Test performance of =, < etc. in boolean expressions with AND or OR
+# This is an automated test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1091#note_2122238799
+# ---------------------------------------------------------------------------
+# [r202/inref/bool_expr_andor_mcmds_perf.txt] contains perf numbers when tested with YDB#1091.
+# The test allows for up to 5% more instructions. And signals failure if it exceeds even that.
+PASS : Performance test of [x=(y=z)!(y=1)]
+PASS : Performance test of [x=(y\'=z)!(y=1)]
+PASS : Performance test of [s:(y=z)!(y=1)]
+PASS : Performance test of [s:(y\'=z)!(y=1)]
+PASS : Performance test of [x=(y[z)!(y=1)]
+PASS : Performance test of [x=(y\'[z)!(y=1)]
+PASS : Performance test of [s:(y[z)!(y=1)]
+PASS : Performance test of [s:(y\'[z)!(y=1)]
+PASS : Performance test of [x=(y]z)!(y=1)]
+PASS : Performance test of [x=(y\']z)!(y=1)]
+PASS : Performance test of [s:(y]z)!(y=1)]
+PASS : Performance test of [s:(y\']z)!(y=1)]
+PASS : Performance test of [x=(y?."1")!(y=1)]
+PASS : Performance test of [x=(y\'?."1")!(y=1)]
+PASS : Performance test of [s:(y?."1")!(y=1)]
+PASS : Performance test of [s:(y\'?."1")!(y=1)]
+PASS : Performance test of [x=(y]]z)!(y=1)]
+PASS : Performance test of [x=(y\']]z)!(y=1)]
+PASS : Performance test of [s:(y]]z)!(y=1)]
+PASS : Performance test of [s:(y\']]z)!(y=1)]
+PASS : Performance test of [x=(y>z)!(y=1)]
+PASS : Performance test of [x=(y\'>z)!(y=1)]
+PASS : Performance test of [x=(y<=z)!(y=1)]
+PASS : Performance test of [s:(y>z)!(y=1)]
+PASS : Performance test of [s:(y\'>z)!(y=1)]
+PASS : Performance test of [s:(y<=z)!(y=1)]
+PASS : Performance test of [x=(y<z)!(y=1)]
+PASS : Performance test of [x=(y>=z)!(y=1)]
+PASS : Performance test of [x=(y\'<z)!(y=1)]
+PASS : Performance test of [s:(y<z)!(y=1)]
+PASS : Performance test of [s:(y>=z)!(y=1)]
+PASS : Performance test of [s:(y\'<z)!(y=1)]
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON

@@ -39,6 +39,7 @@
 # bool_expr_sortsafter-ydb1091			[nars]	  Test that x]]y and x']]y in simple boolean expressions are fast
 # bool_expr_gt-ydb1091				[nars]	  Test that x>y and x'>y in simple boolean expressions are fast
 # bool_expr_lt-ydb1091				[nars]	  Test that x<y and x'<y in simple boolean expressions are fast
+# bool_expr_andor-ydb1091			[nars]	  Test performance of =, < etc. in boolean expressions with AND or OR
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -70,6 +71,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_pattern-ydb10
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_sortsafter-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_gt-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_lt-ydb1091"
+setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_andor-ydb1091"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
