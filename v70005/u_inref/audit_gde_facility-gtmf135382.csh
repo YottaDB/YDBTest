@@ -43,6 +43,9 @@ set testmode=""
 # set error prefix
 setenv ydb_msgprefix "GTM"
 
+# set strace filter for filtering out unrelated syslog items
+set strace_filter = "GTM-I-TEXT|GTM-W-SHMHUGETLB"
+
 echo '# prepare read-write $gtm_dist directory'
 set old_dist=$gtm_dist
 source $gtm_tst/com/copy_ydb_dist_dir.csh ydb_temp_dist
@@ -130,7 +133,7 @@ foreach param ( \
 		| grep "%GTM" \
 		| cut -d'%' -f2 \
 		| cut -d',' -f1 \
-		| grep -v 'GTM-I-TEXT'
+		| grep -vE $strace_filter
 
 	echo "# launch $mode audit_listener"
 	rm -f $aulogfile
@@ -191,7 +194,7 @@ foreach param ( \
 		| grep "%GTM" \
 		| cut -d'%' -f2 \
 		| cut -d',' -f1 \
-		| grep -v 'GTM-I-TEXT'
+		| grep -vE $strace_filter
 
 	echo "# reset log by sending SIGHUP to the audit listener"
 	kill -HUP $pid
@@ -225,7 +228,7 @@ foreach param ( \
 		| grep "%GTM" \
 		| cut -d'%' -f2 \
 		| cut -d',' -f1 \
-		| grep -v 'GTM-I-TEXT'
+		| grep -vE $strace_filter
 
 	echo "# stop audit_listener and wait for finish"
 	kill -TERM $pid
