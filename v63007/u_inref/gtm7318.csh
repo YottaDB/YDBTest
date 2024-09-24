@@ -53,7 +53,7 @@ echo "# allocate a port number for TCP and TLS modes"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
 echo "# set Unix socket filename"
-set uxsock=audit.sock
+set uxsock=`pwd`/audit.sock
 
 echo "# set crypt config file path and name"
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -75,7 +75,7 @@ echo '# Note:'
 echo '# 1) RD means enable logging of all responses READ from $PRINCIPAL which captures input that might be XECUTEd'
 echo '# which will resulting in command=TEST in log output'
 echo '# 2) $ZAUDIT ISV also tested here. This ISV will be 0 when APD is disabled and 1 when APD is enabled'
-echo 
+echo
 foreach param ( \
 	"tcp;APD_ENABLE::127.0.0.1:${portno}" \
 	"tls;APD_ENABLE:TLS:127.0.0.1:${portno}:clicert" \
@@ -123,14 +123,17 @@ GTM_EOF
 	if ("$listenermode" == "tcp") then
 		($gtm_dist/audit_listener tcp $pidfile $aulogfile \
 			$portno &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$listenermode" == "tls") then
 		($gtm_dist/audit_listener tls $pidfile $aulogfile \
 			$portno $certfile $keyfile ydbrocks &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$listenermode" == "unix_socket") then
 		($gtm_dist/audit_listener unix $pidfile $aulogfile \
 			$uxsock &)
+		$gtm_tst/com/wait_for_unix_domain_socket_to_be_listening.csh $uxsock
 	endif
 
 	echo "# wait for pidfile"
