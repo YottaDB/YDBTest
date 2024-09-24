@@ -68,10 +68,6 @@ GTM-E-SOCKCLOSE is not tested, it needs to interrupt the
 client exactly when it sends the log message, which is not
 reasonably feasible without white-box testing.
 
-Notice:
- We cannot use `waitforfilecreate` because we don't know the
- name of the file to search for, as it contains timestamp.
-
 CAT_EOF
 
 echo "# ---- startup ----"
@@ -189,6 +185,11 @@ foreach param ( \
 					set after_epoch=`date -u +"%s"`
 
 					# wait for rotated file, with ~60 sec timeout
+					#
+					# Notice:
+					#   We cannot use "waitforfilecreate" because we don't know the
+					#   name of the file to search for, as it contains timestamp.
+					#
 					@ timeout = 60 * 3
 					while (1)
 						set num_rot=`ls -1 | grep ${aulogfile}_ | wc -l`
