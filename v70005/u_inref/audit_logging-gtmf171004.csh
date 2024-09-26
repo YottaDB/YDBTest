@@ -100,8 +100,8 @@ endif
 echo "# allocate port number for TCP and TLS connections"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
-# set Unix socket filename
-set uxsock=audit.sock
+# set Unix socket filename with absolute path
+set uxsock=`pwd`/audit.sock
 
 # set crypt config file path and name
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -118,6 +118,9 @@ EOF_CLICERT
 echo "# get group ID for restrict.txt"
 set gid=`id -gn`
 
+# reset unique filename counter
+set unifile_counter = 1
+
 foreach param ( \
 	"tcp;#FACILITY#_ENABLE::127.0.0.1:${portno}" \
 	"tls;#FACILITY#_ENABLE:TLS:127.0.0.1:${portno}:clicert" \
@@ -131,15 +134,18 @@ foreach param ( \
 	rm -f $aulogfile
 	if ("$mode" == "tcp") then
 		($gtm_dist/audit_listener tcp $aupidfile $aulogfile \
-			$portno &)
+			$portno &) >& audit_listener_${mode}.log
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "tls") then
 		($gtm_dist/audit_listener tls $aupidfile $aulogfile \
-			$portno $certfile $keyfile ydbrocks &)
+			$portno $certfile $keyfile ydbrocks &) >& audit_listener_${mode}.log
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "unix_socket") then
 		($gtm_dist/audit_listener unix $aupidfile $aulogfile \
-			$uxsock &)
+			$uxsock &) >& audit_listener_${mode}.log
+		$gtm_tst/com/wait_for_unix_domain_socket_to_be_listening.csh $uxsock
 	endif
 
 	echo "# wait for pidfile"
@@ -174,9 +180,16 @@ foreach param ( \
 				if ($resetlog) then
 
 					echo "# delete previous archived log files"
+					# actually don't delete, just move out of the way
 					set num_rot=`ls -1 | grep ${aulogfile}_ | wc -l`
 					if ($num_rot > 0) then
-						rm -f ${aulogfile}_*
+						mkdir -p archived_logs
+						set file_list=`ls -1 ${aulogfile}_*`
+						foreach file ( $file_list )
+							set unifile_postfix=`printf "%05d" $unifile_counter`
+							@ unifile_counter++
+							mv $file archived_logs/${file}_${unifile_postfix}
+						end
 					endif
 
 					echo "# reset log by sending SIGHUP to the audit listener"
@@ -260,7 +273,7 @@ foreach param ( \
 
 				else
 
-					expect $gtm_tst/$tst/u_inref/audit_logging-gtmf171004.exp "$message" \
+					expect -d $gtm_tst/$tst/u_inref/audit_logging-gtmf171004.exp "$message" \
 						>>& expect.log
 					# preserve expect output for debugging, append a small separator
 					echo "--" >> expect.log
