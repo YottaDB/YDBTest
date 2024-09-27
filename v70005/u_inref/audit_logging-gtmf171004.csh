@@ -100,8 +100,21 @@ endif
 echo "# allocate port number for TCP and TLS connections"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
-# set Unix socket filename with absolute path
-set uxsock=`pwd`/audit.sock
+# set Unix socket filename
+#
+# Notice on why we use $portno in Unix socket filename:
+#   - It's recommended to use full path for socket filenames, they
+#     are in a "global namespace": if two programs have different
+#     current directory, "my.sock" will point to the _same_ socket.
+#     Using absolute paths prevents using the same name. But...
+#   - Socket file full path lenght limit is around 100 characters,
+#     so we can't use test directory path for this purpose, they
+#     contains test version, name, date, random numner, it's a
+#     good chance that it will exceed the limit.
+# See also:
+#   https://unix.stackexchange.com/questions/367008/why-is-socket-path-length-limited-to-a-hundred-chars
+#
+set uxsock=/tmp/auditlistener-${portno}.sock
 
 # set crypt config file path and name
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
