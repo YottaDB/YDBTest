@@ -124,6 +124,34 @@ $ echo 'hello' | nc -U audit.sock
 $ cat log.txt
 2024-06-25 10:31:05; hello\n
 ```
+
+### Startup timing issue
+
+In real life situations, there's no such problem,
+services are usually lauched at system startup, and run
+forever, then clients can attach any time.
+
+But when testing, services are started and stopped multiple time.
+The client get executed just right after the service is launched,
+waits for the `pidfile`, and immediately sends a request or a signal.
+It may happen that the launched service is not listening yet,
+it's busy with startup, e.g. initializing TLS library, so the
+request will fail, indicating false error for the test.
+
+We've added two utilities for eliminating such issues:
+`wait_for_port_to_be_listening.csh` and
+`wait_for_unix_domain_socket_to_be_listening.csh`,
+one of these scripts should be called
+after the `audit_listener` is started, and
+before the first client request is made,
+depending on connection method (TCP/TLS or Unix Socket).
+
+Example:
+```
+$ydb_dist/audit_listener tcp $pidfile $aulogfile $portno &
+$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
+```
+
 ### Log rotate
 
 Sending `HUP` signal to the listener renames the actual
@@ -138,6 +166,10 @@ $ ls -l log.*
 -rw------- 1 ern0 ern0  0 Jun 25 06:33 log.txt
 -rw------- 1 ern0 ern0 29 Jun 25 06:31 log.txt_2024177103307
 ```
+
+The listener adds a timestamp to the original name using "%Y%j%H%M%S"
+format, %j is for Julian, the 3-digit day number of the year. So, the
+example in readable form: *2024-177-10-33-07*.
 
 ### Graceful exit
 

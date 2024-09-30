@@ -39,7 +39,7 @@
 int switch_logfile(char *logfile);
 
 void strip_prognam(char* full);
-void save_pidfile(char* fnam);
+void save_pidfile();
 int about(void);
 int main_tcp(int argc, char *argv[]);
 int main_tls(int argc, char *argv[]);
@@ -81,12 +81,13 @@ int main(int argc, char* argv[]);
 char 	*pass;					/* Used to store the TLS/SSL certificate passphrase */
 
 /* Common */
-char	logfile[PATH_MAX + 1];
+char 	logfile[PATH_MAX + 1];
 int	terminate = 0;				/* Boolean value set by signal handler to let program know to terminate */
 int 	logfileswitch = 0;			/* Boolean value set by signal handler to let program know to switch
-						   the log file */
+	        				   the log file */
 int	logfd;
-char*	prognam;
+char* 	prognam;
+char* 	pidfilename;
 
 /* Handler for SIGINT and SIGTERM caused by Ctrl-C and kill (-15) respectively.
  *
@@ -215,10 +216,10 @@ void strip_prognam(char* full)
 	}
 }
 
-void save_pidfile(char* fnam)
+void save_pidfile()
 {
 	char tmpnam[MAX_STR_SIZE + 1];
-	strncpy(tmpnam, fnam, MAX_STR_SIZE);
+	strncpy(tmpnam, pidfilename, MAX_STR_SIZE);
 
 	FILE* f = fopen(tmpnam, "w");
 	if (NULL == f)
@@ -229,8 +230,8 @@ void save_pidfile(char* fnam)
 	fprintf(f, "%d\n", getpid());
 	fclose(f);
 
-	if (-1 == rename(tmpnam, fnam)) {
-		fprintf(stderr, "rename failed: %s -> %s \n", tmpnam, fnam);
+	if (-1 == rename(tmpnam, pidfilename)) {
+		fprintf(stderr, "rename failed: %s -> %s \n", tmpnam, pidfilename);
 		exit(EXIT_ERROR);
 	}
 }
@@ -251,8 +252,8 @@ int about()
 
 int main_tcp(int argc, char *argv[])
 {
-	int			listen_sockfd, client_sockfd, logfile_len, switchlogfile_len, suffix, timefmtlen = 101;
-        int			accepted = 0, bytes_recv, msg_size = 0;
+	int			    listen_sockfd, client_sockfd, logfile_len, switchlogfile_len, suffix, timefmtlen = 101;
+	int			    accepted = 0, bytes_recv, msg_size = 0;
 	char			date[timefmtlen], time_format[timefmtlen], buf[MAX_BUF_SIZE], escaped[2 * MAX_BUF_SIZE];
 	struct sockaddr_in6	src, servaddr;
 	socklen_t		srclen;
@@ -296,6 +297,8 @@ int main_tcp(int argc, char *argv[])
 		perror("listen");
 		return EXIT_ERROR;
 	}
+
+	save_pidfile();
 
 	while (!terminate)
 	{
@@ -624,6 +627,8 @@ int main_tls(int argc, char *argv[])
 		return EXIT_ERROR;
 	}
 
+	save_pidfile();
+
 	while (!terminate)
 	{
 		if ((0 < logfileswitch) && (0 == switch_logfile(logfile)))
@@ -772,7 +777,7 @@ int unix_listen_loop(int fd)
 /* Creates listener UNIX socket, starts listening for connections,
  * opens log file for logging, and finally starts accepting connections.
  */
-int main_unix (int argc, char *argv[])
+int main_unix(int argc, char *argv[])
 {
 	int			fd;
 	struct sockaddr_un	addr = {0};
@@ -813,6 +818,8 @@ int main_unix (int argc, char *argv[])
 		return EXIT_ERROR;
 	}
 
+	save_pidfile();
+
 	if (1 != unix_listen_loop(fd))
 		return EXIT_ERROR;
 
@@ -829,6 +836,7 @@ int main(int argc, char* argv[])
 {
 	int exit_code = 0;
 	strip_prognam(argv[PROGNAME]);
+	pidfilename = argv[PIDFILE];
 
 	if (argc < 2)
 	{
@@ -842,7 +850,6 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			save_pidfile(argv[PIDFILE]);
 			exit_code = main_tcp(argc, argv);
 		}
 	}
@@ -854,7 +861,6 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			save_pidfile(argv[PIDFILE]);
 			exit_code = main_tls(argc, argv);
 		}
 	}
@@ -866,7 +872,6 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			save_pidfile(argv[PIDFILE]);
 			exit_code = main_unix(argc, argv);
 		}
 	} else {

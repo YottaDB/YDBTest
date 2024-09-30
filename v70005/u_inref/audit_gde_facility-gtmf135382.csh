@@ -68,7 +68,7 @@ echo "# allocate a port number for TCP and TLS modes"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
 echo "# set Unix socket filename"
-set uxsock=audit.sock
+set uxsock=auditlistener-${portno}.sock
 
 echo "# set crypt config file path and name"
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -140,14 +140,17 @@ foreach param ( \
 	if ("$mode" == "tcp") then
 		($gtm_dist/audit_listener tcp $pidfile $aulogfile \
 			$portno &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "tls") then
 		($gtm_dist/audit_listener tls $pidfile $aulogfile \
 			$portno $certfile $keyfile ydbrocks &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "unix_socket") then
 		($gtm_dist/audit_listener unix $pidfile $aulogfile \
 			$uxsock &)
+		$gtm_tst/com/wait_for_unix_domain_socket_to_be_listening.csh $uxsock
 	endif
 
 	echo "# wait for pidfile"

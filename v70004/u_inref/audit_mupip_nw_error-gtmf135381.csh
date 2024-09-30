@@ -63,7 +63,7 @@ echo "# allocate a port number for TCP and TLS modes"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
 echo "# set Unix socket filename"
-set uxsock=audit.sock
+set uxsock=auditlistener-${portno}.sock
 
 echo "# set crypt config file path and name"
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -94,7 +94,7 @@ foreach param ( \
 	set restriction=`echo $param | cut -d';' -f2`
 	echo "# Testing mode : $mode"
 	echo "# setup restrict.txt: for audit logging"
-	echo 
+	echo
 	rm -f $gtm_dist/restrict.txt
 	echo "LIBRARY:$gid" >> $gtm_dist/restrict.txt
 	echo $restriction >> $gtm_dist/restrict.txt
@@ -107,9 +107,9 @@ MUPIP1
 	echo
 	echo '# Check if AUDINITFAIL and AUDLOGFAIL message exist in syslog from strace output'
 	$grep -E "AUDINITFAIL|AUDLOGFAIL" test_syslog_${mode}_1_1.txt | $grep "%GTM" \
-			| cut -d'%' -f2 \
-			| cut -d',' -f1 \
-			| grep -Ev 'GTM-I-TEXT|GTM-E-RESTRICTSYNTAX'
+		| cut -d'%' -f2 \
+		| cut -d',' -f1 \
+		| grep -Ev 'GTM-I-TEXT|GTM-E-RESTRICTSYNTAX'
 	echo
 end
 
@@ -130,7 +130,7 @@ foreach param ( \
 	set restriction=`echo $param | cut -d';' -f2`
 	echo "# Testing mode : $mode"
 	echo "# setup restrict.txt: for audit logging"
-	echo 
+	echo
 	rm -f $gtm_dist/restrict.txt
 	#echo "LIBRARY:$gid" >> $gtm_dist/restrict.txt
 	echo $restriction >> $gtm_dist/restrict.txt
@@ -142,9 +142,9 @@ exit
 MUPIP
 	echo
 	$grep -E "AUDCONNFAIL|AUDLOGFAIL" test_syslog_${mode}_1_2.txt | $grep "%GTM" \
-			| cut -d'%' -f2 \
-			| cut -d',' -f1 \
-			| grep -v 'GTM-I-TEXT'
+	        | cut -d'%' -f2 \
+		| cut -d',' -f1 \
+		| grep -v 'GTM-I-TEXT'
 	echo
 end
 echo

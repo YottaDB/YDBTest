@@ -114,7 +114,7 @@ source $gtm_tst/com/portno_acquire.csh >& portno.out
 # See also:
 #   https://unix.stackexchange.com/questions/367008/why-is-socket-path-length-limited-to-a-hundred-chars
 #
-set uxsock=/tmp/auditlistener-${portno}.sock
+set uxsock=auditlistener-${portno}.sock
 
 # set crypt config file path and name
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -181,6 +181,10 @@ foreach param ( \
 			echo "# ---- connection: $mode, reset_log: $presetlog, input: $execmode ----"
 
 			foreach message ( "DSM" "ISM" "MSM")
+
+				# preserve a timestamp for debugging purposes, see:
+				#   https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2106#note_2129635313
+				touch audit_${mode}_${resetlog}_${execmode}_${message}.txt
 
 				echo "# setup restrict.txt: audit logging with $mode"
 				rm -f $gtm_dist/restrict.txt

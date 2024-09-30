@@ -53,7 +53,7 @@ echo "# allocate a port number for TCP and TLS modes"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
 echo "# set Unix socket filename"
-set uxsock=`pwd`/audit.sock
+set uxsock=auditlistener-${portno}.sock
 
 echo "# set crypt config file path and name"
 setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
@@ -86,6 +86,11 @@ foreach param ( \
 	)
 	set mode=`echo $param | cut -d';' -f1`
 	set restriction=`echo $param | cut -d';' -f2`
+
+	# preserve a timestamp for debugging purposes, see:
+	#   https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2106#note_2129635313
+	touch audit_${mode}.txt
+
 	echo "# Testing mode: $mode"
 	rm -f $gtm_dist/restrict.txt
 	echo '# Run mumps -dir without restriction.txt'

@@ -46,6 +46,7 @@
 # ---- startup ----
 # prepare read-write $gtm_dist directory
 # compile audit_listener utility
+# allocate a port number for TCP and TLS modes
 # set Unix socket filename
 # set ydb_crypt_config file path and name
 # set-up crypt_config file for section clicert
@@ -200,7 +201,7 @@ result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
 # show $ZAUDITLOG() log captured (should be empty):
 # release port number
 
-# ---- connection: unix_socket, restrict.txt: AZA_ENABLE:LGDE:audit.sock ----
+# ---- connection: unix_socket, restrict.txt: AZA_ENABLE:LGDE:##UXSOCK## ----
 # setup restrict.txt
 # launch unix_socket audit_listener
 # wait for pidfile
@@ -220,7 +221,7 @@ result: 1 - successful logging
 # reset log
 # stop audit_listener and wait for finish
 
-# ---- connection: unix_socket, restrict.txt: AZA_ENABLE::audit.sock ----
+# ---- connection: unix_socket, restrict.txt: AZA_ENABLE::##UXSOCK## ----
 # setup restrict.txt
 # launch unix_socket audit_listener
 # wait for pidfile
@@ -238,7 +239,7 @@ result: 1 - successful logging
 # reset log
 # stop audit_listener and wait for finish
 
-# ---- connection: none, restrict.txt: AZA_ENABLE:LGDE:audit.sock ----
+# ---- connection: none, restrict.txt: AZA_ENABLE:LGDE:##UXSOCK## ----
 # setup restrict.txt
 # do not launch audit_listener
 # attempt to execute a GDE command
@@ -252,7 +253,7 @@ result: 0 - logging is not enabled - %GTM-W-RESTRICTEDOP
 # wait for $ZAUDITLOG() entry added to log (won't happen)
 # show $ZAUDITLOG() log captured (should be empty):
 
-# ---- connection: none, restrict.txt: AZA_ENABLE::audit.sock ----
+# ---- connection: none, restrict.txt: AZA_ENABLE::##UXSOCK## ----
 # setup restrict.txt
 # do not launch audit_listener
 # attempt to execute a GDE command

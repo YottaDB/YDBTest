@@ -82,8 +82,11 @@ $gt_cc_compiler \
 	-o $ydb_dist/audit_listener \
 	-lssl -lcrypto
 
+echo "# allocate a port number for TCP and TLS modes"
+source $gtm_tst/com/portno_acquire.csh >& portno.out
+
 echo "# set Unix socket filename"
-set uxsock=audit.sock
+set uxsock=auditlistener-${portno}.sock
 
 echo "# set ydb_crypt_config file path and name"
 setenv ydb_crypt_config `pwd`/ydb_crypt_config.libconfig
@@ -115,16 +118,20 @@ foreach param ( \
 	"none;AZA_ENABLE:LGDE,TLS:127.0.0.1:##PORTNO##:clicert" \
 	"none;AZA_ENABLE:TLS:127.0.0.1:##PORTNO##:clicert" \
 	\
-	"unix_socket;AZA_ENABLE:LGDE:${uxsock}" \
-	"unix_socket;AZA_ENABLE::${uxsock}" \
-	"none;AZA_ENABLE:LGDE:${uxsock}" \
-	"none;AZA_ENABLE::${uxsock}" \
+	"unix_socket;AZA_ENABLE:LGDE:##UXSOCK##" \
+	"unix_socket;AZA_ENABLE::##UXSOCK##" \
+	"none;AZA_ENABLE:LGDE:##UXSOCK##" \
+	"none;AZA_ENABLE::##UXSOCK##" \
 	\
 	"tcp;LIBRARY:##GID##" \
 	)
 
 	set mode=`echo $param | cut -d';' -f1`
 	set restrp=`echo $param | cut -d';' -f2`
+
+	# preserve a timestamp for debugging purposes, see:
+	#   https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2106#note_2129635313
+	touch audit_${mode}_${restrp}.txt
 
 	echo
 	echo "# ---- connection: $mode, restrict.txt: $restrp ----"
@@ -148,9 +155,11 @@ foreach param ( \
 	endif
 
 	echo "# setup restrict.txt"
+        # notice: using '|' as sed separator, because $uxsock contains '/'
 	set restr=`echo $restrp \
-		| sed "s/:##PORTNO##/:$portno/g" \
-		| sed "s/:##GID##/:$gid/g"`
+		| sed -E "s|##PORTNO##|${portno}|g" \
+		| sed -E "s|##UXSOCK##|${uxsock}|g" \
+		| sed -E "s|##GID##|${gid}|g"`
 	rm -f $ydb_dist/restrict.txt
 	echo $restr > $ydb_dist/restrict.txt
 	chmod a-w $ydb_dist/restrict.txt
@@ -160,16 +169,19 @@ foreach param ( \
 		echo "# launch $mode audit_listener"
 		($ydb_dist/audit_listener tcp $pidfile $aulogfile \
 			$portno &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "tls") then
 		echo "# launch $mode audit_listener"
 		($ydb_dist/audit_listener tls $pidfile $aulogfile \
 			$portno $certfile $keyfile ydbrocks &)
+		$gtm_tst/com/wait_for_port_to_be_listening.csh $portno
 	endif
 	if ("$mode" == "unix_socket") then
 		echo "# launch $mode audit_listener"
 		($ydb_dist/audit_listener unix $pidfile $aulogfile \
 			$uxsock &)
+		$gtm_tst/com/wait_for_unix_domain_socket_to_be_listening.csh $uxsock
 	endif
 	if ("$mode" == "none") then
 		echo "# do not launch audit_listener"
