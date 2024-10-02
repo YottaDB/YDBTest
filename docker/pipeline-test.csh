@@ -64,21 +64,28 @@ set instream_invokelist = ""
 # Results collected in result.txt, initially empty
 touch result.txt
 
+# List of heavyweight tests we won't run on the pipeline
+# Leading and trailing spaces are necessary and relied upon by the =~ operator
+set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash ideminter_rolrec rollback_A recov suppl_inst_B io resil_4 tp gtcm_gnp triggers resil v44003 burst_load "
+
 # For each file, check if it is instream.csh or is inside inref
 # If it is, add it so that we invoke the test system with "-t xxx -t yyy -t zzz"
 foreach file ($filelist)
-	# If instream.csh changes, then test the entire test
 	set filename = $file:t
+	set directory_name = `echo $file | cut -d / -f 2`
+	# If instream.csh changes, then test the entire test
 	if ("instream.csh" == "$filename") then
 		set test = `dirname $file`
-		if ( "$instream_invokelist" !~ "*-t $test*" ) then
-			set instream_invokelist = "$instream_invokelist -t $test"
-		endif
-	endif
 	# If a file inside inref changes, then test the entire test, as we can't tell which test it belongs to
-	set directory_name = `echo $file | cut -d / -f 2`
-	if ( "inref" == "$directory_name" ) then
+	else if ( "inref" == "$directory_name" ) then
 		set test = `echo $file | cut -d / -f 1`
+	endif
+	if ( $?test ) then
+		# Space delimiters ensure we don't accidentally exclude a test due to partial matching; it needs to be a whole word
+		if ( "$heavyweights" =~ "* $test *" ) then
+			echo "Skipping test on pipeline as it is a heavyweight test"
+			continue
+		endif
 		# If test is already there, don't add it again
 		if ( "$instream_invokelist" !~ "*-t $test*" ) then
 			set instream_invokelist = "$instream_invokelist -t $test"
@@ -88,7 +95,7 @@ end
 
 # The test system has the capability of running multiple instreams at once, so let's do that.
 
-if ( "$instream_invokelist" != ) then
+if ( "$instream_invokelist" != "" ) then
 	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist"
 	if ($status) then
 		echo "${instream_invokelist}: FAIL (non-replic)" >> result.txt
@@ -113,11 +120,19 @@ foreach file ($filelist)
 	set directory_name = `echo $file | cut -d / -f 2`
 	if ( ( "u_inref" == "$directory_name" ) || ( "outref" == "$directory_name" ) ) then
 		set test = `echo $file | cut -d / -f 1`
+		if ( "$heavyweights" =~ "* $test *" ) then
+			echo "Skipping test on pipeline as it is a heavyweight test"
+			continue
+		endif
 		set subtest = $file:r:t
 		# Collect subtests and figure out which ones are replic vs not, as we cannot invoke a non-replic test in replic mode and vice versa
 		grep "setenv subtest_list_" ${test}/instream.csh > instream_setenvs
 		source instream_setenvs
 		rm instream_setenvs
+		if ( ! ( $?subtest_list_non_replic ) && ! ( $?subtest_list_common ) && ! ( $?subtest_list_replic ) ) then
+			echo "Couldn't find subtest_list_non_replic, subtest_list_common, nor subtest_list_replic in instream.csh"
+			continue
+		endif
 		if ( "$subtest_list_non_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
 			# If test was invoked as a suite from instream (non-replic), don't add it to the invoke list
 			if ( "$instream_invokelist" !~ "*-t $test*" ) then
@@ -128,8 +143,7 @@ foreach file ($filelist)
 					echo "$test/${subtest}: PASS (non-replic)" >> result.txt
 				endif
 			endif
-		endif
-		if ( "$subtest_list_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
+		else if ( "$subtest_list_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
 			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
 			if ( "$instream_invokelist" !~ "*-t $test*" ) then
 			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest -replic"
@@ -137,6 +151,23 @@ foreach file ($filelist)
 					echo "$test/${subtest}: FAIL (replic)" >> result.txt
 				else
 					echo "$test/${subtest}: PASS (replic)" >> result.txt
+				endif
+			endif
+		else
+			# Subtest in the u_inref or outref is not a known subtest. Run whole test.
+			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
+			if ( "$instream_invokelist" !~ "*-t $test*" ) then
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test"
+				if ($status) then
+					echo "${test}: FAIL (non-replic)" >> result.txt
+				else
+					echo "${test}: PASS (non-replic)" >> result.txt
+				endif
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -replic"
+				if ($status) then
+					echo "${test}: FAIL (replic)" >> result.txt
+				else
+					echo "${test}: PASS (replic)" >> result.txt
 				endif
 			endif
 		endif

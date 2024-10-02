@@ -12,7 +12,8 @@
 
 stages:
   - build
-  - docker
+  - docker-create
+  - docker-manifest
 
 commit-verify:
   image: ubuntu:22.04
@@ -37,7 +38,7 @@ build-imptp-rs:
     - cd com/imptp-rs; . $HOME/.cargo/env; cargo check --no-default-features
 
 # Run changed tests on every push
-run-tests:
+.run-tests:
   image:
        name: registry.gitlab.com/yottadb/db/ydbtest
        entrypoint: [""]
@@ -48,19 +49,51 @@ run-tests:
     expire_in: 1 month
     when: always
   script:
-    # TODO: Remove next line after this commit is merged, as it will be part of the Dockerfile, but not initially.
-    - apt-get update && apt-get install -y rsync
     - docker/pipeline-test.csh
 
+run-tests-amd64:
+  extends: .run-tests
+
+run-tests-aarch64:
+  extends: .run-tests
+  tags:
+    - aarch64
+
 # Build test system on docker
-docker-ydbtest-image:
+.docker-ydbtest-image:
   image: docker:latest
-  stage: docker
+  stage: docker-create
   services:
     - docker:dind
   script:
-    - docker image build -f docker/Dockerfile --progress=plain -t registry.gitlab.com/yottadb/db/ydbtest .
+    - docker image build -f docker/Dockerfile --progress=plain -t registry.gitlab.com/yottadb/db/ydbtest:${ARCH} .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push registry.gitlab.com/yottadb/db/ydbtest
+    - docker push registry.gitlab.com/yottadb/db/ydbtest:${ARCH}
+  only:
+    - master@YottaDB/DB/YDBTest
+
+docker-create-amd64:
+  extends: .docker-ydbtest-image
+  variables:
+    ARCH: amd64
+
+docker-create-aarch64:
+  extends: .docker-ydbtest-image
+  variables:
+    ARCH: aarch64
+  tags:
+    - aarch64
+
+docker-manifest:
+  stage: docker-manifest
+  services:
+    - docker:dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull registry.gitlab.com/yottadb/db/ydbtest:amd64
+    - docker pull registry.gitlab.com/yottadb/db/ydbtest:aarch64
+    - docker manifest create registry.gitlab.com/yottadb/db/ydbtest registry.gitlab.com/yottadb/db/ydbtest:amd64 registry.gitlab.com/yottadb/db/ydbtest:aarch64
+    - docker manifest inspect registry.gitlab.com/yottadb/db/ydbtest
+    - docker manifest push registry.gitlab.com/yottadb/db/ydbtest
   only:
     - master@YottaDB/DB/YDBTest
