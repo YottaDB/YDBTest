@@ -81,6 +81,7 @@ RUN apt-get update && \
                     libsodium-dev \
                     lsb-release \
                     rsync \
+                    linux-perf \
                     && \
                     apt-get clean
 
@@ -97,8 +98,19 @@ COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
 # Otherwise build_and_install_yottadb.csh script will fail.
 COPY docker/serverconf.txt /usr/library/gtm_test/T999/docker/serverconf.txt
 COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
-RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
-RUN /usr/library/gtm_test/build_and_install_yottadb.csh
+
+# Get the source code for YottaDB and Plugins
+RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB
+RUN git clone --depth 1 https://gitlab.com/YottaDB/Util/YDBPosix.git /Distrib/YDBPosix
+RUN git clone --depth 1 https://gitlab.com/YottaDB/Util/YDBEncrypt.git /Distrib/YDBEncrypt
+RUN mkdir -p /Distrib/ji_plugin && \
+        wget https://sourceforge.net/projects/fis-gtm/files/Plugins/GTMJI/1.0.4/ji_plugin_1.0.4.tar.gz && \
+        tar xzvf ji_plugin_1.0.4.tar.gz -C /Distrib/ji_plugin && rm ji_plugin_1.0.4.tar.gz
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master
+# gtm_curpro: bump up by changing the next two lines
+ENV gtm_curpro V70001_R200
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70001_R200 r2.00
+
 COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc

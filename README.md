@@ -404,12 +404,15 @@ docker build -f docker/Dockerfile -t registry.gitlab.com/yottadb/db/ydbtest .
 
 This will build the test system with the latest master of YottaDB.
 
+In the examples below, if your Kernel is less than 5.8, you need to use
+`SYS_ADMIN` instead of `PERFMON`.
+
 To run, you can do something like this (replacing `<local directory>` with a
 suitable directory. `<local directory>` is where the artifacts will be stored
 on your host when docker is finished running the test):
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
+docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
@@ -421,14 +424,14 @@ repository, the right hand side of the colon is a fixed path that is known by
 the docker scripts which you must not change):
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
+docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --cap-add PERFMON ---rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
 To run the "sudo" subtests, some of which need to be able to alter the OS system
 time, you will need to add the `SYS_TIME` capability when running the container:
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm --cap-add=SYS_TIME registry.gitlab.com/yottadb/db/ydbtest -t sudo
+docker run --init -it -v <local directory>:/testarea1/ --rm --cap-add SYS_TIME --cap-add PERFMON -registry.gitlab.com/yottadb/db/ydbtest -t sudo
 ```
 
 To debug problems, instead of passing `gtmtest.csh` arguments, pass either
@@ -437,8 +440,8 @@ To debug problems, instead of passing `gtmtest.csh` arguments, pass either
 on how to a run a test. You can do that and start debugging from there.
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -shell
-docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -rootshell
+docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm registry.gitlab.com/yottadb/db/ydbtest -shell
+docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm registry.gitlab.com/yottadb/db/ydbtest -rootshell
 ```
 
 To build this image with a custom version of YottaDB, clone
@@ -447,7 +450,7 @@ To build this image with a custom version of YottaDB, clone
 ```sh
 cd YDB
 docker build -f Dockerfile-test -t ydbtest2 .
-docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest2 -t r200
+docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm ydbtest2 -t r200
 ```
 
 ## Troubleshooting

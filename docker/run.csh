@@ -41,7 +41,7 @@ if ( -f /YDBTest/com/gtmtest.csh ) then
 endif
 
 setenv ydb_test_inside_docker 1
-set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
+set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker -w gtm_curpro"
 
 if ( $#argv == 0 ) then
   exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -h"
