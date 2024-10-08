@@ -10,27 +10,48 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# Syntax: docker/build_and_install_yottadb.csh <folder name in /usr/library/> <git tag in YDB> <dbg/pro>
+# If /Distrib/YottaDB/V999_R999/ is passed into the file system, then we use that as the source rather than /Distrib/YottaDB
 set backslash_quote
 set echo
 set verbose
 
 if ( $1 != "") set verno = $1
 if ( $2 != "") set git_tag = $2
+if ( $3 != "") set dbgpro = $3
 
 if (! $?verno ) set verno = "V999_R999"
 if (! $?git_tag ) set git_tag = "master"
 if (! $?gtm_root ) set gtm_root = "/usr/library"
+if (! $?dbgpro ) set dbgpro = "dbg"
+
 set gtm_ver = "$gtm_root/$verno"
+set is_gtm = 0
+
+if ( "$git_tag" =~ "V*" ) set is_gtm = 1
+
+# Don't compile GT.M on aarch64
+if ( (`uname -m` == "aarch64") && $is_gtm ) exit 0
 
 if ( $?work_dir ) then
 	mkdir -p /Distrib/YottaDB/
 	rsync -arv --delete $work_dir/YDB/ /Distrib/YottaDB/$verno/
 endif
-# We only have one source tree; we checkout a different tag if necessary and use that to build
-cd /Distrib/YottaDB/
-# Discard sr_*/release_name.h changes from a previous run
-git checkout .
-git checkout $git_tag
+
+if ( -d /Distrib/YottaDB/V999_R999 ) then
+	# Directory /Distrib/YottaDB/V999_R999/ is created in the YDB pipeline as an new layer on the ydbtest image
+	set source_dir = "/Distrib/YottaDB/V999_R999"
+else
+	# We only have one source tree; we checkout a different tag if necessary and use that to build
+	set source_dir = "/Distrib/YottaDB"
+	pushd /Distrib/YottaDB/
+	# Discard sr_*/release_name.h changes from a previous run
+	git checkout .
+	git checkout $git_tag
+	popd
+endif
+
+cd $source_dir
 
 # Edit sr_linux/release_name.h to reflect V9.9-x version name in GT.M and YottaDB versions
 # But only for master branch; (leave tags alone)
@@ -99,28 +120,29 @@ set nonomatch
 rm -rf $gtm_root/$verno/*
 unset nonomatch
 
-set dbgpro = "dbg"
-if ( "$git_tag" != "master" ) set dbgpro = "pro"
-
-mkdir -p /Distrib/YottaDB/$dbgpro
-cd /Distrib/YottaDB/$dbgpro
-setenv GIT_DIR /Distrib/YottaDB/.git
+mkdir -p $source_dir/$dbgpro
+cd $source_dir/$dbgpro
 if ( "$dbgpro" == "dbg" ) then
-	cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD /Distrib/YottaDB/
+	cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD $source_dir/
 else
-	cmake -Wno-dev -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_INSTALL_PREFIX:PATH=$PWD /Distrib/YottaDB/
+	cmake -Wno-dev -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_INSTALL_PREFIX:PATH=$PWD $source_dir/
 endif
-unsetenv GIT_DIR
 make -j `getconf _NPROCESSORS_ONLN` install
-pushd yottadb_r*
-./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
-popd
+if ( $is_gtm ) then
+	pushd lib/*/*
+	./gtminstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+	popd
+else
+	pushd yottadb_r*
+	./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+	popd
+endif
 mkdir -p $gtm_root/$verno/$dbgpro/obj
 find . -name '*.a' -exec cp {} $gtm_root/$verno/$dbgpro/obj \;
 mkdir -p $gtm_root/$verno/tools
-rm -rf /Distrib/YottaDB/$dbgpro
+rm -rf $source_dir/$dbgpro
 
-cd /Distrib/YottaDB
+cd $source_dir
 cp sr_unix/*.awk $gtm_root/$verno/tools
 cp sr_unix/*.csh $gtm_root/$verno/tools
 cp sr_linux/*.csh $gtm_root/$verno/tools
@@ -182,35 +204,52 @@ end
 
 # Install gtmcrypt plugin
 setenv ydb_dist /usr/library/$verno/$dbgpro
-setenv ydb_icu_version `pkg-config --modversion icu-io`
-cd /Distrib/YDBEncrypt
-make && make install && make clean
-find $ydb_dist/plugin -type f -exec chown root:root {} +
-cd -
-rm -rf /tmp/plugin-build
+setenv gtm_dist $ydb_dist
+if ( $is_gtm ) then
+	set tmpdir = "/tmp/__buildrel_${user}_$$"
+	if (-e $tmpdir) then
+		rm -rf $tmpdir
+	endif
+	mkdir $tmpdir
+	pushd $tmpdir
+	tar xf $ydb_dist/plugin/gtmcrypt/source.tar
+	setenv LC_ALL en_US.utf8
+	setenv gtm_icu_version `pkg-config --modversion icu-io`
+	make install
+	popd
+	rm -rf $tmpdir
+else
+	setenv ydb_icu_version `pkg-config --modversion icu-io`
+	cd /Distrib/YDBEncrypt
+	make && make install && make clean
+	find $ydb_dist/plugin -type f -exec chown root:root {} +
+	cd -
+	rm -rf /tmp/plugin-build
+	# These should be done by the plugin but done by ydbinstall instead
+	mv $ydb_dist/plugin/gtmcrypt $ydb_dist/plugin/ydbcrypt
+	ln -s $ydb_dist/plugin/ydbcrypt $ydb_dist/plugin/gtmcrypt
+endif
 
 # Install GTMJI plugin
 # The make step below needs JAVA_HOME and JAVA_SO_HOME env vars set appropriately so set that up first using "set_java_paths.csh"
 # But before that set up "tst_awk" and "HOSTOS" env var so "set_java_paths.csh" can work without errors.
-setenv tst_awk gawk	# needed for "set_java_paths.csh"
-if ( $?work_dir ) then
-	set java_path_script = $work_dir/YDBTest/com/set_java_paths.csh
-else
-	set java_path_script = /usr/library/gtm_test/set_java_paths.csh
-endif
-cp $java_path_script .
 setenv HOSTOS `uname -s`
 # gtm_test_serverconf_file and gtm_dist variables are needed for installing GTMJI Plugin
 setenv gtm_test_serverconf_file /usr/library/gtm_test/T999/docker/serverconf.txt
-setenv gtm_dist $ydb_dist
-
-source set_java_paths.csh
+setenv tst_awk gawk	# needed for "set_java_paths.csh"
+source /usr/library/gtm_test/set_java_paths.csh
 cd /Distrib/ji_plugin/ji_plugin_1.0.4
 make install && make clean
 cd -
 
 # Install Posix Plugin
-mkdir -p /tmp/plugin-build/posix-build && cd /tmp/plugin-build/posix-build
-cmake /Distrib/YDBPosix && make && make install
-cd -
-rm -rf /tmp/plugin-build
+if ( $is_gtm ) then
+	cd /Distrib/posix_plugin_r2
+	make install
+	make clean
+else
+	mkdir -p /tmp/plugin-build/posix-build && cd /tmp/plugin-build/posix-build
+	cmake /Distrib/YDBPosix && make && make install
+	cd -
+	rm -rf /tmp/plugin-build
+endif

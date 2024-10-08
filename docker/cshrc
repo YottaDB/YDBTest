@@ -37,7 +37,6 @@ if (! $?gtmroutines) then
 	setenv gtmroutines ". $gtm_dist"
 	setenv gtm_tools $gtm_root/$verno/tools
 	setenv gtm_inc $gtm_root/$verno/inc
-	setenv gtm_source $gtm_root/$verno/src
 	setenv gtm_verno $verno
 	setenv gtm_ver $gtm_root/$verno
 	setenv gtm_obj $gtm_exe/obj
@@ -60,8 +59,18 @@ if (! $?gtmroutines) then
 	if ( -f $gtm_tools/gtm_env.csh ) then
 		setenv HOSTOS `uname -s`
 		source $gtm_tools/gtm_env.csh
+		# Bad aliases gtm_env sets up
+		unalias vers versi versio version
 	endif
 endif
+
+alias ver "source ~/version.csh"
+# Autocomplete ver with directories in /usr/library (position 1) and pro/dbg (position 2)
+# @ @ for p1 is to not add a trailing slash but add a space instead
+# See https://www.ibm.com/docs/en/zos/2.4.0?topic=shell-complete-built-in-command-tcsh-list-completions
+complete ver 'p@1@D:/usr/library/@ @' 'p@2@(pro dbg)@'
+
+alias gtmtest "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2"
 
 bindkey "^R" i-search-back
 bindkey "\e[1;5D" backward-word  # ctrl-left

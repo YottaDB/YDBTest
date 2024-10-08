@@ -33,11 +33,10 @@ chmod 777 /testarea1
 
 # User passed in the Test system as a volume
 if ( -f /YDBTest/com/gtmtest.csh ) then
-  echo "Copying passed in test system"
+  # Symlink to allow user to experiment and get the test to pass
+  echo "Test System passed in as a volume... symlinking test system"
   rm -r /usr/library/gtm_test/T999
-  mkdir -p /usr/library/gtm_test/T999
-  cp -r /YDBTest/. /usr/library/gtm_test/T999
-  chown -R gtmtest:gtc /usr/library/gtm_test/T999
+  ln -s /YDBTest /usr/library/gtm_test/T999
 endif
 
 setenv ydb_test_inside_docker 1
@@ -53,7 +52,8 @@ if ( "$argv[1]" == "-rootshell") then
 endif
 
 if ( "$argv[1]" == "-shell") then
-  echo "Try running /usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t r134"
+  echo "Try running gtmtest -t r134"
+  echo "Type 'ver' to switch versions"
   exec su -l gtmtest $pass_env
 endif
 

@@ -313,7 +313,7 @@ Happy debugging!
 
 The file `docker/Dockerfile` is used to build the test system and YDB for each
 commit. Normally, you don't need to use it to build the test system, but can
-simply pull `registry.gitlab.com/yottadb/db/ydbtest`:
+simply pull `registry.gitlab.com/yottadb/db/ydbtest` (both AMD64 and ARM64):
 
 ```sh
 docker pull registry.gitlab.com/yottadb/db/ydbtest
@@ -329,12 +329,12 @@ docker build -f docker/Dockerfile -t registry.gitlab.com/yottadb/db/ydbtest .
 
 This will build the test system with the latest master of YottaDB.
 
-In the examples below, if your Kernel is less than 5.8, you need to use
-`SYS_ADMIN` instead of `PERFMON`.
-
 To run, you can do something like this (replacing `<local directory>` with a
 suitable directory. `<local directory>` is where the artifacts will be stored
 on your host when docker is finished running the test):
+
+(In the examples below, if your Kernel is less than 5.8, you need to use
+`SYS_ADMIN` instead of `PERFMON`.)
 
 ```sh
 docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
@@ -343,10 +343,11 @@ docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm re
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
 not pass any arguments, you will get the output of `gtmtest.csh -h`.
 
-To run against a copy of YDBTest on your file system, you can do the following (the
-volume `-v` argument's left hand side is the full path of the YDBTest git
-repository, the right hand side of the colon is a fixed path that is known by
-the docker scripts which you must not change):
+To run against a copy of YDBTest on your file system (e.g. you use it with
+VSCode, and want to autoload the changes), you can do the following (the volume `-v`
+argument's left hand side is the full path of the YDBTest git repository, the
+right hand side of the colon is a fixed path that is known by the docker
+scripts which you must not change):
 
 ```sh
 docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --cap-add PERFMON ---rm registry.gitlab.com/yottadb/db/ydbtest -t r200
@@ -376,6 +377,106 @@ To build this image with a custom version of YottaDB, clone
 cd YDB
 docker build -f Dockerfile-test -t ydbtest2 .
 docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm ydbtest2 -t r200
+```
+
+You can use the test system interactively inside of this docker image by supplying `-shell` at the end. You will get this message:
+
+```
+$ docker run --init --cap-add SYS_ADMIN -it -v $PWD:/YDBTest -v /testarea/sam/:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -shell
+Test System passed in as a volume... symlinking test system
+Try running gtmtest.csh -t r134
+Type 'ver' to switch versions
+5c04199640f7:~> ver
+Current version: V999_R999 dbg
+Sets build/test environment variables to reference a database-binaries directory under $gtm_root
+Usage: ver <verno> [<image>]
+  where <verno> is Vxxx_Rxyz (YDB) or Vxxxxx (GT.M)
+        <image> is dbg|pro|bta to select debug (default) or production images
+Available versions:
+        V70001_R200  pro
+        V71000       pro
+        V999_R999    dbg
+```
+
+You can use `ver` to switch between versions. `ver` autocompletes as well with
+the tab key. 999 versions are the current master. Versions without R are GT.M
+versions.
+
+Here's an example of running a test, switching versions, and running that test with the new version:
+
+```
+$ docker run --init --cap-add SYS_ADMIN -it -v $PWD:/YDBTest -v /testarea/sam/:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -shell
+Test System passed in as a volume... symlinking test system
+Try running gtmtest -t r134
+Type 'ver' to switch versions
+7daa11820f88:~> gtmtest -t r134
+Created /testarea1/tst_V999_R999_dbg_01_241011_180745_zgF
+Test Version            :: V999_R999
+Test Image              :: dbg
+Test Mail List          :: gtmtest
+Test Output Directory   :: /testarea1/tst_V999_R999_dbg_01_241011_180745_zgF
+Test Source Directory   :: T999
+
+r134 test starts...
+PASS from ydb757
+PASS from ydb775
+PASS from ydb782
+PASS from ydb772
+PASS from ydb785
+PASS from ydb734
+PASS from ydb828
+PASS from ydb831
+PASS from ydb555
+PASS from ydb546
+PASS from ydb758
+PASS from ydb557
+PASS from ydb840
+PASS from ydb781
+PASS from ydb846
+PASS from ydb845
+r134 test DONE.
+00:00:00:46
+Fri Oct 11 06:08:32 PM UTC 2024 PASSED r134
+7daa11820f88:~> ver
+Current version: V999_R999 dbg
+Sets build/test environment variables to reference a database-binaries directory under $gtm_root
+Usage: ver <verno> [<image>]
+  where <verno> is Vxxx_Rxyz (YDB) or Vxxxxx (GT.M)
+        <image> is dbg|pro|bta to select debug (default) or production images
+Available versions:
+        V70001_R200  pro
+        V71000       pro
+        V999_R999    dbg
+7daa11820f88:~> ver V70001_R200 p
+        $gtm_dist set to /usr/library/V70001_R200/pro
+7daa11820f88:~> gtmtest -t r134
+Created /testarea1/tst_V70001_R200_pro_01_241011_180906_AxL
+Test Version            :: V70001_R200
+Test Image              :: pro
+Test Mail List          :: gtmtest
+Test Output Directory   :: /testarea1/tst_V70001_R200_pro_01_241011_180906_AxL
+Test Source Directory   :: T999
+
+r134 test starts...
+PASS from ydb757
+PASS from ydb775
+PASS from ydb782
+PASS from ydb772
+PASS from ydb785
+PASS from ydb734
+PASS from ydb828
+PASS from ydb831
+PASS from ydb555
+PASS from ydb546
+PASS from ydb758
+PASS from ydb557
+PASS from ydb840
+PASS from ydb781
+PASS from ydb846
+PASS from ydb845
+r134 test DONE.
+00:00:00:50
+Fri Oct 11 06:09:56 PM UTC 2024 PASSED r134
 ```
 
 ## Troubleshooting
