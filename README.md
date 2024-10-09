@@ -144,8 +144,6 @@ sudo mkdir -p /testarea1/`whoami` /usr/library/gtm_test
 sudo chown -R `whoami`:gtc /testarea1/ /testarea1/`whoami` /usr/library/gtm_test
 ```
 
-[Install](https://yottadb.com/product/get-started/) or [build](#building-yottadb) the current production release of YottaDB into `$gtm_test/<version>` because some tests use it to create databases. Make sure your `.cshrc` sets `$gtm_curpro` to `<version>`. For example, append `setenv gtm_curpro r200` to your local `.cshrc` if your current production release is installed in `$gtm_test/r200`.
-
 ## Getting the YDBTest repository
 
 Get a clone of the YDBTest repository:
@@ -169,94 +167,21 @@ alias tsync 'rsync -av --delete `git rev-parse --show-toplevel`/ $gtm_test/$gtm_
 ```
 
 ## Building YottaDB
+You need to install YottaDB in a specific way (the get-started page instructions won't work). This way is: `./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group`.
 
-Either build YottaDB with the [YDBDevOps repository](https://gitlab.com/YottaDB/Util/YDBDevOps) if you work for YottaDB and have access to it, otherwise use the following instructions (which are somewhat dated so may or may not work).
+- You need to install the current production version (append `setenv gtm_curpro <prod version>` after install to your `.cshrc`).
+- You need to install the master version (and keep that periodically updated as master is updated)
 
-Create directories to store the YottaDB builds to be tested, and the  (explanation of environment variables [here](#environment-variables)):
+Make sure your `.cshrc` sets `$gtm_curpro` to `<version>`. For example, append `setenv gtm_curpro V70001_R200` to your local `.cshrc` if your current production release is installed in `$gtm_root/V70001_R200/pro`.
 
-```sh
-mkdir -p $gtm_root/$verno/pro   # Where to store a production build
-mkdir -p $gtm_root/$verno/dbg   # Where to store a debug build
+At YottaDB, each version that we compile is a "pro" (Release) and "dbg" (Debug) version. They are stored in these directories:
+
+```
+$gtm_root/$verno/pro   # Where to store a production build
+$gtm_root/$verno/dbg   # Where to store a debug build
 ```
 
-Get a clone of the YDB repository:
-
-```sh
-cd $work_dir
-git clone https://gitlab.com/YottaDB/DB/YDB.git
-```
-
-Make sure to switch to tcsh.
-
-Create and run a `build.csh` file in the parent directory of your local YDB repository.
-
-```sh
-#!/usr/bin/tcsh
-if (! -d $gtm_dist/obj) then
-        set sudostr = "sudo mkdir $gtm_dist/obj"
-        $sudostr
-        @ status1 = $status
-if ($status1) then
-        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-        exit -1
-        endif
-endif
-cp -pa YDB/cmake/*.a $gtm_obj/
-
-if (! -d $gtm_ver/tools) then
-        set sudostr = "sudo mkdir $gtm_ver/tools"
-        $sudostr
-        @ status1 = $status
-        if ($status1) then
-                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                exit -1
-        endif
-endif
-set sudostr = "sudo chown $user.gtc $gtm_ver/tools"
-$sudostr
-cp -pa YDB/sr_unix/*.awk $gtm_tools/
-cp -pa YDB/sr_unix/*.csh $gtm_tools/
-cp -pa YDB/sr_linux/*.csh $gtm_tools/
-rm -f $gtm_ver/tools/setactive{,1}.csh
-
-# This may need to be `uname -i` instead depending upon your machine or you can hardcode
-# it to x86_64, aarch64, armv6l or armv7l as appropriate. This is needed to ensure that
-# the correct assembly code is used to build YottaDB.
-set machtype=`uname -m`
-foreach ext (c s msg h si)
-        if (($ext == "h") || ($ext == "si")) then
-                set dir = "inc"
-        else
-                set dir = "src"
-        endif
-        if (! -d $gtm_ver/$dir) then
-                set sudostr = "sudo mkdir $gtm_ver/$dir"
-                $sudostr
-                @ status1 = $status
-                if ($status1) then
-                        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                        exit -1
-                endif
-        endif
-        set sudostr = "sudo chown $user.gtc $gtm_ver/$dir"
-        $sudostr
-        @ status1 = $status
-        if ($status1) then
-                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                exit -1
-        endif
-        cp -pa YDB/sr_port/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_port_cm/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix_cm/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix_gnp/*.$ext $gtm_ver/$dir/
-        if (${machtype} == "x86_64") then
-                cp -pa YDB/sr_x86_regs/*.$ext $gtm_ver/$dir/
-        endif
-        cp -pa YDB/sr_${machtype}/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_linux/*.$ext $gtm_ver/$dir/
-end
-```
+If you work for YottaDB, use the [YDBDevOps repository](https://gitlab.com/YottaDB/Util/YDBDevOps) to build YottaDB. If you don't, you can use the file [docker/build_and_install_yottadb.csh](docker/build_and_install_yottadb.csh) to build YottaDB and copy all the correct files over. This file is used in pipelines to build YottaDB and run tests on it; so it should mostly work, but you may need to see how to use it by examining the accompanying [Dockerfile](docker/Dockerfile).
 
 # Running a test
 
