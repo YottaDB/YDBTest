@@ -66,61 +66,67 @@
 # ---- connection: tcp, reset_log: no, input: pipe ----
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_tcp_0_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_tcp_0_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_tcp_0_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
 # ---- connection: tcp, reset_log: no, input: terminal ----
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_tcp_0_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_tcp_0_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_tcp_0_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_0_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -131,9 +137,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_tcp_1_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
@@ -142,9 +149,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_tcp_1_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
@@ -153,9 +161,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_tcp_1_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -166,9 +175,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_tcp_1_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
@@ -177,9 +187,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_tcp_1_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tcp
@@ -188,9 +199,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_tcp_1_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tcp_1_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # stop audit_listener and wait for finish
@@ -200,61 +212,67 @@ stamp check: pass
 # ---- connection: tls, reset_log: no, input: pipe ----
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_tls_0_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_tls_0_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_tls_0_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
 # ---- connection: tls, reset_log: no, input: terminal ----
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_tls_0_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_tls_0_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_tls_0_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_0_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -265,9 +283,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_tls_1_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
@@ -276,9 +295,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_tls_1_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
@@ -287,9 +307,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_tls_1_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -300,9 +321,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_tls_1_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
@@ -311,9 +333,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_tls_1_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with tls
@@ -322,9 +345,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_tls_1_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_tls_1_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # stop audit_listener and wait for finish
@@ -334,61 +358,67 @@ stamp check: pass
 # ---- connection: unix_socket, reset_log: no, input: pipe ----
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_unix_socket_0_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_unix_socket_0_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_unix_socket_0_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
 # ---- connection: unix_socket, reset_log: no, input: terminal ----
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: DSM
+# log message: the_message_is_unix_socket_0_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: ISM
+# log message: the_message_is_unix_socket_0_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
 # no log reset, append result to existing file
-# log message: MSM
+# log message: the_message_is_unix_socket_0_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_pipe_MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_0_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -399,9 +429,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_unix_socket_1_pipe_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_pipe_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
@@ -410,9 +441,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_unix_socket_1_pipe_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_pipe_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
@@ -421,9 +453,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_unix_socket_1_pipe_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_pipe_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 
@@ -434,9 +467,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: DSM
+# log message: the_message_is_unix_socket_1_terminal_DSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=DSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_terminal_DSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
@@ -445,9 +479,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: ISM
+# log message: the_message_is_unix_socket_1_terminal_ISM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=ISM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_terminal_ISM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # setup restrict.txt: audit logging with unix_socket
@@ -456,9 +491,10 @@ stamp check: pass
 log rotate done
 # check rotated log filename
 filename check: pass
-# log message: MSM
+# log message: the_message_is_unix_socket_1_terminal_MSM
+# wait for message to be appended to the audit log file
 # display audit log file (last entry should include: tty=/dev/pty/<masked>)
-<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=MSM
+<timestamp_masked>; dist=<masked>; src=4; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=the_message_is_unix_socket_1_terminal_MSM
 # check if log timestamp falls between before-after checkpoints
 stamp check: pass
 # stop audit_listener and wait for finish

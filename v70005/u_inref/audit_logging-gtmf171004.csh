@@ -182,13 +182,16 @@ foreach param ( \
 
 			foreach message ( "DSM" "ISM" "MSM")
 
+				# create a unique message, it will be logged
+				set unique_message = "the_message_is_${mode}_${resetlog}_${execmode}_${message}"
+
 				# preserve a timestamp for debugging purposes, see:
 				#   https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2106#note_2129635313
 				touch audit_${mode}_${resetlog}_${execmode}_${message}.txt
 
 				echo "# setup restrict.txt: audit logging with $mode"
 				rm -f $gtm_dist/restrict.txt
-				foreach facility ("AD" "AZA")
+				foreach facility ( "AD" "AZA" )
 					set restfac = `echo $restriction | sed "s/#FACILITY#/$facility/g"`
 					echo $restfac >> $gtm_dist/restrict.txt
 				end  # facility
@@ -256,9 +259,9 @@ foreach param ( \
 						set name_epoch=`date --date="$name_norm" -u +"%s"`
 
 						# Adjusting BEFORE value - see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
-						@ before_epoch--
+						@ before_epoch -= 2
 
-						if (($before_epoch <= $name_epoch ) && ( $name_epoch <= $after_epoch )) then
+						if (($before_epoch <= $name_epoch) && ($name_epoch <= $after_epoch)) then
 							echo "filename check: pass"
 						else
 							echo "log filename check failed, BEFORE <= FILENAME_STAMP <= AFTER is not true: $before_epoch <= $name_epoch <= $after_epoch"
@@ -271,17 +274,22 @@ foreach param ( \
 					echo "# no log reset, append result to existing file"
 				endif
 
-				echo "# log message: $message"
+				echo "# log message: $unique_message"
 
 				# checkpoint: before
 				set before_epoch=`date -u +"%s"`
 
 				if ($execmode == "pipe") then
 
-					# wrap `$message` in `set result=$zauditlog("$message")`
-					echo "set result="'$'"zauditlog("'"'"$message"'"'")" \
+					# wrap `$unique_message` in `set result=$zauditlog("$unique_message")`
+					echo "set result="'$'"zauditlog("'"'"$unique_message"'"'")" \
 						| $gtm_dist/mumps -dir \
 						|& grep -v '^$' | grep -v '^GTM' | grep -v '^YDB'
+
+                                        echo "# wait for message to be appended to the audit log file"
+					# for more information see: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
+					$gtm_tst/com/wait_for_log.csh -log ${aulogfile} \
+						-message "$unique_message" -duration 600 -waitcreation
 
 					echo "# display audit log file (last entry should include: tty=0 - means STDIN is not a terminal)"
 					rm -f $gtm_dist/restrict.txt
@@ -290,10 +298,14 @@ foreach param ( \
 
 				else
 
-					expect -d $gtm_tst/$tst/u_inref/audit_logging-gtmf171004.exp "$message" \
+					expect -d $gtm_tst/$tst/u_inref/audit_logging-gtmf171004.exp "$unique_message" \
 						>>& expect.log
 					# preserve expect output for debugging, append a small separator
 					echo "--" >> expect.log
+
+                                        echo "# wait for message to be appended to the audit log file"
+					$gtm_tst/com/wait_for_log.csh -log ${aulogfile} \
+						-message "$unique_message" -duration 600 -waitcreation
 
 					echo "# display audit log file (last entry should include: tty=/dev/pty/<masked>)"
 					rm -f $gtm_dist/restrict.txt
@@ -309,11 +321,16 @@ foreach param ( \
 				set log_epoch=`date -u --date="$log_stamp" +%s`
 
 				# Adjusting BEFORE value - see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
-				@ before_epoch--
-				if (($before_epoch <= $log_epoch ) && ( $log_epoch <= $after_epoch )) then
+				@ before_epoch -= 2
+				if (($before_epoch <= $log_epoch) && ($log_epoch <= $after_epoch)) then
 					echo "stamp check: pass"
 				else
 					echo "stamp check failed, BEFORE <= LOG_STAMP <= AFTER is not true: $before_epoch <= $log_epoch <= $after_epoch"
+					echo "log stamp: $log_stamp"
+					echo "contents of $aulogfile follow:"
+    					cat $aulogfile
+					# save $aulogfile contents for later debugging
+					mv $aulogfile ${aulogfile}_${mode}_${resetlog}_${execmode}.save
 				endif
 
 			end  # message
