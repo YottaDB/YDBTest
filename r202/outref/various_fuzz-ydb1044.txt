@@ -1,0 +1,108 @@
+##########################################################################
+########## Test various code issues identified by fuzz testing ###########
+##########################################################################
+
+---- prepare ----
+# create database
+# compile errors
+		set czff=$zsocket("","zff",t,onopen,"cz write ")
+		                                   ^-----
+		At column 37, line 17, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-MAXARGCNT, Maximum number of arguments 4 exceeded
+		set czff=$zsocket("","zff",t,onopen,usfbefore,useafter,"cz write ")
+		                                   ^-----
+		At column 37, line 21, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-MAXARGCNT, Maximum number of arguments 4 exceeded
+		set:$f x
+		     ^-----
+		At column 7, line 29, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-INVSVN, Invalid special variable name
+		set:$f x
+		        ^-----
+		At column 10, line 29, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-EQUAL, Equal sign expected but not found
+		use:0
+		     ^-----
+		At column 7, line 34, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		write:$f
+		       ^-----
+		At column 9, line 39, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-INVSVN, Invalid special variable name
+		write:$f
+		        ^-----
+		At column 10, line 39, source module ##IN_TEST_PATH##/inref/ydb1044.m
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%GTM-E-LABELMISSING, Label referenced but not defined: show
+%GTM-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/ydb1044.m
+
+--------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1044#note_2164370404
+# Prior to GT.M V7.0-004, this test failed with an assert/SIG-11
+# Expecting only MAXARGCNT errors in below output in each invocation
+--------------------------------------------------------------------------
+# checking case "argc1" (too many args, command 1), with program
+%GTM-E-MAXARGCNT, Maximum number of arguments 0 exceeded
+		At M source location argc1+1^ydb1044
+
+# checking case "argc1", (too many args, command 1) direct
+%GTM-E-MAXARGCNT, Maximum number of arguments 4 exceeded
+		set czff=$zsocket("","zff",t,onopen,"cz write ")
+		                                   ^-----
+
+# checking case "argc2" (too many args, command 2), with program
+%GTM-E-MAXARGCNT, Maximum number of arguments 0 exceeded
+		At M source location argc2+1^ydb1044
+
+# checking case "argc2", (too many args, command 2) direct
+%GTM-E-MAXARGCNT, Maximum number of arguments 4 exceeded
+		set czff=$zsocket("","zff",t,onopen,usfbefore,useafter,"cz write ")
+		                                   ^-----
+
+--------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1044#note_2164048856
+# Prior to GT.M V7.0-004 / YottaDB r2.02, this test failed with an assert
+# in debug build
+# Expecting only LABELMISSING errors in below output in each invocation
+--------------------------------------------------------------------------
+# checking case "mlab" (missing label), with program
+%GTM-E-LABELUNKNOWN, Label referenced but not defined
+		At M source location mlab+1^ydb1044
+
+# checking case "mlab", (missing label) direct
+%GTM-E-LABELMISSING, Label referenced but not defined: show
+
+--------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1044#note_2163866307
+# Prior to GT.M V7.0-004 / YottaDB r2.02, this test failed with SIG-11 in
+# both release and debug builds
+# Expecting INVSVN/EQUAL/SPOREOL errors in below output in each invocation
+--------------------------------------------------------------------------
+# checking case "pc1" (postcond issue, command 1), with program
+%GTM-E-INVSVN, Invalid special variable name
+		At M source location pc1+1^ydb1044
+
+# checking case "pc1", (postcond issue, command 1) direct
+%GTM-E-EQUAL, Equal sign expected but not found
+		set:$f x
+		        ^-----
+
+# checking case "pc2" (postcond issue, command 2), with program
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location pc2+1^ydb1044
+
+# checking case "pc2", (postcond issue, command 2) direct
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		use:0
+		     ^-----
+
+# checking case "pc3" (postcond issue, command 3), with program
+%GTM-E-INVSVN, Invalid special variable name
+		At M source location pc3+1^ydb1044
+
+# checking case "pc3", (postcond issue, command 3) direct
+%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		write:$f
+		        ^-----
+---- cleanup ----
+shutdown database
