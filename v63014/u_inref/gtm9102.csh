@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -42,6 +42,11 @@ echo "# Stop background updates"
 $gtm_dist/mumps -run stopupd^gtm9102
 
 cd bak
+if ("ENCRYPT" == "$test_encryption" ) then
+	cp ../$gtmcrypt_config .
+	sed -i 's,'$test_subtest_name','$test_subtest_name'/'${PWD:t}',;' $gtmcrypt_config
+	grep _dat_key ../$gtmcrypt_config | awk -F\" '{print $2;}' | sed 's/^/cp /;s/$/ ./;' | sh
+endif
 echo "# Run [mupip rundown] first on the snapshot as the backup .dat files still have references to live db shmid"
 $gtm_dist/mupip rundown -reg "*" >& rundown.out
 echo "# Verify that multi-region online freeze snapshot has ^a and ^b differing by at most 1"

@@ -29,7 +29,7 @@ cp mumps* temp/
 cd temp
 if ("ENCRYPT" == "$test_encryption" ) then
 	cp ../$gtmcrypt_config .
-	sed -i 's,'$test_subtest_name','$test_subtest_name'/temp,;' $gtmcrypt_config
+	sed -i 's,'$test_subtest_name','$test_subtest_name'/'${PWD:t}',;' $gtmcrypt_config
 endif
 rm mumps.mjl
 echo ""
