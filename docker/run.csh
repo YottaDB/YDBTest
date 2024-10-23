@@ -60,5 +60,9 @@ if ( "$argv[1]" == "-shell") then
   exec su -l gtmtest $pass_env
 endif
 
+if ( "$argv[1]" == "-pipelineydb") then
+  exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/docker/pipeline-test-ydb.csh"
+endif
+
 # Run the tests as the test user
 exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $argv"

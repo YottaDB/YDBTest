@@ -10,52 +10,103 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
-set echo
-set verbose
+pushd $gtm_tst
+set test_list=`echo basic sudo r1* r2* v7*`
+echo "test_list: $test_list"
+popd
 
-#set TEST_LIST=$1
-set TEST_LIST="basic r134 r138 r200 v70001 v70002 70003 v70004 v70005"
+# Choose 3 tests randomly
+set random_test_list=`shuf -n3 -e $test_list`
 
-# Ensure that our hostname does not have dashes as that crashes multiple parts of the test system
-# (it converts hostnames into variables)
-echo "HOSTNAME: $HOST"
-
-# Preamble
-# Start log server; needed by test framework
-rsyslogd
-# needed to create the /var/log/syslog file; as otherwise it won't exist at start
-logger test
-
-# The file is created asynchronously, so this ensures we don't proceed till it's created
-while ( ! -e /var/log/syslog)
-  sleep .01
-end
-
-# Next two seds, fix the serverconf.txt file
-## Correct the host; as it differs each time we start docker
-sed -i "s/HOST/$HOST/" /usr/library/gtm_test/serverconf.txt
-sed -i 's|LOG|/var/log/syslog|' /usr/library/gtm_test/serverconf.txt
-
-# Fix HOST on tstdirs.csh file
-sed -i "s/HOST/$HOST/" /usr/library/gtm_test/tstdirs.csh
-
-# Runner job does not set TERM
-setenv TERM xterm
-
-# Set-up some environment variables to pass to the test system
-setenv ydb_test_inside_docker 1
-set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
-
-RANDOM_TEST_LIST=`shuf -n5 -e $TEST_LIST`
-
-foreach test ($RANDOM_TEST_LIST)
-	unsetenv subtest_list subtest_list_non_replic subtest_list_common subtest_list_replic
-	grep "setenv subtest_list_" ${test}/instream.csh > instream_setenvs
+# Grab subtests
+foreach test ($random_test_list)
+	unsetenv subtest_list_non_replic subtest_list_common subtest_list_replic
+	grep "setenv subtest_list_" $gtm_tst/$test/instream.csh > instream_setenvs
 	source instream_setenvs
 	rm instream_setenvs
-	set subtest_list "$subtest_list_non_replic $subtest_list_common $subtest_list_replic"
-	set random_subtest_list=`shuf -n5 -e $subtest_list`
-	set subtest_list_with_commas=`tr $random_subtest_list ' ' ','`
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest_list_with_commas"
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest_list_with_commas -replic"
+
+	# Choose subtests at random
+	set subtest_list_to_randomize_nonreplic="$subtest_list_non_replic $subtest_list_common"
+	set subtest_list_to_randomize_replic="$subtest_list_common $subtest_list_replic"
+
+	# Remove subtests that don't run in Docker today
+	# r120 fails in ydbdist (process id issue)
+	if ($test == "r120") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydbdist//`
+	# r122 fails in tprestart (log related)
+	if ($test == "r122") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/tprestart//`
+	# r124 fails in ydb359 ($PATH), ydb333 (? cpu issue ?), ydb114 (lack of older version)
+	if ($test == "r124") then
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb359//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb333//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb114//`
+	endif
+	# r130 fails in ydb485 (lack of older version), ydb493 (?), ydb494 (compilation issue), ydb388 (lack of older version)
+	if ($test == "r130") then
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb485//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb493//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb494//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb388//`
+	endif
+	# r136 fails in ydb943 (plugin install config), gtm8863a (lack of older version)
+	if ($test == "r136") then
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb943//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/gtm8863a//`
+	endif
+	# v70000 fails in ydb531_v6to7 (imptp invocation)
+	if ($test == "v70000") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb531_v6tov7//`
+
+	# Choose 5 non-replic tests at random
+	set random_nonreplic_subtest_list=`shuf -n5 -e $subtest_list_to_randomize_nonreplic`
+	# Choose 1 replic test at random
+	set random_replic_subtest_list=`shuf -n1 -e $subtest_list_to_randomize_replic`
+	set random_nonreplic_subtest_list_with_commas=`echo "$random_nonreplic_subtest_list" | tr ' ' ','`
+	set random_replic_subtest_list_with_commas=`echo "$random_replic_subtest_list" | tr ' ' ','`
+
+	# if we have tests, run them async, saving results in /tmp/test-testname.txt
+	# Note that we use "fg", because if we use "bg", the shell does not know that there are child jobs to "wait" for.
+	# using fg with & gives us what we want: run multiple tests concurrently and wait for all of them to finish
+	if ( $random_nonreplic_subtest_list_with_commas != "" ) then
+		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt &
+	endif
+	if ( $random_replic_subtest_list_with_commas != "" ) then
+		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt &
+	endif
 end
+
+# Wait till all tests are finished
+jobs
+wait
+
+# Status of the script. 1 if any test failed
+set test_status = 0
+
+# Go through test output directories
+set tstdirs = `grep -h "Test Output Directory   ::" /tmp/test-* | awk -F":: " '{print $2}'`
+foreach tstdir ($tstdirs)
+	# Output report, and see if it failed
+	# Various looks in report.txt do a loop even though all our invocations will cause a report.txt with a single line
+	# This is because report.txt could potentially in the future contain multiple lines
+	cat $tstdir/report.txt
+	foreach invoke_status (`awk '{print $NF}' $tstdir/report.txt`)
+		if ($invoke_status == 'FAILED') set test_status = 1
+	end
+
+	# For each test in the report, print outstream.log, and if any of the tests failed, print out the diff
+	# Same algorithm as com/submit_test.csh
+	foreach invoke_name (`awk '{print $2}' $tstdir/report.txt`)
+		set tst_general_dir = $tstdir/$invoke_name
+		cat $tst_general_dir/outstream.log
+		foreach file (`awk '/^FAIL from / {print $6}' $tst_general_dir/outstream.log`)
+			set failedtestname = `echo $file | awk -F "/" '{print $1}'`
+			echo "# Diff of $failedtestname follows"
+			cat $tst_general_dir/$file
+		end
+		if (-f $tst_general_dir/diff.log && ! -z $tst_general_dir/diff.log) then
+			echo "# diff.log contents follow"
+			cat $tst_general_dir/diff.log
+		endif
+	end
+	echo
+end
+
+exit $test_status
