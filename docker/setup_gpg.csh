@@ -1,7 +1,7 @@
 #!/bin/tcsh -fe
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,7 @@ echo "no-permission-warning" >> gpg.conf
 mv gpg-agent.conf gpg-agent.conf.bak
 awk '/pinentry-program/{gsub(/\/.*/,"'$PWD'/pinentry-test-gtm.sh")};{print}' gpg-agent.conf.bak > gpg-agent.conf
 echo 'no-use-standard-socket' >> gpg-agent.conf
+echo 'auto-expand-secmem' >> gpg-agent.conf
 unsetenv GNUPGHOME
 setenv gtm_chset M
 setenv LC_ALL C
