@@ -35,16 +35,7 @@ echo ""
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
-if ("ENCRYPT" == "$test_encryption" ) then
-	head -n -3 $gtmcrypt_config > $gtmcrypt_config.merged
-	foreach inst (INST3)
-		echo "        }," >> $gtmcrypt_config.merged
-		$MSR RUN $inst "cat $gtmcrypt_config" | tail -6 | head -3 >> $gtmcrypt_config.merged
-	end
-	tail -n 3 $gtmcrypt_config >> $gtmcrypt_config.merged
-	mv $gtmcrypt_config $gtmcrypt_config.orig
-	mv $gtmcrypt_config.merged $gtmcrypt_config
-endif
+$gtm_tst/com/merge_gtmcrypt_config.csh INST3
 
 echo "# Run ydb312gtm8182f.m to do a SET in INST1, a LOCK in INST3, and a SET in INST3"
 $gtm_dist/mumps -run ydb312gtm8182f

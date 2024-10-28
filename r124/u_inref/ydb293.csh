@@ -44,22 +44,16 @@ set d4=`cat msr_instance_config.txt |& $grep INST4 |& $grep DBDIR |& $tst_awk '{
 # Giving Instance 1 and Instance 2 a way to access the .gld file of Instance 3 and Instance 4
 $MSR RUN INST1 "echo $d3 >>& newdir.txt" >& hide.txt
 $MSR RUN INST2 "echo $d4 >>& newdir.txt" >& hide.txt
+
+$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
 if ("ENCRYPT" == "$test_encryption" ) then
 	set d2=`cat msr_instance_config.txt |& $grep INST2 |& $grep DBDIR |& $tst_awk '{print $3}'`
-	head -n -3 $gtmcrypt_config > $gtmcrypt_config.merged
-	foreach inst (INST2 INST3 INST4)
-		echo "        }," >> $gtmcrypt_config.merged
-		$MSR RUN $inst "cat $gtmcrypt_config" | tail -6 | head -3 >> $gtmcrypt_config.merged
-	end
-	tail -n 3 $gtmcrypt_config >> $gtmcrypt_config.merged
-	mv $gtmcrypt_config $gtmcrypt_config.orig
-	mv $gtmcrypt_config.merged $gtmcrypt_config
 	mv $d2/$gtmcrypt_config $d2/$gtmcrypt_config.orig
 	cp $gtmcrypt_config $d2
 endif
+
 echo ""
 $MSR RUN INST1 '$ydb_dist/mumps -run ydb293'
-
 
 # Dump globals on primary and secondary side
 echo "Dumping globals on primary side"; echo "--------------------------------"; $ydb_dist/mumps -run dump^ydb293

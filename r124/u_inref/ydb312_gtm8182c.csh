@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,6 +66,8 @@ foreach test ("$testA" "$testB")
 	setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 	setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
+	$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
+
 	#The echoed message should specify that INST3 will feeze for test A only
 	echo -n "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 "
 	if ("$test" == "$testA") then
@@ -90,7 +92,12 @@ foreach test ("$testA" "$testB")
 		#-freeze=off needs to be done before shutting down INST3-INST4 source server
 		$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
 	else
-		$gtm_tst/com/check_error_exist.csh msr_execute_27.out "NOJNLPOOL"
+		if ("ENCRYPT" == "$test_encryption" ) then
+			set msrfilenum = 33
+		else
+			set msrfilenum = 27
+		endif
+		$gtm_tst/com/check_error_exist.csh msr_execute_${msrfilenum}.out "NOJNLPOOL"
 	endif
 	echo ""
 
