@@ -12,7 +12,8 @@
 # This module is derived from FIS GT.M.
 #################################################################
 
-if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
+set machtype = `uname -m`
+if (("x86_64" == "$machtype") || ("aarch64" == "$machtype")) then
 	setenv cur_platform_size 1
 else
 	setenv cur_platform_size 0
