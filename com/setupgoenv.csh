@@ -124,6 +124,11 @@ else
 endif
 cd -
 
+if ("ENCRYPT" == "$test_encryption" ) then
+	# Set env var to absolute path (not relative path) since go processes will start from subdirectories
+	setenv gtmcrypt_config `pwd`/gtmcrypt.cfg
+endif
+
 # When using a pure Go application, one can do 'go run xxx.go' and it will do that. This does not work when cgo is involved -
 # which is 100% of our Go applications currently since they all test the Go wrapper.
 set gobuild = "go build"
