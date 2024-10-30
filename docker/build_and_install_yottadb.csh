@@ -234,6 +234,9 @@ else
 	ln -s $ydb_dist/plugin/ydbcrypt $ydb_dist/plugin/gtmcrypt
 endif
 
+# Enable execute permissions on .sh scripts in the YDBEncrypt plugin
+chmod +x ${ydb_dist}/plugin/gtmcrypt/*.sh
+
 # Install GTMJI plugin
 # The make step below needs JAVA_HOME and JAVA_SO_HOME env vars set appropriately so set that up first using "set_java_paths.csh"
 # But before that set up "tst_awk" and "HOSTOS" env var so "set_java_paths.csh" can work without errors.
