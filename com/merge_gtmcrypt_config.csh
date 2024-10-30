@@ -13,14 +13,12 @@
 #
 # $1, $2, $3 etc. space separated list of instance names that we want merged into INST1's $gtmcrypt_config
 
-if ("ENCRYPT" == "$test_encryption" ) then
-	head -n -3 $gtmcrypt_config > $gtmcrypt_config.merged
-	foreach inst ($*)
-		echo "        }," >> $gtmcrypt_config.merged
-		$MSR RUN $inst "cat $gtmcrypt_config" | tail -6 | head -3 >> $gtmcrypt_config.merged
-	end
-	tail -n 3 $gtmcrypt_config >> $gtmcrypt_config.merged
-	mv $gtmcrypt_config $gtmcrypt_config.orig
-	mv $gtmcrypt_config.merged $gtmcrypt_config
-endif
+head -n -3 $gtmcrypt_config > $gtmcrypt_config.merged
+foreach inst ($*)
+	echo "        }," >> $gtmcrypt_config.merged
+	$MSR RUN $inst "cat $gtmcrypt_config" | tail -6 | head -3 >> $gtmcrypt_config.merged
+end
+tail -n 3 $gtmcrypt_config >> $gtmcrypt_config.merged
+mv $gtmcrypt_config $gtmcrypt_config.orig
+mv $gtmcrypt_config.merged $gtmcrypt_config
 

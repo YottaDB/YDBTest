@@ -45,8 +45,8 @@ set d4=`cat msr_instance_config.txt |& $grep INST4 |& $grep DBDIR |& $tst_awk '{
 $MSR RUN INST1 "echo $d3 >>& newdir.txt" >& hide.txt
 $MSR RUN INST2 "echo $d4 >>& newdir.txt" >& hide.txt
 
-$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
 if ("ENCRYPT" == "$test_encryption" ) then
+	$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
 	set d2=`cat msr_instance_config.txt |& $grep INST2 |& $grep DBDIR |& $tst_awk '{print $3}'`
 	mv $d2/$gtmcrypt_config $d2/$gtmcrypt_config.orig
 	cp $gtmcrypt_config $d2

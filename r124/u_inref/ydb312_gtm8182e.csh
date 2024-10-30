@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,12 @@ echo ""
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
+if ("ENCRYPT" == "$test_encryption" ) then
+	$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
+	set d3=`cat msr_instance_config.txt |& $grep INST3 |& $grep DBDIR |& $tst_awk '{print $3}'`
+	mv $d3/$gtmcrypt_config $d3/$gtmcrypt_config.orig
+	cp $gtmcrypt_config $d3
+endif
 
 echo "# Running rmv_map script in INST3 to remove instance file mapping"
 # We set the instance file name of INST3 to NULL so that it no longer has the full path
@@ -60,7 +66,12 @@ echo ""
 echo ""
 
 echo "# Check msr*.out file for REPLINSTUNDEF error"
-$gtm_tst/com/check_error_exist.csh msr_execute_11.out REPLINSTUNDEF
+if ("ENCRYPT" == "$test_encryption" ) then
+	set msrfilenum = 14
+else
+	set msrfilenum = 11
+endif
+$gtm_tst/com/check_error_exist.csh msr_execute_${msrfilenum}.out REPLINSTUNDEF
 echo ""
 echo ""
 

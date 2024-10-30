@@ -66,7 +66,9 @@ foreach test ("$testA" "$testB")
 	setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 	setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
-	$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
+	if ("ENCRYPT" == "$test_encryption" ) then
+		$gtm_tst/com/merge_gtmcrypt_config.csh INST2 INST3 INST4
+	endif
 
 	#The echoed message should specify that INST3 will feeze for test A only
 	echo -n "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 "
