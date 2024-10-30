@@ -479,6 +479,12 @@ r134 test DONE.
 Fri Oct 11 06:09:56 PM UTC 2024 PASSED r134
 ```
 
+## Running pipeline test
+This command is for you to troubleshoot `docker/pipeline-test.csh` (used in the YDBTest pipeline) locally. It's tricky to construct:
+```
+docker run --init --cap-add SYS_ADMIN --cap-add SYS_TIME -it -v $PWD:/YDBTest -v /testarea/sam/:/testarea1/ --rm -w /YDBTest --entrypoint docker/pipeline-test.csh registry.gitlab.com/yottadb/db/ydbtest
+```
+
 ## Troubleshooting
 
 If gtmtest gives the following error, you may need to turn off the sticky bit on the given path with `chmod -x <path>`:

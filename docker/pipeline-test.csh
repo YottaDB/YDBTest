@@ -39,11 +39,17 @@ sed -i "s/HOST/$HOST/" /usr/library/gtm_test/tstdirs.csh
 # Runner job does not set TERM
 setenv TERM xterm
 
-# Copy over the test system to $gtm_tst
-# This is ineffecient, but not worth optimizing. It copies everything over rather than only changed files.
-setenv gtm_tst "/usr/library/gtm_test/T999"
-rsync . -ar --delete --exclude=.git $gtm_tst
-chown -R gtmtest:gtc $gtm_tst
+if ( ! -f /YDBTest/com/gtmtest.csh ) then
+	# Copy over the test system to $gtm_tst
+	# This is ineffecient, but not worth optimizing. It copies everything over rather than only changed files.
+	setenv gtm_tst "/usr/library/gtm_test/T999"
+	rsync . -ar --delete --exclude=.git $gtm_tst
+	chown -R gtmtest:gtc $gtm_tst
+else
+	# Test system passed in /YDBTest, use that
+	rm -r /usr/library/gtm_test/T999
+	ln -s /YDBTest /usr/library/gtm_test/T999
+endif
 
 # Set-up testarea to be in the current directory so we can upload the artifacts
 mkdir testarea
@@ -51,14 +57,24 @@ echo "setenv tst_dir ${PWD}/testarea" >> ~gtmtest/.cshrc
 chmod 777 ${PWD}/testarea
 sed -i "s|/testarea1|$PWD|" /usr/library/gtm_test/tstdirs.csh
 
+# Sudo tests rely on the source code for ydbinstall to be in a specific location
+ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
+
 # Set-up some environment variables to pass to the test system
 setenv ydb_test_inside_docker 1
 set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
 
-# Get list of changed files
-# https://forum.gitlab.com/t/ci-cd-pipeline-get-list-of-changed-files/26847
-git fetch origin
-set filelist = `git diff --name-only origin/master`
+if ( ! -f /YDBTest/com/gtmtest.csh ) then
+	# Get list of changed files
+	# https://forum.gitlab.com/t/ci-cd-pipeline-get-list-of-changed-files/26847
+	git fetch origin
+	set filelist = `git diff --name-only origin/master`
+else
+	# Test system passed in /YDBTest
+	git config --global --add safe.directory /YDBTest
+	set filelist = `git diff --name-only master`
+endif
+
 set instream_invokelist = ""
 
 # Results collected in result.txt, initially empty

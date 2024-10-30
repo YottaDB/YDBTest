@@ -140,7 +140,11 @@ endif
 mkdir -p $gtm_root/$verno/$dbgpro/obj
 find . -name '*.a' -exec cp {} $gtm_root/$verno/$dbgpro/obj \;
 mkdir -p $gtm_root/$verno/tools
-rm -rf $source_dir/$dbgpro
+
+# Sudo tests require `ydbinstall` that is part of the intermediate build process (yuck); so leave the build directory around for master commit
+if ( "$git_tag" != "master" ) then
+	rm -rf $source_dir/$dbgpro
+endif
 
 cd $source_dir
 cp sr_unix/*.awk $gtm_root/$verno/tools

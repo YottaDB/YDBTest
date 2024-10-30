@@ -82,6 +82,7 @@ RUN apt-get update && \
                     lsb-release \
                     rsync \
                     linux-perf \
+                    libcurl4-openssl-dev \
                     && \
                     apt-get clean
 
@@ -111,13 +112,15 @@ COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
 COPY docker/serverconf.txt /usr/library/gtm_test/T999/docker/serverconf.txt
 COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
 # build_and_install_yottadb.csh <folder in /usr/library> <git tag in YDB> <dbg/pro>
-RUN /usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71000 V7.1-000 pro
 
 # gtm_curpro: bump up by changing the next three lines
 ENV gtm_curpro V70001_R200
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70001_R200 r2.00 pro
 RUN ln -s /usr/library/R200 /usr/library/V70001_R200
+
+# Needs to be the last one to enable the lastest source tree to be available for sudo tests
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg
 
 COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
