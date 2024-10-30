@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,7 @@ cd $3
 setenv gtmgbldir "mumps.gld"
 
 # Now that we have a basic second user setup, set the gtm_passwd to the appropriate value
-setenv gtm_passwd `echo $gtmtest1 | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d" "`
+setenv gtm_passwd `echo $gtm_test_gpghome_passwd | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d" "`
 
 # Now try accessing a global in the current database. This should issue an error
 # %YDB-E-CRYPTKEYFETCHFAILED - No read permissions on $GNUPGHOME

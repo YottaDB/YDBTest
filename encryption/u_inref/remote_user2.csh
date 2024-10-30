@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,7 @@ set calling_user = $5
 setenv GNUPGHOME /tmp/__${USER}_$gtm_tst_out
 echo "ssh $user@$HOST:ar 'rm -rf $GNUPGHOME'"	>> $tst_general_dir/cleanup.csh
 setenv GTMXC_gpgagent $gtm_exe/plugin/gpgagent.tab
-setenv gtm_passwd `echo "gtmtest1" | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+setenv gtm_passwd `echo $gtm_test_gpghome_passwd | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 echo "GNUPGHOME = $GNUPGHOME"
 echo "GTMXC_gpgagent = $GTMXC_gpgagent"
 echo "gtm_passwd = $gtm_passwd"
@@ -49,7 +49,7 @@ chmod -R 777 ${USER}_files
 # Create a text file to be given as the input for the import_and_sign_key.sh as the script is an interactive one
 cat << CAT_EOF >> input.txt
 Y
-$gtmtest1
+$gtm_test_gpghome_passwd
 CAT_EOF
 
 # Capture the list of keys before importing and signing

@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,7 +39,7 @@ cat << CAT_EOF > $res_file
 touch $dbk_file
 setenv gtm_obfuscation_key $gtmtest1_gnupghome/gtmtest1@fnis.com_pubkey.txt
 setenv gtm_pinentry_log /tmp/__${gtmtest1}_pinentry.log
-setenv gtm_passwd \`echo $gtmtest1 | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '\`
+setenv gtm_passwd \`echo $gtm_test_gpghome_passwd | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '\`
 source $gtm_tst/com/defaults.csh $gtm_tst/com/defaults_common_csh
 $gtm_tst/com/modconfig.csh $dbk_file append-keypair $dat_file $key_file
 
