@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,9 @@ echo "--------------------------------------------------------------------------
 
 # Need to unset test_system given setting so that access method can be changed throughout the test
 unsetenv acc_meth
+
+# mupip set -acc_meth=MM (done in the middle of the test) does not work with encrypted databases so disable encryption for test.
+setenv test_encryption NON_ENCRYPT
 
 # mupip set -acc_meth=MM does not work with V4 databases.
 setenv gtm_test_mupip_set_version "disable"
