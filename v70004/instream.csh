@@ -1,3 +1,4 @@
+
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
@@ -14,16 +15,17 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# sub_level_map_hide-gtmde270421       [ern0]   Correct navigation when subscript-level mapping "hides" data
-# select_boolean_assert-gtmde308470    [ern0]   GTMASSERT2 fatal error when ydb_side_effects/gtm_side_effects env var is 1 and $SELECT is used in a boolean expression
-# select_op_order-gtmde308470          [berwyn] Preserve left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
-# restrict_lke_clear-gtmf135380        [ern0]   Verify LKE restrictions file behaviour for LKE CLEAR command
-# socket_open_mupip_stop-gtmde297205   [nars]   MUPIP STOP in the midst of SOCKET OPEN does not produce GTMASSERT2 fatal error
-# dollar_ztslate_stp_gcol-gtmde305529  [nars]   $ZTSLATE value is protected amidst garbage collection
-# socket_use_ioerror_sig11-gtmde307442 [nars]   SOCKET USE command with CONNECT/LISTEN and IOERROR="T" does not SIG-11
-# retry_norm-gtmf166755                [pooh]   MUPIP BACKUP retry normalization
-# support_v6_database-gtmf167559       [ern0]   Verify that GT.M V7 versions support the ability to create database files compatible with GT.M V6.3-014
-# audit_mupip_nw_error-gtmf135381      [pooh]   MUPIP facility and improved handling of network errors by the audit facility
+# sub_level_map_hide-gtmde270421		[ern0]   Correct navigation when subscript-level mapping "hides" data
+# select_boolean_assert-gtmde308470    		[ern0]   GTMASSERT2 fatal error when ydb_side_effects/gtm_side_effects env var is 1 and $SELECT is used in a boolean expression
+# select_op_order-gtmde308470          		[berwyn] Preserve left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
+# restrict_lke_clear-gtmf135380        		[ern0]   Verify LKE restrictions file behaviour for LKE CLEAR command
+# socket_open_mupip_stop-gtmde297205   		[nars]   MUPIP STOP in the midst of SOCKET OPEN does not produce GTMASSERT2 fatal error
+# dollar_ztslate_stp_gcol-gtmde305529  		[nars]   $ZTSLATE value is protected amidst garbage collection
+# socket_use_ioerror_sig11-gtmde307442 		[nars]   SOCKET USE command with CONNECT/LISTEN and IOERROR="T" does not SIG-11
+# retry_norm-gtmf166755                		[pooh]   MUPIP BACKUP retry normalization
+# support_v6_database-gtmf167559       		[ern0]   Verify that GT.M V7 versions support the ability to create database files compatible with GT.M V6.3-014
+# audit_mupip_nw_error-gtmf135381      		[pooh]   MUPIP facility and improved handling of network errors by the audit facility
+# honor_socket_connect_timeout-gtmde201295	[ern0]   Verify that timeout value on initial socket connect is honored
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70004 test starts..."
@@ -42,7 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_ioerror_sig1
 setenv subtest_list_non_replic	"$subtest_list_non_replic retry_norm-gtmf166755"
 setenv subtest_list_non_replic	"$subtest_list_non_replic support_v6_database-gtmf167559"
 setenv subtest_list_non_replic	"$subtest_list_non_replic audit_mupip_nw_error-gtmf135381"
-
+setenv subtest_list_non_replic	"$subtest_list_non_replic honor_socket_connect_timeout-gtmde201295"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

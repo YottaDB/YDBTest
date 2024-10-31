@@ -1,0 +1,79 @@
+# *****************************************************************
+# GTM-DE201295 - Test the following release note
+# *****************************************************************
+#
+# Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE201295 says:
+#
+# > SOCKET device OPEN better honors timeouts; similarly, USE for
+# > a SOCKET honors an implicit zero timeout. Note that very short
+# > timeouts, particularly zero (0), may be unsuitable for dealing
+# > with the timing of some network events, and thus may need
+# > adjustment to avoid timing out after this correction.
+# > Previously, these commands did not start their own timers to
+# > bound the operation, causing the CONNECT to only check for a
+# > timeout condition when some other process, or operating system,
+# > event interrupted the process. (GTM-DE201295)
+#
+# The first test case entitled "testing connect to 244.0.0.0"
+# tests the Release note. It fails on v7.0-003 and earlier
+# versions, and passes from versions v7.0-004.
+#
+# Further test cases entitled "testing timeout behaviour..." are
+# not directy related to GTM-DE201295, but they test similar edge
+# case situations with different timing values, see details in the
+# .csh file comment. Some of these cases (0-0-0 and 0-0-2)
+# - pass v7.0-003 and before,
+# - fail on v7.0-004 and v7.0-005,
+# - pass newer versions.
+# Other tests cases do not fail on any version, these have been
+# left here in order to detect possible future bugs.
+
+# ---- startup ----
+# allocate a port number
+# create database
+# setting number of clients: 20
+
+# ---- testing connect to 244.0.0.0 (non-existent IP address) ----
+test was running less than 2 sec, passed
+
+---- testing timeout behaviour with server_delay=0 client_timeout=0 client_stretch=0----
+-- server log --
+# client summary
+0-0-0 - number of clients pass: 20
+0-0-0 - number of clients fail: -
+
+---- testing timeout behaviour with server_delay=0 client_timeout=0 client_stretch=2----
+-- server log --
+# client summary
+0-0-2 - number of clients pass: 20
+0-0-2 - number of clients fail: -
+
+---- testing timeout behaviour with server_delay=0 client_timeout=unset client_stretch=0----
+-- server log --
+# client summary
+0-unset-0 - number of clients pass: 20
+0-unset-0 - number of clients fail: -
+
+---- testing timeout behaviour with server_delay=0 client_timeout=unset client_stretch=2----
+-- server log --
+# client summary
+0-unset-2 - number of clients pass: 20
+0-unset-2 - number of clients fail: -
+
+---- testing timeout behaviour with server_delay=5 client_timeout=2 client_stretch=1----
+-- server log --
+hanging for 5 sec
+# client summary
+5-2-1 - number of clients pass: 20
+5-2-1 - number of clients fail: -
+
+---- testing timeout behaviour with server_delay=2 client_timeout=5 client_stretch=0----
+-- server log --
+hanging for 2 sec
+# client summary
+2-5-0 - number of clients pass: 20
+2-5-0 - number of clients fail: -
+
+# ---- cleanup ----
+# validate db
+# release port number
