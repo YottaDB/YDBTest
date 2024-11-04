@@ -59,10 +59,12 @@ echo "# set Unix socket filename"
 set uxsock=auditlistener-${portno}.sock
 
 echo "# set crypt config file path and name"
-setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
+if (! $?gtmcrypt_config) then
+	setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
+endif
 
 echo "# set-up crypt config file for section clicert"
-cat > $gtmcrypt_config << EOF_CLICERT
+cat >> $gtmcrypt_config << EOF_CLICERT
 tls: {
 	clicert: {
 		CAfile: "$certfile";
