@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,6 +67,14 @@ default:
     breaksw
 endsw
 end
+
+# If this is a replication test that ran with "-encrypt" and sourced "com/setupgoenv.csh", then it would have
+# set "gtmcrypt_config" to an absolute path. But that would point to the source side and so would
+# not contain information of the remote side database or key files in case "dbcheck.csh" is run on
+# the remote side. Therefore, reset the env var to a relative path for the duration of this script.
+if (($?GOPATH) && ("ENCRYPT" == "$test_encryption") && ($?test_replic)) then
+	setenv gtmcrypt_config $gtmcrypt_config:t
+endif
 
 #===============================================================
 #Shut off reorg if it is there
