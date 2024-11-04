@@ -30,6 +30,10 @@ echo "# Randomly chosen prior version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver "pro"
 
+# Turn off encryption for this test as we switch between older and newer version and the
+# encryption env var settings (e.g. "gtm_passwd" etc.) would differ across versions.
+setenv test_encryption NON_ENCRYPT
+
 echo "# Creating database using prior V6 version"
 \rm -f *.o >& rm1.out	# remove .o files (for .m files) created by current version (in case the format is different)
 $gtm_tst/com/dbcreate.csh mumps >&! dbcreate_priorver.out
