@@ -88,11 +88,13 @@ source $gtm_tst/com/portno_acquire.csh >& portno.out
 echo "# set Unix socket filename"
 set uxsock=auditlistener-${portno}.sock
 
-echo "# set ydb_crypt_config file path and name"
-setenv ydb_crypt_config `pwd`/ydb_crypt_config.libconfig
+echo "# set crypt config file path and name"
+if (! $?gtmcrypt_config) then
+	setenv gtmcrypt_config `pwd`/gtm_crypt_config.libconfig
+endif
 
 echo "# set-up crypt_config file for section clicert"
-cat > $ydb_crypt_config << EOF_CLICERT
+cat >> $gtmcrypt_config << EOF_CLICERT
 tls: {
 	clicert: {
 		CAfile: "$certfile";
