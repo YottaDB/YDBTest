@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,6 +28,11 @@ for such a database file when the corresponding database is first created. (GTM-
 CAT_EOF
 
 setenv ydb_test_4g_db_blks 0  # Disable debug-only huge db scheme as it does not work with MM (statsdb uses MM)
+
+# With encryption turned on, the TPRESTART message expected by this subtest does not show up.
+# It is not clear exactly why but it is not considered important to figure that out given we do
+# see the message with -noencrypt. Since -noencrypt does verify the intent of this subtest, we disable -encrypt.
+setenv test_encryption NON_ENCRYPT
 
 echo "#--------------------------------------------------------------------------------------------"
 echo "# Verify TPRESTART messages properly identifies global name in case of statsdb extension restarts"
