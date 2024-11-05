@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -32,7 +32,7 @@ gtm9423
 	write "#  1. open() or openat() calls on mumps.dat",!
 	write "#  2. pwrite64 calls (only done to DB) - show all of them",!
 	write "#  3. write(1..) calls to write out DUMPFHEAD info",!!
-	zsystem "$grep -E '(pwrite64|((open|openat).*mumps.dat)|write\(1,)' strace.outx"
+	zsystem "$grep -E '(pwrite64|((open|openat).*mumps.dat"")|write\(1,)' strace.outx"
 	if 0'=$zsystem do
 	. write !,"Error code ",$zsystem," from grep command",!
 	. zhalt 1
