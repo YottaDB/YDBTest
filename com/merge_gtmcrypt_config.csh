@@ -16,7 +16,7 @@
 head -n -3 $gtmcrypt_config > $gtmcrypt_config.merged
 foreach inst ($*)
 	echo "        }," >> $gtmcrypt_config.merged
-	$MSR RUN $inst "cat $gtmcrypt_config" | tail -6 | head -3 >> $gtmcrypt_config.merged
+	$MSR RUN $inst "cat $gtmcrypt_config" | sed '0,/keys:/d' | head -n -3 >> $gtmcrypt_config.merged
 end
 tail -n 3 $gtmcrypt_config >> $gtmcrypt_config.merged
 mv $gtmcrypt_config $gtmcrypt_config.orig

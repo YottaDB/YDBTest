@@ -3,7 +3,7 @@
 #								#
 # Copyright 2008, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -44,6 +44,9 @@ else
 		$MSR RUN INST$num "pwd" >& curdir.out
 		@ secnum = $num - 1
 		ln -s `grep -v "Executing" curdir.out`/mumps.gld mumpssec$secnum.gld
+		if ("ENCRYPT" == "$test_encryption" ) then
+			$gtm_tst/com/merge_gtmcrypt_config.csh INST$num
+		endif
 	end
 	echo "# Start and stop source server on INST9 just so we create instance file (needed by later dbcheck.csh)"
 	$MSR STARTSRC INST9 INST1 RP
