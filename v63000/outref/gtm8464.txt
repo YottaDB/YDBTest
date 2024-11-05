@@ -23,12 +23,12 @@ Do an extract
 Point the first region back to its database
 
 Do a load
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT *        
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 100  Max Subsc Len: 6  Max Data Len: 100
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 
 Do a dbcheck to ensure db integs clean
 ##SOURCE_PATH##/mupip
@@ -59,12 +59,12 @@ Do an extract
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 200  max subsc len: 6  max rec len: 100  max node len: 110
 
 Do a load
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT *        
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 200  Max Subsc Len: 6  Max Data Len: 100
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 25
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 
 Do a dbcheck to ensure db integs clean
 ##SOURCE_PATH##/mupip
