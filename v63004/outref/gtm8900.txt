@@ -32,7 +32,13 @@ Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
 # Testing MUPIP SET -[NO]ENCRYPT  with encryptable flag set true and GNUPGHOME and gtm_passwd is randomly set
 # --------------------------------------------------------------------------------------------------------------------
 # \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+##SUSPEND_OUTPUT  ENCRYPT
 Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to  TRUE
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT  NON_ENCRYPT
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Error while accessing key file ##TEST_PATH##/mumps_dat_key: No secret key
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+##ALLOW_OUTPUT NON_ENCRYPT
 ##TEST_AWK^#.*GNUPGHOME.*
 ##TEST_AWK^#.*gtm_passwd.*
 # \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
