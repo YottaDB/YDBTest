@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -282,6 +282,8 @@ testF() {
 				fi
 				sleep 0.01
 			done
+			# Wait for at least one set of ^a(i) and ^b(i) to have completed by the above backgrounded job
+			$ydb_dist/yottadb -run %XCMD 'for  quit:$data(^a)&$data(^b)  hang 0.01'
 			tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
 			echo '# Confirming it is crashed'
 			$ydb_dist/yottadb -run %XCMD 'write $data(^a)," ",$data(^b),!'
