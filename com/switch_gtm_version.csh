@@ -91,7 +91,7 @@ source $gtm_tst/com/set_gtmroutines.csh "M"
 # version. Not doing so will let the test use the gtm_passwd created at the beginning
 # of the test which is incorrect w.r.t to the chosen prior version due to the fact that
 # the password masking logic uses inode number of the mumps executable
-if ( ( "ENCRYPT" == "$test_encryption" ) && ( -x $gtm_tools/check_encrypt_support.sh ) ) then
+if ( ( "ENCRYPT" == "$test_encryption" ) ) then
 	if ( "TRUE" == "`$gtm_tst/com/is_encrypt_support.csh $verno $ver_image`" )  then
 		set maskpass = $gtm_dist/plugin/gtmcrypt/maskpass	# prior version's maskpass
 		setenv gtm_passwd `echo $gtm_test_gpghome_passwd | $maskpass | cut -d " " -f3`
