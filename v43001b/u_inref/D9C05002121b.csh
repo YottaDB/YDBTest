@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,6 +12,14 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+if ("ENCRYPT" == "$test_encryption") then
+	# The caller script (D9C05002121a.csh) would have done a "cd" into the "bak" directory before invoking this script
+	# on either the source or receiver side. In either case, make gtmcrypt_config point to an absolute path pointing
+	# to the parent directory as that is where "gtmcrypt.cfg" would be found.
+	setenv gtmcrypt_config $PWD:h/gtmcrypt.cfg
+endif
+
 if (! -d bak) mkdir bak
 if (! -d baktmp) mkdir baktmp
 # Note that "mupip backup -dbg" output can vary across systems. On systems without "copy_file_range()" support

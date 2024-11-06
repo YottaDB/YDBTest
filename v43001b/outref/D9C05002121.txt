@@ -60,6 +60,16 @@ Give it some time...
 
 
 
+
+if ( "ENCRYPT" == "$test_encryption" ) then
+
+##SUSPEND_OUTPUT  NON_ENCRYPT
+
+
+setenv gtmcrypt_config $PWD:h/gtmcrypt.cfg
+endif
+
+##ALLOW_OUTPUT  NON_ENCRYPT
 if ( ! -d bak ) mkdir bak
 if ( ! -d baktmp ) mkdir baktmp
 
@@ -206,6 +216,16 @@ chmod 755 $gtm_baktmpdir
 
 
 
+
+if ( "ENCRYPT" == "$test_encryption" ) then
+
+##SUSPEND_OUTPUT  NON_ENCRYPT
+
+
+setenv gtmcrypt_config $PWD:h/gtmcrypt.cfg
+endif
+
+##ALLOW_OUTPUT  NON_ENCRYPT
 if ( ! -d bak ) mkdir bak
 if ( ! -d baktmp ) mkdir baktmp
 

@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,8 +30,6 @@ $gtm_tst/com/wait_for_log.csh -log job.txt -waitcreation -duration 120
 # at this point job.txt should have exist and have non-zero pid written into it.
 set pid = `cat job.txt`
 
-# We are about to 'cd' into the 'bak' directory to run some GT.M commands, so make gtmcrypt_config point to an absolute path.
-if ("ENCRYPT" == "$test_encryption") setenv gtmcrypt_config $PWD/gtmcrypt.cfg
 cd bak
 
 # the following commands can be run simultaneously as well
