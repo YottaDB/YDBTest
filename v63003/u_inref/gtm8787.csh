@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,7 @@
 
 # Needed to avoid ocassional assert failures in iott_use.c due to an error return from tcsetattr() after the terminal is killed
 setenv gtm_white_box_test_case_enable   1
-setenv gtm_white_box_test_case_number   200      # WBTEST_YDB_KILL_TERMINAL
+setenv gtm_white_box_test_case_number   400      # WBTEST_YDB_KILL_TERMINAL
 echo "# Creating database,journal file"
 $gtm_tst/com/dbcreate.csh mumps 1>>& create.out
 if ($status) then

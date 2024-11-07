@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,7 +57,7 @@ if ("dbg" == "$tst_image") then
 	@ cnt = 220
 
 	setenv gtm_white_box_test_case_enable   1
-	setenv gtm_white_box_test_case_number   203      # WBTEST_YDB_STATICPID
+	setenv gtm_white_box_test_case_number   403      # WBTEST_YDB_STATICPID
 
 	$echoline
 	echo "# Starting the -noonline MUPIP BACKUPs. For these, we"

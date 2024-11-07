@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,7 @@ if ("dbg" == $tst_image) then
     echo
     echo '# Setup WBTEST_YDB_MAXSECSHRRETRY white box test'
     setenv gtm_white_box_test_case_enable 1
-    setenv gtm_white_box_test_case_number 205	# WBTEST_YDB_MAXSECSHRRETRY
+    setenv gtm_white_box_test_case_number 405	# WBTEST_YDB_MAXSECSHRRETRY
     echo
     echo '# Changing our database to read-only (priv 0444) and running lke on the DB. Since it is R/O, it will'
     echo '# attempt to engage gtmsecshr which will fail and drive the error code we want to test.'

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ if ($status) then
 endif
 
 setenv gtm_white_box_test_case_enable   1
-setenv gtm_white_box_test_case_number   203	# WBTEST_YDB_STATICPID so FILEPARSE error due to temporary file name length
+setenv gtm_white_box_test_case_number   403	# WBTEST_YDB_STATICPID so FILEPARSE error due to temporary file name length
 						# (which includes pid) occurs at deterministic target backup directory path length.
 
 foreach i (222 223 224 225 226 227)

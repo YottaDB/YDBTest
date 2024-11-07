@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -58,7 +58,7 @@ if ("dbg" == "$tst_image") then
     echo
     echo '# Set each of the gvstats statistics to a given value then verify that value via both ^%PEEKBYNAME and MUPIP DUMPFHEAD'
     setenv gtm_white_box_test_case_enable   1
-    setenv gtm_white_box_test_case_number   204	# WBTEST_YDB_SETSTATSOFF
+    setenv gtm_white_box_test_case_number   404	# WBTEST_YDB_SETSTATSOFF
     $gtm_dist/mumps -run VerifyGVSTATS^gtm8838
 endif
 echo

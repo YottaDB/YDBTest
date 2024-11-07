@@ -17,7 +17,7 @@ echo "# The following expect script will fail with cores on the whitebox test WB
 echo "# when run without the YDB#1065 fixes."
 
 setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 206 # WBTEST_YDB_RLSIGLONGJMP
+setenv gtm_white_box_test_case_number 406 # WBTEST_YDB_RLSIGLONGJMP
 
 $gtm_tst/com/dbcreate.csh mumps
 

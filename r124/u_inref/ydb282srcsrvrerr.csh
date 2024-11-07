@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 # Test that FILEDELFAIL and RENAMEFAIL error codepaths are handled appropriately by source server.
 #
 set errlist = (FILEDELFAIL RENAMEFAIL)
-set errwbox = (201 202)	# 201 == WBTEST_YDB_FILEDELFAIL, 202 == WBTEST_YDB_RENAMEFAIL
+set errwbox = (401 402)	# 401 == WBTEST_YDB_FILEDELFAIL, 402 == WBTEST_YDB_RENAMEFAIL
 
 foreach errcode (1 2)
 	set wbox = $errwbox[$errcode]
