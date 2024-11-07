@@ -253,19 +253,6 @@ foreach var ($envlist)
 			unset save_ydb_ipv4_only
 		endif
 	endif
-	if ("ENCRYPT" == "$test_encryption") then
-		if ($gtm_gpg_use_agent) then
-			# With GnuPG 2.x, DSE can fail early with a CRYPTKEYFETCHFAILED error because of
-			# errors related to obtaining password via pinentry which is an M program and is bound to fail
-			# due to the bad environment that this test intentionally creates. Filter out these errors.
-			# See <GTM_7546_CRYPTKEYFETCHFAILED_v53003_D9I10002703> for more details.
-			$grep -q "Incorrect password" $envvar/${envvar}_DSE.log
-			if (! $status) then
-				$gtm_tst/com/check_error_exist.csh $envvar/${envvar}_DSE.log CRYPTKEYFETCHFAILED	\
-					>&! $envvar/${envvar}_DSE_CRYPTKEYFETCHFAILED_expected.logx
-			endif
-		endif
-	endif
 	cd $envvar
 	$gtm_tst/com/errors.csh ${envvar}_errorlog >&! allerrors_${envvar}.logx
 	set reffile = $gtm_tst/$tst/outref/errors_${envvar}.txt
