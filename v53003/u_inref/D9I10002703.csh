@@ -52,6 +52,9 @@ if ("ENCRYPT" == "$test_encryption") then
 	# and that would cause the instance to freeze resulting in a test hang if "gtm_custom_errors" is set to
 	# "sr_unix/custom_errors_sample.txt" in the YDB repository (it includes "DBIOERR" error). Therefore, unset this env var
 	unsetenv gtm_custom_errors
+	# Enable white-box test case env var to avoid an assert in the ASSERT_ENCRYPTION_INITIALIZED macro in wcs_wtstart.c
+	setenv gtm_white_box_test_case_enable 1
+	setenv gtm_white_box_test_case_number 407	# WBTEST_YDB_ENCR_ENV_TOOLONG
 endif
 
 # Use minimum align size value to reduce the memory requirement to open all the journal files
