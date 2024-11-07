@@ -46,6 +46,14 @@ if (! $?test_replic) then
 	exit -1
 endif
 
+if ("ENCRYPT" == "$test_encryption") then
+	# When this test is run with encryption, it is possible for wcs_wtstart() to encounter a DBIOERR error (due to a
+	# CRYPTOPFAILED primary error) in case an encryption related env var is set to a long value (e.g. "gtmcrypt_config" etc.)
+	# and that would cause the instance to freeze resulting in a test hang if "gtm_custom_errors" is set to
+	# "sr_unix/custom_errors_sample.txt" in the YDB repository (it includes "DBIOERR" error). Therefore, unset this env var
+	unsetenv gtm_custom_errors
+endif
+
 # Use minimum align size value to reduce the memory requirement to open all the journal files
 # Note : New align value is just appended to the end, instead of modifying the already set value. It works.
 setenv tst_jnl_str "$tst_jnl_str,align=4096"
