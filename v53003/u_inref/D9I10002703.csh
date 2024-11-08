@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -85,6 +85,7 @@ set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",32768)="" Write x,!'
 echo $maxstr > maxstr.txt	# for debugging purposes
 echo "-------------------------------------------------------------------------------------------"
 
+set encrypt_envvar_list = "ydb_crypt_config gtmcrypt_config ydb_passwd gtm_passwd GNUPGHOME"
 foreach var ($envlist)
 	setenv envvar "$var:s/$//"	# Remove leading $ from env var name
 	if ($envvar == "PATH") then
@@ -142,6 +143,45 @@ foreach var ($envlist)
 	mkdir bakdir_${envvar}
 	$MUPIP backup "*" bakdir_${envvar} >&! $envvar/${envvar}_MUPIP_BACKUP.log
 	$corecheck "mupip_backup"
+	if ("ENCRYPT" == "$test_encryption") then
+		foreach encrypt_envvar ($encrypt_envvar_list)
+			if ($envvar != $encrypt_envvar) then
+				continue
+			endif
+			# When run with -encrypt, it is possible for MUPIP INTEG and/or MUPIP BACKUP to produce 2 types of output.
+			# 1) One type of output with lines containing CRYPTKEYFETCHFAILED, CRYPTOPFAILED and MUNOTALLINTEG
+			#    messages. These CRYPT* errors are expected because the encryption env var is set to a huge value.
+			# 2) Additionally, we see another type of output that contains 2 more lines with CRYPTOPFAILED and
+			#    NOTALLDBRNDWN messages. The second type of output happens in case the mupip integ encounters the
+			#    first CRYPTOPFAILED error in wcs_wtstart() while it holds crit. In that case, as part of exit
+			#    handling, secshr_db_clnup() would set cnl->wc_blocked to WC_BLOCK_RECOVER and that would in turn
+			#    cause gds_rundown() to invoke wcs_recover() which would in turn fail due to the CRYPTOPFAILED
+			#    error while trying a wcs_flu() again.
+			# Since whether or not first CRYPTOPFAILED error happens while inside crit or not depends on whether
+			# or not the background updates (that this test script keeps running) have left any dirty buffer to
+			# be flushed at the start of the mupip integ, it is not deterministic. And therefore, we filter out
+			# the additional 2 lines in order to have a deterministic reference file. Hence the awk logic below.
+			foreach cmd (MUPIP_INTEG MUPIP_BACKUP)
+				# In case of mupip integ, we get 6 lines all the time and 2 more lines some times.
+				# In case of mupip backup, we get 2 lines all the time and 4 more lines some times.
+				# So we set "guaranteed_lines" accordingly and use that in the "awk" program below.
+				if ("MUPIP_INTEG" == $cmd) then
+					set print_lines = 6
+				else
+					set print_lines = 2
+				endif
+				set logfile = $envvar/${envvar}_$cmd.log
+				mv $logfile $logfile.orig
+				$tst_awk '											\
+					BEGIN 				{ prevline = ""; }					\
+					NR == '$print_lines'+1 && $1 ~ /CRYPTOPFAILED/ { prevline = $0; next; }			\
+					NR == '$print_lines'+2 && $1 ~ /NOTALLDBRNDWN/ { next; }				\
+							{ if (prevline != "") { print prevline; prevline = "";} print $0; }	\
+					' $logfile.orig > $logfile
+			end
+			break
+		end
+	endif
 	# Test MUPIP REPLIC -SOURCE -SHOWBACKLOG
 	$MUPIP replic -source -showbacklog >&! $envvar/${envvar}_MUPIP_REPLIC_SHOWBACKLOG.log
 	$corecheck "mupip_replic_showbacklog"
