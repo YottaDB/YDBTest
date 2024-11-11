@@ -4,7 +4,7 @@
 # Copyright (c) 2003, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -82,7 +82,7 @@ cache -show -all
 quit
 DSE_EOF
 
-$tst_awk '{gsub("0x[0-9A-F]*",""); print $0;}' dse_cache_show_no_args.log # to make the output independent of the actual shm layout
+$tst_awk '{gsub(" = 0x[0-9A-F]*"," = ##HEX##"); print $0;}' dse_cache_show_no_args.log # to make the output independent of the actual shm layout
 
 #
 # (3) Test CACHE SHOW with arguments and CACHE CHANGE
