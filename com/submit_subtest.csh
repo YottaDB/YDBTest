@@ -422,6 +422,7 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 		$gtm_tst/com/ipcs -a >&! $sub_test.ipc_all.after	# note down the entire system ipc resources in case of failure
 		set zip_them
 	else
+		rm -f $sub_test.diff
 		if ($?tst_keep_output) then
 		    set zip_them
 		else
