@@ -35,6 +35,7 @@
 # gtm9408	[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
 # configure_rmfile-gtmde201825	[pooh]	Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
 # support	[david]		Test that ydb_support.sh gathers the correct support information without issues
+# erofs-ydb1103	[nars]		Test that database file open does not issue DBFILERR error (EROFS) in read-only file system
 
 setenv subtest_list_common "sourceInstall"
 setenv subtest_list_common "$subtest_list_common diffDir"
@@ -53,6 +54,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gtm9324"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm9408"
 setenv subtest_list_non_replic "$subtest_list_non_replic configure_rmfile-gtmde201825"
 setenv subtest_list_non_replic "$subtest_list_non_replic support"
+setenv subtest_list_non_replic "$subtest_list_non_replic erofs-ydb1103"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then

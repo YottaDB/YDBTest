@@ -1,0 +1,44 @@
+#############################################################################################
+# Test that database file open does not issue DBFILERR error (EROFS) in read-only file system
+#############################################################################################
+# Create database file mumps.dat with read-write permissions in test output directory
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Populate mumps.dat with 3 global nodes ^x(1), ^x(2) and ^x(3)
+# Create an ext4 fileystem on the file [device_file]
+# Mount [device_file] as a loopback file system in [./loopfs] as a read-write filesystem
+# Run [zwrite ^x] with mumps.dat in read-write filesystem and expect to see 3 lines of output
+^x(1)="  1"
+^x(2)="  2"
+^x(3)="  3"
+# Copy ./mumps.dat to [./loopfs/mumps.dat]
+# Change mumps.gld to point DEFAULT region to [./loopfs/mumps.dat]
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Unmount ./loopfs and remount it as a read-only filesystem
+# Run [zwrite ^x] with mumps.dat in read-only filesystem and expect to still see 3 lines of output
+^x(1)="  1"
+^x(2)="  2"
+^x(3)="  3"
+# Unmount ./loopfs
+# Change mumps.gld back to point DEFAULT region to [./mumps.dat]
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
