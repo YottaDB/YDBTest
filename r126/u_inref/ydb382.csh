@@ -81,21 +81,34 @@ while (0 != $foundStr)
 	set foundStr = $status
 	sleep 0.5
 end
+echo '# Note down lke -periodic output in lkeA1.outx after 1st round of orphaned lock cleanup'
+cp lkeA.outx lkeA1.outx
+echo '# Start processes which will hold locks and get kill -9ed to create 2nd round of orphaned locks'
 $gtm_dist/mumps -run %XCMD 'lock ^a write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^b write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^c write $zsigproc($job,9) hang 9999'
-echo '# list of locks before lke clnup -periodic triggers'
-$gtm_dist/lke show
 echo '# waiting for periodic to trigger'
 sleep 6
 echo '# clnup no locks should be left'
 $gtm_dist/lke show
+echo '# Diff lke -periodic output after 2nd round of orphaned lock cleanup with lkeA1.outx'
+echo '# We expect to 2 OR 3 MLKCLEANED lines (1 for AREG AND 1 or 2 for DEFAULT) with a total'
+echo '# of 3 lock slots across those lines corresponding to the 3 orphaned locks of ^a,^b,^c'
+# Note that lkeA1.outx sometimes contains 2 lines and sometimes 3 lines of output and so the
+# diff output will have non-deterministic first line of output ("2a3,4" vs "4a5,6"). It is not
+# clear why this happens and is not considered important for the purposes of this test where we
+# care about the 2 MLKCLEANED lines and so we filter that out by doing a "tail -n +2" below.
+diff lkeA1.outx lkeA.outx | tail -n +2 | $tst_awk '									\
+		BEGIN   {sum = 0;}											\
+		        {sum += $7;}											\
+		END     {printf "Number of total MLKCLEANED lock slots : Expected = [3] : Actual = [%d]\n", sum;}'
 set lkePID = `cat lkeA.pid`
 $gtm_dist/mupip stop $lkePID
 set ydbPID = `cat mumpsD.pid`
 $gtm_dist/mupip stop $ydbPID # stop YDB M process in a long HANG command
 # wait for process to die and remove db shm before next test starts
 $gtm_tst/com/wait_for_proc_to_die.csh $lkePID
+$gtm_tst/com/wait_for_proc_to_die.csh $ydbPID
 
 echo '\n# testing -integ switch'
 echo '# settings 3 locks and kill9ing their processes'
