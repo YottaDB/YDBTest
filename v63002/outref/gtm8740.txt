@@ -5,8 +5,10 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 CTL Custom Errors Loaded                             FALSE
 $$^%PEEKBYNAME('jnlpool_ctl_struct.instfreeze_environ_inited')=0
 # Starting a background process so the jnl pool does not get shut down when the source server is stopped
+# Ensure background process has done an update (and therefore opened the journal pool)
 
-# Shutting down primary
+# Shutting down primary now that we know a background process is attached to the journal pool
+# The source server will not take down the journal pool due to the background process
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 
 # Uploading custom errors

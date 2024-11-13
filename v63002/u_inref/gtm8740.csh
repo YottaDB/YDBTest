@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,8 +23,11 @@ $grep Custom replicshow.out
 $ydb_dist/mumps -run gtm8740
 echo "# Starting a background process so the jnl pool does not get shut down when the source server is stopped"
 (($ydb_dist/mumps -run waitfn^gtm8740)&) > background.out
+echo "# Ensure background process has done an update (and therefore opened the journal pool)"
+$ydb_dist/mumps -run ^%XCMD 'for  quit:$get(^stop)=0  hang 0.01'
 echo ""
-echo "# Shutting down primary"
+echo "# Shutting down primary now that we know a background process is attached to the journal pool"
+echo "# The source server will not take down the journal pool due to the background process"
 # To avoid the test framework from complaining when we shut down the source server while a mumps process is running
 setenv gtm_test_other_bg_processes 1
 $MSR STOPSRC INST1 INST2
