@@ -42,6 +42,13 @@ echo '# v70001/u_inref/gtm9424.csh for more details).'
 set default_dbfile = /tmp/mumps_${user}_$$.dat
 $gtm_dist/mumps -run GDE change -segment DEFAULT -file=$default_dbfile
 
+if ( "ENCRYPT" == $test_encryption ) then
+	# Before recreating DEFAULT database in /tmp, update gtmcrypt_config to reflect the new /tmp path
+	# or else we would get CRYPTKEYFETCHFAILED error from the "mupip create" done below.
+	cp $gtmcrypt_config $gtmcrypt_config.orig
+	sed -i 's,dat: "'$PWD'/mumps.dat,dat: "'$default_dbfile',;' $gtmcrypt_config
+endif
+
 echo '# Recreate DEFAULT database to point to /tmp'
 $gtm_dist/mupip create -reg=DEFAULT
 
