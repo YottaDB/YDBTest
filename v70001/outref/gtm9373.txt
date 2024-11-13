@@ -14,12 +14,12 @@
 # 
 # ********************************************************************************************
 
-# In order to keep test runtime to a minimum, this test uses a small heartbeat period of 4 seconds
+# In order to keep test runtime to a minimum, this test uses a small heartbeat period of 32 seconds
 # We expect events to happen in this short period of time at various stages of this test.
 # This is too small a time period for the ARM systems and hence this subtest is disabled there
 
-# Set heartbeat period as 4 seconds in -CONNECTPARAMS qualifier passed to [mupip replic -source -start]
-# Do this by setting [gtm_test_src_connectparams] env var to [-connectparams=5,500,5,0,4,60]
+# Set heartbeat period as 32 seconds in -CONNECTPARAMS qualifier passed to [mupip replic -source -start]
+# Do this by setting [gtm_test_src_connectparams] env var to [-connectparams=5,500,5,0,32,60]
 
 # Since we do online rollback on source side, pass -AUTOROLLBACK to [mupip replic -receiver -start]
 # Do this by setting [gtm_test_autorollback] env var to [TRUE]
@@ -60,7 +60,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 %YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : 0
 %YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE2 has not acknowledged 100 transaction(s)
 
-# Sleep 4 + 1 seconds (heartbeat period + 1 second for some slack).
+# Sleep 32 + 1 seconds (heartbeat period + 1 second for some slack).
 # Run [mupip replic -source -showbacklog]
 # We expect [has not acknowledged] to change into [is behind by].
 # Verify LASTTRANS messages show posted/sent/acknowledged sequence number as 100
@@ -88,7 +88,7 @@ PASS
 PASS
 
 # Wait until backlog is 0 on both source and receiver side
-# Sleep 4 seconds (heartbeat period). To ensure [acknowledged] is updated by receiver on source side in one heartbeat
+# Sleep 32 seconds (heartbeat period). To ensure [acknowledged] is updated by receiver on source side in one heartbeat
 
 # Run [mupip replic -source -showbacklog] : Output in [backlog3.out]
 # Verify LASTTRANS messages show posted/sent/acknowledged as the same value (let us say N)
@@ -112,7 +112,7 @@ PASS
 
 # Wait until receiver server has also done online rollback and reconnected to source server
 # Note: The history record would have a [Cycle = 2] in it so wait for that to show up in the receiver server log
-# Sleep 4 seconds (heartbeat period). To ensure [acknowledged] is updated by receiver on source side in one heartbeat
+# Sleep 32 seconds (heartbeat period). To ensure [acknowledged] is updated by receiver on source side in one heartbeat
 
 # Run a final [mupip replic -source -showbacklog]
 # Verify LASTTRANS messages show posted/sent/acknowledged sequence number as 100

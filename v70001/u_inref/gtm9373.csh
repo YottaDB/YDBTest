@@ -29,7 +29,7 @@ ahead during conditions such as online rollback. (GTM-9373)
 ********************************************************************************************
 CAT_EOF
 
-set heartbeat = 4	# seconds
+set heartbeat = 32	# seconds
 
 echo
 echo "# In order to keep test runtime to a minimum, this test uses a small heartbeat period of $heartbeat seconds"
@@ -78,7 +78,7 @@ echo '# Run [mupip replic -source -showbacklog]'
 echo '# We expect [has not acknowledged] to change into [is behind by].'
 echo '# Verify LASTTRANS messages show posted/sent/acknowledged sequence number as 100'
 echo '# Verify SRCBACKLOGSTATUS message shows [is behind by 0 transaction(s)]'
-sleep 4
+sleep `expr $heartbeat + 1`
 $MUPIP replic -source -showbacklog
 
 set posted = 100
