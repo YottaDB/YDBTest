@@ -37,6 +37,7 @@ RUN apt-get update && \
                     pkg-config \
                     git \
                     tcsh \
+                    less \
                     libconfig-dev \
                     libelf-dev \
                     libgcrypt-dev \
