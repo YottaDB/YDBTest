@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -21,8 +21,8 @@ gtm9092
 	. job child(i):(input="/dev/null":output="/dev/null":error="/dev/null")
 	. if $zjob set childpid(i)=$zjob
 	. else  set $ecode=",U255,"
-	hang .1		; allow some time for child processes to run
-	for  quit:'$zsigproc(childpid(0),0)&'$zsigproc(childpid(1),0)  hang .001
+	; wait for child process to have gone past the "view statshare"
+	for i=0:1:1 for  quit:$data(^started(childpid(i)))  hang 0.01
 	set childpid(2)=1
 	write "Testing with empty region parameter",!
 	write "Verifying that a process with sharing statistics returns TRUE",!
@@ -37,8 +37,8 @@ gtm9092
         . job child2(i):(input="/dev/null":output="/dev/null":error="/dev/null")
         . if $zjob set childpid(i)=$zjob
         . else  set $ecode=",U255,"
-        hang .1
-        for  quit:'$zsigproc(childpid(0),0)&'$zsigproc(childpid(1),0)  hang .001
+	; wait for child process to have gone past the "view statshare"
+	for i=-1:-1:-2 for  quit:$data(^started(childpid(i)))  hang 0.01
         set childpid(2)=1
         write "Verifying that a process with sharing statistics returns TRUE",!
         write $$IN^%YGBLSTAT(childpid(1)),!
@@ -58,11 +58,13 @@ gtm9092
 child(shrflag)
 	; child process that shares statistics if shrflag is 1
 	view:shrflag "statshare"
+	set ^started($job)=1
 	for  set ^x($job,$zut)=$random(2**32-1) hang .001 lock +done($job) quit:$test
 	lock -done($job)
 	quit
 child2(shrflag)
         view:shrflag "statshare"
+	set ^started($job)=1
         for  set ^a($job,$zut)=$random(2**32-1) hang .001 lock +done($job) quit:$test
         lock -done($job)
         quit
