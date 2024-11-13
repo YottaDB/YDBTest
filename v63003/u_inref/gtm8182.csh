@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,7 +30,6 @@ if ($status) then
 endif
 echo ""
 echo ""
-
 
 echo "# Show INST1 mapped instance file"
 $GDE SHOW -INSTANCE  >& show1.log
@@ -85,10 +84,12 @@ echo ""
 echo ""
 
 
-
-
 echo "# Run gtm8182.m to update both INST1 and INST3 DB"
 echo "----------------------------------------------------------------------------"
+if ("ENCRYPT" == "$test_encryption" ) then
+	# Make sure "gtmcrypt.cfg" on INST1 also contains information about INST3 DB or else CRYPTKEYFETCHFAILED error will occur
+	$gtm_tst/com/merge_gtmcrypt_config.csh INST3
+endif
 $gtm_dist/mumps -run gtm8182
 
 # Set gtm_repl_instance back to the non-INST1 specific instance file
