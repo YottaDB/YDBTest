@@ -4,7 +4,7 @@
 #	Copyright 2009, 2014 Fidelity Information Services, Inc	#
 #								#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -18,6 +18,11 @@
 # by new version of GT.M.
 #
 #Creating gld with older version which does not support encryption
+
+# Since this test switches to an older version (using "switch_gtm_version.csh"), we should disable use of V6 version in
+# `dbcreate.csh` as it would otherwise get confusing. This is because the `dbcreate.csh` should happen using the prior
+# version but would otherwise happen with the randomly chosen version in the env var `gtm_test_v6_dbcreate_rand_ver`.
+setenv gtm_test_use_V6_DBs 0
 
 $switch_chset "M" >& switch_chset.log
 set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V53000`

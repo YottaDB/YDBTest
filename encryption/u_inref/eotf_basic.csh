@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -94,6 +94,11 @@ echo "Creating a database."
 if ($use_journaling) then
 	setenv gtm_test_jnl SETJNL
 endif
+
+# Since this test switches to an older version (using "switch_gtm_version.csh"), we should disable use of V6 version in
+# `dbcreate.csh` as it would otherwise get confusing. This is because the `dbcreate.csh` should happen using the prior
+# version but would otherwise happen with the randomly chosen version in the env var `gtm_test_v6_dbcreate_rand_ver`.
+setenv gtm_test_use_V6_DBs 0
 
 setenv gtm_test_sprgde_id "ID1_${REG_COUNT}"	# to differentiate multiple dbcreates done in the same subtest
 if ($use_null_iv) then

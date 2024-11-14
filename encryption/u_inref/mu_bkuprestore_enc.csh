@@ -38,8 +38,10 @@ endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
 
-setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode as we are switching to a prior version and that can cause database file
-				# to be created in a future version relative to the current prior version.
+# Since this test switches to an older version (using "switch_gtm_version.csh"), we should disable use of V6 version in
+# `dbcreate.csh` as it would otherwise get confusing. This is because the `dbcreate.csh` should happen using the prior
+# version but would otherwise happen with the randomly chosen version in the env var `gtm_test_v6_dbcreate_rand_ver`.
+setenv gtm_test_use_V6_DBs 0
 
 echo "Random version choosen is - GTM_TEST_DEBUGINFO $prior_ver"
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $prior_ver $tst_image
