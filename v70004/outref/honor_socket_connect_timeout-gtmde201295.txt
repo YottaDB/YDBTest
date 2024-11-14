@@ -37,30 +37,35 @@
 test was running less than 2 sec, passed
 
 ---- testing timeout behaviour with server_delay=0 client_timeout=0 client_stretch=0----
+# wait for clients to exit
 -- server log --
 # client summary
 0-0-0 - number of clients pass: 20
 0-0-0 - number of clients fail: -
 
 ---- testing timeout behaviour with server_delay=0 client_timeout=0 client_stretch=2----
+# wait for clients to exit
 -- server log --
 # client summary
 0-0-2 - number of clients pass: 20
 0-0-2 - number of clients fail: -
 
 ---- testing timeout behaviour with server_delay=0 client_timeout=unset client_stretch=0----
+# wait for clients to exit
 -- server log --
 # client summary
 0-unset-0 - number of clients pass: 20
 0-unset-0 - number of clients fail: -
 
 ---- testing timeout behaviour with server_delay=0 client_timeout=unset client_stretch=2----
+# wait for clients to exit
 -- server log --
 # client summary
 0-unset-2 - number of clients pass: 20
 0-unset-2 - number of clients fail: -
 
 ---- testing timeout behaviour with server_delay=5 client_timeout=2 client_stretch=1----
+# wait for clients to exit
 -- server log --
 hanging for 5 sec
 # client summary
@@ -68,6 +73,7 @@ hanging for 5 sec
 5-2-1 - number of clients fail: -
 
 ---- testing timeout behaviour with server_delay=2 client_timeout=5 client_stretch=0----
+# wait for clients to exit
 -- server log --
 hanging for 2 sec
 # client summary

@@ -12,19 +12,19 @@
 
 connect ; entry: connect to non-existent IP address
 	;
-        ; important: don't perform any database or print operation here
-        ; because it would start a timer, but we want to go without any
-        ; timer to test OPEN command's timeout behaviour
-        ;
+	; important: don't perform any database or print operation here
+	; because it would start a timer, but we want to go without any
+	; timer to test OPEN command's timeout behaviour
+	;
 	set beg=$zut
 	open "socket":(connect="[240.0.0.0]:19355:TCP"):1:"SOCKET"
 	set end=$zut
-        ;
+	;
 	set elapsed=(end-beg)/(10**6)
-        if elapsed>2 do  quit
-        .write "test was running for ",$justify(elapsed,0,2)," sec, failed",!
-        ;
-        write "test was running less than 2 sec, passed",!
+	if elapsed>2 do  quit
+	.write "test was running for ",$justify(elapsed,0,2)," sec, failed",!
+	;
+	write "test was running less than 2 sec, passed",!
 	quit
 
 server	; entry: server
@@ -39,7 +39,8 @@ server	; entry: server
 	open "server":::"SOCKET"
 	use "server":LISTEN=portno_":TCP"
 	write /listen(clicount)
-	do checkpoint(actor,9,"client has finished")
+	do checkpoint(actor,9,"client has finished",5)
+	lock +(^wait):5
 	;
 	write "# client summary",!
 	set cpass=^client(portno,"pass")
@@ -48,6 +49,7 @@ server	; entry: server
 	set cfail=^client(portno,"fail")
 	do sumpar
 	write "fail: ",$select(cfail=0:"-",1:cfail),!
+	lock -(^wait)
 	quit
 	;
 sumpar  ; print parameters for summary
@@ -64,6 +66,8 @@ rstcc	; reset client counters
 
 client	; entry: client
 	;
+	lock +(^wait($job))
+	set ^wait($job)=$job
 	do procArgs
 	do checkpoint(actor,1,"server start")
 	do incc("stuck")
@@ -105,6 +109,8 @@ skipUseError ; skip error if USE "client" fails, we check for key=""
 	;
 	close "client"
 	do checkpoint(actor,9,"client has finished")
+	kill ^wait($job)
+	lock -(^wait($job))
 	quit
 	;
 incc(token) ; increment client counter for token
@@ -113,6 +119,16 @@ incc(token) ; increment client counter for token
 	if token'="stuck" set ^client(portno,"stuck")=^client(portno,"stuck")-1
 	set ^client(portno,token)=1+^client(portno,token)
 	lock -^client(portno)
+	quit
+
+getw	; entry: get first stuck process
+	;
+	write $order(^wait("")),!
+	quit
+
+killw	; entry: purge process from stuck list
+	;
+	kill ^wait($zcmdline)
 	quit
 
 procArgs ; process args ($ZCMDLINE)
@@ -178,17 +194,18 @@ printElapsed(before,after) ; print elapsed time
 	;
 	quit
 
-checkpoint(actor,id,comment) ; sync mechanism for multiple processes
+checkpoint(actor,id,comment,to) ; sync mechanism for multiple processes
 	;
 	set verbose=0
 	set comment=$get(comment,"")
+	set to=$get(to,60)
 	if comment'="" set comment=" - "_comment
 	use $principal
 	if verbose write "# ",actor," entered checkpoint ",id,comment,!
 	lock +(^checkpoint(portno))
 	set ^checkpoint(portno,id)=1+$get(^checkpoint(portno,id),0)
 	lock -(^checkpoint(portno))
-	for  quit:^checkpoint(portno,id)=^checkpoint(portno_"-count")  hang 0.1
+	for i=1:1:to*10 quit:^checkpoint(portno,id)=^checkpoint(portno_"-count")  hang 0.1
 	if verbose write "# ",actor," left checkpoint ",id,comment,!
 	quit
 

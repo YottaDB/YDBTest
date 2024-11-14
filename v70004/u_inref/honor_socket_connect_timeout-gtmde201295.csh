@@ -92,9 +92,6 @@ CAT_EOF
 # number of clients
 set client_count = 20
 
-# set client log on/off (for debugging)
-set debug_show_client_log = 0
-
 echo
 echo "# ---- startup ----"
 
@@ -194,21 +191,37 @@ foreach parm ( "0-0-0" "0-0-2" "0-unset-0" "0-unset-2" "5-2-1" "2-5-0"  )
                 ($gtm_dist/mumps -run client^gtmde201295 $portno $server_delay $client_timeout client${i} $client_count $i $client_stretch >>& client${i}-${parm}.out &)
         @ i++
         end
+
         $gtm_dist/mumps -run server^gtmde201295 $portno $server_delay $client_timeout server $client_count -1 $client_stretch >>& server-${parm}.out
 
-        # print client logs (debug mode)
-        if ($debug_show_client_log) then
-        set i = 1
-        while ($i <= $client_count)
-                echo "-- client${i} log --"
-                cat client{$i}-${parm}.out
-                @ i++
+        # Clients are "intentionally" got stuck, when no timeout is specified
+        # for a socket OPEN - in this case they must be killed from outside.
+        echo "# wait for clients to exit"
+        while (1)
+                set wpid = `$gtm_dist/mumps -run getw^gtmde201295`
+                if ("" == $wpid) then
+                        break
+                endif
+                $gtm_dist/mumps -run killw^gtmde201295 $wpid
+                kill $wpid
+                $gtm_tst/com/wait_for_proc_to_die.csh $wpid >>& waitforproc-${parm}.log
         end
-        endif
 
         # print server log
         echo "-- server log --"
         cat server-${parm}.out
+
+        # print client logs (only failed ones)
+        set i = 1
+        while ($i <= $client_count)
+                set cfail = `cat client{$i}-${parm}.out | grep 'client.*score.*fail' | wc -l`
+                if ($cfail) then
+                        echo "-- client${i} log (failed) --"
+                        cat client{$i}-${parm}.out
+                endif
+                @ i++
+        end
+
 end
 
 echo
