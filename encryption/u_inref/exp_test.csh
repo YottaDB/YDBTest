@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,7 +65,7 @@ $gtm_tst/com/reset_gpg_agent.csh
 expect -f $gtm_tst/$tst/inref/experiment_3.exp $gtm_dist  >&! experiment_3.out
 $grep "THIS_VAR_IS_ENCRYPTED" experiment_3.out >&! grep_var3.out
 set stat1=$status
-$tail -n 1 experiment_3.out | $grep "GTM" >&! grep_gtm3.out
+$tail -n 1 experiment_3.out | $grep "YDB" >&! grep_gtm3.out
 set stat2=$status
 # Verify that after taking the password, GT.M prints the value and stays in the prompt
 if ($stat1 ||  $stat2) then
@@ -92,7 +92,7 @@ $gtm_tst/com/reset_gpg_agent.csh
 expect -f $gtm_tst/$tst/inref/experiment_5.exp $gtm_dist >&! experiment_5.out
 $grep "THIS_VAR_IS_ENCRYPTED" experiment_5.out >&! grep_var5.out
 set stat1=$status
-$tail -n 1 experiment_5.out | $grep "GTM" >&! grep_gtm5.out
+$tail -n 1 experiment_5.out | $grep "YDB" >&! grep_gtm5.out
 set stat2=$status
 # Verify that after taking the password, GT.M prints the value and stays in the prompt
 if ($stat1 ||  $stat2) then
