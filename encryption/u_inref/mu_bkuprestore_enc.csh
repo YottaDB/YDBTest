@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+setenv ydb_prompt 'GTM>'	# So can run the test under GTM or YDB and have same output
+setenv ydb_msgprefix "GTM"	# So can run the test under GTM or YDB and have same output
 
 # Test that BYTESTREAM BACKUPs created from unencrypted database (of either encryption-supporting GT.M versions or not) cannot be
 # RESTOREd to a current GT.M version's encrypted database due to minor DB version mismatch.
@@ -34,6 +37,10 @@ if ("$prior_ver" =~ "*-E-*") then
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
+
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode as we are switching to a prior version and that can cause database file
+				# to be created in a future version relative to the current prior version.
+
 echo "Random version choosen is - GTM_TEST_DEBUGINFO $prior_ver"
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $prior_ver $tst_image
 
@@ -60,9 +67,9 @@ $gtm_tst/com/dbcheck.csh
 
 echo
 $echoline
-echo "Do BYTESTREAM BACKUP"
+echo "Do BYTESTREAM BACKUP and redirect output to [backup.out]"
 $echoline
-$MUPIP backup -bytestream DEFAULT $prior_ver.dat
+$MUPIP backup -bytestream DEFAULT $prior_ver.dat >& backup.out
 
 mkdir bak1 ; mv mumps.dat mumps.gld ./bak1	# To aid in debugging
 mv $prior_ver.dat bak1/				# Since dbcreate below will rename. So move it away temporarily

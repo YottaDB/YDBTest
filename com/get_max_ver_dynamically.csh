@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@ set curr_ver = $tst_ver
 switch ($1)
 	case "dbminver_mismatch":
 		# Need the awkward gdsdbver*.h because the enum in gdsdbver.h was pushed into gdsdbver_sp.h starting V63000
-		alias getlabel '$tst_awk '"'"'/GDSMVLAST/{if(length(min)){print min;exit}} /GDSMV[56][0-9]+[A-Z]*/{sub(/ENUM_ENTRY./,"",$1);sub(/[^0-9A-Z]*,$/,"",$1);min=$1}'"'"' $gtm_root/\!:1/inc/gdsdbver*.h'
+		alias getlabel '$tst_awk '"'"'/GDSMVLAST/{if(length(min)){print min;exit}} /GDSMV[567][0-9]+[A-Z]*/{sub(/ENUM_ENTRY./,"",$1);sub(/[^0-9A-Z]*,$/,"",$1);min=$1}'"'"' $gtm_root/\!:1/inc/gdsdbver*.h'
 	breaksw
 	case "shlib_mismatch":
 	case "obj_mismatch":
