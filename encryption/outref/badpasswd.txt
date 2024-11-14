@@ -27,13 +27,13 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 #########TEST CONDITION:BAD PASSPHRASE###########
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Incorrect password or error while obtaining password
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Incorrect password or error while obtaining password
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Incorrect password or error while obtaining password
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 #########TEST CONDITION:gtm_passwd unset#########
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable ydb_passwd/gtm_passwd not set
@@ -51,15 +51,15 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 HASH DUMP ON ENCRYPTED DATABASE
-  DB encryption hash cutoff              -1
-  DB encr hash2 start TN 0x0000000000000000
-##TEST_AWK  Database file encryption hash           [A-Z|0-9]*
-##TEST_AWK  Database file encryption hash2          [A-Z|0-9]*
+  DB encryption hash cutoff                      -1
+  DB encr hash2 start TN         0x0000000000000000
+##TEST_AWK  Database file encryption hash                   [A-Z|0-9]*
+##TEST_AWK  Database file encryption hash2                  [A-Z|0-9]*
 HASH DUMP ON NONENCRYPTED DATABASE
-  DB encryption hash cutoff              -1
-  DB encr hash2 start TN 0x0000000000000000
-  Database file encryption hash           00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  Database file encryption hash2          00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  DB encryption hash cutoff                      -1
+  DB encr hash2 start TN         0x0000000000000000
+  Database file encryption hash                   00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  Database file encryption hash2                  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
