@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,12 +16,16 @@
 #
 # Test mupip load and extract operations between encrypted and un-encrypted databases
 #
+
+setenv ydb_msgprefix	"GTM"	# So can run the test under GTM or YDB and have same output
+setenv ydb_prompt	"GTM>"	# So can run the test under GTM or YDB and have same output
+
 # adding random spanning regions functionality to this test is more work for very little (if any) payoff.
 # hence disabling this scheme here.
 setenv gtm_test_spanreg 0
 
 if (! $?gtm_test_replay) then
-	set extr_enc_prior_ver = `$gtm_tst/com/random_ver.csh -gte V63000A`
+	set extr_enc_prior_ver = `$gtm_tst/com/random_ver.csh -gte V63002`
 	if ("$extr_enc_prior_ver" =~ "*-E-*") then
 		echo "The requested prior version is not available: $extr_enc_prior_ver"
 		exit 1
@@ -50,6 +54,9 @@ if (! $?gtm_test_replay) then
 	echo "setenv global2 $global2"				>>&! settings.csh
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $extr_enc_prior_ver
+
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode as we are switching to a prior version and that can cause database file
+				# to be created in a future version relative to the current prior version.
 
 echo "# Switch to the random version"
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $extr_enc_prior_ver $tst_image

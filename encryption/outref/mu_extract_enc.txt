@@ -1,15 +1,15 @@
 # Switch to the random version
 # Create databases with encryption
 # Create two more regions and db without encryption
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 # Update a few random globals
 
-YDB>
+GTM>
 
-YDB>
+GTM>
 
-YDB>
+GTM>
 # Extract in binary format
 ###################################################################
 # Switch to the current version and create encrypted database
@@ -23,16 +23,16 @@ mumps.dat
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 11
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ###################################################################
 # Create a non-encrypted database
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Load the binary extract into the non-encrypted database
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 11
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ## Extract from unencrypted database now to be later loaded into a mix of encrypted and non-encrypted db
 ###################################################################
 # Create a mix of encrypted and non-encrypted datbases
@@ -42,13 +42,13 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 # Load the binary extract into this mixed databases
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 11
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -60,12 +60,12 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/m.dat created
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/m.dat created
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 784  Max Subsc Len: 63  Max Data Len: 4
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 11
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
