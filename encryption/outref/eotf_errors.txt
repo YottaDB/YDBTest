@@ -17,23 +17,6 @@ Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : MUPIP REORG -ENCRYPT cannot continue as access method is not BG
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
-# Case 1B. Operation attempted with V4 blocks
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
-$MUPIP set -encryptable -region "*"
-%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
-$MUPIP reorg -encrypt=$good_key -region "*"
-Region DEFAULT : MUPIP REORG ENCRYPT started
-%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-$MUPIP set -encryptioncomplete -region "*"
-%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
-unset verbose
 # Case 2. Specified key is not found in the configuration file.
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
@@ -92,11 +75,11 @@ Region DEFAULT : MUPIP REORG ENCRYPT finished
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE ENCRYPT
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR ENCRYPT
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR ENCRYPT
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME ENCRYPT
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT ENCRYPT
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME SELECT ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME SELECT TRUNCATE ENCRYPT
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
 
 ##SUSPEND_OUTPUT HOST_AIX_RS6000 PRO DBG
 # Case 13. Attempt to downgrade a partially (re)encrypted database.

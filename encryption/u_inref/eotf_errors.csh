@@ -67,22 +67,6 @@ mv mumps.dat mumps.dat.mm
 mv mumps.gld mumps.gld.mm
 echo
 
-echo "# Case 1B. Operation attempted with V4 blocks"
-setenv test_encryption NON_ENCRYPT
-setenv gtm_test_mupip_set_version "V4"
-$gtm_tst/com/dbcreate.csh mumps
-setenv test_encryption ENCRYPT
-setenv gtm_test_mupip_set_version "disable"
-cp ${gtmcrypt_config}.orig $gtmcrypt_config
-cp ${gtm_dbkeys}.orig $gtm_dbkeys
-set verbose
-$MUPIP set -encryptable -region "*"
-$MUPIP reorg -encrypt=$good_key -region "*"
-$MUPIP set -encryptioncomplete -region "*"
-unset verbose
-mv mumps.dat mumps.dat.v4
-mv mumps.gld mumps.gld.v4
-
 echo "# Case 2. Specified key is not found in the configuration file."
 mv mumps.dat.orig mumps.dat
 mv mumps.gld.orig mumps.gld
