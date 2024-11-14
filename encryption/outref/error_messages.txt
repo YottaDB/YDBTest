@@ -19,9 +19,9 @@ Test case 1: ydb_crypt_config/gtmcrypt_config unset.
 Test case 2: ydb_crypt_config/gtmcrypt_config set to null string.
 ################################################
 rm: No match.
-%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable ydb_crypt_config set to empty string
-%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable ydb_crypt_config set to empty string
-%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable ydb_crypt_config set to empty string
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Environment variable (ydb_|gtm)crypt_config set to empty string
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Environment variable (ydb_|gtm)crypt_config set to empty string
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Environment variable (ydb_|gtm)crypt_config set to empty string
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
@@ -59,9 +59,9 @@ rm: No match.
 Test case 6: gtm_passwd set to bad passphrase.
 ##############################################
 rm: No match.
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Incorrect password or error while obtaining password
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Incorrect password or error while obtaining password
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Incorrect password or error while obtaining password
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 
 
