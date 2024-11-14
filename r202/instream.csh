@@ -74,7 +74,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_gt-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_lt-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_andor-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic various_fuzz-ydb1044"
-setenv subtest_list_replic	""
+setenv subtest_list_replic	"loginterval-ydb1098"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

@@ -1,9 +1,20 @@
-/* C9H09-002905 Source server should log only AFTER sending at least 1000 transactions on the pipe */
+#################################################################
+#								#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+/* C9H09-002905 Source server should log only AFTER sending at least 10000 transactions on the pipe */
 
 BEGIN	{
-	prev=-999;
+	prev=-9999;
 	fail=0;
-	min=1000;
+	min=10000;
 	ll=0;
 }
 
@@ -17,7 +28,7 @@ BEGIN	{
 		if (fail==1)
 			print "TEST-F-FAIL";
 		printf("TEST-E-REPLINFO: Found REPL INFO message in SRC*.log with a gap of at least %d transactions\n", delta);
-		print "TEST-I-REPLINFO: Expected gap between REPL INFO messages is >= 1000 transactions"
+		printf("TEST-I-REPLINFO: Expected gap between REPL INFO messages is >= %d transactions\n", min);
 		print "Previous:\t"line[ll - 1];
 		print "Current:\t"line[ll];
 	}

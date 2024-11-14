@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,10 +11,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm5730()
-	for i=1:1:1000 do
+	for i=1:1:10000 do
 	. tstart ():(serial:transaction="BATCH") ; use BATCH to avoid test slowdown due to jnl hardening for every TCOMMIT
  	. set ^x(i)=i
 	. tcommit
-	for i=1001:1:2000 set ^x(i)=i ;
+	for i=10001:1:20000 set ^x(i)=i ;
 	kill ^x
 	quit
