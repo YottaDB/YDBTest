@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -54,6 +54,10 @@ ls "JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx" >& /dev/null
 if (0 == $status) then
 	mv "JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx" "1_JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx"
 endif
+
+# Below step is needed to avoid %YDBPROCSTUCK background processes still accessing the db when we next do dbcheck.csh
+$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
+
 $gtm_tst/com/dbcheck.csh
 rm mumps.dat
 
@@ -98,4 +102,8 @@ ls "JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx" >& /dev/null
 if (0 == $status) then
 	mv "JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx" "2_JNLFSYNCSTUCK_HALF_TIME_${pid_2}_${pid_1}.outx"
 endif
+
+# Below step is needed to avoid %YDBPROCSTUCK background processes still accessing the db when we next do dbcheck.csh
+$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
+
 $gtm_tst/com/dbcheck.csh

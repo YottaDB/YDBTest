@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,15 +27,7 @@ if (3 != $count_of_msgs) then
 	echo "TEST-E-FAIL, MUTEXLCKALERT message appeared $count_of_msgs times in syslog (expecting 3 times)."
 endif
 
-# Wait for backgrounded dse processes (from %YDBPROCSTUCKEXEC) to finish before moving on as otherwise they can cause a
-# TEST-E-LSOF test failure due to those backgrounded dse processes still accessing mumps.dat after this script exits.
-# The backgrounded dse process id can be found in %YDBPROCSTUCKEXEC*_dse.out but the parent of the dse process can be
-# found in %YDBPROCSTUCKEXEC*.out in a line "pid of jobbed process is PID". Therefore we look for the parent pid below
-# and wait for it to terminate (at which point we are guaranteed the child dse process would also have terminated).
-set pidlist = `grep 'pid of jobbed process is' %YDBPROCSTUCKEXEC*.out | $tst_awk '{print $NF}'`
-foreach pid ($pidlist)
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid
-end
+$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
 
 $grep foo %YDBPROCSTUCKEXEC*_MUTEXLCKALERT*	# make sure things ran to avoid a false positive
 cat *.mje*	# make sure there is nothing logged to any .mje files
