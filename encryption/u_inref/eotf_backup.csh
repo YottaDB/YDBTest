@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -108,8 +108,6 @@ endif
 
 # Start MUPIP BACKUP in the background.
 ($MUPIP backup -bytestream DEFAULT mumps.dat.bak >&! mupip_backup.out &; echo $! > pid.out) >&! /dev/null
-
-$gtm_tst/com/wait_for_log.csh -waitcreation -log mupip_backup.out -duration 30 -message "MUPIP backup of database file"
 
 # Start a MUPIP REORG -ENCRYPT.
 $MUPIP reorg -encrypt=$new_key -region "*" >&! mupip_reorg_encrypt.out
