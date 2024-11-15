@@ -23,14 +23,14 @@ mupip endianevt mumps.dat
 endian convert with bad gtm_passwd and expect error out
 ----------------------------------------------------------------------------------
 mupip endianevt mumps.dat
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Incorrect password or error while obtaining password
 %YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------------------------------------------------------------------------------
 mupip extend with bad gtm_passwd and expect to work without any error
 ----------------------------------------------------------------------------------
 mupip extend DEFAULT -blocks=1000
-##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Incorrect password or error while obtaining password
 Extension successful, file ##TEST_PATH##/mumps.dat extended by 1000 blocks.  Total blocks = 1300.
 ----------------------------------------------------------------------------------
 Integ without gtm_passwd and expect to error out
@@ -44,7 +44,7 @@ mupip integ -file mumps.dat
 Integ with bad gtm_passwd and expect to error out
 ----------------------------------------------------------------------------------
 mupip integ -file mumps.dat
-##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. Incorrect password or error while obtaining password
 %YDB-I-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %YDB-E-INTEGERRS, Database integrity errors
 ----------------------------------------------------------------------------------
@@ -56,11 +56,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           6             150          56.184            NA
-Index             145             145           2.343             4
-Data              145            1023          18.855             4
-Free             1004              NA              NA            NA
-Total            1300            1318              NA             8
+Directory           2             146          47.229            NA
+Index             145             145           0.683             4
+Data              145            1023           4.713             4
+Free             1008              NA              NA            NA
+Total            1300            1314              NA             8
 ----------------------------------------------------------------------------------
 mupip reorg without gtm_passwd and expect to error out
 ----------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ mupip reorg with bad gtm_passwd and expect to error out
 ----------------------------------------------------------------------------------
 mupip reorg -region DEFAULT
 Fill Factor:: Index blocks 100%: Data blocks 100%
-##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Incorrect password or error while obtaining password
 %YDB-E-CRYPTBADCONFIG, Could not retrieve data from encrypted file ##TEST_PATH##/mumps.dat due to bad encryption configuration. Please look at prior messages related to encryption for more details
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
