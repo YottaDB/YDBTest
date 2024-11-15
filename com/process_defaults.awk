@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,7 @@
 		  if ($i ~ /^check_setenv_echo$/)
 			{ $i = "if ( $?" var_name " == 0 ) setenv "
 			  print $0
-			  print "echo " var_name " is $" var_name
+			  print "echo " var_name " is \"$" var_name "\""
 			  printed = 1
 			 }
 		  if ($i ~ /^check_number$/)
