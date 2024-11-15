@@ -18,17 +18,18 @@ File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
   Access method                                  BG  Global Buffers                        1024
-  Reserved Bytes                                  0  Block size (in bytes)                 1024
+  Reserved Bytes                                  0  Block size (in bytes)                 4096
   Maximum record size                           256  Starting VBN                          8193
   Maximum key size                               64  Total blocks            0x0000000000000065
   Null subscripts                             NEVER  Free blocks             0x0000000000000062
   Standard Null Collation                      TRUE  Free space                      0x00000000
   Last Record Backup             0x0000000000000001  Extension Count                        100
   Last Database Backup           0x0000000000000001  Number of local maps                     1
-  Last Bytestream Backup         0x0000000000000001  Lock space                      0x00000028
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
   In critical section                    0x00000000  Timers pending                           0
   Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
   Freeze match                           0x00000000  Flush trigger                          960
+  Freeze online                               FALSE  Freeze online autorelease            FALSE
   Current transaction            0x0000000000000001  No. of writes/flush                      7
   Maximum TN                     0xFFFFFFF803FFFFFF  Certified for Upgrade to                V7
   Maximum TN Warn                0xFFFFFFD813FFFFFF  Desired DB Format                       V7
@@ -44,6 +45,13 @@ Region          AREG
   Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##
   Spanning Node Absent                 ##FILTERED##  Maximum Key Size Assured          ##FILTERED##
   Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
+  Async IO                                      OFF  WIP queue cache blocks                   0
+  DB is auto-created                          FALSE  DB shares gvstats                     TRUE
+  LOCK shares DB critical section             FALSE  Read Only                              OFF
+  Recover interrupted                         FALSE  Full Block Write                         0
+  StatsDB Allocation                           2050
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
+  Reorg Sleep Nanoseconds                         0
 ----------------------------------------------------------
 Rename a_dat_key as a_key
 ----------------------------------------------------------
@@ -54,25 +62,25 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> 
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 0 V7   Master Status: Free Space
 
-           	Low order                         High order
-Block        0:	|  XXX.....  ........  ........  ........  |
-Block       20:	|  ........  ........  ........  ........  |
-Block       40:	|  ........  ........  ........  ........  |
-Block       60:	|  ........  ........  ........  ........  |
-Block       80:	|  ........  ........  ........  ........  |
-Block       A0:	|  ........  ........  ........  ........  |
-Block       C0:	|  ........  ........  ........  ........  |
-Block       E0:	|  ........  ........  ........  ........  |
-Block      100:	|  ........  ........  ........  ........  |
-Block      120:	|  ........  ........  ........  ........  |
-Block      140:	|  ........  ........  ........  ........  |
-Block      160:	|  ........  ........  ........  ........  |
-Block      180:	|  ........  ........  ........  ........  |
-Block      1A0:	|  ........  ........  ........  ........  |
-Block      1C0:	|  ........  ........  ........  ........  |
-Block      1E0:	|  ........  ........  ........  ........  |
+                       	Low order                         High order
+Block                0:	|  XXX.....  ........  ........  ........  |
+Block               20:	|  ........  ........  ........  ........  |
+Block               40:	|  ........  ........  ........  ........  |
+Block               60:	|  ........  ........  ........  ........  |
+Block               80:	|  ........  ........  ........  ........  |
+Block               A0:	|  ........  ........  ........  ........  |
+Block               C0:	|  ........  ........  ........  ........  |
+Block               E0:	|  ........  ........  ........  ........  |
+Block              100:	|  ........  ........  ........  ........  |
+Block              120:	|  ........  ........  ........  ........  |
+Block              140:	|  ........  ........  ........  ........  |
+Block              160:	|  ........  ........  ........  ........  |
+Block              180:	|  ........  ........  ........  ........  |
+Block              1A0:	|  ........  ........  ........  ........  |
+Block              1C0:	|  ........  ........  ........  ........  |
+Block              1E0:	|  ........  ........  ........  ........  |
 
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
@@ -83,25 +91,25 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> 
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 0 V7   Master Status: Free Space
 
-           	Low order                         High order
-Block        0:	|  XXX.....  ........  ........  ........  |
-Block       20:	|  ........  ........  ........  ........  |
-Block       40:	|  ........  ........  ........  ........  |
-Block       60:	|  ........  ........  ........  ........  |
-Block       80:	|  ........  ........  ........  ........  |
-Block       A0:	|  ........  ........  ........  ........  |
-Block       C0:	|  ........  ........  ........  ........  |
-Block       E0:	|  ........  ........  ........  ........  |
-Block      100:	|  ........  ........  ........  ........  |
-Block      120:	|  ........  ........  ........  ........  |
-Block      140:	|  ........  ........  ........  ........  |
-Block      160:	|  ........  ........  ........  ........  |
-Block      180:	|  ........  ........  ........  ........  |
-Block      1A0:	|  ........  ........  ........  ........  |
-Block      1C0:	|  ........  ........  ........  ........  |
-Block      1E0:	|  ........  ........  ........  ........  |
+                       	Low order                         High order
+Block                0:	|  XXX.....  ........  ........  ........  |
+Block               20:	|  ........  ........  ........  ........  |
+Block               40:	|  ........  ........  ........  ........  |
+Block               60:	|  ........  ........  ........  ........  |
+Block               80:	|  ........  ........  ........  ........  |
+Block               A0:	|  ........  ........  ........  ........  |
+Block               C0:	|  ........  ........  ........  ........  |
+Block               E0:	|  ........  ........  ........  ........  |
+Block              100:	|  ........  ........  ........  ........  |
+Block              120:	|  ........  ........  ........  ........  |
+Block              140:	|  ........  ........  ........  ........  |
+Block              160:	|  ........  ........  ........  ........  |
+Block              180:	|  ........  ........  ........  ........  |
+Block              1A0:	|  ........  ........  ........  ........  |
+Block              1C0:	|  ........  ........  ........  ........  |
+Block              1E0:	|  ........  ........  ........  ........  |
 
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
