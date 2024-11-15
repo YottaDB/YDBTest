@@ -495,6 +495,12 @@ BEGIN {
 	else
 		envir[no_options] = "OUTSIDE_DOCKER"
 	#
+	option_names[++no_options] = "gtm_test_hugepages"
+	if (1 == ENVIRON["gtm_test_hugepages"])
+		envir[no_options] = "HUGEPAGES_ON"
+	else
+		envir[no_options] = "HUGEPAGES_OFF"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported

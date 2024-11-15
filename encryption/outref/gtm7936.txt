@@ -3,6 +3,7 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
+Database file ##TEST_PATH##/mumps.dat now has BG access method
 --------------------------------------------------------------
 DSE CACHE -SHOW output with BG, NON_ENCRYPT and NOJNL
 --------------------------------------------------------------
@@ -10,20 +11,29 @@ DSE CACHE -SHOW output with BG, NON_ENCRYPT and NOJNL
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]*
-##TEST_AWKRegion DEFAULT :  node_local         = (0x0000000000000000|0x00000000)
-##TEST_AWKRegion DEFAULT :  critical           = (0x000000000001....|0x0000D...)
-##TEST_AWKRegion DEFAULT :  shmpool_buffer     = (0x00000000000[12]....|0x00018...)
-##TEST_AWKRegion DEFAULT :  lock_space         = (0x00000000001.....|0x0011....)
-##TEST_AWKRegion DEFAULT :  cache_queues_state = (0x00000000001.....|0x0012....)
-##TEST_AWKRegion DEFAULT :  cache_que_header   = (0x00000000001.....|0x0012....) : Numelems = 0x00000407 : Elemsize = 0x000000[79].
-##TEST_AWKRegion DEFAULT :  cache_record       = (0x00000000001.....|0x0013....) : Numelems = 0x00000400 : Elemsize = 0x000000[79].
-##TEST_AWKRegion DEFAULT :  global_buffer      = (0x00000000001.....|0x0015....) : Numelems = 0x00000400 : Elemsize = 0x00000400
-##TEST_AWKRegion DEFAULT :  db_file_header     = (0x00000000002.....|0x0025....)
-##TEST_AWKRegion DEFAULT :  bt_que_header      = (0x00000000002.....|0x0029....) : Numelems = 0x00000407 : Elemsize = 0x000000[34].
-##TEST_AWKRegion DEFAULT :  th_base            = (0x00000000002.....|0x002A....)
-##TEST_AWKRegion DEFAULT :  bt_record          = (0x00000000002.....|0x002A....) : Numelems = 0x00000400 : Elemsize = 0x000000[34].
-##TEST_AWKRegion DEFAULT :  shared_memory_size = (0x00000000002.....|0x0000000000400000|0x00400000)
+##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
+Region DEFAULT :  node_local         = 0x0000000000000000
+Region DEFAULT :  critical           = 0x000000000001F000
+Region DEFAULT :  shmpool_buffer     = 0x0000000000020000
+Region DEFAULT :  lock_space         = 0x0000000000124000
+Region DEFAULT :  cache_queues_state = 0x0000000000140000
+Region DEFAULT :  cache_que_header   = 0x0000000000140030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x0000000000178650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x00000000001B1000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x00000000005B1000
+Region DEFAULT :  bt_que_header      = 0x00000000009B1000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x00000000009C11D0
+Region DEFAULT :  bt_record          = 0x00000000009C1200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x00000000009D2000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000000A00000
+##ALLOW_OUTPUT HUGEPAGES_OFF
+##SUSPEND_OUTPUT NOASYNCIO
+%YDB-E-ASYNCIONOMM, Database file ##TEST_PATH##/mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT NOASYNCIO
+Database file ##TEST_PATH##/mumps.dat now has MM access method
 --------------------------------------------------------------
 DSE CACHE -SHOW output with MM, NON_ENCRYPT and NOJNL
 --------------------------------------------------------------
@@ -31,13 +41,18 @@ DSE CACHE -SHOW output with MM, NON_ENCRYPT and NOJNL
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]*
-##TEST_AWKRegion DEFAULT :  node_local         = (0x0000000000000000|0x00000000)
-##TEST_AWKRegion DEFAULT :  critical           = (0x000000000001....|0x0000D...)
-##TEST_AWKRegion DEFAULT :  shmpool_buffer     = (0x00000000000[12]....|0x00018...)
-##TEST_AWKRegion DEFAULT :  lock_space         = (0x00000000001.....|0x0011....)
-##TEST_AWKRegion DEFAULT :  shared_memory_size = (0x00000000001.....|0x0000000000200000|0x00200000)
-##TEST_AWKRegion DEFAULT :  db_file_header     = 0x[0-9A-F]*
+##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
+Region DEFAULT :  node_local         = 0x0000000000000000
+Region DEFAULT :  critical           = 0x000000000001F000
+Region DEFAULT :  shmpool_buffer     = 0x0000000000020000
+Region DEFAULT :  lock_space         = 0x0000000000124000
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x0000000000540000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000000600000
+##ALLOW_OUTPUT HUGEPAGES_OFF
+##TEST_AWKRegion DEFAULT :  db_file_header     = 0x[0-9A-F]{16}
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -53,23 +68,28 @@ mumps.dat
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]*
-##TEST_AWKRegion DEFAULT :  node_local         = (0x0000000000000000|0x00000000)
-##TEST_AWKRegion DEFAULT :  critical           = (0x000000000001....|0x0000D...)
-##TEST_AWKRegion DEFAULT :  jnl_buffer_struct  = (0x00000000000[12]....|0x00018...)
-##TEST_AWKRegion DEFAULT :  jnl_buffer_data    = (0x00000000000[12]....|0x00018...)
-##TEST_AWKRegion DEFAULT :  shmpool_buffer     = (0x00000000001.....|0x0013....)
-##TEST_AWKRegion DEFAULT :  lock_space         = (0x00000000002.....|0x0023....)
-##TEST_AWKRegion DEFAULT :  cache_queues_state = (0x00000000002.....|0x0024....)
-##TEST_AWKRegion DEFAULT :  cache_que_header   = (0x00000000002.....|0x0024....) : Numelems = 0x00000407 : Elemsize = 0x000000[79].
-##TEST_AWKRegion DEFAULT :  cache_record       = (0x00000000002.....|0x0026....) : Numelems = 0x00000400 : Elemsize = 0x000000[79].
-##TEST_AWKRegion DEFAULT :  global_buffer      = (0x00000000002.....|0x0028....) : Numelems = 0x00000400 : Elemsize = 0x00000400
-##TEST_AWKRegion DEFAULT :  encrypted_globuff  = (0x00000000003.....|0x0038....) : Numelems = 0x00000400 : Elemsize = 0x00000400
-##TEST_AWKRegion DEFAULT :  db_file_header     = (0x00000000004.....|0x0048....)
-##TEST_AWKRegion DEFAULT :  bt_que_header      = (0x00000000004.....|0x004C....) : Numelems = 0x00000407 : Elemsize = 0x000000[34].
-##TEST_AWKRegion DEFAULT :  th_base            = (0x00000000004.....|0x004C....)
-##TEST_AWKRegion DEFAULT :  bt_record          = (0x00000000004.....|0x004C....) : Numelems = 0x00000400 : Elemsize = 0x000000[34].
-##TEST_AWKRegion DEFAULT :  shared_memory_size = (0x0000000000[45].....|0x0000000000600000|0x00600000)
+##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
+Region DEFAULT :  node_local         = 0x0000000000000000
+Region DEFAULT :  critical           = 0x000000000001F000
+Region DEFAULT :  jnl_buffer_struct  = 0x0000000000020400
+Region DEFAULT :  jnl_buffer_data    = 0x00000000000506E8
+Region DEFAULT :  shmpool_buffer     = 0x0000000000173000
+Region DEFAULT :  lock_space         = 0x0000000000277000
+Region DEFAULT :  cache_queues_state = 0x0000000000293000
+Region DEFAULT :  cache_que_header   = 0x0000000000293030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x00000000002CB650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x0000000000304000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  encrypted_globuff  = 0x0000000000704000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x0000000000B04000
+Region DEFAULT :  bt_que_header      = 0x0000000000F04000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x0000000000F141D0
+Region DEFAULT :  bt_record          = 0x0000000000F14200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x0000000000F25000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000001000000
+##ALLOW_OUTPUT HUGEPAGES_OFF
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
