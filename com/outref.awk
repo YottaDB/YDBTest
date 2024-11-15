@@ -407,11 +407,19 @@ BEGIN {
 	options_names[++no_options] = "ydb_allow64GB_jnlpool"
 	if ("0" == ENVIRON["ydb_allow64GB_jnlpool"])
 		envir[no_options] = "JNLPOOL64GB_DISALLOW"
+	else
+		envir[no_options] = "JNLPOOL64GB_ALLOW"
 	#
 	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("20.04" == ENVIRON["gtm_test_linux_version"]))
 	{
 		option_names[++no_options] = "ubuntu_20.04"
 		envir[no_options] = "UBUNTU_20.04"
+	}
+	#
+	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("22.04" == ENVIRON["gtm_test_linux_version"]))
+	{
+		option_names[++no_options] = "ubuntu_22.04"
+		envir[no_options] = "UBUNTU_22.04"
 	}
 	#
 	option_names[++no_options] = "is_tst_dir_cmp_fs"

@@ -1,0 +1,208 @@
+# *****************************************************************
+# GTM-F135288 - Test the following release note
+# *****************************************************************
+#
+# Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F135288 says:
+#
+# > When the gtm_pinshm environment variable is defined and
+# > evaluates to a non-zero integer or any case-independent
+# > string or leading substring of TRUE or YES in a process
+# > creating shared memory, GT.M attempts to pin such memory
+# > used for database global buffers, replication buffers,
+# > and routine buffers into physical memory. Huge pages are
+# > implicitly locked in physical memory, so GT.M does not attempt
+# > to pin shared memory buffers backed by huge pages. gtm_pinshm
+# > does not pin memory used by online INTEG (integ snapshot).
+# > Pinning  may not succeed due to insufficient physical memory
+# > and/or OS configuration. When the gtm_hugetlb_shm environment
+# > variable is defined and evaluates to a non-zero integer or any
+# > case-independent string or leading substring of TRUE or YES
+# > in a process creating shared memory, GT.M attempts to back all
+# > such shared memory segments with huge pages, using the default
+# > huge page size. If huge pages cannot be used, GT.M tries to
+# > back the shared memory with base pages instead, and attempts to
+# > pin the shared memory if requested with gtm_pinshm. GT.M issues
+# > a SHMHUGETLB or SHMLOCK warning message to the system log when
+# > the system is unable to back shared memory with huge pages or
+# > is unable to pin shared memory to physical memory, respectively.
+# > Previously, GT.M did not support the gtm_pinshm option to pin
+# > memory, and gtm_hugetlb_shm replaces the use of libhugetlbfs
+# > for huge page functions, so GT.M no longer evaluates
+# > libhugetlbfs environment variables, e.g. HUGETLB_SHM,
+# > HUGETLB_VERBOSE, etc. [Linux] (GTM-F135288)
+
+# ---- prepare ----
+# check if version supports hugetlb_shm feature
+
+# ---- test_id="pinu_hugeu_enable_set" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="enable" setbuf="set" ----
+# create database
+##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
+# Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
+##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pinu_hugeu_enable_not" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="enable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pinu_hugeu_disable_not" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="disable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin0_huge0_enable_set" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="enable" setbuf="set" ----
+# create database
+##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
+# Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
+##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin0_huge0_enable_not" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="enable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin0_huge0_disable_not" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="disable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin1_huge0_enable_set" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="enable" setbuf="set" ----
+# create database
+##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
+# Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
+DSE: pinning failed
+##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin1_huge0_enable_not" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="enable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin1_huge0_disable_not" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="disable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	not found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin0_huge1_enable_set" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="enable" setbuf="set" ----
+# create database
+##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
+# Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
+DSE: using huge pages failed
+##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin0_huge1_enable_not" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="enable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+##SUSPEND_OUTPUT UBUNTU_22.04
+
+# ---- test_id="pin0_huge1_disable_not" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="disable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found, permission denied
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+##ALLOW_OUTPUT UBUNTU_22.04
+
+# ---- test_id="pin1_huge1_enable_set" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="enable" setbuf="set" ----
+# create database
+##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
+# Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
+DSE: pinning failed
+DSE: using huge pages failed
+##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+
+# ---- test_id="pin1_huge1_enable_not" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="enable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+##SUSPEND_OUTPUT UBUNTU_22.04
+
+# ---- test_id="pin1_huge1_disable_not" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="disable" setbuf="not" ----
+# create database
+# check for pin behavior
+	pin: PASS
+# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
+	found, permission denied
+# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+	not found
+# validate db
+##ALLOW_OUTPUT UBUNTU_22.04
