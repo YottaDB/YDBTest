@@ -1,0 +1,31 @@
+# Test that ydb_hostname env var overrides actual hostname in database file header (node_local.machine_name)
+
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Test 1: Set ydb_hostname to TESTHOSTNAME
+# Expected output of node_local.machine_name in database file header to be TESTHOSTNAME
+TESTHOSTNAME
+
+# Test 2: Set ydb_hostname length=255 (Maximum hostname length - 1)
+# Expected output of node_local.machine_name in database file header to be ##255-byte-long-hostname##
+ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE
+
+# Test 3: Set ydb_hostname length=256 (Maximum hostname length)
+# Expect node_local.machine_name in database file header to truncate at 255, as that is the behavior of strncpy().
+# So it should output the same thing as the Test #2 (##255-byte-long-hostname##).
+ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE
+
+# Test 4: Set ydb_hostname length=257 (Maximum hostname length + 1)
+# Also expect node_local.machine_name in database file header this to truncate at 255.
+# So it should output the same thing as the Test #2 (##255-byte-long-hostname##).
+ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE
+
+# Check database integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
