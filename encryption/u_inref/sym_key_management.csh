@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,8 +68,8 @@ endif
 setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 
 # Remove the keyring (by fingerprint) with which the symmetric key was encrypted.
-set fingerprint = `$gpg --homedir=$GNUPGHOME --fingerprint gtm@fnis.com | $head -n 4 | $tst_awk '/Key fingerprint/{sub(/^.*= /,""); gsub(" ","");print $0}'`
-$gpg --homedir=$GNUPGHOME --batch --delete-secret-and-public-key "$fingerprint"
+set fingerprint = `$gpg --homedir=$GNUPGHOME --list-keys gtm@fnis.com | $head -n 2 | $tail -1`
+$gpg --homedir=$GNUPGHOME --batch --yes --delete-secret-and-public-key "$fingerprint"
 
 # Either try creating a database, or set a global, or try writing to a file.
 if ("mupip_create" == $operation) then
@@ -119,8 +119,8 @@ setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 # Prepare a script to remove the keyring (by fingerprint) with which the symmetric key was encrypted.
 cat > delete-key.csh << EOF
 setenv GNUPGHOME $GNUPGHOME
-set fingerprint = \`$gpg --homedir=\$GNUPGHOME --fingerprint gtm@fnis.com | $head -n 4 | $tst_awk '/Key fingerprint/{sub(/^.*= /,""); gsub(" ","");print \$0}'\`
-$gpg --homedir=\$GNUPGHOME --batch --delete-secret-and-public-key "\$fingerprint"
+set fingerprint = \`$gpg --homedir=$GNUPGHOME --list-keys gtm@fnis.com | $head -n 2 | $tail -1\`
+$gpg --homedir=$GNUPGHOME --batch --yes --delete-secret-and-public-key "$fingerprint"
 $gtm_tst/com/reset_gpg_agent.csh
 EOF
 chmod 755 delete-key.csh

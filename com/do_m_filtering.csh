@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -61,6 +61,8 @@ if (($?gtm_tst) && ($?tst)) then
 else
 	setenv gtmroutines "$tst_dir/$gtm_tst_out/utilobj/$gtm_verno($gtm_test_com_individual) $gtm_exe"
 endif
+
+unsetenv ydb_routines	# so only the "gtmroutines" env var (modified above) takes effect and not ydb_routines from caller
 
 # This need to be unset, otherwise if $argv[2-] contain Unicode, it won't be displayed correctly.
 unsetenv LC_ALL
