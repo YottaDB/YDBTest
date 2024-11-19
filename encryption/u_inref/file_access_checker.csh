@@ -3,6 +3,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,7 +26,7 @@ set invalidSymkeyFlag 	= $2
 set invalidKeyringFlag 	= $3
 set invalidConfigFlag 	= $4
 set emptySymkeyFlag	= $5
-set msg = "Created file $PWD/mumps.dat"
+set msg = "Database file $PWD/mumps.dat created"
 
 # Check if file has read(-r) permissions, file exists(-e), file is empty(-s) and its validity
 if (!(-r $GNUPGHOME)) then
@@ -44,6 +47,10 @@ else if (!(-r mumps.key)) then
 	set msg = "Encryption key file $PWD/mumps.key not accessible"
 else if ($invalidSymkeyFlag == 1) then
 	set msg = "Error while accessing key file $PWD/mumps.key: No data"
+else if (!(-e $GNUPGHOME/pubring.kbx)) then
+	set msg = "Error while accessing key file $PWD/mumps.key: No secret key"
+else if (!(-r $GNUPGHOME/pubring.kbx)) then
+	set msg = "Encryption key file $PWD/mumps.key not accessible"
 else
 	@ fail = 0
 	if ($invalidKeyringFlag == 1) then
@@ -60,7 +67,7 @@ else
 	ls -l $GNUPGHOME >>&! debughelp.txt
 
 	if (0 != $fail) then
-		set msg = "Error while accessing key file $PWD/mumps.key: Decryption failed"
+		set msg = "Error while accessing key file $PWD/mumps.key: No secret key"
 	endif
 endif
 
