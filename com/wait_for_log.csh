@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,8 +19,8 @@
 # if duration is 0, that means no wait was requested (i.e. just check the file)
 # vrb prints the progress messages
 # Note : waitcreation is the default. Not need to explicitly specify it.
-set opt_array      = ("\-log"   "\-message" "\-duration" "\-grep" "\-waitcreation" "\-nowaitcreation" "\-vrb" "\-useE" "\-count" "\-sleepinc")
-set opt_name_array = ("logfile" "mess"      "duration"   "grepit" "waitcreation"   "nowaitcreation"   "vrb"   "useE"   "count"    "sleepinc")
+set opt_array      = ("\-log"   "\-message" "\-duration" "\-grep" "\-waitcreation" "\-nowaitcreation" "\-vrb" "\-useE" "\-count" "\-sleepinc" "\-any")
+set opt_name_array = ("logfile" "mess"      "duration"   "grepit" "waitcreation"   "nowaitcreation"   "vrb"   "useE"   "count"    "sleepinc"  "any"  )
 
 source $gtm_tst/com/getargs.csh "$argv"
 set begdate = `date`
@@ -74,6 +74,10 @@ while ((($sleeptime > 0) || ($duration == 0)) && ($#todologfiles > 0))
 					date
 				endif
 				set retrylogfiles=($retrylogfiles $file)
+			else if ($?any) then
+				# Message found in at least one file. Exit.
+				set retrylogfiles=()
+				break
 			else
 				continue
 			endif

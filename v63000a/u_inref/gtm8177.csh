@@ -33,7 +33,7 @@ set start_time=$time_msr
 echo "# Freeze replication instance"
 $MSR RUN INST2 '$MUPIP replic -source -freeze=on -comment=gtm8177'							>& freeze.log
 $gtm_exe/mumps -run %XCMD 'set ^a=1'
-$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log.updproc -message MUINSTFROZEN'
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log "RCVR_'${time_msr}'.log.u*" -message MUINSTFROZEN -any'
 
 echo "# Kill all processes accessing the database file"
 $MSR RUN INST2 'set pidlist = `fuser mumps.dat`; echo $pidlist; $kill -TERM $pidlist >& term.log' >& pidlist.txt
