@@ -1,9 +1,9 @@
 # ********************************************************************************************
 # GTM-F135381 - Test the following release note
 # ********************************************************************************************
-# 
+#
 # Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-F135381)
-# 
+#
 # When the Audit MUPIP facility (AM_ENABLE) is enabled, MUPIP establishes a connection (via a UNIX/TCP/TLS socket)
 # to a logger/listener process, and sends any MUPIP shell command through the socket to the listener for logging.
 # If sending is successful, MUPIP executes the command. If the connection is not successful or sending of the command fails,
@@ -12,19 +12,17 @@
 # MUPIP commands execute as usual.In addition, the APD_ENABLE facility displays the appropriate network error messages
 # and exits the process gracefully. Previously, certain network errors could result in a segmentation fault without
 # reporting the reason. (GTM-F135381)
-# 
+#
 # This test only contains test below :
 # - Test New error message : AUDINITFAIL, AUDCONNFAIL and AUDLOGFAIL
-# 
+#
 # Notes:
 # 1) Audit MUPIP facility already tested in v70005/audit_mupip_facility-gtmf188829
 # (https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2052) so this will not be tested here
 # 2) APD_ENABLE Facility mentioned in later part of release note will not tested in this test
 # because there is not enough description of the use case to come up with a test case.
-# 
 
 # Prepare read-write $gtm_dist directory
-# compile audit_listener utility
 # allocate a port number for TCP and TLS modes
 # set Unix socket filename
 # set crypt config file path and name

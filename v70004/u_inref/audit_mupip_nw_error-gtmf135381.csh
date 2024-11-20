@@ -11,7 +11,7 @@
 #								#
 #################################################################
 
-cat << CAT_EOF | sed 's/^/# /;'
+cat << CAT_EOF | sed 's/^/# /;' | sed 's/ $//;'
 ********************************************************************************************
 GTM-F135381 - Test the following release note
 ********************************************************************************************
@@ -35,7 +35,6 @@ Notes:
 (https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2052) so this will not be tested here
 2) APD_ENABLE Facility mentioned in later part of release note will not tested in this test
 because there is not enough description of the use case to come up with a test case.
-
 CAT_EOF
 
 echo
@@ -52,12 +51,6 @@ set aulogfile=log.txt
 set pidfile=pid.txt
 set certfile=$gtm_tst/com/tls/certs/CA/ydbCA.crt
 set keyfile=$gtm_tst/com/tls/certs/CA/ydbCA.key
-
-echo "# compile audit_listener utility"
-$gt_cc_compiler \
-	$gtm_tst/com/audit_listener.c \
-	-o $gtm_dist/audit_listener \
-	-lssl -lcrypto
 
 echo "# allocate a port number for TCP and TLS modes"
 source $gtm_tst/com/portno_acquire.csh >& portno.out

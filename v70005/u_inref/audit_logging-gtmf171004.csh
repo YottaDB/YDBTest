@@ -338,7 +338,7 @@ foreach param ( \
 	end  # resetlog
 
 	echo "# stop audit_listener and wait for finish"
-	kill -TERM $pid
+	kill -TERM $pid >>& waitforproc.log
 	$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log
 	rm -f $aupidfile
 	rm -f $aulogfile

@@ -792,9 +792,21 @@ int main_unix(int argc, char *argv[])
 	memset(&listener_term_handler, 0, sizeof(struct sigaction));
 	listener_term_handler.sa_handler = listener_signal_handler;
 	listener_term_handler.sa_flags = 0;
-	sigaction(SIGINT, &listener_term_handler, NULL);	/* Handle Ctrl + C */
-	sigaction(SIGTERM, &listener_term_handler, NULL);	/* Handle kill -15 */
-	sigaction(SIGHUP, &listener_term_handler, NULL);	/* Handle kill -1  */
+
+        // The signal handler set the `terminate` variable's value to `true`
+        // if SIGINT or SIGTERM received, and the main program checks it, and
+        // if it's set, exits (`while !terminate`). But this mechanism does not
+        // work it does not stop the program.
+        // So, changed SIGINT and SIGTERM to do the default action (terminate
+        // the program). Otherwise SIGKILL should be used.
+        //
+        // These lines have intentionally commented out (do the default action):
+        //  sigaction(SIGINT, &listener_term_handler, NULL);	/* Handle Ctrl + C */
+	//  sigaction(SIGTERM, &listener_term_handler, NULL);	/* Handle kill -15 */
+        //
+        // More information: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2136
+
+        sigaction(SIGHUP, &listener_term_handler, NULL);	/* Handle kill -1  */
 
 	/* Create socket to start listening */
 	fd = socket(AF_UNIX, SOCK_STREAM, 0);

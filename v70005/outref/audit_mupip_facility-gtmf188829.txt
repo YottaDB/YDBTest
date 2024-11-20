@@ -34,7 +34,6 @@ Error issuing INTRPT to process 1: Operation not permitted
 # show log captured (should be the MUPIP commands):
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
-# reset log by sending SIGHUP to the audit listener
 # stop audit_listener and wait for finish
 
 # ---- test tls logging ----
@@ -50,7 +49,6 @@ Error issuing INTRPT to process 1: Operation not permitted
 # show log captured (should be the MUPIP commands):
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
-# reset log by sending SIGHUP to the audit listener
 # stop audit_listener and wait for finish
 
 # ---- test unix_socket logging ----
@@ -66,7 +64,6 @@ Error issuing INTRPT to process 1: Operation not permitted
 # show log captured (should be the MUPIP commands):
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=intrpt 1
 <timestamp_masked>; dist=<masked>; src=3; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=exit
-# reset log by sending SIGHUP to the audit listener
 # stop audit_listener and wait for finish
 
 # ---- cleanup ----

@@ -139,13 +139,9 @@ MUPIP2
 	echo "# show log captured (should be the MUPIP commands):"
 	cat $aulogfile | $gtm_dist/mumps -run "filter^auditlogfilter"
 
-	echo "# reset log by sending SIGHUP to the audit listener"
-	kill -HUP $pid
-
 	echo "# stop audit_listener and wait for finish"
-	kill -TERM $pid
-	kill -KILL $pid
-	($gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log)
+	kill -TERM $pid >>& waitforproc.log
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log
 	rm -f $pidfile
 	rm -f $aulogfile
 end

@@ -155,7 +155,7 @@ foreach param ( \
 	endif
 
 	echo "# setup restrict.txt"
-        # notice: using '|' as sed separator, because $uxsock contains '/'
+	# notice: using '|' as sed separator, because $uxsock contains '/'
 	set restr=`echo $restrp \
 		| sed -E "s|##PORTNO##|${portno}|g" \
 		| sed -E "s|##UXSOCK##|${uxsock}|g" \
@@ -240,10 +240,8 @@ foreach param ( \
 
 	if ( "$pid" != "" ) then
 		echo "# stop audit_listener and wait for finish"
-		kill -TERM $pid
-		kill -KILL $pid
-		($gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log)
-
+		kill -TERM $pid >>& stop_audit_listener.outx
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& stop_audit_listener.outx
 		rm -f $pidfile
 	endif
 

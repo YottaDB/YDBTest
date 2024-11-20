@@ -153,8 +153,8 @@ foreach param ( \
 	cat $aulogfile | $gtm_dist/mumps -run "filter^auditlogfilter"
 
 	echo "# stop audit_listener and wait for finish"
-	kill -TERM $pid
-	($gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log)
+	kill -TERM $pid >>& waitforproc.log
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log
 	rm -f $pidfile
 	rm -f $aulogfile
 end
