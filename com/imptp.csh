@@ -104,6 +104,13 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4"
 				endif
 			endif
+			if ($gtm_test_libyottadb_asan_enabled && ("ENCRYPT" == "$test_encryption")) then
+				# We have seen python imptp.py hang when run with ASAN + Encrypted databases
+				# The hang is in libgpgme + ASAN code. Not sure why but not considered worth investigating.
+				# So disable this combination for now.
+				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to ASAN + ENCRYPT causing hang"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
+			endif
 			# Disable YDBPython testing if python3 version is 3.11.*
 			# We have seen one of the following symptoms when building imptp.py in that case.
 			#	SystemError: unknown opcode
