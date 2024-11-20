@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,6 +16,10 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+
+# This test does a mupip extend and mupip integ both of which will produce different output (due to a huge total block
+# count > 4G after the extension) if the below env var is set to a random value by the test framework. So unset it.
+setenv ydb_test_4g_db_blks 0
 
 # This subtest tests various mupip utilities behavior without gtm_passwd
 # 1. endiancvt ( Requied gtm_passwd )
