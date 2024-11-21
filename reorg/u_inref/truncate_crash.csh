@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,7 +42,7 @@ EOF
 $MUPIP reorg -truncate >&! initial_truncate.outx
 if ($status) then
 	cat initial_truncate.outx
-        echo "TEST failed in MUPIP reorg -truncate"
+	echo "TEST failed in MUPIP reorg -truncate"
 	exit 1
 else
 	$grep "Truncated" initial_truncate.outx
@@ -105,7 +105,7 @@ foreach wbnum (55 56 57 58 59)
 	# Wait for killed truncate process to die. If it hasn't died by the time ipcrm is called (which can happen on the slower
 	# boxes, ipcrm will not delete shared memory since it will see that a process is still attached. Then when MUPIP RUNDOWN
 	# invokes grab_crit, it will complete the truncate as in the 'shared memory intact' case.
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid 20
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 
 	$grep "TRUNC" trunc_wbtest_{$wbnum}_1.outx
 	$grep "Truncated" trunc_wbtest_{$wbnum}_1.outx

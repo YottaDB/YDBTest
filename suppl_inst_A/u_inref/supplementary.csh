@@ -49,7 +49,7 @@ $MSR START INST1 INST3 RP
 # Here we stop and restart the replication, to validate that -updateresync, which is used under the hood
 # doesn't error out if the stream info is already present in the instance file.
 get_msrtime
-$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "History has non-zero Supplementary Stream" -duration 30'
+$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "History has non-zero Supplementary Stream" -duration 300'
 $MSR STOP INST1 INST3
 $MSR START INST1 INST3 RP
 unsetenv needupdatersync

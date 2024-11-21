@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,8 +29,8 @@ setenv gtm_test_use_V6_DBs 0		# Disable V6 DB mode due to differences in reporte
 unsetenv gtm_test_jnlpool_sync		# ditto
 
 if (0 == $?test_replic) then
-    echo "Subtest peekaboo must be run with -replic"
-    exit 1
+	echo "Subtest peekaboo must be run with -replic"
+	exit 1
 endif
 #
 setenv gtm_test_disable_randomdbtn 1          # Disable resetting the TN to lower values cause below reset to fail
@@ -49,7 +49,7 @@ echo "Wait for connection to be established"
 $echoline
 echo ""
 setenv start_time `cat start_time`
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message 'New History Content' -duration 30"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message 'New History Content' -duration 300"
 #
 # Set TN to an interesting transnum a few shy of the warning TN. We'll be extracting this TN and
 # formatting it different ways. Do this on both sides.
