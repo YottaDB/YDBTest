@@ -43,13 +43,14 @@ build-imptp-rs:
        name: registry.gitlab.com/yottadb/db/ydbtest
        entrypoint: [""]
   stage: build
+  interruptible: true
   artifacts:
     paths:
       - testarea/
     expire_in: 1 month
     when: always
   script:
-    - docker/pipeline-test.csh
+    - docker/pipeline-test-ydbtest.csh
 
 run-tests-amd64:
   extends: .run-tests

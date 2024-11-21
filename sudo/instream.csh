@@ -120,8 +120,9 @@ if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $
 endif
 
 # Disable Huge page test on Docker, as it requires changing /proc/sys which is not normally writable
+# Disable erofs-ydb1103 on Docker, as it requires mounting permissions from host
 if ($?ydb_test_inside_docker) then
-	if (1 == $ydb_test_inside_docker) setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288"
+	if (1 == $ydb_test_inside_docker) setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 erofs-ydb1103"
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh

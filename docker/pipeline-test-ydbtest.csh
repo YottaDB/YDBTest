@@ -10,8 +10,6 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
-set echo
-set verbose
 
 # Ensure that our hostname does not have dashes as that crashes multiple parts of the test system
 # (it converts hostnames into variables)
@@ -25,7 +23,7 @@ logger test
 
 # The file is created asynchronously, so this ensures we don't proceed till it's created
 while ( ! -e /var/log/syslog)
-  sleep .01
+	sleep .01
 end
 
 # Next two seds, fix the serverconf.txt file
@@ -67,8 +65,13 @@ set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
 if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	# Get list of changed files
 	# https://forum.gitlab.com/t/ci-cd-pipeline-get-list-of-changed-files/26847
-	git fetch origin
-	set filelist = `git diff --name-only origin/master`
+	set upstream_repo = "https://gitlab.com/YottaDB/DB/YDBTest.git"
+	echo "# Add $upstream_repo as remote"
+	git remote -v
+	git remote | grep -q upstream_repo
+	if ($status) git remote add upstream_repo "$upstream_repo"
+	git fetch upstream_repo
+	set filelist = `git diff --name-only upstream_repo/master`
 else
 	# Test system passed in /YDBTest
 	git config --global --add safe.directory /YDBTest
@@ -83,6 +86,9 @@ touch result.txt
 # List of heavyweight tests we won't run on the pipeline
 # Leading and trailing spaces are necessary and relied upon by the =~ operator
 set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash ideminter_rolrec rollback_A recov suppl_inst_B io resil_4 tp gtcm_gnp triggers resil v44003 burst_load "
+
+# Our AARCH64 runner is slow, so add sudo to the list of heavyweight tests
+if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
 
 # For each file, check if it is instream.csh or is inside inref
 # If it is, add it so that we invoke the test system with "-t xxx -t yyy -t zzz"

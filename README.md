@@ -480,9 +480,9 @@ Fri Oct 11 06:09:56 PM UTC 2024 PASSED r134
 ```
 
 ## Running Test pipelines
-This command is for you to troubleshoot `docker/pipeline-test.csh` (used in the YDBTest pipeline) locally. It's tricky to construct:
+This command is for you to troubleshoot `docker/pipeline-test-ydbtest.csh` (used in the YDBTest pipeline) locally. It's tricky to construct:
 ```
-docker run --init --cap-add SYS_ADMIN --cap-add SYS_TIME -it -v $PWD:/YDBTest -v /testarea/sam/:/testarea1/ --rm -w /YDBTest --entrypoint docker/pipeline-test.csh registry.gitlab.com/yottadb/db/ydbtest
+docker run --init --cap-add SYS_ADMIN --cap-add SYS_TIME -it -v $PWD:/YDBTest -v /testarea/sam/:/testarea1/ --rm -w /YDBTest --entrypoint docker/pipeline-test-ydbtest.csh registry.gitlab.com/yottadb/db/ydbtest
 ```
 
 To troubleshoot `docker/pipeline-test-ydb.csh` (used in the YDB pipeline), run either of the following:
