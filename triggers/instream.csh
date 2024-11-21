@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -224,10 +224,10 @@ endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7083 gtm7083a"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7083 gtm7083a"
 else if ("dbg" == "$tst_image") then
-       # We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
+	# We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
 else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
 	# Disable gtm7083 subtest on SUSE Linux and Ubuntu 23.10 (and above) as we don't have the needed
 	# on that distribution (due to no libncurses.so.5 package)
@@ -243,11 +243,21 @@ if ($?ydb_test_exclude_gtm7083a) then
 	endif
 endif
 if ("dbg" == "$tst_image") then
-       # We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
+	# We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
 	set exclude_gtm7083a = 1
 endif
 if ($exclude_gtm7083a) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
+endif
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The "parse_invalidnames" subtest runs 1000s of "mupip trigger" commands on a 5-region database file.
+	# With encryption, opening each region takes more than 0.5 second (in a "gpgme_op_decrypt()" call
+	# that tries to decrypt the database key) and it is not clear how to avoid this delay inside gpgme.
+	# Because of this, running 1000s of processes in the foreground takes around 3 hours to finish even
+	# on an x86_64 system which is too long. Therefore, disable this subtest in that case. We do get
+	# test coverage of "mupip trigger" with encryption in various other tests so this disabling is fine.
+	setenv subtest_exclude_list "$subtest_exclude_list parse_invalidnames"
 endif
 
 # Submit the list of subtests
