@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -141,6 +144,13 @@ endif
 # Filter out tests requiring specific gg-user setup, if the setup is not available
 if ($?gtm_test_noggusers) then
 	setenv subtest_exclude_list "$subtest_exclude_list test_extract_show_single test_extract_show_multi test_extract_show_select multi_generation_ztp"
+endif
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below subtest spawns off a lot of processes and those take a lot of time to finish due to encryption
+	# initialization when opening each database region (there are 9 of those in this test). Therefore disable
+	# this subtest if encryption is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list ztp_tp_ntp_multi_process"
 endif
 
 $gtm_tst/com/submit_subtest.csh
