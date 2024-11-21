@@ -77,6 +77,14 @@ if ($exclude_backup_tmpfile_subtest) then
 	setenv subtest_exclude_list "$subtest_exclude_list backup_tmpfile-gtmde340860"
 endif
 
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below subtest spawns off 8 mumps processes in the background and expects at least one of them to open the
+	# snapshot shmid created by the foreground online integ process. Encryption disturbs this delicate balance enough
+	# that most of the times none of the 8 processes opens the snapshot shmid. And the test fails/hangs.
+	# Therefore disable encryption for this test as there is no special need to test it in this specific subtest.
+	setenv subtest_list_non_replic	"$subtest_list_non_replic online_integ_shmid-gtmde326986"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
