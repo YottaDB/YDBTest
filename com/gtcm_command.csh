@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,13 +74,7 @@ foreach gtcm_server ($tst_gtcm_server_list)
 	setenv tst_remote_host_$x $tst_remote_host_gtcm
 
 	if ("$argv_new" =~ *PORTNO_DEFINED_GTCM*) then
-		eval 'setenv portno_gtcm $GTCM_'"${tst_remote_host_gtcm:r:r:r}"':q'
-		# If there is a colon in the spec, pull out the portno piece after it.
-		if ("$portno_gtcm" =~ *:*) then
-			set portno_gtcm_split=${portno_gtcm:s/:/ /:q}
-			set portno_gtcm_split=(${portno_gtcm_split:x})
-			setenv portno_gtcm $portno_gtcm_split[2]
-		endif
+		setenv portno_gtcm `cat gtcm_portno_$x.txt`
 		set argv_new = `echo "$argv_new" | sed "s,PORTNO_DEFINED_GTCM,$portno_gtcm,g"  `
 	endif
 	if ("$argv_new" =~ *PORTNO_GTCM*) then
