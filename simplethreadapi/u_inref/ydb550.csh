@@ -19,6 +19,12 @@ foreach file ("ydb550" "ydb550b" "ydb550c")
 		echo "# $file.c : Test that a nested ydb_tp_st() rolls back correctly when the parent transaction commits"
 		echo "----------------------------------------------------------------------------------------------------"
 	else if ("ydb550b" == $file) then
+		if ("ENCRYPT" == "$test_encryption" ) then
+			# This test checks for TP restarts happening within 10 seconds. With -encrypt, database open
+			# takes long enough that the restarts don't happen within the 10 seconds and cause failures.
+			# So we skip running this part of the test in case of -encrypt
+			continue
+		endif
 		echo ""
 		echo "# $file.c : Run multiple processes/threads for 10 seconds to ensure that YDB_TP_RESTART is handled correctly"
 		echo "----------------------------------------------------------------------------------------------------------------"

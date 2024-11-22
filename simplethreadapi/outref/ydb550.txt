@@ -93,9 +93,11 @@ Thread T4:ydb_tp_st()1 returned YDB_OK as expected
 Thread T4:Since control has returned from ydb_tp_st()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
 end Thread 4
 
+##SUSPEND_OUTPUT ENCRYPT
 
 # ydb550b.c : Run multiple processes/threads for 10 seconds to ensure that YDB_TP_RESTART is handled correctly
 ----------------------------------------------------------------------------------------------------------------
+##ALLOW_OUTPUT ENCRYPT
 
 # ydb550c.c : Test user callback function initiated YDB_TP_RESTART is handled correctly
 -----------------------------------------------------------------------------------------
