@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,7 +63,7 @@ echo "# Switch the journals on the remote gtcm server 2"
 $rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ; cd $SEC_DIR_GTCM_2; $gtm_tst/$tst/u_inref/jnl_on2.csh"
 #
 echo "# Invoke pini_pfini.csh"
-$gtm_tst/$tst/u_inref/pini_pfini.csh >>& pini_pfini.out
+$gtm_tst/com/pini_pfini.csh >>& pini_pfini.out
 sleep 15	# Allow some updates
 #
 echo "# Now stop all dbfill processes"

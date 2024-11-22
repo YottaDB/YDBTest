@@ -63,6 +63,13 @@ endif
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
 
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below subtest invokes com/pini_pfini.csh which spawns off a lot of processes and those take a lot of time
+	# to finish (4 hours just in itself even on x86_64) due to encryption initialization when opening each database
+	# region (there are 8 of those in this subtest). Therefore disable this subtest if encryption is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list repeat_rollback_after_crash"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
