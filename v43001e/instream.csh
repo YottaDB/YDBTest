@@ -1,3 +1,19 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # ------------------------------------------------------------------------------
 # for stuff fixed in V43001E
 # ------------------------------------------------------------------------------
@@ -24,10 +40,20 @@ else
 	setenv subtest_list "C9C12002186 C9D01002209 D9B07001911 C9C11002163 D9D01002285 D9C03002051"
 	setenv subtest_list "$subtest_list D9D01002286 D9C04002091 C9C11002184"
 endif
+
+setenv subtest_exclude_list ""
+
 # filter out subtests that cannot pass with MM
 # D9B07001911	Tests journal state changes from nobefore to before to off
 if ("MM" == $acc_meth) then
-	setenv subtest_exclude_list "D9B07001911"
+	setenv subtest_exclude_list "$subtest_exclude_list D9B07001911"
 endif
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below subtest spawns off a lot of processes (2500 of them) and those take a lot of time to finish due
+	# to encryption initialization when opening each database region. Therefore disable this subtest if -encrypt.
+	setenv subtest_exclude_list "$subtest_exclude_list D9C04002091"
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "v43001e test DONE."
