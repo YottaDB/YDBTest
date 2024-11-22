@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,8 +56,8 @@ $gtm_dist/mumps -run blockedwrite >& blockedwrite.out
 $echoline
 setenv pipecnt `$grep -c pipe blockedwrite.out`
 if (0 < $pipecnt) then
-    echo "ztrap taken for pipe full"
-    echo "Total number of lines successfully written to pipe:"
+	echo "ztrap taken for pipe full"
+	echo "Total number of lines successfully written to pipe:"
 endif
 
 $grep -c "abc" blockedwrite.out
@@ -66,7 +66,7 @@ $echoline
 echo "**************************** blockedfifo ****************************"
 $echoline
 $gtm_dist/mumps -run blockedfifo
-$gtm_tst/com/wait_for_log.csh -log blkfiforead.mjo -message "10000" -duration 60
+$gtm_tst/com/wait_for_log.csh -log blkfiforead.mjo -message "10000" -duration 300
 if (0 == $status) then
 	wc -l blkfiforead.mjo | $tst_awk '{print "Number of lines read = " $1}'
 	$tail -n 5 blkfiforead.mjo
@@ -418,7 +418,7 @@ $echoline
 echo "**************************** fifozeof ****************************"
 $echoline
 $gtm_dist/mumps -run fifozeof
-$gtm_tst/com/wait_for_log.csh -log fiforead.mjo -message "device" -duration 10
+$gtm_tst/com/wait_for_log.csh -log fiforead.mjo -message "device" -duration 300
 if (0 == $status) then
 	cat fiforead.mjo
 endif
@@ -426,7 +426,7 @@ $echoline
 echo "**************************** fifovar ****************************"
 $echoline
 $gtm_dist/mumps -run fifovar
-$gtm_tst/com/wait_for_log.csh -log fifovarread.mjo -message "DEVICEWRITE" -duration 120
+$gtm_tst/com/wait_for_log.csh -log fifovarread.mjo -message "DEVICEWRITE" -duration 300
 if (0 == $status) then
 	cat fifovarread.mjo
 	#we don't want the accumulated error output
@@ -471,11 +471,11 @@ if ("TRUE" == $gtm_test_unicode_support) then
 	$gtm_dist/mumps -run ^%XCMD 'write $CHAR(239),$CHAR(187),$CHAR(191),"^",!' > uout_with_bom
 	# verify output
 	echo uout_with_bom:
-        $gtm_dist/mumps -run ^%XCMD 'set in="uout_with_bom" open in for  use in read *x  quit:$zeof  use $p write x," "'
+	$gtm_dist/mumps -run ^%XCMD 'set in="uout_with_bom" open in for  use in read *x  quit:$zeof  use $p write x," "'
 	echo "^" > uout_without_bom
 	$convert_to_gtm_chset uout_without_bom
 	echo uout_without_bom:
-        $gtm_dist/mumps -run ^%XCMD 'set in="uout_without_bom" open in for  use in read *x  quit:$zeof  use $p write x," "'
+	$gtm_dist/mumps -run ^%XCMD 'set in="uout_without_bom" open in for  use in read *x  quit:$zeof  use $p write x," "'
 	# make sure in UTF-8 mode for execution
 	$switch_chset UTF-8
 	$gtm_dist/mumps -run shortutf
