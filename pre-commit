@@ -135,6 +135,10 @@ set check_ext_list = "m csh sh c"
 set header = "Files with wrong indentation"
 
 foreach file ($filelist)
+	if (! -e $file) then
+		# If file is being deleted as part of this commit, skip processing this file.
+		continue
+	endif
 	set ext = $file:e
 	foreach check_ext ($check_ext_list)
 		if ($ext == $check_ext) then
