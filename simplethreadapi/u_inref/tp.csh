@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,6 +71,12 @@ set exefile = $file:r
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
 
 foreach file (tp*.c)
+	if (("ENCRYPT" == "$test_encryption" ) && ("tp5_TPTIMEOUT.c" == $file)) then
+		# This test checks for TPTIMEOUT happening within $zmaxtptime value of 1 second
+		# But with -encrypt, database open takes more than a few seconds and causes failures.
+		# So we disable this part of the test in case of -encrypt.
+		continue
+	endif
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
