@@ -52,5 +52,17 @@ if ($?test_replic == 1) then
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
+
+setenv subtest_exclude_list ""
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below 2 subtests are very sensitive to timing between mupip backup process and concurrent updates
+	# (see the comment "so that we have time to mess with them") in the respective subtest driver scripts).
+	# Running them with -encrypt destroys the timing and causes these tests to fail almost always.
+	# Since these 2 subtests test an obscure error scenario, they are not that important to run with -encrypt
+	# and so we disable them with -encrypt.
+	setenv subtest_exclude_list "$subtest_exclude_list mu_bkup_change_permission mu_bkup_stop"
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "V51000 test DONE."
