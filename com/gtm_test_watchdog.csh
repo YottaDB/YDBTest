@@ -29,7 +29,9 @@ if (! $?gtm_test_hang_alert_sec) then
 		set gtm_test_hang_alert_sec = 86400 # A subtest running for 24 hours on a 1-CPU system is suspected to be hung
 	else
 		# Multi-CPU x86_64 box
-		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours on x86_64 boxes is suspected to be hung
+		# A subtest running for 5 hours on x86_64 boxes is suspected to be hung
+		# Usually 2.5 hours on x86_64 boxes is enough but with -encrypt we have seen tests take 4 hours.
+		set gtm_test_hang_alert_sec = 18000
 	endif
 endif
 set mailinterval = 1800 # Send TIMEDOUT mail to the user 30 minutes AFTER TEST-E-HANG email
