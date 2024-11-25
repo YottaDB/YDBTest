@@ -76,8 +76,11 @@ foreach option ($options)
 		set arg = " $log"
 		breaksw
 	case "-p --pid":
-		# Hang for 30 secs, will stop later
-		($gtm_dist/mumps -run %XCMD 'hang 30' & ; echo $! >&! pid.txt) >& m_job_control_output.txt
+		# Start an M program in the background. Ensure it is alive until we MUPIP STOP it later in the test. Towards that,
+		# HANG inside the M program. We initially had the hang time as 30 seconds but noticed some times the process
+		# terminates before the MUPIP STOP step on slower AARCH64 systems. This causes the MUPIP STOP step to issue a
+		# "No such process" error and fails the test. HANG a lot longer (3000 seconds) to avoid that random error.
+		($gtm_dist/mumps -run %XCMD 'hang 3000' & ; echo $! >&! pid.txt) >& m_job_control_output.txt
 		set pid = `cat pid.txt`
 		# Test with core or with process number?
 		set pid_runningP_or_core = `shuf -i 0-1 -n 1`
