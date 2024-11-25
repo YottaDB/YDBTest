@@ -120,10 +120,10 @@ $gtm_tst/com/wait_for_proc_to_die.csh $pid >& waitforproc.log
 
 # stop stuck background process (normally it's already exited)
 if ( 0 != $? ) then
-        echo "TEST-E-HANG: process is hung unexpectedly, stopping"
-        $gtm_dist/mupip stop $pid
+	echo "TEST-E-HANG: process is hung unexpectedly, stopping"
+	$gtm_dist/mupip stop $pid
 else
-        cat conn.txt
+	cat conn.txt
 endif
 
 # Test case graphs
@@ -176,51 +176,51 @@ endif
 #
 foreach parm ( "0-0-0" "0-0-2" "0-unset-0" "0-unset-2" "5-2-1" "2-5-0"  )
 
-        set server_delay=`echo $parm | cut -d- -f1`
-        set client_timeout=`echo $parm | cut -d- -f2`
-        set client_stretch=`echo $parm | cut -d- -f3`
+	set server_delay=`echo $parm | cut -d- -f1`
+	set client_timeout=`echo $parm | cut -d- -f2`
+	set client_stretch=`echo $parm | cut -d- -f3`
 
-        echo
-        echo "---- testing timeout behaviour with server_delay=${server_delay} client_timeout=${client_timeout} client_stretch=${client_stretch}----"
+	echo
+	echo "---- testing timeout behaviour with server_delay=${server_delay} client_timeout=${client_timeout} client_stretch=${client_stretch}----"
 
-        # reset checkpoint values
-        $gtm_dist/mumps -run chkrst^gtmde201295 $portno
+	# reset checkpoint values
+	$gtm_dist/mumps -run chkrst^gtmde201295 $portno
 
-        set i = 1
-        while ($i <= $client_count)
-                ($gtm_dist/mumps -run client^gtmde201295 $portno $server_delay $client_timeout client${i} $client_count $i $client_stretch >>& client${i}-${parm}.out &)
-        @ i++
-        end
+	set i = 1
+	while ($i <= $client_count)
+		($gtm_dist/mumps -run client^gtmde201295 $portno $server_delay $client_timeout client${i} $client_count $i $client_stretch >>& client${i}-${parm}.out &)
+	@ i++
+	end
 
-        $gtm_dist/mumps -run server^gtmde201295 $portno $server_delay $client_timeout server $client_count -1 $client_stretch >>& server-${parm}.out
+	$gtm_dist/mumps -run server^gtmde201295 $portno $server_delay $client_timeout server $client_count -1 $client_stretch >>& server-${parm}.out
 
-        # Clients are "intentionally" got stuck, when no timeout is specified
-        # for a socket OPEN - in this case they must be killed from outside.
-        echo "# wait for clients to exit"
-        while (1)
-                set wpid = `$gtm_dist/mumps -run getw^gtmde201295`
-                if ("" == $wpid) then
-                        break
-                endif
-                $gtm_dist/mumps -run killw^gtmde201295 $wpid
-                kill $wpid
-                $gtm_tst/com/wait_for_proc_to_die.csh $wpid >>& waitforproc-${parm}.log
-        end
+	# Clients are "intentionally" got stuck, when no timeout is specified
+	# for a socket OPEN - in this case they must be killed from outside.
+	echo "# wait for clients to exit"
+	while (1)
+		set wpid = `$gtm_dist/mumps -run getw^gtmde201295`
+		if ("" == $wpid) then
+			break
+		endif
+		$gtm_dist/mumps -run killw^gtmde201295 $wpid
+		kill $wpid
+		$gtm_tst/com/wait_for_proc_to_die.csh $wpid >>& waitforproc-${parm}.log
+	end
 
-        # print server log
-        echo "-- server log --"
-        cat server-${parm}.out
+	# print server log
+	echo "-- server log --"
+	cat server-${parm}.out
 
-        # print client logs (only failed ones)
-        set i = 1
-        while ($i <= $client_count)
-                set cfail = `cat client{$i}-${parm}.out | grep 'client.*score.*fail' | wc -l`
-                if ($cfail) then
-                        echo "-- client${i} log (failed) --"
-                        cat client{$i}-${parm}.out
-                endif
-                @ i++
-        end
+	# print client logs (only failed ones)
+	set i = 1
+	while ($i <= $client_count)
+		set cfail = `cat client{$i}-${parm}.out | grep 'client.*score.*fail' | wc -l`
+		if ($cfail) then
+			echo "-- client${i} log (failed) --"
+			cat client{$i}-${parm}.out
+		endif
+		@ i++
+	end
 
 end
 

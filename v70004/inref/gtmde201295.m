@@ -16,11 +16,11 @@ connect ; entry: connect to non-existent IP address
 	; because it would start a timer, but we want to go without any
 	; timer to test OPEN command's timeout behaviour
 	;
-	set beg=$zut
+	set beg=$horolog
 	open "socket":(connect="[240.0.0.0]:19355:TCP"):1:"SOCKET"
-	set end=$zut
+	set end=$horolog
 	;
-	set elapsed=(end-beg)/(10**6)
+	set elapsed=$$^difftime(end,beg)
 	if elapsed>2 do  quit
 	.write "test was running for ",$justify(elapsed,0,2)," sec, failed",!
 	;
@@ -82,7 +82,7 @@ client	; entry: client
 	hang spread
 	;
 	write "# attempt to connect with timeout=",timeout,!
-	set before=$piece($zhorolog,",",2)
+	set before=$zhorolog
 	set isset=(+timeout=timeout)
 	set timeout=+timeout
 	set expect=$select(delay'>timeout:"catch",1:"miss")
@@ -90,7 +90,7 @@ client	; entry: client
 	;
 	if isset open "client":(connect="127.0.0.1:"_portno_":TCP"):timeout:"SOCKET"
 	if 'isset open "client":(connect="127.0.0.1:"_portno_":TCP")::"SOCKET"
-	set after=$piece($zhorolog,",",2)
+	set after=$zhorolog
 	;
 	set $ztrap="set key="""" goto skipUseError"
 	use "client"
@@ -181,7 +181,7 @@ printZshowDExtr ; print ZSHOW "D" extract
 printElapsed(before,after) ; print elapsed time
 	;
 	new elapsed,min,error
-	set elapsed=after-before
+	set elapsed=$$^difftime(after,before)
 	set min=$select(delay<timeout:delay,1:timeout)
 	write "# check elapsed time, it should be ",min," sec",!
 	set error=""
