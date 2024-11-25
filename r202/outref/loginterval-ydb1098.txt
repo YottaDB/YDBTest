@@ -1,6 +1,7 @@
 # This is to test the frequency at which the source server log file emits output.
 # Create a new empty database so we can run an M program.
-# Run 50000 transactions and make sure exactly 5 logs are emitted.
+# Run 50000 transactions
+# Shutdown the servers and verify they match.
 # Validate that the sequence numbers in REPL INFO messages are 10000 transactions apart.
 # On ARM, these numbers have been observed to vary between 1 and 100 of the expected value.
 # Permit a variance of up to 500, as long as we don't see more logs than we expect.
@@ -9,4 +10,3 @@ Seqno : 10xxx
 Seqno : 20xxx
 Seqno : 30xxx
 Seqno : 40xxx
-# Shutdown the servers and verify they match.

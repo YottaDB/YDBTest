@@ -10,13 +10,13 @@
 #								#
 #################################################################
 {
-	seqno=$3; line_no=(NR-1)
+	seqno=$6; line_no=(NR-1)
 	if (seqno > line_no*10000 && seqno < line_no*10000 + 500) {
 		printf "Seqno : %d0xxx\n", line_no
 	} else {
-		printf "Seqno out of range : %d\n", seqno
+		printf "Seqno out of range : %s\n", seqno
 	}
 }
 END {
-	if (NR != 5) { print "TEST-E-FAIL : Saw more than 5 lines of output"; }
+	if (NR != 5) { printf "TEST-E-FAIL : Saw %d lines of output, but expected exactly 5", NR; }
 }
