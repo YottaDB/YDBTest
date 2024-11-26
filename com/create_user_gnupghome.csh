@@ -57,7 +57,8 @@ endif
 
 # If $gnupghome_source has been rebuilt, remove the user's copy, so it could be recreated.
 set tmp_dir = "$tmp_dir/$USER"
-if ((-M $gnupghome_source/gpg.conf) > (-M $tmp_dir/gpg.conf)) then
+if (((-M $gnupghome_source/gpg.conf) > (-M $tmp_dir/gpg.conf))					\
+		|| ((-M $gnupghome_source/gpg-agent.conf) > (-M $tmp_dir/gpg-agent.conf))) then
 	chmod -R 775 $tmp_dir >>&! $log_file		# Make things so we CAN remove dir
 	rm -rf $tmp_dir >>&! $log_file
 	if ($status) then
