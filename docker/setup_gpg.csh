@@ -14,9 +14,9 @@ setenv GNUPGHOME /usr/library/com/gnupg
 setenv gtm_pubkey $GNUPGHOME/gtm@fnis.com_pubkey.txt
 setenv gtm_dist /usr/library/V999_R999/dbg
 cp $gtm_dist/plugin/gtmcrypt/gen_keypair.sh .
-# Create temp copy of gen_keypair.sh: Remove passphrase related lines and just export the var here
+# Create temp copy of gen_keypair.sh: Remove line that unsets the passphrase and just export the var here
 # We don't have an tty to be able to prompt for a password while building this
-sed -i '80,89d' gen_keypair.sh
+sed -i '/^unset passphrase/d' gen_keypair.sh
 chmod +x gen_keypair.sh
 setenv passphrase "ydbrocks"
 ./gen_keypair.sh gtm@fnis.com gtm
