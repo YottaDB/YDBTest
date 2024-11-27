@@ -82,7 +82,7 @@ if ("ENCRYPT" == "$test_encryption" ) then
 	# snapshot shmid created by the foreground online integ process. Encryption disturbs this delicate balance enough
 	# that most of the times none of the 8 processes opens the snapshot shmid. And the test fails/hangs.
 	# Therefore disable encryption for this test as there is no special need to test it in this specific subtest.
-	setenv subtest_list_non_replic	"$subtest_list_non_replic online_integ_shmid-gtmde326986"
+	setenv subtest_exclude_list "$subtest_exclude_list online_integ_shmid-gtmde326986"
 endif
 
 # Submit the list of subtests
