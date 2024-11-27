@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,6 +11,7 @@
 #								#
 #################################################################
 
+set timeout 120
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
