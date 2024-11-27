@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -426,7 +426,7 @@ endif
 
 set bakdir3 = dir_${bakdir}_mupip_rollback_3
 unset noglob
-$gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.dat *.mjl*" mv	# move over files for debugging test failures if any
+$gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.dat *.mjl*" mv nozip	# move over files for debugging test failures if any
 
 set sort = "sort -T ."	# Use sort -T . to ensure temporary files get created in current directory instead of /tmp where we might not have enough space
 
@@ -609,8 +609,7 @@ if (! $forward_only_specified) then
 	cp $bakdir2/*.dat .	# restore dat to reflect backward rollback
 else
 	# Forward rollback done. Databases are in good shape.
-	cp $bakdir3/*.dat.gz .	# restore dat to reflect forward rollback
-	gunzip *.dat.gz
+	mv $bakdir3/*.dat .	# restore dat to reflect forward rollback
 	# Move away replication instance file
 	if (-e $gtm_repl_instance) then
 		mv $gtm_repl_instance $gtm_repl_instance.orig_${n}
