@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 $gtm_tst/com/dbcreate.csh mumps 1 210 900 1024 4000 64
 setenv gtmgbldir "./mumps.gld"
@@ -26,7 +40,12 @@ while ($currun <= $reruns)
 		cat checkdb_err_$currun.txt
 		@ stoptest = 1
 	endif
-	
+
+	# In case %YDBPROCSTUCKEXEC was invoked in the above "mumps -run drive^mettest" call, we need to
+	# wait for potentially jobbed off DSE processes before doing a "mupip integ" that requires standalone access.
+	# Hence the below call.
+	$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
+
 	$gtm_exe/mupip integ mumps.dat >>&! integ_report.$currun
 	grep "No errors detected by integ." integ_report.$currun | sed 's/^/PASS '$currun' - /g'
 	if ( $status != 0) then
