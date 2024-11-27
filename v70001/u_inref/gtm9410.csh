@@ -11,6 +11,13 @@
 #################################################################
 #
 
+# This subtest traces the "clock_nanosleep()" calls through strace. But having auto relink enabled for $gtm_dist causes
+# the "$GDE exit" invocation below to invoke `$ydb_dist/GDE.o` which would in turn go through auto relink shared memory
+# and it is possible a "grab_latch()" call on that shared memory sleeps for a bit because another concurrently running
+# test is holding that latch. This can cause false test failures due to extra "clock_nanosleep()" calls in Test 1a) and 1c)
+# where we expect to see NO clock_nanosleep() calls. Therefore disable auto-relink in this subtest.
+source $gtm_tst/com/gtm_test_disable_autorelink.csh
+
 cat << CAT_EOF | sed 's/^/# /;'
 ********************************************************************************************
 GTM-9424 - Test the following release note
