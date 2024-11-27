@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,16 @@ if ("ENCRYPT" == $test_encryption && "TRUE" == $gcrypt_fips && "FALSE" == "$gtm_
 		echo "Environment variable encryption_lib is not defined. Cannot set FIPS mode."
 		exit 1
 	else if ("gcrypt" == $encryption_lib) then
-		source $gtm_tst/com/set_env_random.csh "gtmcrypt_FIPS" "TRUE FALSE"
+		# We have noticed that on SUSE Linux Enterprise Desktop 15 SP5, enabling FIPS mode
+		# results in the following error when opening an encrypted database file.
+		#
+		#  %YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat.
+		#  Failed to initialize FIPS mode. Reason: General error
+		#
+		# It is not clear why that happens only there. For now, disable FIPS only on SLED systems.
+		if ("sled" != $gtm_test_linux_suse_distro) then
+			source $gtm_tst/com/set_env_random.csh "gtmcrypt_FIPS" "TRUE FALSE"
+		endif
 	endif
 endif
 
