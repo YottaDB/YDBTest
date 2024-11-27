@@ -17,7 +17,7 @@ logger test
 
 # The file is created asynchronously, so this ensures we don't proceed till it's created
 while ( ! -e /var/log/syslog)
-  sleep .01
+	sleep .01
 end
 
 # Next two seds, fix the serverconf.txt file
@@ -33,10 +33,10 @@ chmod 777 /testarea1
 
 # User passed in the Test system as a volume
 if ( -f /YDBTest/com/gtmtest.csh ) then
-  # Symlink to allow user to experiment and get the test to pass
-  echo "Test System passed in as a volume... symlinking test system"
-  rm -r /usr/library/gtm_test/T999
-  ln -s /YDBTest /usr/library/gtm_test/T999
+	# Symlink to allow user to experiment and get the test to pass
+	echo "Test System passed in as a volume... symlinking test system"
+	rm -r /usr/library/gtm_test/T999
+	ln -s /YDBTest /usr/library/gtm_test/T999
 endif
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
@@ -46,23 +46,23 @@ setenv ydb_test_inside_docker 1
 set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker -w gtm_curpro"
 
 if ( $#argv == 0 ) then
-  exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -h"
+	exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -h"
 endif
 
 # Debugging entry points for testing problems with the system
 if ( "$argv[1]" == "-rootshell") then
-  exec su - $pass_env
+	exec su - $pass_env
 endif
 
 if ( "$argv[1]" == "-shell") then
-  echo "Try running gtmtest -t r134"
-  echo "Type 'ver' to switch versions"
-  exec su -l gtmtest $pass_env
+	echo "Try running gtmtest -t r134"
+	echo "Type 'ver' to switch versions"
+	exec su -l gtmtest $pass_env
 endif
 
 if ( "$argv[1]" == "-pipelineydb") then
-  exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/docker/pipeline-test-ydb.csh"
+	exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/docker/pipeline-test-ydb.csh"
 endif
 
 # Run the tests as the test user
-exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $argv"
+exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $argv"

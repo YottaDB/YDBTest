@@ -66,10 +66,10 @@ foreach test ($random_test_list)
 	# Note that we use "fg", because if we use "bg", the shell does not know that there are child jobs to "wait" for.
 	# using fg with & gives us what we want: run multiple tests concurrently and wait for all of them to finish
 	if ( $random_nonreplic_subtest_list_with_commas != "" ) then
-		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt &
+		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt &
 	endif
 	if ( $random_replic_subtest_list_with_commas != "" ) then
-		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt &
+		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt &
 	endif
 end
 

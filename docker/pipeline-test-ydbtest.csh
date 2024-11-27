@@ -118,13 +118,13 @@ end
 # The test system has the capability of running multiple instreams at once, so let's do that.
 
 if ( "$instream_invokelist" != "" ) then
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist"
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist"
 	if ($status) then
 		echo "${instream_invokelist}: FAIL (non-replic)" >> result.txt
 	else
 		echo "${instream_invokelist}: PASS (non-replic)" >> result.txt
 	endif
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist -replic"
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist -replic"
 	if ($status) then
 		echo "${instream_invokelist}: FAIL (replic)" >> result.txt
 	else
@@ -158,7 +158,7 @@ foreach file ($filelist)
 		if ( "$subtest_list_non_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
 			# If test was invoked as a suite from instream (non-replic), don't add it to the invoke list
 			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (non-replic)" >> result.txt
 				else
@@ -168,7 +168,7 @@ foreach file ($filelist)
 		else if ( "$subtest_list_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
 			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
 			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest -replic"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest -replic"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (replic)" >> result.txt
 				else
@@ -179,13 +179,13 @@ foreach file ($filelist)
 			# Subtest in the u_inref or outref is not a known subtest. Run whole test.
 			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
 			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test"
 				if ($status) then
 					echo "${test}: FAIL (non-replic)" >> result.txt
 				else
 					echo "${test}: PASS (non-replic)" >> result.txt
 				endif
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -replic"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -replic"
 				if ($status) then
 					echo "${test}: FAIL (replic)" >> result.txt
 				else
