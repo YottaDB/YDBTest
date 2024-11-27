@@ -249,7 +249,7 @@ if ("MM" == "$acc_meth") then
 	echo "# test_encryption is set to $test_encryption (since acc_meth is $acc_meth) by do_random_settings.csh"	>>&! $settingsfile
 	echo "setenv test_encryption $test_encryption"									>>&! $settingsfile
 else if !($?test_encryption) then
-	if ((50 >= $randnumbers[9])) then
+	if ((10 >= $randnumbers[9])) then
 		setenv test_encryption "ENCRYPT"
 	else
 		setenv test_encryption "NON_ENCRYPT"
