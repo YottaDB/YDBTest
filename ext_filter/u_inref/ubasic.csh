@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # extract.awk is used to check external filter log in the source side. The stream seqno will be "0" for non-suppl instance and non-zero for suppl instance
 set strm_seqno_zero = "TRUE"
@@ -20,10 +34,12 @@ d ^unicodeJnlrec
 h
 EOF
 #
-echo "Verifying log file:"
-sleep 5
-# Filter volatile fields in journal records like checksum, timestamp and nodeflags (different between trigger supporting and 
-# trigger non-supporting platforms)
-check_mjf log.extout
-#
 $gtm_tst/com/dbcheck.csh -extract
+
+# Now that the replication servers (and backgrounded filter programs writing to log.extout) have been shut down,
+# verify the log.extout contents.
+echo "Verifying log file:"
+# Filter volatile fields in journal records like checksum, timestamp and nodeflags
+# (different between trigger supporting and trigger non-supporting platforms)
+check_mjf log.extout
+

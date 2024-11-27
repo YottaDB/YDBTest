@@ -24,6 +24,15 @@ ZKILL,TZKILL,UZKILL
 Passed from unicodeJnlrec
 
 YDB>
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
 Verifying log file:
 Received: 
 05\#TIMESTAMP#\1\0\0\#TOKENSEQ1#\0\#STRMSEQNO#\0\#NODEFLAGS#\^acn("＠ＡＢＣＤＥＦＧ")="｀ａｂｃｄｅｆｇ"
@@ -139,12 +148,6 @@ Sent:
 10\#TIMESTAMP#\13\0\0\#TOKENSEQ13#\0\#STRMSEQNO#\1\#NODEFLAGS#\^acn("ߐ")
 10\#TIMESTAMP#\13\0\0\#TOKENSEQ13#\0\#STRMSEQNO#\2\#NODEFLAGS#\^acn("ஸ")
 09\#TIMESTAMP#\13\0\0\#TOKENSEQ13#\0\#STRMSEQNO#\1\
-Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-Shutting down Primary Source Server Server in ##TEST_PATH##
-DATABASE EXTRACT PASSED
-##SOURCE_PATH##/mupip
-##SOURCE_PATH##/mupip integ -REG *
-No errors detected by integ.
-##REMOTE_SOURCE_PATH##/mupip
-##REMOTE_SOURCE_PATH##/mupip integ -REG *
-No errors detected by integ.
+Received: 
+99
+EOT received, halting...
