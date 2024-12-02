@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #################################################################
 
 set timeout = $1
-if ("" == "$timeout") set timeout = 1800	# keep in sync with com/wait_until_src_backlog_below.csh
+if ("" == "$timeout") set timeout = 3600	# keep in sync with com/wait_until_src_backlog_below.csh
 set sleepinc = 5
 while ($timeout > 0)
 	$gtm_tst/com/is_rcvr_backlog_clear.csh

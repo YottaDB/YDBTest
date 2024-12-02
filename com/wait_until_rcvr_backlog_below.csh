@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ if ( $limit < 0) then
 endif
 
 if ($2 == "") then
-	set maxwait=1800
+	set maxwait=3600
 else
 	set maxwait=$2
 endif

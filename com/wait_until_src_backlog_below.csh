@@ -3,7 +3,7 @@
 #								#
 # Copyright 2004, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@
 # Waits (in increments of 1 second) until the current backlog is <= the input backlog.
 #
 # $1 - backlog limit to wait for
-# $2 - optional max. wait time (by default it is 1800 seconds, i.e. 30 minutes)
+# $2 - optional max. wait time (by default it is 3600 seconds, i.e. 60 minutes)
 # $3 - optional log file name
 # $4 - optional noerror - Silently exit even if backlog did not decrease after the max wait
 #
@@ -30,7 +30,7 @@ if ( $limit < 0) then
 endif
 
 if ($2 == "") then
-	set maxwait=1800	# keep in sync with com/wait_until_rcvr_backlog_clear.csh
+	set maxwait=3600	# keep in sync with com/wait_until_rcvr_backlog_clear.csh
 else
 	set maxwait=$2
 endif
