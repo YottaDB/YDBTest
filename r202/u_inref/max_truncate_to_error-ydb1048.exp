@@ -11,6 +11,10 @@
 #								#
 #################################################################
 
+# The default expect timeout of 10 seconds has been seen to be not enough in some cases when system is loaded
+# and particularly when the test is run with "-encrypt" (db file open takes order of seconds in that case).
+set timeout 120
+
 set chset [lindex $argv 0]
 
 # The tty line limit is 4096
