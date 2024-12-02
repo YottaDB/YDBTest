@@ -643,6 +643,19 @@ else
 endif
 setenv tst_random_all "$tst_random_all gtm_custom_errors"
 
+if (("ENCRYPT" == $test_encryption) && $?gtm_custom_errors) then
+	# Having "gtm_custom_errors" env var defined causes the journal pool to be opened first by all processes
+	# before they open any database file (see "jnlpool_init()" call in sr_port/gvcst_init.c). And a
+	# "mupip replic -source" command would open the journal pool, hold the ftok lock on the instance file
+	# and while it still holds this will try to open all database files (which would take order of seconds
+	# due to decryption slowness at db open time) resulting in a much longer time the ftok lock on mumps.repl
+	# is held and in turn cause a spurious test failure due to a SEMWT2LONG error. To avoid this, bump the
+	# default timeout from 60 seconds to a higher value of 300 seconds using the below env var.
+	setenv gtm_db_startup_max_wait 300
+	echo "# gtm_db_startup_max_wait set by do_random_settings.csh"		>>&! $settingsfile
+	echo "setenv gtm_db_startup_max_wait $gtm_db_startup_max_wait"		>>&! $settingsfile
+endif
+
 ###########################################################################
 ### Random option - 26 ### Randomly decide to enable instance freeze on regions
 #
