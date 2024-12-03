@@ -304,12 +304,12 @@ ydb484e	;
 	for operator="=","'=","<",">","'<","'>","<=",">=","]","]]","']","']]","[","'[" do
 	. write " -> Test that IF $ZYSQLNULL"_operator_"x does not execute IF block AND sets $TEST to 0",!
 	. for nonnull=0,"","abcd","12abcd",(1/3),20,(-1/3),"-18.58" do
-        . . set xstr="if $zysqlnull"_operator_$zwrite(nonnull)_" write ""IF block executed. Not expected."",!" write xstr,! xecute xstr
-        . . set xstr="else  write ""ELSE block executed as expected"",!" write xstr,! xecute xstr
-        . . set xstr="zwrite $test" write xstr,! xecute xstr
-        . . set xstr="if "_$zwrite(nonnull)_operator_"$zysqlnull write ""IF block executed. Not expected."",!" write xstr,! xecute xstr
-        . . set xstr="else  write ""ELSE block executed as expected"",!" write xstr,! xecute xstr
-        . . set xstr="zwrite $test" write xstr,! xecute xstr
+	. . set xstr="if $zysqlnull"_operator_$zwrite(nonnull)_" write ""IF block executed. Not expected."",!" write xstr,! xecute xstr
+	. . set xstr="else  write ""ELSE block executed as expected"",!" write xstr,! xecute xstr
+	. . set xstr="zwrite $test" write xstr,! xecute xstr
+	. . set xstr="if "_$zwrite(nonnull)_operator_"$zysqlnull write ""IF block executed. Not expected."",!" write xstr,! xecute xstr
+	. . set xstr="else  write ""ELSE block executed as expected"",!" write xstr,! xecute xstr
+	. . set xstr="zwrite $test" write xstr,! xecute xstr
 	write !
 	quit
 
@@ -551,7 +551,7 @@ ydb484f	;
 	. . set:$ZYISSQLNULL(second) l=""
 	. . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) do
 	. . . set xstr="set res=$zyhash("_$ZWRITE(first)_","_$ZWRITE(second)_") zwrite res" write xstr," " xecute xstr
-        . . . set xstr="set res=$zyhash("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
+	. . . set xstr="set res=$zyhash("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
 	. . kill dummy
 	;
 	write "$QSUBSCRIPT",!
@@ -565,7 +565,7 @@ ydb484f	;
 	. . set:$ZYISSQLNULL(second) l=""
 	. . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) do
 	. . . set xstr="set res=$qsubscript("_$ZWRITE(first)_","_$ZWRITE(second)_") zwrite res" write xstr," " xecute xstr
-        . . . set xstr="set res=$qsubscript("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
+	. . . set xstr="set res=$qsubscript("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
 	. . kill dummy
 	;
 	write "$ZWRITE",!
@@ -583,7 +583,7 @@ ydb484f	;
 	. . set:$ZYISSQLNULL(second) l=""
 	. . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) do
 	. . . set xstr="set res=$zwrite("_$ZWRITE(first)_","_$ZWRITE(second)_") zwrite res" write xstr," " xecute xstr
-        . . . set xstr="set res=$zwrite("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
+	. . . set xstr="set res=$zwrite("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
 	. . kill dummy
 	;
 	write "$ZCONVERT 3 arg form",!
@@ -611,7 +611,7 @@ ydb484f	;
 	. . set:second=y l=second
 	. . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) do
 	. . . set xstr="set res=$zconvert("_$ZWRITE(first)_","_$ZWRITE(second)_") zwrite res" write xstr," " xecute xstr
-        . . . set xstr="set res=$zconvert("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
+	. . . set xstr="set res=$zconvert("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
 	. . kill dummy
 	write "$ZTRNLNM",!
 	set a="ydb_dist",b="x",c="",d="",e="",f="VALUE"
@@ -699,7 +699,7 @@ ydb484f	;
 	. . . set:'$ZYISSQLNULL(second) l=y
 	. . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) do
 	. . . . set xstr="set res="_func_"("_$ZWRITE(first)_","_$ZWRITE(second)_") zwrite res" write xstr," " xecute xstr
-        . . . . set xstr="set res="_func_"("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
+	. . . . set xstr="set res="_func_"("_$ZWRITE(k)_","_$ZWRITE(l)_") zwrite res" write xstr," " xecute xstr
 	. . . kill dummy
 	;
 	write "$ZPARSE",!
@@ -734,7 +734,7 @@ ydb484f	;
 	;
 	write "$ORDER",!
 	set xzynull=$ZYSQLNULL,y0=0,z1=1,xnull=""
-        set xstr="set ^x1=1" xecute xstr
+	set xstr="set ^x1=1" xecute xstr
 	zwrite xzynull
 	zwrite xnull
 	zwrite y0
@@ -828,7 +828,7 @@ ydb484f	;
 	. . set:second=y2 l=second
 	. . if ((first="$ZYSQLNULL")!($ZYISSQLNULL(second))!(first="xzynull")) do
 	. . . set xstr="write $zbitget("_first_","_$ZWRITE(second)_")" write xstr," " xecute xstr write !
-        . . . set xstr="write $zbitget("_k_","_l_")" write xstr," " xecute xstr write !
+	. . . set xstr="write $zbitget("_k_","_l_")" write xstr," " xecute xstr write !
 	. . kill dummy
 	;
 	write "$ZBITSET",!
@@ -957,7 +957,7 @@ ydb484f	;
 	write "$GET and $INCREMENT",!
 	set a1=1,bneg2=-2
 	set zynull=$ZYSQLNULL
-        set xstr="set ^x1=1" write xstr," " xecute xstr
+	set xstr="set ^x1=1" write xstr," " xecute xstr
 	zwrite a1
 	zwrite bneg2
 	zwrite zynull
@@ -1021,7 +1021,7 @@ ydb484f	;
 	;
 	write "$ZCOLLATE",!
 	set xexpr="A(""foo"")",y0=0,z1=1,zynull=$ZYSQLNULL
-        set ^xgexpr=xexpr
+	set ^xgexpr=xexpr
 	zwrite xexpr
 	zwrite y0
 	zwrite z1
@@ -1108,7 +1108,7 @@ ydb484f	;
 	write !,"Testing m commands",!
 	write "WRITE",!
 	set xlocal="asdf",yval=6,zval="h",zynull=$ZYSQLNULL
-        set ^xglobal="hello"
+	set ^xglobal="hello"
 	for tvstr="",":tv=1" do
 	. for first="$ZYSQLNULL","zynull",xlocal,"xlocal","^xglobal" do
 	. . new k,l,m set k=xlocal
@@ -1162,7 +1162,7 @@ ydb484f	;
 	set incrtrapLEVEL=1	; Reset incrtrapLEVEL back to 1 now that the FOR loop section is done.
 	write "SET",!
 	Set x="I love hotdogs"
-        set ^xglob=x
+	set ^xglob=x
 	set xlocal="hello",xextractlocal="$extract(x,3,6)",xextractglob="$extract(^x,3,6)",xpiecelocal="$piece(x,""^"",2)",xpieceglobal="$piece(^x,""^"",2)",xisv="$zprompt"
 	set ystr="hello",yint=1,ylocal=x,^yglobal=^xglob
 	for tvstr="",":tv=1" do
@@ -1238,16 +1238,16 @@ ydb484f	;
 	. . . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)!$ZYISSQLNULL(third)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"_$ZWRITE(second)_":"_$ZWRITE(third) write xstr," " xecute xstr write !
 	. . . . kill dummy
 	;
-        for tvstr="",":tv=1" do
+	for tvstr="",":tv=1" do
 	. for first=$ZYSQLNULL,"DBSYNC","EPOCH","FLUSH","GVSRESET","JNLFLUSH","PATCODE","PATLOAD" do
-        . . for second=$ZYSQLNULL,"name" do
-        . . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"_$ZWRITE(second) write xstr," " xecute xstr write !
+	. . for second=$ZYSQLNULL,"name" do
+	. . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"_$ZWRITE(second) write xstr," " xecute xstr write !
 	. . . kill dummy
 	;
 	for tvstr="",":tv=1" do
 	. for first=$ZYSQLNULL,"LINK" do
-        . . for second=$ZYSQLNULL,y1,"RECURSIVE","NORECURSIVE" do
-        . . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"_$ZWRITE(second) write xstr," " xecute xstr write !
+	. . for second=$ZYSQLNULL,y1,"RECURSIVE","NORECURSIVE" do
+	. . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(second)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"_$ZWRITE(second) write xstr," " xecute xstr write !
 	. . . kill dummy
 	;
 	for tvstr="",":tv=1" do
@@ -1263,10 +1263,10 @@ ydb484f	;
 	. . . kill dummy
 	;
 	for tvstr="",":tv=1" do
-        . for first=$ZYSQLNULL,"NOISOLATION" do
+	. for first=$ZYSQLNULL,"NOISOLATION" do
 	. . for second="","+","-" do
-        . . . for third=$ZYSQLNULL,"^x,^y" do
-        . . . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(third)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"""_second_$ZWRITE(third)_"""" write xstr," " xecute xstr write !
+	. . . for third=$ZYSQLNULL,"^x,^y" do
+	. . . . if ($ZYISSQLNULL(first)!$ZYISSQLNULL(third)) set xstr="view"_tvstr_" "_$ZWRITE(first)_":"""_second_$ZWRITE(third)_"""" write xstr," " xecute xstr write !
 	. . . . kill dummy
 	set xstr="view ""NOISOLATION"":""""" write xstr," " xecute xstr write !
 	set xstr="view"_tvstr_" ""NOISOLATION"":""""" write xstr," " xecute xstr write !
@@ -2409,6 +2409,8 @@ AllCmdPostConditionalTest
 	. ; In case of boolrslt=0 or $zysqlnull job is not executed so beforezjobval should be equal to afterzjobval
 	. ; In case of boolrslt=1 job is executed so beforezjobval should not be equal to afterzjobval and its value should not be 0
 	. do verifypcrslt("JOB",boolrslt,result1,result2,dlrtest,boolexpr,.failcnt)
+	. ; Make sure any backgrounded/jobbed off processes are finished before we proceed to return to caller
+	. do:boolrslt=1 ^waitforproctodie(afterzjobval)
 	. ;
 	. ; KILL
 	. set ^result=0,xstr="kill:"_boolexpr_" ^result"
@@ -2767,14 +2769,14 @@ verifypcrslt(func,boolrslt,result1,result2,dlrtest,boolexpr,failcnt)
 	new fail
 	set fail=0
 	if ((value(boolrslt)'=1)&result1) do
-        . write "FAIL from "_func_" postconditionaltest : dlrtest=",dlrtest
-        . write " : boolexpr : [",boolexpr,"] evaluates to ",value(boolrslt)," but postconditional evaluated to TRUE",!
-        . if $increment(failcnt)
+	. write "FAIL from "_func_" postconditionaltest : dlrtest=",dlrtest
+	. write " : boolexpr : [",boolexpr,"] evaluates to ",value(boolrslt)," but postconditional evaluated to TRUE",!
+	. if $increment(failcnt)
 	. set fail=1
 	if ((value(boolrslt)=1)&result2) do
-        . write "FAIL from "_func_" postconditionaltest : dlrtest=",dlrtest
-        . write " : boolexpr : [",boolexpr,"] evaluates to ",value(boolrslt)," but postconditional evaluated to FALSE",!
-        . if $increment(failcnt)
+	. write "FAIL from "_func_" postconditionaltest : dlrtest=",dlrtest
+	. write " : boolexpr : [",boolexpr,"] evaluates to ",value(boolrslt)," but postconditional evaluated to FALSE",!
+	. if $increment(failcnt)
 	. set fail=1
 	write:'fail "       -> PASS from "_func_" postconditionaltest",!
 	quit
