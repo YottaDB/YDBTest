@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,6 +33,14 @@ endif
 # When run in encrypt mode, stress test mupip reorg -encrypt using 3 keys
 if ("ENCRYPT" == $test_encryption) then
 	setenv gtm_test_eotf_keys 3
+	# ENCRYPT and gtm_custom_errors leads to a lot of %YDBPROCSTUCK invocations
+	# in the stress test (both concurr and concurr_small subtests) particularly
+	# when choose_eotf is later randomly chosen to be 1. Each %YDBPROCSTUCK invocation
+	# further slows down the already loaded situation by requiring processes to open
+	# encrypted database files. Therefore disable gtm_custom_errors in this case.
+	unsetenv gtm_custom_errors
+	echo "# gtm_custom_errors left undefined by concurr_settings.csh"		>>&! settings.csh
+	echo "unsetenv gtm_custom_errors"						>>&! settings.csh
 endif
 
 if (! $?gtm_test_replay) then
