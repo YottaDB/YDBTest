@@ -40,9 +40,9 @@ foreach test ($random_test_list)
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb333//`
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb114//`
 	endif
-	# r130 fails in ydb485 (lack of older version), ydb493 (?), ydb494 (compilation issue), ydb388 (lack of older version)
+	# r130 fails in ydb484 (lack of older version), ydb493 (?), ydb494 (compilation issue), ydb388 (lack of older version)
 	if ($test == "r130") then
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb485//`
+		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb484//`
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb493//`
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb494//`
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb388//`
