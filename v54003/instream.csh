@@ -92,7 +92,7 @@ setenv subtest_list_replic     "D9L04002809 C9J03003101 maxregseqno resync D9I12
 
 # only HP-UX_IA64 and OSF1 uses caller_id stub so run this test only for these platform
 if (("HOST_HP-UX_IA64" == "$gtm_test_os_machtype") || ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype")) then
-        setenv subtest_list_non_replic "$subtest_list_non_replic callerid"
+	setenv subtest_list_non_replic "$subtest_list_non_replic callerid"
 endif
 
 if ($?test_replic == 1) then
@@ -160,6 +160,10 @@ if ("ENCRYPT" == $test_encryption) then
 	# This test does not ship databases across hosts, but it renames databases
 	# Sourcing the below script would result in both the databases using the same key and hence would work
 	source $gtm_tst/com/create_sym_key_for_multihost_use.csh
+	# The below subtest uses white-box testing and is very sensitive to runtime. With -encrypt, db file open
+	# takes order of many seconds and disturbs the test flow resulting in extra "TIMER_HANDLER" lines which
+	# causes test failures. Therefore disable -encrypt for this white-box subtest.
+	setenv subtest_exclude_list "$subtest_exclude_list C9K11003340"
 endif
 
 # A lot of subtests expect YDB-E-REQRUNDOWN error. But running with journling on would throw YDB-E-REQRECOV error
