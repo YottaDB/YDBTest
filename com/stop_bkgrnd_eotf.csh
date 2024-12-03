@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -14,7 +17,7 @@
 echo "`date` : Signalling to stop online_eotf.csh"
 touch EOTF.END
 
-set timeout = 300
+set timeout = 3600	# A wait of 300 seconds is usually enough but with -encrypt it has been seen to take as much as half an hour
 while ($timeout > 0)
 	ls EOTF.RUNNING
 	if ($status != 0) then
