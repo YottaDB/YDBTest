@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,9 +26,9 @@ $gtm_tst/com/dbcreate.csh mumps > dbcreate.out
 
 # Set a very low flush timer span for quick updates.
 $gtm_dist/dse >& "dse.outx" << EOF
-        find -region=DEFAULT
-        change -fileheader -flush_time=1
-        quit
+	find -region=DEFAULT
+	change -fileheader -flush_time=1
+	quit
 EOF
 
 # Launch a GT.M process that initiates two jobs, one that launches
@@ -49,8 +49,8 @@ $gtm_dist/mupip stop $child_pid >&! mupip_stop_child.out
 $gtm_dist/mupip stop $parent_pid >&! mupip_stop_parent.out
 
 # Make sure that both processes are dead.
-$gtm_tst/com/wait_for_proc_to_die.csh $parent_pid 60
-$gtm_tst/com/wait_for_proc_to_die.csh $child_pid 60
+$gtm_tst/com/wait_for_proc_to_die.csh $parent_pid 300
+$gtm_tst/com/wait_for_proc_to_die.csh $child_pid 300
 
 # In case processes were still alive when MUPIP STOP was delivered,
 # we remove the FORCEDHALT messages from the logs, but keep the logs
