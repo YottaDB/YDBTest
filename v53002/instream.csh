@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,11 +50,11 @@ endif
 setenv subtest_exclude_list ""
 # filter out a specific subtest for some servers:
 if (("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname") || ("os390" == "$gtm_test_osname")) then
-        # In AIX, the subtest fails with "YDB-F-KRNLKILL, Process was terminated by SIGDANGER signal"
+	# In AIX, the subtest fails with "YDB-F-KRNLKILL, Process was terminated by SIGDANGER signal"
 	# HP-UX IA64 becomes non-responsive for long periods of time when the subtest runs
-        # So temporarily disable the subtest in AIX and HP-UX until
-        # a) A solution is found to limit vmemory (like the limit command) or
-        # b) All such resource intensive subtests are moved to manually_start test.
+	# So temporarily disable the subtest in AIX and HP-UX until
+	# a) A solution is found to limit vmemory (like the limit command) or
+	# b) All such resource intensive subtests are moved to manually_start test.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
 endif
 # filter out subtests that cannot pass with MM
@@ -68,6 +68,14 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
 	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
 	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
+endif
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The below subtest is very sensitive to virtual memory usage and running with -encrypt has been seen to
+	# cause occasional failures where the out-of-memory error is at database file open time instead of later
+	# inside a gtm_malloc() call. Since that out-of-memory error code path is not important to be tested with
+	# -encrypt, we disable this subtest when run with -encrypt.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
 endif
 

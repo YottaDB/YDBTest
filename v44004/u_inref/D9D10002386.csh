@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,7 +43,7 @@
 if ($?gtm_zlib_cmp_level) then
 	if ($gtm_zlib_cmp_level > 6) then
 		$echoline  >> settings.csh
-		echo "Drop compression level from $gtm_zlib_cmp_level to 6"  >> settings.csh
+		echo "# Drop compression level from $gtm_zlib_cmp_level to 6"  >> settings.csh
 		echo "setenv gtm_zlib_cmp_level 6" >> settings.csh
 		setenv gtm_zlib_cmp_level 6
 	endif
@@ -182,9 +182,9 @@ echo "#disk_resync3 is:	GTM_TEST_DEBUGINFO: $disk_resync3"
 echo "#shm_resync3_slt is: 	GTM_TEST_DEBUGINFO: $shm_resync3_slt"
 
 if ($disk_resync3 > $shm_resync3) then
-   echo "TEST-E-NOFLUSH, the resync seqno from disk should be less than or equal to the info from shm ."
-   echo "disk_resync3: $disk_resync3"
-   echo "shm_resync3: $shm_resync3"
+	echo "TEST-E-NOFLUSH, the resync seqno from disk should be less than or equal to the info from shm ."
+	echo "disk_resync3: $disk_resync3"
+	echo "shm_resync3: $shm_resync3"
 endif
 
 echo "#After $test_resync_flush_sleep_time seconds of clearing the backlog, the resync seqno from disk should get updated."

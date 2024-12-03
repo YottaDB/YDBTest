@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,6 +27,6 @@ unsetenv gtm_test_autorelink_always
 
 # Because the randomly chosen value of $gtm_test_autorelink_dirs as well as $gtm_test_autorelink_always might
 # have changed, record their new values in settings.csh.
-echo "gtm_test_autorelink_dirs and gtm_test_autorelink_always modified by gtm_test_disable_autorelink.csh"	>> settings.csh
+echo "# gtm_test_autorelink_dirs and gtm_test_autorelink_always modified by gtm_test_disable_autorelink.csh"	>> settings.csh
 echo "setenv gtm_test_autorelink_dirs $gtm_test_autorelink_dirs"						>> settings.csh
 echo "unsetenv gtm_test_autorelink_always"									>> settings.csh
