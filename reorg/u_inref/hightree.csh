@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# This test relies on a particular database block layout as the reference file contains mupip integ output etc.
+# Having a mupip reorg -encrypt running in the background (in case of -encrypt run) will disturb this so disable that.
+setenv gtm_test_do_eotf 0
 
 # Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
 # the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
