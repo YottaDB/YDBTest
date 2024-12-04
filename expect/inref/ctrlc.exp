@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,10 +68,15 @@ expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 # Test that FOR loop with global updates is also interruptible
 # This tests a regression in GT.M V7.0-001.
 # See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1383#note_1570284046 for more details.
+# If this test runs with -encrypt, the "^x" access below could take more than 10 seconds (the
+# timeout for most of this section of the test) and so increase the timeout just for this stage.
+set timeout 60
 send -- "do gbl^ctrlc\r"
 expect "for i=1:1:20000000  SET ^x=i"
 send -- "\003"
 expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+# Reset timeout to original/lower value back now that this database access stage of the test is done.
+set timeout 10
 
 # ZSHOW
 send -- "do zshow^ctrlc\r"
