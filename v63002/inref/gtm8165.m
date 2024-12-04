@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -78,8 +78,8 @@ writeslashwait
 
 writeslashpass
 	set ^stop=0
-        set sock="gtm8165pass.socket"
-        open sock:(LISTEN="passsocket1:LOCAL":attach="passhandle1")::"SOCKET"
+	set sock="gtm8165pass.socket"
+	open sock:(LISTEN="passsocket1:LOCAL":attach="passhandle1")::"SOCKET"
 	use sock:(detach="passhandle1")
 	open sock:(LISTEN="passsocket2:LOCAL":attach="passhandle2")::"SOCKET"
 	job passchild
@@ -118,7 +118,7 @@ passchild
 
 writeslashaccept
 	set ^stop=0
-        set sock="gtm8165pass.socket"
+	set sock="gtm8165pass.socket"
 	open sock:(LISTEN="acceptsocket:LOCAL":attach="accepthandle")::"SOCKET"
 	use sock
 	job acceptchild
@@ -189,5 +189,6 @@ tlschild
 	set sock="socket"
 	open sock:(CONNECT="localhost:"_$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
+	write /tls("server")
 	for  quit:^stop  hang 0.1
 	quit
