@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,30 @@ grep -v "$filter" valgrind1.out
 $echoline
 echo '# Create a database and test valgrind -q $ydb_dist/mupip integ -reg "*"'
 $gtm_tst/com/dbcreate.csh mumps
-valgrind -q $ydb_dist/mupip integ -reg "*" >& valgrind2.out
+
+# When running "mupip integ -reg *" on an encrypted database through valgrind, a few warnings show up
+# during the dlopen() of the encryption plugin .so file. Those warnings are outside YDB or YDBEncrypt
+# code base so we suppress those warnings by using the below suppression file. Having this suppression
+# file even with "-noencrypt" does not hurt so we use this file in all cases below.
+set supp_file = ydb704_mupip_integ.supp
+cat > $supp_file << CAT_EOF
+{
+	ydb704_1
+	Memcheck:Addr8
+	fun:strncmp
+	fun:is_dst
+	fun:_dl_dst_count
+}
+{
+	ydb704_2
+	Memcheck:Addr8
+	fun:strncmp
+	fun:is_dst
+	fun:_dl_dst_substitute
+}
+CAT_EOF
+
+valgrind --suppressions=$supp_file -q $ydb_dist/mupip integ -reg "*" >& valgrind2.out
 if ($status) then
 	echo "valgrind invocation failed : See valgrind2.out for details"
 	exit 1
