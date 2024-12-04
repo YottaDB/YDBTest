@@ -5,7 +5,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -268,9 +268,13 @@ get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message REPLINSTNOHIST -duration 120 -waitcreation'
 $MSR RUN INST2 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
+# The receiver server has issued a REPLINSTNOHIST error but it is possible it is still in the process of exiting at this point.
+# Before going to the next step where we expect the passive source server to be the only process accessing
+# the journal pool and database files, make sure the receiver server has terminated.
+$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
- #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
+# The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
 $MSR REFRESHLINK INST1 INST2
 $echoline
 
@@ -287,7 +291,7 @@ $MSR RUN INST5 'set msr_dont_trace ; $MUPIP replic -instance_create '$supplarg' 
 $MSR RUN RCV=INST5 SRC=INST1 '$gtm_tst/com/set_resync_and_reg_seqno.csh DEFAULT 10 setseqno.out'
 $MSR STARTSRC INST1 INST5
 setenv msr_dont_chk_stat
-# We expect the receiver server to exit with a REPINSTNOHIST error.
+# We expect the receiver server to exit with a REPLINSTNOHIST error.
 # So do not do a checkhealth. See explaination above
 setenv gtm_test_repl_skiprcvrchkhlth 1
 $MSR STARTRCV INST1 INST5
@@ -297,9 +301,11 @@ $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message
 
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
+# See comment before previous call to wait_until_srvr_exit.csh for why the next line is necessary.
+$MSR RUN INST5 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 
 $MSR RUN RCV=INST5 SRC=INST1 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST5.out'
- #The above is done because, the receiver will be shut down but the passive server will be alive still.
+# The above is done because, the receiver will be shut down but the passive server will be alive still.
 $MSR REFRESHLINK INST1 INST5
 $MSR STOPSRC INST1 INST5
 
@@ -361,7 +367,7 @@ end
 
 # Now shut down the passive source server
 $MSR RUN RCV=INST3 SRC=INST2 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST2INST3.out'
- #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
+# The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
 $MSR REFRESHLINK INST2 INST3
 $MSR STOPSRC INST2 INST3
 $echoline
