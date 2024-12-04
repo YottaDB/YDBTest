@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -66,7 +69,7 @@ if ($?gtm_use_same_sym_key) then
 			set remote_symkey_path = "$SEC_SIDE/.."
 		endif
 
-		set remote_host_key_name = ${hostn}_pubkey.asc
+		set remote_host_key_name = ${hostn}_$$_pubkey.asc
 		set shared_sym_key_on_remote_host = ${hostn}_sym_key_from_$tst_org_host.asc
 
 		# Determine the ID of the remote host's default public key.
