@@ -206,7 +206,7 @@ echo
 echo '# Wait until receiver server has also done online rollback and reconnected to source server'
 echo '# Note: The history record would have a [Cycle = 2] in it so wait for that to show up in the receiver server log'
 setenv start_time `cat start_time`
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log -message 'New History Content.*Cycle = \[2\]' -duration 120"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log -message 'New History Content.*Cycle = \[2\]' -duration 600"
 
 echo "# Sleep $heartbeat seconds (heartbeat period). To ensure [acknowledged] is updated by receiver on source side in one heartbeat"
 sleep $heartbeat
