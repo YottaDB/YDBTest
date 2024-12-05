@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -72,6 +72,13 @@
 setenv acc_meth BG		# MM and encryption is not supported
 setenv test_encryption ENCRYPT
 setenv gtm_test_set_encryptable	0	# since this is encryption specific test, do not randomly set encryptable
+
+# Any dbcreate.csh call done in subtests of the encryption test could switch to a random older V6 version (tracked by the env var
+# "gtm_test_v6_dbcreate_rand_ver") to create database files. It is possible that older version does not support encryption
+# (i.e. com/is_encrypt_support.csh returns FALSE when called with that older version). In that case, com/switch_gtm_version.csh
+# would reset the "test_encryption" env var to NON_ENCRYPT before creating database files which would defeat the purpose of
+# this test as it expects "test_encryption" to be set to ENCRYPT for all subtests. Therefore disable V6 versions in dbcreate.csh
+setenv gtm_test_use_V6_DBs 0
 
 # If encryption environment is not already set, do it now
 if !(-e $tst_general_dir/encrypt_env_settings.csh) then
@@ -163,7 +170,7 @@ if ($?ydb_environment_init) then
 endif
 
 if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list err_maskpass encr_env helper_scripts"
+	setenv subtest_exclude_list "$subtest_exclude_list err_maskpass encr_env helper_scripts"
 endif
 
 setenv GNUPGHOME	"$tst_working_dir/.gnupg"
