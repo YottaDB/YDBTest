@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -124,7 +124,7 @@ while ($iteration <= $num_of_reorg_cycles)
 	@ reorg_finished = 0
 	while (0 <= $process_count)
 		@ timer = 0
-		while (30 > $timer)
+		while (300 > $timer)
 			@ reorg_finished = `$gtm_tst/com/is_proc_alive.csh $pid; echo $status` # ` for vim highlighting
 			if ($reorg_finished) break
 			@ timer++
