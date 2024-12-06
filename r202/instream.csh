@@ -42,6 +42,7 @@
 # bool_expr_andor-ydb1091			[nars]	  Test performance of =, < etc. in boolean expressions with AND or OR
 # various_fuzz-ydb1044				[ern0]    Test various code issues identified by fuzz testing
 # ydb_hostname-ydb747				[pooh]    Test for testing ydb_hostname variable
+# untimed_nodelim_socread-ydb1100		[nars]	  Test untimed nodelimiter socket READs return sooner than r2.00
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -76,6 +77,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_lt-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_andor-ydb1091"
 setenv subtest_list_non_replic	"$subtest_list_non_replic various_fuzz-ydb1044"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydb_hostname-ydb747"
+setenv subtest_list_non_replic	"$subtest_list_non_replic untimed_nodelim_socread-ydb1100"
 setenv subtest_list_replic	"loginterval-ydb1098"
 
 if ($?test_replic == 1) then

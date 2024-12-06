@@ -1,0 +1,12 @@
+# --------------------------------------------------------------
+# Test untimed nodelimiter socket READs return sooner than r2.00
+# --------------------------------------------------------------
+# Parent process jobs off a child process and communicates with child through a socket
+# The socket is opened with NODELIM
+# Child process does 256 WRITE commands each of which write small pieces of text
+# Before the YDB#1100 fixes, all 256 write command outputs would be read by ONE untimed READ command
+# (as it would wait for all data to be available before terminating the READ command).
+# Whereas after the YDB#1100 fixes, an untimed READ with NODELIM returns whenever SOME data is available
+# We therefore expect the parent process to read the 256 WRITE command data in MULTIPLE untimed READ commands
+PASS: Parent read all 256 pieces of data from child exactly as expected
+PASS: Parent used at least 2 READ commands (as expected)
