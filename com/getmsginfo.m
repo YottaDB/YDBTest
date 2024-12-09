@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -215,7 +218,7 @@ parseMsgs(file,out)
 ;   messages(<mnemonic>,"args",<idx>,"preChars")	Characters preceding the idx-th argument.                   ;
 ;   messages(<mnemonic>,"args",<idx>,"postChars")	Characters following the idx-th argument.                   ;
 ;                                                                                                                   ;
-; where <mnemonic> is the mnemonic of the message ("DBFILEXT," "BINHDR," and so on), and <idx> is the index of the  ;
+; where <mnemonic> is the mnemonic of the message ("DBFILEXT," etc.), and <idx> is the index of the                 ;
 ; message argument. Note that special strings "<START>" and "<END>" are used for "preChars" and "postChars"         ;
 ; expressions to indicate that the search boundaries are confined by either the beginning or end of the line.       ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
