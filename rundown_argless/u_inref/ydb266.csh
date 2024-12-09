@@ -41,6 +41,11 @@ echo "# Start time for monitoring syslog"
 set syslog_start = `date +"%b %e %H:%M:%S"`
 
 echo "# Run argumentless mupip rundown. Use -override to avoid MUUSERLBK errors. Redirect output to [rundown.log]."
+if ("ENCRYPT" == "$test_encryption" ) then
+	# The mupip rundown done below is going to rundown database files on INST2
+	# so make it aware of those key files by the below call.
+	$gtm_tst/com/merge_gtmcrypt_config.csh INST2
+endif
 $MUPIP rundown -override >& rundown.log
 
 echo "# Capture all syslog messages from the start time into file [syslog.txt]."
