@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,7 +63,11 @@ if (! $?gtm_test_replay) then
 		echo "setenv tst_jnl_str $tstjnlstr"		>> settings.csh
 	endif
 endif
-$gtm_tst/com/dbcreate.csh mumps 6 255 16128 $blksz
+
+# Use 16384 global buffers to try and avoid 'G' (cdb_sc_lostcr) type restarts in the update process
+# while clearing the backlog and hopefully speeding up the backlog clearing process and test runtime.
+$gtm_tst/com/dbcreate.csh mumps -n_regions=6 -key=255 -rec=16128 -block=$blksz -global_buffer=16384
+
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 set src_log_time = $start_time
@@ -105,14 +109,8 @@ echo "# Ensure the source server reads from journal files after jnlbuffer overfl
 echo "# If the message about reading from journal files doesnt appear in the SRC log, then the test should/will fail"
 $gtm_tst/com/wait_for_log.csh -log SRC_${src_log_time}.log -message "Source server now reading from journal files" -duration 60
 
-echo "# Stop GTM process in primary..."
+echo "# Stop IMPTP process in primary..."
 $gtm_tst/com/endtp.csh
-echo "# Sync the primary and secondary"
-$gtm_tst/com/RF_sync.csh
-# Force a dse buffer flush here, as the backlog will be too high
-# In such cases, shutdown process might take longer than 4 minutes and will fail.
-$gtm_tst/com/dse_buffer_flush.csh
-$sec_shell "$sec_getenv ; cd $SEC_SIDE ; $gtm_tst/com/dse_buffer_flush.csh"
 
 $gtm_tst/com/rfstatus.csh "Before_TEST_stops:"
 echo "# Database check and Application level check"
