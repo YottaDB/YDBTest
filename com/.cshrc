@@ -63,8 +63,8 @@ setenv gtm_root /usr/library   # Where your (and others') installed binaries go
 setenv gtm_test $gtm_root/gtm_test   # Where to hold a copy of $work_dir/YDBTest to run from: it needn't be under $gtm_root
 setenv tst_dir /testarea1/$USER   # Where to put the output of your test
 setenv r ~/.gtmresults   # Where to create symlink that points to latest test results directory; short name for easy access
-setenv gtm_test_com_individual $work_dir/YDBTest-dev/com   # Use your own tester-command scripts, not main YDBTest checkout (useful for when you are developing YDBTest/com separately from writing tests)
-setenv force_gtm_test_com_individual   # gtmtest normally re-runs itself from gtmtest.csh in the test source dir. Prevent this.
+#setenv gtm_test_com_individual $work_dir/YDBTest-dev/com   # Use your own tester-command scripts, not main YDBTest checkout (useful for when you are developing YDBTest/com separately from writing tests)
+#setenv force_gtm_test_com_individual   # gtmtest normally re-runs itself from gtmtest.csh in the test source dir. Prevent this.
 
 # Other settings you're less likely to want to change
 setenv tst_image dbg   # Select default production/debug build image (dbg/pro) to test against; change later with 'ver' alias
@@ -93,7 +93,7 @@ endif
 
 # Show git branch in prompt
 setenv GIT_BRANCH "sh -c 'git branch --no-color 2> /dev/null' | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ [\1]/'"
-alias precmd 'set prompt="%{\033[34m%}%B%{\033[31m%}%~%b%{\033[36m%}`$GIT_BRANCH`%{\033[0m%}%# "'
+alias precmd 'set prompt="%{\033[34m%}%n@%B%m%b %B%{\033[31m%}%~%b%{\033[36m%}`$GIT_BRANCH`%{\033[0m%}%# "'
 set promptchars=">#"   # use '>' prompt for users; '#' for root
 # Avoid loss of history if you close your terminal window with your mouse by:
 #   Merging history every minute (at next command) so that history from concurrent terminal window is saved
