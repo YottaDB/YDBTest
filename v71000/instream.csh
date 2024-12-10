@@ -20,6 +20,7 @@
 # commandlen_parse-gtmde422089		[jon]	Test ARGSLONGLINE (LINETOOLONG) error reporting in utility commands
 # lockargs_identical-gtmde340906	[jon]	Attempting a LOCK with more identical arguments than GT.M supports for the command generates an error
 # mupipbackup_fastercopy-gtmde408789	[jon]	MUPIP BACKUP -DATABASE uses faster copy mechanism when available
+# rctldump_superseded-gtmf135385	[jon]	MUPIP RTCLDUMP reports the number of times a routine has been replaced (rtnsupersede) in the autorelink cache
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71000 test starts..."
@@ -31,6 +32,7 @@ setenv subtest_list_non_replic	"numoflow_exponential-gtmde388565"
 setenv subtest_list_non_replic	"fallintoflst_warning-gtmde376239"
 setenv subtest_list_non_replic	"commandlen_parse-gtmde422089"
 setenv subtest_list_non_replic	"mupipbackup_fastercopy-gtmde408789"
+setenv subtest_list_non_replic	"rctldump_superseded-gtmf135385"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

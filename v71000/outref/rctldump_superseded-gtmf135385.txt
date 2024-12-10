@@ -1,0 +1,29 @@
+# ********************************************************************************************
+# GTM-F135385 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-F135385)
+# 
+# MUPIP RCTLDUMP reports the number of times a routine has been superseded (rtnsupersede) in the autorelink cache. Previously,
+# MUPIP RCTLDUMP did not record this value, and only recorded the number of times a routine has been referenced. (GTM-F135385)
+
+# Create routine directories `obj` and `src`
+# Set gtmroutines to use routine directories with autorelink enabled
+
+# Generate the first test routine version in src/gtmf135385.m
+# Run the first version of the test routine in the background and capture the PID in gtmf135385-v1.pid
+# Wait up to 300 seconds for backgrounded mumps process to start
+# Run MUPIP RCTLDUMP to get the initial `superseded` value
+
+# Generate and run new versions of the test routine, and run MUPIP RCTLDUMP after each routine exits
+# Wait for each new mumps process to exit before running MUPIP RCTLDUMP to ensure the routine version was updated
+
+# Check if `superseded` values are present and incremented in the output from the preceding MUPIP RCTLDUMP calls
+    rec#1: rtnname: gtmf135385  cycle: 1  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 1
+    rec#1: rtnname: gtmf135385  cycle: 2  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 2
+    rec#1: rtnname: gtmf135385  cycle: 3  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 3
+    rec#1: rtnname: gtmf135385  cycle: 4  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 4
+    rec#1: rtnname: gtmf135385  cycle: 5  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 5
+    rec#1: rtnname: gtmf135385  cycle: 6  objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN  superseded: 6
+# Terminate the initial test process using MUPIP INTRPT
+# Wait for the initial test process to die using wait_for_proc_to_die.csh
