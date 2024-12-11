@@ -133,6 +133,13 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list support"
 endif
 
+if ("ENCRYPT" == $test_encryption) then
+	# The below subtest uses sudo and su to run as a different userid and exercises the DBPRIVERR error.
+	# But in order to get this error, one needs to pass encryption env vars gtm_passwd/gtmcrypt_config etc.
+	# and that is not trivial. It is not worth trying to make it work with -encrypt so just disable it.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7759"
+endif
+
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
 # various subtests of the sudo test. This way we can restore the system copy at the end of the test and avoid the system
 # yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
