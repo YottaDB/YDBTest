@@ -11,20 +11,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; WBTEST_RTNOBJ_INTEG will be triggered when numvers >= 2. So purpose of this routine is for make numvers=2
-; and that will print out RLNKRECNFL and RLNKINTEGINFO in syslog 
+; and that will print out RLNKRECNFL and RLNKINTEGINFO in syslog
 ;
 ; numvers is the counter for number of version for routine in relinkctl file when enabled autorelink
-; 
+;
 ; First, we set $zroutines to "obj*(src1)" and compile rtn.m in src1 to obj/rtn.o in Process A.;
 ; This will increase numvers to 1. After that, we start Process B and let process B set $zroutines to "obj*".;
 ; Then, we proceed to compile different rtn.m in src2 to obj/rtn.o.;
-; Now numvers will increase to 2 and this will trigger the WBTEST_RTNOBJ_INTEG and 
+; Now numvers will increase to 2 and this will trigger the WBTEST_RTNOBJ_INTEG and
 ; will print out RLNKRECNFL and RLNKINTEGINFO in syslog.;
 ;
 procA
 	set procBStarted=0
 	lock +^procBTerminate
 	;
+	set oldroutines=$zroutines
 	set $zroutines="obj*(src1)"
 	zsystem "$gtm_dist/mupip rctldump obj >&! rctldump-a1.log"
 	do rtn^rtn
@@ -38,6 +39,8 @@ procA
 	zsystem "$gtm_dist/mupip rctldump obj >&! rctldump-b1.log"
 	;
 	lock -^procBTerminate
+	set $zroutines=oldroutines
+	do ^waitforproctodie($zjob)	; wait for jobbed/child process to terminate before returning to caller
 	quit
 	;
 procB
