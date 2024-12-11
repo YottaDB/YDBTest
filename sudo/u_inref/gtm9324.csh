@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,23 +34,24 @@ echo
 $echoline
 echo
 echo '# Part 1 - Verify ZSTEP operation is restored and MUPIP INTERRUPT or $ZTIMEOUT'
-echo
 echo '# testA: Launch M process to be interrupted while ZSTEPing'
-($gtm_dist/mumps -run testA^gtm9324 & ; echo $! >&! mumpspidA.txt)
+($gtm_dist/mumps -run testA^gtm9324 & ; echo $! >&! mumpspidA.txt) >& mumpspidA.out
 set mumpspidA = `cat mumpspidA.txt`
 $gtm_dist/mumps -run ^%XCMD 'for i=1:1 quit:$get(^loopcnt1,0)>1  hang .1'	# Wait for loop to become active
-echo
 echo '# Interrupt process and wait for it to die'
 $MUPIP intrpt $mumpspidA	    			# Send interrupt
 $gtm_tst/com/wait_for_proc_to_die.csh $mumpspidA 300
+echo '# [cat mumpspidA.out]'
+cat mumpspidA.out
 echo
 echo '# testB: Run similar test that uses $ZTIMEOUT instead of $ZINTERRUPT to cause an interrupted ZSTEP'
-($gtm_dist/mumps -run testB^gtm9324 & ; echo $! >&! mumpspidB.txt)
+($gtm_dist/mumps -run testB^gtm9324 & ; echo $! >&! mumpspidB.txt) >& mumpspidB.out
 set mumpspidB = `cat mumpspidB.txt`
 $gtm_dist/mumps -run ^%XCMD 'for i=1:1 quit:$get(^loopcnt2,0)>1  hang .1'	# Wait for loop to become active
-echo
 echo '# Wait for process to die'
 $gtm_tst/com/wait_for_proc_to_die.csh $mumpspidB 300
+echo '# [cat mumpspidB.out]'
+cat mumpspidB.out
 echo
 $echoline
 echo
@@ -81,33 +82,33 @@ echo '# Create ydbtest3 group and userid'
 $grep -q ydbtest3 /etc/group              # Quietly see if the group exists
 set savestatus = $status
 if (0 == $savestatus) then
-    echo 'The ydbtest3 group already exists'
+	echo 'The ydbtest3 group already exists'
 else if (1 == $savestatus) then           # Does not exist, create it now
-    sudo groupadd ydbtest3 >& groupadd.log
-    set savestatus = $status
-    if (0 != $savestatus) then
-	echo "TEST-F-GROUPADDFAIL The groupadd command for ydbtest3 failed with rc $savestatus"
-	exit 1
-    endif
-    echo 'The ydbtest3 group has been created'
+	sudo groupadd ydbtest3 >& groupadd.log
+	set savestatus = $status
+	if (0 != $savestatus) then
+		echo "TEST-F-GROUPADDFAIL The groupadd command for ydbtest3 failed with rc $savestatus"
+		exit 1
+	endif
+	echo 'The ydbtest3 group has been created'
 else
-    echo "Unknown error from $grep: $savestatus"
+	echo "Unknown error from $grep: $savestatus"
 endif
 # Now do similar for the userid
 $grep -q ydbtest3 /etc/passwd
 set savestatus = $status
 if (0 == $savestatus) then
-    echo 'The ydbtest3 userid already exists'
+	echo 'The ydbtest3 userid already exists'
 else if (1 == $savestatus) then           # Does not exist, create it now
-    sudo useradd --gid ydbtest3 --no-log-init --no-create-home -d `pwd` ydbtest3 >& useradd.log
-    set savestatus = $status
-    if (0 != $savestatus) then
-	echo "TEST-F-USERADDFAIL The useradd command for ydbtest3 failed with rc $savestatus"
-	exit 1
-    endif
-    echo 'The ydbtest3 userid has been created'
+	sudo useradd --gid ydbtest3 --no-log-init --no-create-home -d `pwd` ydbtest3 >& useradd.log
+	set savestatus = $status
+	if (0 != $savestatus) then
+		echo "TEST-F-USERADDFAIL The useradd command for ydbtest3 failed with rc $savestatus"
+		exit 1
+	endif
+	echo 'The ydbtest3 userid has been created'
 else
-    echo "Unknown error from $grep: $savestatus"
+	echo "Unknown error from $grep: $savestatus"
 endif
 echo
 echo '# Verify that a ZSTEP command works correctly when ZBREAK is restrited'
@@ -152,9 +153,9 @@ if (0 != $savestatus) echo "## The userdel command for ydbtest3 failed with rc $
 # command on it if so.
 $grep -q ydbtest3 /etc/group              # Quietly see if the group exists
 if (0 == $status) then                    # Group exists - try to remove it
-    sudo groupdel ydbtest3 >& groupdel.log
-    set savestatus = $status
-    if (0 != $savestatus) echo "## The groupdel command for ydbtest3 failed with rc $savestatus"
+	sudo groupdel ydbtest3 >& groupdel.log
+	set savestatus = $status
+	if (0 != $savestatus) echo "## The groupdel command for ydbtest3 failed with rc $savestatus"
 endif
 setenv gtm_dist $gtm_dist_save
 setenv gtm_exe $gtm_dist
