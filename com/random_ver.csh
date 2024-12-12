@@ -293,51 +293,6 @@ end
 # Disable gtmcompile, including the -dynamic_literals qualifer, since prior versions complain. See comment in switch_gtm_version.csh
 unsetenv gtmcompile
 
-# We do allow pre-V53004 versions to be randomly chosen with encryption, though, to make sure that older versions (such as V4) can be
-# picked. Yet since pre-V53004 versions do not support encryption anyway, we take care of disabling it altogether when applying such
-# version in a test.
-if ($?test_encryption && ("ENCRYPT" == "$test_encryption")) then
-	if ($gtm_gpg_use_agent) then
-		set actualverlist = "$filteredlist"
-		set filteredlist = ""
-		foreach ver ($actualverlist)
-			if ((`expr $ver ">=" "V54001"`) || (`expr $ver "<" "V53004"`)) then
-				set filteredlist = ($filteredlist $ver)
-			endif
-		end
-		if ("" == "$filteredlist") then
-			echo "No encryption versions found supporting gpg-agent" >> must_force_non_encrypt
-		endif
-	endif
-	if ("AIX" == $HOSTOS) then
-		# Filter out prior versions that we know cause hangs with encryption on AIX.
-		if ((! $?encryption_lib) || (! $?encryption_algorithm)) then
-			# do_random_settings or gtm_test_replay should have set this environment variables.
-			echo "RANDOMVER-E-INCMPLTCONFIG : Environment variable encryption_lib or encryption_algorithm undefined"
-			exit -1
-		endif
-		# On AIX, the AES256 cipher in versions [V53004; V60000] and Blowfish cipher in versions [V53004; V54000A] were
-		# either unsupported or caused hangs in tests, and thus are not usable.
-		# Note: From V6.3-001 onwards, BLOWFISHCFB is not supported.
-		if ("AES256CFB" == $encryption_algorithm) then
-			set actualverlist = "$filteredlist"
-			set filteredlist = ""
-			foreach ver ($actualverlist)
-				if ((`expr $ver ">" "V60000"`) || (`expr $ver "<" "V53004"`)) then
-					set filteredlist = ($filteredlist $ver)
-				endif
-			end
-			if ("" == "$filteredlist") then
-				echo "No encryption versions found supporting AES256CFB cipher" >> must_force_non_encrypt
-			endif
-		else if ("BLOWFISHCFB" == $encryption_algorithm) then
-			set filteredlist = ""
-			if ("" == "$filteredlist") then
-				echo "No encryption versions found supporting BLOWFISHCFB cipher" >> must_force_non_encrypt
-			endif
-		endif
-	endif
-endif
 set filteredcount = $#filteredlist
 if ("" == "$filteredlist") then
 	echo "RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria - ${argv}. Exiting..."
