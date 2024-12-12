@@ -1281,19 +1281,11 @@ setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
 # we never use the chosen version as it may be overriden (on or off) in the test itself which we cannot
 # know at this point.
 if (! $?gtm_test_v6_dbcreate_rand_ver) then
-	if ($?gtm_test_nopriorgtmver) then
-		# This system has already been noted by the test framework as having no older versions.
-		# Therefore, use the current version to create the database inside "dbcreate.csh"
+	# See commit message of 884330d9 for details on why minimum V6 build below is set at V63003.
+	setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
+	if ($status) then
+		# No V6 GT.M or YottaDB build was found. Use the current version to create the database inside "dbcreate.csh"
 		setenv gtm_test_v6_dbcreate_rand_ver $gtm_verno
-	else
-		setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
-		if ($status) then
-			# This system has older versions. But it does not have any pure GT.M V6 build.
-			# For example an AARCH64/ARMV7L system can contain older YottaDB builds but will
-			# not have any pure GT.M build (since GT.M is not supported on that architecture).
-			# In that case too, use the current version to create the database inside "dbcreate.csh"
-			setenv gtm_test_v6_dbcreate_rand_ver $gtm_verno
-		endif
 	endif
 endif
 echo '# Random V6 version used to create V6 mode databases (when enabled)'			>>&! $settingsfile
