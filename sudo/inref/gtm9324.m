@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -41,8 +41,8 @@ testB
 	;
 	; Setup $ZTIMEOUT to pop in 1 second from now
 	;
-	set $ztimeout="1:do handleint"		; Assuming we can get into this loop in 1 second
 	set ^loopend=0
+	set $ztimeout="1:do handleint"		; Assuming we can get into this loop in 1 second
 	for loopcnt2=1:1 set ^loopcnt2=loopcnt2 quit:^loopend  hang .1
 	;
 	; Add a few lines of code to trace to verify zstep was restored

@@ -50,8 +50,8 @@ testA+11^gtm9324    :	quit
 ##TEST_AWK\[[0-9]*\] [0-9]*
 
 Stepping STARTED
-testB+5^gtm9324     :	set $ztimeout="1:do handleint"		; Assuming we can get into this loop in 1 second
-testB+6^gtm9324     :	set ^loopend=0
+testB+5^gtm9324     :	set ^loopend=0
+testB+6^gtm9324     :	set $ztimeout="1:do handleint"		; Assuming we can get into this loop in 1 second
 testB+7^gtm9324     :	for loopcnt2=1:1 set ^loopcnt2=loopcnt2 quit:^loopend  hang .1
 handleint+1^gtm9324 :	set ^loopend=1
 handleint+2^gtm9324 :	write "Interrupt routine entered - setting loop terminator",!
