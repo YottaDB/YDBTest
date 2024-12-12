@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,7 +57,9 @@ $gtm_exe/mumps -run %XCMD 'view "FLUSH"'	# this avoids <dual_fail5_negative_resy
 # PRIMARY SIDE (A) CRASH (1st crash on A)
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH1:"
 $gtm_tst/com/primary_crash.csh
-$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+endif
 echo "mupip_rollback.csh *"
 echo "mupip_rollback.csh *" >>& consist_rollback.log
 $gtm_tst/com/mupip_rollback.csh "*" >>& consist_rollback.log
@@ -107,7 +109,9 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/wait_for_transaction_seqno.c
 
 # NEW PRIMARY SIDE (B) CRASH  (1st crash of B)
 $pri_shell "$pri_getenv; $gtm_tst/com/primary_crash.csh"
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+endif
 #
 echo "ANOTHER SWITCH OVER # (A) is primary. (B) is receiver:"
 $DO_FAIL_OVER
@@ -133,7 +137,7 @@ $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count_short SRC $test_slee
 # PRIMARY SIDE (A) CRASH AGAIN (2nd crash)
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH2:"
 $gtm_tst/com/primary_crash.csh
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	$gtm_tst/com/backup_dbjnl.csh bak3 '*.dat *.mjl*' cp nozip
 endif
 #
@@ -158,7 +162,7 @@ $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count_short SRC $test_slee
 # PRIMARY SIDE (A) CRASH: 3rd crash of (A)
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH3:"
 $gtm_tst/com/primary_crash.csh
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	$gtm_tst/com/backup_dbjnl.csh bak4 '*.dat *.mjl*' cp nozip
 endif
 #
@@ -191,13 +195,13 @@ $grep "successful" rollback4.log
 #
 set tst_nseqno = `$gtm_tst/com/get_fetch_resync.csh rollback4.log`
 if ($tst_seqtarget == $tst_nseqno) then
-        echo "PASSED rollback -fetchresync"
+	echo "PASSED rollback -fetchresync"
 else
-        echo "FAILED from rollback: tst_seqno1=$tst_seqno1 tst_seqtarget=$tst_seqtarget tst_nseqno=$tst_nseqno"
+	echo "FAILED from rollback: tst_seqno1=$tst_seqno1 tst_seqtarget=$tst_seqtarget tst_nseqno=$tst_nseqno"
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh"
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh ""on"""
-        echo "Test was forced to stop!"
-        exit 1
+	echo "Test was forced to stop!"
+	exit 1
 endif
 #
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh < /dev/null "">>&!"" imptp.out"

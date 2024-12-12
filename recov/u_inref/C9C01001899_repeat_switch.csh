@@ -3,7 +3,7 @@
 #								#
 # Copyright 2003, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,7 +12,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-setenv test_debug 1
 unsetenv test_replic
 setenv test_reorg "NON_REORG"
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
@@ -49,7 +48,7 @@ sleep 10
 $gtm_tst/com/gtm_crash.csh
 #
 #
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	\mkdir ./save; \cp {*.dat,*.mj*} ./save
 endif
 #

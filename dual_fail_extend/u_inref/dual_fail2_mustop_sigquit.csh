@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -80,7 +80,9 @@ end
 echo "Doing Fail over."
 $DO_FAIL_OVER
 
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
+endif
 # ROLLBACK ON PRIMARY SIDE (B)
 echo "Doing rollback on (B):"
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo mupip_rollback.csh -losttrans=lost1.glo >>&! rollback1.log'

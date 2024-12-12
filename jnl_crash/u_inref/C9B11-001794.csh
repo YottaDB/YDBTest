@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,6 @@
 # the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
-setenv test_debug 1
 echo "C9B11-001794: Test rundown/recover"
 echo "They should succeed when <kill -9 pid> and <ipcrm -s sem> is done (no <ipcrm -m shm>)" # BYPASSOK
 set gtm_process = 2
@@ -39,7 +38,7 @@ while ($count < $iteration)
 	echo "Shared Memory is existing"
 	$gtm_tst/com/get_dse_df.csh "BEFORE_CRASH" "" "-all"
 	$gtm_tst/com/gtm_crash.csh "NO_SHM_REM"
-	if ($?test_debug == 1) then
+	if ($?test_debug) then
 		\mkdir save_${count}; cp {*.dat,*.mj*} save_${count}
 	endif
 	if ($count == 1) then

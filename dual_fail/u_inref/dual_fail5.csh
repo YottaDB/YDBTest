@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,7 +69,9 @@ $gtm_tst/com/wait_for_src_slot.csh -file -instance INSTANCE2 -maxwait 600 -searc
 # PRIMARY SIDE (A) CRASH (1st crash on A)
 $gtm_tst/com/rfstatus.csh "BEFORE_PRI_A_CRASH:"
 $gtm_tst/com/primary_crash.csh
-$gtm_tst/com/backup_dbjnl.csh bak1
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak1
+endif
 $gtm_tst/com/cur_jnlseqno.csh  "RESYNC" >& pre_rollback_syncno.txt
 echo "mupip_rollback.csh *"
 echo "mupip_rollback.csh *" >>& consist_rollback.log
@@ -131,7 +133,9 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/wait_for_transaction_seqno.c
 #
 # NEW PRIMARY SIDE (B) CRASH  (1st crash of B)
 $pri_shell "$pri_getenv; $gtm_tst/com/primary_crash.csh"
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+endif
 #
 echo "=== STEP 3 ==="
 #
@@ -163,8 +167,8 @@ echo "=== STEP 5 ==="
 # PRIMARY SIDE (A) CRASH AGAIN
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH2:"
 $gtm_tst/com/primary_crash.csh
-if ($?test_debug == 1) then
-        $gtm_tst/com/backup_dbjnl.csh bak3
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak3
 endif
 #
 echo "=== STEP 6 ==="
@@ -198,9 +202,9 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh -fetchre
 #
 set tst_nseqno = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/get_fetch_resync.csh rollback3.log < /dev/null"`
 if ($tst_seqtarget == $tst_nseqno) then
-        echo "PASSED rollback -fetchresync"
+	echo "PASSED rollback -fetchresync"
 else
-        echo "FAILED from rollback: tst_seqno1=$tst_seqno1 tst_seqtarget=$tst_seqtarget tst_nseqno=$tst_nseqno"
+	echo "FAILED from rollback: tst_seqno1=$tst_seqno1 tst_seqtarget=$tst_seqtarget tst_nseqno=$tst_nseqno"
 	$gtm_tst/com/endtp.csh
 	$gtm_tst/com/SRC_SHUT.csh "on"
 	echo "Test was forced to stop!"

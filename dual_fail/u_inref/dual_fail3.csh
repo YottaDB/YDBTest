@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,7 +69,9 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/wait_for_transaction_seqno.c
 $pri_shell "$pri_getenv; $gtm_tst/com/primary_crash.csh"
 
 # RESTART PRIMARY SIDE (B)
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+endif
 setenv start_time `date +%H_%M_%S`
 echo "Doing rollback on (B):"
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo mupip_rollback.csh -losttrans=lost1.glo >>&! rollback1.log'
@@ -81,7 +83,9 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh "AFTER_PRI_B_UP2:" < /dev/null
 
 
 # RESTART SECONDARY (A)
-$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+endif
 echo "Doing Rollback on side A"
 echo "mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo >>&! rollback2.log" >>&! rollback2.log
 $gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log

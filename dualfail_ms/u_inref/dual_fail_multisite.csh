@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,6 @@ if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif
 #
-unsetenv test_debug
 $MULTISITE_REPLIC_PREPARE 3
 $gtm_tst/com/dbcreate.csh mumps 2 125 1000 1024
 setenv gtm_test_tptype "ONLINE"

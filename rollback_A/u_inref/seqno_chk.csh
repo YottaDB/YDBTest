@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,15 +42,17 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 #
 # PRIMARY SIDE (A) UP
-$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1"
+if ($?test_debug) then
+	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1"
+endif
 #
 $MUPIP rundown -reg "*" -override |& sort -f
 echo "Journal extract on primary side before rollback ......"
 $gtm_tst/$tst/u_inref/seqextr.csh
 echo "Verifying journals on primary side before rollback ......"
 $GTM << gtm_eof
-  d chkextr^bkgrnd(1)
-  h
+	d chkextr^bkgrnd(1)
+	h
 gtm_eof
 #
 echo "mupip rollback on primary side ..."
@@ -60,7 +62,9 @@ echo "$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo " >>&! rollback1.log
 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log
 $grep "successful" rollback1.log
 #
-$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+if ($?test_debug) then
+	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+endif
 # PRIMARY SIDE (A) UP
 echo "Restarting Primary (A)..."
 $gtm_tst/com/SRC.csh "." $portno $start_time >& START_${start_time}.out
@@ -92,8 +96,8 @@ $gtm_tst/com/dbcheck_filter.csh -extract
 cd $PRI_DIR
 echo "Verifying database on primary side ......"
 $GTM << gtm_eof
-  d chkdata^bkgrnd
-  h
+	d chkdata^bkgrnd
+	h
 gtm_eof
 #
 echo "Journal extract on primary side ......"
@@ -101,7 +105,7 @@ $gtm_tst/$tst/u_inref/seqextr.csh
 #
 echo "Verifying journals on primary side ......"
 $GTM << gtm_eof
-  d chkextr^bkgrnd(0)
-  h
+	d chkextr^bkgrnd(0)
+	h
 gtm_eof
 #

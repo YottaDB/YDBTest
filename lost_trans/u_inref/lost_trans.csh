@@ -33,7 +33,6 @@ source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a failov
 source $gtm_tst/com/rand_suppl_type.csh 0 2
 # For this test buffer size is 1 MB and  5 processes
 setenv gtm_test_tptype "ONLINE"
-setenv test_debug 1
 setenv tst_buffsize  1048576
 set gtm_process = 5
 # enable noisolation
@@ -59,7 +58,7 @@ $gtm_tst/com/dbcreate.csh mumps 4 125 1000 -allocation=2048 -extension_count=204
 setenv portno `$sec_shell 'cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 if ($LFE == "E") then
-        setenv test_sleep_sec 30
+	setenv test_sleep_sec 30
 else
 	setenv test_sleep_sec 10
 endif
@@ -118,7 +117,9 @@ $GTM << GTM_EOF
 GTM_EOF
 
 cd $SEC_SIDE
-$gtm_tst/com/backup_dbjnl.csh bak1 "*.dat *.mjl* *.repl *.gld" cp
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak1 "*.dat *.mjl* *.repl *.gld" cp
+endif
 if (0 == $rcvr_rand) then
 	# Start rcvr normally and expect it to fail.
 	$sec_shell "$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/RCVR.csh "." $portno $start_time >&! RCVR_${start_time}.out"

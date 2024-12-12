@@ -4,7 +4,7 @@
 # Copyright (c) 2007, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,6 @@ setenv gtm_test_jobcnt 3
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally
 #even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
-setenv test_debug 1
 # Following is to work around C9D07-002359 for debug versions
 ##DISABLED_TEST##REENABLE##
 setenv tst_jnl_str "$tst_jnl_str,epoch=300"

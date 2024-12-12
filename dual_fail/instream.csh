@@ -22,7 +22,6 @@ source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # subtests in this test d
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif
-setenv test_debug 1
 #
 # Large align size will have issues with 32 bit OS and the maximum align sizes vary across the GG servers
 # So force the align_size to the testsystem default value i.e 4096.

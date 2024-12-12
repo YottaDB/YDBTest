@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,6 @@ setenv gtm_test_mupip_set_version "disable"     # -autorollback (online rollback
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
 $gtm_tst/com/dbcreate.csh mumps 5 125 1000
-setenv test_debug 1
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 $MUPIP set -journal=enable,on,before,epoch=30 -reg "*" |& sort -f
@@ -45,7 +44,9 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 #
 # PRIMARY SIDE (A) UP
-$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1"
+if ($?test_debug) then
+	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1"
+endif
 setenv start_time `date +%H_%M_%S`
 echo "$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo " >>&! rollback1.log
 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log
@@ -62,7 +63,9 @@ d main^d9002426
 halt
 xyz
 # SECONDARY SIDE (B) UP
-$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+if ($?test_debug) then
+	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2"
+endif
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo >>&! rollback2.log'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo "*" >>&! rollback2.log; $grep "successful" rollback2.log'
 echo "Restarting Secondary (B)..."

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -48,7 +48,7 @@ if (0 != "$stat") then
 	echo "TEST-E-TRANSACTIONS processed by the secondary did not reach the expected number (1500)"
 	echo "Since the rest of the test relies on this, no point in continuing it. Will exit now."
 	$gtm_tst/com/endtp.csh >>& endtp.out
-        $gtm_tst/com/dbcheck.csh
+	$gtm_tst/com/dbcheck.csh
 	exit 1
 endif
 # Wait for the journal seqno related entires to be hardned in the primary side. This is required because,
@@ -59,7 +59,9 @@ echo "==== STEP 2 ===="
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/rfstatus.csh "BEFORE_PRI_A_CRASH:"
 $gtm_tst/com/primary_crash.csh
-$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip
+endif
 # The source server sometimes takes longer than 3 1/2 minutes to shutdown and causes the test to fail.
 # do dse buffer_flush before invoking shutdown, to avoid this failure
 echo "Shutdown Secondary..."
@@ -90,7 +92,9 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/wait_for_transaction_seqno.c
 echo "==== STEP 3 ===="
 # NEW PRIMARY SIDE (B) CRASH
 $pri_shell "$pri_getenv; $gtm_tst/com/primary_crash.csh"
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+endif
 #
 # ANOTHER SWITCH OVER # (A) is primary. (B) is receiver
 echo "ANOTHER SWITCH OVER # (A) is primary. (B) is receiver:"

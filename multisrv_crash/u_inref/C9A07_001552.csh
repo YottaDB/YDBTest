@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,7 +75,9 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH1:"
 $gtm_tst/com/primary_crash.csh
 $sec_shell "$sec_getenv; $gtm_tst/com/rcvrstat.csh "BEFORE_SEC_B_CRASH1:" < /dev/null"
 $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh"
-$gtm_tst/com/backup_dbjnl.csh save1 '*.dat *.mj* *.gld *.repl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh save1 '*.dat *.mj* *.gld *.repl*' cp nozip
+endif
 echo "mupip_rollback.csh -losttrans=lost1.glo * >&! rollback1.log"
 $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >&! rollback1.log
 $grep "JNLSUCCESS" rollback1.log
@@ -84,10 +86,10 @@ $grep "JNLSUCCESS" rollback1.log
 source $gtm_tst/com/bakrestore_test_replic.csh
 $gtm_tst/com/dbcheck_filter.csh -nosprgde
 if ($status) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (1)"
-        echo "The errors found (other than "kill in progress" related ones)"
-        cat error.mupip
-        exit
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (1)"
+	echo "The errors found (other than "kill in progress" related ones)"
+	cat error.mupip
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################
@@ -109,7 +111,9 @@ $MUPIP set -journal=enable,on,before -reg '*' >&! GTM_5229_NOPREVLINK_errors_3.o
 echo "=== STEP 4 ==="
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH2:"
 $gtm_tst/com/primary_crash.csh
-$gtm_tst/com/backup_dbjnl.csh save2 '*.dat *.mj* *.gld *.repl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh save2 '*.dat *.mj* *.gld *.repl*' cp nozip
+endif
 echo "mupip_rollback.csh -losttrans=lost2.glo * >&! rollback2.log"
 $gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo "*" >&! rollback2.log
 $grep "JNLSUCCESS" rollback2.log
@@ -118,11 +122,11 @@ $grep "JNLSUCCESS" rollback2.log
 source $gtm_tst/com/bakrestore_test_replic.csh
 $gtm_tst/com/dbcheck_filter.csh -nosprgde
 if ($status) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (2)"
-        echo "The errors found (other than "kill in progress" related ones)"
-        cat error.mupip
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (2)"
+	echo "The errors found (other than "kill in progress" related ones)"
+	cat error.mupip
 
-        exit
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################
@@ -145,14 +149,18 @@ echo "=== STEP 6 ==="
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH3:"
 $gtm_tst/com/primary_crash.csh
-$gtm_tst/com/backup_dbjnl.csh save3 '*.dat *.mj* *.gld *.repl*' cp nozip
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh save3 '*.dat *.mj* *.gld *.repl*' cp nozip
+endif
 
 echo "=== STEP 7 ==="
 # FAIL OVER #
 echo "DOING QUICK FAIL OVER..."
 $DO_FAIL_OVER
 echo "ROLLBACK on SIDE (B)..."
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh save4 '*.dat *.mj* *.gld *.repl*' cp nozip"
+if ($?test_debug) then
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh save4 '*.dat *.mj* *.gld *.repl*' cp nozip"
+endif
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'mupip_rollback.csh -losttrans=lost3.glo "*" >&! rollback3.log; \
 										$grep "JNLSUCCESS" rollback3.log'
 
@@ -162,10 +170,10 @@ source $gtm_tst/com/bakrestore_test_replic.csh
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/dbcheck_filter.csh -nosprgde" >&! pri_shell_dbcheck_filter.out
 $grep 'No errors detected by integ' pri_shell_dbcheck_filter.out >& /dev/null
 if ($status) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (3)"
-        echo "The errors found (other than "kill in progress" related ones)"
-        cat pri_shell_dbcheck_filter.out
-        exit
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (3)"
+	echo "The errors found (other than "kill in progress" related ones)"
+	cat pri_shell_dbcheck_filter.out
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################
@@ -185,11 +193,11 @@ $grep "JNLSUCCESS" rollback4.log
 source $gtm_tst/com/bakrestore_test_replic.csh
 $gtm_tst/com/dbcheck_filter.csh -nosprgde
 if ($status) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (4)"
-        echo "The errors found (other than "kill in progress" related ones)"
-        cat error.mupip
-        $pri_shell "$pri_getenv;  cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh on"
-        exit
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (4)"
+	echo "The errors found (other than "kill in progress" related ones)"
+	cat error.mupip
+	$pri_shell "$pri_getenv;  cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh on"
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################

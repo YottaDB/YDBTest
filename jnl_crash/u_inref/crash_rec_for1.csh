@@ -37,7 +37,9 @@ while ($count < $iteration)
 	echo "Crash ..."
 	$gtm_tst/com/gtm_crash.csh
 	$gtm_tst/com/imptp_handle_crash_asserts_cores.csh
-	$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	if ($?test_debug) then
+		$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	endif
 	\rm -f *.dat
 	$MUPIP create |& sort -f
 	source $gtm_tst/com/mupip_set_version.csh # re-do the mupip_set_version
@@ -50,12 +52,12 @@ while ($count < $iteration)
 		if ($num == 2) $switch_chset UTF-8  >>&  for1_${count}.log
 	endif
 	$MUPIP journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,h.mjl,mumps.mjl >>&  for1_${count}.log
-        set stat1 = $status
+	set stat1 = $status
 	$grep "successful" for1_${count}.log
-        set stat2 = $status
+	set stat2 = $status
 	ls *.mjl_forw_phase >& /dev/null
 	set stat3 = $status
-        cat *.mje*
+	cat *.mje*
 	if ( "TRUE" == $gtm_test_unicode_support ) then
 		if ($?save_chset) then
 			$switch_chset $save_chset  >>&  for1_${count}.log
@@ -65,16 +67,16 @@ while ($count < $iteration)
 	endif
 	\rm -f *.o >>& for1_${count}.log
 	if ($count != $iteration) then
-        	$gtm_tst/com/dbcheck.csh -nosprgde
+		$gtm_tst/com/dbcheck.csh -nosprgde
 	else
-        	$gtm_tst/com/dbcheck.csh
+		$gtm_tst/com/dbcheck.csh
 	endif
 	$gtm_tst/com/checkdb.csh
 	if ($stat1 != 0 || $stat2 != 0 || $stat3 == 0) then
-                echo "crash_rec_for1 TEST FAILED on iteration $count"
-                cat  for1_${count}.log
-                exit 1
-        endif
+		echo "crash_rec_for1 TEST FAILED on iteration $count"
+		cat  for1_${count}.log
+		exit 1
+	endif
 end
 $gtm_tst/$tst/u_inref/check_prev.csh
 echo "crash_rec_for1 TEST FINISHED"

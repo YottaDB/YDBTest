@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,6 @@
 #
 # TEST : PRIMARY SERVER CRASH, BACKLOG AND FAILOVER (6.17 and 6.18)
 #
-setenv test_debug 1
 setenv gtm_test_maxdim 3
 setenv gtm_test_parms "1,7"
 setenv gtm_test_dbfill "IMPRTP"
@@ -109,7 +108,7 @@ echo "=== STEP 3 ==="
 echo "DOING FAIL OVER..."
 $DO_FAIL_OVER
 echo "ROLLBACK on SIDE (B)..."
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh save1 '*.mj* *.dat' cp nozip"
 endif
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >&! rollback1.log;	\
@@ -118,10 +117,10 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttra
 source $gtm_tst/com/bakrestore_test_replic.csh
 set stat_rem = `$pri_shell  "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/dbcheck_filter.csh > /dev/null; echo $status" `
 if ($stat_rem) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (3)"
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (3)"
 	date
-        cat error.mupip
-        exit
+	cat error.mupip
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################
@@ -137,7 +136,7 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/bkgrnd_reorg.csh >>& reorg.o
 #
 # SECONDARY SIDE (A) UP
 cd $SEC_SIDE
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	$gtm_tst/com/backup_dbjnl.csh save2 '*.mj*' cp nozip
 endif
 echo "mupip_rollback.csh -fetchresync=portno -losttrans=fetch.glo *"
@@ -148,14 +147,14 @@ $grep "successful" rollback2.log
 source $gtm_tst/com/bakrestore_test_replic.csh
 $gtm_tst/com/dbcheck_filter.csh > /dev/null
 if ($status) then
-        echo "INTEG ERRORS SEEN. STOPPING THE TEST (4)"
+	echo "INTEG ERRORS SEEN. STOPPING THE TEST (4)"
 	date
-        cat error.mupip
+	cat error.mupip
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh < /dev/null "">>&!"" endtp.out"
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/close_reorg.csh >>& close_reorg.out"
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/close_reorg.csh >>& close_reorg.out"
-        $pri_shell "$pri_getenv;  cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh ""."""
-        exit
+	$pri_shell "$pri_getenv;  cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh ""."""
+	exit
 endif
 source $gtm_tst/com/bakrestore_test_replic.csh
 ##########################################################

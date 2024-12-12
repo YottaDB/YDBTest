@@ -31,7 +31,6 @@ if ($?gtmdbglvl) then
 endif
 setenv gtm_test_forward_rollback 0	# This test causes disk full situation due to multiple backups of db/jnl taken by mupip_rollback.csh if set to 1
 setenv gtm_test_switches_jnl_files 1	# indicate to mupip_rollback.csh that this test switches jnlfiles explicitly
-setenv test_debug 1
 setenv gtm_test_tp 6
 setenv gtm_test_jobcnt 6
 setenv gtm_test_dbfill "IMPTP"

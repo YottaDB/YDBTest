@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,7 +50,7 @@ while ($count < $iteration)
 	echo "Crash ..."
 	$gtm_tst/com/get_dse_df.csh "BEFORE_CRASH" "" "-all"
 	$gtm_tst/com/gtm_crash.csh
-	if ($?test_debug == 1) then
+	if ($?test_debug) then
 		$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
 	endif
 	echo "Recover..."
@@ -75,9 +75,9 @@ while ($count < $iteration)
 	endif
 	cat *.mje*
 	if ($count != $iteration) then
-        	$gtm_tst/com/dbcheck_filter.csh -nosprgde
+		$gtm_tst/com/dbcheck_filter.csh -nosprgde
 	else
-        	$gtm_tst/com/dbcheck_filter.csh
+		$gtm_tst/com/dbcheck_filter.csh
 	endif
 	$gtm_tst/com/checkdb.csh
 	echo "End Iteration $count"

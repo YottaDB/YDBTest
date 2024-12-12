@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,9 +34,9 @@ while ($count < $iteration )
 # Note that imptp.m commits a few transactions only
 	$GTM  << \xyz  >>& imptp.out
 	w $J,!
-        for kk=1:1:10 do in3^npfill("set",1,1)
-        for kk=1:1:10 do in3^npfill("kill",1,1)
-        h
+	for kk=1:1:10 do in3^npfill("set",1,1)
+	for kk=1:1:10 do in3^npfill("kill",1,1)
+	h
 \xyz
 	@ count = $count + 1
 	echo "GTM Process starts in background..."
@@ -48,7 +48,9 @@ while ($count < $iteration )
 	cat *.mje*
 	echo "Crash..."
 	$gtm_tst/com/gtm_crash.csh
-	$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	if ($?test_debug) then
+		$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	endif
 	# From V43FT03 we have journal idempotency. So we do not have journal switch and can reuse journals"
 	echo "Recover..."
 	echo "$MUPIP journal -recover -backward *"
@@ -59,11 +61,11 @@ while ($count < $iteration )
 	endif
 	$MUPIP journal -recover -backward "*" >>&  rec2_${count}.log
 	set stat1 = $status
-        $grep "successful" rec2_${count}.log
-        set stat2 = $status
+	$grep "successful" rec2_${count}.log
+	set stat2 = $status
 	ls *.mjl_forw_phase >& /dev/null
 	set stat3 = $status
-        cat *.mje*
+	cat *.mje*
 	if ( "TRUE" == $gtm_test_unicode_support ) then
 		if ($?save_chset) then
 			$switch_chset $save_chset  >>&  rec2_${count}.log
@@ -72,16 +74,16 @@ while ($count < $iteration )
 		endif
 	endif
 	if ($count != $iteration) then
-        	$gtm_tst/com/dbcheck_filter.csh -nosprgde
+		$gtm_tst/com/dbcheck_filter.csh -nosprgde
 	else
-        	$gtm_tst/com/dbcheck_filter.csh
+		$gtm_tst/com/dbcheck_filter.csh
 	endif
-        $gtm_tst/com/checkdb.csh
+	$gtm_tst/com/checkdb.csh
 	if ($stat1 != 0 || $stat2 != 0 || $stat3 == 0) then
-                echo "crash_rec_back2 TEST FAILED on iteration $count"
-                cat  rec2_${count}.log
-                exit 1
-        endif
+		echo "crash_rec_back2 TEST FAILED on iteration $count"
+		cat  rec2_${count}.log
+		exit 1
+	endif
 end
 $gtm_tst/$tst/u_inref/check_prev.csh
 echo "crash_rec_back2 TEST PASSED"

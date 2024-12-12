@@ -42,12 +42,10 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 
 # PRIMARY SIDE (A) UP
-# #######################################################################
-# The following lines are commented out as they sometimes have been seen to take up a lot of disk space.
-# They can be re-enabled in case of a test failure for analysis and hence are left around.
-#	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip"
-#	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
-# #######################################################################
+if ($?test_debug) then
+	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip"
+	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+endif
 #
 echo "Primary:mupip_rollback.csh -losttrans=lost1.glo *"
 echo "$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo " >>&! rollback1.log

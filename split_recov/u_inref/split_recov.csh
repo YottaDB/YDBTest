@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,9 +22,9 @@ source $gtm_tst/com/gtm_test_setbgaccess.csh
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 #
 if ($LFE == "E") then
-        setenv test_sleep_sec 180
+	setenv test_sleep_sec 180
 else
-        setenv test_sleep_sec 60
+	setenv test_sleep_sec 60
 endif
 
 source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a failover and so disable -trigupdate
@@ -35,7 +35,6 @@ if ("1" == "$test_replic_suppl_type") then
 endif
 
 # For this test buffer size is 1 MB and always keep log files
-setenv test_debug 1
 setenv tst_buffsize  1048576
 $gtm_tst/com/dbcreate.csh mumps 6 125 1000 512,1024,4096
 setenv portno `$sec_shell 'cat $SEC_DIR/portno'`
@@ -75,7 +74,7 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh ""AFTER_PRI_B_UP:"" < /dev/nul
 
 
 cd $SEC_SIDE
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	$gtm_tst/com/backup_dbjnl.csh bak '*.dat *.mjl*' cp nozip
 endif
 echo "mupip_rollback.csh -verbose -fetchresync=portno -losttrans=fetch.glo *  >&! rollback.log"

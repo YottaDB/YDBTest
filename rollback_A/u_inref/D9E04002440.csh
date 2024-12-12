@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,6 @@
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif
-setenv test_debug  1
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 $gtm_tst/com/dbcreate.csh mumps 8 125-325 900-1150 512,1024,4096 2000 4096 2000
 $MUPIP set -journal=enable,on,before,epoch=10 -reg AREG
@@ -54,7 +53,9 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processe
 $gtm_tst/com/rfstatus.csh "BEFORE_SEC_B_CRASH:"
 $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh"
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/corrupt_jnlrec.csh a b c >>& corrupt_jnlrec.out "
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak22 '*.dat *.mjl* *.gld *.repl' cp"
+if ($?test_debug) then
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak22 '*.dat *.mjl* *.gld *.repl' cp"
+endif
 # primary continues to run and creates a backlog
 sleep 20
 
@@ -62,7 +63,9 @@ sleep 20
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 $gtm_tst/com/corrupt_jnlrec.csh c e >>& corrupt_jnlrec.out
-$gtm_tst/com/backup_dbjnl.csh bak11 '*.dat *.mjl* *.gld *.repl' cp
+if ($?test_debug) then
+	$gtm_tst/com/backup_dbjnl.csh bak11 '*.dat *.mjl* *.gld *.repl' cp
+endif
 
 # FAIL OVER #
 echo "Doing Fail over."

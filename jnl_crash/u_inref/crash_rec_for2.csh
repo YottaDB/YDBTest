@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,28 +35,30 @@ while ($count < $iteration)
 	$gtm_tst/com/get_dse_df.csh "BEFORE_CRASH" "" "-all"
 	echo "Crash ..."
 	$gtm_tst/com/gtm_crash.csh
-	$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	if ($?test_debug) then
+		$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
+	endif
 	\cp ./last_data/*.dat .
 	echo "Recover..."
 	echo "$MUPIP journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,h.mjl,mumps.mjl"
 	$MUPIP journal -recover -forward a.mjl,b.mjl,c.mjl,d.mjl,e.mjl,f.mjl,g.mjl,h.mjl,mumps.mjl >>&  for2_${count}.log
-        set stat1 = $status
-        $grep "successful" for2_${count}.log
-        set stat2 = $status
+	set stat1 = $status
+	$grep "successful" for2_${count}.log
+	set stat2 = $status
 	ls *.mjl_forw_phase >& /dev/null
 	set stat3 = $status
-        cat *.mje*
+	cat *.mje*
 	if ($count != $iteration) then
-        	$gtm_tst/com/dbcheck.csh -nosprgde
+		$gtm_tst/com/dbcheck.csh -nosprgde
 	else
-        	$gtm_tst/com/dbcheck.csh
+		$gtm_tst/com/dbcheck.csh
 	endif
-        $gtm_tst/com/checkdb.csh
+	$gtm_tst/com/checkdb.csh
 	if ($stat1 != 0 || $stat2 != 0 || $stat3 == 0) then
-                echo "crash_rec_for2 TEST FAILED on iteration $count"
-                cat  for2_${count}.log
-                exit 1
-        endif
+		echo "crash_rec_for2 TEST FAILED on iteration $count"
+		cat  for2_${count}.log
+		exit 1
+	endif
 	\rm last_data/*.dat ; \cp *.dat ./last_data	# BYPASSOK backup_dbjnl.csh
 end
 $gtm_tst/$tst/u_inref/check_prev.csh

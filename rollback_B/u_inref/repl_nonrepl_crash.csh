@@ -30,7 +30,6 @@ echo "Test case 77a : Replication configuration"
 setenv gtm_test_jobcnt 5
 setenv test_sleep_sec 90
 setenv test_sleep_sec_short 10
-setenv test_debug 1
 setenv gtm_test_repl_norepl 1
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv gtm_test_tp 1
@@ -68,7 +67,9 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 
 # PRIMARY SIDE (A) UP
-$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 "
+if ($?test_debug) then
+	$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 "
+endif
 set cur_time = `date +%H_%M_%S`
 \mv h.dat h_${cur_time}.dat
 $MUPIP create -reg=HREG
@@ -78,7 +79,9 @@ $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log
 $grep "successful" rollback1.log
 
 # SECONDARY SIDE (B) UP
-$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 "
+if ($?test_debug) then
+	$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 "
+endif
 $sec_shell "$sec_getenv; cd $SEC_SIDE; \mv h.dat h_${cur_time}.dat; $MUPIP create -reg=HREG ;cp h.dat_orig h.dat"
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo >>&! rollback2.log'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost2.glo "*" >>&! rollback2.log;$grep "successful" rollback2.log'

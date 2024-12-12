@@ -13,7 +13,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-setenv test_debug 1
 unsetenv test_replic
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 # Cannot use triggers while turning journaling on and off
@@ -37,7 +36,7 @@ $gtm_tst/com/imptp_handle_crash_asserts_cores.csh
 #
 $gtm_tst/com/corrupt_jnlrec.csh mumps b c >>& corrupt_jnlrec.out
 #
-if ($?test_debug == 1) then
+if ($?test_debug) then
 	\mkdir ./save; \cp {*.gld,*.dat,*.mj*} ./save
 endif
 #
