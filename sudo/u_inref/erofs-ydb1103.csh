@@ -38,6 +38,14 @@ sudo cp mumps.dat ./loopfs
 echo "# Change mumps.gld to point DEFAULT region to [./loopfs/mumps.dat]"
 $gtm_dist/mumps -run GDE "change -seg DEFAULT -file=./loopfs/mumps.dat"
 
+if ( "ENCRYPT" == $test_encryption ) then
+	# Update gtmcrypt_config to reflect the new ./loopfs subdirectory path for mumps.dat
+	# or else we would get CRYPTKEYFETCHFAILED error ("Expected hash" error detail).
+	cp $gtmcrypt_config $gtmcrypt_config.orig
+	sed -i 's,mumps\.dat,loopfs/mumps.dat,;' $gtmcrypt_config
+	cp $gtmcrypt_config $gtmcrypt_config.new
+endif
+
 echo "# Unmount ./loopfs and remount it as a read-only filesystem"
 sudo umount ./loopfs
 sudo mount -t ext4 -o loop,ro device_file ./loopfs
@@ -50,6 +58,11 @@ sudo umount ./loopfs
 
 echo "# Change mumps.gld back to point DEFAULT region to [./mumps.dat]"
 $gtm_dist/mumps -run GDE "change -seg DEFAULT -file=mumps.dat"
+
+if ( "ENCRYPT" == $test_encryption ) then
+	# Restore original gtmcrypt_config now that we are going to look at mumps.dat (loopfs/mumps.dat no longer needed)
+	cp $gtmcrypt_config.orig $gtmcrypt_config
+endif
 
 $gtm_tst/com/dbcheck.csh
 
