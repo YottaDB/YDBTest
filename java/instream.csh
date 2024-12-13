@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,6 +50,17 @@ else
 	setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${JAVA_SO_HOME}:${JVM_SO_HOME}:${gtmji_dir}
 	setenv lib_preload_init ${LD_PRELOAD}
 	setenv lib_preload ${LD_PRELOAD}:${JAVA_SO_HOME}/libjsig.so
+	if (1 == $gtm_test_use_V6_DBs) then
+		# We are going to create dbs with a random older V6 build.
+		if ("ENCRYPT" == $test_encryption) then
+			echo "# gtm_test_use_V6_DBs changed from 1 to 0 by java/instream.csh"	>>&! settings.csh
+			echo "# because LD_LIBRARY_PATH set by java/instream.csh would "	>>&! settings.csh
+			echo '# include $gtm_dist/plugin and would have a version mismatch'	>>&! settings.csh
+			echo '# with the V6 build $gtm_dist/plugin and cause CRYPTINIT errors'	>>&! settings.csh
+			echo "setenv gtm_test_use_V6_DBs 0"					>>&! settings.csh
+			setenv gtm_test_use_V6_DBs 0
+		endif
+	endif
 endif
 
 # Have a bigger stack limit (some platforms seem to need it).
