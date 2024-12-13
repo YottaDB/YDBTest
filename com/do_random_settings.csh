@@ -1300,20 +1300,34 @@ else
 	# If we haven't already disabled setting the disk version, choose one or the other with 50% frequency
 	if (! $?gtm_test_use_V6_DBs) then
 		if (50 >= $randnumbers[49]) then
-			source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh  # Enable V6 DBs
+			setenv gtm_test_use_V6_DBs 1
 		else
 			setenv gtm_test_use_V6_DBs 0
 		endif
-		echo "# gtm_test_use_V6_DBs set by do_random_settings.csh"				>>&! $settingsfile
+		echo "# gtm_test_use_V6_DBs set to [$gtm_test_use_V6_DBs] by do_random_settings.csh"	>>&! $settingsfile
 	else
-		echo "# gtm_test_use_V6_DBs was already set before coming into do_random_settings.csh"	>>&! $settingsfile
-		#
-		# $gtm_test_use_V6_DBs is already set coming in here. If it was set to '1' then we need to drive our
-		# script to do the full enable which includes driving com/ydb_prior_ver_check.csh.
-		if (1 == $gtm_test_use_V6_DBs) then
-			source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh  # Enable V6 DBs
+		echo "# gtm_test_use_V6_DBs was already set to [$gtm_test_use_V6_DBs] before coming into do_random_settings.csh"	>>&! $settingsfile
+	endif
+endif
+if (1 == $gtm_test_use_V6_DBs) then
+	# We are going to create dbs with a random older V6 build.
+	if ("ENCRYPT" == $test_encryption) then
+		# Check if this older build is built with encryption support.
+		# If not, then we have to disable using V6 DBs for this test as otherwise dbcreate_base.csh
+		# will create unencrypted databases using the V6 DB (because com/switch_gtm_version.csh called
+		# by dbcreate_base.csh would have set the "test_encryption" env var to "NON_ENCRYPT") and the
+		# caller subtest driver script will not be aware of this internal change and see unexpected results.
+		if ("TRUE" != "`$gtm_tst/com/is_encrypt_support.csh $gtm_test_v6_dbcreate_rand_ver $tst_image`") then
+			echo -n "# gtm_test_use_V6_DBs set back to 0 by do_random_settings.csh"			>>&! $settingsfile
+			echo " because [$gtm_test_v6_dbcreate_rand_ver] was not built with encryption support"	>>&! $settingsfile
+			setenv gtm_test_use_V6_DBs 0
 		endif
 	endif
+endif
+if (1 == $gtm_test_use_V6_DBs) then
+	# If $gtm_test_use_V6_DBs is set to 1, we then need to drive our script to do
+	# the full enable which includes driving com/ydb_prior_ver_check.csh.
+	source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh  # Enable V6 DBs
 endif
 echo "setenv gtm_test_use_V6_DBs $gtm_test_use_V6_DBs"						>>&! $settingsfile
 
