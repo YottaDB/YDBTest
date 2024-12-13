@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,6 +39,7 @@
 # env_for_huge_and_shm-gtmf135288    [ern0]    Test huge pages support: setting gtm_pinshm and gtm_hugetlb_shm env variables to true
 # gtmsecshrsrvf-ydb_tmp-ydb1112      [nars]    Test that ydb_tmp env var mismatch between multiple clients results in GTMSECSHRSRVF errors
 # gtmsecshrsrvf-ydb_env_set-ydb1112  [nars]    Test ydb_env_set sets ydb_tmp env var appropriately and avoids GTMSECSHRSRVF errors
+# shmhugetlb_syslog-gtmf221672		[jon]       Test that additional context is included in SHMHUGETLB syslog messages
 
 setenv subtest_list_common "sourceInstall"
 setenv subtest_list_common "$subtest_list_common diffDir"
@@ -61,6 +62,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic erofs-ydb1103"
 setenv subtest_list_non_replic "$subtest_list_non_replic env_for_huge_and_shm-gtmf135288"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_env_set-ydb1112"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_tmp-ydb1112"
+setenv subtest_list_non_replic "$subtest_list_non_replic shmhugetlb_syslog-gtmf221672"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then

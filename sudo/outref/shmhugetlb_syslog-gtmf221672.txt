@@ -1,0 +1,25 @@
+# ********************************************************************************************
+# GTM-F221672 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-F221672)
+# 
+# The SHMHUGETLB syslog warning message provides information about the operation of the calling process.
+# Previously, SHMHUGETLB failure messages did not include operational information necessary to understand the reasons for such failures. (GTM-F221672)
+
+# Set the database access method to BG mode to ensure shared memory is used
+# Set gtm_hugetlb_shm to enable hugetlb pages
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set the number of global buffers to the maximum to create conditions for SHMHUGETLB error
+# Run DSE to produce SHMHUGETLB error
+
+# Check syslog for SHMHUGETLB errors
+##TIMESTAMP GTM-DSE[##PID]: %GTM-W-SHMHUGETLB, Could not back shared memory with huge pages, using base pages instead for database file ##PATH, %SYSTEM-E-ENO12, Cannot allocate memory -- generated from ##MEMADDR.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
