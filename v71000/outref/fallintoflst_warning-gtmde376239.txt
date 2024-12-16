@@ -1,0 +1,89 @@
+# ********************************************************************************************
+# GTM-DE376239 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE376239)
+# 
+# GT.M reports a FALLINTOFLST error after an argumentless DO embedded subroutine followed by a label with a formallist when no QUIT terminates the code after the DO block, except when there are no lines between the end of the embedded subroutine and the label with the formallist, in which case GT.M infers a QUIT would be appropriate to separate them. When GT.M inserts an implicit QUIT, it issues a FALLINOFLST warning unless compilation has a -NOWARNING qualifier. Previously, since the FALLINTOFLST error was introduced in V6.0-002, GT.M inappropriately gave that error for cases of that combination under circumstances where the QUIT was on the same line as the argumentless DO rather than explicitly between the embedded subroutine and the label with the formallist. (GTM-DE376239)
+# 
+
+# See the below GitLab threads for more information on the cases tested below:
+# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2197#note_2310986168
+# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2197#note_2303484583
+# Testing compilation errors for: 'mumps gtmde376239a.m'
+	formallistrtn(a,b)
+	              ^-----
+		At column 15, line 19, source module ##TEST_PATH##/gtmde376239a.m
+%GTM-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%GTM-I-TEXT, Adding implicit QUIT above
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239a'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+2^gtmde376239a
+
+GTM>
+
+# Testing compilation errors for: 'mumps -NOWARNING gtmde376239a.m'
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239a'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+2^gtmde376239a
+
+GTM>
+
+# Testing compilation errors for: 'mumps gtmde376239b.m'
+		do  write 1
+		    ^-----
+		At column 6, line 17, source module ##TEST_PATH##/gtmde376239b.m
+%GTM-W-DONOBLOCK, Argumentless DO not followed by a block
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239b'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+1^gtmde376239b
+
+GTM>
+
+# Testing compilation errors for: 'mumps -NOWARNING gtmde376239b.m'
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239b'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+1^gtmde376239b
+
+GTM>
+
+# Testing compilation errors for: 'mumps gtmde376239c.m'
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239c'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+4^gtmde376239c
+
+GTM>
+
+# Testing compilation errors for: 'mumps -NOWARNING gtmde376239c.m'
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239c'
+1
+%GTM-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+		At M source location embeddedrtn+4^gtmde376239c
+
+GTM>
+
+# YottaDB r2.04 will behave differently than r2.02 for the below test case.
+# r2.02 will provide a clear FALLINTOFLST error while r2.04 will issue
+# a confusing QUITARGREQD error (this happened because an implicit QUIT was
+# inserted by GT.M/YottaDB and not because of a QUIT coded by the user).
+# But we are going to keep the r2.04 behavior to be compatible with upstream
+# GT.M and other M implementations.
+# See note at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2197#note_2303484583
+# for more details.
+# Testing compilation errors for: 'mumps gtmde376239d.m'
+	bad(arg)
+	    ^-----
+		At column 5, line 21, source module ##TEST_PATH##/gtmde376239d.m
+%GTM-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%GTM-I-TEXT, Adding implicit QUIT above
+# Testing runtime errors for: 'mumps -run embeddedrtn^gtmde376239d'
+1
+%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument
+		At M source location z+1^gtmde376239d
+
+GTM>
