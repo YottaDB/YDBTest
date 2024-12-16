@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -126,6 +126,18 @@ set new_key = mumps_dat_key2
 # Submit a large number of updates to the database.
 echo
 echo "Write database updates"
+
+# Before writing the real database updates, do a dummy global update so we can then sleep for 1 second and
+# then note that time as the start time before the real set of updates so any -since time calculated for a
+# later mupip journal -recover command is guaranteed to be greater than or equal to that noted start time.
+# This is because without the dummy update, the journal file previous link would be cut as part of the first
+# update (due to a CRYPTJNLMISMATCH error) and would show up in the syslog as a PREVJNLLINKCUT message. It is
+# possible for the randomly calculated -since time in this case to be EQUAL to the start time of the first update
+# in which case the mupip journal -recover -since would try and go back to the previous journal file but would get
+# a NOPREVLINK error as the previous journal file link was already cut.
+$gtm_dist/mumps -run %XCMD 'set ^dummyupdate=1'
+sleep 1
+
 @ start_in_sec = `date +%s`
 $gtm_dist/mumps -run %XCMD 'for i=1:1:100 set ^a(i)=$justify(i,'$RAND_RECORD_SIZE')'
 @ end_in_sec = `date +%s`
