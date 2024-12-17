@@ -1,0 +1,138 @@
+######################################################################################
+# Test that I/O parameters for external calls can be pre-allocated
+######################################################################################
+# Compile external C routines
+# Run [dbcreate.csh]
+# Export environment variables for M->C FFI
+# ydb_buffer_t
+# Verify the C program can both read and write IO ydb_buffer_t* arguments.
+c.iorepeatb: 100 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+io_repeatb: buf_size=100 input_size=13 example-input
+# Verify the C program can write to IO ydb_buffer_t* arguments even if the input string is empty.
+c.iorepeatb: 100 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+io_repeatb: buf_size=100 input_size=0 
+# Verify the C program can distinguish skipped actuals from 0-length IO ydb_buffer_t* arguments.
+io_repeatb: no input argument passed
+io_repeatb: buf_size=100 input_size=0 
+# Verify the C program can distinguish skipped actuals from uninitialized O ydb_buffer_t* arguments.
+o_repeatb: no input argument passed
+# ydb_string_t
+# Verify the C program can both read and write IO ydb_string_t* arguments.
+c.iorepeats: 100 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+io_repeats: input_size=13 example-input
+# Verify the C program can write to IO ydb_string_t* arguments even if the input string is empty.
+c.iorepeats: 100 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+io_repeats: input_size=0 
+# Verify the C program can distinguish skipped actuals from 0-length IO ydb_string_t* arguments.
+io_repeats: no input argument passed
+io_repeats: input_size=0 
+# Verify the C program can distinguish skipped actuals from O ydb_string_t* arguments.
+o_repeats: no input argument passed
+# ydb_char_t
+# Verify the C program can both read and write IO ydb_char_t* arguments.
+c.iorepeatc: 99 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+io_repeatc: input_size=13 example-input
+# Verify the C program can write to IO ydb_char_t* arguments even if the input string is empty.
+c.iorepeatc: 99 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+io_repeatc: empty string or no input argument
+io_repeatc: input_size=0 
+# Verify skipped actuals are passed as 0-length null-terminated strings for IO ydb_char_t* arguments.
+io_repeatc: empty string or no input argument
+io_repeatc: input_size=0 
+io_repeatc: empty string or no input argument
+io_repeatc: input_size=0 
+# Verify skipped actuals are passed as 0-length null-terminated strings for O ydb_char_t* arguments.
+o_repeatc: empty string or no input argument
+o_repeatc: empty string or no input argument
+# Verify that ydb_char_t** does not allow pre-allocation as an O param.
+%YDB-I-EXTSRCLIN, 	fooCharDoubleStarO: void foo_char_double_star(O:ydb_char_t **[15])
+									       ^-----
+%YDB-I-EXTSRCLOC, 		At column 55, line 1, source module type_char_double_star_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# Verify that ydb_char_t** does not allow pre-allocation as an IO param.
+%YDB-I-EXTSRCLIN, 	fooCharDoubleStarIO: void foo_char_double_star(IO:ydb_char_t **[15])
+										^-----
+%YDB-I-EXTSRCLOC, 		At column 56, line 1, source module type_char_double_star_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# Verify that each pointer to a numeric type gives an error when pre-allocated.
+# O : ydb_int_t *
+%YDB-I-EXTSRCLIN, 	foointO: void foo_int(O:ydb_int_t *[15])
+						      ^-----
+%YDB-I-EXTSRCLOC, 		At column 30, line 1, source module type_int_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_int_t *
+%YDB-I-EXTSRCLIN, 	foointIO: void foo_int(IO:ydb_int_t *[15])
+						       ^-----
+%YDB-I-EXTSRCLOC, 		At column 31, line 1, source module type_int_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_double_t *
+%YDB-I-EXTSRCLIN, 	foodoubleO: void foo_double(O:ydb_double_t *[15])
+							       ^-----
+%YDB-I-EXTSRCLOC, 		At column 39, line 1, source module type_double_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_double_t *
+%YDB-I-EXTSRCLIN, 	foodoubleIO: void foo_double(IO:ydb_double_t *[15])
+								^-----
+%YDB-I-EXTSRCLOC, 		At column 40, line 1, source module type_double_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_float_t *
+%YDB-I-EXTSRCLIN, 	foofloatO: void foo_float(O:ydb_float_t *[15])
+							    ^-----
+%YDB-I-EXTSRCLOC, 		At column 36, line 1, source module type_float_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_float_t *
+%YDB-I-EXTSRCLIN, 	foofloatIO: void foo_float(IO:ydb_float_t *[15])
+							     ^-----
+%YDB-I-EXTSRCLOC, 		At column 37, line 1, source module type_float_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_uint_t *
+%YDB-I-EXTSRCLIN, 	foouintO: void foo_uint(O:ydb_uint_t *[15])
+							 ^-----
+%YDB-I-EXTSRCLOC, 		At column 33, line 1, source module type_uint_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_uint_t *
+%YDB-I-EXTSRCLIN, 	foouintIO: void foo_uint(IO:ydb_uint_t *[15])
+							  ^-----
+%YDB-I-EXTSRCLOC, 		At column 34, line 1, source module type_uint_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_long_t *
+%YDB-I-EXTSRCLIN, 	foolongO: void foo_long(O:ydb_long_t *[15])
+							 ^-----
+%YDB-I-EXTSRCLOC, 		At column 33, line 1, source module type_long_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_long_t *
+%YDB-I-EXTSRCLIN, 	foolongIO: void foo_long(IO:ydb_long_t *[15])
+							  ^-----
+%YDB-I-EXTSRCLOC, 		At column 34, line 1, source module type_long_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_ulong_t *
+%YDB-I-EXTSRCLIN, 	fooulongO: void foo_ulong(O:ydb_ulong_t *[15])
+							    ^-----
+%YDB-I-EXTSRCLOC, 		At column 36, line 1, source module type_ulong_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_ulong_t *
+%YDB-I-EXTSRCLIN, 	fooulongIO: void foo_ulong(IO:ydb_ulong_t *[15])
+							     ^-----
+%YDB-I-EXTSRCLOC, 		At column 37, line 1, source module type_ulong_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_int64_t *
+%YDB-I-EXTSRCLIN, 	fooint64O: void foo_int64(O:ydb_int64_t *[15])
+							    ^-----
+%YDB-I-EXTSRCLOC, 		At column 36, line 1, source module type_int64_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_int64_t *
+%YDB-I-EXTSRCLIN, 	fooint64IO: void foo_int64(IO:ydb_int64_t *[15])
+							     ^-----
+%YDB-I-EXTSRCLOC, 		At column 37, line 1, source module type_int64_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# O : ydb_uint64_t *
+%YDB-I-EXTSRCLIN, 	foouint64O: void foo_uint64(O:ydb_uint64_t *[15])
+							       ^-----
+%YDB-I-EXTSRCLOC, 		At column 39, line 1, source module type_uint64_o.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# IO : ydb_uint64_t *
+%YDB-I-EXTSRCLIN, 	foouint64IO: void foo_uint64(IO:ydb_uint64_t *[15])
+								^-----
+%YDB-I-EXTSRCLOC, 		At column 40, line 1, source module type_uint64_io.xc
+%YDB-E-ZCPREALLVALSTR, Pre-allocation allowed only for output or input/output variables of type ydb_buffer_t*, ydb_string_t*, or ydb_char_t*
+# Shutdown the server and verify database integrity.

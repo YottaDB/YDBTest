@@ -78,6 +78,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic bool_expr_andor-ydb1091
 setenv subtest_list_non_replic	"$subtest_list_non_replic various_fuzz-ydb1044"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydb_hostname-ydb747"
 setenv subtest_list_non_replic	"$subtest_list_non_replic untimed_nodelim_socread-ydb1100"
+setenv subtest_list_non_replic	"$subtest_list_non_replic callout_io-ydb1056"
 setenv subtest_list_replic	"loginterval-ydb1098"
 
 if ($?test_replic == 1) then
