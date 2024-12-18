@@ -19,12 +19,22 @@ if ( -e $last_tst_dir/submitted_tests ) then
 	# If test was run with runtest or gtmtest, there is a submitted_tests file containing
 	# a list of tests that were run, so extract name of last test run.
 	# Otherwise (if run by runsubtest), retain $tst from what was previously set by settest.
-	foreach tst (`awk '{print $2}' $last_tst_dir/submitted_tests`)
+	foreach submitted_tst (`awk '{print $2}' $last_tst_dir/submitted_tests`)
 		# Find the last listed test that was actually run
-		if ! (-e $last_tst_dir/${tst}_0) break
-		setenv tst $tst
+		set max_wait = 60
+		# Note that this check only works for the simple case of running one test without replication.
+		# It will not work in the case of:
+		# + Submitting a test with `-replic`, which would only create `${tst}_1`
+		# + Submitting a test with `-num_runs 10` etc., which would only create `${tst}_0_1` etc.
+		while ( (! -e $last_tst_dir/${submitted_tst}_0) && ($max_wait > 0) )
+			# Wait for the last test directory to be created. Needed when tests are run in the background,
+			# such as when -fg is not passed to gtmtest.csh, e.g. via $gtmtest_args".
+			sleep 1
+			@ max_wait = $max_wait - 1
+		end
+		if ! (-e $last_tst_dir/${submitted_tst}_0) break
+		setenv tst $submitted_tst
 	end
-	unset tst   # unset the internal variable to expose the last env variable we set above
 endif
 
 if ( "$tst" == "" ) then
