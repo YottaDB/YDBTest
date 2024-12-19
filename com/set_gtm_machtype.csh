@@ -20,7 +20,7 @@
 unset anyerror
 
 if ( $MACHTYPE == "unknown" ) then
- set MACHTYPE = `uname -m`
+	set MACHTYPE = `uname -m`
 endif
 set shorthost = $HOST:ar
 
@@ -36,7 +36,7 @@ if ($mach_type =~ "x86_64*") set mach_type = "x86_64"
 if ($mach_type =~ "armv*l") set mach_type = "armvxl"	# ARMV6L and ARMV7L are together considered ARMVXL
 if ($mach_type =~ "aarch64*") set mach_type = "aarch64"
 if ( ($gtm_platform != "x86_64") && ($mach_type == "x86_64") ) then
-        set mach_type = "ix86"
+	set mach_type = "ix86"
 endif
 set os_machtype = "$os_name"_"$mach_type"
 # get the OS version, needed for aix and sometimes hpux
@@ -171,18 +171,18 @@ set kversion = `uname -r | cut -d "." -s -f "1,2"`	# Looks like '6.2.0-36-generi
 set base="5.3"
 set min = `echo "$base\n${kversion}" | sort -V | head -1`
 if ("$min" == "$base") then
-    # Kernel version is >= 5.3
-    set gversion = `ldd --version | head -n1 | cut -d ')' -f2 | cut -d ' ' -f2`	# 1st line looks like 'ldd (Ubuntu GLIBC 2.35-0ubuntu3.4) 2.35'
-    if (1 == `echo "(2.27 < $gversion)" | bc`) then
-        # glibc version is > 2.27
-      	setenv ydb_test_copy_file_range_avail 1
-    else
-	# glibc version is <=  2.27
-	setenv ydb_test_copy_file_range_avail 0
-    endif
+	# Kernel version is >= 5.3
+	set gversion = `ldd --version | head -n1 | cut -d ')' -f2 | cut -d ' ' -f2`	# 1st line looks like 'ldd (Ubuntu GLIBC 2.35-0ubuntu3.4) 2.35'
+	if (1 == `echo "(2.27 < $gversion)" | bc`) then
+		# glibc version is > 2.27
+		setenv ydb_test_copy_file_range_avail 1
+	else
+		# glibc version is <=  2.27
+		setenv ydb_test_copy_file_range_avail 0
+	endif
 else
-    # Kernel version is < 5.3
-    setenv ydb_test_copy_file_range_avail 0
+	# Kernel version is < 5.3
+	setenv ydb_test_copy_file_range_avail 0
 endif
 
 # Determine if big_files directory is available. Used later to decide whether a few subtests can be enabled or not.
@@ -206,13 +206,15 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 	# and pick the first line (returns the latest of the multiple version numbers) which was found to
 	# match the actual OpenSSL version.
 	set libcryptopath = `ldd $ydb_dist/plugin/libgtmtls.so |& grep libcrypto | awk '{print $3}'`
-	set opensslver = `strings $libcryptopath | grep -w '^OpenSSL [0-9]' | awk '{print $2}' | sort -r | head -1`
-	if ( `expr "$opensslver" \>= "1.1.1"` ) then
-		setenv ydb_test_tls13_plus 1
-	endif
-	set opensslmajorver = `echo $opensslver | sed 's/\..*//;'`
-	if ( `expr "$opensslmajorver" \>= "3"` ) then
-		setenv ydb_test_openssl3_plus 1
+	if ("$libcryptopath" != "") then
+		set opensslver = `strings $libcryptopath | grep -w '^OpenSSL [0-9]' | awk '{print $2}' | sort -r | head -1`
+		if ( `expr "$opensslver" \>= "1.1.1"` ) then
+			setenv ydb_test_tls13_plus 1
+		endif
+		set opensslmajorver = `echo $opensslver | sed 's/\..*//;'`
+		if ( `expr "$opensslmajorver" \>= "3"` ) then
+			setenv ydb_test_openssl3_plus 1
+		endif
 	endif
 endif
 
