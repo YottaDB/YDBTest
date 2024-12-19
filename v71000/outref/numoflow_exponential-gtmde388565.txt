@@ -1,0 +1,41 @@
+# ********************************************************************************************
+# GTM-DE388565 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE388565)
+# 
+# GT.M handles string literal operands to a Boolean string relational operator where the literal contains an exponential format appropriately. Previously such a combination inappropriately produced a NUMOFLOW error if the numeric evaluation would have produced an error. (GTM-DE388565)
+
+# Run a series of string relational operator comparisons,
+# and expect no errors. Previously, NUMOFLOW errors would be
+# issued. The following string relational operators are tested:
+# =, [, ], ]], '=, '[, '], ']], ?, '?
+No overflow: =
+No overflow: [
+No overflow: ]
+No overflow: ]]
+No overflow: ?
+No overflow: '=
+No overflow: '[
+No overflow: ']
+No overflow: ']]
+No overflow: '?
+# Run the Boolean literal optimization test case using mumps -machine -lis
+# Check mumps -machine -lis output to confirm that literal
+# instructions are optimized, such that there are now 3-4 instructions
+# (depending on whether dynamic literals are enabled). Previously, there
+# were 12. Per the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/645#note_2285637632:
+# Notice no 'OC_BOOL*' opcodes above. Whereas, with the YDB master before GT.M V7.1-000 was merged, below is the output one sees which
+# includes 'OC_BOOLINIT', 'OC_BOOLFINI' etc. all of which indicate triples corresponding to the boolean expression
+# which implies the literal optimization did not happen at compile time.
+##SUSPEND_OUTPUT PRO
+JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+##SUSPEND_OUTPUT DYNAMIC_LITERALS
+PUSHAB      @GTM$LITERAL+0x0                         ;OC_WRITE
+##SUSPEND_OUTPUT NODYNAMIC_LITERALS
+##ALLOW_OUTPUT DYNAMIC_LITERALS
+PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
+PUSHAB      B^0(r9)                                  ;OC_WRITE
+##ALLOW_OUTPUT NODYNAMIC_LITERALS
+JSB         @B^xf_ret(R11)                           ;OC_RET
+##ALLOW_OUTPUT PRO

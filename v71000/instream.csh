@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # lockargs_identical-gtmde340906	[jon]	Attempting a LOCK with more identical arguments than GT.M supports for the command generates an error
+# numoflow_exponential-gtmde388565	[jon]	Avoid inappropriate NUMOFLOW from a literal Boolean argument with exponential (E) form
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71000 test starts..."
@@ -22,6 +23,7 @@ echo "v71000 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"lockargs_identical-gtmde340906"
+setenv subtest_list_non_replic	"numoflow_exponential-gtmde388565"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
