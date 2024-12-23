@@ -1,0 +1,52 @@
+# ********************************************************************************************
+# GTM-DE421008 - Test the following release note
+# ********************************************************************************************
+# 
+# Original GT.M release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE421008):
+# 
+# MUPIP STOP three times within a minute logs the event to syslog and otherwise acts like a kill -9 by stopping a process at points that may not be safe, except that it may produce a core file; previously any three MUPIP STOPs over the life of a process acted like a kill -9 and produced no record of the event. (GTM-DE421008)
+# 
+# Revised YottaDB release note:
+# 
+# MUPIP STOP three times within a minute acts like a kill -9 by stopping a process at points that may not be safe, except that it may produce a core file; previously any three MUPIP STOPs over the life of a process acted like a kill -9. (GTM-DE421008)
+# 
+
+# Run [dbcreate.csh] to create database
+# Run DSE with 'critseize^gtmde421008' to confirm that running:
+
+# 1. MUPIP STOP three times does NOT act as a kill -9 when a dse process that has seized crit
+#    is sent 3 mupip stops where the 2nd and 3rd stop are spaced 60+ seconds apart
+# Open a PIPE device for a DSE process and seize crit
+##TEST_AWK# SUCCESS - Seized crit for [0-9]*
+##TEST_AWK# Issuing first MUPIP STOP to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+##TEST_AWK# Issuing second MUPIP STOP to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+# Wait for > 60 seconds
+##TEST_AWK# Issue third MUPIP stop to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+# Verify MUPIP STOPs did not terminate the DSE process
+# SUCCESS - crit held, despite MUPIP STOP
+
+# 2. MUPIP STOP three times acts as a kill -9 when a dse process that has seized crit
+#    is sent 3 mupip stops where the 2nd and 3rd stop are spaced < 60 seconds apart
+# Open a PIPE device for a DSE process and seize crit
+##TEST_AWK# SUCCESS - Seized crit for [0-9]*
+##TEST_AWK# Issuing first MUPIP STOP to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+##TEST_AWK# Issuing second MUPIP STOP to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+# Wait for < 60 seconds
+##TEST_AWK# Issue third MUPIP stop to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+# Verify MUPIP STOP(s) terminated the DSE process
+# SUCCESS - process successfully terminated by MUPIP STOP
+
+# 3. MUPIP STOP one time terminates a dse process that has NOT seized crit
+# Open a PIPE device for a DSE process and seize crit
+##TEST_AWK# SUCCESS - Seized crit for [0-9]*
+##TEST_AWK# Crit released for [0-9]*
+##TEST_AWK# Issuing first MUPIP STOP to [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+# Verify MUPIP STOP(s) terminated the DSE process
+# SUCCESS - process successfully terminated by MUPIP STOP

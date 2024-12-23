@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -36,7 +36,7 @@ gtm8793
 	; Start test
 	write "# Test GTM-8793 - Verify that if the script defined by ydb_procstuckexec fails, we get an EXITSTATUS error in syslog",!
 	write "#",!
-	write "# Spawning DSE process and seizing the critial section",!
+	write "# Spawning DSE process and seizing the critical section",!
 	set dsePipe="DSEPIPE"
 	open dsePipe:(command="$ydb_dist/dse")::"PIPE"
 	use dsePipe
