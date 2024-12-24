@@ -60,7 +60,7 @@ echo '# 4) Test that the client retries for a total of 5 times before giving up 
 $grep -E "$pattern" syslog1.txt | sed 's/.* YDB-/YDB-/;s/\[.*\]/[##PID##]/;s/8 - [0-9]* :/8 - ##PID##/;s,version .* from /,version ##ZYRELEASE## from /,;s/ -- generated from.*//;s/ydb_secshr......../ydb_secshrXXXXXXXX/;s,/tmp/tmp...........,/tmp/tmp.XXXXXXXXXX,;s,called from module .*/sr_,called from module sr_,;'
 
 # Kill gtmsecshr process started above before leaving subtest
-set secshrpid = `ps -ef | grep $gtm_dist/gtmsecshr | grep -v grep | $tst_awk '{print $2}'`
+set secshrpid = `pgrep -f $gtm_dist/gtmsecshr`
 if ("$secshrpid" != "") then
 	sudo kill $secshrpid
 endif
