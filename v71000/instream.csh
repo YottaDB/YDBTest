@@ -17,6 +17,7 @@
 # lockargs_identical-gtmde340906	[jon]	Attempting a LOCK with more identical arguments than GT.M supports for the command generates an error
 # numoflow_exponential-gtmde388565	[jon]	Avoid inappropriate NUMOFLOW from a literal Boolean argument with exponential (E) form
 # fallintoflst_warning-gtmde37623	[jon]	When GT.M inserts an implicit QUIT to prevent a possible error, it generates a FALLINTOFLST WARNING message
+# commandlen_parse-gtmde422089		[jon]	Test ARGSLONGLINE (LINETOOLONG) error reporting in utility commands
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71000 test starts..."
@@ -26,6 +27,7 @@ setenv subtest_list_common	""
 setenv subtest_list_non_replic	"lockargs_identical-gtmde340906"
 setenv subtest_list_non_replic	"numoflow_exponential-gtmde388565"
 setenv subtest_list_non_replic	"fallintoflst_warning-gtmde376239"
+setenv subtest_list_non_replic	"commandlen_parse-gtmde422089"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
