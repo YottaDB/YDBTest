@@ -1,0 +1,28 @@
+##########################################################################################
+# Test ydb_env_set calls in a multi-user environment do not result in GTMSECSHRSRVF errors
+##########################################################################################
+# See https://gitlab.com/YottaDB/DB/YDB/-/issues/1112#description for more details
+# This test runs commands as current user and gtmtest1 userid. The latter is not easy to do in UTF-8 mode.
+# Since this test does not care about M vs UTF-8 mode, wwitch test to M mode for ease of implementation.
+setenv gtm_chset M
+unset echo
+# Prepare script gtmtest1_execute.csh to be executed by gtmtest1 userid
+# Execute script gtmtest1_execute.csh as userid gtmtest1
+# This will open $gtm_dist/gtmhelp.dat and then kill -9 itself leaving the ftok semaphore lying around
+Killed
+# Start $gtm_dist/gtmsecshr after setting ydb_tmp/gtm_tmp to something like /tmp/yottadb/r2.02_x86_64
+# (which matches what ydb_env_set would have set the env var to)
+# Open $gtm_dist/gtmhelp.dat as current userid using $gtm_dist/ydb_env_set (which does PEEKBYNAME calls)
+# This would need help from gtmsecshr server to remove the ftok semaphore when it terminates
+# But this process has ydb_tmp/gtm_tmp unset, whereas gtmsecshr server started in the previous step has it set.
+# We expect the ydb_env_set call to set ydb_tmp to the appropriate value and successfully communicate with the server.
+# And NOT end up with a GTMSECSHRSRVF error which it did before the YDB#1112 code fixes.
+# We expect to see NO errors from the ydb_env_set invocation.
+ydb_tmp=##YDB_TMP##
+# 1) Check that a GTMSECSHRDMNSTARTED message is seen in syslog
+# 2) Check that a GTMSECSHRTMPPATH message is seen in syslog
+# 3) Check that a SYSCALL message is NOT seen in syslog
+# 4) Check that a GTMSECSHRSTART message is NOT seen in syslog
+# 5) Check that a DBRNDWN message is NOT seen in syslog
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRDMNSTARTED, gtmsecshr daemon started for version ##ZYRELEASE## from ##SOURCE_REALPATH## using socket file ##YDB_TMP##/ydb_secshrXXXXXXXX
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is ##YDB_TMP##, %YDB-I-TEXT, (from $ydb_tmp/$gtm_tmp)

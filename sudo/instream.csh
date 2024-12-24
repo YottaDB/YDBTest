@@ -38,6 +38,7 @@
 # erofs-ydb1103                      [nars]    Test that database file open does not issue DBFILERR error (EROFS) in read-only file system
 # env_for_huge_and_shm-gtmf135288    [ern0]    Test huge pages support: setting gtm_pinshm and gtm_hugetlb_shm env variables to true
 # gtmsecshrsrvf-ydb_tmp-ydb1112      [nars]    Test that ydb_tmp env var mismatch between multiple clients results in GTMSECSHRSRVF errors
+# gtmsecshrsrvf-ydb_env_set-ydb1112  [nars]    Test ydb_env_set sets ydb_tmp env var appropriately and avoids GTMSECSHRSRVF errors
 
 setenv subtest_list_common "sourceInstall"
 setenv subtest_list_common "$subtest_list_common diffDir"
@@ -58,6 +59,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic configure_rmfile-gtmde2
 setenv subtest_list_non_replic "$subtest_list_non_replic support"
 setenv subtest_list_non_replic "$subtest_list_non_replic erofs-ydb1103"
 setenv subtest_list_non_replic "$subtest_list_non_replic env_for_huge_and_shm-gtmf135288"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_env_set-ydb1112"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_tmp-ydb1112"
 setenv subtest_list_replic ""
 
@@ -146,6 +148,8 @@ if ($?ydb_test_inside_docker) then
 	if ( "0" != $ydb_test_inside_docker ) then
 		# Disable the following subtest due to https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2206#note_2274448098
 		setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_tmp-ydb1112"
+		# Disable the following subtest due to similar reasons as the above subtest
+		setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_env_set-ydb1112"
 	endif
 endif
 
