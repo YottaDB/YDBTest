@@ -18,25 +18,26 @@
 # a major release. All of these tests require 'sudo' to run.         #
 ######################################################################
 #
-# sourceInstall	                        [mmr]		Test that ydbinstall.sh when sourced will give an error then exit
-# diffDir	                        [mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
-# ydb306	                        [kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
-# gtm9116	                        [bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
-# plugins	                        [bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
-# ydb783	                        [sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
-# gtm7759	                        [estess]	Test that expected log message do and don't show up depending on restrict.txt setting
-# ydb894	                        [jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
-# ydb880	                        [jv]		Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
-# ydb910	                        [jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
-# ydb924	                        [jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
-# gtm8517	                        [estess]	Test that install permissions and checksum files are created by install and are non-zero
-# olderversion	                        [sam]		Test to see if ydbinstall can successfully install older versions
-# gtm9324	                        [estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
-# gtm9408	                        [nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
-# configure_rmfile-gtmde201825	        [pooh]	        Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
-# support	                        [david]		Test that ydb_support.sh gathers the correct support information without issues
-# erofs-ydb1103	                        [nars]		Test that database file open does not issue DBFILERR error (EROFS) in read-only file system
-# env_for_huge_and_shm-gtmf135288       [ern0]          Test huge pages support: setting gtm_pinshm and gtm_hugetlb_shm env variables to true
+# sourceInstall                      [mmr]     Test that ydbinstall.sh when sourced will give an error then exit
+# diffDir                            [mmr]     Test that ydbinstall.sh when called from anothre directory will still install properly
+# ydb306                             [kz]      Test that --zlib and --utf8 will run together with ydbinstall.sh
+# gtm9116                            [bdw]     Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
+# plugins                            [bdw]     Test that ydbinstall.sh installs various plugin combinations without errors
+# ydb783                             [sam]     Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
+# gtm7759                            [estess]  Test that expected log message do and don't show up depending on restrict.txt setting
+# ydb894                             [jv]      Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
+# ydb880                             [jv]      Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
+# ydb910                             [jv]      Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
+# ydb924                             [jv]      Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
+# gtm8517                            [estess]  Test that install permissions and checksum files are created by install and are non-zero
+# olderversion                       [sam]     Test to see if ydbinstall can successfully install older versions
+# gtm9324                            [estess]  Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
+# gtm9408                            [nars]    Test that HANG command does not hang indefinitely if system date is reset back in time
+# configure_rmfile-gtmde201825       [pooh]    Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
+# support                            [david]   Test that ydb_support.sh gathers the correct support information without issues
+# erofs-ydb1103                      [nars]    Test that database file open does not issue DBFILERR error (EROFS) in read-only file system
+# env_for_huge_and_shm-gtmf135288    [ern0]    Test huge pages support: setting gtm_pinshm and gtm_hugetlb_shm env variables to true
+# gtmsecshrsrvf-ydb_tmp-ydb1112      [nars]    Test that ydb_tmp env var mismatch between multiple clients results in GTMSECSHRSRVF errors
 
 setenv subtest_list_common "sourceInstall"
 setenv subtest_list_common "$subtest_list_common diffDir"
@@ -57,6 +58,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic configure_rmfile-gtmde2
 setenv subtest_list_non_replic "$subtest_list_non_replic support"
 setenv subtest_list_non_replic "$subtest_list_non_replic erofs-ydb1103"
 setenv subtest_list_non_replic "$subtest_list_non_replic env_for_huge_and_shm-gtmf135288"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_tmp-ydb1112"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then

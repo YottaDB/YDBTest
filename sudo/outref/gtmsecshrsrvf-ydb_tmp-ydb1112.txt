@@ -1,0 +1,52 @@
+##########################################################################################
+# Test ydb_tmp env var mismatch between multiple clients results in GTMSECSHRSRVF errors
+##########################################################################################
+# This test runs commands as current user and gtmtest1 userid. The latter is not easy to do in UTF-8 mode.
+# Since this test does not care about M vs UTF-8 mode, wwitch test to M mode for ease of implementation.
+setenv gtm_chset M
+unset echo
+# Prepare script gtmtest1_execute.csh to be executed by gtmtest1 userid
+# Execute script gtmtest1_execute.csh as userid gtmtest1
+# This will open $gtm_dist/gtmhelp.dat and then kill -9 itself leaving the ftok semaphore lying around
+Killed
+# Start $gtm_dist/gtmsecshr after setting ydb_tmp/gtm_tmp to /tmp/tmp.xxxx (where xxxx is a randomly generated name)
+# Unset ydb_tmp/gtm_tmp env var
+# Open $gtm_dist/gtmhelp.dat as current userid
+# This would need help from gtmsecshr server to remove the ftok semaphore when it terminates
+# But this process has ydb_tmp/gtm_tmp unset, whereas gtmsecshr server started in the previous step has it set.
+# We therefore expect this process to be unable to communicate with the server and end up with a GTMSECSHRSRVF error
+# We also expect to see various other secondary errors CRITSEMFAIL/ENO2 etc.
+##TEST_AWK%YDB-E-GTMSECSHRSRVF, Client - .* : Attempt to service request failed \(retry = 4\)
+%YDB-I-TEXT, Unable to communicate with gtmsecshr
+%YDB-I-TEXT, Remove Semaphore failed
+%YDB-E-CRITSEMFAIL, Error with semaphores for region ##SOURCE_REALPATH##/gtmhelp.dat
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call sem_rmid\(\) -- called from module .*sr_unix/ftok_sems.c at line 299
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-DBFILERR, Error with database file ##SOURCE_REALPATH##/gtmhelp.dat
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call db_read_only ftok_sem_release -- called from module .*sr_unix/gds_rundown.c at line 1045
+%YDB-E-NOTALLDBRNDWN, Not all regions were successfully rundown
+%YDB-E-GVRUNDOWN, Error during global database rundown
+# Check that GTMSECSHRDMNSTARTED|GTMSECSHRTMPPATH|SYSCALL|GTMSECSHRSTART|DBRNDWN messages are seen in syslog
+# 1) Test that GTMSECSHRDMNSTARTED message in syslog includes full path of server socket file
+# 2) Test that %SYSTEM-E-ENO2 error (ENOENT) is seen from the sendto() system call
+# 3) Test that sendto() system call shows full path of the server socket file that client is sending to
+# 4) Test that the client retries for a total of 5 times before giving up (5 sets of messages seen below)
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRDMNSTARTED, gtmsecshr daemon started for version ##ZYRELEASE## from ##SOURCE_REALPATH## using socket file /tmp/tmp.XXXXXXXXXX/ydb_secshrXXXXXXXX
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp/tmp.XXXXXXXXXX, %YDB-I-TEXT, (from $ydb_tmp/$gtm_tmp)
+YDB-MUMPS[##PID##]: %YDB-E-SYSCALL, Error received from system call sendto("/tmp/ydb_secshrXXXXXXXX") -- called from module sr_unix/secshr_client.c at line 289, %SYSTEM-E-ENO2, No such file or directory
+YDB-SECSHR[##PID##]: %YDB-W-GTMSECSHRSTART, Server 8 - ##PID## gtmsecshr failed to startup, %YDB-I-TEXT, server already running, %SYSTEM-E-ENO11, Resource temporarily unavailable
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-E-SYSCALL, Error received from system call sendto("/tmp/ydb_secshrXXXXXXXX") -- called from module sr_unix/secshr_client.c at line 289, %SYSTEM-E-ENO2, No such file or directory
+YDB-SECSHR[##PID##]: %YDB-W-GTMSECSHRSTART, Server 8 - ##PID## gtmsecshr failed to startup, %YDB-I-TEXT, server already running, %SYSTEM-E-ENO11, Resource temporarily unavailable
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-E-SYSCALL, Error received from system call sendto("/tmp/ydb_secshrXXXXXXXX") -- called from module sr_unix/secshr_client.c at line 289, %SYSTEM-E-ENO2, No such file or directory
+YDB-SECSHR[##PID##]: %YDB-W-GTMSECSHRSTART, Server 8 - ##PID## gtmsecshr failed to startup, %YDB-I-TEXT, server already running, %SYSTEM-E-ENO11, Resource temporarily unavailable
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-E-SYSCALL, Error received from system call sendto("/tmp/ydb_secshrXXXXXXXX") -- called from module sr_unix/secshr_client.c at line 289, %SYSTEM-E-ENO2, No such file or directory
+YDB-SECSHR[##PID##]: %YDB-W-GTMSECSHRSTART, Server 8 - ##PID## gtmsecshr failed to startup, %YDB-I-TEXT, server already running, %SYSTEM-E-ENO11, Resource temporarily unavailable
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-E-SYSCALL, Error received from system call sendto("/tmp/ydb_secshrXXXXXXXX") -- called from module sr_unix/secshr_client.c at line 289, %SYSTEM-E-ENO2, No such file or directory
+YDB-SECSHR[##PID##]: %YDB-W-GTMSECSHRSTART, Server 8 - ##PID## gtmsecshr failed to startup, %YDB-I-TEXT, server already running, %SYSTEM-E-ENO11, Resource temporarily unavailable
+YDB-SECSHR[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+YDB-MUMPS[##PID##]: %YDB-E-DBRNDWN, Error during global database rundown for region DEFAULT., Notify those responsible for proper database operation.
