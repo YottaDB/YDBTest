@@ -142,6 +142,13 @@ if ("ENCRYPT" == $test_encryption) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7759"
 endif
 
+if ($?ydb_test_inside_docker) then
+	if ( "0" != $ydb_test_inside_docker ) then
+		# Disable the following subtest due to https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2206#note_2274448098
+		setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_tmp-ydb1112"
+	endif
+endif
+
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
 # various subtests of the sudo test. This way we can restore the system copy at the end of the test and avoid the system
 # yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
