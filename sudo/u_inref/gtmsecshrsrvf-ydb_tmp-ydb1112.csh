@@ -33,6 +33,12 @@ echo "# Execute script $script as userid $gtmtest1"
 echo '# This will open $gtm_dist/gtmhelp.dat and then kill -9 itself leaving the ftok semaphore lying around'
 $rsh $tst_org_host -l $gtmtest1 $tst_tcsh `pwd`/$script
 
+# Kill gtmsecshr process in case it is already running as we want to start a new one with a specific ydb_tmp/gtm_tmp value
+set secshrpid = `pgrep -f $gtm_dist/gtmsecshr`
+if ("$secshrpid" != "") then
+	sudo kill $secshrpid
+endif
+
 echo '# Start $gtm_dist/gtmsecshr after setting ydb_tmp/gtm_tmp to /tmp/tmp.xxxx (where xxxx is a randomly generated name)'
 set tmpdir = `mktemp -d`
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tmp gtm_tmp $tmpdir
