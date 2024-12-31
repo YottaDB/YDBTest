@@ -23,6 +23,7 @@
 # rctldump_superseded-gtmf135385	[jon]	MUPIP RTCLDUMP reports the number of times a routine has been replaced (rtnsupersede) in the autorelink cache
 # locklimit_lockincr2high-gtmde340950	[jon]	Test that exceeding the LOCK level limit for the same resource name generates a LOCKINCR2HIGH error
 # triple_mupipstop-gtmde421008		[jon]	Triple MUPIP STOP within a minute similar, but slightly better than kill -9
+# fdsizelmt_errmsg-gtmde325871		[jon]	Test FDSIZELIMIT error when running GT.CM server with over 1021 open file descriptors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71000 test starts..."
@@ -37,6 +38,7 @@ setenv subtest_list_non_replic	"mupipbackup_fastercopy-gtmde408789"
 setenv subtest_list_non_replic	"rctldump_superseded-gtmf135385"
 setenv subtest_list_non_replic	"locklimit_lockincr2high-gtmde340950"
 setenv subtest_list_non_replic	"triple_mupipstop-gtmde421008"
+setenv subtest_list_non_replic	"fdsizelmt_errmsg-gtmde325871"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

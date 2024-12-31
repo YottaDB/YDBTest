@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -44,7 +44,7 @@ set logfile=port_${testname}.txt_${test_subtest_name}
 set nstat = 0
 echo "###### Acquire Port ######"			 > $logfile
 while ( ($nstat == 0) && ($portno < $port_upperlimit ) )
-        @ portno = $portno + $increment
+	@ portno = $portno + $increment
 	echo `date` "# test $portno..."			>> $logfile
 	set port_reservation_file = /tmp/test_${portno}.txt
 	if (-e $port_reservation_file) then

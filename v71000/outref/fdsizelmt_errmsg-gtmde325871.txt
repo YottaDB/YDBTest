@@ -1,0 +1,32 @@
+# ********************************************************************************************
+# GTM-DE325871 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE325871)
+# 
+# GT.M processes can use sockets created when over 1021 files, pipes, fifos, sockets, and/or regions are already open. GT.M issues an FDSIZELMT error message when there are too many descriptors needed by GT.CM servers. Previously, sockets created when there were too many open descriptors caused an GTMASSERT2 error. (GTM-DE325871)
+
+### Test 1: Test FDSIZELMT error when connecting to a GT.CM server when 1021 file descriptors are open
+# Use mumps to obtain the fullpath to the database
+# Set file path to the database using the fullpath
+
+# Start the GT.CM GNP server
+
+# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>.
+# This should use the GNP server even though <hostname> is local due to the @ syntax.
+# Bump the process file descriptor limit to 2048 to allow the routine to hit the FDSIZELMT
+# Run the routine and expect an FDSIZELMT error, since the limit is 1021 file descriptors.
+%GTM-E-FDSIZELMT, Too many (FDS) descriptors needed by GT.CM server
+		At M source location gtcmfdlimit+4^gtmde325871
+
+GTM>
+
+### Test 2: Test no GTMASSERT2 error when opening a socket with over 1021 file descriptors already open
+# Run a simple M server process to provide TCP socket for client connection
+# Run an M client process to open > 1021 file descriptors then connect to the M server process
+# Expect the client to output 'CONNECTED' string received from server.
+# Previously, this socket connection would have produced a GTMASSERT2 error.
+CONNECTED
+
+##TEST_PATH##/gnpserver.log
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
