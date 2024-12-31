@@ -1,0 +1,50 @@
+# ********************************************************************************************
+# GTM-DE340950 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE340950)
+# 
+# An attempt by a process to incrementally LOCK the same resource name more than 511 times produces a LOCKINCR2HIGH with accurate context. Previously LOCK processing did not appropriately detect the limit or supply correct context. (GTM-DE340950)
+
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Test 1: Increment a lock up to 510, then increment by 2 more to a total of 512, exceeding the 511 limit
+# Expect:
+#   1. A LOCKINCR2HIGH error
+#   2. ZSHOW 'L' to show a lock level of 510
+# Prior to v71000:
+#   1. This did NOT issue a LOCKINCR2HIGH error, even though the 511 lock limit was exceeded
+#   2. Doing a ZSHOW 'L' after these operations incorrectly showed that the lock was NOT held
+# See discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/641#note_2359000888 for more detail.
+MLG:510,MLT:0
+LOCK a LEVEL=510
+%GTM-E-LOCKINCR2HIGH, Attempt to increment a LOCK more than 511 times,%GTM-I-LOCKIS, 		Resource name: a
+		At M source location gtmde340950a+3^gtmde340950
+
+GTM>
+
+# Test 2: Increment a lock in groups of 255 until the limit of 511 is exceeded
+# Expect:
+#   1. A LOCKINCR2HIGH error
+#   2. ZSHOW 'L' to show a lock level of 255, for the first call of the lock255 routine
+#   3. ZSHOW 'L' to show a lock level of 510, for the second call of the lock255 routine
+# Prior to v71000:
+#   1. This did NOT issue a LOCKINCR2HIGH error, even though the 511 lock limit was exceeded
+#   2. Doing a ZSHOW 'L' after these operations showed an incorrect lock level
+# See discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/641#note_2356949033 for more detail.
+MLG:1,MLT:0
+LOCK a LEVEL=255
+MLG:2,MLT:0
+LOCK a LEVEL=510
+%GTM-E-LOCKINCR2HIGH, Attempt to increment a LOCK more than 511 times,%GTM-I-LOCKIS, 		Resource name: a
+		At M source location lock255+1^lock255
+
+GTM>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
