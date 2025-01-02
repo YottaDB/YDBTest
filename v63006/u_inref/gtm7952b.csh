@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -26,8 +26,8 @@ cat >> callOut.xc << xx
 `pwd`/gtm7952b.so
 callOutStr: int callOutStr(O:gtm_string_t *[1]) : sigsafe
 callOutStr2: int callOutStr2(O:gtm_string_t *[1]) : sigsafe
-callOutChar: int callOutChar(O:gtm_char_t **[1]) : sigsafe
-callOutChar2: int callOutChar2(O:gtm_char_t **[1]) : sigsafe
+callOutChar: int callOutChar(O:gtm_char_t **) : sigsafe
+callOutChar2: int callOutChar2(O:gtm_char_t **) : sigsafe
 xx
 setenv GTMXC `pwd`/callOut.xc
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtm7952b.c

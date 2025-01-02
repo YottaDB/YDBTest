@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 # This source code contains the intellectual property           #
@@ -31,6 +31,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                     file \
+                    less \
                     cmake \
                     make \
                     gcc \
