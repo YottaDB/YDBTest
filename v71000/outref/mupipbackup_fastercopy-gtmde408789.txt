@@ -1,0 +1,82 @@
+# ********************************************************************************************
+# GTM-DE408789 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#GTM-DE408789)
+# 
+# MUPIP BACKUP -DATABASE attempts to use a faster copy mechanism depending on the support by the kernel,
+# and by source and destination filesystems. If the source and destination filesystems are different
+# or the faster copy mechanisms are not available in the kernel, MUPIP BACKUP -DATABASE uses the default
+# copy mechanism (/bin/cp). Previously, GT.M used faster copy mechanisms only on Linux Kernel 5.3 or above,
+# and changes due to backporting in Linux kernels could cause MUPIP BACKUP to report an EXDEV error on filesystems
+# where backups had earlier been supported.
+# 
+# MUPIP BACKUP -ONLINE does not retry backup when it detects a concurrent rollback or on certain errors
+# during the copy phase of BACKUP. Previously, MUPIP BACKUP -ONLINE incorrectly retried backup when it encountered
+# a concurrent rollback or an error in the first backup attempt; the workaround was to specify -RETRY=0.
+##########################################################################################
+Test 1st paragraph of release note
+See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2213#note_2310214085 for how
+various parts of the above release note are tested in other existing tests and why only
+the below use case is tested here.
+##########################################################################################
+
+# Create database
+# Now we try a backup and we expect to see it complete successfully in two different cases:"
+# 1. Kernel version >= 5.3: ydb_test_copy_file_range_avail is set to 0: Backups are done using the 'faster copy mechanism'"
+# 2. Kernel version < 5.3: ydb_test_copy_file_range_avail is set to 1: Backups are done using 'cp'"
+# 
+# Prior to GT.M V7.1-000, the ydb_test_copy_file_range_avail=1 case would have issued an
+# EXDEV error on unsupported filesystems. Now, no EXDEV is error is issued in this case.
+# Also filter out %YDB-I-FILERENAME and %YDB-I-JNLCREATE and %YDB-I-FILERENAME lines
+# which appear only occasionally, depending on random settings.
+##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL HOST_LINUX_AARCH64
+%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##TEST_AWKMUPIP INFO:   Temp file name: /tmp//DEFAULT_.*
+%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/bin/cp --sparse=always 'mumps.dat' '/tmp/DEFAULT_.*.tmp'
+MUPIP INFO:   Current Transaction # at end of backup is 0x0000000000000001
+##TEST_AWKMUPIP INFO:   unalias -a; .*/bin/mv '/tmp/DEFAULT_.*.tmp/mumps.dat' '/tmp/mumps_.*.dat'
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##SUSPEND_OUTPUT COPYFILERANGE_AVAIL
+##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##TEST_AWKMUPIP INFO:   Temp file name: /tmp//DEFAULT_.*
+##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x0000000000000001
+##TEST_AWKMUPIP INFO:   unalias -a; .*/bin/mv '/tmp/DEFAULT_.*.tmp/mumps.dat' '/tmp/mumps_.*.dat'
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+##ALLOW_OUTPUT COPYFILERANGE_AVAIL
+##ALLOW_OUTPUT HOST_LINUX_AARCH64
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##TEST_AWKMUPIP INFO:   Temp file name: /tmp//DEFAULT_.*
+
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/bin/cp --sparse=always 'mumps.dat' '/tmp/DEFAULT_.*.tmp'
+MUPIP INFO:   Current Transaction # at end of backup is 0x0000000000000001
+##TEST_AWKMUPIP INFO:   unalias -a; .*/bin/mv '/tmp/DEFAULT_.*.tmp/mumps.dat' '/tmp/mumps_.*.dat'
+##TEST_AWK%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+##ALLOW_OUTPUT HOST_LINUX_X86_64
+##########################################################################################
+2nd paragraph of release note is not tested, per discussion at:
+https://gitlab.com/YottaDB/DB/YDBTest/-/issues/647#note_2285043070
+##########################################################################################
