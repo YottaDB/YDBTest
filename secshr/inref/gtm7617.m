@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013 Fidelity Information Services, Inc		;
 ;								;
-; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -70,7 +70,7 @@ validate
 	use file
 	for i=1:1  read line(i)  quit:$zeof  quit:line(i)[^stop  do
 	.	if 'foundstart set foundstart=(line(i)[^start)
-	.	else  if line(i)["GTMSECSHRINIT" set message($increment(msgcount))=line(i)
+	.	else  set:(line(i)["GTMSECSHRINIT")&(line(i)["SECSHRCHDIRFAILED1") message($increment(msgcount))=line(i)
 	close file
 	; Validate 1) same number of messages 2) contents match our expectations
 	if '$data(msgcount) write "No GTMSECSHRINIT messages found! exiting",! halt
