@@ -1,13 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
 ;	the license, please stop and do not read further.	;
-; 								;
+;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Moved from v63009 due to timing failures when other tests are run in parallel
 
@@ -20,50 +20,50 @@
 compdectooct
 	write "Comparing performance of current %DO implementation vs previous %DO implementation for 16 digit values",!
 	set interval=200
-   	set iend=$zgetjpi(0,"CPUTIM")+interval
-   	set istart=1
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
 	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zgetjpi(0,"CPUTIM")
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumdecexactlen(16)
+	 . quit:iend<istart
+	 . set i=$$getrandnumdecexactlen(16)
 	 . set k=$$FUNC^%DO(i,16)
 	; checking previous m implementation
 	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(16)
-         . set k=$$FUNCPREVDECTOOCT(i,16)
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumdecexactlen(16)
+	 . set k=$$FUNCPREVDECTOOCT(i,16)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
 	if (ncnt<(ocnt*.9)) write "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %DO implementation vs previous %DO implementation for 20 digit values",!
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(20)
-         . set k=$$FUNC^%DO(i,16)
-        ; checking previous m implementation
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(20)
-         . set k=$$FUNCPREVDECTOOCT(i,16)
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ncnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ncnt=$increment(ncnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumdecexactlen(20)
+	 . set k=$$FUNC^%DO(i,16)
+	; checking previous m implementation
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumdecexactlen(20)
+	 . set k=$$FUNCPREVDECTOOCT(i,16)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        if (ncnt<ocnt*.9) write "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+	if (ncnt<(ocnt*.9)) write "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
@@ -76,27 +76,27 @@ compdectooct
 compocttodec
 	write "Comparing performance of current %OD implementation vs previous %OD implementation for 20 digit values",!
 	set interval=200
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNC^%OD(i)
-        ; checking previous m implementation
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNCPREVOCTTODEC(i)
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ncnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ncnt=$increment(ncnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(20)
+	 . set k=$$FUNC^%OD(i)
+	; checking previous m implementation
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(20)
+	 . set k=$$FUNCPREVOCTTODEC(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+	if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
@@ -109,50 +109,50 @@ compocttodec
 comphextooct
 	write "Comparing performance of current %HO implementation vs previous %HO implementation for 14 digit values",!
 	set interval=200
-   	set iend=$zgetjpi(0,"CPUTIM")+interval
-   	set istart=1
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
 	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zgetjpi(0,"CPUTIM")
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumhexexactlen(14)
+	 . quit:iend<istart
+	 . set i=$$getrandnumhexexactlen(14)
 	 . set k=$$FUNC^%HO(i)
 	; starting previous m implementation
 	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(14)
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumhexexactlen(14)
 	 . set k=$$FUNCPREVHEXTOOCT(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
 	write:(ncnt<(ocnt*0.9)) "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %HO implementation vs previous %HO implementation for 16 digit values",!
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(16)
-         . set k=$$FUNC^%HO(i)
-        ; starting previous m implementation
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(16)
-         . set k=$$FUNCPREVHEXTOOCT(i)
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ncnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ncnt=$increment(ncnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumhexexactlen(16)
+	 . set k=$$FUNC^%HO(i)
+	; starting previous m implementation
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumhexexactlen(16)
+	 . set k=$$FUNCPREVHEXTOOCT(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+	write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
@@ -165,50 +165,50 @@ comphextooct
 compocttohex
 	write "Comparing performance of current %OH implementation vs previous %OH implementation for 16 digit values",!
 	set interval=200
-   	set iend=$zgetjpi(0,"CPUTIM")+interval
-   	set istart=1
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
 	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zgetjpi(0,"CPUTIM")
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumoctexactlen(16)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(16)
 	 . set k=$$FUNC^%OH(i)
 	; starting previous m implementation
 	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(16)
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(16)
 	 . set k=$$FUNCPREVOCTTOHEX(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
 	write:(ncnt<(ocnt*0.9)) "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %OH implementation vs previous %OH implementation for 20 digit values",!
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNC^%OH(i)
-        ; starting previous m implementation
-        set iend=$zgetjpi(0,"CPUTIM")+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zgetjpi(0,"CPUTIM")
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNCPREVOCTTOHEX(i)
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ncnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ncnt=$increment(ncnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(20)
+	 . set k=$$FUNC^%OH(i)
+	; starting previous m implementation
+	set iend=$zgetjpi(0,"CPUTIM")+interval
+	set istart=1
+	set ocnt=1
+	for  do	 quit:iend<istart
+	 . set istart=$zgetjpi(0,"CPUTIM")
+	 . set ocnt=$increment(ocnt)
+	 . quit:iend<istart
+	 . set i=$$getrandnumoctexactlen(20)
+	 . set k=$$FUNCPREVOCTTOHEX(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+	write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
@@ -260,8 +260,8 @@ getrandnumhexexactlen(n)
 FUNCPREVHEXTOOCTFM(h)
 	n c,d,dg,o
 	s d=0,h=$tr(h,"abcdef","ABCDEF"),o=""
-	f c=1:1:$l(h) s dg=$f("0123456789ABCDEF",$e(h,c)) q:'dg  s d=(d*16)+(dg-2)
-	f  q:'d  s o=d#8_o,d=d\8
+	f c=1:1:$l(h) s dg=$f("0123456789ABCDEF",$e(h,c)) q:'dg	 s d=(d*16)+(dg-2)
+	f  q:'d	 s o=d#8_o,d=d\8
 	q:0<o o
 	q 0
 FUNCPREVHEXTOOCT(h)
@@ -277,7 +277,7 @@ FUNCPREVDECTOOCTFM(d,l)
 	q:d=0 $e("000000000000",1,l)
 	n o
 	s o=""
-	f  q:'d  s o=d#8_o,d=d\8
+	f  q:'d	 s o=d#8_o,d=d\8
 	q $e("000000000000",1,l-$l(o))_o
 FUNCPREVDECTOOCT(d,l)
 	n isn,i,h,apnd
@@ -314,7 +314,7 @@ FUNCPREVOCTTOHEXFM(o)
 	n d,dg,ex,h
 	s d=0,h="",o=+o
 	f dg=1:1:$l(o) s ex=$find("01234567",$e(o,dg)) q:'ex  s d=(d*8)+(ex-2)
-	f  q:'d  s h=$e("0123456789ABCDEF",d#16+1)_h,d=d\16
+	f  q:'d	 s h=$e("0123456789ABCDEF",d#16+1)_h,d=d\16
 	q h
 FUNCPREVOCTTOHEX(o)
 	q:o=0 0
@@ -351,7 +351,7 @@ PREVMULTIPLYBYNUMBER(num,x,base)
 	. for k=0:1:16 set:k<10 c($CHAR(k+48))=k SET:k'<10 c($CHAR(k+55))=k
 	. set num=c(num)
 	set res="0"
-	for  quit:num=0  do
+	for  quit:num=0	 do
 	. if (num#2>0) do
 	.. set res=$$PREVADDVAL(res,x,base)
 	. set num=$piece((num/2),"."),x=$$PREVADDVAL(x,x,base)
@@ -382,5 +382,5 @@ PREVVALIDLEN(val,base)
 	new i,valbasechar,invalidi,len
 	set valbasechar=$extract("0123456789ABCDEF",1,base),len=$length(val)
 	quit:'len 0
-	for i=1:1:$length(val)  set invalidi='($find(valbasechar,($extract(val,i))))  quit:invalidi
+	for i=1:1:$length(val)	set invalidi='($find(valbasechar,($extract(val,i))))  quit:invalidi
 	quit $select($get(invalidi):i-1,1:i)
