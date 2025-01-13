@@ -1,0 +1,35 @@
+# ********************************************************************************************
+# GTM-DE500860 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE500860)
+# 
+# The GT.M compiler accepts source files with arbitrary extensions. FIS recommends using the .m extension for source files as our testing of that is very extensive, however there may be cases where other extensions serve a purpose. Previously, the compiler enforced an explicit or implicit .m extension for source files. (GTM-DE500860)
+
+# Test 1: Compile a routine with non-'.m' extension then run
+# Create a test routine, 'testrtn.test', with a file extension of '.test'
+# Compile 'testrtn.test'
+# Run [mumps -run testrtn]
+# Confirm the test routine compiled and issued the correct output: 'TEST'
+# Previously, when attempting to compile a routine without a '.m' extension,
+# GT.M would issue a %GTM-E-FILENOTFND error.
+TEST
+# Run [file testrtn.o] to confirm an object file was generated
+##TEST_AWKtestrtn.o: ELF 64-bit LSB relocatable, [0-9a-zA-Z\- ]*, version 1 \([a-zA-Z/]*\), not stripped
+
+# Test 2: Run a routine with non-'.m' directly
+# Create a test routine, 'testrtn2.test', with a file extension of '.test'
+# Run 'testrtn2.test', expect ZLINKFILE and FILENOTFND errors
+%GTM-E-ZLINKFILE, Error while zlinking "testrtn2"
+%GTM-E-FILENOTFND, File testrtn2.m not found
+%GTM-E-FILENOTFND, File testrtn2.o not found
+
+# Test 3: Compile a routine with non-'.m' extension using ZCOMPILE then run
+# Compile 'testrtn.test' with ZCOMPILE
+# Run [mumps -run testrtn]
+# Confirm the test routine compiled and issued the correct output: 'TEST'
+# Previously, when attempting to compile a routine without a '.m' extension,
+# GT.M would issue a %GTM-E-FILENOTFND error.
+TEST
+# Run [file testrtn.o] to confirm an object file was generated
+##TEST_AWKtestrtn.o: ELF 64-bit LSB relocatable, [0-9a-zA-Z\- ]*, version 1 \([a-zA-Z/]*\), not stripped
