@@ -24,6 +24,7 @@ echo "v71001 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"ygblstat_cmdlinewarn-gtmde503394"
 setenv subtest_list_non_replic	"numoflow_regression"
+setenv subtest_list_non_replic	"randstr_rangearg-gtmde500856"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

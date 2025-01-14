@@ -1,0 +1,28 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE500856)
+# 
+# ^%RANDSTR limits the range argument upper limit to the actual number of characters available in the current character set - 256 for M mode and 65,536 for UTF-8 mode. Previously, a missing or defective upper limit caused the routine to perform unproductive processing that could consume unreasonable amounts of time. The workaround was to avoid inappropriate range arguments. (GTM-DE500856)
+
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+# Run M routines that call ^%RANDSTR with various range argument upper limits,
+# then confirm that each routine runs in less than 1.5 million instructions.
+# Previously, these routines would have hung for long periods without issuing any output.
+
+# Test 1. Defective range argument upper limit, e.g.: '1:1:2**32'
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
+%GTM-E-INVDLRCVAL, Invalid $CHAR() value 55296
+		At M source location %RANDSTR+21^%RANDSTR
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
+PASS: Took less than 150000000 instructions
+
+# Test 2. Missing range argument upper limit, i.e. '1:1'
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
+%GTM-E-INVDLRCVAL, Invalid $CHAR() value 55296
+		At M source location %RANDSTR+21^%RANDSTR
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
+PASS: Took less than 150000000 instructions
+
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
