@@ -20,7 +20,7 @@ echo "v71001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"ygblstat_cmdlinewarn-gtmde503394"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

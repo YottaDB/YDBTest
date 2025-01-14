@@ -1,0 +1,19 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE503394)
+# 
+# %YGBLSTAT warns about incorrect command line usage. Previously, the utility silently ignored command lines containing errors. (GTM-DE503394)
+# Run %YGBLSTAT with an unrecognized option '-badop' to trigger an error
+# Confirm a YGBLSTAT-F-INVALID error was reported and %YGBLSTAT usage is output.
+# Note that there is no output for options of the formats --option and ---option,
+# even though these also should issue a YGBLSTAT-F-INVALID error.
+# Previously, running with an unrecognized option would result in no output in all cases.
+##TEST_PATH##/mumps.out
+YGBLSTAT-F-INVALID, Unrecognized option: "badop"
+YGBLSTAT-F-INVALID, Unrecognized option: "badop 1"
+YGBLSTAT-F-INVALID, Unrecognized option: "badop=1"
+YGBLSTAT-F-INVALID, Unrecognized option: "-badop"
+YGBLSTAT-F-INVALID, Unrecognized option: "-badop 1"
+YGBLSTAT-F-INVALID, Unrecognized option: "-badop=1"
