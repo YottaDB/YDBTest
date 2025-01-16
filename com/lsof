@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,4 +27,4 @@
 # Adding the "-a" in between will ensure it translates to "lsof -u $USER -a mumps.dat" which would mean we will only
 # list all open files by the current user AND that relate to the file mumps.dat.
 
-lsof -c '^chrome' -u $USER -a $*
+lsof -c '^chrome' -c '^firefox' -u $USER -a $*
