@@ -24,7 +24,7 @@ Object Directory         : ##TEST_PATH##/dir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: z  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: z  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
 Case 7. The '?' wildcard character needs to be supported:
 Object Directory         : ##TEST_PATH##/dir
@@ -32,7 +32,7 @@ Object Directory         : ##TEST_PATH##/dir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: z  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: z  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
 Case 8. If the directory in ZRUPDATE argument is missing, and the relinkctl file for it was created
         by a different process and never opened by the process doing the ZRUPDATE, we should still
@@ -42,11 +42,11 @@ Object Directory         : ##TEST_PATH##/dir/dir3
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: a  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: a  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
 Object Directory         : ##TEST_PATH##/dir/dir3
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: a  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: a  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0

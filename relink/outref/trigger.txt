@@ -25,8 +25,8 @@ Object Directory         : ##REMOTE_TEST_PATH##/instance2
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: TRIG  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
-##TEST_AWK    rec#2: rtnname: update  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: TRIG  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
+##TEST_AWK    rec#2: rtnname: update  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
 
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 
@@ -61,8 +61,8 @@ Object Directory         : ##TEST_PATH##
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: trigger  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
-##TEST_AWK    rec#2: rtnname: TRIG  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: trigger  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
+##TEST_AWK    rec#2: rtnname: TRIG  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
 version 3
 
 On the secondary:

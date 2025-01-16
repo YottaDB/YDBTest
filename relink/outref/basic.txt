@@ -97,13 +97,13 @@ Object Directory         : ##TEST_PATH##/someDir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 Object Directory         : ##TEST_PATH##
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
  b. ZRUPDATE "otherRtn.o","someDir/someRtn.o","someDir/otherRtn.o","someRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
@@ -111,13 +111,13 @@ Object Directory         : ##TEST_PATH##/someDir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 Object Directory         : ##TEST_PATH##
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
  c. ZRUPDATE "otherRtn.o","someDir/otherRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
@@ -137,13 +137,13 @@ Object Directory         : ##TEST_PATH##/someDir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 Object Directory         : ##TEST_PATH##
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
  e. ZRUPDATE "someRtn.o","someRtn.m","someDir/otherRtn.o","someDir/%someRtn.o"
 %YDB-E-FILEPARSE, Error parsing file specification: someRtn.m
@@ -159,13 +159,13 @@ Object Directory         : ##TEST_PATH##/someDir
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 Object Directory         : ##TEST_PATH##
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
  h. ZRUPDATE "other*","*/*.m"
 %YDB-E-FILEPARSE, Error parsing file specification: */*.m
@@ -186,7 +186,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 # of attached processes  : 3
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 2
 
 Process A has executed the originally linked version of the routine:
 Object Directory         : ##TEST_PATH##/objXDS
@@ -195,7 +195,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 # of attached processes  : 3
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 2
 
 Process C has executed the currently available routine:
 Object Directory         : ##TEST_PATH##/objXDS
@@ -204,7 +204,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 # of attached processes  : 4
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 2
 
 Process A has also executed the currently available routine:
 Object Directory         : ##TEST_PATH##/objXDS
@@ -213,7 +213,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 # of attached processes  : 4
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: rtnWEH  cycle: 2  objhash: 0x[0-9a-f]*  numvers: 2  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 2
 
 Duplicate entries in $gtmroutines.
 version 1
@@ -223,14 +223,14 @@ Object Directory         : ##TEST_PATH##/dirA
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
 
 Object Directory         : ##TEST_PATH##/dirA
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: y  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: y  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
 Duplicate entries in $zroutines.
 version 1
@@ -240,14 +240,14 @@ Object Directory         : ##TEST_PATH##/dirA
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 ##TEST_AWKRtnobj shared memory # 1 : shmid: [0-9]*  shmlen: 0x[0-9a-f]*  shmused: 0x[0-9a-f]*  shmfree: 0x[0-9a-f]*  objlen: 0x[0-9a-f]*
-##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
+##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*  superseded: 1
 
 Object Directory         : ##TEST_PATH##/dirA
 ##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
-    rec#1: rtnname: y  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
+    rec#1: rtnname: y  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0  superseded: 0
 
 Environment variables in $zroutines.
 Object Directory         : ##TEST_PATH##
