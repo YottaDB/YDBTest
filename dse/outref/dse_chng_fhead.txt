@@ -244,7 +244,7 @@ Spin sleep time mask            0x00FFFFFF is present in the file dse_dump_0.out
 Mutex Sleep Spin Count                   0 is present in the file dse_dump_0.out
 dse dump -file -all
   Database is Fully Upgraded                :  TRUE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 dse change -file -fully_upgraded=0
 
 File  	##TEST_PATH##/mumps.dat
@@ -252,7 +252,7 @@ Region	DEFAULT
 
 dse dump -file -all
   Database is Fully Upgraded                : FALSE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 dse change -file -fully_upgraded=1
 
 File  	##TEST_PATH##/mumps.dat
@@ -260,7 +260,7 @@ Region	DEFAULT
 
 dse dump -file -all
   Database is Fully Upgraded                :  TRUE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 dse change -file -fully_upgraded=TRUE it should give an error
 
 File  	##TEST_PATH##/mumps.dat
@@ -280,7 +280,7 @@ Region	DEFAULT
 
 dse dump -file -all
   Database is Fully Upgraded                :  TRUE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 dse change -file fully_upgraded=32313214343
 
 File  	##TEST_PATH##/mumps.dat

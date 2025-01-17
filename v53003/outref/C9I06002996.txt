@@ -114,7 +114,7 @@ Region DEFAULT : MUPIP REORG DOWNGRADE finished
 
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
   Database is Fully Upgraded                : FALSE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 # Test that endiancvt does not proceed if fully_upgraded is FALSE
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
@@ -122,7 +122,7 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
   Database is Fully Upgraded                : FALSE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 # Set fully_upgraded back to TRUE before proceeding to next test
 
 Region DEFAULT : MUPIP REORG UPGRADE started
@@ -141,7 +141,7 @@ Region DEFAULT : Database is now FULLY UPGRADED
 Region DEFAULT : MUPIP REORG UPGRADE finished
 
   Database is Fully Upgraded                :  TRUE
-  Database WAS ONCE Fully Upgraded from V4  :  TRUE
+  Database WAS ONCE Fully Upgraded          :  TRUE
 
 ##ALLOW_OUTPUT ASYNCIO UPGRADE_DOWNGRADE_UNSUPPORTED
 ##SOURCE_PATH##/mupip
