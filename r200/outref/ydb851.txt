@@ -58,9 +58,17 @@ Database file ##TEST_PATH##/mumps.dat now has BG access method
 # Testing [mupip set -region=DEFAULT -acc=BG]
 Database file ##TEST_PATH##/mumps.dat now has BG access method
 # Testing [mupip upgrade -region DEFAULT]
-%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-I-TEXT, Upgrade canceled by user
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # Testing [mupip upgrade -region=DEFAULT]
-%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-I-TEXT, Upgrade canceled by user
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 #####################################################################
 # Test that all MUPIP commands work fine with multiple regions (CREG,AREG)
 #####################################################################
@@ -127,9 +135,17 @@ Database file ##TEST_PATH##/c.dat now has BG access method
 Database file ##TEST_PATH##/a.dat now has BG access method
 Database file ##TEST_PATH##/c.dat now has BG access method
 # Testing [mupip upgrade -region CREG,AREG]
-%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-I-TEXT, Upgrade canceled by user
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # Testing [mupip upgrade -region=CREG,AREG]
-%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-I-TEXT, Upgrade canceled by user
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 # ----------------------------------------------------------------------
 # Miscellaneous tests of use cases noted in YDB#851 on gitlab
