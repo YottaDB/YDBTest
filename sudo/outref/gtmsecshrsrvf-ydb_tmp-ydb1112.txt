@@ -23,7 +23,7 @@ Killed
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call sem_rmid\(\) -- called from module .*sr_unix/ftok_sems.c at line 299
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-DBFILERR, Error with database file ##SOURCE_REALPATH##/gtmhelp.dat
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call db_read_only ftok_sem_release -- called from module .*sr_unix/gds_rundown.c at line 1045
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call db_read_only ftok_sem_release -- called from module .*sr_unix/gds_rundown.c at line [0-9]*
 %YDB-E-NOTALLDBRNDWN, Not all regions were successfully rundown
 %YDB-E-GVRUNDOWN, Error during global database rundown
 # Check that GTMSECSHRDMNSTARTED|GTMSECSHRTMPPATH|SYSCALL|GTMSECSHRSTART|DBRNDWN messages are seen in syslog
