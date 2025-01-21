@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ echo ''
 echo '# From the discussion, We concluded that this test will only test 2 topics from release note.'
 echo '# 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1'
 echo '# 2) -RETRY=0 will perform backup without any retries'
-echo 
+echo
 echo '# And topics will NOT get tested in this test:'
 echo '# 3) RETRY=1 fails the first attempt but succeeds in the retry (Tested in v70001/gtm9424)'
 echo '# 4) Copy failure error messages include region information when displaying OS service error codes (Tested in v70001/gtm9424)'
@@ -46,26 +46,25 @@ echo '# Creating database file region DEFAULT'
 $gtm_tst/com/dbcreate.csh mumps
 echo
 echo '# Test 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1'
-echo '# This means both MUPIP BACKUP -DATABASE and MUPIP BACKUP -DATABASE -RETRY=1 will retry only once'
-echo '# Previously, This will perform backup 1 attempt without any retries'
-echo '# Expected same amount of retry (1 retry) for both MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1'
-echo 
+echo '# With GT.M V7.1-000 and later, no retries will be attempted for either MUPIP BACKUP -DATABASE or'
+echo '# MUPIP BACKUP -DATABASE -RETRY=1 when an error occurs during the copy phase of the backup.'
+echo '# With V7.0-004 and later, this would perform 1 backup attempt with 1 retry.'
+echo '# Prior to GT.M V7.0-004, this would perform 1 backup attempt without any retries'
+echo
 echo '# Create temporary destination file'
 mkdir bak1/
 echo '# Create destination file'
 touch bak1/mumps.dat
-echo 
+echo
 echo '# Change the permission to make this file not writable (This will cause BKUPFILEPERM error)'
 chmod -w bak1/mumps.dat
 echo '# Perform  MUPIP BACKUP -DATABASE for region DEFAULT'
-echo '# Expected 1 retry'
 echo '# Need to use [-replace] to be able to overwrite an existing target file'
 $MUPIP backup -replace -DATABASE "DEFAULT" bak1/mumps.dat >& bak1_1.outx; $grep -Ev 'FILERENAME|JNLCREATE' bak1_1.outx
 echo
 echo '# Perform MUPIP BACKUP -DATABASE "DEFAULT" -RETRY=1 for region DEFAULT'
-echo '# Also expected 1 retry'
 $MUPIP backup -replace -DATABASE "DEFAULT" -RETRY=1 bak1/mumps.dat >& bak1_2.outx; $grep -Ev 'FILERENAME|JNLCREATE' bak1_2.outx
-echo 
+echo
 echo '# Test 2) -RETRY=0 will perform backup without any retries.'
 echo '# Previously, This will not perform backup and and error reports will not identify the region associated with the failure'
 echo

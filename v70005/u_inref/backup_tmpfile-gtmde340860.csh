@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -53,7 +53,9 @@ echo '# Recreate DEFAULT database to point to /tmp'
 $gtm_dist/mupip create -reg=DEFAULT
 
 echo '# Now attempt a mupip backup on both AREG and DEFAULT where the target is [bkpdir] a subdirectory in the current directory.'
-echo '# AREG backup should work fine but we would see an EXDEV error while trying to backup DEFAULT database.'
+echo '# AREG backup should work fine.'
+echo '# In GT.M V7.1-000 and older versions, we would see an EXDEV error while trying to backup DEFAULT database. In GT.M V7.1-000'
+echo '# and above, this error would not show up.'
 echo '# In GT.M V7.0-004 and older versions, this would cause temporary files to be left over and an [Error removing temp dir]'
 echo '# error message displayed. In GT.M V7.0-005 and above, this error would not show up.'
 mkdir bkpdir

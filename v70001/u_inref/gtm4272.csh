@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,32 +60,33 @@ rm mumps_backup.dat
 #	     does not seem to generate BKUPPROGRESS messages.
 #
 if ((1 == $ydb_test_copy_file_range_avail) && ("armvxl" != "$gtm_test_machtype") && ("aarch64" != "$gtm_test_machtype")) then
-    echo
-    $echoline
-    echo
-    echo '# Test # 2 - BKUPPROGRESS - run a backup that prints progress messages (grep from output file)'
-    echo '#   Command used: $MUPIP backup -showprogress DEFAULT mumps_backup.dat'
-    # These progress messages aren't very interesting due to the smallness of the backup but it shows it is functional. Note since
-    # the BKUPPROGRESS message is not deterministic (in terms of how many we get), we write the output to the file and select the
-    # first message that occurs. We only need to see one to prove these messages exist.
-    $MUPIP backup -showprogress DEFAULT mumps_backup.dat >& mupip_backup_showprogress.log
-    $grep BKUPPROGRESS mupip_backup_showprogress.log | head -n1
-    rm mumps_backup.dat
+	echo
+	$echoline
+	echo
+	echo '# Test # 2 - BKUPPROGRESS - run a backup that prints progress messages (grep from output file)'
+	echo '#   Command used: $MUPIP backup -showprogress DEFAULT mumps_backup.dat'
+	# These progress messages aren't very interesting due to the smallness of the backup but it shows it is functional. Note since
+	# the BKUPPROGRESS message is not deterministic (in terms of how many we get), we write the output to the file and select the
+	# first message that occurs. We only need to see one to prove these messages exist.
+	$MUPIP backup -showprogress DEFAULT mumps_backup.dat >& mupip_backup_showprogress.log
+	$grep BKUPPROGRESS mupip_backup_showprogress.log | head -n1
+	rm mumps_backup.dat
 endif
 #
 # Test # 3 uses white box testing so only run this sub-test if this is a debug build
 #
 if ("dbg" == "$tst_image") then
-    echo
-    $echoline
-    echo
-    echo '# Test #3 - BKUPRETRY - Attempt backup with whitebox test WBTEST_BACKUP_FORCE_MV_RV enabled to cause an error and generate a retry'
-    echo '#   Command used: $MUPIP backup -retry=2 DEFAULT mumps_backup.dat'
-    setenv gtm_white_box_test_case_enable 1
-    setenv gtm_white_box_test_case_number 175	# WBTEST_BACKUP_FORCE_MV_RV to generate an error
-    $MUPIP backup -retry=2 DEFAULT mumps_backup.dat
-    unsetenv gtm_white_box_test_case_enable
-    unsetenv gtm_white_box_test_case_number
+	echo
+	$echoline
+	echo
+	echo '# Test #3 - BKUPRETRY - Attempt backup with whitebox test WBTEST_BACKUP_FORCE_MV_RV enabled to cause an error and attempt to generate a retry'
+	echo '#   Expect no backup retries due to upstream changes documented at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/647'
+	echo '#   Command used: $MUPIP backup -retry=2 DEFAULT mumps_backup.dat'
+	setenv gtm_white_box_test_case_enable 1
+	setenv gtm_white_box_test_case_number 175	# WBTEST_BACKUP_FORCE_MV_RV to generate an error
+	$MUPIP backup -retry=2 DEFAULT mumps_backup.dat
+	unsetenv gtm_white_box_test_case_enable
+	unsetenv gtm_white_box_test_case_number
 endif
 #
 # Test #4
@@ -94,12 +95,12 @@ endif
 # quotes in that version which we don't consider worth matching given this is old RHEL 7 in a reference file due to the quote's
 # multi-byte representation so this subtest is bypassed under RHEL 7.9.
 if (("rhel" != $gtm_test_linux_distrib) || ("7.9" != $gtm_test_linux_version)) then
-    echo
-    $echoline
-    echo
-    echo '# Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR'
-    echo '#   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl'
-    $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
+	echo
+	$echoline
+	echo
+	echo '# Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR'
+	echo '#   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl'
+	$MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
 endif
 #
 echo

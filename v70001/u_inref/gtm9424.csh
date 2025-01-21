@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,20 +19,20 @@ GTM-9424 - Test the following release note
 Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9424)
 
 1) MUPIP BACKUP -DATABASE uses what seems to be the best copy mechanism available on the kernel to create
-   a backup copy of the database. If the copy mechanism supports monitoring, MUPIP BACKUP -SHOWPROGRESS
-   periodically displays the transfer progress, estimated time left, speed, and the number of transaction
-   applied to the database during backup. Pressing CTRL_C performs the appropriate cleanup and exits the
-   BACKUP command. Previously, MUPIP BACKUP used cp or pax for copy phase and did not have a progress
-   monitoring mechanism. On kernels where the copy mechanism supports robust error handling, MUPIP BACKUP
-   handles error conditions such as ENOMEM, ENOSPC, EIO, and so on with a more descriptive action message.
+	a backup copy of the database. If the copy mechanism supports monitoring, MUPIP BACKUP -SHOWPROGRESS
+	periodically displays the transfer progress, estimated time left, speed, and the number of transaction
+	applied to the database during backup. Pressing CTRL_C performs the appropriate cleanup and exits the
+	BACKUP command. Previously, MUPIP BACKUP used cp or pax for copy phase and did not have a progress
+	monitoring mechanism. On kernels where the copy mechanism supports robust error handling, MUPIP BACKUP
+	handles error conditions such as ENOMEM, ENOSPC, EIO, and so on with a more descriptive action message.
 
 2) MUPIP BACKUP displays the BKUPFILPERM message when it finds that there is no write permission for the
-   backup file. MUPIP BACKUP performs this check before starting BACKUP. Previously, MUPIP BACKUP reported
-   this condition after performing the copy.
+	backup file. MUPIP BACKUP performs this check before starting BACKUP. Previously, MUPIP BACKUP reported
+	this condition after performing the copy.
 
 3) The -RETRY=n qualifier of MUPIP BACKUP -DATABASE makes n number of attempts to retry performing BACKUP
-   if the backup fails. If -RETRY is not specified, GT.M defaults -RETRY to zero (0). In case of an error,
-   retry attempts are always based on cp or pax. Previously, the -RETRY qualifier was not available.(GTM-9424)
+	if the backup fails. If -RETRY is not specified, GT.M defaults -RETRY to zero (0). In case of an error,
+	retry attempts are always based on cp or pax. Previously, the -RETRY qualifier was not available.(GTM-9424)
 
 ##########################################################################################
 Test 1 : Test 1st paragraph of release note
@@ -50,10 +50,12 @@ v70001/gtm4272 subtest (in Test # 2) as part of commit 81a7f6d8. That is as good
 case we can easily come up with.
 
 c) The [ENOMEM, ENOSPC, EIO] error handling part is tested by trying to backup to a target file system that
-is a different mount point than the current file system. We use /tmp for that purpose. We expect an
-error message corresponding to the EXDEV error code (Error code: 18, Invalid cross-device link) in the
-mupip backup output. That is considered enough of a test of other error return values from copy_file_range()
-like ENOMEM, ENOSPC, EIO etc.
+is a different mount point than the current file system. We use /tmp for that purpose.
+Prior to GT.M V7.1-000, we expected an error message corresponding to the EXDEV error code
+(Error code: 18, Invalid cross-device link) in the mupip backup output. That was considered enough of a test of other
+error return values from copy_file_range() like ENOMEM, ENOSPC, EIO etc.
+With GT.M V7.1-000 and above, no EXDEV error is issued, per the release note at
+https://gitlab.com/YottaDB/DB/YDBTest/-/issues/647.
 
 d) The [CTRL_C] part of the release note is tested by issuing a Ctrl-C to a backup command while it is
 running and expecting to see a %YDB-I-BACKUPCTRL message in the output followed by a %YDB-E-MUNOFINISH.
@@ -85,10 +87,10 @@ if (($ydb_test_copy_file_range_avail) && (("ubuntu" != $gtm_test_linux_distrib) 
 	# is disabled on those platforms.
 	if (($tst_dir_fstype != $tmp_dir_fstype) && ("armv6l" != `uname -m`) && ("aarch64" != `uname -m`)) then
 		echo "# ------------------------------"
-		echo "# Test (1c) : EXDEV error code from MUPIP BACKUP"
+		echo "# Test (1c) : No EXDEV error code from MUPIP BACKUP"
 		echo "# ------------------------------"
 		echo "# Try running mupip backup with target directory of /tmp (which is different mount point)"
-		echo "# Expect to see EXDEV error"
+		echo "# Expect NOT to see EXDEV error"
 		set targetfile = "/tmp/mumps_${user}_$$.dat"	# pick unique name that will not collide with other users/tests
 		$MUPIP backup "*" $targetfile
 		echo "# ------------------------------"
@@ -120,7 +122,7 @@ $gtm_dist/mumps -run %XCMD 'for i=1:1:100000 set ^x(i)=$j(i,200)'
 mkdir bak1
 (expect -d $gtm_tst/$tst/u_inref/gtm9424.exp > expect.out) >& expect.dbg
 if ($status) then
-        echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 endif
 mv expect.out expect.outx       # move .out to .outx to avoid -E- from being caught by test framework
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx

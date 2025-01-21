@@ -34,26 +34,21 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 # Test 1) MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
-# This means both MUPIP BACKUP -DATABASE and MUPIP BACKUP -DATABASE -RETRY=1 will retry only once
-# Previously, This will perform backup 1 attempt without any retries
-# Expected same amount of retry (1 retry) for both MUPIP BACKUP -DATABASE equivalent to MUPIP BACKUP -DATABASE -RETRY=1
+# With GT.M V7.1-000 and later, no retries will be attempted for either MUPIP BACKUP -DATABASE or
+# MUPIP BACKUP -DATABASE -RETRY=1 when an error occurs during the copy phase of the backup.
+# With V7.0-004 and later, this would perform 1 backup attempt with 1 retry.
+# Prior to GT.M V7.0-004, this would perform 1 backup attempt without any retries
 
 # Create temporary destination file
 # Create destination file
 
 # Change the permission to make this file not writable (This will cause BKUPFILEPERM error)
 # Perform  MUPIP BACKUP -DATABASE for region DEFAULT
-# Expected 1 retry
 # Need to use [-replace] to be able to overwrite an existing target file
-%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
-%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
 %GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
 %GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 # Perform MUPIP BACKUP -DATABASE "DEFAULT" -RETRY=1 for region DEFAULT
-# Also expected 1 retry
-%GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
-%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
 %GTM-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
 %GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
 

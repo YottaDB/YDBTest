@@ -5,20 +5,20 @@
 # Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9424)
 # 
 # 1) MUPIP BACKUP -DATABASE uses what seems to be the best copy mechanism available on the kernel to create
-#    a backup copy of the database. If the copy mechanism supports monitoring, MUPIP BACKUP -SHOWPROGRESS
-#    periodically displays the transfer progress, estimated time left, speed, and the number of transaction
-#    applied to the database during backup. Pressing CTRL_C performs the appropriate cleanup and exits the
-#    BACKUP command. Previously, MUPIP BACKUP used cp or pax for copy phase and did not have a progress
-#    monitoring mechanism. On kernels where the copy mechanism supports robust error handling, MUPIP BACKUP
-#    handles error conditions such as ENOMEM, ENOSPC, EIO, and so on with a more descriptive action message.
+# 	a backup copy of the database. If the copy mechanism supports monitoring, MUPIP BACKUP -SHOWPROGRESS
+# 	periodically displays the transfer progress, estimated time left, speed, and the number of transaction
+# 	applied to the database during backup. Pressing CTRL_C performs the appropriate cleanup and exits the
+# 	BACKUP command. Previously, MUPIP BACKUP used cp or pax for copy phase and did not have a progress
+# 	monitoring mechanism. On kernels where the copy mechanism supports robust error handling, MUPIP BACKUP
+# 	handles error conditions such as ENOMEM, ENOSPC, EIO, and so on with a more descriptive action message.
 # 
 # 2) MUPIP BACKUP displays the BKUPFILPERM message when it finds that there is no write permission for the
-#    backup file. MUPIP BACKUP performs this check before starting BACKUP. Previously, MUPIP BACKUP reported
-#    this condition after performing the copy.
+# 	backup file. MUPIP BACKUP performs this check before starting BACKUP. Previously, MUPIP BACKUP reported
+# 	this condition after performing the copy.
 # 
 # 3) The -RETRY=n qualifier of MUPIP BACKUP -DATABASE makes n number of attempts to retry performing BACKUP
-#    if the backup fails. If -RETRY is not specified, GT.M defaults -RETRY to zero (0). In case of an error,
-#    retry attempts are always based on cp or pax. Previously, the -RETRY qualifier was not available.(GTM-9424)
+# 	if the backup fails. If -RETRY is not specified, GT.M defaults -RETRY to zero (0). In case of an error,
+# 	retry attempts are always based on cp or pax. Previously, the -RETRY qualifier was not available.(GTM-9424)
 # 
 # ##########################################################################################
 # Test 1 : Test 1st paragraph of release note
@@ -36,10 +36,12 @@
 # case we can easily come up with.
 # 
 # c) The [ENOMEM, ENOSPC, EIO] error handling part is tested by trying to backup to a target file system that
-# is a different mount point than the current file system. We use /tmp for that purpose. We expect an
-# error message corresponding to the EXDEV error code (Error code: 18, Invalid cross-device link) in the
-# mupip backup output. That is considered enough of a test of other error return values from copy_file_range()
-# like ENOMEM, ENOSPC, EIO etc.
+# is a different mount point than the current file system. We use /tmp for that purpose.
+# Prior to GT.M V7.1-000, we expected an error message corresponding to the EXDEV error code
+# (Error code: 18, Invalid cross-device link) in the mupip backup output. That was considered enough of a test of other
+# error return values from copy_file_range() like ENOMEM, ENOSPC, EIO etc.
+# With GT.M V7.1-000 and above, no EXDEV error is issued, per the release note at
+# https://gitlab.com/YottaDB/DB/YDBTest/-/issues/647.
 # 
 # d) The [CTRL_C] part of the release note is tested by issuing a Ctrl-C to a backup command while it is
 # running and expecting to see a %YDB-I-BACKUPCTRL message in the output followed by a %YDB-E-MUNOFINISH.
@@ -48,16 +50,14 @@
 # Create database
 ##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL TST_DIR_FSTYPE_SAME_AS_TMP UBUNTU_20.04 HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 # ------------------------------
-# Test (1c) : EXDEV error code from MUPIP BACKUP
+# Test (1c) : No EXDEV error code from MUPIP BACKUP
 # ------------------------------
 # Try running mupip backup with target directory of /tmp (which is different mount point)
-# Expect to see EXDEV error
+# Expect NOT to see EXDEV error
 ##SUSPEND_OUTPUT JNL_OFF
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
 ##ALLOW_OUTPUT JNL_OFF
-%YDB-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
-%YDB-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
 %YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
@@ -81,8 +81,6 @@
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
 ##ALLOW_OUTPUT JNL_OFF
-%YDB-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
-%YDB-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
 %YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 3
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up

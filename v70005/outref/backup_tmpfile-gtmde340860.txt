@@ -29,12 +29,12 @@ mumps.dat
 # Recreate DEFAULT database to point to /tmp
 ##TEST_AWK%GTM-I-DBFILECREATED, Database file /tmp/mumps_.*.dat created
 # Now attempt a mupip backup on both AREG and DEFAULT where the target is [bkpdir] a subdirectory in the current directory.
-# AREG backup should work fine but we would see an EXDEV error while trying to backup DEFAULT database.
+# AREG backup should work fine.
+# In GT.M V7.1-000 and older versions, we would see an EXDEV error while trying to backup DEFAULT database. In GT.M V7.1-000
+# and above, this error would not show up.
 # In GT.M V7.0-004 and older versions, this would cause temporary files to be left over and an [Error removing temp dir]
 # error message displayed. In GT.M V7.0-005 and above, this error would not show up.
 %GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bkpdir/a.dat
-%GTM-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
-%GTM-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
 ##TEST_AWK%GTM-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT \(database file: /tmp/mumps_.*.dat\). Attempt: #2 of 2
 ##TEST_AWK%GTM-I-BACKUPDBFILE, DB file /tmp/mumps_.*.dat backed up in file ##TEST_PATH##/bkpdir/mumps_.*.dat
 %GTM-I-BACKUPSUCCESS, Backup completed successfully
