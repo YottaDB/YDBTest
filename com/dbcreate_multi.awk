@@ -311,7 +311,7 @@ function print_block(segname,regname){
 	  if (value["qdbrundown"])
 		print "change -region " regname " " value["qdbrundown"]
 	  # DEFER_ALLOCATE option is available from V62002
-	  if ((6 < major_ver) || ((6 == major_ver) && (2002 <= full_ver)))
+	  if ((6 < major_ver) || ((6 == major_ver) && (2002 <= minor_ver)))
 	  {
 	      if (value["defer_allocate"])
 		  print "change -segment " segname " " value["defer_allocate"]
