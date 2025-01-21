@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -302,6 +302,7 @@ function print_block(segname,regname){
       if (value["test_stats"])
 		print "change -region " regname " " value["test_stats"]
       major_ver = gensub(/^.*V([0-9])[0-9]+.*/,"\\1","g",ENVIRON["gtm_dist"])
+      minor_ver = gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"])
       # QDBRUNDOWN and INST_FREEZE_ON_ERROR options are not available for versions older than V60000
       if (6 <= major_ver)
       {
@@ -310,7 +311,7 @@ function print_block(segname,regname){
 	  if (value["qdbrundown"])
 		print "change -region " regname " " value["qdbrundown"]
 	  # DEFER_ALLOCATE option is available from V62002
-	  if ((6 < major_ver) || ((6 == major_ver) && (2002 <= gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"]))))
+	  if ((6 < major_ver) || ((6 == major_ver) && (2002 <= full_ver)))
 	  {
 	      if (value["defer_allocate"])
 		  print "change -segment " segname " " value["defer_allocate"]
@@ -319,7 +320,7 @@ function print_block(segname,regname){
 	  }
       }
       # ASYNCIO option is only available from V63001 onwards
-      if ((6 < major_ver) || ((6 == major_ver) && (3001 <= gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"]))))
+      if ((6 < major_ver) || ((6 == major_ver) && (3001 <= minor_ver)))
       {
           # Even though -asyncio was inherited from the gtm_test_asyncio env var after checking the access method env var is BG
           # at the time of do_random_settings.csh, it is possible a test (e.g. mm/basic subtest) overrides it by setting the
@@ -336,7 +337,11 @@ function print_block(segname,regname){
 	      # issues when trying to mmap() this huge .gst file (e.g. "%SYSTEM-E-ENO12, Cannot allocate memory" error).
 	      # Therefore, disable statistics sharing for this database by setting "-nostats" for all regions in case
 	      # this is a replication test (identified by the "test_replic" env var being 1 or MULTISITE).
-              print "change -region " regname " -nostats"
+
+	      # Note also that NOSTATS started being supported only from V63001 and so disable adding this if
+	      # the current version is less than V63001.
+		if ((6 < major_ver) || ((6 == major_ver) && (3001 <= minor_ver)))
+			print "change -region " regname " -nostats"
       }
       if  ("NULL" == value["null_subscripts"]) # this NULL has nothing to do with "NULL"_subscripts, it is dbcreate_multi.awk's "NULL"
 		value["null_subscripts"]="ALWAYS"
