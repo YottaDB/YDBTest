@@ -1,0 +1,211 @@
+# Test that ZSHOW "V" accepts a STACK level parameter
+# Create database
+# --- Test $IO output at various levels ---
+# Test default level
+x="a"
+# Test explicit level
+x="a"
+# Test non-default level
+%cli="NEW  SET x=""a""  ZSHOW ""V""::0"
+etrap="goto CLIERR^%XCMD"
+# Test -1 as alias for current $STACK level
+x="a"
+# Test arbitrary expressions
+x="a"
+x="a"
+$STACK=2
+d("V",1)="a=""The quick brown fox"""
+d("V",2)="c=""jumps over the lazy dog"""
+d("V",3)="n=2"
+# Test non-integer stack levels
+%cli="NEW  ZSHOW ""V""::0.85"
+etrap="goto CLIERR^%XCMD"
+%cli="NEW  ZSHOW ""V""::-0.85"
+etrap="goto CLIERR^%XCMD"
+%cli="NEW  ZSHOW ""V""::1E-1"
+etrap="goto CLIERR^%XCMD"
+
+# --- Test local variable output ---
+b("V",1)="%cli=""NEW  SET x=""""a""""  ZSHOW """"V"""":b:0   ZWRITE b"""
+b("V",2)="etrap=""goto CLIERR^%XCMD"""
+
+# --- Test global variable output ---
+^b("V",1)="%cli=""NEW  SET x=""""a""""  ZSHOW """"V"""":^b:0   ZWRITE ^b"""
+^b("V",2)="etrap=""goto CLIERR^%XCMD"""
+
+# --- Test indirection ---
+# Test indirection to local
+b("V",1)="%cli=""NEW  SET x=""""a"""",y=""""b""""  ZSHOW """"V"""":@y:0   ZWRITE b"""
+b("V",2)="etrap=""goto CLIERR^%XCMD"""
+# Test indirection to global
+^c("V",1)="%cli=""NEW  SET x=""""a"""",y=""""^c""""  ZSHOW """"V"""":@y:0   ZWRITE ^c"""
+^c("V",2)="etrap=""goto CLIERR^%XCMD"""
+# Test double indirection to local
+b("V",1)="%cli=""NEW  SET x=""""a"""",y=""""@z"""",z=""""b""""  ZSHOW """"V"""":@y:0   ZWRITE b"""
+b("V",2)="etrap=""goto CLIERR^%XCMD"""
+# Test double indirection to global
+^d("V",1)="%cli=""NEW  SET x=""""a"""",y=""""@z"""",z=""""^d""""  ZSHOW """"V"""":@y:0   ZWRITE ^d"""
+^d("V",2)="etrap=""goto CLIERR^%XCMD"""
+# Test stack level specified through indirection
+%cli="SET x=""y"",y=-1 ZSHOW ""v""::@x"
+etrap="goto CLIERR^%XCMD"
+x="y"
+y=-1
+
+# --- Test that local variables defined before trigger entry are visible using ZSHOW "V"::0 inside the trigger ---
+No matching triggers found for deletion
+Added SET trigger on ^x2 named x2set
+# Execute [set x2=2]
+# Execute [zwrite $STACK]
+$STACK=0
+# Execute [zshow "s"]
+x2+8^trigydb873
+# Execute [zshow "v"::0]
+x=1
+x2=2
+# Execute [set ^x2=1] which invokes the trigger [do trig^trigydb873]
+# Inside trigger entryref [trig^trigydb873]
+# Execute [zwrite $STACK]
+$STACK=2
+# Execute [set trig=3]
+# Execute [zshow "s"]
+trig+8^trigydb873
++1^x2set#
+x2+12^trigydb873
+# Execute [zshow "v"::2]
+trig=3
+# Execute [zshow "v"::1]
+z=3
+# Execute [zshow "v"::0] : Expect to see local variables defined before trigger entry
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1618?diff_id=1243502228&start_sha=dad2040cd16c8e209418ba7ef89fd7b8c9ce0291#note_2312571263 for more discussion about this test case.
+x=1
+x2=2
+# Leaving trigger entryref [trig^trigydb873]
+# Execute the trigger a second time (this takes a different codepath that reuses the symbol table)
+# Inside trigger entryref [trig^trigydb873]
+# Execute [zwrite $STACK]
+$STACK=2
+# Execute [set trig=3]
+# Execute [zshow "s"]
+trig+8^trigydb873
++1^x2set#
+x2+14^trigydb873
+# Execute [zshow "v"::2]
+trig=3
+# Execute [zshow "v"::1]
+z=3
+# Execute [zshow "v"::0] : Expect to see local variables defined before trigger entry
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1618?diff_id=1243502228&start_sha=dad2040cd16c8e209418ba7ef89fd7b8c9ce0291#note_2312571263 for more discussion about this test case.
+x=1
+x2=2
+# Leaving trigger entryref [trig^trigydb873]
+# Execute [zwrite $STACK]
+$STACK=0
+# Execute [zshow "s"]
+x2+18^trigydb873
+# Execute [zshow "v"::0]
+x=1
+x2=2
+
+# --- Test that multiple triggers on the same variable all see the same parent stack frames ---
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x2 named x2set1
+Added SET trigger on ^x2 named x2set2
+# Execute [set x2=2]
+# Execute [zwrite $STACK]
+$STACK=0
+# Execute [zshow "s"]
+x2+9^multitrigydb873
+# Execute [zshow "v"::0]
+x=1
+x2=2
+# Execute [set ^x2=1] which invokes the trigger [do trig^multitrigydb873]
+# Execute [zwrite $STACK]
+$STACK=0
+# Execute [zshow "s"]
+x2+17^multitrigydb873
+# Execute [zshow "v"::0]
+x=1
+x2=2
+# Each trigger in this M file is executed in a random order. Redirect the output to a log and output it in a deterministic order.
+# Inside trigger entryref [trig^multitrigydb873]
+# Execute [zwrite $STACK]
+$STACK=2
+# Execute [set trig=3]
+# Execute [zshow "s"]
+trig+10^multitrigydb873
++1^x2set1#
+x2+13^multitrigydb873
+# Execute [zshow "v"::2]
+out="x2set1#out.log"
+trig=3
+x=1
+# Execute [zshow "v"::1]
+out="x2set1#out.log"
+trig=3
+x=1
+# Execute [zshow "v"::0]
+x=1
+x2=2
+# Leaving trigger entryref [trig^multitrigydb873]
+# Inside trigger entryref [trig^multitrigydb873]
+# Execute [zwrite $STACK]
+$STACK=2
+# Execute [set trig=3]
+# Execute [zshow "s"]
+trig+10^multitrigydb873
++1^x2set2#
+x2+13^multitrigydb873
+# Execute [zshow "v"::2]
+out="x2set2#out.log"
+trig=3
+x=2
+# Execute [zshow "v"::1]
+out="x2set2#out.log"
+trig=3
+x=2
+# Execute [zshow "v"::0]
+x=1
+x2=2
+# Leaving trigger entryref [trig^multitrigydb873]
+
+# --- Test ZSHOWSTACKRANGE errors ---
+%YDB-E-ZSHOWSTACKRANGE, Invalid stack level value -2 for ZSHOW "V"
+%YDB-E-ZSHOWSTACKRANGE, Invalid stack level value 4 for ZSHOW "V"
+%YDB-E-VAREXPECTED, Variable expected in this context
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-ZSHOWSTACKRANGE, Invalid stack level value 5 for ZSHOW "V"
+%cli="ZSHOW ""V""::0.85"
+etrap="goto CLIERR^%XCMD"
+%cli="ZSHOW ""V""::-0.85"
+etrap="goto CLIERR^%XCMD"
+%cli="ZSHOW ""V""::1E-1"
+etrap="goto CLIERR^%XCMD"
+        Indirection
+%XCMD+5^%XCMD
+        Indirection
+%XCMD+5^%XCMD
+%YDB-E-VAREXPECTED, Variable expected in this context
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-ZSHOWSTACKRANGE, Invalid stack level value 5 for ZSHOW "V"
+        Indirection
+%XCMD+5^%XCMD
+        Indirection
+%XCMD+5^%XCMD
+        Indirection
+%XCMD+5^%XCMD
+
+# --- Test that stack level is ignored for non-V codes ---
+        Indirection
+%XCMD+5^%XCMD
+        Indirection
+%XCMD+5^%XCMD
+%cli="NEW  ZSHOW ""SV""::0"
+etrap="goto CLIERR^%XCMD"
+
+# --- Test that V is still deduplicated when stack level is present ---
+%cli="NEW  ZSHOW ""VV""::0"
+etrap="goto CLIERR^%XCMD"
+# Run [dbcheck.csh]
