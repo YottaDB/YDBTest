@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -71,11 +71,13 @@ if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	git remote | grep -q upstream_repo
 	if ($status) git remote add upstream_repo "$upstream_repo"
 	git fetch upstream_repo
-	set filelist = `git diff --name-only upstream_repo/master`
+	set basecommit = `git merge-base HEAD upstream_repo/master`
+	set filelist = `git diff --name-only $basecommit`
 else
 	# Test system passed in /YDBTest
 	git config --global --add safe.directory /YDBTest
-	set filelist = `git diff --name-only master`
+	set basecommit = `git merge-base HEAD master`
+	set filelist = `git diff --name-only $basecommit`
 endif
 
 set instream_invokelist = ""
