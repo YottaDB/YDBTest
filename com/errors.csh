@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -82,7 +82,7 @@ if !(-z log_and_out_files.txt) then
 	# because tcsh seems to be losing a few bytes of the multi-byte character (in the filename) at 4K page boundaries.
 	# To work around that, we generate another .csh file (log_and_out_files.csh) that contains the names of all the files
 	# and source another script (errors_helper.csh) which does the error check, thereby avoiding the backslash-quote usage.
-	$tst_awk '{printf "(set log_out_file=%s; source $gtm_tst/com/errors_helper.csh)\n", $0;}' log_and_out_files.txt >! log_and_out_files.csh
+	$tst_awk '{printf "(set log_out_file=\"%s\"; source $gtm_tst/com/errors_helper.csh)\n", $0;}' log_and_out_files.txt >! log_and_out_files.csh
 	source log_and_out_files.csh
 endif
 
