@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC. and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -171,6 +171,8 @@ void *childthread(void *threadparm)
 	status = ydb_stdout_stderr_adjust_t(YDB_NOTTP, NULL); CHECK_STATUS("ydb_stdout_stderr_adjust_t()", status, fp);
 	status = ydb_thread_is_main(); CHECK_STATUS("ydb_thread_is_main()", status, fp);
 	fprintf(fp, " --> Invoke ydb_timer_cancel()           after ydb_exit() : There is no return value since function is void\n"); fflush(stdout);
+	timer_id = 0;
 	ydb_timer_cancel_t(YDB_NOTTP, NULL, timer_id);
+	time = 0;
 	status = ydb_timer_start_t(YDB_NOTTP, NULL, timer_id, time, NULL, data_value, &valuebuff); CHECK_STATUS("ydb_timer_start_t()", status, fp);
 }

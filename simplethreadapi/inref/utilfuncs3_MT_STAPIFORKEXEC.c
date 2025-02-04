@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -184,7 +184,9 @@ void *childthread(void *threadparm)
 		status = ydb_message_t(YDB_NOTTP, NULL, 0, &value1); CHECK_STATUS("ydb_message_t()", status, fp);
 		status = ydb_stdout_stderr_adjust_t(YDB_NOTTP, NULL); CHECK_STATUS("ydb_stdout_stderr_adjust_t()", status, fp);
 		fprintf(fp, " --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void\n"); fflush(stdout);
+		timer_id = 0;
 		ydb_timer_cancel_t(YDB_NOTTP, NULL, timer_id);
+		time = 0;
 		status = ydb_timer_start_t(YDB_NOTTP, NULL, timer_id, time, NULL, data_value, &valuebuff); CHECK_STATUS("ydb_timer_start_t()", status, fp);
 	} else
 	{	/* parent process */

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -136,11 +136,14 @@ int main()
 			ydb_fork_n_core();
 		}
 		status = ydb_init(); CHECK_STATUS("ydb_init()", status);
+		i = 0;
 		status = ydb_message_t(YDB_NOTTP, NULL, i, &value1); CHECK_STATUS("ydb_message_t()", status);
 		status = ydb_stdout_stderr_adjust_t(YDB_NOTTP, NULL); CHECK_STATUS("ydb_stdout_stderr_adjust_t()", status);
 		/* ydb_thread_is_main() does not return YDB_ERR_STAPIFORKEXEC, checking to make sure return is YDB_NOTOK */
-  		printf(" --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void\n"); fflush(stdout);
+		printf(" --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void\n"); fflush(stdout);
+		timer_id = 0;
 		ydb_timer_cancel_t(YDB_NOTTP, NULL, timer_id);
+		time = 0;
 		status = ydb_timer_start_t(YDB_NOTTP, NULL, timer_id, time, NULL, data_value, &valuebuff); CHECK_STATUS("ydb_timer_start_t()", status);
 
 	} else
