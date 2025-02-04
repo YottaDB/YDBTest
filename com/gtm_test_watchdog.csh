@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,7 +65,10 @@ while !( -e $exit_file)
 		if (0 == $teststopped) then
 			# Stop the test and exit
 			echo "$errmsg (Threshold = $gtm_test_max_core ; Actual = $core_count)" >>&! $tst_general_dir/outstream.log
-			echo "WATCHDOG-E-CORE_COUNT. The core count ($core_count) exceed the threshold ($gtm_test_max_core). The test/subtest is stopped" >>&! gtm_test_watchdog.out
+			set msg = "WATCHDOG-E-CORE_COUNT : ${watch_dir:h:t}/$cursubtestdir stopped as it has too many core files"
+			echo "$msg" >>&! gtm_test_watchdog.out
+			# create a diff file so scripts that search for *.diff files to detect failure treat this subtest as failed
+			echo "$msg" > $cursubtestdir.diff
 			$gtm_tst/com/stoptest.csh
 			set teststopped=1
 		endif
@@ -88,7 +91,7 @@ while !( -e $exit_file)
 			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			cd $cursubtestdir
 			echo $msg > hangalert_email.txt
-			# create a diff file so scripts that search for *.diff files find this failure
+			# create a diff file so scripts that search for *.diff files to detect failure treat this subtest as failed
 			echo $msg > $cursubtestdir.diff
 			# "test_time" env var is needed by the following "write_logs.csh" invocation.
 			setenv test_time  `echo $timestart.$timenow | $tst_awk -F \. -f $gtm_tst/com/diff_time.awk -v full=1`
