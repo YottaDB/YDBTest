@@ -2,7 +2,7 @@
 #
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -142,7 +142,11 @@ foreach file ($filelist)
 	set ext = $file:e
 	foreach check_ext ($check_ext_list)
 		if ($ext == $check_ext) then
-			set bad_line_count = `cat $file | grep '^ ' | wc -l`
+			if ($ext == "c") then
+				set bad_line_count = `cat $file | grep '^ ' | grep -v '^ \*' | wc -l`
+			else
+				set bad_line_count = `cat $file | grep '^ ' | wc -l`
+			endif
 			if (0 == $bad_line_count) continue
 			set exitstatus = 1
 			if ( "$header" != "" ) then
@@ -152,11 +156,11 @@ foreach file ($filelist)
 			set plural = "s"
 			if ($bad_line_count == 1) set plural = ""
 			echo -n "  ${file} ($bad_line_count line${plural} found)"
-			if ($bad_line_count < 11) then
-				echo ":"
-				grep -n '^ ' $file | sed 's/^/    \> /g'
+			echo ":"
+			if ($ext == "c") then
+				grep -n '^ ' $file | grep -v ': \*' | sed 's/^/    \> /g'
 			else
-				echo ""
+				grep -n '^ ' $file | sed 's/^/    \> /g'
 			endif
 		endif
 	end
