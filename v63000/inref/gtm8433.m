@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -25,11 +28,11 @@ zshowv	; verify that large locals go into smaller globals appropriately
 	. ; 1 character (lower case) name sometimes with a leading percent-sign, a random 1 digit subscript and data<256 in length
 	. set name=$select($random(10):"",1:"%")_$$^%RANDSTR(1,,"L"),@name@($random(10))=$$^%RANDSTR($random(256),,"E")
 	. ; 2 character (lower case) name with data of random length up to close to 1MiB
-	. set name=$$^%RANDSTR(2,,"L"),@name@($random(250))=$$^%RANDSTR((2**($random(11)+9))-(1+$length(name)),,"E")
+	. set name=$$^%RANDSTR(2,,"L"),@name@($random(250))=$$^%RANDSTR((2**($random(10)+9))-(1+$length(name)),,"E")
 	. ; 2 character (upper case) name with data of random length up to close to 1MiB
-	. set name=$$^%RANDSTR(2,,"U"),@name=$$^%RANDSTR((2**($random(11)+9))-(1+$length(name)),,"E")
+	. set name=$$^%RANDSTR(2,,"U"),@name=$$^%RANDSTR((2**($random(10)+9))-(1+$length(name)),,"E")
 	. ; 2 character (upper_lower case) name with control characters of random length up to close to 1MiB
-	. set name=$$^%RANDSTR(1,,"U")_$$^%RANDSTR(1,,"L"),@name=$$^%RANDSTR((2**($random(11)+9))-(1+$length(name)),,"C")
+	. set name=$$^%RANDSTR(1,,"U")_$$^%RANDSTR(1,,"L"),@name=$$^%RANDSTR((2**($random(10)+9))-(1+$length(name)),,"C")
 	. ; 2 character (whatever case) name with data of all "C" characters
 	. set name=$$^%RANDSTR(1,,"L")_$$^%RANDSTR(1,,"U"),@name=$translate($justify("",2**10)," ","C")
 	. ; 1 character (upper case) name sometimes with a leading percent-sign, a random 1 digit subscript and data of "P"
