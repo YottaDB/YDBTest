@@ -20,7 +20,9 @@ echo "r204 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"view_statshare-ydb254 zshow_v-ydb873"
+setenv subtest_list_non_replic	"view_statshare-ydb254"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_v-ydb873"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm-v71001"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

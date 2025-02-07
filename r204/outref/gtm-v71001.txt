@@ -1,0 +1,22 @@
+#---------------------------------------------------------------------------
+# Test few gvn usages in boolean expressions that failed during fuzz testing
+# These used to assert fail and/or SIG-11 before GT.M V7.1-001 got merged
+# Not sure what GT.M release note fixed this longstanding issue
+# See https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2289799513 for actual test cases
+#---------------------------------------------------------------------------
+
+# Create database
+
+## Test case 1 : Original fuzz testing failure
+## Expect LVUNDEF error (not SIG-11 or assert failure)
+%YDB-E-LVUNDEF, Undefined local variable: VCOMP
+## Test case 2 : Simplest case that failed like the previous test case
+## Expect GVUNDEF error (not SIG-11 or assert failure)
+1%YDB-E-GVUNDEF, Global variable undefined: ^x
+## Test case 3 : Slightly fancy example using a naked indicator in the second argument to $incr.
+## Expect GVNAKED error (not SIG-11 or assert failure)
+%YDB-E-GVNAKED, Illegal naked global reference
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
