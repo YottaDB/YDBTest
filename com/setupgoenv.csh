@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,6 +75,12 @@ chmod -R +w go/pkg
 # rely on that directory existing. So download the git repo using "git clone".
 mkdir -p go/src/lang.yottadb.com/go/yottadb/
 git clone https://gitlab.com/YottaDB/Lang/YDBGo go/src/lang.yottadb.com/go/yottadb >& gitclone.log
+set status1 = $status
+if ($status1) then
+	echo "TEST-E-FAILED : [git clone] returned failure status of $status1. Output below and in gitclone.log"
+	cat gitclone.log
+	exit 1
+endif
 
 cd go/src/$go_repo
 if ($?ydb_test_go_repo_dir) then
