@@ -2,124 +2,224 @@ YDB#869 : Test boolean expressions involving huge numeric literals issue NUMOFLO
 
 #################################################################################################
 # Test 1 : Test that compiling M program with NUMOFLOW expressions does not assert fail or SIG-11
-# Note that NUMOFLOW errors will be printed more than once for the same expression in different code sections
-# Therefore there would be more NUMOFLOW errors (60 error lines in actual) here than the number of expressions (3*6 = 18)
-----------
-Error %YDB-E-NUMOFLOW seen in compile_ydb869.outx as expected:
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-----------
+# Note that NUMOFLOW errors will be printed once per expression.
+# Since we have 22 expressions, we expect 22 NUMOFLOW errors below.
+# Also, we do not expect a NUMOFLOW error more than once per line # and column # combination below.
+# Running [##SOURCE_PATH##/mumps ##IN_TEST_PATH##/inref/ydb869.m >& compile_ydb869.outx]
+# Running [grep -B 1 NUMOFLOW compile_ydb869.outx]
+		At column 17, line 17, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 18, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 33, line 19, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 39, line 20, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 32, line 21, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 18, line 22, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 25, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 26, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 33, line 27, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 39, line 28, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 31, line 29, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 30, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 33, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 34, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 33, line 35, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 39, line 36, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 31, line 37, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 17, line 38, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 31, line 41, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 31, line 42, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 19, line 43, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+		At column 37, line 43, source module ##IN_TEST_PATH##/inref/ydb869.m
+%GTM-E-NUMOFLOW, Numeric overflow
 
 #################################################################################################
-# Test 2 : Test that running M commands with NUMOFLOW expressions does not assert fail or SIG-11
-# Note that NUMOFLOW errors will be printed once per expression in this case so we expect 18 lines of such errors
-----------
-Error %YDB-E-NUMOFLOW seen in direct_ydb869.outx as expected:
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-%YDB-E-NUMOFLOW, Numeric overflow
-----------
+# Test 2 : Test that [mumps -direct] with NUMOFLOW expressions does not assert fail or SIG-11
+# Note that NUMOFLOW errors will be printed once per expression.
+# Since we have 22 expressions in 21 lines, we expect 21 NUMOFLOW errors below.
+# Running [grep -v ^;' ##IN_TEST_PATH##/inref/ydb869.m | ##SOURCE_PATH##/mumps -direct >& direct_ydb869.outx]
+# Running [grep -B 1 -E "^##|^GTM>|^%GTM-" direct_ydb869.outx | grep -v FILENOTFND]
+
+GTM>
+%GTM-E-INVCMD, Invalid command keyword encountered
+--
+
+GTM>
+## Tests that use Unary ' operator (OC_COM) : Complement operation
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+
+GTM>
+## Tests that use Unary + operator (OC_FORCENUM)
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+
+GTM>
+## Tests that use Unary - operator (OC_NEG)
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+
+GTM>
+## Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2340631591
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+--
+
+GTM>
+
+GTM>
+
+GTM>
 
 #################################################################################################
-# Test 3 : Test that running M program with NUMOFLOW expressions does not assert fail or SIG-11
+# Test 3 : Test that [mumps -run] with NUMOFLOW expressions does not assert fail or SIG-11
 # We run this with a ZTRAP handler set to print the error in each line and move on to the next line
 # So we expect a series of error lines below. Mostly NUMOFLOW errors. But some other errors too since these
-# M lines were generated by fuzz testing which can generated syntax-error M lines
+# M lines were generated by fuzz testing which can generate M lines with syntax errors
+# Running [##SOURCE_PATH##/mumps -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^ydb869']
 ## Tests that use Unary ' operator (OC_COM) : Complement operation
-ZSTATUS=ydb869+2^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+3^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+4^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+5^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+6^ydb869,%YDB-E-RPARENMISSING, Right parenthesis expected
-ZSTATUS=ydb869+7^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+2^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+3^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+4^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+5^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+6^ydb869,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=ydb869+7^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
 ## Tests that use Unary + operator (OC_FORCENUM)
-ZSTATUS=ydb869+10^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+11^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+12^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+13^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+14^ydb869,%YDB-E-RPARENMISSING, Right parenthesis expected
-ZSTATUS=ydb869+15^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+10^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+11^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+12^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+13^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+14^ydb869,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=ydb869+15^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
 ## Tests that use Unary - operator (OC_NEG)
-ZSTATUS=ydb869+18^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+19^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
-ZSTATUS=ydb869+20^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+21^ydb869,%YDB-E-ZLINKFILE, Error while zlinking "truZQUIT",%YDB-E-FILENOTFND, File truZQUIT.m not found,%YDB-E-FILENOTFND, File truZQUIT.o not found
-ZSTATUS=ydb869+22^ydb869,%YDB-E-RPARENMISSING, Right parenthesis expected
-ZSTATUS=ydb869+23^ydb869,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+18^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+19^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+20^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+21^ydb869,%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT",%GTM-E-FILENOTFND, File truZQUIT.m not found,%GTM-E-FILENOTFND, File truZQUIT.o not found
+ZSTATUS=ydb869+22^ydb869,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=ydb869+23^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+## Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2340631591
+ZSTATUS=ydb869+26^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+27^ydb869,%GTM-E-NUMOFLOW, Numeric overflow
+ZSTATUS=ydb869+28^ydb869,%GTM-E-NUMOFLOW, Numeric overflow

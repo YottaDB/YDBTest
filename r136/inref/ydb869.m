@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -36,5 +36,10 @@ ydb869
 	set (z,$iv)=(1!$s($$^truZQUIT=-"1E47":"ok",1:1))
 	if i>1,$zbitfind(b2,-"1E47"=i w !,"oops"
 	write -"1E47"=1
+	;
+	write "## Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2340631591",!
+	write (x=+"1E52")&(x=-"1E52")
+	write (x=+"1E53")&(x=-"1E54")
+	write (x=+"1E55") write (x=-"1E56")
 	quit
 
