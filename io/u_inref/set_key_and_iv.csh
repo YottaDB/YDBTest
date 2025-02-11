@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -21,6 +24,6 @@ else
 endif
 cat >> $gtmcrypt_config <<EOF
 files : {
-        key : "mumps_dat_key";
+	key : "$PWD/mumps_dat_key";
 };
 EOF

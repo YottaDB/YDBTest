@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,4 +35,9 @@ $MUPIP set -read_only -nostats -acc=MM -reg "*"
 $ydb_dist/mumps -run readonly
 
 setenv ydb_gbldir mumps.gld
+
+# Signal dbcheck_base.csh to not try to do a "mupip backup" on the *.dat files (it would do this before doing
+# "mupip upgrade" and "mupip reorg -upgrade") as it would get a DBRDONLY error.
+setenv dbcheck_base_skip_upgrade_check 1
+
 $gtm_tst/com/dbcheck.csh

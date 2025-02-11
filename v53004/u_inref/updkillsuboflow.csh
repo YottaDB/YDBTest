@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2009, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,6 +39,7 @@ kill ^a("12dfrfdfe")
 halt
 EOF
 # Check GVSUBOFLOW error exists in the log file
+setenv dbcheck_expect_error "DBGTDBMAX INTEGERRS"	# signal dbcheck_base.csh these errors are expected on secondary side integ
 source $gtm_tst/$tst/u_inref/check_for_errors.csh "GVSUBOFLOW"   # dbcheck.csh call from check_for_errors.csh
 $gtm_tst/com/check_error_exist.csh dbcheck.out "DBGTDBMAX" "INTEGERRS">>& ignore_err.outx
 $sec_shell "$sec_getenv; cd $SEC_SIDE; if (-f *.err*) mv *.err* ERR_MU;"

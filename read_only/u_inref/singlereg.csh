@@ -4,7 +4,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,10 @@
 #								#
 #################################################################
 #!/user/local/bin/tcsh -f
+
+# Signal dbcheck_base.csh (called from various scripts below) to not try to do a "mupip backup" on the *.dat files
+# (it would do this before doing "mupip upgrade" and "mupip reorg -upgrade") as it would get a DBRDONLY error.
+setenv dbcheck_base_skip_upgrade_check 1
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

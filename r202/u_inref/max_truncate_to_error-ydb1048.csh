@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,6 +43,13 @@ set at_32k = `perl -le "print 'x' x 33023"`
 echo $at_32k >> perl.out
 set over_32k = `perl -le "print 'x' x 34000"`
 echo $over_32k >> perl.out
+
+# Note down incoming gtm_chset before playing with it in the below script.
+if ($?gtm_chset) then
+	set save_chset = $gtm_chset
+else
+	set save_chset = ""
+endif
 
 foreach chset (UTF-8 M)
 	# Set the environment variable to avoid $chset from being modified
@@ -155,4 +162,13 @@ foreach chset (UTF-8 M)
 	end
 end
 
+# If incoming "gtm_chset" was "UTF-8" switch back to it now that we are done playing with "gtm_chset".
+# Not doing so can cause a "gtm_chset" vs "gtmroutines" mismatch which can cause problems (for example when
+# "PEEKBYNAME" is invoked inside dbcheck_base.csh). If incoming "gtm_chset" was "M", then no need to switch
+# anything as the above "foreach chset (UTF-8 M)" loop has "M" as the last iteration so a "$switch_chset M"
+# would have been done anyways at the end of the loop.
+if ("UTF-8" == $save_chset) then
+	# Restore gtm_chset and gtmroutines back in sync
+	$switch_chset $save_chset >&! switch_$chset.dbcheck.log
+endif
 $gtm_tst/com/dbcheck.csh >& dbcheck.out

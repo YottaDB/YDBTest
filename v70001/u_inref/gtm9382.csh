@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,6 +36,9 @@ chmod a-w mumps.dat
 
 echo '# Set soft link from [./gtmdist] in current directory to [$gtm_dist] and reset [gtm_dist] env var to point to [./gtmdist]'
 ln -s $gtm_dist gtmdist
+
+# Save original gtm_dist before modifying it to a relative path
+set save_gtm_dist = $gtm_dist
 unsetenv ydb_dist
 unsetenv gtm_dist
 setenv gtm_dist "./gtmdist"
@@ -50,6 +53,9 @@ $gtm_dist/mumps -run %XCMD 'set x=$get(^a)'
 
 echo '# Set read-write permission back on mumps.dat'
 chmod a+w mumps.dat
+
+# Restore original gtm_dist env var before invoking dbcheck.csh as it won't work on tampered/relative path value.
+setenv gtm_dist $save_gtm_dist
 
 echo '# Validate DB'
 $gtm_tst/com/dbcheck.csh

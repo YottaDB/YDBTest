@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -194,6 +194,12 @@ dump -bl=3E000000
 EOF
 echo
 echo
+
+# Signal dbcheck_base.csh (called from few places below) to not try to do a "mupip backup" on the *.dat files
+# (it would do this before doing "mupip upgrade" and "mupip reorg -upgrade") as it could fill up the disk due
+# to copying a 0.5Tb sized .dat file into a couple of subdirectories.
+setenv dbcheck_base_skip_upgrade_check 1
+
 echo '# Validate database'
 $gtm_tst/com/dbcheck.csh >& dbcheck.out
 setenv ydb_test_4g_db_blks $save_test_4g_db_blks # Restore to original value

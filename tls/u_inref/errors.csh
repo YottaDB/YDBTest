@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -140,6 +140,17 @@ database: {
 	} );
 };
 EOF
+
+if ("ENCRYPT" == "$test_encryption" ) then
+	# Signal dbcheck_base.csh (called from dbcheck.csh below) to skip the "mupip upgrade" step as it would get a
+	# CRYPTKEYFETCHFAILED error when trying to open the backed up encrypted .dat files (under a subdirectory) as the
+	# "dat: " line in config.cfg above points to the "mumps.dat" file in the parent directory. While this can be fixed
+	# easily by replacing "mumps.dat" with "$PWD/mumps.dat", it won't work for the secondary side of this replication
+	# test as that needs to point to the $PWD of the secondary side (not the primary side). Since this subtest does not
+	# generate a unique enough data workload for the "mupip upgrade" test, it is considered best to disable the test
+	# rather than spend non-trivial time trying to make it work.
+	setenv dbcheck_base_skip_upgrade_check 1
+endif
 
 $MULTISITE_REPLIC_PREPARE 2
 

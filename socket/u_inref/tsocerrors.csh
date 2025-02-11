@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -193,16 +193,16 @@ tls: {
 
 database: {
 	keys: ( {
-		dat: "mumps.dat";
-		key: "mumps_dat_key";
+		dat: "$PWD/mumps.dat";
+		key: "$PWD/mumps_dat_key";
 	} );
 };
 EOF
 cat << EOF >&! $gtmcrypt_config.dbkeysonly
 database: {
 	keys: ( {
-		dat: "mumps.dat";
-		key: "mumps_dat_key";
+		dat: "$PWD/mumps.dat";
+		key: "$PWD/mumps_dat_key";
 	} );
 };
 EOF

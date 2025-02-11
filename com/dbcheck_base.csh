@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -81,17 +81,17 @@ if ($?tst_offline_reorg == 1) then
 	h
 \emptytest
 	if (-f rf_reorg.tmp) then
-        	\rm -f rf_reorg.tmp
+		\rm -f rf_reorg.tmp
 	else
-        	\rm -f rf_reorg.tmp
-        	$MUPIP reorg >>&! offline_reorg.out
-        	if ($status) then
-                	echo "TEST FAILED in MUPIP REORG!"
-        	endif
-       	endif
+		\rm -f rf_reorg.tmp
+		$MUPIP reorg >>&! offline_reorg.out
+		if ($status) then
+			echo "TEST FAILED in MUPIP REORG!"
+		endif
+	endif
 endif
 
-if ( $?HOSTOS == "0" )  setenv HOSTOS `uname -s`
+if ($?HOSTOS == "0")  setenv HOSTOS `uname -s`
 
 # The below script sets online_noonline_specified and online_noonline to be used below
 source $gtm_tst/com/set_online_for_dbcheck.csh $argv
@@ -133,6 +133,200 @@ else
 	setenv dbname $arg1
 	echo "$MUPIP integ -REG *"
 	$MUPIP integ $online_noonline -REG "*" >& tmp.mupip
+
+	set master_map_size = `$gtm_dist/mumps -run %XCMD 'write $$^%PEEKBYNAME("sgmnt_data.master_map_len","DEFAULT")'`
+	if ("$master_map_size" == 4186112) then		# i.e. 8176*512
+		# This means the database file is already in V7 format. This is possible if the test did not use
+		# dbcreate.csh (i.e. it used "mupip create" instead in which case gtm_test_use_V6_DBs env var will not
+		# be honored and so the db would have been created in V7 format) OR if it used more than 1 dbcheck.csh
+		# call for 1 dbcreate.csh call (in that case,the second dbcheck.csh call will find the .dat file already
+		# in V7 format). In either case, skip the "mupip upgrade" check below.
+		set dbcheck_base_skip_upgrade_check = 1
+	endif
+	if (! $?dbcheck_base_skip_upgrade_check && $gtm_test_use_V6_DBs) then
+		# The caller subtest script created DBs in V6 format (as part of a prior dbcreate.csh call).
+		# So the .dat file would be in V6 format. Test "mupip upgrade" of that V6 DB to V7 format.
+		set bakdir = dbcheck_base_bakdir_$$
+		mkdir $bakdir
+		set logfile = dbcheck_base_mupip_backup_$$.out
+
+		# Most tests would only define gtmgbldir env var but some tests might define ydb_gbldir env var
+		# Therefore check for both. Note that ydb_gbldir prevails over gtmgbldir.
+		if ($?ydb_gbldir) then
+			set oldgbldir = $ydb_gbldir
+		else
+			set oldgbldir = $gtmgbldir
+		endif
+		if (! -e $oldgbldir) then
+			set oldgbldir = "${oldgbldir}.gld"
+			if (! -e $oldgbldir) then
+				echo "TEST-E-DBCHECK_BASE : gtmgbldir is set to [$oldgbldir] but file does not exist"
+			endif
+		endif
+		set newgbldir = $PWD/$bakdir/$oldgbldir:t
+		cp $oldgbldir $newgbldir
+
+		# First get a copy of the .dat files using "mupip backup". But disable journaling etc. as that
+		# can cause problems with multiple .dat files pointing to the same journal file. We only care about
+		# the "mupip upgrade" part and for that we only need the .dat files.
+		$MUPIP backup -journal=disable -nonewjnlfiles "*" $bakdir >& $logfile
+
+		# Before running "mupip upgrade" or "mupip reorg -upgrade", unsetenv any white-box variable set by the
+		# test system caller script. Otherwise, they will fail asserts (e.g. secshr_db_clnup.c line 294 etc.)
+		# No need to re-enable this for rest of script so no save/restore done (like "gtmgbldir", "gtm_repl_instance").
+		unsetenv gtm_white_box_test_case_enable
+
+		unsetenv ydb_gbldir		# unset ydb_gbldir env var as we are going to set gtmgbldir in the next line
+		setenv gtmgbldir $newgbldir
+		unsetenv ydb_routines
+		set oldroutines = "$gtmroutines"
+		setenv gtmroutines ". $gtm_dist"
+		if ($?gtm_chset) then
+			if ("$gtm_chset" == "UTF-8") then
+				setenv gtmroutines ". $gtm_dist/utf8"
+			endif
+		endif
+
+		set oldconfig = ""
+		if ("ENCRYPT" == $test_encryption) then
+			# It is possible the subtest did not use "dbcreate.csh" but uses "dbcheck.csh" (e.g. gtm7077.csh)
+			# In that case, "$gtmcrypt_config" might not exist. In that case, skip the below part.
+			if (-e $gtmcrypt_config) then
+				# Update gtmcrypt_config to reflect the new $bakdir subdirectory path for the db files
+				# (mumps.dat etc.) or else we would get CRYPTKEYFETCHFAILED error ("Expected hash" error detail).
+				cp $gtmcrypt_config $bakdir
+				set oldconfig = $gtmcrypt_config
+				set newconfig = $PWD/$bakdir/$oldconfig:t
+				setenv gtmcrypt_config $newconfig
+				# While most ".dat" lines in gtmcrypt.cfg are of the form "dat: ", there are some of
+				# the form "dat = " (those created by com/modconfig.csh) so handle both cases below.
+				cat > configch.m << GDECH
+				 set reg="" for  set reg=\$view("GVNEXT",reg)  quit:reg=""  do
+				 . set filename=\$view("GVFILE",reg)
+				 . set basename=\$piece(filename,"/",\$length(filename,"/"))
+				 . write "s,dat: """_filename_""",dat: ""$PWD/$bakdir/"_basename_""",;",!
+				 . write "s,dat = """_filename_""",dat = ""$PWD/$bakdir/"_basename_""",;",!
+GDECH
+				$gtm_dist/mumps -run configch > $bakdir/config.sed
+				sed -i -f $bakdir/config.sed $newconfig
+				mv configch.m $bakdir
+			endif
+		endif
+
+		cd $bakdir
+
+		# Fix absolute path names of segments in .gld to relative path names as we want the gld to point
+		# to db files in the "bak" subdirectory when "mupip upgrade" is done (that is, we do not want to
+		# touch the original .dat files in the parent directory).
+		cat > gdech.m << GDECH
+		 set reg="" for  set reg=\$view("GVNEXT",reg)  quit:reg=""  do
+		 . set segname=\$\$^%PEEKBYNAME("gd_segment.sname",reg,"S")
+		 . set filename=\$view("GVFILE",reg)
+		 . set filename=\$piece(filename,"/",\$length(filename,"/"))
+		 . write "change -seg "_segname_" -file="_filename,!
+GDECH
+
+		# Before running mupip upgrade, check for any regions that could still be in V7 format
+		# due to the mupip create being done outside of dbcreate.csh. Known cases currently are
+		# - Tests that use ydb_env_set would have created YDBOCTO and YDBAIM regions in V7 format.
+		# - Tests that use "gtm_test_repl_norepl" would have recreated HREG in com/db_extract.csh.
+		# In these cases, [mupip upgrade -reg "*"] would issue a MUNOFINISH error (with a message
+		# "HREG: is ineligible for MUPIP UPGRADE to V6p... is currently V7"). To avoid that, recreate
+		# those specific regions using the V6 version just like dbcreate_base.csh would have done.
+		set reglist = "YDBOCTO YDBAIM"
+		if ($gtm_test_repl_norepl) then
+			# This is a case where HREG is non-replicated and all other regions are replicated.
+			# In this case, various scripts like "com/db_extract.csh" could have recreated HREG
+			# using $tst_ver (i.e. V7 version).
+			set reglist = "$reglist HREG"
+		endif
+		foreach reg ($reglist)
+			set master_map_size = `$gtm_dist/mumps -run %XCMD 'write $$^%PEEKBYNAME("sgmnt_data.master_map_len","'$reg'")'`
+			if ("$master_map_size" == 4186112) then		# i.e. 8176*512
+				set dbfilepath = `$gtm_dist/mumps -run %XCMD 'write $view("GVFILE","'$reg'")'`
+				rm -f $dbfilepath:t
+				source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
+				$MUPIP create -reg=$reg >& dbcheck_base_mupip_create_${reg}_$$.out
+				source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+			endif
+		end
+
+		# Take backup of pre-upgrade .dat files in case needed for later analysis of failed tests
+		mkdir bak
+		cp * bak >& cp.outx
+
+		$gtm_dist/mumps -run gdech >& gdech.com
+		$gtm_dist/mumps -run GDE @gdech.com >& gdech.out
+
+		set logfile = dbcheck_base_mupip_upgrade_$$.out
+		yes | $MUPIP upgrade -reg "*" >& $logfile
+
+		# Before running "mupip reorg -upgrade" and "mupip integ", unsetenv "gtm_repl_instance" in case it is set
+		# as otherwise they would fail with a REPLINSTACC error (because we do not copy "mumps.repl" to "bak" subdir).
+		if ($?gtm_repl_instance) then
+			set replinst_save = $gtm_repl_instance
+		else
+			set replinst_save = ""
+		endif
+		unsetenv gtm_repl_instance
+
+		set logfile = dbcheck_base_mupip_reorg_upgrade_$$.out
+		yes | $MUPIP reorg -upgrade -reg "*" >& $logfile
+
+		# ----------------------------------------------------------------------
+		# The following code is commented out because it is possible that "mupip reorg" does not visit
+		# each block and so it is possible for the below assertions to not be TRUE in some cases.
+		# ----------------------------------------------------------------------
+		## set logfile = dbcheck_base_mupip_reorg_$$.out
+		## $MUPIP reorg -reg "*" >& $logfile
+		## # In case database is empty, reorg would issue a "NOSELECT" warning. So filter that out
+		## # else the test framework will treat that as a test failure.
+		## $gtm_tst/com/check_error_exist.csh $logfile "W-NOSELECT" >& $logfile.outx
+		##
+		## set logfile = dbcheck_base_dse_all_dump_all_$$.out
+		## $DSE all -dump -all >& $logfile
+		## set var1 = `$grep "Database is Fully Upgraded" $logfile | $grep -v "Database is Fully Upgraded                :  TRUE"`
+		## if ("" != "$var1") then
+		## 	echo "TEST-E-FULLYUPGRADED : dbcheck_base.csh found Fully Upgraded not TRUE for at least one region in $logfile"
+		## endif
+		## set var2 = `$grep "Blocks to Upgrade" $logfile | $grep -v "Blocks to Upgrade       0x0000000000000000"`
+		## if ("" != "$var2") then
+		## 	echo "TEST-E-BLOCKS2UPGRADE : dbcheck_base.csh found Blocks to Upgrade not 0 for at least one region in $logfile"
+		## endif
+		# ----------------------------------------------------------------------
+
+		set logfile = dbcheck_base_mupip_integ_$$.out
+		$MUPIP integ $online_noonline -reg "*" >& $logfile
+		if ($status) then
+			# In some cases, the caller subtest expects "mupip integ" to issue an error.
+			# For example, the v53004/updkillsuboflow subtest expects a DBGTDBMAX error in dbcheck.csh on
+			# the secondary side. In that case, it would have set the "dbcheck_expect_error" env var to
+			# contain the expected error name. So filter that error out from the integ output and assume
+			# the integ is a success otherwise. If there are any other errors in the integ output, they
+			# would be caught by the test framework since the integ output is in a *.out named file so it
+			# is ok to skip issuing a TEST-E-MUPIPINTEG error in that case.
+			if (! $?dbcheck_expect_error) then
+				echo "TEST-E-MUPIPINTEG : dbcheck_base.csh found MUPIP INTEG failure. See $logfile."
+			else
+				$gtm_tst/com/check_error_exist.csh $logfile $dbcheck_expect_error >& $logfile.outx
+			endif
+		endif
+
+		# Restore gtmgbldir. No need to restore ydb_gbldir as it will be done when this script returns back to caller.
+		setenv gtmgbldir $oldgbldir
+		setenv gtmroutines "$oldroutines"
+		cd ..
+
+		# Restore "gtm_repl_instance" in case it was unset above.
+		if ("$replinst_save" != "") then
+			setenv gtm_repl_instance $replinst_save
+		endif
+
+		if ("" != "$oldconfig") then
+			setenv gtmcrypt_config $oldconfig
+		endif
+	endif
+
 	# If gtm_test_trig_upgrade env var is defined, the parent test uses triggers and wants to additionally
 	# test on-the-fly trigger upgrade (of ^#t global from #LABEL 2 to #LABEL 3).
 	if ($?gtm_test_trig_upgrade) then

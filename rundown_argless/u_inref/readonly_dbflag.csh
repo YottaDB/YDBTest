@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Signal dbcheck_base.csh (called in various places below) to not try to do a "mupip backup" on the *.dat files
+# (it would do this before doing "mupip upgrade" and "mupip reorg -upgrade") as it would get a DBRDONLY error.
+setenv dbcheck_base_skip_upgrade_check 1
 
 $echoline
 echo "Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)"

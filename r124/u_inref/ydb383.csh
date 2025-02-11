@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,5 +30,9 @@ echo ""
 `pwd`/$exefile
 echo "$exefile returned with exit status : $status"
 echo ""
+
+# Signal dbcheck_base.csh (called from dbcheck.csh below) to skip the "mupip upgrade" step as it would get an
+# "Extension size not set in database header" error due to the "mupip set -extension_count=0" done above.
+setenv dbcheck_base_skip_upgrade_check 1
 
 $gtm_tst/com/dbcheck.csh

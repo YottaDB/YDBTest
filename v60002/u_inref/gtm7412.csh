@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,5 +38,10 @@ set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window1.txt
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-GBLOFLOW"
 $gtm_tst/com/grepfile.csh "YDB-W-FREEBLKSLOW" syslog1.txt 1
+
+# Signal dbcheck_base.csh (called from dbcheck.csh below) to skip the "mupip upgrade" step as it would get an
+# "Extension size not set in database header" error due to the "mupip set -exten=0" done above.
+setenv dbcheck_base_skip_upgrade_check 1
+
 $gtm_tst/com/dbcheck.csh
 echo "# End gtm7412"

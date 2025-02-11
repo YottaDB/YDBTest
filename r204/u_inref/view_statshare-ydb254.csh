@@ -145,5 +145,10 @@ echo ""
 echo "# Run dbcheck.csh on both databases"
 setenv gtmgbldir $initgtmgbldir
 $gtm_tst/com/dbcheck.csh
+
 setenv gtmgbldir mumps2.gld
+# Signal dbcheck_base.csh (called from dbcheck.csh below) to skip the "mupip upgrade" step as it would get a
+# MUNOFINISH error ("REG1: is ineligible for MUPIP UPGRADE to V6p... is currently V7") due to that mupip create
+# happening outside of dbcreate_base.csh.
+setenv dbcheck_base_skip_upgrade_check 1
 $gtm_tst/com/dbcheck.csh

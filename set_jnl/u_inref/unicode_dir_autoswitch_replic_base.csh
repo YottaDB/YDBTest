@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -94,6 +94,9 @@ if ($status != 0) then
 else
 	echo "DATABASE EXTRACT PASSED"
 endif
+# Signal dbcheck_base.csh to not do a "mupip backup" on the *.dat files (it would do this before doing
+# "mupip upgrade" and "mupip reorg -upgrade") as it would get a FILENAMETOOLONG error.
+setenv dbcheck_base_skip_upgrade_check 1
 $gtm_tst/com/dbcheck_base.csh
 $sec_shell "$sec_getenv ; cd $SEC_SIDE/$unidir; $gtm_tst/com/dbcheck_base.csh"
 ###############################################################
