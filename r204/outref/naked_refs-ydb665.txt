@@ -1,0 +1,514 @@
+# Test fusing multiple global accesses into a naked reference
+# Create database
+# Raise the maximum key length (for max subscript testing)
+# Create second global directory (for ZGBLDIR and GVEXTNAME testing)
+# Set up external calls (for FGNCAL testing)
+# Test that two consecutive `SET ^X(1),^X(2)` commands are fused into a naked reference
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+# Test that `-machine` works correctly on GVNAMENAKED
+# Test that two consecutive `SET ^X(1,2),^X(1,3)` commands with multiple subscripts are fused into a naked reference
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+# Test that two consecutive `SET ^X(1,2),^X(1,3)` commands with the maximum number of subscripts are fused into a naked reference
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+# Test that a manual `SET ^X(1),^(2),^X(3)` naked reference still fuses the last global access 
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAKED
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+# Test that the last subscript can be an arbitrary expression and still be fused
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_ADD
+OC_ADD
+OC_GVNAMENAKED
+OC_GVGET
+OC_WRITE
+OC_RET
+1
+# Test that the start of a subroutine does not misoptimize a fuse into the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+OC_RET
+# Test a more complicated subroutine does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVGET
+OC_WRITE
+%YDB-E-GVUNDEF, Global variable undefined: ^x(2)
+		At M source location x^routinebackjump
+
+YDB>
+# Test that modifying $ZGBLDIR does not misoptimize a fuse into the next global access
+OC_LINESTART
+OC_SVPUT
+OC_GVNAME
+OC_GVPUT
+OC_LINESTART
+OC_SVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RET
+#  Test that NEW-ing $ZGBLDIR does not misoptimize a fuse
+OC_LINESTART
+OC_SVPUT
+OC_GVNAME
+OC_GVPUT
+OC_NEWINTRINSIC
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that consecutive `SET X(1) \n SET X(2)` commands across a newline can be fused even with -line_entry.
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+# Test that GOTO does not cause a runtime error
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_GVZWRITE
+OC_RET
+^x(2)=1
+# Test that ZGOTO does not cause a runtime error
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_GVZWRITE
+OC_RET
+^x(2)=1
+# Test that two consecutive `SET X(1) \n SET X(2)` commands across a newline are fused into a naked reference when passed -noline_entry
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+# Test that an indirect global reference does not misoptimize a fuse into the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GLVNSLOT
+OC_INDSAVGLVN
+OC_STOGLVN
+OC_GLVNPOP
+OC_GVNAME
+OC_GVPUT
+# Test that an expression that uses an indirect global reference does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_INDGLVN
+OC_ADD
+OC_WRITE
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+11
+# Test that subroutine calls do not misoptimize a fuse.
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_CALL
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+11
+# Test that extrinsic calls do not misoptimize a fuse.
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_EXCAL
+OC_JMP
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+OC_RTERROR
+11
+# Test that global calls do not misoptimize a fuse.
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_EXTCALL
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+11
+# Test that global calls to extrinsic functions do not misoptimize a fuse.
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_EXTEXCAL
+OC_GVNAME
+OC_GVPUT
+# Test that non-consecutive global references do not misoptimize a fuse into any global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+# Test that accessing a global reference with no subscripts does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+# Test that a JMPEQU conditional expression does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVGET
+OC_EQU_RETBOOL
+OC_JMPEQU
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that a DO block does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_CALLSP
+OC_GVNAME
+# Test that a global reference with a variable subscript does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that a call to an extrinsic function does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVDATA
+OC_EXFUN
+OC_JMP
+OC_EXFUNRET
+OC_GVNAME
+OC_GVDATA
+OC_PUTINDX
+# Test that a non-literal subscript does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that function calls in FOR loops with local variables do not misoptimize a fuse
+OC_LINESTART
+OC_STOTEMP
+OC_CONUM
+OC_STOTEMP
+OC_FORINIT
+OC_JMPGTR
+OC_FORCHK1
+OC_GVNAME
+OC_GVPUT
+OC_FORLCLDO
+OC_GVNAME
+OC_GVPUT
+OC_FORLOOP
+# Test that indirection through XECUTE does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_COMMARG
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+1
+# Test that indirection in an intrinsic function does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_INDFUN
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that indirection in ZSHOW does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_INDRZSHOW
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that indirection through READ does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_READ
+OC_TIMTRU
+OC_INDSET
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that indirection through $INCR does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_COMVAL
+OC_INDINCR
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that indirection through $ORDER does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GLVNSLOT
+OC_INDSAVGLVN
+OC_GVSAVTARG
+OC_GVSAVTARG
+OC_GVRECTARG
+OC_INDO2
+OC_GLVNPOP
+OC_GVRECTARG
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that indirection through OPEN does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_INDDEVPARMS
+OC_OPEN
+OC_GVNAME
+OC_GVGET
+OC_EQU_RETMVAL
+OC_WRITE
+OC_RET
+1
+# Test that indirection through MERGE does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RESTARTPC
+OC_INDMERGE
+OC_MERGE_LVARG
+OC_MERGE
+OC_GVNAME
+OC_GVGET
+OC_EQU_RETMVAL
+OC_WRITE
+OC_RET
+0
+# Test that indirection through `SET $extrinsic` does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GLVNSLOT
+OC_INDSAVGLVN
+OC_INDGET1
+OC_SETZP1
+OC_STOGLVN
+OC_GLVNPOP
+OC_GVNAME
+OC_GVGET
+OC_EQU_RETMVAL
+OC_WRITE
+OC_RET
+0
+# Test that indirection through `$GET` does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GLVNSLOT
+OC_INDSAVGLVN
+OC_INDGET2
+OC_GLVNPOP
+OC_FNGET2
+OC_WRITE
+OC_GVNAME
+OC_GVGET
+OC_EQU_RETMVAL
+OC_WRITE
+OC_RET
+hello0
+# Test that indirection through MERGE with side effects does not misoptimize a fuse
+TODO
+# Test that indirection through `$QUERY` does not misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GLVNSLOT
+OC_INDSAVGLVN
+OC_GVSAVTARG
+OC_GVSAVTARG
+OC_GVRECTARG
+OC_INDQ2
+OC_GLVNPOP
+OC_GVRECTARG
+OC_WRITE
+OC_GVNAME
+OC_GVGET
+OC_EQU_RETMVAL
+OC_WRITE
+OC_RET
+0
+# Test that a global extrinsic function call does not misoptimize and fuse the next global access
+OC_LINESTART
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_EXTEXFUN
+OC_EXFUNRET
+OC_WRITE
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+132
+# Test that transaction restarts preserve $REFERENCE and so optimizing is valid
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+$REFERENCE="^x(1)"
+$REFERENCE="^x(1)"
+^x(1)=1
+^x(2)=2
+^y(3)=3
+# Test that $NEXT is not misoptimized. This was minimized from mugj/V1IDNM3.m.
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVNEXT
+OC_GVNAME
+OC_GVGET
+OC_CAT
+OC_RET
+# Test that side effects that generate a STOTEMP do not crash the compiler
+# Read SUBS_ARRAY_2_TRIPLES in compiler.h if this breaks.
+OC_LINESTART
+OC_STOTEMP
+OC_COMVAL
+OC_FNINCR
+OC_GVNAME
+OC_GVPUT
+OC_RET
+# Test that accessing a different global directory resets $REFERENCE
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVEXTNAM
+OC_GVPUT
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+1
+# Test that external calls reset $REFERENCE
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_FGNCAL
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+1
+# Test that external calls used in an expression reset $REFERENCE
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_FNFGNCAL
+OC_WRITE
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_RET
+11
+# Test that $ZSTEP interrupts do not misoptimize a fuse
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+# Test that ZBREAK interrupts do not misoptimize a fuse
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+# Test that ZTRAP interrupts do not misoptimize a fuse
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_WRITE
+OC_RET
+150373850,+3^ztrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariableb
+150373850,+3^ztrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariableb
+# Test that ETRAP interrupts do not misoptimize a fuse
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+,M6,Z150373850,150373850,f^etrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariable
+# Test that EXCEPTION handlers do not misoptimize a fuse
+OC_LINESTART
+OC_SVGET
+OC_WRITE
+OC_WTEOL
+OC_GVNAMENAKED
+OC_GVPUT
+OC_OPEN
+^x(1)
+150379354,+2^openexception,%YDB-E-DEVOPENFAIL, Error opening /not/here,%SYSTEM-E-ENO2, No such file or directory
+^y
+150379354,+2^openexception,%YDB-E-DEVOPENFAIL, Error opening /not/here,%SYSTEM-E-ENO2, No such file or directory
+# Test that ZINTERRUPT handlers save and restore $REFERENCE
+INTRPT issued to process NNNN
+^x(1)
+1
+# Test that ZTIMEOUT handlers cannot misoptimize a fuse
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_HANG
+OC_GVNAMENAKED
+OC_GVGET
+OC_WRITE
+OC_RET
+21
+# Run [dbcheck.csh]
