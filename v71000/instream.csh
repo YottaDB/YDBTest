@@ -24,6 +24,7 @@
 # locklimit_lockincr2high-gtmde340950	[jon]	Test that exceeding the LOCK level limit for the same resource name generates a LOCKINCR2HIGH error
 # triple_mupipstop-gtmde421008		[jon]	Triple MUPIP STOP within a minute similar, but slightly better than kill -9
 # fdsizelmt_errmsg-gtmde325871		[jon]	Test FDSIZELIMIT error when running GT.CM server with over 1021 open file descriptors
+# inplaceconv_V6toV7-gtmf135427		[jon]	Support in-place conversion from V6 to V7 database formats
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71000 test starts..."
@@ -39,6 +40,7 @@ setenv subtest_list_non_replic	"rctldump_superseded-gtmf135385"
 setenv subtest_list_non_replic	"locklimit_lockincr2high-gtmde340950"
 setenv subtest_list_non_replic	"triple_mupipstop-gtmde421008"
 setenv subtest_list_non_replic	"fdsizelmt_errmsg-gtmde325871"
+setenv subtest_list_non_replic	"inplaceconv_V6toV7-gtmf135427"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

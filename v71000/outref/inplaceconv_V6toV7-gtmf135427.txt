@@ -1,0 +1,150 @@
+# ********************************************************************************************
+# GTM-F135427 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-005_Release_Notes.html#GTM-F135427)
+# 
+# GT.M V7.1-000 provides the capability to upgrade a V6 database to V7 in-place. There is no ability to downgrade a V7 database to V6 in place. You can use MUPIP EXTRACT on V7 and MUPIP LOAD on V6 as long as the data does not cause the V6 database file to exceed the V6 maximum limits or revert to a prior version using a suitable combination of replicating instances. GT.M V7.1-000 blocks all access to a V6 database marked as not fully upgraded from V4 format.
+# 
+# GT.M V7 databases differ from V6 in the following ways. Please refer to the Administration and Operations Guide for more details about these differences.
+# 
+# Starting Virtual Block Number (VBN) is 8193, or slightly more on upgraded files, in V7 vs. 513 in V6
+# 
+# Block "Pointers" are 64-bit in V7 rather than 32-bit in V6
+# 
+# A GT.M V7 instance can originate BC/SI replication stream to or replicate from a V6 BC/SI replication stream as long as the V7 database remains within the maximum V6 limits.
+# 
+# The V6 to V7 database upgrade process is split into two phases intended to reduce the downtime necessary for a database upgrade. This process is considerably faster and consumes less disk space than a traditional extract, transfer and load cycle. Please refer to Upgrading to GT.M V7.1-000 (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#upgrade) for more details. (GTM-F135427)
+
+### Test case 1: In-place database upgrade from V6 to V7
+# Set version to: V6
+# Create a V6 database
+# Set a value in the database: ^x=1
+# Write the current contents of the database, i.e. ^x=1
+^x=1
+# Confirm the database format is 'V6' format and that the database IS fully upgraded
+Desired DB Format               V6
+Database is Fully Upgraded                :  TRUE
+
+# Set version to: V7
+# Upgrade the global directory : GDE exit
+# Perform phase 1 of in-place upgrade : MUPIP UPGRADE
+# Confirm the database format is 'V7m' format and that the database is NOT fully upgraded
+Desired DB Format                      V7m
+Database is Fully Upgraded                : FALSE
+
+# Perform phase 2 of in-place upgrade : MUPIP REORG -UPGRADE
+# Confirm the database format is 'V7m' format and that the database is NOT fully upgraded (need optional phase 3)
+Desired DB Format                      V7m
+Database is Fully Upgraded                : FALSE
+
+# Perform (optional) phase 3 of in-place upgrade : Manually upgrade all database blocks then redo MUPIP REORG -UPGRADE
+# Update the value of the only global variable to upgrade only database block: ^x=2
+# Set another value in the database: ^y=2
+# Write the current contents of the database, i.e. ^x=2, ^y=2
+^x=2,^y=2
+# Run MUPIP REORG -UPGRADE to complete database block upgrade
+# Confirm the database format is 'V7m' format and that the database IS fully upgraded
+Desired DB Format                      V7m
+Database is Fully Upgraded                :  TRUE
+
+# Set another value in the database: ^z=3
+# Write the current contents of the database, i.e. ^x=2, ^y=2, ^z=3
+^x=2,^y=2,^z=3
+
+### Test case 2: MUPIP EXTRACT from V7, then MUPIP LOAD to V6 (when EXTRACTed data falls within V6 limits)
+# Set version to: V7
+# Create a V7 database
+# Set a value in the V7 database: ^x=1
+# Extract the V7 database
+# Set version to: V6
+# Create a V6 database
+# Load the V7 database extract into the V6 database
+# Write the contents of the V6 database using V6 version
+1
+
+### Test case 3: GT.M V7.1-000 blocks all access to a V6 database marked as not fully upgraded from V4 format.
+### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2328483690
+# Set version to: V6
+# Create a V6 global directory
+# Create a V6 database
+# Set the database block format version to V4
+# Set value in the database
+# Change version to: V7
+# Upgrade the global directory : GDE exit
+# Attempt to write the value in the database: expect a DBUPGRDREQ error
+%GTM-E-DBUPGRDREQ, Database file ##TEST_PATH##/mumps.dat is not fully upgraded (format V4) and cannot be used by this version of YottaDB. Please upgrade the database.
+# Change version to: V6
+# Upgrade the database block format from V4 to V6
+# Change version to: V7
+# Attempt to write the value in the database: expect no errors
+^x=1
+
+### Test case 4: GT.M V7.1-000 issues MUNOFINISH error (error detail "Extension size not set") when attempting to MUPIP UPGRADE a V6 database with extension size 0
+### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2366436858
+# Create a V6 database
+# Set db extension size to 0
+# Change version to: V7
+# Run MUPIP UPGRADE, expect MUNOFINISH
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T4.dat)
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/T4.mjl is renamed to ##TEST_PATH##/T4.mjl_[0-9]*
+##ALLOW_OUTPUT JNL_OFF
+Region DEFAULT : WARNING, region is currently empty. MUPIP UPGRADE will adjust the region
+Region DEFAULT : Please considering recreating the region with V7 for optimal results
+Region DEFAULT : Not enough free blocks to extend the master map & provide additional index blocks.Region DEFAULT: Extension size not set in database header.
+Region DEFAULT: Perform a MUPIP EXTEND on this region, otherwise free at least 0x4002 blocks to continue.
+Region DEFAULT : Error while attempting to make room for enlarged master bitmap.  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+### Test case 5: GT.M V7.1-000 issues a MUNOFINISH error (and not a DBUPGRDREQ error) when retrying MUPIP UPGRADE on a V6 database with extension size 0
+### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2373149364
+# Create a V6 database
+# Set db extension size to 0
+# Change version to: V7
+# Run MUPIP UPGRADE, expect MUNOFINISH
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T5.dat)
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/T5.mjl is renamed to ##TEST_PATH##/T5.mjl_[0-9]*
+##ALLOW_OUTPUT JNL_OFF
+Region DEFAULT : WARNING, region is currently empty. MUPIP UPGRADE will adjust the region
+Region DEFAULT : Please considering recreating the region with V7 for optimal results
+Region DEFAULT : Not enough free blocks to extend the master map & provide additional index blocks.Region DEFAULT: Extension size not set in database header.
+Region DEFAULT: Perform a MUPIP EXTEND on this region, otherwise free at least 0x4002 blocks to continue.
+Region DEFAULT : Error while attempting to make room for enlarged master bitmap.  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Retry MUPIP UPGRADE, expect MUNOFINISH
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T5.dat)
+Region DEFAULT : WARNING, region is currently empty. MUPIP UPGRADE will adjust the region
+Region DEFAULT : Please considering recreating the region with V7 for optimal results
+Region DEFAULT : Not enough free blocks to extend the master map & provide additional index blocks.Region DEFAULT: Extension size not set in database header.
+Region DEFAULT: Perform a MUPIP EXTEND on this region, otherwise free at least 0x4002 blocks to continue.
+Region DEFAULT : Error while attempting to make room for enlarged master bitmap.  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+### Test case 6: MUPIP UPGRADE of a database that has lots of globals that have been mostly killed does not result in a DBLRCINVSZ integrity error
+### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2373413989
+# Set version to: V6
+# Create a V6 database
+# Run the manygbls routine
+# Set version to: V7
+# Run MUPIP UPGRADE
+# Run MUPIP INTEG, expect no DBLRCINVSZ error
+# Prior to YottaDB commit https://gitlab.com/YottaDB/DB/YDB/-/commit/5e80ddb29135a200eaddec6244529dba90eed984,
+# this would randomly issue an DBLRCINVSZ error.
+No errors detected by integ.
