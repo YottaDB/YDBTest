@@ -116,9 +116,14 @@ COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_instal
 # build_and_install_yottadb.csh <folder in /usr/library> <git tag in YDB> <dbg/pro>
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71000 V7.1-000 pro
 
+# v6 DB (dbg)
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 pro
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 dbg
+
 # gtm_curpro: bump up by changing the next three lines
 ENV gtm_curpro V70005_R202
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70005_R202 r2.02 pro
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70005_R202 r2.02 dbg
 RUN ln -s /usr/library/R202 /usr/library/V70005_R202
 
 # Needs to be the last one to enable the lastest source tree to be available for sudo tests

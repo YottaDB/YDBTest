@@ -1,7 +1,7 @@
 #!/bin/tcsh -e
 #################################################################
 #								#
-# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -117,7 +117,7 @@ mkdir -p $gtm_root/$verno
 # $gtm_root/$verno have anything inside already just we want to clean it first
 # then we will unset nonomatch after this line is done
 set nonomatch
-rm -rf $gtm_root/$verno/*
+rm -rf $gtm_root/$verno/$dbgpro/*
 unset nonomatch
 
 mkdir -p $source_dir/$dbgpro
@@ -130,21 +130,26 @@ endif
 make -j `getconf _NPROCESSORS_ONLN` install
 if ( $is_gtm ) then
 	pushd lib/*/*
-	./gtminstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+		if ($verno =~ "*V7*") then
+			# the --utf8 option does not accept an ICU version in GT.M V7.0-000 or later
+			./gtminstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+		else
+			./gtminstall --installdir=$gtm_root/$verno/$dbgpro --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
+		endif
 	popd
 else
 	pushd yottadb_r*
-	./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+		if ($verno =~ "*V7*") then
+			# the --utf8 option does not accept an ICU version in GT.M V7.0-000 or later
+			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+		else
+			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
+		endif
 	popd
 endif
 mkdir -p $gtm_root/$verno/$dbgpro/obj
 find . -name '*.a' -exec cp {} $gtm_root/$verno/$dbgpro/obj \;
 mkdir -p $gtm_root/$verno/tools
-
-# Sudo tests require `ydbinstall` that is part of the intermediate build process (yuck); so leave the build directory around for master commit
-if ( "$git_tag" != "master" ) then
-	rm -rf $source_dir/$dbgpro
-endif
 
 cd $source_dir
 cp sr_unix/*.awk $gtm_root/$verno/tools
@@ -155,56 +160,42 @@ rm -f $gtm_root/$verno/tools/setactive{,1}.csh
 
 set machtype=`uname -m`
 foreach ext (c s msg h si)
-        if (($ext == "h") || ($ext == "si")) then
-                set dir = "inc"
-        else
-                set dir = "src"
-        endif
+	if (($ext == "h") || ($ext == "si")) then
+		set dir = "inc"
+	else
+		set dir = "src"
+	endif
 	mkdir -p $gtm_ver/$dir
 
-	# Check if file extension exists first then do cp
-	set filecount=`find "sr_port/ "-maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_port/*.$ext $gtm_ver/$dir/
-	endif
-
-	set filecount=`find "sr_port_cm/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_port_cm/*.$ext $gtm_ver/$dir/
-	endif
-
-        set filecount=`find "sr_unix/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_unix/*.$ext $gtm_ver/$dir/
-	endif
-
-        set filecount=`find "sr_unix_cm/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_unix_cm/*.$ext $gtm_ver/$dir/
-	endif
-
-        set filecount=`find "sr_unix_gnp/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_unix_gnp/*.$ext $gtm_ver/$dir/
-	endif
-
-        if (${machtype} == "x86_64") then
-		set filecount=`find "sr_x86_regs/ "-maxdepth 1 -name "*.$ext" | wc -l`
-		if ($filecount > 0) then
-			cp -pa sr_x86_regs/*.$ext $gtm_ver/$dir/
+	foreach sr_dir (sr_port sr_port_cm sr_unix sr_unix_cm sr_unix_gnp sr_x86_regs sr_${machtype} sr_linux)
+		set filecount=`find "${sr_dir}/" -maxdepth 1 -name "*.$ext" | wc -l`
+		if (${machtype} == "x86_64" && ${sr_dir} == "sr_x86_regs" && $filecount > 0) then
+			cp -pa ${sr_dir}/*.$ext $gtm_ver/$dir/
+		else if ($filecount > 0) then
+			cp -pa ${sr_dir}/*.$ext $gtm_ver/$dir/
 		endif
-	endif
+	end
+end
 
-	set filecount=`find "sr_${machtype}/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_${machtype}/*.$ext $gtm_ver/$dir/
-	endif
+# Copy xfer_desc.i (if it exists) to $gtm_inc
+if (-e $source_dir/$dbgpro/xfer_desc.i) then
+	cp -pa $source_dir/$dbgpro/xfer_desc.i $gtm_ver/inc
+endif
 
-	set filecount=`find "sr_linux/" -maxdepth 1 -name "*.$ext" | wc -l`
-	if ($filecount > 0) then
-		cp -pa sr_linux/*.$ext $gtm_ver/$dir/
+# gtm_threadgbl_deftypes.h used to be in "gen" directory previously. Now it is in "genused" directory.
+# Handle both cases in this script
+foreach dir (gen genused)
+	if (-e $source_dir/$dbgpro/$dir/gtm_threadgbl_deftypes.h) then
+		cp -pa $source_dir/$dbgpro/$dir/gtm_threadgbl_deftypes.h $gtm_ver/inc
 	endif
 end
+
+# Sudo tests require `ydbinstall` that is part of the intermediate build process (yuck); so leave the build directory around for master commit
+# Otherwise delete to save space
+if ( "$git_tag" != "master" ) then
+	rm -rf $source_dir/$dbgpro
+endif
+
 
 # Install gtmcrypt plugin
 setenv ydb_dist /usr/library/$verno/$dbgpro

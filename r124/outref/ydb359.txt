@@ -7,12 +7,12 @@
 
 
 Stepping STARTED
-ydb359+2^ydb359     :        set x=1
-ydb359+3^ydb359     :        zsystem "mupip intrpt "_$j
+ydb359+2^ydb359     :	set x=1
+ydb359+3^ydb359     :	zsystem "$gtm_dist/mupip intrpt "_$j
 ##TEST_AWKINTRPT issued to process [0-9]*
 zintr+1^ydb359      :	if $ZJOBEXAM()
 zintr+2^ydb359      :	quit
-ydb359+5^ydb359     :        set z=3
-ydb359+6^ydb359     :        write "x = ",x," : y = ",y," : z = ",z,!
+ydb359+5^ydb359     :	set z=3
+ydb359+6^ydb359     :	write "x = ",x," : y = ",y," : z = ",z,!
 x = 1 : y = 2 : z = 3
-ydb359+7^ydb359     :        quit
+ydb359+7^ydb359     :	quit

@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -34,22 +34,8 @@ foreach test ($random_test_list)
 	if ($test == "r120") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydbdist//`
 	# r122 fails in tprestart (log related)
 	if ($test == "r122") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/tprestart//`
-	# r124 fails in ydb359 ($PATH), ydb333 (? cpu issue ?), ydb114 (lack of older version)
-	if ($test == "r124") then
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb359//`
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb333//`
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb114//`
-	endif
-	# r130 fails in ydb484 (lack of older version), ydb493 (?), ydb494 (compilation issue), ydb388 (lack of older version)
-	if ($test == "r130") then
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb484//`
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb493//`
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb494//`
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb388//`
-	endif
-	# r136 fails in ydb943 (plugin install config), gtm8863a (lack of older version)
+	# r136 fails in gtm8863a (v V63011_R134 is not installed)
 	if ($test == "r136") then
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb943//`
 		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/gtm8863a//`
 	endif
 	# v70000 fails in ydb531_v6to7 (imptp invocation)
