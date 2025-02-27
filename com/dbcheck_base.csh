@@ -226,6 +226,10 @@ GDECH
 		 . write "change -seg "_segname_" -file="_filename,!
 GDECH
 
+		# First run GDE with V7 version to make sure .gld is upgraded (if needed)
+		$gtm_dist/mumps -run gdech >& gdech.com
+		$gtm_dist/mumps -run GDE @gdech.com >& gdech.out
+
 		# Before running mupip upgrade, check for any regions that could still be in V7 format
 		# due to the mupip create being done outside of dbcreate.csh. Known cases currently are
 		# - Tests that use ydb_env_set would have created YDBOCTO and YDBAIM regions in V7 format.
@@ -245,18 +249,22 @@ GDECH
 			if ("$master_map_size" == 4186112) then		# i.e. 8176*512
 				set dbfilepath = `$gtm_dist/mumps -run %XCMD 'write $view("GVFILE","'$reg'")'`
 				rm -f $dbfilepath:t
+				# Since we want the .dat file to be in V6 format, switch to the V6 version.
 				source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
-				$MUPIP create -reg=$reg >& dbcheck_base_mupip_create_${reg}_$$.out
+				# Since the .gld format could be different between the V6 and V7 version, create a fresh V6
+				# format .gld instead of using the V7 format $gtmgbldir (could result in a GDINVALID error).
+				setenv gtmgbldir v6_${newgbldir:t}
+				$gtm_dist/mumps -run GDE change -seg DEFAULT -file=$dbfilepath:t >& v6_gde_change_${reg}_$$.out
+				$MUPIP create >& dbcheck_base_mupip_create_${reg}_$$.out
 				source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+				# Restore gtmgbldir to V7 format
+				setenv gtmgbldir $newgbldir
 			endif
 		end
 
 		# Take backup of pre-upgrade .dat files in case needed for later analysis of failed tests
 		mkdir bak
 		cp * bak >& cp.outx
-
-		$gtm_dist/mumps -run gdech >& gdech.com
-		$gtm_dist/mumps -run GDE @gdech.com >& gdech.out
 
 		set logfile = dbcheck_base_mupip_upgrade_$$.out
 		yes | $MUPIP upgrade -reg "*" >& $logfile
