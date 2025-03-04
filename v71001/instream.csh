@@ -14,6 +14,8 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# ygblstat_cmdlinewarn-gtmde503394	[jon]	Test %YGBLSTAT issues warnings for defective command lines
+# numoflow_regression				[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -21,6 +23,7 @@ echo "v71001 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"ygblstat_cmdlinewarn-gtmde503394"
+setenv subtest_list_non_replic	"numoflow_regression"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

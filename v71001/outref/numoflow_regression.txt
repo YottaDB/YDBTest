@@ -1,0 +1,11 @@
+# The following subtest tests that a GT.M v7.1-001 regression is not included in the YottaDB codebase.
+# For more information see the discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/658#note_2332948688.
+
+# Run test routine: Expect NUMOFLOW error
+# Previously, in V71001, there was a regression such that this routine would incorrectly result in either:
+#		1. dbg builds: %GTM-F-ASSERT, Assert failed in sr_port/gvcst_incr.c line 40 for expression (MV_IS_NUMERIC(increment))
+#		2. pro builds: no error
+%GTM-E-NUMOFLOW, Numeric overflow
+		At M source location numoflowreg+3^numoflowreg
+
+GTM>
