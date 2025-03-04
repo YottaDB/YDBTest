@@ -50,3 +50,7 @@
 ##TEST_AWKSTOP issued to process [0-9]*
 # Verify MUPIP STOP(s) terminated the DSE process
 # SUCCESS - process successfully terminated by MUPIP STOP
+##TEST_PATH##/dse00.err
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
+##TEST_AWK##TEST_PATH##/dse1[0-9]*.err
+%GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP

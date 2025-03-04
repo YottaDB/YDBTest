@@ -14,26 +14,29 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# ygblstat_cmdlinewarn-gtmde503394	[jon]	Test %YGBLSTAT issues warnings for defective command lines
-# numoflow_regression			[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
-# ztranslate_nobadchar-gtmde525624	[jon]	Test $ZTRANSLATE() does not issue a BADCHAR when operating on UTF-8 strings
 # ygblstat_cmdlinewarn-gtmde503394		[jon]	Test %YGBLSTAT issues warnings for defective command lines
 # numoflow_regression					[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
-# booleansubs_sideeffects-gtmde513737		[jon]	Test the truth-value of subscripted local variables in Boolean expressions is protected from subsequent side effects
-# comptimelit_numoflow-gtmde50885	[jon]	Test NUMOFLOW errors correctly reported when evaluating unary operations on literals at compile time
+# comptimelit_numoflow-gtmde50885		[jon]	Test NUMOFLOW errors correctly reported when evaluating unary operations on literals at compile time
+# ztranslate_nobadchar-gtmde525624		[jon]	Test $ZTRANSLATE() does not issue a BADCHAR when operating on UTF-8 strings
+# ygblstat_cmdlinewarn-gtmde503394		[jon]	Test %YGBLSTAT issues warnings for defective command lines
+# numoflow_regression					[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
+# booleansubs_sideeffects-gtmde513737	[jon]	Test the truth-value of subscripted local variables in Boolean expressions is protected from subsequent side effects
+# xecuteopfail_cleancompile-gtmde510902	[jon]	Test prevent literal operation failures in XECUTE blocks from improperly affecting the surrounding execution environment
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"ygblstat_cmdlinewarn-gtmde503394"
-setenv subtest_list_non_replic	"numoflow_regression"
-setenv subtest_list_non_replic	"randstr_rangearg-gtmde500856"
-setenv subtest_list_non_replic	"compilerext-gtmde500860"
-setenv subtest_list_non_replic	"ztranslate_nobadchar-gtmde525624"
-setenv subtest_list_non_replic	"booleansubs_sideeffects-gtmde513737"
-setenv subtest_list_non_replic	"comptimelit_numoflow-gtmde508852"
+setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic ygblstat_cmdlinewarn-gtmde503394"
+setenv subtest_list_non_replic	"$subtest_list_non_replic numoflow_regression"
+setenv subtest_list_non_replic	"$subtest_list_non_replic randstr_rangearg-gtmde500856"
+setenv subtest_list_non_replic	"$subtest_list_non_replic compilerext-gtmde500860"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztranslate_nobadchar-gtmde525624"
+setenv subtest_list_non_replic	"$subtest_list_non_replic booleansubs_sideeffects-gtmde513737"
+setenv subtest_list_non_replic	"$subtest_list_non_replic comptimelit_numoflow-gtmde508852"
+setenv subtest_list_non_replic	"$subtest_list_non_replic xecuteopfail_cleancompile-gtmde510902"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

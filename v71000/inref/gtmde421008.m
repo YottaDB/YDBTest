@@ -114,10 +114,9 @@ critseize(seizeCrit,hangTime) ;
 	use dsePipe
 	for i=1:1  read dseResult(i):0 quit:'$test!$zeof
 	zkill dseResult(i)
-	do:$data(piperr)
-	. use dseErr
-	. for i=1:1  read dseErr(i):0 quit:'$test!$zeof
-	. zkill dseErr(i)
+	use dseErr
+	for i=1:1  read dseErr(i):0 quit:'$test!$zeof
+	zkill dseErr(i)
 	close dsePipe
 	use $p
 

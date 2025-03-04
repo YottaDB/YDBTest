@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 20
+set errname [lindex $argv 0];
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+# The %YDB-I-FILERENAME message that would show up in the MUPIP BACKUP output below would be longer than 132 columns
+# (the size that is set by expectinit.exp) so increase the width to a lot more to avoid line splitting and in turn test failures.
+# send -- "stty cols 512\r"
+# expect -exact "SHELL"
+
+send -- "\$gtm_dist/mumps -dir\r"
+expect -exact "GTM>"
+send "do ^$errname\r"
+expect -exact "%GTM-E-$errname"
+send "do ^noerror\r"
+expect -exact "1"
+expect -exact "GTM>"
+send "h\r"
+expect -exact "SHELL"

@@ -40,7 +40,7 @@ PASS from testrtn
 # Run [file testrtn.o] to confirm the routine compiled and an object file was generated
 # Previously, when attempting to compile a routine without a '.m' extension,
 # GT.M would issue a %GTM-E-FILENOTFND error.
-noextrtn.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
+##TEST_AWKnoextrtn.o: ELF 64-bit LSB relocatable, [0-9a-zA-Z\- ]*, version 1 \([a-zA-Z/]*\), not stripped
 # Run [mumps -run noextrtn] to run the compiled routine and confirm it issues the correct output: 'PASS from noextrtn'
 PASS from noextrtn
 
