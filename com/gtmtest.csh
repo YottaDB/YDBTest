@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -79,8 +79,8 @@ endif
 ######
 # first read the defaults, so that anything unset will have a default value
 if ($?gtm_dist == 0) then
-   echo 'TEST-E-GTMDIST_UNDEFINED : gtm_dist env var is not defined. Cannot start any tests.'
-   exit 40
+	echo 'TEST-E-GTMDIST_UNDEFINED : gtm_dist env var is not defined. Cannot start any tests.'
+	exit 40
 endif
 
 source $gtm_test_com_individual/defaults.csh $gtm_test_com_individual/defaults_common_csh
@@ -382,7 +382,6 @@ endif
 if ($?gtm_test_temporary_disable) then
 	echo "-x dbload"		>>! $test_list	# needs $gtm_test/big_files/dbload/*.go
 	echo "-x dbcompatibility"	>>! $test_list	# can be re-enabled once V63002/T63002 is released (wait for "gld_mismatch")
-	echo "-x filter"		>>! $test_list	# can be re-enabled once V63002/T63002 is released
 endif
 
 #############
@@ -442,40 +441,40 @@ endif
 #process request file and command line arguments, for requests and excludes
 
 if (-e $test_list) then
-   # fills $exclude_file too
-   $tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/request.awk $test_list>! $tmpfile
-   source $tmpfile #this produces $test_list_1
-   $tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $test_list_1 >>! $submit_tests_temp
+	# fills $exclude_file too
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/request.awk $test_list>! $tmpfile
+	source $tmpfile #this produces $test_list_1
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $test_list_1 >>! $submit_tests_temp
 endif
 
 if (($?minorbucket)||("$bucket" != "")) then
-   #reset env. vars --undefine and redefine
-   foreach option ($tst_options_all)
-      #echo "reset" $option
-      unsetenv $option
-      end
-   echo "#Reset options for bucket submission" >! ${TMP_FILE_PREFIX}_option_default_2
-   $tst_awk -f $gtm_tst/com/process.awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/default_options_csh >>! ${TMP_FILE_PREFIX}_option_default_2
-   source ${TMP_FILE_PREFIX}_option_default_2
-   endif
+	#reset env. vars --undefine and redefine
+	foreach option ($tst_options_all)
+		#echo "reset" $option
+		unsetenv $option
+		end
+	echo "#Reset options for bucket submission" >! ${TMP_FILE_PREFIX}_option_default_2
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_test_com_individual/process_defaults.awk $gtm_test_com_individual/default_options_csh >>! ${TMP_FILE_PREFIX}_option_default_2
+	source ${TMP_FILE_PREFIX}_option_default_2
+endif
 #minorbucket requested
 if ($?minorbucket) then
-   #take the tests requested, but run all L/E tests for them
-   foreach test_case (`cut -f 2,3 -d " " $test_list_1 |sort -u |sed 's/ /@/'`)
-     $grep `echo $test_case|cut -f 1 -d @` $gtm_tst/com/SUITE |$grep " $LFE " >>! ${submit_tests_temp}_a
-     set tst_name = `echo $test_case|cut -f 1 -d @`
-     #grep each test (and the LE) from SUITE (instead of grep, AWK is used
-     #since only specific fields are to be searched)
-     $tst_awk '($2 ~ suite && $1 == tst){if ($1 !~ /#/)  print}' tst=$tst_name suite=$LFE $gtm_tst/com/SUITE >>! ${TMP_FILE_PREFIX}_buckets
-   end
+	#take the tests requested, but run all L/E tests for them
+	foreach test_case (`cut -f 2,3 -d " " $test_list_1 |sort -u |sed 's/ /@/'`)
+		$grep `echo $test_case|cut -f 1 -d @` $gtm_tst/com/SUITE |$grep " $LFE " >>! ${submit_tests_temp}_a
+		set tst_name = `echo $test_case|cut -f 1 -d @`
+		#grep each test (and the LE) from SUITE (instead of grep, AWK is used
+		#since only specific fields are to be searched)
+		$tst_awk '($2 ~ suite && $1 == tst){if ($1 !~ /#/)  print}' tst=$tst_name suite=$LFE $gtm_tst/com/SUITE >>! ${TMP_FILE_PREFIX}_buckets
+	end
 
-   #if there are any tests from SUITE
-   if (-e ${TMP_FILE_PREFIX}_buckets) then
-      #correct numbering
-      $tst_awk '{print ++no[$1] " " $0}' ${TMP_FILE_PREFIX}_buckets >! $submit_tests
-      #fill in missing options and test applicability
-      $tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $submit_tests>! $submit_tests_temp
-   endif
+	#if there are any tests from SUITE
+	if (-e ${TMP_FILE_PREFIX}_buckets) then
+		#correct numbering
+		$tst_awk '{print ++no[$1] " " $0}' ${TMP_FILE_PREFIX}_buckets >! $submit_tests
+		#fill in missing options and test applicability
+		$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $submit_tests>! $submit_tests_temp
+	endif
 endif #minorbucket if
 
 ############################
@@ -483,21 +482,19 @@ endif #minorbucket if
 # but excludes are accounted for
 
 if ("$bucket" != "") then
-   # A bucket is requested, determine tests to be run
-
-   foreach suite ($bucket)
-     set suite = ` echo $suite|cut -c 1`
-     #grep each suite (instead of grep, AWK is used
-     #since only a specific field is to be searched)
-     $tst_awk '$2 ~ suite {if ($1 !~ /#/) print }' suite=$suite  $gtm_tst/com/SUITE >>! ${TMP_FILE_PREFIX}_buckets
-   end
-   #if there are any tests from SUITE
-   if (-e ${TMP_FILE_PREFIX}_buckets) then
-      $tst_awk '{print ++no[$1] " " $0}' ${TMP_FILE_PREFIX}_buckets >>! $test_list_1
-      #run this through the applicability,too and fill in missing options
-      $tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $test_list_1 >>! $submit_tests_temp
-   endif
-
+	# A bucket is requested, determine tests to be run
+	foreach suite ($bucket)
+		set suite = ` echo $suite|cut -c 1`
+		#grep each suite (instead of grep, AWK is used
+		#since only a specific field is to be searched)
+		$tst_awk '$2 ~ suite {if ($1 !~ /#/) print }' suite=$suite  $gtm_tst/com/SUITE >>! ${TMP_FILE_PREFIX}_buckets
+	end
+	#if there are any tests from SUITE
+	if (-e ${TMP_FILE_PREFIX}_buckets) then
+		$tst_awk '{print ++no[$1] " " $0}' ${TMP_FILE_PREFIX}_buckets >>! $test_list_1
+		#run this through the applicability,too and fill in missing options
+		$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/applic.awk $gtm_tst/com/test_applic $test_list_1 >>! $submit_tests_temp
+	endif
 endif
 
 # $LFE should be changed to E when the T_ALL is submitted since the individual test would expect $LFE to be E or L.
@@ -574,10 +571,10 @@ if ($test_num_runs != 1) then
 
 
 if (`cat $submit_tests` == "") then
-   #the file does exist, but is it empty
-   echo "$submit_tests is empty. No test specified, or all requested tests excluded or eliminated (due to applicability)"
-   echo "Exiting now. ${TMP_FILE_PREFIX}_* files will not be cleaned up"
-   exit 16
+	#the file does exist, but is it empty
+	echo "$submit_tests is empty. No test specified, or all requested tests excluded or eliminated (due to applicability)"
+	echo "Exiting now. ${TMP_FILE_PREFIX}_* files will not be cleaned up"
+	exit 16
 endif
 # determine host,remote server locations
 if ($?cms_tools) then
@@ -630,13 +627,13 @@ if ($?test_debug_print_only) then
 		echo "Test Remote Directory          :: $tst_remote_dir"
 	endif
 	if (($?test_replic)||($?test_gtm_gtcm_one)) then
-	   echo "Test Remote Version            :: $remote_ver"
-	   echo "Test Remote Image              :: $remote_image"
-	   echo "Test Remote User               :: $tst_remote_user"
+		echo "Test Remote Version            :: $remote_ver"
+		echo "Test Remote Image              :: $remote_image"
+		echo "Test Remote User               :: $tst_remote_user"
 	endif
 	echo " "
-   $gtm_test_com_individual/clean_and_exit.csh
-   exit 18
+	$gtm_test_com_individual/clean_and_exit.csh
+	exit 18
 endif
 #############################################################################
 if ($?gtm_test_dryrun) then
@@ -719,11 +716,11 @@ endif
 ##################
 # Check if it is "non-allowed" directory again
 if (`echo $tst_dir | $tst_awk -F/ '$2 ~/gtc/ || $2 ~/usr/ || $3 ~/gtc/ {print "1"}'`) then
-   echo "TEST-E-DIR2 Will not submit the test in $tst_dir."
-   echo "Please specify a non-/gtc/ non-/usr/ directory to run the tests."
-   echo "The directory $tst_dir/$gtm_tst_out has been created. Please remove it."
-   $gtm_test_com_individual/clean_and_exit.csh
-   exit 20
+	echo "TEST-E-DIR2 Will not submit the test in $tst_dir."
+	echo "Please specify a non-/gtc/ non-/usr/ directory to run the tests."
+	echo "The directory $tst_dir/$gtm_tst_out has been created. Please remove it."
+	$gtm_test_com_individual/clean_and_exit.csh
+	exit 20
 endif
 ########################
 #############################################################################
@@ -767,31 +764,30 @@ endif
 #############################################################################
 
 if ("$test_want_concurrency" == "yes") then
-   if ("$test_load_dir" == "") then
-      setenv test_load_dir "$tst_dir/$gtm_tst_out/_load"
-   endif
-   if ( ! (-e $test_load_dir) ) mkdir -p $test_load_dir
- endif
+	if ("$test_load_dir" == "") then
+		setenv test_load_dir "$tst_dir/$gtm_tst_out/_load"
+	endif
+	if ( ! (-e $test_load_dir) ) mkdir -p $test_load_dir
+endif
 
 if ("$test_want_concurrency" == "yes"  &&  !(-e $test_load_dir/loadinp.m)) then
-   \cp $gtm_tst/com/{clear,loadinp,load,unload,getnear}.m $test_load_dir
-
-   if (!(-e $test_load_dir/load.dat)) then
-      pushd $test_load_dir
-      setenv gtmgbldir load.gld
-      if (!(-e load.gld)) then
-	 $gtm_exe/mumps -run GDE << GDEEOF
-	    ch -s DEFAULT -file=load.dat
-	    exit
+	\cp $gtm_tst/com/{clear,loadinp,load,unload,getnear}.m $test_load_dir
+	if (!(-e $test_load_dir/load.dat)) then
+		pushd $test_load_dir
+		setenv gtmgbldir load.gld
+		if (!(-e load.gld)) then
+			$gtm_exe/mumps -run GDE << GDEEOF
+			ch -s DEFAULT -file=load.dat
+			exit
 GDEEOF
-      endif
-      $gtm_exe/mupip create
-      $gtm_exe/mumps -direct <<GTMEOF
-	  d ^loadinp
-	  h
+		endif
+		$gtm_exe/mupip create
+		$gtm_exe/mumps -direct <<GTMEOF
+			d ^loadinp
+			h
 GTMEOF
-     popd
-  endif
+		popd
+	endif
 endif
 
 ###################################################################################
@@ -829,35 +825,35 @@ echo "TEST JNL DIR:     $tst_jnldir"		>> $confil
 echo "TEST BACKUP DIR:  $tst_bakdir"		>> $confil
 if ($?test_replic) echo "REMOTE HOST:      $tst_remote_host"	>> $confil
 if (($?test_replic)||($?test_gtm_gtcm_one)) then
-   echo "REMOTE VERSION:   $remote_ver"				>> $confil
-   echo "REMOTE IMAGE:     $remote_image"			>> $confil
-   echo "REMOTE USER:      $tst_remote_user"			>> $confil
+	echo "REMOTE VERSION:   $remote_ver"			>> $confil
+	echo "REMOTE IMAGE:     $remote_image"			>> $confil
+	echo "REMOTE USER:      $tst_remote_user"		>> $confil
 endif
 if ($?test_replic) then
-   echo "TEST REMOTE DIR:  $tst_remote_dir"			>> $confil
-   echo "BUFFSIZE:         $tst_buffsize"			>> $confil
-   echo "LOG:              $tst_rf_log"				>> $confil
-   echo "TEST REMOTE JNL DIR:	$tst_remote_jnldir" 		>> $confil
-   echo "TEST REMOTE BACKUP DIR:	$tst_remote_bakdir"	>> $confil
+	echo "TEST REMOTE DIR:  $tst_remote_dir"		>> $confil
+	echo "BUFFSIZE:         $tst_buffsize"			>> $confil
+	echo "LOG:              $tst_rf_log"			>> $confil
+	echo "TEST REMOTE JNL DIR:	$tst_remote_jnldir" 	>> $confil
+	echo "TEST REMOTE BACKUP DIR:	$tst_remote_bakdir"	>> $confil
 endif
 echo " "        >> $confil
 #call a new shell script after this point
 \cp $submit_tests $tst_dir/$gtm_tst_out/submitted_tests
 
 if ($?test_no_background) then
-   $gtm_tst/com/submit.csh  -f < /dev/null
-   exit $status
+	$gtm_tst/com/submit.csh  -f < /dev/null
+	exit $status
 else
-   if ("$gtm_test_run_time" == "now" || "$gtm_test_run_time" == "") then
-	$gtm_tst/com/submit.csh -f < /dev/null >& /dev/null &
-   else
-	set at_script = $tst_dir/$gtm_tst_out/at_script # keep the at script in the test output directory itself
-	echo "#\!/usr/local/bin/tcsh -f" >>! $at_script
-	setenv | $grep -v "TERMCAP"| sed 's/=/ "/' | sed 's/$/"/'  | sed 's/^/setenv /' >> $at_script
-   	echo "$tst_tcsh $gtm_tst/com/submit.csh -f < /dev/null" >> $at_script
-	# HP-UX wont take echo "$shell -f at_script  >>& /dev/null"
-	chmod a-w $at_script
-	chmod +x $at_script
-	echo "$at_script " | at $gtm_test_run_time
-   endif
+	if ("$gtm_test_run_time" == "now" || "$gtm_test_run_time" == "") then
+		$gtm_tst/com/submit.csh -f < /dev/null >& /dev/null &
+	else
+		set at_script = $tst_dir/$gtm_tst_out/at_script # keep the at script in the test output directory itself
+		echo "#\!/usr/local/bin/tcsh -f" >>! $at_script
+		setenv | $grep -v "TERMCAP"| sed 's/=/ "/' | sed 's/$/"/'  | sed 's/^/setenv /' >> $at_script
+		echo "$tst_tcsh $gtm_tst/com/submit.csh -f < /dev/null" >> $at_script
+		# HP-UX wont take echo "$shell -f at_script  >>& /dev/null"
+		chmod a-w $at_script
+		chmod +x $at_script
+		echo "$at_script " | at $gtm_test_run_time
+	endif
 endif
