@@ -55,6 +55,15 @@ if ($test_align > $align_limit) then
 	echo "setenv tst_jnl_str $tst_jnl_str"			>>&! settings.csh
 endif
 
+# This test invokes the "switch_over/switch_over" subtest which in turn will have a random older version (potentially GT.M build)
+# source server connect to a newer version (YottaDB build) receiver server. Therefore need "ydb_ipv4_only" and "gtm_ipv4_only"
+# to be in sync. See comment in v63000/u_inref/gtm8423.csh for more details.
+if ($?ydb_ipv4_only) then
+	setenv gtm_ipv4_only $ydb_ipv4_only
+	echo "# gtm_ipv4_only set to match ydb_ipv4_only in gtm8423.csh"	>>&! settings.csh
+	echo "setenv gtm_ipv4_only $gtm_ipv4_only"				>>&! settings.csh
+endif
+
 set minver = "V63000A"
 set prior_ver = `$gtm_tst/com/random_ver.csh -gte $minver -rh $tst_remote_host`
 if ("$prior_ver" =~ "*-E-*") then
