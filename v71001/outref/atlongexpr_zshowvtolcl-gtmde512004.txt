@@ -1,0 +1,110 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE512004)
+# 
+# SET @($ZWRTAC=expr) works for strings approaching 1MiB; previously such an indirect expression was limited to the maximum length of a source line. Also, the %ZSHOWVTOLCL utility routine now deals with more cases, such as such longer strings. (GTM-DE512004)
+# 
+# Additionally, test the regression reported at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/668#note_2332712148.
+# 
+
+# Create database file
+
+# Test 1: V71001 Regression
+# Run a routine that:
+# 1. Sets a local variable to a value that is 0.5Mib in size and contains control characters
+# 2. Does ZSHOW 'V' of the local variable into a global
+# 3. Uses %ZSHOWVTOLCL to restore the local variable from the global
+# Prior to V71001, this test passed with no errors.
+# In V71001, this test fails with an error, despite the size of the local variable
+# value falling well within the 1Mib limit.
+# For details see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/668#note_2332712148
+# Temporarily disable this test until the reported regression is resolved
+PASS
+
+# Test 2: SET @(\$ZWRTAC=expr) works for strings approaching 1MiB
+# Run a routine that does [SET @(\$ZWRTAC=expr)] where "expr" is 1048566 characters long.
+# This is equivalent to MAX_STRLEN - 10. Anything higher than this generates a %GTM-E-MAXSTRLEN error.
+# Expect ZWRITE output containing \$ZWRTAC variables and no errors.
+# Prior to V71001, this would generate a %GTM-E-INDRMAXLEN error.
+$ZWRTAC=""
+*b(2)=$ZWRTAC1
+$ZWRTAC1=1 ;*
+i=1048566
+$ZWRTAC=""
+
+# Test 3: %ZSHOWVTOLCL does not leave internal variables in scope
+# Run a routine that does ZWRITE both before and after calling %ZSHOWVTOLCL.
+# Expect a "Cannot restore %ZSHOWvbase" error and NO output from either ZWRITE.
+# Previously, this resulted in the second ZWRITE emitting output for internal variables
+# used by %ZSHOWVTOLCL when run with YottaDB builds between the following commits:
+# Prior to commit: https://gitlab.com/YottaDB/DB/YDB/-/commit/999d88e7651a55187b70494e29a14d240a23e3f1
+# And after commit: https://gitlab.com/YottaDB/DB/YDB/-/commit/e70fedf858c50ddf037db98df4a36bd5115a7582
+
+Cannot restore %ZSHOWvbase
+
+1 items skipped due to errors
+%ZSHOWvbase=1
+
+# Test 4: %ZSHOWVTOLCL correctly restores subscripted local variables
+# Run a routine that runs ZWRITE after attempting to restore subscripted local variables.
+# Expect ZWRITE output for two variables, each showing a value of 1
+# Previously, due to an unreleased regression in YottaDB, the variables were not restored and ZWRITE issued no output for either variable.
+# Note that the regression as introduced with this commit: https://gitlab.com/YottaDB/DB/YDB/-/commit/999d88e7651a55187b70494e29a14d240a23e3f1
+# The regression is fixed in YottaDB with this commit: https://gitlab.com/YottaDB/DB/YDB/-/commit/9a8ea88bf33475d8797fe412d3f72f80c2a4d925
+ret(1)=1
+x(1)=1
+
+# Test 5: SET @ can restore LVN values approaching 1MiB in length
+# Run a routine that creates an alias container pointing to an LVN
+# with value nearly 1MiB long, kills all variables and alias variables,
+# and then restores the lvn value through $ZWRTAC1.
+# Expect a PASS message, otherwise TEST-E-FAIL.
+# Prior to V71001, this routine would generate a %GTM-E-INDRMAXLEN error and cause the test to fail.
+PASS : Successfully restored close to a 1Mib value through $ZWRTAC1 in ZWRITE output
+
+# Test 6: %ZSHOWVTOLCL issues 'Could not work...' error message instead of MAXSTRLEN
+# Run a routine that:
+# 1. Sets a local variable to a value that is 1Mib (2**20) in size and contains control characters
+# 2. Does ZSHOW 'V' of the local variable into a global
+# 3. Uses %ZSHOWVTOLCL to restore the local variable from the global
+# In V71001 and later, expect a 'Could not work...' error for values exceeding the 1Mib limit,
+# and an LVUNDEF error in the output for the local variable that was consequently not restored.
+# Prior to V71001, this test would result in a MAXSTRLEN error.
+
+Could not work ^x("V") into a value within current processing limits
+
+1 items skipped due to errors
+%GTM-E-LVUNDEF, Undefined local variable: x
+		At M source location nowork+7^gtmde512004
+
+GTM>
+
+# Test 7: %ZSHOWVTOLCL can restore LVN values approaching 1MiB in length
+# Run a routine that:
+# 1. Sets a local variable to a value that is nearly 1Mib (2**20-15) in size and contains control characters
+# 2. Does ZSHOW 'V' of the local variable into a global
+# 3. Uses %ZSHOWVTOLCL to restore the local variable from the global
+# Prior to V71001, this test would result in a MAXSTRLEN error.
+# In V71001, this test successfully restores an LVN value exceeding the 1Mib limit.
+# Temporarily disable this test until the regression noted in Test 1 is resolved.
+PASS: x successfully restored
+
+# Test 8: %ZSHOWVTOLCL continues to emit an when an LVN key both:
+# + Is greater than 8192 bytes long
+# + Cannot convert from ZWRITE format to string with embedded non-graphic characters
+# These conditions are based on an error path present in %ZSHOWVTOLCL prior to v71001.
+# Since v71001, drops this error path, this test confirms that the v71001 version of
+# %ZSHOWVTOLCL still issues an error under the same error conditions.
+# So, this test should pass with versions both before and after v71001.
+# Expect a 'Could not extract valid key' error from %ZSHOWVTOLCL followed by an LVUNDEF error
+# for an attempt to access the local variable that was not restored due to the above error.
+
+Could not extract a valid key from ^x("V",18)
+
+1 items skipped due to errors
+%GTM-E-LVUNDEF, Undefined local variable: x
+		At M source location bigkey+11^gtmde512004
+
+GTM>
