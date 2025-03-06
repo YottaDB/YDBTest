@@ -85,6 +85,7 @@ RUN apt-get update && \
                     rsync \
                     linux-perf \
                     libcurl4-openssl-dev \
+		    netbase \
                     && \
                     apt-get clean
 
