@@ -145,9 +145,9 @@ else
 	pushd yottadb_r*
 		if ($verno =~ "*V7*") then
 			# the --utf8 option does not accept an ICU version in GT.M V7.0-000 or later
-			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
+			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 --keep-obj --ucaseonly-utils --prompt-for-group -overwrite-existing
 		else
-			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
+			./ydbinstall --installdir=$gtm_root/$verno/$dbgpro --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group -overwrite-existing
 		endif
 	popd
 endif
