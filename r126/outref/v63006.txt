@@ -1,18 +1,24 @@
-# Test that 'ZCompile "bar2.edit"' issues NOTMNAME error instead of compiling
-# GT.M V6.3-006 started issuing the NOTMNAME error (see http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-006_Release_Notes.html#GTM-8178)
-# But there was an inconsistency in ZCOMPILE that is addressed as part of YottaDB r1.26 (after integrating GT.M V6.3-006) and this is a test of that.
+# ------------------------------------------------------------------------
+# Test that 'ZCompile "bar2.edit"' does NOT issue a NOTMNAME error
+# ------------------------------------------------------------------------
+# GT.M V6.3-006 started issuing a NOTMNAME error (see http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-006_Release_Notes.html#GTM-8178)
+# But there was an inconsistency in ZCOMPILE that is addressed as part of YottaDB r1.26 (after integrating GT.M V6.3-006)
+# and this test was originally written to test that change.
+
+# But GT.M V7.1-001 changed this behavior and stopped issuing the NOTMNAME error in this case
+# Therefore this test has been revised to no longer expect a NOTMNAME error
 touch bar2.edit.m
-ZCompile "bar2.edit.m"
+# ZCompile "bar2.edit.m"
+# Expect a NOTMNAME and ZLNOOBJECT error
 
 YDB>
 %YDB-E-NOTMNAME, bar2.edit is not a valid M name
 %YDB-E-ZLNOOBJECT, No object module was produced
 
 YDB>
-ZCompile "bar2.edit"
+# ZCompile "bar2.edit"
+# Expect NO error and expect bar2.o to be created
 
 YDB>
-%YDB-E-NOTMNAME, bar2.edit is not a valid M name
-%YDB-E-ZLNOOBJECT, No object module was produced
 
 YDB>

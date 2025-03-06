@@ -9,17 +9,26 @@
 ## Running : [mumps .abcd]
 %YDB-E-NOTMNAME, .abcd is not a valid M name
 %YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [mumps abcd.]
+%YDB-E-NOTMNAME, abcd. is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
 ## Running : [mumps ..]
 %YDB-E-FILEPARSE, Error parsing file specification: ..
 %YDB-E-NORTN, Routine name missing
 ## Running : [mumps ..abcd]
 %YDB-E-NOTMNAME, ..abcd is not a valid M name
 %YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [mumps abcd..]
+%YDB-E-NOTMNAME, abcd.. is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
 ## Running : [mumps ...]
 %YDB-E-NOTMNAME, ... is not a valid M name
 %YDB-E-ZLNOOBJECT, No object module was produced
 ## Running : [mumps ...abcd]
-%YDB-E-NOTMNAME, ...abcd is not a valid M name
+%YDB-E-NOTMNAME, .. is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [mumps abcd...]
+%YDB-E-NOTMNAME, abcd... is not a valid M name
 %YDB-E-ZLNOOBJECT, No object module was produced
 # Running : [mumps -nameofrtn=GTM8068 $gtm_tst/$tst/inref/] : Expecting to not see an assert failure in zl_cmd_qlf.c
 %YDB-E-FILEPARSE, Error parsing file specification: ##IN_TEST_PATH##/inref/

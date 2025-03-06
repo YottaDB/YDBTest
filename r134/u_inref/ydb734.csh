@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,8 @@ foreach param (. .. ...)
 	$ydb_dist/mumps $param
 	echo "## Running : [mumps ${param}abcd]"
 	$ydb_dist/mumps ${param}abcd
+	echo "## Running : [mumps abcd${param}]"
+	$ydb_dist/mumps abcd${param}
 end
 
 echo '# Running : [mumps -nameofrtn=GTM8068 $gtm_tst/$tst/inref/] : Expecting to not see an assert failure in zl_cmd_qlf.c'
