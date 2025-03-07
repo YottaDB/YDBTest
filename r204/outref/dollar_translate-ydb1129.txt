@@ -1,0 +1,27 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test that $TRANSLATE in UTF-8 mode does not fail with GTMASSERT2 if search string is more than 256 chars long
+# Also test $TRANSLATE functionality in general for both M and UTF-8 mode
+# -------------------------------------------------------------------------------------------------------------
+# Create database
+# Run [mumps -run ydb1129].
+# This will generate random $TRANSLATE invocations.
+# This used to almost always fail with a GTMASSERT2 fatal error before YDB#1129 was fixed.
+# After YDB#1129 was fixed, this issues no errors. We expect to see PASS below.
+PASS : $translate() returned correct results AND had no GTMASSERT2 failures
+
+# -------------------------------------------------------------------------------------------------------------
+# Run tests from https://gitlab.com/YottaDB/DB/YDB/-/issues/1129#description
+# -------------------------------------------------------------------------------------------------------------
+# Invoking [mumps -run testorig1^ydb1129]
+# This used to previously fail with a GTMASSERT2 error
+# We now do not expect any error or output below
+
+# Invoking [mumps -run testorig2^ydb1129]
+# This used to previously fail with a GTMASSERT2 error
+# We now do not expect any error or output below
+
+# Invoking [mumps -run testorig3^ydb1129]
+# This used to previously fail with a GTMASSERT2 error
+# We now do not expect any error or output below
+
+# Run [dbcheck.csh]
