@@ -43,6 +43,10 @@ set shorthost = $HOST
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 set portno = `cat portno.out`
 $gtm_dist/gtcm_gnp_server -service=$portno -log=gnpserver.log -trace
+
+# Wait for server to write the pid in the log file before proceeding to record the pid.
+$gtm_tst/com/wait_for_log.csh -log gnpserver.log -message "pid :" -waitcreation
+
 sed 's/.*pid : \([0-9]*\)\]/\1/' gnpserver.log | head -n 1 >& gnpserver.pid
 echo
 
@@ -60,8 +64,12 @@ cat gtcmfdlimit.txt | sed 's/\(%GTM-E-FDSIZELMT, Too many (\)\([0-9]*\)\() descr
 echo
 
 set server_pid = `cat gnpserver.pid`
-$gtm_dist/mupip stop $server_pid >&! mupip.out
-$gtm_tst/com/wait_for_proc_to_die.csh $server_pid 30
+if ("" == "$server_pid") then
+	echo "TEST-E-FAIL : Could not find gtcm_gnp_server pid from log file [gnpserver.pid]"
+else
+	$gtm_dist/mupip stop $server_pid >&! mupip.out
+	$gtm_tst/com/wait_for_proc_to_die.csh $server_pid 30
+endif
 
 echo "### Test 2: Test no GTMASSERT2 error when opening a socket with over 1021 file descriptors already open"
 setenv gtmgbldir mumps.gld

@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,6 +56,12 @@ if ("nolog" == "$4") then
 	set nolog = 1
 endif
 set pid = "$1"
+
+if ("" == "$pid") then
+	echo "WAITPROCALIVE-E-EMPTYPID: Empty string was passed as PID to wait_for_proc_to_die.csh"
+	exit -1
+endif
+
 set onesleep = 1
 
 set treat_defunct_as_dead = "$5"
