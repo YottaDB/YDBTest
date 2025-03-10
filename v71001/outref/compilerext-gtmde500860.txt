@@ -9,15 +9,14 @@
 # Test 1: Compile a routine with non-'.m' extension then run
 # Create a test routine, 'testrtn.test', with a file extension of '.test'
 # Compile 'testrtn.test'
-# Run [mumps -run testrtn]
-# Confirm the test routine compiled and issued the correct output: 'TEST'
+# Run [file testrtn.o] to confirm the test routine compiled and an object file was generated
 # Previously, when attempting to compile a routine without a '.m' extension,
 # GT.M would issue a %GTM-E-FILENOTFND error.
-TEST
-# Run [file testrtn.o] to confirm an object file was generated
 ##TEST_AWKtestrtn.o: ELF 64-bit LSB relocatable, [0-9a-zA-Z\- ]*, version 1 \([a-zA-Z/]*\), not stripped
+# Run [mumps -run testrtn] and confirm it issues the correct output: 'PASS from testrtn'
+PASS from testrtn
 
-# Test 2: Run a routine with non-'.m' directly
+# Test 2: Run a routine with non-'.m' extension directly
 # Create a test routine, 'testrtn2.test', with a file extension of '.test'
 # Run 'testrtn2.test', expect ZLINKFILE and FILENOTFND errors
 %GTM-E-ZLINKFILE, Error while zlinking "testrtn2"
@@ -26,10 +25,28 @@ TEST
 
 # Test 3: Compile a routine with non-'.m' extension using ZCOMPILE then run
 # Compile 'testrtn.test' with ZCOMPILE
-# Run [mumps -run testrtn]
-# Confirm the test routine compiled and issued the correct output: 'TEST'
+# Run [file testrtn.o] to confirm the test routine compiled and an object file was generated
 # Previously, when attempting to compile a routine without a '.m' extension,
 # GT.M would issue a %GTM-E-FILENOTFND error.
-TEST
-# Run [file testrtn.o] to confirm an object file was generated
 ##TEST_AWKtestrtn.o: ELF 64-bit LSB relocatable, [0-9a-zA-Z\- ]*, version 1 \([a-zA-Z/]*\), not stripped
+# Run [mumps -run testrtn] and confirm it issues the correct output: 'PASS from testrtn'
+PASS from testrtn
+
+# Test 4: Compile a routine with no file extension then run
+# This tests YDB!1647 (https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1647)
+# For more details see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/660#note_2389125090
+# Create a test routine, 'noextrtn' with no file extension
+# Compile 'noextrtn'
+# Run [file testrtn.o] to confirm the routine compiled and an object file was generated
+# Previously, when attempting to compile a routine without a '.m' extension,
+# GT.M would issue a %GTM-E-FILENOTFND error.
+noextrtn.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
+# Run [mumps -run noextrtn] to run the compiled routine and confirm it issues the correct output: 'PASS from noextrtn'
+PASS from noextrtn
+
+# Test 5: Run a routine no file extension directly
+# Create a test routine, 'noextrtn2' with no file extension
+# Run 'noextrtn2', expect ZLINKFILE and FILENOTFND errors
+%GTM-E-ZLINKFILE, Error while zlinking "noextrtn2"
+%GTM-E-FILENOTFND, File noextrtn2.m not found
+%GTM-E-FILENOTFND, File noextrtn2.o not found
