@@ -15,7 +15,8 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # ygblstat_cmdlinewarn-gtmde503394	[jon]	Test %YGBLSTAT issues warnings for defective command lines
-# numoflow_regression				[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
+# numoflow_regression			[jon]	Test fix of regression resulting in assert failure instead of NUMOFLOW error
+# ztranslate_nobadchar-gtmde525624	[jon]	Test $ZTRANSLATE() does not issue a BADCHAR when operating on UTF-8 strings
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -26,6 +27,7 @@ setenv subtest_list_non_replic	"ygblstat_cmdlinewarn-gtmde503394"
 setenv subtest_list_non_replic	"numoflow_regression"
 setenv subtest_list_non_replic	"randstr_rangearg-gtmde500856"
 setenv subtest_list_non_replic	"compilerext-gtmde500860"
+setenv subtest_list_non_replic	"ztranslate_nobadchar-gtmde525624"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
