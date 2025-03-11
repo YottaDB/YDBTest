@@ -20,7 +20,7 @@ Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_R
 
 The GT.M compiler accepts source files with arbitrary extensions. FIS recommends using the .m extension for source files as our testing of that is very extensive, however there may be cases where other extensions serve a purpose. Previously, the compiler enforced an explicit or implicit .m extension for source files. (GTM-DE500860)
 CAT_EOF
-echo ''
+echo
 
 setenv ydb_msgprefix "GTM"
 echo "# Test 1: Compile a routine with non-'.m' extension then run"

@@ -1,0 +1,38 @@
+# ********************************************************************************************
+# GTM-DE513737 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE513737)
+# 
+# GT.M returns the correct value for a Boolean expression containing a subscripted local variable when that variable is affected by side-effects later in the expression and gtm_boolean>=1. Previously, GT.M evaluated the boolean using the value of the subscripted local after all side-effects. This issue did not affect unsubscripted local variables or globals of any kind. (GTM-DE513737)
+# 
+
+# In each of the below tests, run a routine [gtmde513737] that contains a boolean expression that:
+# 1. Contains a subscripted local variable
+# 2. Contains code that modifies that subscripted local variable via a side effect
+# 3. References that subscripted variable before the code that induces the side effect
+#
+# Run the routine also with each valid value of $gtm_boolean (0-3), then the first invalid value (4).
+# This range is based on the definition of 'gtm_bool_type' in 'sr_port/fullbool.h',
+# since it is values from this enum that are expected and referenced when 'gtm_boolean' is read
+# from the environment during mumps process startup in 'sr_port/gtm_env_init.c'.
+# Test 1: gtm_boolean = 1
+# Set gtm_boolean = 1
+# Run the [gtmde513737] routine
+TRUE
+# Test 2: gtm_boolean = 2
+# Set gtm_boolean = 2
+# Run the [gtmde513737] routine
+		if (test(1)&(test(1)+$$changeval(.test))) do
+		                     ^-----
+		At column 23, line 15, source module ##IN_TEST_PATH##/inref/gtmde513737.m
+%GTM-W-BOOLSIDEFFECT, Extrinsic ($$), External call ($&) or $INCREMENT() with potential side effects in Boolean expression
+TRUE
+# Test 3: gtm_boolean = 3
+# Set gtm_boolean = 3
+# Run the [gtmde513737] routine
+TRUE
+# Test 4: gtm_boolean = 0
+# Set gtm_boolean = 0
+# Run the [gtmde513737] routine
+TRUE
