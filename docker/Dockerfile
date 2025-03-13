@@ -121,8 +121,8 @@ RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71000 V7.1-000 pro
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 pro
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 dbg
 
-# gtm_curpro: bump up by changing the next three lines
-ENV gtm_curpro V70005_R202
+# gtm_curpro: bump up (when r2.04 is released) by changing the next 4 lines
+ENV gtm_curpro=V70005_R202
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70005_R202 r2.02 pro
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V70005_R202 r2.02 dbg
 RUN ln -s /usr/library/R202 /usr/library/V70005_R202
