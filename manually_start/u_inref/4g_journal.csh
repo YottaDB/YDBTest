@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -189,7 +189,7 @@ else
 #
 	echo "Verifying data ..."
 $GTM << gtm_eof
-  d dverify^jnl4G(1)
+	d dverify^jnl4G(1)
 gtm_eof
 #
 endif
@@ -224,10 +224,38 @@ echo "Done forward recovery at :" >>& tracktime.log
 date >>& tracktime.log
 echo "Verifying data ..."
 $GTM << gtm_eof
-  d dverify^jnl4G(0)
+	d dverify^jnl4G(0)
 gtm_eof
 #
 #move the tracktime.log  to upper level directory; otherwise it will get removed on success
 mv tracktime.log ./..
 #
+if ($gtm_test_use_V6_DBs) then
+	# Since $gtm_test_use_V6_DBs is TRUE, the dbcheck.csh call below is going to do a "mupip upgrade" test
+	# in dbcheck_base.csh to test V6 to V7 upgrade logic on this database file. The first thing that test
+	# does is a "$MUPIP backup -journal=disable -nonewjnlfiles". We have seen this create a database with
+	# a DBBSIZMN integrity error in rare cases when the database has "Async IO" turned ON. The integrity
+	# error occurs because GDS block 1 (the root block of the directory tree) is all zeroed out and empty
+	# in the backed up database file. This is because "mubfilcpy()" (invoked by "mupip backup") does a separate
+	# open of the source database file without O_DIRECT and identifies alternate holes/data portions using
+	# lseek(SEEK_HOLE) and lseek(SEEK_DATA) calls and uses # copy_file_range() to do the copies to the sparse target
+	# backup file. And for reasons not yet clear, when the database block size is 8Kb (which is the case in this test),
+	# a multiple of the filesystem block size of 4Kb, the lseek(SEEK_DATA) call when done from an offset that is in
+	# the middle of the local bitmap block GDS block 0 returns the offset of GDS block 2. It misses out GDS block 1
+	# in some cases. It is not clear what conditions cause this. But it seems like some weird interaction of O_DIRECT
+	# usage (which is the case for Async IO enabled files) and maybe the filesystem (XFS was the only one where we saw
+	# this during in-house testing) and maybe even the Linux kernel (Debian 12, 6.1.0-31-amd64). This GDS block 1
+	# is initialized at database create time and never touched again in this test. So whether we open the file
+	# using O_DIRECT (and bypass the file cache) or without O_DIRECT (and use the file cache), this block cannot
+	# suddenly disappear and seem like a zeroed out block to the filesystem cache. Until there is more evidence of
+	# this being a potential YottaDB issue (if at all, it has to be an Async IO == O_DIRECT issue only), we assume
+	# this is some external issue and work around it by invoking hexdump to dump the bytes corresponding to
+	# GDS block 0 (offset 0x40000 to 0x42000) and block 1 (offset 0x42000 to 0x44000). With this change, the
+	# test passes reliably whereas it fails 25% of the time otherwise. Somehow the act of dumping those blocks
+	# using hexdump makes the filesystem cache see GDS block 1 as data in the later lseek(SEEK_DATA) call.
+	if ($gtm_test_asyncio) then
+		hexdump -C -s 0x40000 -n 0x4000 mumps.dat > mumps.dat.hd
+	endif
+endif
+
 $gtm_tst/com/dbcheck.csh -noshut
