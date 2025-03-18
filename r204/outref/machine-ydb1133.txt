@@ -1,0 +1,16 @@
+# ---------------------------------------------------
+# Test that [mumps -machine] generates opcodes for an M file.
+# Also test that -length is accepted and ignored.
+# ---------------------------------------------------
+# Test that we see opcodes for WRITE
+# The exact contents of this file are not important. This just verifies that it looks vaguely like VAX bytecode.
+# Filter the byte length out (it differs when passed -dynamic_literals)
+         N     PUSHAB      @B^0(r8)                                 ;OC_WRITE
+# Test that we do not crash on file names that are too long.
+# The exact contents of this file are also not important. The point is to make sure we generate a listing and do not crash.
+OC_BINDPARM
+# Test that files with no .m extension generate the right file name
+# Test that `-length` does not generate a list file
+# Test that `-length` does not modify the contents of a list file
+# Test that `-length=0` is accepted and ignored
+# Test that `-length` does not crash if smaller than the size of the listing file.

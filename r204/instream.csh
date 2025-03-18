@@ -24,6 +24,7 @@ setenv subtest_list_non_replic	"view_statshare-ydb254"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_v-ydb873"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm-v71001"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_translate-ydb1129"
+setenv subtest_list_non_replic	"$subtest_list_non_replic machine-ydb1133"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
