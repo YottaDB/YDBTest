@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -29,7 +29,11 @@ server	;
 	use s
 	write /wait
 	use $principal write "# server : Convert non-TLS socket to a TLS socket",!  use s
+	if $random(2)  ; set $test randomly to 0 or 1. This is a side test of YDB#1136
+	set dlrtestSave=$test
 	write /tls("server",,"server")
+	if dlrtestSave'=$test do
+	. use $principal write "YDB#1136-E-FAILED: $TEST was modified even though write /tls(server) specified no timeout",! use s
 	use $principal write "# server : Wait for child to reach the point where it has opened the pipe device",!  use s
 	for  quit:^pipeDoneInChild=1  hang 0.001
 	use $principal
@@ -53,7 +57,11 @@ client	;
 	set hostname=$$^findhost(2)
 	open s:(CONNECT=hostname_":"_^portno_":TCP":delim=$char(13))::"SOCKET"	; Open a TLS socket client side connection
 	use s
+	if $random(2)  ; set $test randomly to 0 or 1. This is a side test of YDB#1136
+	set dlrtestSave=$test
 	write /tls("client",,"client")				; Convert non-TLS socket to TLS socket
+	if dlrtestSave'=$test do
+	. use $principal write "YDB#1136-E-FAILED: $TEST was modified even though write /tls(client) specified no timeout",! use s
 	open "pipedevice":(command="yes":readonly)::"PIPE"	; Open a PIPE device
 	set ^pipeDoneInChild=1	; Signal parent pid that child process has opened a PIPE device after having
 				; opened a TLS socket. So it can start reading what we write to TLS socket device
