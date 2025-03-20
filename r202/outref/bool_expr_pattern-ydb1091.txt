@@ -213,7 +213,6 @@ actual=-1
 +101^boolexpr       : set subs1=$ZYSQLNULL set actual=-1 set actual=''''(subs1'?."1") zwrite actual
 actual=$ZYSQLNULL
 +102^boolexpr       : quit
-##SUSPEND_OUTPUT PRO
 
 # ---------------------------------------------------------------------------
 # Test2 : Verify that all generated y?."1" and y'?."1" simple boolean expressions in boolexpr.m get optimized
@@ -323,7 +322,6 @@ actual=$ZYSQLNULL
 ;OC_PATTERN_RETMVAL
 ;OC_NPATTERN_RETBOOL
 ;OC_NPATTERN_RETMVAL
-##ALLOW_OUTPUT PRO
 ##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
 
 # ---------------------------------------------------------------------------

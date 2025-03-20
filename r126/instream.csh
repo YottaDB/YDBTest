@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,11 +68,6 @@ if ("armv6l" == `uname -m`) then
 	# be fixed. Since other platforms run this test fine, we disable this subtest only on the Pi Zero architecture.
 	# This can be revisited at a later point in time to see if it works and if so re-enable it.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb449"
-endif
-
-# on pro builds filter out ydb440 as mumps -machine -lis does not work there
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list ydb440"
 endif
 
 # Submit the list of subtests

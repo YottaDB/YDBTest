@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,21 +29,18 @@ echo '# Using $gtm_curpro would have avoided a huge reference file but I chose n
 echo '# does not have $gtm_curpro available which would make this subtest fail there.'
 $gtm_dist/mumps -run boolexpr
 
-# Only run Test2 if Debug build. As mumps -machine -lis only works with Debug builds.
-if ("dbg" == "$tst_image") then
-	echo ""
-	echo "# ---------------------------------------------------------------------------"
-	echo "# Test2 : Verify that all generated y<z and y'<z simple boolean expressions in boolexpr.m get optimized"
-	echo "# with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing"
-	echo "# ---------------------------------------------------------------------------"
-	echo "# Run [mumps -machine -lis=boolexpr.lis boolexpr.m]"
-	$gtm_dist/mumps -machine -lis=boolexpr.lis boolexpr.m
-	set filter = "OC_LINESTART|OC_EXTCALL|OC_LINEFETCH|OC_JMPEQU|OC_STOLIT|OC_LVZWRITE|OC_SVGET|OC_LITC|OC_RET"
-	echo '# Run [grep -E OC_ boolexpr.lis | grep -vE '$filter' | awk \'{print $NF}\']'
-	echo '# Expect to see only OC_LT_RETMVAL, OC_NLT_RETMVAL, OC_LT_RETBOOL or OC_NLT_RETBOOL opcodes'
-	echo '# Do not expect to see any OC_BOOL* opcodes (implies optimization did not happen)'
-	$grep -E "OC_" boolexpr.lis | $grep -vE $filter | $tst_awk '{print $NF}'
-endif
+echo ""
+echo "# ---------------------------------------------------------------------------"
+echo "# Test2 : Verify that all generated y<z and y'<z simple boolean expressions in boolexpr.m get optimized"
+echo "# with no OC_BOOLINIT/OC_BOOLFINI/OC_BOOLEXPRSTART/OC_BOOLEXPRFINISH opcodes in the mumps machine listing"
+echo "# ---------------------------------------------------------------------------"
+echo "# Run [mumps -machine -lis=boolexpr.lis boolexpr.m]"
+$gtm_dist/mumps -machine -lis=boolexpr.lis boolexpr.m
+set filter = "OC_LINESTART|OC_EXTCALL|OC_LINEFETCH|OC_JMPEQU|OC_STOLIT|OC_LVZWRITE|OC_SVGET|OC_LITC|OC_RET"
+echo '# Run [grep -E OC_ boolexpr.lis | grep -vE '$filter' | awk \'{print $NF}\']'
+echo '# Expect to see only OC_LT_RETMVAL, OC_NLT_RETMVAL, OC_LT_RETBOOL or OC_NLT_RETBOOL opcodes'
+echo '# Do not expect to see any OC_BOOL* opcodes (implies optimization did not happen)'
+$grep -E "OC_" boolexpr.lis | $grep -vE $filter | $tst_awk '{print $NF}'
 
 # Only run the below perf related stage of the subtest if "perf" executable exists and is the YottaDB
 # build is not a DBG or ASAN build (both are slow). Also restrict the test to only be on x86_64 linux.
@@ -75,4 +72,3 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		echo "PASS: Test of [$cmd]"
 	end
 endif
-

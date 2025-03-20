@@ -28,7 +28,6 @@ No overflow: '?
 # Notice no 'OC_BOOL*' opcodes above. Whereas, with the YDB master before GT.M V7.1-000 was merged, below is the output one sees which
 # includes 'OC_BOOLINIT', 'OC_BOOLFINI' etc. all of which indicate triples corresponding to the boolean expression
 # which implies the literal optimization did not happen at compile time.
-##SUSPEND_OUTPUT PRO
 JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
 ##SUSPEND_OUTPUT DYNAMIC_LITERALS
 PUSHAB      @GTM$LITERAL+0x0                         ;OC_WRITE
@@ -38,4 +37,3 @@ PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
 PUSHAB      B^0(r9)                                  ;OC_WRITE
 ##ALLOW_OUTPUT NODYNAMIC_LITERALS
 JSB         @B^xf_ret(R11)                           ;OC_RET
-##ALLOW_OUTPUT PRO

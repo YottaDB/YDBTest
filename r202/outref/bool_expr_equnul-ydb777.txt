@@ -413,7 +413,6 @@ actual=-1
 +201^boolexpr       : set s=$ZYSQLNULL set actual=-1 set actual=''''(""'=s) zwrite actual
 actual=$ZYSQLNULL
 +202^boolexpr       : quit
-##SUSPEND_OUTPUT PRO
 
 # ---------------------------------------------------------------------------
 # Test2 : Verify that all generated s= and s'= simple boolean expressions in boolexpr.m get optimized
@@ -623,7 +622,6 @@ actual=$ZYSQLNULL
 ;OC_EQUNUL_RETMVAL
 ;OC_NEQUNUL_RETBOOL
 ;OC_NEQUNUL_RETMVAL
-##ALLOW_OUTPUT PRO
 ##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
 
 # ---------------------------------------------------------------------------

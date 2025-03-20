@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,14 +42,8 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	# optimizexecute is disabled on pro because "yottadb -machine -lis=" is only implemented for dbg builds
-	setenv subtest_exclude_list "$subtest_exclude_list optimizexecute"
 	# gtm9260 needs to use $ydb_lockhash_n_bits which is only available in dbg mode
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9260"
-endif
-
-if ("dbg" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
 # Bypass gtm9260 on ARMV6L. This is because this test is trying to create a resized M lock hashtable (which is

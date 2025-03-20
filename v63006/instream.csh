@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,11 +40,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-# Filter out white box tests that cannot run in pro
-# gtm8947 does not work on pro because it uses the yottadb -lis switch
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8947"
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
