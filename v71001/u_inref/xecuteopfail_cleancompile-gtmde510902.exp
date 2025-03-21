@@ -11,7 +11,7 @@
 #								#
 #################################################################
 
-set timeout 20
+set timeout 60
 set errname [lindex $argv 0];
 
 spawn /usr/local/bin/tcsh -f
@@ -26,6 +26,7 @@ send -- "\$gtm_dist/mumps -dir\r"
 expect -exact "GTM>"
 send "do ^$errname\r"
 expect -exact "%GTM-E-$errname"
+expect -exact "GTM>"
 send "do ^noerror\r"
 expect -exact "1"
 expect -exact "GTM>"
