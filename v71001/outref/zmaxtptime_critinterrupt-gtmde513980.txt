@@ -1,0 +1,19 @@
+# ********************************************************************************************
+# GTM-DE340950 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE513980)
+# 
+# GT.M correctly executes the ETRAP/ETRAP/ZTRAP exception handler at the time of expiry of $ZMAXTPTIME when
+# the process holds a database critical section. Previously, due to a regression in V7.0-001, the $ZMAXTPTIME timer
+# did not execute ETRAP/ETRAP/ZTRAP exception handler until the process released all database critical sections
+# which could allow a transaction to materially exceed the specified $ZMAXTPTIME. (GTM-DE513980)
+# 
+
+# Set gtm_tpnotacidtime to a value higher than the hang time of 15 seconds, i.e. 30 seconds, to avoid a TPNOTACID message in the below routine
+# Run a gtmde5139800 to do a trestart until execution reaches the final retry. Then, while holding crit, hang for 15 seconds.
+# Set $zmaxtptime to 2 seconds. And so we expect a TPTIMEOUT error to kick in the middle of the hang 15 when 2 seconds have elapsed.
+# Prior to v71001, no TPTIMEOUT error would be issued.
+##TEST_AWK\$h = [0-9]*,[0-9]* : \$trestart = 3 : BEFORE hang 15
+##TEST_AWK\$HOROLOG="[0-9]*,[0-9]*"
+$ZSTATUS="150377322,gtmde513980+7^gtmde513980,%GTM-E-TPTIMEOUT, Transaction timeout"
