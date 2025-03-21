@@ -16,6 +16,10 @@
 # 
 # The V6 to V7 database upgrade process is split into two phases intended to reduce the downtime necessary for a database upgrade. This process is considerably faster and consumes less disk space than a traditional extract, transfer and load cycle. Please refer to Upgrading to GT.M V7.1-000 (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-000_Release_Notes.html#upgrade) for more details. (GTM-F135427)
 
+# The below tests force the use of V6 mode to create DBs. This requires turning off ydb_test_4g_db_blks since
+# V6 and V7 DBs are incompatible in that V6 cannot allocate unused space beyond the design-maximum total V6 block limit
+# in anticipation of a V7 upgrade.
+
 ### Test case 1: In-place database upgrade from V6 to V7
 # Set version to: V6
 # Create a V6 database

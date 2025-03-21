@@ -33,14 +33,18 @@ CAT_EOF
 echo
 
 setenv gtm_test_use_V6_DBs 0  # Disable V6 mode DBs as this test already switches versions for its various test cases
-set rand_ver6 = `$gtm_tst/com/random_ver.csh -type V6`
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
+echo '# The below tests force the use of V6 mode to create DBs. This requires turning off ydb_test_4g_db_blks since'
+echo '# V6 and V7 DBs are incompatible in that V6 cannot allocate unused space beyond the design-maximum total V6 block limit'
+echo '# in anticipation of a V7 upgrade.'
+setenv ydb_test_4g_db_blks 0
 setenv ydb_msgprefix "GTM"
 setenv ydb_prompt "GTM>"
+echo
 
 echo "### Test case 1: In-place database upgrade from V6 to V7"
 echo "# Set version to: V6"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 setenv gtmgbldir T1.gld
 echo "# Create a V6 database"
 $gtm_tst/com/dbcreate.csh T1 >& dbcreateT1.log
@@ -109,7 +113,7 @@ echo "# Extract the V7 database"
 $gtm_dist/mupip extract -format=zwr x.zwr >&! mupipextractT2v7.out
 
 echo "# Set version to: V6"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 echo "# Create a V6 database"
 setenv gtmgbldir T2v6.gld
 $gtm_tst/com/dbcreate.csh T2v6 >& dbcreateT2v6.log
@@ -123,9 +127,8 @@ echo
 
 echo "### Test case 3: GT.M V7.1-000 blocks all access to a V6 database marked as not fully upgraded from V4 format."
 echo "### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2328483690"
-setenv gtm_test_use_V6_DBs 0  # Disable V6 mode DBs to allow creation of V7 databases by subsequent tests
 echo "# Set version to: V6"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 echo "# Create a V6 global directory"
 setenv gtmgbldir T3v6.gld
 $gtm_dist/mumps -run GDE exit >&! gdeT3v6.out
@@ -145,7 +148,7 @@ echo "# Attempt to write the value in the database: expect a DBUPGRDREQ error"
 $gtm_dist/mumps -run %XCMD 'zwrite ^x'
 
 echo "# Change version to: V6"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 setenv gtmgbldir T3v6.gld
 rm -f T3v6.gld $gtm_dist/mumps -run GDE exit >>&! gdeT3v6.out
 echo "# Upgrade the database block format from V4 to V6"
@@ -161,15 +164,15 @@ echo
 
 echo '### Test case 4: GT.M V7.1-000 issues MUNOFINISH error (error detail "Extension size not set") when attempting to MUPIP UPGRADE a V6 database with extension size 0'
 echo "### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2366436858"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 echo "# Create a V6 database"
 setenv gtmgbldir T4.gld
 $gtm_tst/com/dbcreate.csh T4 >& dbcreateT4.log
 echo "# Set db extension size to 0"
-$gtm_dist/mupip set -extension=0 -reg DEFAULT >>&! mupipV7b.out
+$gtm_dist/mupip set -extension=0 -reg DEFAULT >>&! mupipT4.out
 echo "# Change version to: V7"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
-$gtm_dist/mumps -run GDE exit >&! gdeT3v7.out
+$gtm_dist/mumps -run GDE exit >&! gdeT4v7.out
 echo "# Run MUPIP UPGRADE, expect MUNOFINISH"
 echo "y" | $gtm_dist/mupip upgrade -reg "*"
 echo
@@ -177,14 +180,14 @@ echo
 echo "### Test case 5: GT.M V7.1-000 issues a MUNOFINISH error (and not a DBUPGRDREQ error) when retrying MUPIP UPGRADE on a V6 database with extension size 0"
 echo "### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2373149364"
 echo "# Create a V6 database"
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 setenv gtmgbldir T5.gld
 $gtm_tst/com/dbcreate.csh T5 >& dbcreateT5.log
 echo "# Set db extension size to 0"
 $gtm_dist/mupip set -extension=0 -reg DEFAULT >>&! mupipT5.out
 echo "# Change version to: V7"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
-$gtm_dist/mumps -run GDE exit >&! gdeT3v7.out
+$gtm_dist/mumps -run GDE exit >&! gdeT5v7.out
 echo "# Run MUPIP UPGRADE, expect MUNOFINISH"
 echo "y" | $gtm_dist/mupip upgrade -reg "*"
 echo "# Retry MUPIP UPGRADE, expect MUNOFINISH"
@@ -194,8 +197,7 @@ echo
 echo "### Test case 6: MUPIP UPGRADE of a database that has lots of globals that have been mostly killed does not result in a DBLRCINVSZ integrity error"
 echo "### For details on this test case see: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/655#note_2373413989"
 echo "# Set version to: V6"
-source $gtm_tst/com/ydb_prior_ver_check.csh $rand_ver6
-source $gtm_tst/com/switch_gtm_version.csh $rand_ver6 $tst_image
+source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image
 echo "# Create a V6 database"
 setenv gtmgbldir T6.gld
 $gtm_tst/com/dbcreate.csh T6 >& dbcreateT6.log
