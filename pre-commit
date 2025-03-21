@@ -166,5 +166,32 @@ foreach file ($filelist)
 	end
 end
 
+# ----------------------------------------------------------------------------------------
+# 5) Reports subtest additions to instream.csh that are missing "$subtest_list_non_replic"
+# ----------------------------------------------------------------------------------------
+
+set fixlist = ""
+
+foreach file ($filelist)
+	if ($file =~ */instream.csh) then
+		foreach testtype ("subtest_list_common" "subtest_list_non_replic" "subtest_list_replic")
+			grep '^setenv '"$testtype"'[[:space:]]*"..*"' $file | grep -v '"$'"$testtype"' .*"' >& /dev/null
+			if ($status == 0) then
+				set fixlist = "$fixlist $file"
+				# We don't need to report the same file multiple times
+				continue
+			endif
+		end
+	endif
+end
+if ("" != "$fixlist") then
+	echo "  --> Hook $0 returned non-zero status"
+	echo '  --> Below files contain subtest declarations missing "$subtest_list_{common,non_replic,replic}":'
+	foreach file ($fixlist)
+		echo "	$file"
+	end
+	@ exitstatus = 1
+endif
+
 # -----------------------------------------------------------------
 exit $exitstatus
