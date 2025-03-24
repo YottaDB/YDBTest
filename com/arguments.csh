@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,98 +30,98 @@
 # this file can have setenv's or test configurations
 @ argc1 = 1  #show next argument
 foreach arg  ($argv)
-   #set arg_ignore_case = `echo $arg|awk '{print toupper($1)}'`
-   @ argc1 = $argc1 + 1
-   set tmp_arg = `echo $arg|cut -b 2-`
-   if ($?skip) then
-      unset skip
-   else
+	#set arg_ignore_case = `echo $arg|awk '{print toupper($1)}'`
+	@ argc1 = $argc1 + 1
+	set tmp_arg = `echo $arg|cut -b 2-`
+	if ($?skip) then
+		unset skip
+	else
 switch($arg)
 case "-report":
-	    ##HELP_SCREEN -report on or -report off
-	    ##HELP_SCREEN to set report sending (the final mail) on or off
-	    ##HELP_SCREEN default is on for more than a single test
-	    setenv test_send_report `echo $argv[$argc1] |  tr '[a-z]' '[A-Z]'`
-	    set skip
+	##HELP_SCREEN -report on or -report off
+	##HELP_SCREEN to set report sending (the final mail) on or off
+	##HELP_SCREEN default is on for more than a single test
+	setenv test_send_report `echo $argv[$argc1] |  tr '[a-z]' '[A-Z]'`
+	set skip
 breaksw
 case "-debug":
-	    ##HELP_SCREEN print environment into a file
-	    ##HELP_SCREEN for debugging
-	    setenv test_debug
-	    #setenv tst_keep_output
+	##HELP_SCREEN print environment into a file
+	##HELP_SCREEN for debugging
+	setenv test_debug
+	#setenv tst_keep_output
 breaksw
 case "-L":
 case "-E":
 case "-light":
 case "-full":
 case "-extended":
-	    ##HELP_SCREEN RUN the selected tests with their L/E versions ($LFE)
-	    setenv LFE $tmp_arg
-	    breaksw
+	##HELP_SCREEN RUN the selected tests with their L/E versions ($LFE)
+	setenv LFE $tmp_arg
+	breaksw
 case "-L_ALL":
 case "-E_ALL":
 case "-M_ALL":
 case "-S_ALL":
 case "-T_ALL":
-	    ##HELP_SCREEN RUN THE L/E suites completely ($bucket)
-	    setenv bucket "$tmp_arg"
-	    #the first character of each element of $bucket is taken as bucket
-	    #you still have to process the arguments for the options
+	##HELP_SCREEN RUN THE L/E suites completely ($bucket)
+	setenv bucket "$tmp_arg"
+	#the first character of each element of $bucket is taken as bucket
+	#you still have to process the arguments for the options
 breaksw
 case "-suite":
-	    ##HELP_SCREEN start all tests in the SUITE specified by the next argument.
-	    setenv  bucket "$argv[$argc1]"
-	    set skip
+	##HELP_SCREEN start all tests in the SUITE specified by the next argument.
+	setenv  bucket "$argv[$argc1]"
+	set skip
 breaksw
 case "-minorbucket":
 case "-bucket":
-	    ##HELP_SCREEN RUN L/E buckets of the selected tests ($minorbucket)
-	    # run LE versions of all tests from command line and request file
-	    # so LE of selected tests
-	    #must parse arguments
-	    setenv minorbucket
+	##HELP_SCREEN RUN L/E buckets of the selected tests ($minorbucket)
+	# run LE versions of all tests from command line and request file
+	# so LE of selected tests
+	#must parse arguments
+	setenv minorbucket
 breaksw
 case "-distributed":
-	    ##HELP_SCREEN This test invocation is a part of distributed run. The file passed controls the distribution
-	    set param = "$argv[$argc1]"
-	    set file = `echo $param | cut -d : -f 1`
-	    if ((-d /gtc/staff/$USER/logs) && (-w /gtc/staff/$USER/logs)) then
-		    setenv test_distributed /gtc/staff/$USER/logs/$file
-	    else
-	    	    # This is intentionally ~/ just in case the entire /gtc/staff/$USER doesn't exist. (~ is not equivalent to /gtc/staff/$USER always)
-		    setenv test_distributed ~/$file
-	    endif
-	    set srvr = `echo "${param}:" | cut -d : -f 2`
-	    if ("" == "$srvr") then
-	    	setenv test_distributed_srvr "$tst_tcsh -c"
-	    else
-	    	setenv test_distributed_srvr "$rsh $srvr"
-	    endif
-	    set skip
+	##HELP_SCREEN This test invocation is a part of distributed run. The file passed controls the distribution
+	set param = "$argv[$argc1]"
+	set file = `echo $param | cut -d : -f 1`
+	if ((-d /gtc/staff/$USER/logs) && (-w /gtc/staff/$USER/logs)) then
+		setenv test_distributed /gtc/staff/$USER/logs/$file
+	else
+		# This is intentionally ~/ just in case the entire /gtc/staff/$USER doesn't exist. (~ is not equivalent to /gtc/staff/$USER always)
+		setenv test_distributed ~/$file
+	endif
+	set srvr = `echo "${param}:" | cut -d : -f 2`
+	if ("" == "$srvr") then
+		setenv test_distributed_srvr "$tst_tcsh -c"
+	else
+		setenv test_distributed_srvr "$rsh $srvr"
+	endif
+	set skip
 breaksw
 case "-exclude_servers":
-	    ##HELP_SCREEN comma separated list of servers to be excluded from running test (in this case as remote buddies)
-	    if ($?exclude_servers) then
-		    setenv  exclude_servers "${exclude_servers},$argv[$argc1]"
-	    else
-		    setenv  exclude_servers "$argv[$argc1]"
-	    endif
-	    set skip
+	##HELP_SCREEN comma separated list of servers to be excluded from running test (in this case as remote buddies)
+	if ($?exclude_servers) then
+		setenv  exclude_servers "${exclude_servers},$argv[$argc1]"
+	else
+		setenv  exclude_servers "$argv[$argc1]"
+	endif
+	set skip
 breaksw
 case "-MM":
 case "-mm":
-	    ##HELP_SCREEN Set access method MM ($acc_meth)
-	    setenv acc_meth MM
+	##HELP_SCREEN Set access method MM ($acc_meth)
+	setenv acc_meth MM
 breaksw
 case "-BG":
 case "-bg":
-	    ##HELP_SCREEN Set access method BG ($acc_meth)
-	    setenv acc_meth BG
+	##HELP_SCREEN Set access method BG ($acc_meth)
+	setenv acc_meth BG
 breaksw
 case "-s":
-	    ##HELP_SCREEN Test Source Directory ($tst_src) is set to next argument
-	    setenv tst_src $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Test Source Directory ($tst_src) is set to next argument
+	setenv tst_src $argv[$argc1]
+	set skip
 breaksw
 case "-noreorg":
 case "-NOREORG":
@@ -129,8 +129,8 @@ case "-no[n|_]reorg":
 case "NO[N|_]REORG":
 case "-non_reorg":
 case "NON_REORG":
-	    ##HELP_SCREEN Test will be run with MUPIP REORG off ($test_reorg)
-	    setenv test_reorg NON_REORG
+	##HELP_SCREEN Test will be run with MUPIP REORG off ($test_reorg)
+	setenv test_reorg NON_REORG
 breaksw
 case "-noco*":
 case "-NOCO*":
@@ -138,57 +138,57 @@ case "-no[n|_]co*":
 case "NO[N|_]CO*":
 case "-non_co*":
 case "NON_co*":
-	    ##HELP_SCREEN Test will be run with default collation value (0)
-	    setenv test_collation NON_COLLATION
-	    setenv test_collation_value "default"
+	##HELP_SCREEN Test will be run with default collation value (0)
+	setenv test_collation NON_COLLATION
+	setenv test_collation_value "default"
 breaksw
 case "-reo*":
 case "-REO*":
-	    ##HELP_SCREEN  Test will be run with MUPIP REORG on ($test_reorg)
-	    setenv test_reorg REORG
+	##HELP_SCREEN  Test will be run with MUPIP REORG on ($test_reorg)
+	setenv test_reorg REORG
 breaksw
 case "-repl":
 case "-replic":
-	    ##HELP_SCREEN Test will be run with Replication ON ($test_repl=REPLIC)
-	    setenv test_repl REPLIC
+	##HELP_SCREEN Test will be run with Replication ON ($test_repl=REPLIC)
+	setenv test_repl REPLIC
 breaksw
 case "-MULTI*SITE":
 case "-multi*site":
-	    ##HELP_SCREEN Test will be run with Replication ON on multiple machines
-	    ##HELP_SCREEN Also note that when running with -multisite, you cannot specify different remote hosts or
-	    ##HELP_SCREEN versions. They will be picked up automatically.
-	    setenv test_repl REPLIC
-	    # don't set test_replic_mh_type 1 if test_replic_mh_type is already set to 2 by this script
-	    if (! $?arguments_xendian) then
-		    setenv test_replic_mh_type 1
-	    endif
+	##HELP_SCREEN Test will be run with Replication ON on multiple machines
+	##HELP_SCREEN Also note that when running with -multisite, you cannot specify different remote hosts or
+	##HELP_SCREEN versions. They will be picked up automatically.
+	setenv test_repl REPLIC
+	# don't set test_replic_mh_type 1 if test_replic_mh_type is already set to 2 by this script
+	if (! $?arguments_xendian) then
+		setenv test_replic_mh_type 1
+	endif
 breaksw
 case "-XENDIAN":
 case "-xendian":
-	    ##HELP_SCREEN Test will be run with Replication ON on multiple machines of opposite endianness
-	    ##HELP_SCREEN Also note that when running with -xendian, you cannot specify different remote hosts or
-	    ##HELP_SCREEN versions. They will be picked up automatically.
-	    set arguments_xendian = 1
-	    setenv test_repl REPLIC
-	    setenv test_replic_mh_type 2
+	##HELP_SCREEN Test will be run with Replication ON on multiple machines of opposite endianness
+	##HELP_SCREEN Also note that when running with -xendian, you cannot specify different remote hosts or
+	##HELP_SCREEN versions. They will be picked up automatically.
+	set arguments_xendian = 1
+	setenv test_repl REPLIC
+	setenv test_replic_mh_type 2
 breaksw
 case "-CO*":
 case "-co*":
-	    ##HELP_SCREEN Test will be run with collation on
-	    ##HELP_SCREEN This argument might have a qualifier for the collation number and collation routines file
-	    ##HELP_SCREEN the qualifier must be comma seperated (e.g. -coll 3,~/mycollation.c)
-	    ##HELP_SCREEN polish collation (1) is the default if the collation value is not specified
-	    # -collation 1,/usr/library/sfdfddfss.c
-	    setenv test_collation COLLATION
-	    # Check if it has a qualifier
-	    # first check if this is the last argument
-	    if ($argc1 > $# ) breaksw
-	    # then check if the next argument is another argument on its own (i.e. "-*")
-	    if ( "$argv[$argc1]" =~ -*) breaksw
-	    # then check if it is actually a number
-	    setenv test_collation_value $argv[$argc1]
-	    setenv test_collation_submit_dir `pwd`
-	    set skip
+	##HELP_SCREEN Test will be run with collation on
+	##HELP_SCREEN This argument might have a qualifier for the collation number and collation routines file
+	##HELP_SCREEN the qualifier must be comma seperated (e.g. -coll 3,~/mycollation.c)
+	##HELP_SCREEN polish collation (1) is the default if the collation value is not specified
+	# -collation 1,/usr/library/sfdfddfss.c
+	setenv test_collation COLLATION
+	# Check if it has a qualifier
+	# first check if this is the last argument
+	if ($argc1 > $# ) breaksw
+	# then check if the next argument is another argument on its own (i.e. "-*")
+	if ( "$argv[$argc1]" =~ -*) breaksw
+	# then check if it is actually a number
+	setenv test_collation_value $argv[$argc1]
+	setenv test_collation_submit_dir `pwd`
+	set skip
 breaksw
 case "-norep*":
 case "-NOREP*":
@@ -196,8 +196,8 @@ case "-no[n|_]rep*":
 case "-NO[N|_]REP*":
 case "-non_rep*":
 case "-NON_REP*":
-	    ##HELP_SCREEN Test will be run with Replication OFF ($test_repl=NON_REPLIC)
-	    setenv test_repl NON_REPLIC
+	##HELP_SCREEN Test will be run with Replication OFF ($test_repl=NON_REPLIC)
+	setenv test_repl NON_REPLIC
 breaksw
 case "-noni*":
 case "-NONI*":
@@ -206,200 +206,200 @@ case "-NO[N|_]NI*":
 case "-non_ni*":
 case "-NON_NI*":
 case "-unni*":
-	   ##HELP_SCREEN Test will not be run with nice ($test_nice=UNNICE)
-	   setenv test_nice UNNICE
+	##HELP_SCREEN Test will not be run with nice ($test_nice=UNNICE)
+	setenv test_nice UNNICE
 breaksw
 case "-nomail":
 case "-no_m*":
 case "-nm":
-	    ##HELP_SCREEN No mail will be sent ($tst_dont_send_mail)
-	    #set up mail routine so that mail won't be sent
-	    setenv tst_dont_send_mail
+	##HELP_SCREEN No mail will be sent ($tst_dont_send_mail)
+	#set up mail routine so that mail won't be sent
+	setenv tst_dont_send_mail
 breaksw
 case "-failmail":
-	    ##HELP_SCREEN Mail will be sent only if test fails (no mail sent if test passes)
-	    ##HELP_SCREEN optionally followed by the maximum number of test failures to be sent
-	    ##HELP_SCREEN no mail will be sent for the failed tests beyond that number
-            setenv gtm_test_fail_mail 9999
-	    # Check if it has a qualifier
-	    # first check if this is the last argument
-	    if ($argc1 > $# ) breaksw
-	    # then check if the next argument is another argument on its own (i.e. "-*")
-	    if !( "$argv[$argc1]" =~ -*) then
-	    	#if ("-" != `echo $argv[$argc1] | cut -b 1`) then
-	        setenv gtm_test_fail_mail $argv[$argc1]
+	##HELP_SCREEN Mail will be sent only if test fails (no mail sent if test passes)
+	##HELP_SCREEN optionally followed by the maximum number of test failures to be sent
+	##HELP_SCREEN no mail will be sent for the failed tests beyond that number
+	setenv gtm_test_fail_mail 9999
+	# Check if it has a qualifier
+	# first check if this is the last argument
+	if ($argc1 > $# ) breaksw
+	# then check if the next argument is another argument on its own (i.e. "-*")
+	if !( "$argv[$argc1]" =~ -*) then
+		#if ("-" != `echo $argv[$argc1] | cut -b 1`) then
+		setenv gtm_test_fail_mail $argv[$argc1]
 		set skip
-	    endif
+	endif
 breaksw
 case "-failsubtestmail":
-	    ##HELP_SCREEN The failmail will automatically send diff of the subtests too
-	    ##HELP_SCREEN This is present here only for backward compatibility
-	    # Check if it has a qualifier (but ignore it)
-	    # first check if this is the last argument
-	    if ($argc1 > $# ) breaksw
-	    # then check if the next argument is another argument on its own (i.e. "-*")
-	    if !( "$argv[$argc1]" =~ -*) then
+	##HELP_SCREEN The failmail will automatically send diff of the subtests too
+	##HELP_SCREEN This is present here only for backward compatibility
+	# Check if it has a qualifier (but ignore it)
+	# first check if this is the last argument
+	if ($argc1 > $# ) breaksw
+	# then check if the next argument is another argument on its own (i.e. "-*")
+	if !( "$argv[$argc1]" =~ -*) then
 		set skip
-	    endif
+	endif
 breaksw
 case "-procstuckmail":
-	    ##HELP_SCREEN Mail alerts from gtmprocstuck_get_stack_trace.csh for 30 second hangs will be sent
-	    ##HELP_SCREEN By default, only for a 5 minute hang, mail alert will be sent
-	    setenv gtm_procstuck_mail
+	##HELP_SCREEN Mail alerts from gtmprocstuck_get_stack_trace.csh for 30 second hangs will be sent
+	##HELP_SCREEN By default, only for a 5 minute hang, mail alert will be sent
+	setenv gtm_procstuck_mail
 breaksw
 case "-k*":
-	    ##HELP_SCREEN The output will not be removed even if test is successful ($tst_keep_output)
-	    setenv tst_keep_output
+	##HELP_SCREEN The output will not be removed even if test is successful ($tst_keep_output)
+	setenv tst_keep_output
 breaksw
 case "-v*":
-	    ##HELP_SCREEN Version tested is set to next argument ($tst_ver)
-	    setenv tst_ver `echo $argv[$argc1] |  tr '[a-z]' '[A-Z]'`
-	    set skip
+	##HELP_SCREEN Version tested is set to next argument ($tst_ver)
+	setenv tst_ver `echo $argv[$argc1] |  tr '[a-z]' '[A-Z]'`
+	set skip
 breaksw
 case "-ml":
 case "-mail*":
-	    ##HELP_SCREEN Mail will be sent to the mailing list in the next argument ($mailing_list)
-	    #setup mailing list
-	    setenv  mailing_list  $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Mail will be sent to the mailing list in the next argument ($mailing_list)
+	#setup mailing list
+	setenv  mailing_list  $argv[$argc1]
+	set skip
 breaksw
 case "-o*":
-	    ##HELP_SCREEN Output directory will be set to the next argument ($tst_dir)
-	    if ( -w $argv[$argc1] ) then
-		    setenv tst_dir $argv[$argc1]
-	    else
-		    mkdir -p  $argv[$argc1] >& /dev/null
-		    if ($status) then
-			    echo "cannot write to $argv[$argc1], $tst_dir is output directory"
-		    else
-			   setenv tst_dir $argv[$argc1]
-		    endif
-	    endif
-	    set skip
+	##HELP_SCREEN Output directory will be set to the next argument ($tst_dir)
+	if ( -w $argv[$argc1] ) then
+		setenv tst_dir $argv[$argc1]
+	else
+		mkdir -p  $argv[$argc1] >& /dev/null
+		if ($status) then
+			 echo "cannot write to $argv[$argc1], $tst_dir is output directory"
+		else
+			setenv tst_dir $argv[$argc1]
+		endif
+	endif
+	set skip
 breaksw
 case "-no_o*":
 case "-noo*":
-	    ##HELP_SCREEN No output will remain when test is finished ($tst_no_output)
-	    setenv tst_dir /tmp #/$USER
-	    if (!(-d $tst_dir)) then
-	    \mkdir $tst_dir
-	    endif
-	    setenv tst_no_output
+	##HELP_SCREEN No output will remain when test is finished ($tst_no_output)
+	setenv tst_dir /tmp #/$USER
+	if (!(-d $tst_dir)) then
+	\mkdir $tst_dir
+	endif
+	setenv tst_no_output
 breaksw
 case "-stdout":
-	    ##HELP_SCREEN Output directly to stdout, config file, output file, and diff file (if it exists)
-	    ##HELP_SCREEN If an argument is not supplied, defaults to very verbose (3)
-	    ##HELP_SCREEN If an argument is supplied, it behaves as follows:
-	    ##HELP_SCREEN - 0 - don't print any extra information
-	    ##HELP_SCREEN - 1 - print each subtest result
-	    ##HELP_SCREEN - 2 - print diff file for each failed subtest
-	    ##HELP_SCREEN - 3 - print verbose output (set echo; set verbose)
-	    setenv tst_stdout 3 # default
-	    # Is this the last argument or next argument is another flag
-	    # If so, break out, having set tst_stdout=3
-	    if ( $argc1 > $# ) breaksw
-	    if ("$argv[$argc1]" =~ -*) breaksw
-	    # Next argument is a stdout level
-	    setenv tst_stdout $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Output directly to stdout, config file, output file, and diff file (if it exists)
+	##HELP_SCREEN If an argument is not supplied, defaults to very verbose (3)
+	##HELP_SCREEN If an argument is supplied, it behaves as follows:
+	##HELP_SCREEN - 0 - don't print any extra information
+	##HELP_SCREEN - 1 - print each subtest result
+	##HELP_SCREEN - 2 - print diff file for each failed subtest
+	##HELP_SCREEN - 3 - print verbose output (set echo; set verbose)
+	setenv tst_stdout 3 # default
+	# Is this the last argument or next argument is another flag
+	# If so, break out, having set tst_stdout=3
+	if ( $argc1 > $# ) breaksw
+	if ("$argv[$argc1]" =~ -*) breaksw
+	# Next argument is a stdout level
+	setenv tst_stdout $argv[$argc1]
+	set skip
 breaksw
 case "-fg":
-	    ##HELP_SCREEN Run the test(s) in the foreground
-	    ##HELP_SCREEN Tests are run in the background by default
-	    setenv test_no_background
+	##HELP_SCREEN Run the test(s) in the foreground
+	##HELP_SCREEN Tests are run in the background by default
+	setenv test_no_background
 breaksw
 case "-ru":
 case "-remote_u*":
 case "-remoteu*":
-	    ##HELP_SCREEN Remote User ($tst_remote_user) is set to next argument
-	    setenv tst_remote_user $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote User ($tst_remote_user) is set to next argument
+	setenv tst_remote_user $argv[$argc1]
+	set skip
 breaksw
 case "-rv":
 case "-remote_v*":
 case "-remotev*":
-	    ##HELP_SCREEN Remote Version ($remote_ver) is set to next argument
-	    setenv remote_ver $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote Version ($remote_ver) is set to next argument
+	setenv remote_ver $argv[$argc1]
+	set skip
 breaksw
 case "-rv*gtcm":
 case "-remote_v*gtcm":
 case "-remotev*gtcm":
-	    ##HELP_SCREEN GT.CM Remote Version ($remote_ver_gtcm) is set to next argument
-	    ##HELP_SCREEN It should be a comma separated list (refer to the explanation of rh_gtcm)
-	    setenv remote_ver_gtcm $argv[$argc1]
-	    set skip
+	##HELP_SCREEN GT.CM Remote Version ($remote_ver_gtcm) is set to next argument
+	##HELP_SCREEN It should be a comma separated list (refer to the explanation of rh_gtcm)
+	setenv remote_ver_gtcm $argv[$argc1]
+	set skip
 breaksw
 case "-ri":
 case "-remote_i*":
 case "-remotei*":
-	    ##HELP_SCREEN Remote Image ($remote_image) is set to next argument
-	    setenv remote_image $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote Image ($remote_image) is set to next argument
+	setenv remote_image $argv[$argc1]
+	set skip
 breaksw
 case "-ri*gtcm":
 case "-remote_i*gtcm":
 case "-remotei*gtcm":
-	    ##HELP_SCREEN GT.CM Remote Image ($remote_image_gtcm) is set to next argument
-	    ##HELP_SCREEN It should be a comma separated list (refer to the explanation of rh_gtcm)
-	    setenv remote_image_gtcm $argv[$argc1]
-	    set skip
+	##HELP_SCREEN GT.CM Remote Image ($remote_image_gtcm) is set to next argument
+	##HELP_SCREEN It should be a comma separated list (refer to the explanation of rh_gtcm)
+	setenv remote_image_gtcm $argv[$argc1]
+	set skip
 breaksw
 case "-rh*gtcm":
 case "-remote_h*gtcm":
 case "-remoteh*gtcm":
-	    ##HELP_SCREEN GT.CM Remote Host ($tst_gtcm_remote_host) is set to next argument
-	    ##HELP_SCREEN It should be a comma separated list of hosts, such as host1,host2,host3
-	    ##HELP_SCREEN The order of $tst_remote_dir should match the order of the host list
-	    setenv tst_gtcm_remote_host $argv[$argc1]
-	    set skip
+	##HELP_SCREEN GT.CM Remote Host ($tst_gtcm_remote_host) is set to next argument
+	##HELP_SCREEN It should be a comma separated list of hosts, such as host1,host2,host3
+	##HELP_SCREEN The order of $tst_remote_dir should match the order of the host list
+	setenv tst_gtcm_remote_host $argv[$argc1]
+	set skip
 breaksw
 case "-rh":
 case "-remote_h*":
 case "-remoteh*":
-	    ##HELP_SCREEN Remote Host ($tst_remote_host) is set to next argument
-	    setenv tst_remote_host $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote Host ($tst_remote_host) is set to next argument
+	setenv tst_remote_host $argv[$argc1]
+	set skip
 breaksw
 case "-rd*gtcm":
 case "-ro*gtcm":
 case "-remote_d*gtcm":
 case "-remoted*gtcm":
-	    ##HELP_SCREEN Remote Output Directory ($tst_gtcm_remote_dir) is set to next argument
-	    ##HELP_SCREEN It should be a comma separated list of directories,
-	    ##HELP_SCREEN matching the order of the host list
-	    setenv tst_gtcm_remote_dir $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote Output Directory ($tst_gtcm_remote_dir) is set to next argument
+	##HELP_SCREEN It should be a comma separated list of directories,
+	##HELP_SCREEN matching the order of the host list
+	setenv tst_gtcm_remote_dir $argv[$argc1]
+	set skip
 breaksw
 case "-rd":
 case "-ro":
 case "-remote_d*":
 case "-remoted*":
-	    ##HELP_SCREEN Remote Output Directory ($tst_remote_dir) is set to next argument
-	    setenv tst_remote_dir $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Remote Output Directory ($tst_remote_dir) is set to next argument
+	setenv tst_remote_dir $argv[$argc1]
+	set skip
 breaksw
 case "-buff_size":
-	    ##HELP_SCREEN Global buffer Size ($tst_buffsize) is set to next argument
-	    setenv tst_buffsize $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Global buffer Size ($tst_buffsize) is set to next argument
+	setenv tst_buffsize $argv[$argc1]
+	set skip
 breaksw
 case "-alignsize":
 case "-align":
-	    ##HELP_SCREEN Journaling alignment ($test_align) is set to next argument
-	    setenv test_align $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Journaling alignment ($test_align) is set to next argument
+	setenv test_align $argv[$argc1]
+	set skip
 breaksw
 case "-journal":
 case "-jnl":
-	    ##HELP_SCREEN Journaling ($tst_jnl_str = before/nobefore) is set to next argument
-	    setenv tst_jnl_str "-journal=enable,on,$argv[$argc1]"
-	    if ("nobefore" == "$argv[$argc1]") then
-	    	setenv gtm_test_jnl_nobefore 1
-	    else
-	    	setenv gtm_test_jnl_nobefore 0
-	    endif
-	    set skip
+	##HELP_SCREEN Journaling ($tst_jnl_str = before/nobefore) is set to next argument
+	setenv tst_jnl_str "-journal=enable,on,$argv[$argc1]"
+	if ("nobefore" == "$argv[$argc1]") then
+		setenv gtm_test_jnl_nobefore 1
+	else
+		setenv gtm_test_jnl_nobefore 0
+	endif
+	set skip
 breaksw
 case "-setjnl":
 case "-setjournal":
@@ -440,33 +440,33 @@ case "-remote_backup_dir":
 breaksw
 case "-noline*":
 case "-NOLINE*":
-	    ##HELP_SCREEN Run the M code with NOLINE_ENTRY
-	    ##HELP_SCREEN Note that the default is no NOLINE_ENTRY
-	    setenv gtm_test_nolineentry NOLINE
+	##HELP_SCREEN Run the M code with NOLINE_ENTRY
+	##HELP_SCREEN Note that the default is no NOLINE_ENTRY
+	setenv gtm_test_nolineentry NOLINE
 breaksw
 case "-num_runs":
-	    ##HELP_SCREEN Number of Runs ($test_num_runs) is set to next argument
-	    setenv test_num_runs $argv[$argc1]
-	    set skip
+	##HELP_SCREEN Number of Runs ($test_num_runs) is set to next argument
+	setenv test_num_runs $argv[$argc1]
+	set skip
 breaksw
 case "-GT.M":
 case "-gt.m":
 case "-GTM":
 case "-gtm":
-	    ##HELP_SCREEN Test GT.M ($test_gtm_gtcm)
-	    setenv test_gtm_gtcm "GT.M"
+	##HELP_SCREEN Test GT.M ($test_gtm_gtcm)
+	setenv test_gtm_gtcm "GT.M"
 breaksw
 case "-gtcm":
 case "-gt.cm":
 case "-GTCM":
 case "-GT.CM":
-	    ##HELP_SCREEN Test GT.CM ($test_gtm_gtcm)
-	    setenv test_gtm_gtcm "GT.CM"
+	##HELP_SCREEN Test GT.CM ($test_gtm_gtcm)
+	setenv test_gtm_gtcm "GT.CM"
 breaksw
 case "-TP":
 case "-tp":
-	    ##HELP_SCREEN  TP ($gtm_test_tp)
-	    setenv gtm_test_tp "TP"
+	##HELP_SCREEN  TP ($gtm_test_tp)
+	setenv gtm_test_tp "TP"
 breaksw
 case "-notp":
 case "-NOTP":
@@ -474,94 +474,94 @@ case "-no[n|_]tp":
 case "-NO[N|_]TP":
 case "-non_tp":
 case "-NON_TP":
-	    ##HELP_SCREEN NON_TP  ($gtm_test_tp)
-	    setenv gtm_test_tp "NON_TP"
+	##HELP_SCREEN NON_TP  ($gtm_test_tp)
+	setenv gtm_test_tp "NON_TP"
 breaksw
 case "-testtiminglog":
-	    ##HELP_SCREEN log results into timing.info
-	    setenv testtiming_log
+	##HELP_SCREEN log results into timing.info
+	setenv testtiming_log
 breaksw
 case "-testresultslog":
-	    ##HELP_SCREEN log results into testresults.csv
-	    setenv testresults_log
+	##HELP_SCREEN log results into testresults.csv
+	setenv testresults_log
 breaksw
 case "-nozip":
 case "-no_zip":
 case "-dontzip":
-	    ##HELP_SCREEN Do not zip the tmp directory  (or sub-test directory) contents
-	    setenv test_dont_zip
-	    breaksw
+	##HELP_SCREEN Do not zip the tmp directory  (or sub-test directory) contents
+	setenv test_dont_zip
+	breaksw
 case "-nodbxcstack":
 case "-nodbx*":
-	    ##HELP_SCREEN Disable the use of the debugger.
-	    ##HELP_SCREEN Use this option when the debugger bogs down the system like on
-	    ##HELP_SCREEN z/OS.  You need this option for an L_ALL or E_ALL
-	    setenv tst_disable_dbx
-	    breaksw
+	##HELP_SCREEN Disable the use of the debugger.
+	##HELP_SCREEN Use this option when the debugger bogs down the system like on
+	##HELP_SCREEN z/OS.  You need this option for an L_ALL or E_ALL
+	setenv tst_disable_dbx
+	breaksw
 case "-f":
-	    ##HELP_SCREEN The next argument specifies the test request file
-	    ##HELP_SCREEN which might have ordinary shell commands
-	    ##HELP_SCREEN or requests in the form
-	    ##HELP_SCREEN <request/exclude> <test_name_1> <conf_1>
-	    ##HELP_SCREEN where <request/exclude> is either -t or -x
-	    \cat $argv[$argc1] >>! $test_list
-	    set skip
+	##HELP_SCREEN The next argument specifies the test request file
+	##HELP_SCREEN which might have ordinary shell commands
+	##HELP_SCREEN or requests in the form
+	##HELP_SCREEN <request/exclude> <test_name_1> <conf_1>
+	##HELP_SCREEN where <request/exclude> is either -t or -x
+	\cat $argv[$argc1] >>! $test_list
+	set skip
 breaksw
 case "-t":
-	    ##HELP_SCREEN The next argument selects all tests/subtests in the form [test/]pattern.
-	    ##HELP_SCREEN If [test/] is omitted and pattern exactly matches a test, select only test <pattern>.
-	    ##HELP_SCREEN Otherwise return all subtests matching *pattern* where test defaults to '*'.
-	    set skip
-	    set testarray = `$gtm_test_com_individual/tstmatch.csh $argv[$argc1]`
-	    if ( "$testarray" == "" ) echo "No test found matching specification '-t $argv[$argc1]'" `false` || exit 5
+	##HELP_SCREEN The next argument selects all tests/subtests in the form [test/]pattern.
+	##HELP_SCREEN If [test/] is omitted and pattern exactly matches a test, select only test <pattern>.
+	##HELP_SCREEN Otherwise return all subtests matching *pattern* where test defaults to '*'.
+	set skip
+	set testarray = `$gtm_test_com_individual/tstmatch.csh $argv[$argc1]`
+	if ( "$testarray" == "" ) echo "No test found matching specification '-t $argv[$argc1]'" `false` || exit 5
 
-	    # See if argument exactly matches a test name
-	    if ( "$testarray" !~ "*/*" ) then
-		    setenv tst "$testarray[1]"   # tst also used by -st below (if supplied)
-		    echo "-t $tst" >>! $test_list
-		    breaksw
-	    endif
+	# See if argument exactly matches a test name
+	if ( "$testarray" !~ "*/*" ) then
+		setenv tst "$testarray[1]"   # tst also used by -st below (if supplied)
+		echo "-t $tst" >>! $test_list
+		breaksw
+	endif
 
-	    # If we get to here, $testarray is an array of entries in the form: test/subtest
-	    setenv tst "$testarray[1]:h"
-	    echo "-t $tst" >>! $test_list
-	    setenv gtm_test_st_list ""
-	    foreach t ( $testarray )
+	# If we get to here, $testarray is an array of entries in the form: test/subtest
+	setenv tst "$testarray[1]:h"
+	echo "-t $tst" >>! $test_list
+	setenv gtm_test_st_list ""
+	foreach t ( $testarray )
 		if ( "$t:h" != "$tst" ) then
 			echo "Error: more than one parent test directory for subtests matching '-t $argv[$argc1]': $testarray"
 			exit 5
 		endif
 		if ( "$gtm_test_st_list" != "" ) setenv gtm_test_st_list "$gtm_test_st_list,"   # add comma
 		setenv gtm_test_st_list "${gtm_test_st_list}${t:t}"
-	    end
+	end
 breaksw
 case "-st":
 case "-subtest":
-	    ##HELP_SCREEN The next argument is the name of the subtests requested (comma seperated)
-	    ##HELP_SCREEN Only those subtests requested will be run
-	    ##HELP_SCREEN No logs will be kept of this run (forced -nolog)
-	    setenv gtm_test_st_list $argv[$argc1]
-	    if ! ( $?tst ) echo "No test specified with -t prior to subtest specification '$argv[$argc1]'" `false` || exit 5
-	    # Verify that each subtest supplied actually exists
-	    foreach subname (${gtm_test_st_list:as/,/ /})
-		if ( ! -e "$gtm_tst/$tst/u_inref/${subname}.csh" ) echo "Could not find subtest '$tst/$subname'" `false` || exit 5
-	    end
-	    if ( "$gtm_test_st_list" == "" ) unsetenv gtm_test_st_list
-	    set skip
+	##HELP_SCREEN The next argument is the name of the subtests requested (comma seperated)
+	##HELP_SCREEN Only those subtests requested will be run
+	##HELP_SCREEN No logs will be kept of this run (forced -nolog)
+	setenv gtm_test_st_list $argv[$argc1]
+	if ! ( $?tst ) echo "No test specified with -t prior to subtest specification '$argv[$argc1]'" `false` || exit 5
+	# Verify that each subtest supplied actually exists
+	foreach subname (${gtm_test_st_list:as/,/ /})
+		if ( ! -e "${gtm_test_com_individual:h}/$tst/u_inref/${subname}.csh" ) echo "Could not find subtest '$tst/$subname'" `false` || exit 5
+	end
+	if ( "$gtm_test_st_list" == "" ) unsetenv gtm_test_st_list
+	set skip
 breaksw
 case "-x":
-	    ##HELP_SCREEN Exclude following test or option
-	    ##HELP_SCREEN Is case sensitive, i.e. -x mm will exclude mm test and -x MM will exclude MM option, since options are writtenin uppercase
-	    ##HELP_SCREEN if the following parameter is a file, it assumes the file contains a list of -x <test> entries
-	    ##HELP_SCREEN Pattern matching is not done, so -x replic will not exclude replication tests. The options recognized can be seen by submitting with -- option, or from submitted_tests file in the test output directory
-	    #exclude test given at command line
-	    if (-f $argv[$argc1] ) then
-	    	# If the next argument is a file, it would contain a list of tests to exclude
+	##HELP_SCREEN Exclude following test or option
+	##HELP_SCREEN Is case sensitive, i.e. -x mm will exclude mm test and -x MM will exclude MM option, since options are writtenin uppercase
+	##HELP_SCREEN if the following parameter is a file, it assumes the file contains a list of -x <test> entries
+	##HELP_SCREEN Pattern matching is not done, so -x replic will not exclude replication tests. The options recognized can be seen by submitting with -- option, or from submitted_tests file in the test output directory
+	#exclude test given at command line
+	if (-f $argv[$argc1] ) then
+		# If the next argument is a file, it would contain a list of tests to exclude
 		cat $argv[$argc1] >>&! $test_list
-	    else
+	else
 		echo "-x" $argv[$argc1] >>! $test_list
-	    endif
-	    set skip
+	endif
+	set skip
 breaksw
 case "-dry*":
 case "-dryrun":
@@ -571,26 +571,26 @@ case "-dryrun":
 	setenv gtm_test_dryrun
 breaksw
 
-   #     case "impossible_sample_argument": #to take next arg into a variable
-   #	 setenv impossible_sample_case_variable $argv[$argc1]
-   #	 set skip #so next argument shall not be parsed
-   #	 breaksw
+#	case "impossible_sample_argument": #to take next arg into a variable
+#	 setenv impossible_sample_case_variable $argv[$argc1]
+#	 set skip #so next argument shall not be parsed
+#	 breaksw
 case "-env":
-	    ##HELP_SCREEN To set arbitrary environment variables "-env env_var=value"
-	    ##HELP_SCREEN Ex: gtmtest.csh -env gtm_test_nomultihost=1 <other options>
-	    ##HELP_SCREEN The above will set the env.variable gtm_test_nomultihost to 1
-	    ##HELP_SCREEN Setting the above env.variable will disable all multi-host tests like
-	    ##HELP_SCREEN GT.CM tests, multi_machine, dualfail_ms and MULTISITE option of multisite_replic test
-	    set temp = `echo $argv[$argc1]|cut -f 1 -d "="`
-	    set value = `echo $argv[$argc1]|cut -f 2 -d "="`
-	    setenv $temp  $value
-	    set skip
+	##HELP_SCREEN To set arbitrary environment variables "-env env_var=value"
+	##HELP_SCREEN Ex: gtmtest.csh -env gtm_test_nomultihost=1 <other options>
+	##HELP_SCREEN The above will set the env.variable gtm_test_nomultihost to 1
+	##HELP_SCREEN Setting the above env.variable will disable all multi-host tests like
+	##HELP_SCREEN GT.CM tests, multi_machine, dualfail_ms and MULTISITE option of multisite_replic test
+	set temp = `echo $argv[$argc1]|cut -f 1 -d "="`
+	set value = `echo $argv[$argc1]|cut -f 2 -d "="`
+	setenv $temp  $value
+	set skip
 breaksw
 case "-h":
 case "-help":
-	   ##HELP_SCREEN Print help and exit
-           $tst_awk -f $gtm_test_com_individual/help_screen.awk $gtm_test_com_individual/arguments.csh | less -F
-	   exit 5
+	##HELP_SCREEN Print help and exit
+	$tst_awk -f $gtm_test_com_individual/help_screen.awk $gtm_test_com_individual/arguments.csh | less -F
+	exit 5
 breaksw
 case "-dbglvl":
 	##HELP_SCREEN $gtmdbglvl is set to next argument
@@ -598,107 +598,107 @@ case "-dbglvl":
 	set skip
 breaksw
 case "-dynlit*":
-	    ##HELP_SCREEN Selects standard literal compilation
-	    setenv gtm_test_dynamic_literals	"DYNAMIC_LITERALS"
+	##HELP_SCREEN Selects standard literal compilation
+	setenv gtm_test_dynamic_literals	"DYNAMIC_LITERALS"
 breaksw
 case "-nodynlit*":
-	    ##HELP_SCREEN Selects space-saving dynamic literal compilation
-	    setenv gtm_test_dynamic_literals	"NODYNAMIC_LITERALS"
+	##HELP_SCREEN Selects space-saving dynamic literal compilation
+	setenv gtm_test_dynamic_literals	"NODYNAMIC_LITERALS"
 breaksw
 case "-list":
-	    ##HELP_SCREEN Print list of tests (and their applicabilities)
-	    setenv test_list_only
+	##HELP_SCREEN Print list of tests (and their applicabilities)
+	setenv test_list_only
 breaksw
 case "--":
-	    ##HELP_SCREEN print out submitted tests and exit
-	    ##HELP_SCREEN for debugging
-	    setenv test_debug_print_only
+	##HELP_SCREEN print out submitted tests and exit
+	##HELP_SCREEN for debugging
+	setenv test_debug_print_only
 breaksw
 case "-buildcycle":
-	    ##HELP_SCREEN not intended for use by individual users. Intended for build cycle to log directory information.
-	    setenv gtm_test_buildcycle
+	##HELP_SCREEN not intended for use by individual users. Intended for build cycle to log directory information.
+	setenv gtm_test_buildcycle
 breaksw
 case "-ipcs*":
-	    ##HELP_SCREEN Differences in ipcs list causes test to fail
-	    setenv tst_ipcs_diff_causes_fail
+	##HELP_SCREEN Differences in ipcs list causes test to fail
+	setenv tst_ipcs_diff_causes_fail
 breaksw
 case "-at":
-	    ##HELP_SCREEN at functionality, the next argument is taken as the argument to the at command.
-	    setenv gtm_test_run_time $argv[$argc1]
-	    set skip
+	##HELP_SCREEN at functionality, the next argument is taken as the argument to the at command.
+	setenv gtm_test_run_time $argv[$argc1]
+	set skip
 breaksw
 case "-unicode":
-	    ##HELP_SCREEN defines $gtm_chset=UTF-8 and gtm_test_dbdata=UTF-8
-	    setenv gtm_test_unicode
+	##HELP_SCREEN defines $gtm_chset=UTF-8 and gtm_test_dbdata=UTF-8
+	setenv gtm_test_unicode
 breaksw
 case "-nounicode":
-	    ##HELP_SCREEN defines $gtm_chset=M and gtm_test_dbdata=M
-	    setenv gtm_test_nounicode
+	##HELP_SCREEN defines $gtm_chset=M and gtm_test_dbdata=M
+	setenv gtm_test_nounicode
 breaksw
 case "-encrypt":
 	##HELP_SCREEN -encrypt defines test_encryption=ENCRYPT
-	    setenv test_encryption ENCRYPT
-	    setenv acc_meth BG # encryption requires BG access method - do not leave acc_meth setting to randomization
+	setenv test_encryption ENCRYPT
+	setenv acc_meth BG # encryption requires BG access method - do not leave acc_meth setting to randomization
 breaksw
 case "-noencrypt":
-        ##HELP_SCREEN -noencrypt defines test_encryption=NON_ENCRYPT
-            setenv test_encryption NON_ENCRYPT
+	##HELP_SCREEN -noencrypt defines test_encryption=NON_ENCRYPT
+	setenv test_encryption NON_ENCRYPT
 breaksw
 case "-freeze*":
-	    ##HELP_SCREEN Allows mumps processes to freeze on failures defined in custom_errors_sample.txt
-	    setenv gtm_test_freeze_on_error	1
+	##HELP_SCREEN Allows mumps processes to freeze on failures defined in custom_errors_sample.txt
+	setenv gtm_test_freeze_on_error	1
 breaksw
 case "-nofreeze*":
-	    ##HELP_SCREEN Disallows mumps processes to freeze on failures
-	    setenv gtm_test_freeze_on_error	0
+	##HELP_SCREEN Disallows mumps processes to freeze on failures
+	setenv gtm_test_freeze_on_error	0
 breaksw
 case "-qdbr*":
-	    ##HELP_SCREEN Allows mumps processes to bypass in gds_rundown
-	    setenv gtm_test_qdbrundown	1
+	##HELP_SCREEN Allows mumps processes to bypass in gds_rundown
+	setenv gtm_test_qdbrundown	1
 breaksw
 case "-noqdbr*":
-	    ##HELP_SCREEN Disallows mumps processes to bypass in gds_rundown
-	    setenv gtm_test_qdbrundown	0
+	##HELP_SCREEN Disallows mumps processes to bypass in gds_rundown
+	setenv gtm_test_qdbrundown	0
 breaksw
 case "-side*":
-	    ##HELP_SCREEN Selects standard side effect compilation
-	    setenv gtm_side_effects	1
+	##HELP_SCREEN Selects standard side effect compilation
+	setenv gtm_side_effects	1
 breaksw
 case "-noside*":
-	    ##HELP_SCREEN Selects original GT.M side effect compilation
-	    setenv gtm_side_effects	0
+	##HELP_SCREEN Selects original GT.M side effect compilation
+	setenv gtm_side_effects	0
 breaksw
 case "-spannode":
-	    ##HELP_SCREEN Forces spanning node testing in all tests
-	    setenv gtm_test_spannode	1
+	##HELP_SCREEN Forces spanning node testing in all tests
+	setenv gtm_test_spannode	1
 breaksw
 case "-nospannode":
-	    ##HELP_SCREEN Disables spanning node testing in all tests but spanning_nodes
-	    setenv gtm_test_spannode	0
+	##HELP_SCREEN Disables spanning node testing in all tests but spanning_nodes
+	setenv gtm_test_spannode	0
 breaksw
 case "-spanreg":
-	    ##HELP_SCREEN Forces spanning node testing in all tests
-	    setenv gtm_test_spanreg	1
+	##HELP_SCREEN Forces spanning node testing in all tests
+	setenv gtm_test_spanreg	1
 breaksw
 case "-nospanreg":
-	    ##HELP_SCREEN Forces spanning node testing in all tests
-	    setenv gtm_test_spanreg	0
+	##HELP_SCREEN Forces spanning node testing in all tests
+	setenv gtm_test_spanreg	0
 breaksw
 case "-trig*":
-	    ##HELP_SCREEN Forces trigger testing in all tests
-	    setenv gtm_test_trigger	1
+	##HELP_SCREEN Forces trigger testing in all tests
+	setenv gtm_test_trigger	1
 breaksw
 case "-notrig*":
-	    ##HELP_SCREEN Disables trigger testing in all tests but the triggers test
-	    setenv gtm_test_trigger	0
+	##HELP_SCREEN Disables trigger testing in all tests but the triggers test
+	setenv gtm_test_trigger	0
 breaksw
 case "-defer_allocate":
-	    ##HELP_SCREEN The database space is not fully allocated at the database creation and extentions
-	    setenv gtm_test_defer_allocate	1
+	##HELP_SCREEN The database space is not fully allocated at the database creation and extentions
+	setenv gtm_test_defer_allocate	1
 breaksw
 case "-nodefer_allocate":
-	    ##HELP_SCREEN The database space is fully allocated at the database creation and extentions
-	    setenv gtm_test_defer_allocate	0
+	##HELP_SCREEN The database space is fully allocated at the database creation and extentions
+	setenv gtm_test_defer_allocate	0
 breaksw
 case "-norandomsettings":
 	##HELP_SCREEN -norandomsettings disables sourcing of do_random_settings.csh.
@@ -715,22 +715,22 @@ case "-tslog":
 	setenv	gtm_test_tslog	1
 breaksw
 case "-b*":
-	    #image, since bg is caught above, it will not come here
-	    ##HELP_SCREEN Image ($tst_image)
-	    setenv tst_image bta
+	#image, since bg is caught above, it will not come here
+	##HELP_SCREEN Image ($tst_image)
+	setenv tst_image bta
 breaksw
 case "-d*":
-	    ##HELP_SCREEN Image ($tst_image)
-	    setenv tst_image dbg
+	##HELP_SCREEN Image ($tst_image)
+	setenv tst_image dbg
 breaksw
 case "-p*":
-	    ##HELP_SCREEN Image ($tst_image)
-	    setenv tst_image pro
+	##HELP_SCREEN Image ($tst_image)
+	setenv tst_image pro
 breaksw
 default:
-	    echo "Unrecognized option $arg"
-	    echo Try \"gtmtest.csh\" for help "(no arguments)"
-	    exit 5
+	echo "Unrecognized option $arg"
+	echo Try \"gtmtest.csh\" for help "(no arguments)"
+	exit 5
 endsw
 endif
 end
