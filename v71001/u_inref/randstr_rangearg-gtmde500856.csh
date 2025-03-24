@@ -54,14 +54,9 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		else
 			set testname = "missinglimit"
 		endif
-		set instructions = `perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -run $testname^gtmde500856`
-		echo $instructions >& perf.out
-		if ( "$instructions[1]" == "GTM>" ) then
-			set total_instructions = "$instructions[2]"
-		else
-			set total_instructions = "$instructions[1]"
-		endif
-		if ( "$total_instructions" > $limit ) echo "FAIL: Test took more than $limit instructions"`false` || continue
+		perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -run $testname^gtmde500856 >& perf.out
+		set instructions = `tail -1 perf.out`
+		if ( "$instructions[1]" > $limit ) echo "FAIL: Test took more than $limit instructions"`false` || continue
 		echo "PASS: Took less than $limit instructions"
 		echo ""
 	end
