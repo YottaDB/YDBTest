@@ -3,6 +3,9 @@
  * Copyright (c) 2012-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
+ * Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
  *	under a license.  If you do not know the terms of	*
@@ -314,7 +317,7 @@ gtm_status_t gtm8087_localtime(int argc, gtm_long_t timep, gtm_int_t *sec, gtm_i
 
 	if (11 != argc)
 		return (gtm_status_t)-argc;
-	if (currtimetm = localtime((time_t *)&timep))	/* Warning - assignment */
+	if ((currtimetm = localtime((time_t *)&timep)))	/* Warning - assignment */
 	{
 		*sec	= (gtm_int_t)currtimetm->tm_sec;
 		*min	= (gtm_int_t)currtimetm->tm_min;
@@ -447,7 +450,7 @@ gtm_status_t gtm8087_regcomp(int argc, gtm_string_t *pregstr, gtm_char_t *regex,
 gtm_status_t gtm8087_regexec(int argc, gtm_string_t *pregstr, gtm_char_t *string, gtm_int_t nmatch, gtm_string_t *pmatch,
 			   gtm_int_t eflags, gtm_int_t *matchsuccess)
 {
-        regex_t         *preg;
+	regex_t		*preg;
 	regmatch_t	*result;
 	size_t		resultsize;
 
