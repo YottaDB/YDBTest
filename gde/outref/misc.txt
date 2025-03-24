@@ -282,14 +282,14 @@ ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexdefault.dat created
 Region	AREG
 Region          AREG
-  Reserved Bytes                              63965  Block size (in bytes)                65024
   Mutex Queue Slots                              64  KILLs in progress                        0
+  Data Reserved Bytes                         63965  Index Reserved Bytes                 63965
 Region          BREG
-  Reserved Bytes                               4568  Block size (in bytes)                 5120
   Mutex Queue Slots                           32768  KILLs in progress                        0
+  Data Reserved Bytes                          4568  Index Reserved Bytes                  4568
 Region          DEFAULT
-  Reserved Bytes                                920  Block size (in bytes)                 4096
   Mutex Queue Slots                            2048  KILLs in progress                        0
+  Data Reserved Bytes                           920  Index Reserved Bytes                   920
 # Test case to check if a change to template and subsequent rename of DEFAULT segment, shows the right commands in show -command output
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld

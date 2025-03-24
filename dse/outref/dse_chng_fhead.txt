@@ -14,7 +14,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
 ##TEST_AWK  Access method                                  (MM|BG)  Global Buffers                        1024
-  Reserved Bytes                                  0  Block size (in bytes)                 1024
+                                                     Block size (in bytes)                 1024
   Maximum record size                           256  Starting VBN                          8193
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Maximum key size                               64  Total blocks            0x0000000000000BBE
@@ -65,6 +65,7 @@ Region          DEFAULT
   LOCK shares DB critical section             FALSE  Read Only                              OFF
   Recover interrupted                         FALSE  Full Block Write                         0
   StatsDB Allocation                           2050
+  Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
   Reorg Sleep Nanoseconds                         0
 command: change -fileheader -location=NULL -size=1 -value=1 ...
@@ -109,7 +110,7 @@ File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
 ##TEST_AWK  Access method                                  (MM|BG)  Global Buffers                        1024
-  Reserved Bytes                                  0  Block size (in bytes)                 1024
+                                                     Block size (in bytes)                 1024
   Maximum record size                           256  Starting VBN                          8193
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Maximum key size                               64  Total blocks            0x0000000000000BBE
@@ -160,6 +161,7 @@ Region          DEFAULT
   LOCK shares DB critical section             FALSE  Read Only                              OFF
   Recover interrupted                         FALSE  Full Block Write                         0
   StatsDB Allocation                           2050
+  Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
   Reorg Sleep Nanoseconds                         0
 Check -nocrit qualifier...
