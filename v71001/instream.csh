@@ -24,6 +24,7 @@
 # atlongexpr_zshowvtolcl-gtmde512004		[jon]	Test SET @expr supports long exprs and %ZSHOWVTOLCL uses them for alias containers
 # zmaxtptime_critinterrupt-gtmde513980		[jon]	Test $ZMAXTPTIME can interrupt a transaction holding a database critical section
 # ztimeout_tpdefer-gtmde519525			[jon]	Test $ZTIMEOUT deferred during a TP transaction
+# viewjnlpool_multiinst-gtmf135040		[jon]	Test $VIEW("JNLPOOL") with multiple instances
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -43,6 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic atlongexpr_zshowvtolcl-
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_critinterrupt-gtmde513980"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_tpdefer-gtmde519525"
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic viewjnlpool_multiinst-gtmf135040"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
