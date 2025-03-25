@@ -14,14 +14,14 @@ GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
    
 Global: a (region DEFAULT)
 %YDB-E-MAXBTLEVEL, Global ^a in region DEFAULT reached maximum level
-Blocks processed    : 22647 
-Blocks coalesced    : 62 
-Blocks split        : 11194 
-Blocks swapped      : 22583 
-Blocks freed        : 62 
-Blocks reused       : 16298 
+Blocks processed    : 14798 
+Blocks coalesced    : 38 
+Blocks split        : 8658 
+Blocks swapped      : 14767 
+Blocks freed        : 15 
+Blocks reused       : 10808 
 Levels Increased    : 7 
-Blocks extended     : 16231 
+Blocks extended     : 10821 
 %YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 
@@ -33,17 +33,17 @@ Type           Blocks         Records          % Used      Adjacent
 
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 ##TEST_AWKDirectory           2               2           [2|3]....            NA
-Index            6277           28943          34.070          1056
-Data            22667           50000          49.081         20348
-Free               54              NA              NA            NA
-Total           29000           78945              NA         21404
+Index            5132           23500          26.511           705
+Data            18369           50000          60.085         12901
+Free               97              NA              NA            NA
+Total           23600           73502              NA         13606
 ##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
 ##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
 ##TEST_AWKDirectory           2               2           [2|3]....            NA
-Index            6277           28943          34.070          1056
-Data            22667           50000          49.081         20347
-Free       4286578231              NA              NA            NA
-Total      4286607177           78945              NA         21403
+Index            5132           23500          26.511           704
+Data            18369           50000          60.085         12900
+Free       4286578274              NA              NA            NA
+Total      4286601777           73502              NA         13604
 ##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 # Verify that the maximum tree height/depth is 11 (new MAX_BT_DEPTH in GT.M V7.0-001 as part of GTM-9434)
 # Previously, this was only 7. The above part of the test (thanks to the [mupip reorg -fill=0] already created
@@ -62,63 +62,63 @@ Key not found, would be in block  6.
     Global tree path
     Path--blk:off
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
-	4:10,	6CBD:10,	6157:10,	5B2D:10,	35A0:10,	6FC6:10,	6F5E:10,	60B3:10,	7:10,	8:10,	6:10,
+	4:10,	4699:10,	3C0B:10,	424C:10,	57CF:10,	57D6:10,	5667:10,	57B4:10,	3:10,	5:10,	6:10,
 ##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
 ##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
-	4:10,	100006ABD:10,	100005F57:10,	10000592D:10,	1000033A0:10,	100006DC6:10,	100006D5E:10,	100005EB3:10,	7:10,	8:10,	6:10,
+	4:10,	100004499:10,	100003A0B:10,	10000404C:10,	1000055CF:10,	1000055D6:10,	100005467:10,	1000055B4:10,	3:10,	5:10,	6:10,
 ##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 DSE> 
-Block 4   Size 396   Level 10   TN xxx V7
+Block 4   Size 395   Level 10   TN xxx V7
 
 DSE> 
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
-Block 6CBD   Size CF   Level 9   TN xxx V7
+Block 4699   Size CF   Level 9   TN xxx V7
 
 DSE> 
-Block 6157   Size CF   Level 8   TN xxx V7
+Block 3C0B   Size CF   Level 8   TN xxx V7
 
 DSE> 
-Block 5B2D   Size CF   Level 7   TN xxx V7
+Block 424C   Size CF   Level 7   TN xxx V7
 
 DSE> 
-Block 35A0   Size CC   Level 6   TN xxx V7
+Block 57CF   Size CF   Level 6   TN xxx V7
 
 DSE> 
-Block 6FC6   Size CF   Level 5   TN xxx V7
+Block 57D6   Size CC   Level 5   TN xxx V7
 
 DSE> 
-Block 6F5E   Size CC   Level 4   TN xxx V7
+Block 5667   Size CC   Level 4   TN xxx V7
 
 DSE> 
-Block 60B3   Size CC   Level 3   TN xxx V7
+Block 57B4   Size CC   Level 3   TN xxx V7
 ##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
 ##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
-Block 100006ABD   Size CF   Level 9   TN xxx V7
+Block 100004499   Size CF   Level 9   TN xxx V7
 
 DSE> 
-Block 100005F57   Size CF   Level 8   TN xxx V7
+Block 100003A0B   Size CF   Level 8   TN xxx V7
 
 DSE> 
-Block 10000592D   Size CF   Level 7   TN xxx V7
+Block 10000404C   Size CF   Level 7   TN xxx V7
 
 DSE> 
-Block 1000033A0   Size CC   Level 6   TN xxx V7
+Block 1000055CF   Size CF   Level 6   TN xxx V7
 
 DSE> 
-Block 100006DC6   Size CF   Level 5   TN xxx V7
+Block 1000055D6   Size CC   Level 5   TN xxx V7
 
 DSE> 
-Block 100006D5E   Size CC   Level 4   TN xxx V7
+Block 100005467   Size CC   Level 4   TN xxx V7
 
 DSE> 
-Block 100005EB3   Size CC   Level 3   TN xxx V7
+Block 1000055B4   Size CC   Level 3   TN xxx V7
 ##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 
 DSE> 
-Block 7   Size CC   Level 2   TN xxx V7
+Block 3   Size CC   Level 2   TN xxx V7
 
 DSE> 
-Block 8   Size DB   Level 1   TN xxx V7
+Block 5   Size DB   Level 1   TN xxx V7
 
 DSE> 
 Block 6   Size 1C1   Level 0   TN xxx V7
