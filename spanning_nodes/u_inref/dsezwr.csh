@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,7 +31,7 @@ if ( 0 == $status ) then
 	mv dbcreate.out dbcreate.out_bkup
 endif
 
-@ blk_size = `$DSE dump -f |& $grep 'Block size ' | $tst_awk '{print $8}'`
+@ blk_size = `$DSE dump -f |& $grep 'Block size ' | $tst_awk '{print $5}'`
 # randomly choose the size of the mumps node to be greater than blk_size and less than rec_size, so that node will span across the blocks
 @ node_sz_range = $rec_size - $blk_size
 @ node_size = `$gtm_exe/mumps -run rand $node_sz_range 1 $blk_size`
@@ -48,12 +48,12 @@ EOF
 #randomly choose if the subscript to use or not. Currently hard-coded
 @ has_subs = `$gtm_exe/mumps -run rand 2`
 if ( 1 == $has_subs) then
-        set key = "^a(1)"
-        set span_key = "^a(1,#SPAN"
+	set key = "^a(1)"
+	set span_key = "^a(1,#SPAN"
 	@ keysz_in_bytes = 10
 else
-        set key = "^a"
-        set span_key = "^a(#SPAN"
+	set key = "^a"
+	set span_key = "^a(#SPAN"
 	@ keysz_in_bytes = 7
 endif
 echo "key=$key" >>&! test.debug
@@ -67,7 +67,7 @@ echo "key=$key" >>&! test.debug
 @ totspanblks = `expr $node_size / $eff_blk_size`
 @ rem = `expr $node_size % $eff_blk_size`
 if ( 0 != $rem) then
-        @ totspanblks = $totspanblks + 1
+	@ totspanblks = $totspanblks + 1
 endif
 
 $gtm_exe/mumps -run '%XCMD' "set $key=^tmp"
@@ -86,10 +86,10 @@ echo "span_key=$span_key" >>&! test.debug
 
 @ iter = 2
 while ( $iter <= $totspanblks )
-        set blkid = `$DSE find -key=\"$span_key$iter\)\" |& $grep "Key found in block" | $tst_awk '{print $5}' | $tst_awk -F\. '{print $1}'`
-        @ iter = $iter + 1
+	set blkid = `$DSE find -key=\"$span_key$iter\)\" |& $grep "Key found in block" | $tst_awk '{print $5}' | $tst_awk -F\. '{print $1}'`
+	@ iter = $iter + 1
 	echo "blkid=$blkid" >>&! test.debug
-        set blkid_list = ($blkid_list $blkid)
+	set blkid_list = ($blkid_list $blkid)
 	echo $blkid_list >>&! test.debug
 end
 echo $blkid_list >>&! test.debug
@@ -101,7 +101,7 @@ echo 'open -file="dse_span.zwr"' >>&! dsecmd.csh
 while ( $iter <= $totspanblks )
 	echo "dump -bl=$blkid_list[$iter] -zwr" >>&! dsecmd.csh
 	$DSE INTEGRIT  -bl=$blkid_list[$iter] >>&! dseinteg.out
-        @ iter = $iter + 1
+	@ iter = $iter + 1
 end
 echo 'close' >>&! dsecmd.csh
 echo 'EOF' >>&! dsecmd.csh
@@ -110,7 +110,7 @@ source dsecmd.csh >&! dsecmd.out
 @ killgbl = `$gtm_exe/mumps -run rand 2`
 if ( 1 == $killgbl ) then
 	echo "Spanning node will be killed"  >>&! test.debug
-        $gtm_exe/mumps -run '%XCMD' "kill $key"
+	$gtm_exe/mumps -run '%XCMD' "kill $key"
 else
 	echo "Spanning node will not be killed" >>&! test.debug
 endif

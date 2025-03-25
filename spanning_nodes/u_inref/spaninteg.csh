@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,10 +28,10 @@ source $gtm_tst/com/set_random_limits.csh
 $gtm_tst/com/dbcreate.csh mumps 1 20 $rec_size $RAND_BLOCK_SIZE 1024 4096 >&! dbcreate.outx
 $grep "YDB-W-MUNOSTRMBKUP" dbcreate.out >&! test.debug
 if ( 0 == $status ) then
-        mv dbcreate.out dbcreate.out_bkup
+	mv dbcreate.out dbcreate.out_bkup
 endif
 
-@ blk_size = `$DSE dump -f |& $grep 'Block size ' | $tst_awk '{print $8}'`
+@ blk_size = `$DSE dump -f |& $grep 'Block size ' | $tst_awk '{print $5}'`
 
 @ node_sz_range = ($rec_size - $blk_size) + 1
 @ node_size = `$gtm_exe/mumps -run rand $node_sz_range 1 $blk_size`
@@ -56,7 +56,7 @@ echo "span_key=$span_key" >>&! test.debug
 @ totspanblks = `expr $node_size / $eff_blk_size`
 @ rem = `expr $node_size % $eff_blk_size`
 if ( 0 != $rem) then
-        @ totspanblks = $totspanblks + 1
+	@ totspanblks = $totspanblks + 1
 endif
 # Add 1 in totspanblks count to account for control block of spanning node.
 @ totspanblks = $totspanblks + 1
@@ -77,10 +77,10 @@ echo $blkid_list >>&! test.debug
 # Construct the array of the block-ids of spanning nodes
 @ iter = 2
 while ( $iter <= $totspanblks )
-        set blkid = `$DSE find -key=\"$span_key$iter\)\" |& $grep "Key found in block" | $tst_awk '{print $5}' | $tst_awk -F\. '{print $1}'`
-        @ iter = $iter + 1
+	set blkid = `$DSE find -key=\"$span_key$iter\)\" |& $grep "Key found in block" | $tst_awk '{print $5}' | $tst_awk -F\. '{print $1}'`
+	@ iter = $iter + 1
 	echo "iter=$iter blkid=$blkid" >>&! test.debug
-        set blkid_list = ($blkid_list $blkid)
+	set blkid_list = ($blkid_list $blkid)
 end
 
 echo $blkid_list >>&! test.debug
@@ -92,7 +92,7 @@ echo 'open -file="dse_span.zwr"' >>&! dsecmd.csh
 @ iter = 1
 while ( $iter <= $totspanblks )
 echo "dump -bl=$blkid_list[$iter] -zwr" >>&! dsecmd.csh
-        @ iter = $iter + 1
+	@ iter = $iter + 1
 end
 echo 'close' >>&! dsecmd.csh
 echo 'EOF' >>&! dsecmd.csh
