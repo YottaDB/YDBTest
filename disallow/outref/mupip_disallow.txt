@@ -257,15 +257,15 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -reserved_bytes=0 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -flush_time ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES DATA_RESERVED_BYTES INDEX_RESERVED_BYTES FLUSH_TIME
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -lock_space=2048 ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES DATA_RESERVED_BYTES INDEX_RESERVED_BYTES FLUSH_TIME LOCK_SPACE
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -defer_time=40 ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES DATA_RESERVED_BYTES INDEX_RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -wait_disk=10 ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES DATA_RESERVED_BYTES INDEX_RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK
 --------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -version=V4 -partial_recov_bypass ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK PARTIAL_RECOV_BYPASS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION ACCESS_METHOD GLOBAL_BUFFERS RESERVED_BYTES DATA_RESERVED_BYTES INDEX_RESERVED_BYTES FLUSH_TIME LOCK_SPACE DEFER_TIME WAIT_DISK PARTIAL_RECOV_BYPASS
 !
 !
 !	DISALLOW(journal.on AND journal.off)
