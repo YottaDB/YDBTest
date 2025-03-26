@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,7 @@ set backslash_quote
 unsetenv gtm_boolean		# to ensure short-circuiting else boolean conditional on zsystem below will give GVUNDEF
 unsetenv gtm_side_effects	# also needed to ensure gtm_boolean does not get implicitly turned on
 $gtm_exe/mumps -run %XCMD "s ^a=1  for i=1:1:300 zsystem:\$data(^b)&('\$\$^isprcalv(^b)) \"kill -9 \"_\$j  hang 1" >&! mumps_bg.out &	# BYPASSOK kill
-unset backslash_quite
+unset backslash_quote
 set bgpid=$!
 
 # Make sure above got started

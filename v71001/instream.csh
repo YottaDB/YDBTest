@@ -23,6 +23,7 @@
 # xecuteopfail_cleancompile-gtmde510902		[jon]	Test prevent literal operation failures in XECUTE blocks from improperly affecting the surrounding execution environment
 # atlongexpr_zshowvtolcl-gtmde512004		[jon]	Test SET @expr supports long exprs and %ZSHOWVTOLCL uses them for alias containers
 # zmaxtptime_critinterrupt-gtmde513980		[jon]	Test $ZMAXTPTIME can interrupt a transaction holding a database critical section
+# ztimeout_tpdefer-gtmde519525			[jon]	Test $ZTIMEOUT deferred during a TP transaction
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic comptimelit_numoflow-gt
 setenv subtest_list_non_replic	"$subtest_list_non_replic xecuteopfail_cleancompile-gtmde510902"
 setenv subtest_list_non_replic	"$subtest_list_non_replic atlongexpr_zshowvtolcl-gtmde512004"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_critinterrupt-gtmde513980"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_tpdefer-gtmde519525"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

@@ -14,6 +14,7 @@
 # Run a gtmde5139800 to do a trestart until execution reaches the final retry. Then, while holding crit, hang for 15 seconds.
 # Set $zmaxtptime to 2 seconds. And so we expect a TPTIMEOUT error to kick in the middle of the hang 15 when 2 seconds have elapsed.
 # Prior to v71001, no TPTIMEOUT error would be issued.
+$ZMAXTPTIME=2
 ##TEST_AWK\$h = [0-9]*,[0-9]* : \$trestart = 3 : BEFORE hang 15
 ##TEST_AWK\$HOROLOG="[0-9]*,[0-9]*"
-$ZSTATUS="150377322,gtmde513980+7^gtmde513980,%GTM-E-TPTIMEOUT, Transaction timeout"
+$ZSTATUS="150377322,gtmde513980+8^gtmde513980,%GTM-E-TPTIMEOUT, Transaction timeout"

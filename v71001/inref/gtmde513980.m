@@ -12,6 +12,7 @@
 
 gtmde513980 ;
 	set $zmaxtptime=2
+	zwrite $zmaxtptime
 	set $etrap="zwrite $h,$zstatus  halt"
 	tstart ():serial
 	if $trestart<3 trestart
