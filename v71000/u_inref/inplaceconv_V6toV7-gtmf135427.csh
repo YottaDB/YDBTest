@@ -40,7 +40,6 @@ echo '# V6 and V7 DBs are incompatible in that V6 cannot allocate unused space b
 echo '# in anticipation of a V7 upgrade.'
 setenv ydb_test_4g_db_blks 0
 setenv ydb_msgprefix "GTM"
-setenv ydb_prompt "GTM>"
 echo
 
 echo "### Test case 1: In-place database upgrade from V6 to V7"

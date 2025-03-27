@@ -25,6 +25,7 @@
 # zmaxtptime_critinterrupt-gtmde513980		[jon]	Test $ZMAXTPTIME can interrupt a transaction holding a database critical section
 # ztimeout_tpdefer-gtmde519525			[jon]	Test $ZTIMEOUT deferred during a TP transaction
 # viewjnlpool_multiinst-gtmf135040		[jon]	Test $VIEW("JNLPOOL") with multiple instances
+# inplaceupgrade_concurrent-gtmf225097		[jon]	Test Second phase of in-place conversion from V6 to V7 database formats supports operation with concurrent activity
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -43,6 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic xecuteopfail_cleancompi
 setenv subtest_list_non_replic	"$subtest_list_non_replic atlongexpr_zshowvtolcl-gtmde512004"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_critinterrupt-gtmde513980"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_tpdefer-gtmde519525"
+setenv subtest_list_non_replic	"$subtest_list_non_replic inplaceupgrade_concurrent-gtmf225097"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic viewjnlpool_multiinst-gtmf135040"
 

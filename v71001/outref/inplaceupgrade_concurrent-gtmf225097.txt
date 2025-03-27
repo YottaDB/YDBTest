@@ -1,0 +1,79 @@
+# ********************************************************************************************
+# GTM-F225097 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-F225097)
+# 
+# MUPIP REORG -UPGRADE, which completes the second phase of a V6 to V7 database transition, can run concurrently with other processing excepting other MUPIP REORG [-UPGRADE] processes. REORG -UPGRADE can work either by region or by file allowing administrator to run concurrent upgrade operations on different regions/files.
+# 
+# Note: FIS does not recommend running MUPIP REORG -UPGRADE with concurrent activity for MM database files on AIX due to a rare concurrency conflict.
+# 
+# MUPIP DOWNGRADE -VERSION=V63000A allows the current GT.M to downgrade a V6 database to the pre-V63000A EOF block format. Previously the downgrade function reported an unsupported error for a V7 versions. (GTM-F225097)
+# 
+
+# The below tests force the use of V6 mode to create DBs. This requires turning off ydb_test_4g_db_blks since
+# V6 and V7 DBs are incompatible in that V6 cannot allocate unused space beyond the design-maximum total V6 block limit
+# in anticipation of a V7 upgrade.
+
+### Test 1: Run MUPIP REORG -UPGRADE while concurrently running upgrade operations on other files/regions
+# Set version to: V6
+# Create V6 database files
+# Set a large value in each region of the database to slow down later MUPIP REORG -UPGRADE calls
+# Fill region DEFAULT for 5 seconds
+# Fill region A for 5 seconds
+# Fill region B for 5 seconds
+# Fill region C for 5 seconds
+# Set version to: V7
+# Upgrade the global directory T1.gld : GDE exit
+
+# Perform phase 1 of in-place upgrade on region DEFAULT: MUPIP UPGRADE
+# Perform phase 1 of in-place upgrade on region AREG: MUPIP UPGRADE
+# Perform phase 1 of in-place upgrade on region BREG: MUPIP UPGRADE
+# Perform phase 1 of in-place upgrade on region CREG: MUPIP UPGRADE
+
+# Perform phase 2 upgrade of each region in the background to ensure each MUPIP REORG -UPGRADE process runs concurrently:
+# Perform phase 2 of in-place upgrade on region DEFAULT:
+# Perform phase 2 of in-place upgrade on region AREG:
+# Perform phase 2 of in-place upgrade on region BREG:
+# Perform phase 2 of in-place upgrade on region CREG:
+
+### Test 2: Run MUPIP REORG -UPGRADE concurrently on the same region
+# Set version to: V6
+# Create V6 database
+# Set a large value in a region of the database to slow down later MUPIP REORG -UPGRADE calls
+# Fill region DEFAULT for 5 seconds
+# Set version to: V7
+# Upgrade the global directory T2.gld : GDE exit
+
+# Perform phase 1 of in-place upgrade on region DEFAULT: MUPIP UPGRADE
+
+# Perform phase 2 of DEFAULT in the background using 2 concurrent MUPIP REORG -UPGRADE processes:
+# Perform phase 2 of in-place upgrade on region DEFAULT with first process:
+# Perform phase 2 of in-place upgrade on region DEFAULT with second process:
+
+# Confirm that one concurrent MUPIP REORG successfully upgraded the database
+# and that the a second concurrent MUPIP REORG was skipped.  Expect a PASS message
+# confirming that exactly 1 MUPIP REORG process completed the upgrade and
+# exactly 1 MUPIP REORG process skipped the upgrade.
+# For more details, see the discussion thread at:
+# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2281#note_2452144014
+PASS: 1 MUPIP REORG process completed the upgrade, and 1 MUPIP REORG process skipped the upgrade.
+
+### Test 3: Run MUPIP DOWNGRADE -VERSION=V63000A to downgrade a V6 database to V63000A block format
+# Set version to: V6
+# Create V6 database files
+# Set a value in the database: ^x=1
+# Set version to: V7
+# Perform MUPIP DOWNGRADE -VERSION=V63000A
+# Set version to: V6
+# Write the previously set value in the database: ^x=1
+^x=1
+# Add a new value to the database then write it: ^y=2
+^y=2
+# Set version to: V7
+# Upgrade the global directory T3.gld : GDE exit
+# Set a new value in the database: ^z=3
+# Write the previously set values in the database: ^x=1,^y=2,^z=3
+^x=1
+^y=2
+^z=3
