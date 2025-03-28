@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -171,7 +171,7 @@ chmod g+w $test_jnldir
 set path = ($path_base $gtm_tst/$tst/inref $gtm_tst/$tst/u_inref $gtm_tst/com .)
 
 if ( ($?test_replic) && ($?test_gtm_gtcm_one) ) then
-    	echo "TEST-E-REPLIC_GTCM REPLICATION AND GT.CM should not be specified together" >>! $tst_general_dir/diff.log
+	echo "TEST-E-REPLIC_GTCM REPLICATION AND GT.CM should not be specified together" >>! $tst_general_dir/diff.log
 	cat $tst_general_dir/diff.log
 	$gtm_tst/com/write_logs.csh FAILED
 	if (!($?tst_dont_send_mail)) then
@@ -576,13 +576,13 @@ endif
 # add for the logs directory
 setenv gtm_test_log_dir  $ggdata/tests/timinginfo/$tst_src/$tst
 if ($?test_replic) then
-   setenv gtm_repl_instance mumps.repl
-   setenv MULTISITE_REPLIC_PREPARE "source $gtm_tst/com/multisite_replic_prepare.csh"
-   setenv remote_gtm_exe `$sec_shell "setenv gtm_ver_noecho; source $gtm_tst/com/set_active_version.csh $remote_ver $remote_image;"'echo $gtm_exe'`
-   if !($?gtm_tools) setenv remote_gtm_exe $gtm_exe
+	setenv gtm_repl_instance mumps.repl
+	setenv MULTISITE_REPLIC_PREPARE "source $gtm_tst/com/multisite_replic_prepare.csh"
+	setenv remote_gtm_exe `$sec_shell "setenv gtm_ver_noecho; source $gtm_tst/com/set_active_version.csh $remote_ver $remote_image;"'echo $gtm_exe'`
+	if !($?gtm_tools) setenv remote_gtm_exe $gtm_exe
 else if ("GT.CM" == $test_gtm_gtcm) then
-   # no capability to have different versions for remote GT.M version yet
-   setenv remote_gtm_exe `$tst_tcsh -c "setenv gtm_ver_noecho; source $gtm_tst/com/set_active_version.csh $remote_ver $remote_image;"'echo $gtm_exe'`
+	# no capability to have different versions for remote GT.M version yet
+	setenv remote_gtm_exe `$tst_tcsh -c "setenv gtm_ver_noecho; source $gtm_tst/com/set_active_version.csh $remote_ver $remote_image;"'echo $gtm_exe'`
 
 else
 	setenv MULTISITE_REPLIC_PREPARE "echo Is this MULTISITE test then pls. resubmit it with -replic option"
@@ -610,10 +610,10 @@ if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
 endif
 
 if (($?test_replic) || ("GT.CM" == $test_gtm_gtcm)) then
-   setenv remote_image `basename $remote_gtm_exe`
-   setenv remote_ver `basename ${remote_gtm_exe:h}`
+	setenv remote_image `basename $remote_gtm_exe`
+	setenv remote_ver `basename ${remote_gtm_exe:h}`
 else
-   unsetenv gtm_repl_instance
+	unsetenv gtm_repl_instance
 endif
 ############################################
 set testfilesdir = $tst_general_dir/testfiles
@@ -656,35 +656,35 @@ echo "USER:			$USER" 			>> $tst_general_dir/config.log
 echo "MAIL TO:		$mailing_list" 			>> $tst_general_dir/config.log
 echo "COMPILE OPTION:		$gtm_test_nolineentry" 	>> $tst_general_dir/config.log
 echo "LIGHT/FULL/EXTENDED:	$LFE" 			>> $tst_general_dir/config.log
- echo "NICE/UNNICE:             $test_nice" 		>> $tst_general_dir/config.log
+echo "NICE/UNNICE:             $test_nice" 		>> $tst_general_dir/config.log
 echo "REORG/NON_REORG:	$test_reorg" 			>> $tst_general_dir/config.log
 echo "JOURNAL:		$tst_jnl_str" 			>> $tst_general_dir/config.log
 if ($?test_replic) then
-   if ("MULTISITE" == "$test_replic") then
-	   echo "REPLICATION:          	MULTISITE" 		>> $tst_general_dir/config.log
-	   echo "TEST REMOTE DIRS:     	`setenv | $grep tst_remote_dir_`" >> $tst_general_dir/config.log
-	   echo "REMOTE HOSTS:         	`setenv | $grep tst_remote_host_`" >> $tst_general_dir/config.log
-   else
-	   echo "REPLICATION" 					>> $tst_general_dir/config.log
-	   echo "TEST REMOTE DIR:	$tst_remote_dir" 	>> $tst_general_dir/config.log
-	   echo "REMOTE HOST:          	$tst_remote_host" 	>> $tst_general_dir/config.log
-   endif
-   echo "gtm_repl_instance:	$gtm_repl_instance" 	>> $tst_general_dir/config.log
-   echo "BUFFSIZE:            	$tst_buffsize" 		>> $tst_general_dir/config.log
-   echo "LOG:                 	$tst_rf_log" 		>> $tst_general_dir/config.log
-   echo "JOURNAL:              	$tst_jnl_str" 		>> $tst_general_dir/config.log
+	if ("MULTISITE" == "$test_replic") then
+		echo "REPLICATION:          	MULTISITE" 		>> $tst_general_dir/config.log
+		echo "TEST REMOTE DIRS:     	`setenv | $grep tst_remote_dir_`" >> $tst_general_dir/config.log
+		echo "REMOTE HOSTS:         	`setenv | $grep tst_remote_host_`" >> $tst_general_dir/config.log
+	else
+		echo "REPLICATION" 					>> $tst_general_dir/config.log
+		echo "TEST REMOTE DIR:	$tst_remote_dir" 	>> $tst_general_dir/config.log
+		echo "REMOTE HOST:          	$tst_remote_host" 	>> $tst_general_dir/config.log
+	endif
+	echo "gtm_repl_instance:	$gtm_repl_instance" 	>> $tst_general_dir/config.log
+	echo "BUFFSIZE:            	$tst_buffsize" 		>> $tst_general_dir/config.log
+	echo "LOG:                 	$tst_rf_log" 		>> $tst_general_dir/config.log
+	echo "JOURNAL:              	$tst_jnl_str" 		>> $tst_general_dir/config.log
 else
-   echo "REPLICATION:		$test_repl" 		>> $tst_general_dir/config.log
+	echo "REPLICATION:		$test_repl" 		>> $tst_general_dir/config.log
 endif
 if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
-   echo "REMOTE VERSION:       	$remote_ver" 		>> $tst_general_dir/config.log
-   echo "REMOTE IMAGE:         	$remote_image" 		>> $tst_general_dir/config.log
-   echo "REMOTE USER:          	$tst_remote_user" 	>> $tst_general_dir/config.log
+	echo "REMOTE VERSION:       	$remote_ver" 		>> $tst_general_dir/config.log
+	echo "REMOTE IMAGE:         	$remote_image" 		>> $tst_general_dir/config.log
+	echo "REMOTE USER:          	$tst_remote_user" 	>> $tst_general_dir/config.log
 endif
 if ("GT.CM" == $test_gtm_gtcm) then
-   echo "REMOTE HOST:          	$tst_remote_host" 	>> $tst_general_dir/config.log
-   echo "TEST GT.CM SERVERS:          $tst_gtcm_server_list" >> $tst_general_dir/config.log
-   echo "TEST GT.CM DIRECTORIES:      $tst_remote_dir_gtcm_total" >> $tst_general_dir/config.log
+	echo "REMOTE HOST:          	$tst_remote_host" 	>> $tst_general_dir/config.log
+	echo "TEST GT.CM SERVERS:          $tst_gtcm_server_list" >> $tst_general_dir/config.log
+	echo "TEST GT.CM DIRECTORIES:      $tst_remote_dir_gtcm_total" >> $tst_general_dir/config.log
 endif
 # Note that the test might override the following
 if ($?gtm_chset) then
@@ -843,17 +843,17 @@ endif
 
 # Use prctl to detect unaligned memory access on Linux/ia64 boxes
 if (("ia64" == "$MACHTYPE") && ($HOSTOS == "Linux")) then
-    set prctl_comm = "prctl --unaligned=signal"
+	set prctl_comm = "prctl --unaligned=signal"
 else
-    set prctl_comm = ""
+	set prctl_comm = ""
 endif
 
 #########################################################################
 set instream = $gtm_tst/$tst/instream.csh.$tst_ver
 if (-f $instream) then
-   set instream =  $gtm_tst/$tst/instream.csh.$tst_ver
+	set instream =  $gtm_tst/$tst/instream.csh.$tst_ver
 else
-   set instream =  $gtm_tst/$tst/instream.csh
+	set instream =  $gtm_tst/$tst/instream.csh
 endif
 echo "USING SCRIPT: 		$instream" >> $tst_general_dir/config.log
 
@@ -902,26 +902,26 @@ rm -f $tst_general_dir/subtest_exclude_list
 
 # do call instream if not dryrun, or dryrun and subtests exist
 if ((! $?gtm_test_dryrun) || (! $dryrun_subtest)) then
-  	source $gtm_tst/com/mm_nobefore.csh	  # Force NOBEFORE image journaling with MM
+	source $gtm_tst/com/mm_nobefore.csh	  # Force NOBEFORE image journaling with MM
 	setenv tst_tslog_file $tst_general_dir/outstream.log_ts
 	unset echo; unset verbose
 	(source $gtm_tst/com/gtm_test_watchdog.csh $tst_general_dir/tmp & ; echo $! >&! gtm_test_watchdog.pid) >&! gtm_test_watchdog.out
 	set watchdogpid = `cat gtm_test_watchdog.pid`
 	if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
-	  set echo
-	  set verbose
+		set echo
+		set verbose
 	endif
 	if ($tst_stdout > 0) then
-	   # tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
-	   # -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
-	   eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter |& tee $tst_general_dir/outstream.log"
+		# tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
+		# -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
+		eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter |& tee $tst_general_dir/outstream.log"
 	else
-	   # tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
-           # -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
-	   eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter >& $tst_general_dir/outstream.log"
+		# tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
+		     # -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
+		eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter >& $tst_general_dir/outstream.log"
 	endif
 	if ($status != 0 ) then
-	   echo "Possible error!" >> $tst_general_dir/outstream.log
+		echo "Possible error!" >> $tst_general_dir/outstream.log
 	endif
 	# submit_subtest might take control away from $tst_working_dir
 	cd $tst_working_dir
@@ -995,8 +995,8 @@ if ( "OS/390" == $HOSTOS ) then
 	cat $tst_general_dir/outstream.log_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.log
 	cat $tst_general_dir/outstream.cmp_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.cmp
 	if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
-	  set echo
-	  set verbose
+		set echo
+		set verbose
 	endif
 endif
 
@@ -1055,9 +1055,9 @@ endif
 ##################### LOG ##################################
 
 if ( $stat == 0 ) then
-   set log_line_stat = "PASSED"
+	set log_line_stat = "PASSED"
 else
-   set log_line_stat = "FAILED"
+	set log_line_stat = "FAILED"
 endif
 # source below so that env variables set there can be reused below
 source $gtm_tst/com/write_logs.csh $log_line_stat
@@ -1109,9 +1109,9 @@ endif
 ############################################################
 # Flag GT.CM directories for the failure (for the automation
 if ($stat) then
-	 if ("GT.CM" == $test_gtm_gtcm) then
-	   $sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; cd SEC_DIR_GTCM/..; echo This is just to flag the FAILURE. >! diff.log"
-	 endif
+	if ("GT.CM" == $test_gtm_gtcm) then
+		$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; cd SEC_DIR_GTCM/..; echo This is just to flag the FAILURE. >! diff.log"
+	endif
 endif
 ############################################################
 
@@ -1144,7 +1144,7 @@ if ( $stat == 0 ) then
 			\chmod -R g+w $dir
 		end
 		if ($?test_replic) then
-			$sec_shell "\chmod -R g+w $SEC_DIR $test_remote_jnldir $test_remote_bakdir"
+			$sec_shell "\chmod -R g+w $SEC_DIR; if (-d $test_remote_jnldir) \chmod -R g+w $test_remote_jnldir; if (-d $test_remote_bakdir) \chmod -R g+w $test_remote_bakdir"
 		else if ("GT.CM" == $test_gtm_gtcm) then
 			$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; \chmod -R g+w SEC_DIR_GTCM"
 		endif
