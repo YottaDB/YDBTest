@@ -1,0 +1,371 @@
+# Tests that $ydb_dist/yottadb, tmp/yottadb, and /tmp/yottadb/<rel> have correct permissions under the following conditions:
+# 1. YottaDB is installed with --group-restriction
+# 2. YottaDB is installed without --group-restriction
+# 3. After install, ydb_env_set is sourced as the root user
+# 4. After install, ydb_env_set is sourced as a non-root user
+# 5. /tmp/yottadb exists before this test is run
+# 6. /tmp/yottadb does not exist before this test is run
+
+# Get the group id of the current process
+# Get the YottaDB release number
+##TEST_AWK# Get the group of /tmp/yottadb/r[a-zA-Z0-9\._]*, if it already exists
+
+### Test 1: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is undefined
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].
+# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwx---].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+##TEST_AWK# Run ydbinstall/ydbinstall.sh: with --group-restriction --group [a-zA-Z0-9]*
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test1
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt]:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+##TEST_AWK# Confirm the group of \$ydb_tmp matches --group, i.e. [a-zA-Z0-9_]*:
+PASS: $ydb_tmp has the correct group id
+
+### Test 2: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is undefined
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].
+# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwxrwx].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test2
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt]:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+
+### Test 3: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is undefined
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt], or unchanged.
+# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwx---], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+##TEST_AWK# Run ydbinstall/ydbinstall.sh: with --group-restriction --group [a-zA-Z0-9]*
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test3
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [a-zA-Z0-9]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+##TEST_AWK# Confirm the group of \$ydb_tmp matches --group, i.e. [a-zA-Z0-9_]*:
+PASS: $ydb_tmp has the correct group id
+
+### Test 4: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is undefined
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt], or unchanged.
+# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwxrwx], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test4
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [a-zA-Z0-9]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+
+### Test 5: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is a directory path, WITHOUT <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [$ydb_tmp/..] are unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwx---].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+##TEST_AWK# Run ydbinstall/ydbinstall.sh: with --group-restriction --group [a-zA-Z0-9]*
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test5
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+##TEST_AWK# Confirm the group of \$ydb_tmp matches --group, i.e. [a-zA-Z0-9_]*:
+PASS: $ydb_tmp has the correct group id
+
+### Test 6: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is a directory path, WITHOUT <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [$ydb_tmp/..] are unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test6
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+
+### Test 7: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is a directory path, WITHOUT <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [$ydb_tmp/..] are unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwx---], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+##TEST_AWK# Run ydbinstall/ydbinstall.sh: with --group-restriction --group [a-zA-Z0-9]*
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test7
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [a-zA-Z0-9]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+##TEST_AWK# Confirm the group of \$ydb_tmp matches --group, i.e. [a-zA-Z0-9_]*:
+PASS: $ydb_tmp has the correct group id
+
+### Test 8: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is a directory path, WITHOUT <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [$ydb_tmp/..] are unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test8
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [a-zA-Z0-9]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+
+### Test 9: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is a directory path, WITH <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt].
+# 3. Permissions of [$ydb_tmp] are [drwxrwx---].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: with --group-restriction --group gtc
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test9
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+# Confirm the group of $ydb_tmp matches --group, i.e. gtc:
+PASS: $ydb_tmp has the correct group id
+
+### Test 10: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as root user
+# 3. $ydb_tmp is a directory path, WITH <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt].
+# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx].
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test10
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+# Invoke ydb_env_set as root
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+
+### Test 11: Install YottaDB under the following conditions:
+# 1. WITH --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is a directory path, WITH <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].
+# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwx---], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: with --group-restriction --group gtc
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test11
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [0-9a-zA-Z]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-x---]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwx---], or unchanged:
+PASS: $ydb_tmp has the correct permissions
+# Confirm the group of $ydb_tmp matches --group, i.e. gtc:
+PASS: $ydb_tmp has the correct group id
+
+### Test 12: Install YottaDB under the following conditions:
+# 1. WITHOUT --group-restriction
+# 2. Run ydb_env_set as non-root user
+# 3. $ydb_tmp is a directory path, WITH <rel>
+# Expect the following results:
+# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].
+# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.
+# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx], or unchanged.
+# Unset environment variables set by the test system that prevent
+# ydb_env_set from using the installation in the test directory
+# Set test case variables
+# Get the initial permissions of $ydb_tmp, if it exists
+# Get the initial permissions of $ydb_tmp/.. if it exists
+# Record test case variable values for later reference
+# Run ydbinstall/ydbinstall.sh: without --group-restriction
+##TEST_AWKYottaDB version r[0-9\.]* installed successfully at ##TEST_PATH##/install/test12
+##TEST_AWK.*YottaDB pkg-config file install.* at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWK# Invoke ydb_env_set as [0-9a-zA-Z]*
+# Get the permissions of $ydb_dist/yottadb, for later validation of $ydb_tmp/yottadb/<rel> permissions
+# Get the permissions of $ydb_tmp
+# Get the permissions of $ydb_tmp/..
+# Get the group of $ydb_tmp
+# Confirm the permissions of $ydb_tmp/.. are [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp/.. has the correct permissions
+# Confirm the permissions of $ydb_dist/yottadb are [-r-xr-xr-x]:
+PASS: $ydb_dist/yottadb has the correct permissions
+# Confirm the permissions of $ydb_tmp are [drwxrwxrwx], [drwxrwxrwt], or unchanged:
+PASS: $ydb_tmp has the correct permissions
