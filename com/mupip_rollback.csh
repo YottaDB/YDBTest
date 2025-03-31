@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -424,9 +424,7 @@ if (! $forward_only_specified) then
 	endif
 endif
 
-set bakdir3 = dir_${bakdir}_mupip_rollback_3
 unset noglob
-$gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.dat *.mjl*" mv nozip	# move over files for debugging test failures if any
 
 set sort = "sort -T ."	# Use sort -T . to ensure temporary files get created in current directory instead of /tmp where we might not have enough space
 
@@ -546,16 +544,19 @@ if (! $forward_only_specified) then
 	endif
 
 	echo "# Check mupip extract" >>& $misclog
-	# The second line of the extract file contains a timestamp so need to remove that before the diff.
-	foreach direction (backward forward)
-		$tail -n +3 ${bakdir}_${direction}_extract.out >& ${bakdir}_${direction}_extract.out.filtered
-	end
+	# The second line of the extract file contains a timestamp so need to skip the first 2 lines before the diff.
 	# Since extract files could be huge, use "cmp" instead of "diff" (faster).
-	echo "cmp ${bakdir}_{backward,forward}_extract.out.filtered" >>& $misclog
-	cmp ${bakdir}_{backward,forward}_extract.out.filtered >>& $misclog
+	foreach direction (backward forward)
+		set skip$direction = `$head -n 2 ${bakdir}_${direction}_extract.out | wc -c`
+	end
+	echo "cmp --ignore-initial=${skipbackward}:${skipforward} ${bakdir}_{backward,forward}_extract.out" >>& $misclog
+	cmp --ignore-initial=${skipbackward}:${skipforward} ${bakdir}_{backward,forward}_extract.out>>& $misclog
 	if ($status) then
 		echo "TEST-E-ERROR : MUPIP EXTRACT diff of backward and forward rollback failed. See above for details" >>& $misclog
 		set exit_status = 1
+	else
+		echo "rm -f ${bakdir}_*_extract.out" >>& $misclog
+		rm -f ${bakdir}_*_extract.out	# * to account for "backward" and "forward"
 	endif
 
 	echo "# Check appropriate lost transaction files got created" >>& $misclog
@@ -605,11 +606,19 @@ if (! $forward_only_specified) then
 		endif
 	endif
 
-	cp $bakdir2/*.mjl* .	# restore mjl to reflect backward rollback
-	cp $bakdir2/*.dat .	# restore dat to reflect backward rollback
+	if (0 == $exit_status) then
+		mv $bakdir2/*.mjl* .	# restore mjl to reflect backward rollback
+		mv $bakdir2/*.dat .	# restore dat to reflect backward rollback
+	endif
 else
-	# Forward rollback done. Databases are in good shape.
-	mv $bakdir3/*.dat .	# restore dat to reflect forward rollback
+	# Forward rollback done. Databases are in good shape. Preserve dat to reflect forward rollback.
+	# Move over journal files for debugging test failures if any.
+	set bakdir3 = dir_${bakdir}_mupip_rollback_3
+	if (0 != $exit_status) then
+		$gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.mjl*" mv nozip
+	else
+		rm -rf *.mjl*
+	endif
 	# Move away replication instance file
 	if (-e $gtm_repl_instance) then
 		mv $gtm_repl_instance $gtm_repl_instance.orig_${n}
@@ -638,8 +647,6 @@ if (0 == $exit_status) then
 	# Cleaning them up is okay since this invocation of mupip_rollback.csh succeeded.
 	echo "rm -rf $bakdir1 $bakdir2 $bakdir3" >>& $misclog
 	rm -rf $bakdir1 $bakdir2 $bakdir3
-	echo "rm -f ${bakdir}_*_extract.out{,.filtered}" >>& $misclog
-	rm -f ${bakdir}_*_extract.out{,.filtered}	# * to account for "backward" and "forward"
 endif
 
 exit $exit_status

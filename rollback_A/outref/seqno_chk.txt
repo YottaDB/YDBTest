@@ -154,8 +154,6 @@ Journal extract on primary side before rollback ......
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Verifying journals on primary side before rollback ......
-
-YDB>
 Checking AREG...
 VERIFICATION PASSED
 Checking BREG...
@@ -174,8 +172,6 @@ Checking HREG...
 VERIFICATION PASSED
 Checking DEFAULT...
 VERIFICATION PASSED
-
-YDB>
 mupip rollback on primary side ...
 #mupip journal /rollback /back /losttrans=lost.glo *
 %YDB-S-JNLSUCCESS, Show successful
@@ -206,7 +202,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File a.mjf is renamed to a.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file a.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -216,7 +211,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File b.mjf is renamed to b.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file b.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -226,7 +220,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File c.mjf is renamed to c.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file c.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -236,7 +229,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File d.mjf is renamed to d.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file d.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -246,7 +238,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File e.mjf is renamed to e.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file e.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -256,7 +247,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File f.mjf is renamed to f.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file f.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -266,7 +256,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File g.mjf is renamed to g.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file g.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -276,7 +265,6 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File h.mjf is renamed to h.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file h.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -286,14 +274,11 @@ Journal extract on primary side ......
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-FILERENAME, File mumps.mjf is renamed to mumps.mjf_##TIMESTAMP##
 %YDB-I-FILECREATE, Journal extract file mumps.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Verifying journals on primary side ......
-
-YDB>
 Checking AREG...
 VERIFICATION PASSED
 Checking BREG...
@@ -314,5 +299,3 @@ Checking DEFAULT...
 VERIFICATION PASSED
 Checking between regions...
 VERIFICATION PASSED.
-
-YDB>

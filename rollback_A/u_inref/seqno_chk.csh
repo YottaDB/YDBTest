@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,11 +50,14 @@ $MUPIP rundown -reg "*" -override |& sort -f
 echo "Journal extract on primary side before rollback ......"
 $gtm_tst/$tst/u_inref/seqextr.csh
 echo "Verifying journals on primary side before rollback ......"
-$GTM << gtm_eof
-	d chkextr^bkgrnd(1)
-	h
-gtm_eof
-#
+$gtm_dist/mumps -run %XCMD 'do chkextr^bkgrnd(1)' >& chkextr1.out
+cat chkextr1.out
+$grep "VERIFICATION FAILED" chkextr1.out > /dev/null
+if ($status) then
+	# Verification passed. Remove extract files as they occupy disk space otherwise.
+	rm -f *.mjf
+endif
+
 echo "mupip rollback on primary side ..."
 echo "#mupip journal /rollback /back /losttrans=lost.glo *"
 setenv start_time `date +%H_%M_%S`
@@ -104,8 +107,11 @@ echo "Journal extract on primary side ......"
 $gtm_tst/$tst/u_inref/seqextr.csh
 #
 echo "Verifying journals on primary side ......"
-$GTM << gtm_eof
-	d chkextr^bkgrnd(0)
-	h
-gtm_eof
+$gtm_dist/mumps -run %XCMD 'do chkextr^bkgrnd(0)' >& chkextr0.out
+cat chkextr0.out
+$grep "VERIFICATION FAILED" chkextr0.out > /dev/null
+if ($status) then
+	# Verification passed. Remove extract files as they occupy disk space otherwise.
+	rm -f *.mjf
+endif
 #
