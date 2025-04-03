@@ -428,6 +428,7 @@ unset noglob
 
 set sort = "sort -T ."	# Use sort -T . to ensure temporary files get created in current directory instead of /tmp where we might not have enough space
 
+set bakdir3 = dir_${bakdir}_mupip_rollback_3
 if (! $forward_only_specified) then
 	echo "#################################################################" >>& $misclog
 	echo "# Check BACKWARD and FORWARD rollback produced the same database state" >>& $misclog
@@ -613,7 +614,6 @@ if (! $forward_only_specified) then
 else
 	# Forward rollback done. Databases are in good shape. Preserve dat to reflect forward rollback.
 	# Move over journal files for debugging test failures if any.
-	set bakdir3 = dir_${bakdir}_mupip_rollback_3
 	if (0 != $exit_status) then
 		$gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.mjl*" mv nozip
 	else
