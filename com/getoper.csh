@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -83,7 +83,9 @@ else
 	set datefmt = "%Y-%m-%dT%H:%M:%SZ"
 	set time_before = `date -Is -d "$1"`
 	if ("$2" != "") then
-		set time_after = `date -Is -d "$2"`
+		# Just like with journalctl, advance time by 2 seconds, otherwise --since="$time_before" "$until_time" does not work
+		@ time_after = `date +"%s" -d "$2"` + 2
+		set time_after = `date -Is -d "@${time_after}"`
 	else
 		set time_after = ""
 	endif

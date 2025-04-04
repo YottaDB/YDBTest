@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,13 +33,17 @@ set | $grep syslog_time > debug.txt	# record these variables for test debugging 
 $gtm_tst/com/getoper.csh "$syslog_time_before" "$syslog_time_after" syslog2.txt
 
 # Search for TPRESTART messages belonging to this test (hence the `pwd` below) and ensure they have the right global name.
-# $8 is the full path of the database file name
-# $15 is the global name (subscripted or unsubscripted)
+# $8 is the full path of the database file name ($6 in Rsyslog)
+# $15 is the global name (subscripted or unsubscripted) ($13 in Rsyslog)
 # It is possible the global name is ^*DIR to imply directory tree. Filter that out.
 # It is possible the global name is ^*BITMAP to imply bitmap related restarts. Filter that out.
 # It is possible the global name has subscripts. Filter the subscript portion out.
 # Finally compare the unsubscripted global name against the database file name.
-$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $8, $15}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+if (-X journalctl) then
+	$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $8, $15}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+else # RSyslog
+	$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $6, $13}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+endif
 while (-z reg_gbl.out)
 	# If the delta was 1, the test fails. Otherwise, repeat with a delta of (previous delta - 1).
 	if ($rand == 1) then
@@ -54,7 +58,11 @@ while (-z reg_gbl.out)
 	set syslog_time_after = `date +"%b %e %H:%M:%S"`
 	set | $grep syslog_time > debug.txt	# record these variables for test debugging if later needed
 	$gtm_tst/com/getoper.csh "$syslog_time_before" "$syslog_time_after" syslog2.txt
-	$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $8, $15}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+	if (-X journalctl) then
+		$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $8, $15}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+	else # RSyslog
+		$grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $6, $13}' | $grep -vwE "DIR|BITMAP" | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+	endif
 end
 echo "-------------------------------------------------------------------------------------------------"
 echo "Below is a list of global names & region names in the TPRESTART syslog messages that do not match"
