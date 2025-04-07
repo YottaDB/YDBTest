@@ -1,0 +1,54 @@
+#######################################
+#      Test of $ZYCOMPILE
+#######################################
+# -------------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1665#note_2438087704
+# -------------------------------------------------------------------------------
+# Run [write $zyco(" write 1")] : Tests that $ZYCO() is accepted as function name
+
+# Run [write $zycompile(" write 1")] : Tests that $ZYCOMPILE() is accepted as function name
+
+# Run [write $zycompile(" do")] : Tests that $ZYCOMPILE() is accepted as function name
+
+# Run [write $zycompile(" set $zwrtac=""""")] : Tests INVSVN error is returned and no assert fail
+16,%YDB-E-INVSVN,Invalid special variable name
+# Run [write $zycompile(" set ($iv)=1")] : Tests INVSVN error is returned and no assert fail
+13,%YDB-E-INVSVN,Invalid special variable name
+# Run [write $zycompile(" set $ztriggerop=1")] : Tests INVSVN error is returned and no assert fail
+19,%YDB-E-SVNOSET,Cannot SET this special variable
+# Run [write $zycompile(" zwrite $zfoobar")] : Tests INVSVN error is returned and no assert fail
+17,%YDB-E-INVSVN,Invalid special variable name
+# Run [write $zycompile(" new $ztimeout")] : Tests SVNONEW error is returned and no assert fail
+15,%YDB-E-SVNONEW,Cannot NEW this special variable
+# Run [write (0!((-(+(-("1E47"))))))] : Tests NUMOFLOW error is returned and no assert fail
+31,%YDB-E-NUMOFLOW,Numeric overflow
+# -------------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1665#note_2438180472
+# -------------------------------------------------------------------------------
+# Run [write $zycompile(" d label zwrite $zfoobar")] : Tests INVSVN error is returned, not empty string
+25,%YDB-E-INVSVN,Invalid special variable name# -------------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1665#note_2438257063
+# -------------------------------------------------------------------------------
+# Run [write $zycompile(" d label")] : Tests empty string is returned, not a LABELMISSING error
+# -------------------------------------------------------------------------------
+# Test that any substring other than $ZYCO or $ZYCOMPILE issues an error
+# -------------------------------------------------------------------------------
+# Run [write $zycom(" write 1")] : Tests INVFCN error is returned
+ZSTATUS=+54^ydb1138,%YDB-E-INVFCN, Invalid function name
+# Run [write $zycomp(" write 1")] : Tests INVFCN error is returned
+ZSTATUS=+54^ydb1138,%YDB-E-INVFCN, Invalid function name
+# Run [write $zycompi(" write 1")] : Tests INVFCN error is returned
+ZSTATUS=+54^ydb1138,%YDB-E-INVFCN, Invalid function name
+# Run [write $zycompil(" write 1")] : Tests INVFCN error is returned
+ZSTATUS=+54^ydb1138,%YDB-E-INVFCN, Invalid function name
+# Run [write $zycompiler(" write 1")] : Tests INVFCN error is returned
+ZSTATUS=+54^ydb1138,%YDB-E-INVFCN, Invalid function name
+# -------------------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1665#note_2435762415
+# -------------------------------------------------------------------------------
+# Compiling M line [label(a,) set c=1]. Expecting a NAMEEXPECTED error.
+# Prior to r2.04 (YDB@a4c332e7), no error was issued
+	label(a,) set c=1
+	        ^-----
+		At column 9, line 1, source module ##TEST_PATH##/ydb1138a.m
+%YDB-E-NAMEEXPECTED, A local variable name is expected in this context
