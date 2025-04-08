@@ -14,6 +14,6 @@
 # Run the gtmde519525 routine to set $ZTIMEOUT to 2 seconds, do a trestart until execution reaches the final retry,
 # and then, hang for 15 seconds. Expect a message with $HOROLOG and $TRESTART information both BEFORE and AFTER
 # the hang. Prior to v71001, the transaction would not complete and a GTM-W-ZTIMEOUT message would be issued.
-##TEST_AWK\$ZTIMEOUT=[0-9\.]*
+##TEST_AWK\$ZTIMEOUT=[0-9\."]*
 ##TEST_AWK\$h = [0-9]*,[0-9]* : \$trestart = 3 : BEFORE hang 15
 ##TEST_AWK\$h = [0-9]*,[0-9]* : \$trestart = 3 : BEFORE tcommit
