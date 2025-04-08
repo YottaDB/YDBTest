@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,8 +17,20 @@
 
 if (! -x ./modconfig) then
 	$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/com/modconfig.c -I /usr/include -I /usr/local/include	>&! modconfig.compil
+	set result = $status
+	if ($result) then
+		echo "MODCONFIG-E-COMPILEFAIL : modconfig.compil output follows"
+		cat modconfig.compil
+		exit $result
+	endif
 	$gt_ld_linker $gt_ld_option_output ./modconfig $gt_ld_options_common ./modconfig.o -L /usr/lib -L /usr/local/lib -lconfig \
 														>&! modconfig.link
+	set result = $status
+	if ($result) then
+		echo "MODCONFIG-E-LINKFAIL : See modconfig.link for details."
+		cat modconfig.link
+		exit $result
+	endif
 endif
 
 ./modconfig $*

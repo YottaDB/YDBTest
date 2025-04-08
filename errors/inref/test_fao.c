@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -15,6 +15,9 @@
 #include <stdio.h>
 #include "mdef.h"
 #include "cli.h"
+
+void gtm_threadgbl_init(void);
+void util_out_print(caddr_t message, int flush, ...);
 
 int main()
 {

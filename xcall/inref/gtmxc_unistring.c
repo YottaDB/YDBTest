@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -19,11 +19,12 @@
 #include "gtmxc_types.h"
 #include <string.h>
 #include <locale.h>
+#include <wchar.h>
 
 void
 xc_wcslen( int count,
 		xc_char_t **in_data,
-                xc_string_t *out_data)
+		xc_string_t *out_data)
 {
 	int len,n;
 	wchar_t *wp;
@@ -35,9 +36,9 @@ xc_wcslen( int count,
 	wp = (wchar_t *)malloc(n);
 	len = mbstowcs(wp, *in_data, n);
 	len = wcslen(wp);
-        (void)SPRINTF(out_data->address,"%d",len);
+	(void)SPRINTF(out_data->address,"%d",len);
 	fflush(stdout);
-        out_data->length = strlen(out_data->address);
+	out_data->length = strlen(out_data->address);
 }
 
 void xc_wcscat	(int count,
@@ -56,7 +57,7 @@ void xc_wcscat	(int count,
 	w2 = (wchar_t *)malloc(n2+n1);
 	len = mbstowcs(w2,*in_data2,n2);
 	wcscat(w2,w1);
-        (void)SPRINTF(*out_data,"%ls",w2);
+	(void)SPRINTF(*out_data,"%ls",w2);
 	fflush(stdout);
 }
 
