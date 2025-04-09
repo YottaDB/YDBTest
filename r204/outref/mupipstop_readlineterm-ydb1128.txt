@@ -1,0 +1,37 @@
+# ********************************************************************************************
+# YDB#1128 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from https://gitlab.com/YottaDB/DB/YDB/-/issues/1128):
+# 
+# A MUPIP STOP does not terminate DSE, LKE and MUPIP processes if they hold the critical section for a database file. Previously, if $ydb_readline was 1 or an equivalent value, it would incorrectly terminate the process. Note that a sequence of three MUPIP STOP signals sent within one minute continue to terminate the process even if it holds a critical section. [#1128 (closed)]
+# 
+
+# Set `stty_init cols 132` to prevent line break at 80 characters (default) in below DSE process
+# For details, see the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2282#note_2455085030
+
+# Spawn a DSE process when ydb_readline env var is set to 1
+spawn ##SOURCE_PATH##/dse
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Seize crit using the spawned DSE process
+DSE> crit -seize
+
+Seized write critical section.
+
+DSE> 
+
+# Issue MUPIP stop to the DSE process that is holding crit
+##TEST_AWKspawn ##SOURCE_PATH##/mupip stop [0-9]*
+##TEST_AWKSTOP issued to process [0-9]*
+
+# Confirm that the DSE process was not terminated by the MUPIP STOP
+# Before YDB@68a3ea71f, the DSE process would be terminated by the MUPIP STOP
+# Check for a defunct DSE process and pass if there is no such process.
+# This is done because a defunct process signals that the process was terminated,
+# but was not yet removed from the system and so would still show up in `ps` output.
+# See also the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2282#note_2450383690.
+PASS: DSE process not terminated by MUPIP STOP
+exit

@@ -14,6 +14,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# mupipstop_readlineterm-ydb1128		[jon]	Test MUPIP STOP terminates DSE/LKE/MUPIP even if they hold a critical section when ydb_readline=1
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -27,6 +28,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gtm-v71001"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_translate-ydb1129"
 setenv subtest_list_non_replic	"$subtest_list_non_replic machine-ydb1133"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_zycompile-ydb1138"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupipstop_readlineterm-ydb1128"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

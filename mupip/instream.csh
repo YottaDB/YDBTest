@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -18,12 +21,13 @@
 # mu_stop is made obsolete, because dual_fail_extend has better mupip stop test: Layek 03/26/01
 # mu_reorg is also not needed. reorg test is more extensive: Layek 03/26/01
 #
-# mu_backup_tn_reset [s7mj] subtest for test testing mupip incremental backup after tn_reset.
-# mu_load_err [e3009839] subtest for testing mupip load error conditions (for now binary format)
+# mu_backup_tn_reset			[s7mj]		subtest for test testing mupip incremental backup after tn_reset.
+# mu_load_err				[e3009839]	subtest for testing mupip load error conditions (for now binary format)
+# mupipstop_readlineterm-ydb1128	[jon]		Test MUPIP STOP terminates DSE/LKE/MUPIP even if they hold a critical section when ydb_readline=1
 
-# Encryprion cannot support access method MM, so explicitly running the test with NON_ENCRYPT when acc_meth is MM
+# Encryption cannot support access method MM, so explicitly running the test with NON_ENCRYPT when acc_meth is MM
 if ("MM" == $acc_meth) then
-        setenv test_encryption NON_ENCRYPT
+	setenv test_encryption NON_ENCRYPT
 endif
 echo "MUPIP test Starts..."
 # this test has explicit mupip creates, so let's not do anything that will have to be repeated at every mupip create
@@ -31,9 +35,24 @@ setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "mu_backup mu_create mu_extend mu_freeze mu_integ mu_load mu_load_no_leak mu_set"
-setenv subtest_list_non_replic "mu_rundown mu_backup_tn_reset mu_load_err D9J02002719 D9J02002719_1"
-setenv subtest_list_replic     "mu_rollback1 mu_rundown_no_ipcrm1"
+setenv subtest_list_common     ""
+setenv subtest_list_common     "$subtest_list_common mu_backup"
+setenv subtest_list_common     "$subtest_list_common mu_create"
+setenv subtest_list_common     "$subtest_list_common mu_extend"
+setenv subtest_list_common     "$subtest_list_common mu_freeze"
+setenv subtest_list_common     "$subtest_list_common mu_integ"
+setenv subtest_list_common     "$subtest_list_common mu_load"
+setenv subtest_list_common     "$subtest_list_common mu_load_no_leak"
+setenv subtest_list_common     "$subtest_list_common mu_set"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic mu_rundown"
+setenv subtest_list_non_replic "$subtest_list_non_replic mu_backup_tn_reset"
+setenv subtest_list_non_replic "$subtest_list_non_replic mu_load_err"
+setenv subtest_list_non_replic "$subtest_list_non_replic D9J02002719"
+setenv subtest_list_non_replic "$subtest_list_non_replic D9J02002719_1"
+setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic mu_rollback1"
+setenv subtest_list_replic     "$subtest_list_replic mu_rundown_no_ipcrm1"
 
 if ( $LFE == "E" ) then
 	setenv subtest_list_common "$subtest_list_common mu_load2 mu_extract"

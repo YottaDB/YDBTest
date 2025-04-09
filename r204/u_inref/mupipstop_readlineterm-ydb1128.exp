@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 60
+
+puts "# Set `stty_init cols 132` to prevent line break at 80 characters (default) in below DSE process"
+puts "# For details, see the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2282#note_2455085030"
+set stty_init "cols 132"
+set gtm_dist [lrange $argv 0 0]
+
+puts "\n# Spawn a DSE process when ydb_readline env var is set to 1"
+spawn $gtm_dist/dse
+set dse_pid [exp_pid]
+set dse_id $spawn_id
+
+expect -i dse_id -exact "DEFAULT"
+puts "# Seize crit using the spawned DSE process"
+expect -i dse_id -exact "DSE> "
+send -i dse_id "crit -seize\r"
+expect -i dse_id -exact "\nSeized write critical section.\r\n\r\nDSE> "
+
+puts "\n\n# Issue MUPIP stop to the DSE process that is holding crit"
+spawn $gtm_dist/mupip stop $dse_pid
+set mupip_id $spawn_id
+
+expect -i mupip_id -exact "STOP issued to process"
+expect -i mupip_id eof
+puts "\n# Confirm that the DSE process was not terminated by the MUPIP STOP"
+puts "# Before YDB@68a3ea71f, the DSE process would be terminated by the MUPIP STOP"
+set psout [exec ps -ef $dse_pid | grep "dse"]
+puts "# Check for a defunct DSE process and pass if there is no such process."
+puts "# This is done because a defunct process signals that the process was terminated,"
+puts "# but was not yet removed from the system and so would still show up in `ps` output."
+puts "# See also the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2282#note_2450383690."
+if {! [ string match "*defunct*" $psout ]} {
+	puts "PASS: DSE process not terminated by MUPIP STOP"
+	send -i dse_id "exit\r"
+	expect -i dse_id eof
+} else {
+	puts "FAIL: DSE process terminated by MUPIP STOP"
+}
+
+exit
