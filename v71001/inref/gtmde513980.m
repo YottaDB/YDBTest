@@ -11,6 +11,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 gtmde513980 ;
+	; Do initial database access outside of the transaction to perform
+	; encryption operations prior to the transaction. That way, the ~0.5
+	; seconds needed for encryption setup do not impact the transaction runtime.
+	set x=$get(^x)
 	set $zmaxtptime=2
 	zwrite $zmaxtptime
 	set $etrap="zwrite $h,$zstatus  halt"
