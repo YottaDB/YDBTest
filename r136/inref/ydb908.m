@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -59,7 +59,7 @@ test2	;
 test3	;
 	new pid,expected,actual,line,nlines,utime,stime,cutime,cstime,cputim
 	set pid=1
-        do piperead("/proc/"_pid_"/stat")	; "line()" and "nlines" will be populated after the call
+	do piperead("/proc/"_pid_"/stat")	; "line()" and "nlines" will be populated after the call
 	set keyword="" for  set keyword=$order(keyword(keyword)) quit:keyword=""  do
 	. write "# Test $ZGETJPI(",pid,",",keyword,") matches what exists in /proc/",pid,"/stat for <init> process (i.e. PID=1)",!
 	. set utime=$piece(line(1)," ",keyword("UTIME"))
@@ -76,7 +76,7 @@ test3	;
 
 test4	;
 	new i,line,nlines,file,actual
-        do piperead("/proc/*/stat")	; "line()" and "nlines" will be populated after the call
+	do piperead("/proc/*/stat")	; "line()" and "nlines" will be populated after the call
 	set file="test4.out"	; use this file to record the non-deterministic $zgetjpi output of all pids in the system.
 				; Having the extension ".out" ensures test framework will catch any "%YDB-E-"/"%YDB-F-" errors.
 	open file:(newversion)
@@ -93,9 +93,9 @@ test4	;
 
 piperead(dev);
 	kill line,nlines
-        open dev:(command="cat /proc/*/stat":readonly)::"PIPE"
+	open dev:(command="cat /proc/*/stat":readonly)::"PIPE"
 	use dev
-        for  read line($increment(nlines)) quit:$zeof
+	for  read line($increment(nlines)) quit:$zeof
 	kill line(nlines) if $increment(nlines,-1)
 	close dev
 	quit
@@ -105,5 +105,6 @@ timeIsAlmostSame(expected,actual)
 	; This is because the "init" process would be accumulating CPUTIM etc. all the time and so it is possible
 	; the "cat /proc/1/stat" and $zgetjpi(1,"CPUTIM") calls get different values. We expect the two values to
 	; be very close to each other.
+	if expected=actual quit 1
 	quit (expected/actual)>0.99
 
