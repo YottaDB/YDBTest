@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -89,8 +89,8 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb935"
 endif
 
-if ("suse" == "$gtm_test_linux_distrib") then
-	# Disable gtm8863a on SUSE_LINUX as we require YottaDB r1.34 which is not available on SUSE Linux flavors
+if (! -e ${gtm_root}/V63011_R134 ) then
+	# Disable gtm8863a if r1.34 is not available (r1.34 required by test)
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8863a"
 endif
 
