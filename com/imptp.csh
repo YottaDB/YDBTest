@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -316,8 +316,21 @@ xyz
 				exit 1
 			endif
 			# Now move imptprust to main test directory
-			mv "target/$rust_target_dir/imptp" ../imptprust
-			mv "target/$rust_target_dir/imptpjob" ../imptpjobrust
+			if ($?CARGO_TARGET_DIR) then
+				set target = $CARGO_TARGET_DIR
+			else
+				set target = "target"
+			endif
+			mv "$target/$rust_target_dir/imptp" ../imptprust
+			if ($status) then
+				echo "TEST-E-FAILED : could not find imptprust binary"
+				exit 1
+			endif
+			mv "$target/$rust_target_dir/imptpjob" ../imptpjobrust
+			if ($status) then
+				echo "TEST-E-FAILED : could not find imptpjobrust binary"
+				exit 1
+			endif
 			# Go back to the original test directory
 			cd -
 		endif

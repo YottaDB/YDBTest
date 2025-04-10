@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -147,11 +147,10 @@ setenv gtm_test_dbfillid 2
 # that the hang occurs and resumes later after the freeze is lifted.
 #
 # Run background process under /bin/sh to avoid job control output
-/bin/sh -c "$gtm_tst/com/imptp.csh 4 > imptp_${gtm_test_jobid}.out 2>&1 &"
-# We don't have a imptp_check_error.csh call here as the imptp.csh invocation in the previous line happens
+set pid = `sh -c "$gtm_tst/com/imptp.csh 4 > imptp_${gtm_test_jobid}.out 2>&1 &"'echo $!'`
+# The imptp.csh invocation in the previous line happens
 # in the background and we are not guaranteed that imptp_${gtm_test_jobid}.out will even exist at this point.
-# Hence the below call is commented out.
-#    source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
+# We will check if it succeeded after unfreezing the database.
 
 # make sure we can go another 10 seconds without getting any more transactions due to the freeze
 
@@ -199,10 +198,24 @@ $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2.txt "" "REPLINSTUNFROZEN"
 
 setenv gtm_test_jobid 2
 setenv gtm_test_dbfillid 2
+
+# First make sure that imptp.csh finished.
 # max_sleep of 600 was a little short on some slower machines under load hence bumped up to 3600.
-# Turns out 3600 is also not enough on Pi Zeros if imptprust is randomly chosen (the rust compile itself could take 1-1/2 hours).
-# Hence setting the timeout to 3 hours. Normal case will be much shorter.
-@ max_sleep = 10800
+# In particular the Rust compile can take a long time. Normal compilations will be much faster.
+@ max_sleep = 3600
+timeout $max_sleep tail --pid=$pid -f /dev/null
+if ($status) then
+	echo "TEST-E-TIMEOUT: imptp.csh never finished"
+	set echo
+	kill $pid
+	wait
+	cat imptp_${gtm_test_jobid}.out
+	exit 1
+endif
+source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
+
+# Next make sure that the imptp worker finishes.
+@ max_sleep = 300	# 30 was insufficient on a slower box
 $gtm_exe/mumps -r '%XCMD' "do startwait^gtm4525b(${gtm_test_dbfillid},${max_sleep})" >&! imptp_start_wait_${gtm_test_dbfillid}.out
 
 echo ""
@@ -360,7 +373,7 @@ echo ""
 $DSE change -fileheader -nocrit -flush_time=00:00:15:00 >&! dse_change.out
 
 if ("" == `$DSE dump -nocrit -fileheader |& tee -a dse_change.out | $grep "Flush timer.*00:00:15:00"`) then
-    echo "TEST-E-FAIL, DSE could not change header under freeze. Please check dse_change.out"
+	echo "TEST-E-FAIL, DSE could not change header under freeze. Please check dse_change.out"
 endif
 
 echo ""
