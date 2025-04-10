@@ -48,6 +48,7 @@ if (! $?gtmroutines) then
 	setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
 
 	setenv PATH ${PATH}:/sbin/
+	setenv PATH /home/gtmtest/.cargo/bin:${PATH}
 
 	setenv LC_ALL en_US.UTF-8
 	# Below is needed for YDBEncrypt compilation

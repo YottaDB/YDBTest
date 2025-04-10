@@ -85,7 +85,8 @@ RUN apt-get update && \
                     rsync \
                     linux-perf \
                     libcurl4-openssl-dev \
-		    netbase \
+                    netbase \
+                    clang \
                     && \
                     apt-get clean
 
@@ -98,6 +99,10 @@ RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
 # Allow gtmtest as a member of the sudo group to use sudo with no password for the sudo tests
 RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
 
+# Install Rust
+RUN su - gtmtest -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+ENV PATH="/home/gtmtest/.cargo/bin:${PATH}"
+
 # Get the source code for YottaDB and Plugins
 RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB
 RUN git clone --depth 1 https://gitlab.com/YottaDB/Util/YDBPosix.git /Distrib/YDBPosix
@@ -106,7 +111,7 @@ RUN mkdir -p /Distrib/ji_plugin && \
         wget https://sourceforge.net/projects/fis-gtm/files/Plugins/GTMJI/1.0.4/ji_plugin_1.0.4.tar.gz && \
         tar xzf ji_plugin_1.0.4.tar.gz -C /Distrib/ji_plugin && rm ji_plugin_1.0.4.tar.gz
 RUN mkdir -p /Distrib/posix_plugin_r2 && \
-	wget https://sourceforge.net/projects/fis-gtm/files/Plugins/posix/r2/posix_plugin_r2.tar.gz && \
+        wget https://sourceforge.net/projects/fis-gtm/files/Plugins/posix/r2/posix_plugin_r2.tar.gz && \
         tar xzf posix_plugin_r2.tar.gz -C /Distrib/posix_plugin_r2 && \
         rm ../posix_plugin_r2.tar.gz
 COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
@@ -117,7 +122,7 @@ COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_instal
 # build_and_install_yottadb.csh <folder in /usr/library> <git tag in YDB> <dbg/pro>
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71000 V7.1-000 pro
 
-# v6 DB (dbg)
+# v6 DB
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 pro
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 dbg
 
