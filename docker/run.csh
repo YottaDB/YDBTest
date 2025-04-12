@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,6 +19,14 @@ logger test
 while ( ! -e /var/log/syslog)
 	sleep .01
 end
+
+# Start sshd
+/sbin/sshd
+
+# Trust localhost
+su - gtmtest -c "ssh-keyscan -t rsa localhost >>& ~/.ssh/known_hosts"
+su - gtmtest -c "ssh-keyscan -t rsa `hostname -I` >>& ~/.ssh/known_hosts"
+su - gtmtest -c "ssh-keyscan -t rsa $HOST >>& ~/.ssh/known_hosts"
 
 # Next two seds, fix the serverconf.txt file
 ## Correct the host; as it differs each time we start docker

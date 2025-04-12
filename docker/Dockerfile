@@ -87,15 +87,18 @@ RUN apt-get update && \
                     libcurl4-openssl-dev \
                     netbase \
                     clang \
+                    openssh-server \
                     && \
                     apt-get clean
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=en_US.UTF-8
+# gtmtest1 is the ssh user
 RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
     groupadd gtc && \
-    useradd gtmtest -G gtc,adm,sudo -m -s /usr/local/bin/tcsh
+    useradd gtmtest -g gtc -G adm,sudo -m -s /usr/local/bin/tcsh && \
+    useradd gtmtest1 -g gtc -G adm,sudo -m -s /usr/local/bin/tcsh
 # Allow gtmtest as a member of the sudo group to use sudo with no password for the sudo tests
 RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
 
@@ -139,11 +142,23 @@ COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/version.csh ~/version.csh && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc && \
-    ln -s /usr/library/gtm_test/T999/docker/version.csh ~gtmtest/version.csh
+    ln -s /usr/library/gtm_test/T999/docker/version.csh ~gtmtest/version.csh && \
+    ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest1/.cshrc && \
+    ln -s /usr/library/gtm_test/T999/docker/version.csh ~gtmtest1/version.csh
 RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
 RUN ln -s /usr/library/gtm_test/T999/docker/tstdirs.csh /usr/library/gtm_test/tstdirs.csh
+
 RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
+
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
+
+# SSH gtmuser -> gtmuser1 set-up
+RUN mkdir /run/sshd && \
+    su - gtmtest -c 'mkdir ~/.ssh/' && su - gtmtest1 -c 'mkdir ~/.ssh/' && \
+    su - gtmtest -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa' && \
+    cp ~gtmtest/.ssh/id_rsa.pub ~gtmtest1/.ssh/authorized_keys && \
+    chmod 600 ~gtmtest1/.ssh/authorized_keys && chown gtmtest1:gtc ~gtmtest1/.ssh/authorized_keys
+
 WORKDIR /home/gtmtest
 ENTRYPOINT ["/usr/library/gtm_test/T999/docker/run.csh"]
