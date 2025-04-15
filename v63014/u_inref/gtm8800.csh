@@ -4,6 +4,9 @@
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -34,7 +37,7 @@ $gtm_dist/mumps -run ^%XCMD 'for i=1:1:10 set ^a(i)=$justify(i,50)'
 $MSR SYNC INST1 INST2
 $MSR SYNC INST1 INST3
 echo
-echo '# Obtain semaphore & shared memory ids of the databases, journal pools, and receiver pools in INST1, INST2, and INST3'
+echo '# Obtain semaphore & shared memory ids of the databases, journal pools, and receive pools in INST1, INST2, and INST3'
 set cmd = "$MUPIP FTOK"  # Resolve the command
 set ENVVARS = "$gtm_test_msr_DBDIR1 $gtm_test_msr_DBDIR2 $gtm_test_msr_DBDIR3"
 set envvars = `echo $ENVVARS` # Create array with expanded dirs indexable by instance number

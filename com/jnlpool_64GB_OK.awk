@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #################################################################
 #
 # Awk routine to parse the output from a "free -g" command and see if the total of mem and swap exceeds the
-# that needed for a 64GB journal and receiver pools. We don't know exactly what this minimum is but at this
+# that needed for a 64GB journal and receive pools. We don't know exactly what this minimum is but at this
 # point, the only system the v63014/gtm7628 test is able to run on has 64GB RAM plus another 16GB in swap
 # space so make that combined total our current minimum to run the test. This script expects to be fed the
 # output of 'free -g' so the values are already in gigabytes.

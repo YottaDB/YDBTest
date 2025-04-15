@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -47,7 +50,7 @@ echo ">>> Restart Source Server"
 $MSR STARTSRC INST1 INST2 RP
 
 # At this point, if the secondary is ahead of the rolled-back primary, the receiver will issue a "Manual ROLLBACK required"
-# message and exit, causing subsequent operations below to fail because the receiver pool is unavailable.  Because of timing,
+# message and exit, causing subsequent operations below to fail because the receive pool is unavailable.  Because of timing,
 # this won't always happen, but it happens most of the time without JNLFILEONLY.  With JNLFILEONLY, which is enabled above,
 # the secondary should never be ahead of the primary, so the test should complete peacefully.
 

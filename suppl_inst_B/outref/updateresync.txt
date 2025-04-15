@@ -46,7 +46,7 @@ Error UPDSYNC2MTINS seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
 ----------
 ----------
 Error NORECVPOOL seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-##TEST_AWK.YDB-E-NORECVPOOL, No receiver pool info found in the replication instance of .*/instance2/mumps.repl
+##TEST_AWK.YDB-E-NORECVPOOL, No receive pool info found in the replication instance of .*/instance2/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
