@@ -354,6 +354,32 @@ on your host when docker is finished running the test):
 docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
+The multi-host replication tests use testarea1, testarea2 and testarea3 all
+together. You may need to pass additional volumes, but in the vast majority of
+cases just mapping `testarea1` is enough. Here is a list of these tests:
+
+```
+gtmtest -env test_replic_mh_type=1 -t msreplic_A -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_B -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_C -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_D -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_E -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_F -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_G -replic
+gtmtest -env test_replic_mh_type=1 -t msreplic_H -replic
+gtmtest -env test_replic_mh_type=1 -t suppl_inst_A -replic
+gtmtest -env test_replic_mh_type=1 -t suppl_inst_B -replic
+gtmtest -env test_replic_mh_type=1 -t suppl_inst_C -replic
+gtmtest -env test_replic_mh_type=1 -t suppl_inst_D -replic
+gtmtest -env test_replic_mh_type=1 -t dualfail_ms -replic
+gtmtest -env test_replic_mh_type=1 -t increment -gtcm
+gtmtest -env test_replic_mh_type=1 -t increment -replic
+gtmtest -env test_replic_mh_type=1 -t gtcm_gnp -gtcm
+gtmtest -env test_replic_mh_type=1 -t merge -gtcm
+gtmtest -env test_replic_mh_type=1 -t mem_stress -gtcm
+gtmtest -env test_replic_mh_type=1 -t tcp_bkup -replic
+```
+
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
 not pass any arguments, you will get the output of `gtmtest.csh -h`.
 

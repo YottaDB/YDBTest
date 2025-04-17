@@ -23,21 +23,31 @@ end
 # Start sshd
 /sbin/sshd
 
+# Add an extra hostname for remote tests
+echo "127.0.0.1 ydbtest" >> /etc/hosts
+
 # Trust localhost
 su - gtmtest -c "ssh-keyscan -t rsa localhost >>& ~/.ssh/known_hosts"
 su - gtmtest -c "ssh-keyscan -t rsa `hostname -I` >>& ~/.ssh/known_hosts"
 su - gtmtest -c "ssh-keyscan -t rsa $HOST >>& ~/.ssh/known_hosts"
+su - gtmtest -c "ssh-keyscan -t rsa ydbtest >>& ~/.ssh/known_hosts"
 
-# Next two seds, fix the serverconf.txt file
+# Next seds, fix the serverconf.txt file
 ## Correct the host; as it differs each time we start docker
 sed -i "s/HOST/$HOST/" /usr/library/gtm_test/serverconf.txt
 sed -i 's|LOG|/var/log/syslog|' /usr/library/gtm_test/serverconf.txt
+sed -i "s/SE1/localhost/" /usr/library/gtm_test/serverconf.txt
+sed -i "s/SE2/ydbtest/" /usr/library/gtm_test/serverconf.txt
 
-# Set HOST on tstdirs.csh file
+# Set hosts on tstdirs.csh file
 sed -i "s/HOST/$HOST/" /usr/library/gtm_test/tstdirs.csh
+sed -i "s/SE1/localhost/" /usr/library/gtm_test/tstdirs.csh
+sed -i "s/SE2/ydbtest/" /usr/library/gtm_test/tstdirs.csh
 
-# Make sure /testarea1 is writeable, as it can be redirected from the host
+# Make sure /testarea[n] is writeable, as it can be redirected from the host
 chmod 777 /testarea1
+chmod 777 /testarea2
+chmod 777 /testarea3
 
 # User passed in the Test system as a volume
 if ( -f /YDBTest/com/gtmtest.csh ) then

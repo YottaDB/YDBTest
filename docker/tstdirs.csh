@@ -1,7 +1,7 @@
 #!/bin/tcsh -fe
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,4 +10,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-setenv gtm_tstdir_HOST	"/testarea1"	#01
+setenv gtm_tstdir_HOST	"/testarea1 /testarea2 /testarea3"	#01
+setenv gtm_tstdir_SE1	"/testarea3 /testarea1 /testarea2"	#02
+setenv gtm_tstdir_SE2	"/testarea2 /testarea3 /testarea1"	#03

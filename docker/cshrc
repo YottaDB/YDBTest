@@ -42,6 +42,7 @@ if (! $?gtmroutines) then
 	setenv gtm_obj $gtm_exe/obj
 	setenv gtm_log $gtm_ver/log
 	setenv tst_dir /testarea1
+	setenv ggdata /testarea1
 	setenv gtm_com /usr/library/com
 
 	setenv gtm_test_noggsetup 1
@@ -60,6 +61,10 @@ if (! $?gtmroutines) then
 		source $gtm_tools/gtm_env.csh
 		# Bad aliases gtm_env sets up
 		unalias vers versi versio version
+	endif
+	# Needed for replication tests using remote hosts
+	if ( -f /usr/library/gtm_test/tstdirs.csh ) then
+		source /usr/library/gtm_test/tstdirs.csh
 	endif
 endif
 

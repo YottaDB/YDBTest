@@ -24,6 +24,8 @@ ARG OS_VSN=bookworm
 FROM debian:${OS_VSN}
 
 VOLUME /testarea1
+VOLUME /testarea2
+VOLUME /testarea3
 VOLUME /YDBTest
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -154,11 +156,14 @@ RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
 # SSH gtmuser -> gtmuser1 set-up
+#     gtmuser -> gtmuser set-up (for replication tests)
 RUN mkdir /run/sshd && \
     su - gtmtest -c 'mkdir ~/.ssh/' && su - gtmtest1 -c 'mkdir ~/.ssh/' && \
     su - gtmtest -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa' && \
     cp ~gtmtest/.ssh/id_rsa.pub ~gtmtest1/.ssh/authorized_keys && \
-    chmod 600 ~gtmtest1/.ssh/authorized_keys && chown gtmtest1:gtc ~gtmtest1/.ssh/authorized_keys
+    chmod 600 ~gtmtest1/.ssh/authorized_keys && chown gtmtest1:gtc ~gtmtest1/.ssh/authorized_keys && \
+    cp ~gtmtest/.ssh/id_rsa.pub ~gtmtest/.ssh/authorized_keys && \
+    chmod 600 ~gtmtest/.ssh/authorized_keys && chown gtmtest:gtc ~gtmtest/.ssh/authorized_keys
 
 WORKDIR /home/gtmtest
 ENTRYPOINT ["/usr/library/gtm_test/T999/docker/run.csh"]
