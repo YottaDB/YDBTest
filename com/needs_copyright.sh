@@ -29,7 +29,7 @@ if ! [ -e "$file" ]; then
 	exit 1
 fi
 
-skipextensions="txt out dat key crt cfg inp zwr lis"	# List of extensions that cannot have copyrights.
+skipextensions="txt out dat key crt cfg inp zwr lis json"	# List of extensions that cannot have copyrights.
 if echo "$skipextensions" | grep -q -w "$(echo "$file" | awk -F . '{print $NF}')"; then
 	exit 1
 fi

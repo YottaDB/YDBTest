@@ -88,6 +88,8 @@ RUN apt-get update && \
                     rsync \
                     linux-perf \
                     libcurl4-openssl-dev \
+                    libjansson4 \
+                    libjansson-dev \
                     netbase \
                     clang \
                     openssh-server \
