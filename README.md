@@ -393,11 +393,10 @@ scripts which you must not change):
 docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --cap-add PERFMON ---rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
-To run the "sudo" subtests, some of which need to be able to alter the OS system
-time, you will need to add the `SYS_TIME` capability when running the container:
+To run the "sudo" subtests, you need to add extra capabilities (SYS_TIME, IPC_LOCK):
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm --cap-add SYS_TIME --cap-add PERFMON -registry.gitlab.com/yottadb/db/ydbtest -t sudo
+docker run --init -it -v <local directory>:/testarea1/ --rm --cap-add SYS_TIME --cap-add IPC_LOCK -registry.gitlab.com/yottadb/db/ydbtest -t sudo
 ```
 
 To debug problems, instead of passing `gtmtest.csh` arguments, pass either
@@ -529,13 +528,13 @@ To troubleshoot `docker/pipeline-test-ydb.csh` (used in the YDB pipeline), run e
 
 1. To troubleshoot the script itself, run this:
 ```
-docker run --init -t -v ${PWD}/testarea/:/testarea1/ --cap-add SYS_ADMIN --cap-add SYS_TIME -e CI_PIPELINE_ID -e CI_COMMIT_BRANCH --rm registry.gitlab.com/yottadb/db/ydbtest -pipelineydb
+docker run --init -t -v ${PWD}/testarea/:/testarea1/ --cap-add SYS_ADMIN --cap-add SYS_TIME --cap-add IPC_LOCK -e CI_PIPELINE_ID -e CI_COMMIT_BRANCH --rm registry.gitlab.com/yottadb/db/ydbtest -pipelineydb
 ```
 
 2. To replicate the YDB pipeline, go to YDB repo and run these steps:
 ```
 docker build -f Dockerfile-test -t ydbtest .
-docker run --init -t -v ${PWD}/testarea/:/testarea1/ --cap-add SYS_ADMIN --cap-add SYS_TIME -e CI_PIPELINE_ID -e CI_COMMIT_BRANCH --rm ydbtest -pipelineydb
+docker run --init -t -v ${PWD}/testarea/:/testarea1/ --cap-add SYS_ADMIN --cap-add SYS_TIME --cap-add IPC_LOCK -e CI_PIPELINE_ID -e CI_COMMIT_BRANCH --rm ydbtest -pipelineydb
 ```
 
 ## Troubleshooting

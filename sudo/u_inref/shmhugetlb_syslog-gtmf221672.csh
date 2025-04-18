@@ -36,7 +36,7 @@ set sudostr = "$sudostr --preserve-env gtmgbldir"
 # from the root user id to the gtmtest user id via `su -l gtmtest`
 # in `pipeline-test-ydbtest.csh`. For more information see the discussion at:
 # https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2196#note_2373397992
-if ($?CI_PIPELINE_ID) then
+if ($?ydb_test_inside_docker) then
 	sudo setcap 'cap_ipc_lock+ep' $gtm_dist/dse
 endif
 # Set start time for getoper.csh
@@ -58,6 +58,6 @@ $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog.txt
 grep SHMHUGETLB test_syslog.txt | grep -E "(GTM|YDB|MUMPS)-DSE\[$dsePID\]" | sed "s@.* \(GTM\|YDB\|MUMPS\)-DSE\[[0-9]*\]: \(%GTM-W-SHMHUGETLB, Could not back shared memory with huge pages, using base pages instead for database file \)$PWD/mumps.dat\(, %SYSTEM-E-ENO12, Cannot allocate memory -- generated from \).*\.@##TIMESTAMP GTM-DSE\[##PID\]: \2##PATH\3##MEMADDR.@g"
 $gtm_tst/com/dbcheck.csh
 # Reset capabilities on the DSE, undoing `cap_ipc_lock+ep` above
-if ($?CI_PIPELINE_ID) then
+if ($?ydb_test_inside_docker) then
 	sudo setcap '-r' $gtm_dist/dse
 endif
