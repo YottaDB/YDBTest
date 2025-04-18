@@ -20,6 +20,8 @@
 # - docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm ydbtest -shell
 # Run a shell as root
 # - docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm ydbtest -rootshell
+
+# When the following line changes, remove the lines installing a custom version of gawk below
 ARG OS_VSN=bookworm
 FROM debian:${OS_VSN}
 
@@ -107,6 +109,17 @@ RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
 # Install Rust
 RUN su - gtmtest -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
 ENV PATH="/home/gtmtest/.cargo/bin:${PATH}"
+
+# Install Gawk 5.2.2, as 5.2.1 has a bug: https://lists.gnu.org/archive/html/bug-gawk/2023-02/msg00015.html
+RUN wget https://ftp.gnu.org/gnu/gawk/gawk-5.2.2.tar.gz && \
+    tar xvf gawk-5.2.2.tar.gz && \
+    rm gawk-5.2.2.tar.gz && \
+    cd gawk-5.2.2/ && \
+    ./configure && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -r gawk-5.2.2/
 
 # Get the source code for YottaDB and Plugins
 RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB
