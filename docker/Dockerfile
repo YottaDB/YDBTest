@@ -165,6 +165,9 @@ RUN ln -s /usr/library/gtm_test/T999/docker/tstdirs.csh /usr/library/gtm_test/ts
 
 RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
 
+# Set-up $ggdata
+RUN mkdir /usr/library/gtm_test/ggdata && chown gtmtest:gtc /usr/library/gtm_test/ggdata
+
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
