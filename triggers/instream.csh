@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -224,7 +224,7 @@ endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm7083 gtm7083a"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
 else if ("dbg" == "$tst_image") then
 	# We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
@@ -234,19 +234,8 @@ else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
 endif
 
-# For the gtm7083a subtest, look at two things (env var and dbg builds) to decide whether to disable it or not.
-set exclude_gtm7083a = 0
-if ($?ydb_test_exclude_gtm7083a) then
-	if ($ydb_test_exclude_gtm7083a) then
-		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
-		set exclude_gtm7083a = 1
-	endif
-endif
-if ("dbg" == "$tst_image") then
-	# We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
-	set exclude_gtm7083a = 1
-endif
-if ($exclude_gtm7083a) then
+# The gtm7083a subtest requires the V62000 build to exist. Otherwise disable this subtest.
+if (! -e $gtm_root/V62000) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
 endif
 

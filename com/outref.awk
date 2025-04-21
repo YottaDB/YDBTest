@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -341,10 +341,6 @@ BEGIN {
 	option_names[++no_options] = "ydb_test_exclude_ydb362b"
 	if (1 == ENVIRON["ydb_test_exclude_ydb362b"])
 		envir[no_options] = "EXCLUDE_YDB362B"
-	#
-	option_names[++no_options] = "ydb_test_exclude_gtm7083a"
-	if (1 == ENVIRON["ydb_test_exclude_gtm7083a"])
-		envir[no_options] = "EXCLUDE_GTM7083A"
 	#
 	option_names[++no_options] = "ydb_test_exclude_V5_tests"
 	if (1 == ENVIRON["ydb_test_exclude_V5_tests"])
