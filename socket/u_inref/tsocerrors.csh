@@ -144,7 +144,7 @@ tls: {
 	};
 
 	client2: {						# for CASE 2
-		# cipher-list: "TLS_AES_128_CCM_8_SHA256";	# clientcipher
+		# cipher-list: "TLS_AES_128_GCM_SHA256";	# clientcipher
 		# verify-level: "CHECK";			# client2verifylevel
 	};
 
