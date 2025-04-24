@@ -49,11 +49,12 @@ else
 	ln -s /YDBTest /usr/library/gtm_test/T999
 endif
 
-# Set-up testarea to be in the current directory so we can upload the artifacts
-mkdir testarea
-echo "setenv tst_dir ${PWD}/testarea" >> ~gtmtest/.cshrc
-chmod 777 ${PWD}/testarea
-sed -i "s|/testarea1|$PWD|" /usr/library/gtm_test/tstdirs.csh
+# Set-up testareas to be in the current directory so we can upload the artifacts
+mkdir testarea{1,2,3}
+# tst_dir can only be one test area, the main one
+echo "setenv tst_dir ${PWD}/testarea1" >> ~gtmtest/.cshrc
+chmod 777 ${PWD}/testarea{1,2,3}
+sed -i "s|/testarea|$PWD/testarea|g" /usr/library/gtm_test/tstdirs.csh
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
 ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
