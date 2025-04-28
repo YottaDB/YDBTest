@@ -131,19 +131,20 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.* or 3.12.*"
 				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
 			endif
-			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
-			# to prevent erroneous core files from `rustc --version`.
+			# Disable YDBPython testing if YottaDB is built with ASAN and GCC.
+			# This is to prevent erroneous core files from `rustc --version`.
 			# This command is run by YDBPython's `setup.py`, during the setting of
 			# LD_PRELOAD, e.g.:
 			#	LD_PRELOAD=$(gcc -print-file-name=libasan.so) rustc --version
-			# On systems with Rust version 1.58.*, 1.59.* or 1.60.* or 1.61.* (all versions only on an Arch
-			# Linux system, not on a Ubuntu/Debian/RHEL system), this has been seen to result in a
-			# segmentation fault. So, disable YDBPython random choice on Arch Linux.
-			# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 and
-			# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1385#note_972287548 for more details.
-			if (($gtm_test_libyottadb_asan_enabled) && ("arch" == $gtm_test_linux_distrib)) then
-				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to ASAN + Arch Linux"
-				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
+			# On systems with Rust version 1.58 onwards (and even as high as 1.86.0) we have seen this
+			# result in a segmentation fault. This seems to happen only when rustc is installed using
+			# rustup in a user's home directory (~/.cargo/bin/rustc) and does not seem to happen when rustc
+			# is installed system-wide (/usr/bin/rustc). No idea why. So, disable YDBPython random choice for now.
+			if ($gtm_test_libyottadb_asan_enabled)
+				if ("gcc" == $gtm_test_asan_compiler) then
+					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to GCC + ASAN (rustc --version core dumps)"
+					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
+				endif
 			endif
 			# Disable Python testing if YottaDB is built with ASAN and CLANG.
 			# In that case, setting the LD_PRELOAD env var (which the YDBPython wrapper sets whenever it
