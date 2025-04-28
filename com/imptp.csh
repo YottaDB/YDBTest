@@ -140,7 +140,7 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# result in a segmentation fault. This seems to happen only when rustc is installed using
 			# rustup in a user's home directory (~/.cargo/bin/rustc) and does not seem to happen when rustc
 			# is installed system-wide (/usr/bin/rustc). No idea why. So, disable YDBPython random choice for now.
-			if ($gtm_test_libyottadb_asan_enabled)
+			if ($gtm_test_libyottadb_asan_enabled) then
 				if ("gcc" == $gtm_test_asan_compiler) then
 					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to GCC + ASAN (rustc --version core dumps)"
 					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
