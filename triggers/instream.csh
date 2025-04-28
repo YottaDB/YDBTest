@@ -235,7 +235,7 @@ else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
 endif
 
 # The gtm7083a subtest requires the V62000 build to exist. Otherwise disable this subtest.
-if (! -e $gtm_root/V62000) then
+if (! -e $gtm_root/V62000/$tst_image) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
 endif
 
