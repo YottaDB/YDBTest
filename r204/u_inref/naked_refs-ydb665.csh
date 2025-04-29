@@ -84,6 +84,11 @@ $gtm_tst/$tst/inref/list.csh routinebackjump.m 1
 $gtm_tst/$tst/inref/list.csh routinebackjump.m 2
 $gtm_exe/mumps -run y^routinebackjump
 
+echo '# Test that returning a value does not misoptimize a fuse'
+echo 'f()	quit:0 ^x(1)  set ^x(1)=1' > quitval.m
+$gtm_tst/$tst/inref/list.csh quitval.m 1
+$gtm_exe/mumps -run quitval
+
 echo '# Test that modifying $ZGBLDIR does not misoptimize a fuse into the next global access'
 echo ' set $zgbldir="mumps.gld",^x(1)=1\
 	set $zgbldir="alt.gld",^x(2)=2' > zgbldir.m
@@ -288,6 +293,12 @@ echo ' kill ^x,^y  set ^x(1)=1  tstart ():serial  zwrite $reference\
 	zwrite ^x,^y' > transaction.m
 $gtm_tst/$tst/inref/list.csh transaction.m 2
 $gtm_exe/mumps -run transaction
+
+echo '# Test that fuses do not happen across a transaction rollback'
+echo '	tstart\
+	k ^a(4)  trollback 0  k ^a(5)' > trollback.m
+$gtm_tst/$tst/inref/list.csh trollback.m 2
+$gtm_exe/mumps -run trollback
 
 echo '# Test that $NEXT is not misoptimized. This was minimized from mugj/V1IDNM3.m.'
 echo ' S ^V1A(1000)=1,D="D(1)",D(1)="500"\

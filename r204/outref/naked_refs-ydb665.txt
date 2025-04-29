@@ -67,6 +67,12 @@ OC_WRITE
 		At M source location x^routinebackjump
 
 YDB>
+# Test that returning a value does not misoptimize a fuse
+OC_LINESTART
+OC_BINDPARM
+OC_GVNAME
+OC_GVPUT
+OC_RET
 # Test that modifying $ZGBLDIR does not misoptimize a fuse into the next global access
 OC_LINESTART
 OC_SVPUT
@@ -412,6 +418,14 @@ $REFERENCE="^x(1)"
 ^x(1)=1
 ^x(2)=2
 ^y(3)=3
+# Test that fuses do not happen across a transaction rollback
+OC_LINESTART
+OC_GVNAME
+OC_GVKILL
+OC_TROLLBACK
+OC_GVNAME
+OC_GVKILL
+OC_RET
 # Test that $NEXT is not misoptimized. This was minimized from mugj/V1IDNM3.m.
 OC_LINESTART
 OC_GVNAMENAKED
