@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,8 +25,8 @@ source .venv/bin/activate.csh
 # See comment in com/setuppyenv.csh for why this step is needed
 pip install setuptools >& setup.txt
 
-# Install into venv: `python setup.py install`
-python setup.py install >>&  setup.txt
+# Install into venv: `python -m pip install .`
+python -m pip install . >>&  setup.txt
 pip3 install flask      >>& setup.txt
 
 # Make sure that the ldd linkage is right

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,7 @@ source .venv/bin/activate.csh
 # following in the activated virtual environment. See https://docs.python.org/3/whatsnew/3.12.html
 # for more details (search for "gh-95299").
 pip install setuptools
-# Install into venv: `python setup.py install`
-python setup.py install
+# Install into venv: `python -m -pip install .`
+python -m -pip install .
 cd ..
 exit 0
