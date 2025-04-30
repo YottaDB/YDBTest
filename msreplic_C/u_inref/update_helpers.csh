@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,55 +38,65 @@ setenv gtm_process  5
 setenv tst_buffsize 33000000
 setenv test_tn_count 3000
 setenv test_sleep_sec 30
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+
+# Note: Use different jobids for each imptp.csh invocation below to avoid imp*.mjo* and imp*.mje* files of one
+# invocation from being overwritten by the next invocation. Having a different jobid will ensure unique
+# *.mjo* and *.mje* files will be created for each invocation.
+setenv gtm_test_jobid 1
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp1.out
+source $gtm_tst/com/imptp_check_error.csh imptp1.out; if ($status) exit 1
 
 $echoline
 echo "# Create a backlog, and a couple of history records:"
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 setenv gtm_test_other_bg_processes
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp1.out
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 2
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp2.out
+source $gtm_tst/com/imptp_check_error.csh imptp2.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp2.out
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 3
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp3.out
+source $gtm_tst/com/imptp_check_error.csh imptp3.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp3.out
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 4
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp4.out
+source $gtm_tst/com/imptp_check_error.csh imptp4.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp4.out
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 5
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp5.out
+source $gtm_tst/com/imptp_check_error.csh imptp5.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp5.out
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 6
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp6.out
+source $gtm_tst/com/imptp_check_error.csh imptp6.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp6.out
 unsetenv gtm_test_other_bg_processes
 set cur_seqno = `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh wait_for_transaction_seqno.backlog`
 $echoline
@@ -103,15 +113,16 @@ endif
 echo "#Start the receivers:"
 $MSR STARTRCV INST1 INST2
 echo "# Start the updates"
-$gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
-source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
+setenv gtm_test_jobid 7
+$gtm_tst/com/imptp.csh $gtm_process >&! imptp7.out
+source $gtm_tst/com/imptp_check_error.csh imptp7.out; if ($status) exit 1
 # give INST2 some time to partially catch-up
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "INSTANCE2" noerror
 $MSR STARTRCV INST1 INST3
 echo "#- Start helpers on INST3:"
 $MSR RUN RCV=INST3 SRC=INST1 '$MUPIP  replicate -receive -start -helpers >& helpers_start.out'
 echo "# Stop the updates"
-$gtm_tst/com/endtp.csh >>&! imptp.out
+$gtm_tst/com/endtp.csh >&! endtp7.out
 
 $echoline
 $MSR SYNC ALL_LINKS
