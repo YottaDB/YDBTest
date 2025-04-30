@@ -68,7 +68,7 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	set rust_supported = `tcsh $gtm_tst/com/is_rust_supported.csh`
 	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Python (rand=3), Golang (rand=4), or Rust (rand=5) version of imptp
 	# Note that if a new choice gets added above, "imptpflavor" entryref in "com/imptp.m" needs to be correspondingly updated.
-	if !($?gtm_test_replay) then
+	if (! $?gtm_test_replay || ! $?ydb_imptp_flavor) then
 		if ($?ydb_imptp_flavor) then
 			if ((0 > $ydb_imptp_flavor) || (5 < $ydb_imptp_flavor)) then
 				echo "TEST-E-FAILED : Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"

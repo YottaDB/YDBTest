@@ -159,7 +159,7 @@ endif
 # Random Go environment settings
 # ydb_go_race_detector - determines if the go -race flag should be used
 # GOGC - The rate Go does garbage collection; a smaller value increases frequency; default is 100
-if (! $?gtm_test_replay) then
+if (! $?gtm_test_replay || ! $?ydb_go_race_detector_on) then
 	echo "# Go environment variables" >> settings.csh
 	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
 	if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
