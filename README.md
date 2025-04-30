@@ -413,9 +413,11 @@ To build this image with a custom version of YottaDB, clone
 `https://gitlab.com/YottaDB/DB/YDB.git`, and then run the following:
 
 ```sh
+# needed so the second `docker build` doesn't redownload the image each time
+docker build -f docker/Dockerfile -t registry.gitlab.com/yottadb/db/ydbtest .
 cd YDB
-docker build -f Dockerfile-test -t ydbtest2 .
-docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm ydbtest2 -t r200
+docker build -f Dockerfile-test -t ydbtestfork .
+docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON ---rm ydbtestfork -t r200
 ```
 
 You can use the test system interactively inside of this docker image by supplying `-shell` at the end. You will get this message:
