@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,7 +64,7 @@ endif
 # Now force retries
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/$tst/u_inref/fix_tp_rest.csh >>& fix_tp_rest.out"
 echo "Now GTM process will end."
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 # The purpose of the test is to induce RESTARTS in the secondary by doing concurrent reads while update proces is running.
 # Ensure that there are some TPRETRY messages seen in the update process log.
 $grep "TPRETRY" $SEC_SIDE/RCVR_${start_time}.log.updproc >&! TPRETRY_updproc.outx

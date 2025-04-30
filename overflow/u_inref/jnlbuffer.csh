@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -110,7 +110,7 @@ echo "# If the message about reading from journal files doesnt appear in the SRC
 $gtm_tst/com/wait_for_log.csh -log SRC_${src_log_time}.log -message "Source server now reading from journal files" -duration 60
 
 echo "# Stop IMPTP process in primary..."
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 
 $gtm_tst/com/rfstatus.csh "Before_TEST_stops:"
 echo "# Database check and Application level check"

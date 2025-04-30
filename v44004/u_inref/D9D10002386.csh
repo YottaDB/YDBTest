@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -136,7 +136,7 @@ echo "GTM_TEST_DEBUGINFO: "`date`
 
 # stop the background M process
 echo "#Stop the background GTM process"
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 echo "GTM_TEST_DEBUGINFO: "`date`
 
 $MUPIP replic -source -showbacklog >& check_srcbacklog2.out

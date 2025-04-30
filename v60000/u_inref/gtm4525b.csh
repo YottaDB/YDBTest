@@ -533,7 +533,7 @@ error:
 	foreach i (1 2 3 4)
 		setenv gtm_test_jobid $i
 		setenv gtm_test_dbfillid $i
-		$gtm_tst/com/endtp.csh
+		$gtm_tst/com/endtp.csh >>&! endtp_${gtm_test_jobid}.out
 	end
 	if ($?test_replic) then
 		$MSR STOP INST1 INST2

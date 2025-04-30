@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -35,6 +35,6 @@ sleep $test_sleep_sec_short
 #
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/$tst/u_inref/var_tp_rest.csh >>&! var_tp_rest.out"
 echo "Now GTM process will end."
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 $gtm_tst/com/dbcheck.csh -extract
 $gtm_tst/com/checkdb.csh

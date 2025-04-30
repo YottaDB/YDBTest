@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -42,13 +45,13 @@ $MSR RUN INST1 'set msr_dont_trace ; $MUPIP set -file mumps.dat '${tst_jnl_str}'
 $MSR RUN INST2 'set msr_dont_trace ; $MUPIP set -file mumps.dat '${tst_jnl_str}',file='${jnldir}'/sec/mumps.mjl >&! jnlswitch.out'
 
 echo ">>> Start imptp"
-$MSR RUN INST1 "$gtm_tst/com/imptp.csh" >&! imptp1.out
+$MSR RUN INST1 "$gtm_tst/com/imptp.csh" >&! imptp.out
 
 echo ">>> Sleep 5 seconds"
 sleep 5
 
 echo ">>> Stop imptp"
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 
 echo ">>> Check journal files for JNLBADRECFMT error"
 $gtm_tst/com/jnlextall.csh mumps

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -198,7 +198,7 @@ if ($tst_seqtarget == $tst_nseqno) then
 	echo "PASSED rollback -fetchresync"
 else
 	echo "FAILED from rollback: tst_seqno1=$tst_seqno1 tst_seqtarget=$tst_seqtarget tst_nseqno=$tst_nseqno"
-	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh"
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh < /dev/null "">>&!"" endtp.out"
 	$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/SRC_SHUT.csh ""on"""
 	echo "Test was forced to stop!"
 	exit 1

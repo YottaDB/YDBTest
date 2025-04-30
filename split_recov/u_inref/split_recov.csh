@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -61,7 +61,7 @@ $MUPIP set -file $tst_jnl_str a.dat
 $gtm_tst/com/wait_for_transaction_seqno.csh +1000 SRC $test_sleep_sec "" noerror
 
 # now stop GTM
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp1.out
 echo "Source shut down ..."
 $gtm_tst/com/SRC_SHUT.csh "." >>&! SHUT_${start_time}.out
 
@@ -95,7 +95,7 @@ echo "Apply some more transactions..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh "5" < /dev/null "">>&!"" imptp.out"
 $pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +1000 SRC $test_sleep_sec "" noerror
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh  < /dev/null "">>&!"" imptp.out"
+$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh  < /dev/null "">>&!"" endtp2.out"
 
 
 $gtm_tst/com/rfstatus.csh "Before_TEST_stops:"

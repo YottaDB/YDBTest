@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -117,8 +117,8 @@ set stat = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_transac
 if (0 != "$stat") then
 	echo "TEST-E-TRANSACTIONS processed by the secondary did not reach the expected number (2)"
 	echo "Since the rest of the test relies on this, no point in continuing it. Will exit now."
-	$gtm_tst/com/endtp.csh >>& endtp.out
-        $gtm_tst/com/dbcheck.csh
+	$gtm_tst/com/endtp.csh >& endtp3.out
+	$gtm_tst/com/dbcheck.csh
 	exit 1
 endif
 
@@ -150,8 +150,7 @@ echo "Stop updates on primary side (Side A)"
 $GTM << aa
 write "GTM_TEST_DEBUGINFO: ",\$zv
 aa
-$gtm_tst/com/endtp.csh
-mv endtp.out endtp1.out
+$gtm_tst/com/endtp.csh >& endtp1.out
 # wait until backlog is clear
 $gtm_tst/com/wait_until_src_backlog_below.csh 0
 
@@ -237,7 +236,8 @@ $sec_shell '$sec_getenv; cd $SEC_SIDE;$sv_curver; $MUPIP replic -receiv -start -
 # Make sure the secondary side is supplementary instance
 $sec_shell '$sec_getenv; cd $SEC_SIDE;$sv_curver; $MUPIP replic -edit -show mumps.repl >& show_mumps_repl_new.out ; $grep "HDR Supplementary Instance" show_mumps_repl_new.out'
 echo "# Stop updates on the primary side"
-$pri_shell '$pri_getenv; cd $PRI_SIDE;$sv_curver; $gtm_tst/com/endtp.csh;mv endtp.out endtp2.out'
+$pri_shell '$pri_getenv; cd $PRI_SIDE;$sv_curver; $gtm_tst/com/endtp.csh >& endtp2.out'
+
 # restore '$gtm_tst/com/dbcheck.csh -extract' once C9902-000863 is fixed
 $gtm_tst/com/dbcheck_filter.csh
 #

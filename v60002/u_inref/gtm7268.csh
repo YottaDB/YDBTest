@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,7 +50,7 @@ source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "JNLCLOSED"
 
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.out
 

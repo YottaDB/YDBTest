@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -133,7 +133,7 @@ if ($tst_seqno >= $tst_nseqno) then
 	echo "PASSED rollback -fetchresync"
 else
 	echo "FAILED from rollback: tst_seqno=$tst_seqno tst_nseqno=$tst_nseqno"
-	$gtm_tst/com/endtp.csh
+	$gtm_tst/com/endtp.csh >>& endtp.out
 	$gtm_tst/com/SRC_SHUT.csh "on"
 	echo "Test was forced to stop!"
 	exit 1

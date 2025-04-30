@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -158,7 +158,7 @@ echo ">>> Update all regions"
 $gtm_exe/mumps -run %XCMD 'set ^a($job)=$random(1000),^b($job)=$random(1000),^c($job)=$random(1000),^d($job)=$random(1000)'
 
 echo ">>> Stop imptp"
-$gtm_tst/com/endtp.csh
+$gtm_tst/com/endtp.csh >>& endtp.out
 
 echo ">>> Update all regions again"
 $gtm_exe/mumps -run %XCMD 'set ^a($job)=$random(1000),^b($job)=$random(1000),^c($job)=$random(1000),^d($job)=$random(1000)'
