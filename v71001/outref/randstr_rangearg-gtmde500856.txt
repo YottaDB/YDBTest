@@ -6,7 +6,7 @@
 # 
 # ^%RANDSTR limits the range argument upper limit to the actual number of characters available in the current character set - 256 for M mode and 65,536 for UTF-8 mode. Previously, a missing or defective upper limit caused the routine to perform unproductive processing that could consume unreasonable amounts of time. The workaround was to avoid inappropriate range arguments. (GTM-DE500856)
 
-##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON GCOL_NOSORT
 # Run M routines that call ^%RANDSTR with various range argument upper limits,
 # then confirm that each routine runs in less than 1.5 million instructions.
 # Previously, these routines would have hung for long periods without issuing any output.
@@ -21,4 +21,4 @@ PASS: Took less than 150000000 instructions
 ##TEST_PATH##/perf.out
 %GTM-E-INVDLRCVAL, Invalid $CHAR() value 55296
 ##ALLOW_OUTPUT NONUNICODE_MODE
-##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON GCOL_NOSORT

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -11,11 +11,15 @@
 #
 #################################################################
 
-
 echo '# Check that concatenating strings that already happen to be at the end of the stringpool'
 echo '# produces very fast concatenation operations. For v70005 we expect CPU instructions under 150,000,000.'
 echo '# (Max instructions used by v70005 is 69,020,710 on armv6l dbg; min is 14,714,225 on x86_64 pro.)'
 echo '# (max instructions used by v70004 is 2,735,479,421 on armv6l dbg; min is 529,709,305 on x86_64 pro.)'
+
+# stp_gcol() preserves order of string addresses in the stringpool thereby ensuring garbage collection will
+# continue to keep strings at the end of the stringpool. But stp_gcol_nosort() will not preserve the order
+# Therefore force stp_gcol() to always sort for this test (otherwise the test will fail because it takes longer to run).
+setenv ydb_stp_gcol_nosort 0
 
 set limit = 150000000
 

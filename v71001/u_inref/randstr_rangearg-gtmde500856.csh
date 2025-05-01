@@ -34,13 +34,18 @@ setenv ydb_msgprefix "GTM"	# So can run the test under GTM or YDB
 # the test framework (i.e. gtm_trace_gbl_name env var is not defined) as otherwise a lot more instructions get used.
 set perf_missing = `which perf >/dev/null; echo $status`
 
+# Note that if "ydb_stp_gcol_nosort" is 1, then ^%RANDSTR can take a lot of instructions as it creates a lot of strings
+# that share memory locations and so the nosort approach will not work as efficiently and will end up taking a lot more
+# instructions than the sort approach so disable this test in case nosort approach is chosen randomly by the test framework.
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh      # detect asan build into $gtm_test_libyottadb_asan_enabled
 if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_image") && ("x86_64" == `uname -m`)       \
-	&& ("GCC" == $gtm_test_yottadb_compiler) && ! $?gtm_trace_gbl_name) then
+		&& ("GCC" == $gtm_test_yottadb_compiler)								\
+		&& ! $?gtm_trace_gbl_name										\
+		&& (0 == $ydb_stp_gcol_nosort)) then
 	set limit = 150000000
-	set testmsg = ( \
-		"# Test 1. Defective range argument upper limit, e.g.: '1:1:2**32'" \
-		"# Test 2. Missing range argument upper limit, i.e. '1:1'" \
+	set testmsg = (									\
+		"# Test 1. Defective range argument upper limit, e.g.: '1:1:2**32'"	\
+		"# Test 2. Missing range argument upper limit, i.e. '1:1'"		\
 	)
 
 	echo "# Run M routines that call ^%RANDSTR with various range argument upper limits,"

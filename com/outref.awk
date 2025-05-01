@@ -491,6 +491,12 @@ BEGIN {
 	else
 		envir[no_options] = "OUTSIDE_DOCKER"
 	#
+	option_names[++no_options] = "ydb_stp_gcol_nosort"
+	if (1 == ENVIRON["ydb_stp_gcol_nosort"])
+		envir[no_options] = "GCOL_NOSORT"
+	else
+		envir[no_options] = "GCOL_SORT"
+	#
 	option_names[++no_options] = "gtm_test_hugepages"
 	if (1 == ENVIRON["gtm_test_hugepages"])
 		envir[no_options] = "HUGEPAGES_ON"

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,6 +12,12 @@
 #################################################################
 
 # This tests $ZYHASH and ydb_mmrhash_128 to make sure that they return equivalent and consistent hashes across runs
+
+# ^%RANDSTR uses $ZEXTRACT extensively and ydb390.m invokes it with a string length of 1Mib.
+# This means we will end up with a lot of duplicated data if "ydb_stp_gcol_nosort" env var is 1
+# (as "stp_gcol_nosort()" will not notice the data duplication). And that will cause the process to
+# take TOO LONG to run and need a lot of memory. So force stp_gcol() to always sort.
+setenv ydb_stp_gcol_nosort 0
 
 $ydb_dist/yottadb -run ydb390
 
