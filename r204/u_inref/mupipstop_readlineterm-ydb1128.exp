@@ -23,8 +23,9 @@ spawn $gtm_dist/dse
 set dse_pid [exp_pid]
 set dse_id $spawn_id
 
-expect -i dse_id -exact "DEFAULT"
-puts "# Seize crit using the spawned DSE process"
+expect -i dse_id -exact "DSE> "
+puts "\n# Seize crit using the spawned DSE process"
+send -i dse_id "\r"
 expect -i dse_id -exact "DSE> "
 send -i dse_id "crit -seize\r"
 expect -i dse_id -exact "\nSeized write critical section.\r\n\r\nDSE> "
