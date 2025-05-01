@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 51 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 52 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1397,6 +1397,24 @@ endif
 echo "setenv gtm_statshare $gtm_statshare"							>>&! $settingsfile
 
 setenv tst_random_all "$tst_random_all gtm_statshare"
+###########################################################################
+
+###########################################################################
+### Random option - 52 ### Randomly enable ydb_stp_gcol_nosort 50% of the time
+#
+if !($?ydb_stp_gcol_nosort) then
+	if (50 >= $randnumbers[52]) then
+		setenv ydb_stp_gcol_nosort 0
+	else
+		setenv ydb_stp_gcol_nosort 1
+	endif
+	echo "# ydb_stp_gcol_nosort set by do_random_settings.csh"				>>&! $settingsfile
+else
+	echo "# ydb_stp_gcol_nosort was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+echo "setenv ydb_stp_gcol_nosort $ydb_stp_gcol_nosort"						>>&! $settingsfile
+
+setenv tst_random_all "$tst_random_all ydb_stp_gcol_nosort"
 ###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report
