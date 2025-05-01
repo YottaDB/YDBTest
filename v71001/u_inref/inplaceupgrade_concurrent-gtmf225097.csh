@@ -52,9 +52,17 @@ $gtm_dist/mumps -run GDE exit >&! gdeT1.out
 echo "# Set a large value in each region of the database to slow down later MUPIP REORG -UPGRADE calls"
 foreach reg ("DEFAULT" "A" "B" "C")
 	echo "# Fill region $reg for 5 seconds"
+	# Before spawning background process, kill ^stopfill to start with known state
+	$gtm_dist/mumps -r %XCMD 'kill ^stopfill'
+	# Start background process (an M program).
 	($gtm_dist/mumps -run fillglobal^gtmf225097 $reg & ; echo $! >& mumpsT1$reg.pid) >&! fillT1$reg.out
+	# Wait for backgrounded M program to have set ^stopfill to 0. Only then do we know it has started doing updates.
+	$gtm_dist/mumps -r %XCMD 'for i=1:1 quit:$data(^stopfill)  hang 0.01'
+	# Sleep for 5 seconds while backgrounded M program is performing updates
 	sleep 5
-	$gtm_dist/mumps -r %XCMD "set ^stopfill=1"
+	# Now signal backgrounded M program to terminate
+	$gtm_dist/mumps -r %XCMD 'set ^stopfill=1'
+	# Wait for backgrounded M program to terminate
 	$gtm_tst/com/wait_for_proc_to_die.csh `cat mumpsT1$reg.pid` 300
 end
 
