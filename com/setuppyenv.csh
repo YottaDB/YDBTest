@@ -29,12 +29,30 @@ cd $pypath
 python3 -m venv .venv
 # Activate virtual environment
 source .venv/bin/activate.csh
+set status1 = $status
+if ($status1) then
+	echo "SETUPPYENV-E-FAILED : [source .venv/bin/activate.csh] failed with status [$status1]"
+	cd ..
+	exit 1
+endif
 # setuptools is no longer pre-installed in virtual environments created with venv from Python 3.12
 # This means that it is no longer available by default. But since setup.py needs it, run the
 # following in the activated virtual environment. See https://docs.python.org/3/whatsnew/3.12.html
 # for more details (search for "gh-95299").
 pip install setuptools
-# Install into venv: `python -m -pip install .`
-python -m -pip install .
+set status1 = $status
+if ($status1) then
+	echo "SETUPPYENV-E-FAILED : [pip install setuptools] failed with status [$status1]"
+	cd ..
+	exit 1
+endif
+# Install into venv: `python -m pip install .`
+python -m pip install .
+set status1 = $status
+if ($status1) then
+	echo "SETUPPYENV-E-FAILED : [python -m pip install .] failed with status [$status1]"
+	cd ..
+	exit 1
+endif
 cd ..
 exit 0
