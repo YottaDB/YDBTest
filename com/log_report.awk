@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,7 +56,7 @@ BEGIN {
 			# The below will result in ENCR:11 ; ENCR:10 ; ENCR:00 ; ENCR:01 (last one not actually done)
 			printf "ENCR:%-2s ",encropt""eotf
 		}
-		if ( "gtmdbglvl" == rname ) printf "DBGLVL:%-7s ",rval[i]
+		if ( "gtmdbglvl" == rname ) printf "DBGLVL:%-10s ",rval[i]
 		if ( "gtm_test_online_integ" == rname ) printf "OLI:%-3s ",substr(rval[i],1,3)
 		if ( "gtm_test_trigger" == rname ) printf "TRG:%-1s ",rval[i]
 		if ( "gtm_chset" == rname )
