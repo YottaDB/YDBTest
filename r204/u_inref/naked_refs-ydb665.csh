@@ -36,12 +36,10 @@ $gtm_tst/$tst/inref/list.csh consecutive.m 1
 $gtm_exe/mumps -run consecutive
 
 echo '# Test that `-machine` works correctly on GVNAMENAKED'
-if ($tst_image == "dbg") then
-	# override gtmcompile for this specific test; we want to compare exact opcodes.
-	env gtmcompile=-noline_entry $gtm_exe/mumps -machine consecutive.m
-	grep -E -o '^    [0-9].*|OC_.*' consecutive.lis > filtered.lis
-	diff filtered.lis $gtm_tst/$tst/inref/consecutive.lis
-endif
+# override gtmcompile for this specific test; we want to compare exact opcodes.
+env gtmcompile=-noline_entry $gtm_exe/mumps -machine consecutive.m
+grep -E -o '^    [0-9].*|OC_.*' consecutive.lis > filtered.lis
+diff filtered.lis $gtm_tst/$tst/inref/consecutive.lis
 
 echo '# Test that two consecutive `SET ^X(1,2),^X(1,3)` commands with multiple subscripts are fused into a naked reference'
 echo ' SET ^x(1,2)="a",^x(1,3)="b"\
@@ -68,14 +66,14 @@ echo ' set ^x(1,6)=1,a=2  write ^x(1,a+1++"3")' > arbitrarylast.m
 $gtm_tst/$tst/inref/list.csh arbitrarylast.m 1
 $gtm_exe/mumps -run arbitrarylast
 
-echo '# Test that the start of a subroutine does not misoptimize a fuse into the next global access'
+echo '# Test that the start of a subroutine does not misoptimize a naked reference'
 echo ' set ^x(1)=1\
 x set ^x(2)=2  quit' > routine.m
 $gtm_tst/$tst/inref/list.csh routine.m 1
 $gtm_tst/$tst/inref/list.csh routine.m 2
 $gtm_exe/mumps -run routine
 
-echo '# Test a more complicated subroutine does not misoptimize a fuse'
+echo '# Test a more complicated subroutine does not misoptimize a naked reference'
 echo ' set ^x(1)="x1",^x(2)="x2"\
 x write ^x(2)\
 quit\
@@ -84,19 +82,19 @@ $gtm_tst/$tst/inref/list.csh routinebackjump.m 1
 $gtm_tst/$tst/inref/list.csh routinebackjump.m 2
 $gtm_exe/mumps -run y^routinebackjump
 
-echo '# Test that returning a value does not misoptimize a fuse'
+echo '# Test that returning a value does not misoptimize a naked reference'
 echo 'f()	quit:0 ^x(1)  set ^x(1)=1' > quitval.m
 $gtm_tst/$tst/inref/list.csh quitval.m 1
 $gtm_exe/mumps -run quitval
 
-echo '# Test that modifying $ZGBLDIR does not misoptimize a fuse into the next global access'
+echo '# Test that modifying $ZGBLDIR does not misoptimize a naked reference'
 echo ' set $zgbldir="mumps.gld",^x(1)=1\
 	set $zgbldir="alt.gld",^x(2)=2' > zgbldir.m
 $gtm_tst/$tst/inref/list.csh zgbldir.m 1
 $gtm_tst/$tst/inref/list.csh zgbldir.m 2
 $gtm_exe/mumps -run zgbldir
 
-echo '#  Test that NEW-ing $ZGBLDIR does not misoptimize a fuse'
+echo '#  Test that NEW-ing $ZGBLDIR does not misoptimize a naked reference'
 echo ' set $zgbldir="alt.gld",^x(1)=1  new $zgbldir  set ^x(2)=2' > newzgbldir.m
 $gtm_tst/$tst/inref/list.csh newzgbldir.m 1
 $gtm_exe/mumps -run newzgbldir
@@ -129,44 +127,44 @@ $gtm_tst/$tst/inref/list.csh consecutivelines.m 1
 $gtm_tst/$tst/inref/list.csh consecutivelines.m 2
 $gtm_exe/mumps -run consecutivelines
 
-echo '# Test that an indirect global reference does not misoptimize a fuse into the next global access'
+echo '# Test that an indirect global reference does not misoptimize a naked reference'
 echo ' SET y="^Y(2)",^X(1)=1,@y=2,^X(3)=3 \
 	Q:(^X(1)=1)&(^X(3)=3)&(^Y(2)=2)  W "FAILED: ",^X(1),^X(3),^Y(2),^Y(3),!  Q' > consecutiveindr.m
 $gtm_tst/$tst/inref/list.csh consecutiveindr.m 1
 $gtm_exe/mumps -run consecutiveindr
 
-echo '# Test that an expression that uses an indirect global reference does not misoptimize a fuse'
+echo '# Test that an expression that uses an indirect global reference does not misoptimize a naked reference'
 echo ' S ^Y(2)="a",y="^Y(2)"\
 	S ^X(1)=1  W 1+@y,^X(1)' > indglvn.m
 $gtm_tst/$tst/inref/list.csh indglvn.m 2
 $gtm_exe/mumps -run indglvn
 
-echo '# Test that subroutine calls do not misoptimize a fuse.'
+echo '# Test that subroutine calls do not misoptimize a naked reference'
 echo ' set ^X(1)=1  do y  write ^X(1)  quit\
 y  write 1' > call.m
 $gtm_tst/$tst/inref/list.csh call.m 1
 $gtm_exe/mumps -run call
 
-echo '# Test that extrinsic calls do not misoptimize a fuse.'
+echo '# Test that extrinsic calls do not misoptimize a naked reference'
 echo ' set ^X(1)=1  do y(1)  write ^X(1)  quit\
 y(a)  write a' > excall.m
 $gtm_tst/$tst/inref/list.csh excall.m 1
 $gtm_exe/mumps -run excall
 
-echo '# Test that global calls do not misoptimize a fuse.'
+echo '# Test that global calls do not misoptimize a naked reference'
 echo ' set ^X(1)=1  do y^extcall  write ^X(1)  quit\
 y  write 1' > extcall.m
 $gtm_tst/$tst/inref/list.csh extcall.m 1
 $gtm_exe/mumps -run extcall
 
-echo '# Test that global calls to extrinsic functions do not misoptimize a fuse.'
+echo '# Test that global calls to extrinsic functions do not misoptimize a naked reference'
 echo ' set ^x(1)=1  do y^extexcal(1)  set ^x(2)=2\
 	quit\
 y(a) set ^y(3)=3  quit' > extexcal.m
 $gtm_tst/$tst/inref/list.csh extexcal.m 1
 $gtm_exe/mumps -run extexcal
 
-echo '# Test that non-consecutive global references do not misoptimize a fuse into any global access'
+echo '# Test that non-consecutive global references do not misoptimize a naked reference'
 echo ' SET ^a(1)="a",^b(2)="b",^a(2)="c"\
 	Q:(^a(1)="a")&(^b(2)="b")&(^a(2)="c")  W "TEST-E-FAIL: ",^a(1),^b(2),^a(2),!  Q' > nonconsecutive.m
 $gtm_tst/$tst/inref/list.csh nonconsecutive.m 1
@@ -182,6 +180,16 @@ echo '# Test that a JMPEQU conditional expression does not misoptimize and fuse 
 echo ' s ^X(1)=1  s:^X(1)=2 ^Y(1)=1  s ^Y(2)=2' > jumpequ.m
 $gtm_exe/mumps -run jumpequ
 $gtm_tst/$tst/inref/list.csh jumpequ.m 1
+
+echo '# Test that a JMPNEQ conditional expression does not misoptimize and fuse the next global access. Minimized from ydb449.m'
+echo '	kill ^x\
+	set isOrder=0\
+	if isOrder set x=$data(^x("sub0","sub1"))\
+	else  set x=$query(^x("sub0","sub1"),-1)\
+	quit' > jmpneq.m
+$gtm_exe/mumps -run jmpneq
+$gtm_tst/$tst/inref/list.csh jmpneq.m 4
+
 echo '# Test that a DO block does not misoptimize and fuse the next global access'
 echo ' do  if $data(^names(1)) do\
 	. if $data(^names(2))\
@@ -206,7 +214,12 @@ echo ' S X=2,^V1B(1)=50,^A(X,21)=60,^V1B(1)=70' > nonliteralsub.m
 $gtm_tst/$tst/inref/list.csh nonliteralsub.m 1
 $gtm_exe/mumps -run nonliteralsub
 
-echo '# Test that function calls in FOR loops with local variables do not misoptimize a fuse'
+echo '# Test that FOR loops do not misoptimize a naked reference across iterations'
+echo '	set ^x(1)=1,^x(2)=2  for i=1:1:2  write ^x(i)  set ^x("a",i)=1' > forloop.m
+$gtm_tst/$tst/inref/list.csh forloop.m 1
+$gtm_exe/mumps -run forloop
+
+echo '# Test that function calls in FOR loops with local variables do not misoptimize a naked reference'
 echo ' set delta=1 for i=1:delta:2 set ^x(1)=1 do y set ^x(2)=2\
 	quit\
 y	set ^y(3)=3  quit' > forlcldo.m
@@ -218,61 +231,66 @@ echo ' SET ^y(1)=1  XECUTE "set ^x(1)=2"  WRITE ^y(1)' > xecute.m
 $gtm_tst/$tst/inref/list.csh xecute.m 1
 $gtm_exe/mumps -run xecute
 
-echo '# Test that indirection in an intrinsic function does not misoptimize a fuse'
+echo '# Test that indirection in an intrinsic function does not misoptimize a naked reference'
 echo ' set x="^y(2)",^x(1)=1,^x(2)=$data(@x)' > indfun.m
 $gtm_tst/$tst/inref/list.csh indfun.m 1
 $gtm_exe/mumps -run indfun
 
-echo '# Test that indirection in ZSHOW does not misoptimize a fuse'
+echo '# Test that indirection in ZSHOW does not misoptimize a naked reference'
 echo ' set a=1,^x(1)=1 zshow "a":@"^y(3)" set ^x(2)=2' > indrzshow.m
 $gtm_tst/$tst/inref/list.csh indrzshow.m 1
 $gtm_exe/mumps -run indrzshow
 
-echo '# Test that indirection through READ does not misoptimize a fuse'
+echo '# Test that indirection through READ does not misoptimize a naked reference'
 echo ' set x="^y(2)",^x(1)=1 read @x:0 set ^x(2)=2' > indset.m
 $gtm_tst/$tst/inref/list.csh indset.m 1
 $gtm_exe/mumps -run indset
 
-echo '# Test that indirection through $INCR does not misoptimize a fuse'
+echo '# Test that indirection through $INCR does not misoptimize a naked reference'
 echo ' set z="^y(2)",^x(1)=1,y=$incr(@z),^x(2)=2' > indincr.m
 $gtm_tst/$tst/inref/list.csh indincr.m 1
 $gtm_exe/mumps -run indincr
 
-echo '# Test that indirection through $ORDER does not misoptimize a fuse'
+echo '# Test that indirection through $ORDER does not misoptimize a naked reference'
 echo ' set z="^y(2)",a=1,^x(1)=1,y=$order(@z,a),^x(2)=2' > indo2.m
 $gtm_tst/$tst/inref/list.csh indo2.m 1
 $gtm_exe/mumps -run indo2
 
-echo '# Test that indirection through OPEN does not misoptimize a fuse'
+echo '# Test that indirection through OPEN does not misoptimize a naked reference'
 echo ' set ^a="UTF-8",p="ICHSET=(^a)",^x(1)=1  open "/dev/stdin":@p  w ^x(2)=2' > inddevparms.m
 $gtm_tst/$tst/inref/list.csh inddevparms.m 1
 $gtm_exe/mumps -run inddevparms
 
-echo '# Test that indirection through MERGE does not misoptimize a fuse'
+echo '# Test that indirection through MERGE does not misoptimize a naked reference'
 echo ' set x="^b",^b=1,^y(1)=1  merge a=@x   w ^y(2)=2' > indmerge.m
 $gtm_tst/$tst/inref/list.csh indmerge.m 1
 $gtm_exe/mumps -run indmerge
 
-echo '# Test that indirection through `SET $extrinsic` does not misoptimize a fuse'
+echo '# Test that indirection through `SET $extrinsic` does not misoptimize a naked reference'
 echo ' set x="a",a="hello",^y(1)=1,$zpiece(@x,1)="x"  w ^y(2)=2' > indget1.m
 $gtm_tst/$tst/inref/list.csh indget1.m 1
 $gtm_exe/mumps -run indget1
 
-echo '# Test that indirection through `$GET` does not misoptimize a fuse'
+echo '# Test that indirection through `$GET` does not misoptimize a naked reference'
 echo ' set x="a",a="hello",^y(1)=1  w $get(@x,1),^y(2)=2' > indget2.m
 $gtm_tst/$tst/inref/list.csh indget2.m 1
 $gtm_exe/mumps -run indget2
 
-echo '# Test that indirection through MERGE with side effects does not misoptimize a fuse'
+echo '# Test that indirection through MERGE with side effects does not misoptimize a naked reference'
 # echo ' set x="a",a="hello",^y(1)=1  w $get(@x,1),^y(2)=2' > indmerge2.m
 echo "TODO"
 # $gtm_tst/$tst/inref/list.csh indmerge2.m 1
 # $gtm_exe/mumps -run indmerge2
 
-echo '# Test that indirection through `$QUERY` does not misoptimize a fuse'
+echo '# Test that indirection through `$QUERY` does not misoptimize a naked reference'
 echo ' set x="a",a=1,^y(1)=1  w $query(@x,a),^y(2)=2' > indq2.m
 $gtm_tst/$tst/inref/list.csh indq2.m 1
 $gtm_exe/mumps -run indq2
+
+echo '# Test that indirection through `$NAME` does not misoptimize a naked access'
+echo '	set x=$data(^x(1)),x=$name(@"x($data(^y(1)))"),x=$data(^x(2))' > indfnname.m
+$gtm_tst/$tst/inref/list.csh indfnname.m 1
+$gtm_exe/mumps -run indfnname
 
 echo '# Test that a global extrinsic function call does not misoptimize and fuse the next global access'
 echo ' set ^x(1)=1,^x(2)=2,^y(3)=3\
@@ -327,35 +345,35 @@ echo ' s ^y=1  w $&c.alwaystrue,^y' > fnfgncal.m
 $gtm_tst/$tst/inref/list.csh fnfgncal.m 1
 $gtm_exe/mumps -run fnfgncal
 
-echo '# Test that $ZSTEP interrupts do not misoptimize a fuse'
+echo '# Test that $ZSTEP interrupts do not misoptimize a naked reference'
 echo '	set $zstep="set x=$get(^y(3)) zstep into"  zbreak f:"zstep into"\
 f	set ^x(1)=1\
 	set ^x(2)=2' > zstep.m
 $gtm_tst/$tst/inref/list.csh zstep.m 3
 $gtm_exe/mumps -run zstep
 
-echo '# Test that ZBREAK interrupts do not misoptimize a fuse'
+echo '# Test that ZBREAK interrupts do not misoptimize a naked reference'
 echo '	kill ^x,^y  zbreak f+1:"set ^y=1  zstep into:"""""\
 f	set ^x(1)=1\
 	set ^x(2)=2' > zbreak.m
 $gtm_tst/$tst/inref/list.csh zbreak.m 3
 $gtm_exe/mumps -run zbreak
 
-echo '# Test that ZTRAP interrupts do not misoptimize a fuse'
+echo '# Test that ZTRAP interrupts do not misoptimize a naked reference'
 echo '	kill ^y  set $ZTRAP="write $ZSTATUS,!  quit:$data(^y)  set ^y=1"\
 	set ^x(1)=1  \
 	set ^x(2)=2  write notarealvariableb' > ztrap.m
 $gtm_tst/$tst/inref/list.csh ztrap.m 3
 $gtm_exe/mumps -run ztrap
 
-echo '# Test that ETRAP interrupts do not misoptimize a fuse'
+echo '# Test that ETRAP interrupts do not misoptimize a naked reference'
 echo '	set $etrap="set ^y=1  w $ecode,$zstatus  zstep into"\
 f	set ^x(1)=1  w notarealvariable\
 	set ^x(2)=2' > etrap.m
 $gtm_tst/$tst/inref/list.csh etrap.m 3
 $gtm_exe/mumps -run etrap
 
-echo '# Test that EXCEPTION handlers do not misoptimize a fuse'
+echo '# Test that EXCEPTION handlers do not misoptimize a naked reference'
 echo '	kill ^y  set ^x(1)=1\
 	write $REFERENCE,!  set ^x(2)=2  open "/not/here":(EXCEPTION="write $zstatus,!  quit:$data(^y)  set ^y=1")\
 	' > openexception.m
@@ -373,11 +391,23 @@ sleep 1 \
 $gtm_exe/mupip intrpt "'$\! 2>&1| sed "s/issued to process .*/issued to process NNNN/" \
 wait'
 
-echo '# Test that ZTIMEOUT handlers cannot misoptimize a fuse'
+echo '# Test that ZTIMEOUT handlers cannot misoptimize a naked reference'
 echo '	set $ZTIMEOUT="1:set ^y=2  write ^y"\
 	set ^x(1)=1  hang 2  write ^x(1)' > ztimeout.m
 $gtm_tst/$tst/inref/list.csh ztimeout.m 2
 $gtm_exe/mumps -run ztimeout
+
+echo '# Test that nested interrupts cannot misoptimize a naked reference'
+echo 'x	set x=$data(^x(1))\
+	zbreak x+3:"do y"\
+	zbreak y+1:"set x=1"\
+	set x=$data(^x(2))\
+	quit\
+y\
+	set x=$data(^y(1,2))\
+	quit' > nestedzbreak.m
+$gtm_tst/$tst/inref/list.csh nestedzbreak.m 4
+$gtm_exe/mumps -run nestedzbreak
 
 echo "# Run [dbcheck.csh]"
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

@@ -44,7 +44,7 @@ OC_GVGET
 OC_WRITE
 OC_RET
 1
-# Test that the start of a subroutine does not misoptimize a fuse into the next global access
+# Test that the start of a subroutine does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -53,7 +53,7 @@ OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
 OC_RET
-# Test a more complicated subroutine does not misoptimize a fuse
+# Test a more complicated subroutine does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -67,13 +67,13 @@ OC_WRITE
 		At M source location x^routinebackjump
 
 YDB>
-# Test that returning a value does not misoptimize a fuse
+# Test that returning a value does not misoptimize a naked reference
 OC_LINESTART
 OC_BINDPARM
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that modifying $ZGBLDIR does not misoptimize a fuse into the next global access
+# Test that modifying $ZGBLDIR does not misoptimize a naked reference
 OC_LINESTART
 OC_SVPUT
 OC_GVNAME
@@ -83,7 +83,7 @@ OC_SVPUT
 OC_GVNAME
 OC_GVPUT
 OC_RET
-#  Test that NEW-ing $ZGBLDIR does not misoptimize a fuse
+#  Test that NEW-ing $ZGBLDIR does not misoptimize a naked reference
 OC_LINESTART
 OC_SVPUT
 OC_GVNAME
@@ -120,7 +120,7 @@ OC_GVPUT
 OC_LINESTART
 OC_GVNAMENAKED
 OC_GVPUT
-# Test that an indirect global reference does not misoptimize a fuse into the next global access
+# Test that an indirect global reference does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -130,7 +130,7 @@ OC_STOGLVN
 OC_GLVNPOP
 OC_GVNAME
 OC_GVPUT
-# Test that an expression that uses an indirect global reference does not misoptimize a fuse
+# Test that an expression that uses an indirect global reference does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -142,7 +142,7 @@ OC_GVGET
 OC_WRITE
 OC_RET
 11
-# Test that subroutine calls do not misoptimize a fuse.
+# Test that subroutine calls do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -152,7 +152,7 @@ OC_GVGET
 OC_WRITE
 OC_RET
 11
-# Test that extrinsic calls do not misoptimize a fuse.
+# Test that extrinsic calls do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -164,7 +164,7 @@ OC_WRITE
 OC_RET
 OC_RTERROR
 11
-# Test that global calls do not misoptimize a fuse.
+# Test that global calls do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -174,14 +174,14 @@ OC_GVGET
 OC_WRITE
 OC_RET
 11
-# Test that global calls to extrinsic functions do not misoptimize a fuse.
+# Test that global calls to extrinsic functions do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
 OC_EXTEXCAL
 OC_GVNAME
 OC_GVPUT
-# Test that non-consecutive global references do not misoptimize a fuse into any global access
+# Test that non-consecutive global references do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -210,6 +210,13 @@ OC_GVPUT
 OC_GVNAME
 OC_GVPUT
 OC_RET
+# Test that a JMPNEQ conditional expression does not misoptimize and fuse the next global access. Minimized from ydb449.m
+OC_LINESTART
+OC_GETTRUTH
+OC_COBOOL
+OC_JMPNEQ
+OC_GVNAME
+OC_GVREVERSEQUERY
 # Test that a DO block does not misoptimize and fuse the next global access
 OC_LINESTART
 OC_CALLSP
@@ -240,7 +247,26 @@ OC_GVPUT
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that function calls in FOR loops with local variables do not misoptimize a fuse
+# Test that FOR loops do not misoptimize a naked reference across iterations
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+OC_STOTEMP
+OC_CONUM
+OC_FORINIT
+OC_JMPGTR
+OC_FORCHK1
+OC_GVNAME
+OC_GVGET
+OC_WRITE
+OC_GVNAME
+OC_GVPUT
+OC_FORLOOP
+OC_RET
+12
+# Test that function calls in FOR loops with local variables do not misoptimize a naked reference
 OC_LINESTART
 OC_STOTEMP
 OC_CONUM
@@ -264,7 +290,7 @@ OC_GVGET
 OC_WRITE
 OC_RET
 1
-# Test that indirection in an intrinsic function does not misoptimize a fuse
+# Test that indirection in an intrinsic function does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -272,7 +298,7 @@ OC_INDFUN
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that indirection in ZSHOW does not misoptimize a fuse
+# Test that indirection in ZSHOW does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -280,7 +306,7 @@ OC_INDRZSHOW
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that indirection through READ does not misoptimize a fuse
+# Test that indirection through READ does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -290,7 +316,7 @@ OC_INDSET
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that indirection through $INCR does not misoptimize a fuse
+# Test that indirection through $INCR does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -299,7 +325,7 @@ OC_INDINCR
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that indirection through $ORDER does not misoptimize a fuse
+# Test that indirection through $ORDER does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -314,7 +340,7 @@ OC_GVRECTARG
 OC_GVNAME
 OC_GVPUT
 OC_RET
-# Test that indirection through OPEN does not misoptimize a fuse
+# Test that indirection through OPEN does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -328,7 +354,7 @@ OC_EQU_RETMVAL
 OC_WRITE
 OC_RET
 1
-# Test that indirection through MERGE does not misoptimize a fuse
+# Test that indirection through MERGE does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -344,7 +370,7 @@ OC_EQU_RETMVAL
 OC_WRITE
 OC_RET
 0
-# Test that indirection through `SET $extrinsic` does not misoptimize a fuse
+# Test that indirection through `SET $extrinsic` does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -360,7 +386,7 @@ OC_EQU_RETMVAL
 OC_WRITE
 OC_RET
 0
-# Test that indirection through `$GET` does not misoptimize a fuse
+# Test that indirection through `$GET` does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -376,9 +402,9 @@ OC_EQU_RETMVAL
 OC_WRITE
 OC_RET
 hello0
-# Test that indirection through MERGE with side effects does not misoptimize a fuse
+# Test that indirection through MERGE with side effects does not misoptimize a naked reference
 TODO
-# Test that indirection through `$QUERY` does not misoptimize a fuse
+# Test that indirection through `$QUERY` does not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -397,6 +423,17 @@ OC_EQU_RETMVAL
 OC_WRITE
 OC_RET
 0
+# Test that indirection through `$NAME` does not misoptimize a naked access
+OC_LINESTART
+OC_GVNAME
+OC_GVDATA
+OC_COMVAL
+OC_INDFNNAME
+OC_COMVAL
+OC_INDFNNAME2
+OC_GVNAME
+OC_GVDATA
+OC_RET
 # Test that a global extrinsic function call does not misoptimize and fuse the next global access
 OC_LINESTART
 OC_GVNAME
@@ -475,17 +512,17 @@ OC_GVGET
 OC_WRITE
 OC_RET
 11
-# Test that $ZSTEP interrupts do not misoptimize a fuse
+# Test that $ZSTEP interrupts do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
-# Test that ZBREAK interrupts do not misoptimize a fuse
+# Test that ZBREAK interrupts do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
-# Test that ZTRAP interrupts do not misoptimize a fuse
+# Test that ZTRAP interrupts do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAMENAKED
 OC_GVPUT
@@ -493,13 +530,13 @@ OC_WRITE
 OC_RET
 150373850,+3^ztrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariableb
 150373850,+3^ztrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariableb
-# Test that ETRAP interrupts do not misoptimize a fuse
+# Test that ETRAP interrupts do not misoptimize a naked reference
 OC_LINESTART
 OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
 ,M6,Z150373850,150373850,f^etrap,%YDB-E-LVUNDEF, Undefined local variable: notarealvariable
-# Test that EXCEPTION handlers do not misoptimize a fuse
+# Test that EXCEPTION handlers do not misoptimize a naked reference
 OC_LINESTART
 OC_SVGET
 OC_WRITE
@@ -515,7 +552,7 @@ OC_OPEN
 INTRPT issued to process NNNN
 ^x(1)
 1
-# Test that ZTIMEOUT handlers cannot misoptimize a fuse
+# Test that ZTIMEOUT handlers cannot misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
@@ -525,4 +562,8 @@ OC_GVGET
 OC_WRITE
 OC_RET
 21
+# Test that nested interrupts cannot misoptimize a naked reference
+OC_LINESTART
+OC_GVNAMENAKED
+OC_GVDATA
 # Run [dbcheck.csh]
