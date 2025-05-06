@@ -16,6 +16,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # mupipstop_readlineterm-ydb1128	[jon]	Test MUPIP STOP terminates DSE/LKE/MUPIP even if they hold a critical section when ydb_readline=1
 # mureorgupgrade-ydb1027		[jon]	Test 2 MUPIP REORG -UPGRADE test cases for YDB#1027
+# remove_stpmove-ydb1673		[jon]	Test remove unnecessary stp_move() call when linking multiple copies of same routine
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -31,6 +32,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic machine-ydb1133"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollar_zycompile-ydb1138"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupipstop_readlineterm-ydb1128"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mureorgupgrade-ydb1027"
+setenv subtest_list_non_replic	"$subtest_list_non_replic remove_stpmove-ydb1673"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
