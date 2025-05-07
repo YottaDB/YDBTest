@@ -33,6 +33,20 @@ OC_GVPUT
 OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
+# Test that increasing the number of subscripts still optimizes a naked reference
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAMENAKED
+OC_GVPUT
+OC_RET
+# Test that decreasing the number of subscripts does not misoptimize
+OC_LINESTART
+OC_GVNAME
+OC_GVPUT
+OC_GVNAME
+OC_GVPUT
+OC_RET
 # Test that the last subscript can be an arbitrary expression and still be fused
 OC_LINESTART
 OC_GVNAME
@@ -261,7 +275,7 @@ OC_FORCHK1
 OC_GVNAME
 OC_GVGET
 OC_WRITE
-OC_GVNAME
+OC_GVNAMENAKED
 OC_GVPUT
 OC_FORLOOP
 OC_RET

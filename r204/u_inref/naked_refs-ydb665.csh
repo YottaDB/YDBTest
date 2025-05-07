@@ -61,6 +61,16 @@ echo ' set ^x(1)=1,^(2)=2,^x(3)=3' > manualnaked.m
 $gtm_tst/$tst/inref/list.csh manualnaked.m 1
 $gtm_exe/mumps -run manualnaked
 
+echo '# Test that increasing the number of subscripts still optimizes a naked reference'
+echo ' set ^x(1)=1,^x(1,2,3)=2' > moresubs.m
+$gtm_tst/$tst/inref/list.csh moresubs.m 1
+$gtm_exe/mumps -run moresubs
+
+echo '# Test that decreasing the number of subscripts does not misoptimize'
+echo ' set ^x(1,2,3)=2,^x(1)=1' > fewersubs.m
+$gtm_tst/$tst/inref/list.csh fewersubs.m 1
+$gtm_exe/mumps -run fewersubs
+
 echo '# Test that the last subscript can be an arbitrary expression and still be fused'
 echo ' set ^x(1,6)=1,a=2  write ^x(1,a+1++"3")' > arbitrarylast.m
 $gtm_tst/$tst/inref/list.csh arbitrarylast.m 1
