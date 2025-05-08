@@ -50,9 +50,13 @@ else
 endif
 
 setenv subtest_exclude_list ""
-# filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
+	# filter out white box tests that cannot run in pro
         setenv subtest_exclude_list "$subtest_exclude_list C9B11001824"
+else
+	# filter out white box tests that cannot run in dbg
+	# C9IO9003004 makes assertions about the number of global accesses, which breaks because GVNAMENAKED does a cross-check.
+        setenv subtest_exclude_list "$subtest_exclude_list C9I09003044"
 endif
 
 # Disable D9I10002706 test on HPUX-HPPA as that has been observed to cause eternal hangs in add_inter (see D9I10-002706 folder)
