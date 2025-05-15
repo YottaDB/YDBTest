@@ -20,17 +20,19 @@
 #	"V4"         - pickup a random V4 version
 #	"ms"         - pick up any of the available prior multisite versions that are supported with the current version
 #	"any"        - pick up any of all available prior versions
+# If -ck (checkonly) is specified, exit with 0 status even if version is not available
 #
 # To force the prior version to always be one version at test start-up, either doall.csh or
 # gtmtest.csh, add -env gtm_force_prior_ver=VERSION to the command.
 #
 
 if ( 0 == $#argv ) then
-	echo "Usage: \$gtm_tst/com/random_ver.csh [-gt|-gte] <version> ||  [-lt|-lte] <version> || -type <version>"
+	echo "Usage: \$gtm_tst/com/random_ver.csh [-gt|-gte] <version> ||  [-lt|-lte] <version> || -type <version> [ -ck true] "
 	echo "Sample usage:"
 	echo "\$gtm_tst/com/random_ver.csh -type V4"
 	echo "\$gtm_tst/com/random_ver.csh -gte V44002 -lt V51000"
 	echo "\$gtm_tst/com/random_ver.csh -gte V53003"
+	echo "\$gtm_tst/com/random_ver.csh -gte V44002 -lt V51000 -ck true"
 	exit 1
 endif
 
@@ -46,8 +48,8 @@ if ($?gtm_force_prior_ver) then
 	exit 0
 endif
 
-set opt_array      = ("\-gt"  "\-lt"  "\-gte"  "\-lte"  "\-type"  "\-rh")
-set opt_name_array = ("vergt" "verlt" "vergte" "verlte" "vertype" "remotehosts")
+set opt_array      = ("\-gt"  "\-lt"  "\-gte"  "\-lte"  "\-type"  "\-rh" "\-ck")
+set opt_name_array = ("vergt" "verlt" "vergte" "verlte" "vertype" "remotehosts" "checkonly")
 source $gtm_tst/com/getargs.csh $argv
 
 # First list out all versions available in the server. Skip V3 and V9 versions
@@ -96,11 +98,15 @@ while ($cnt <= $numvers)
 end
 @ numvers = $#actualverlist
 if (0 == $numvers) then
-	echo "RANDOMVER-E-CANNOTRUN : Could not determine previous versions. Check random_ver_err.txt"
-	echo "localallverlist : $localallverlist"	>> random_ver_err.txt
-	echo "remotehosts  : $remotehosts"		>> random_ver_err.txt
-	echo "allverslist : $allverlist"		>> random_ver_err.txt
-	exit -1
+	if ("" != $checkonly) then
+		echo "RANDOMVER-E-CANNOTRUN"
+	else
+		echo "RANDOMVER-E-CANNOTRUN : Could not determine previous versions. Check random_ver_err.txt"
+		echo "localallverlist : $localallverlist"	>> random_ver_err.txt
+		echo "remotehosts  : $remotehosts"		>> random_ver_err.txt
+		echo "allverslist : $allverlist"		>> random_ver_err.txt
+		exit -1
+	endif
 endif
 
 # Check for the upper and lower end of the versions required
@@ -295,8 +301,12 @@ unsetenv gtmcompile
 
 set filteredcount = $#filteredlist
 if ("" == "$filteredlist") then
-	echo "RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria - ${argv}. Exiting..."
-	exit -1
+	if ("" != $checkonly) then
+		echo "RANDOMVER-E-CANNOTRUN"
+	else
+		echo "RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria - ${argv}. Exiting..."
+		exit -1
+	endif
 endif
 set randno = `$gtm_exe/mumps -run rand $filteredcount`
 # The list starts from 1 to $numvers, the random number generated is 0 to $numvers-1

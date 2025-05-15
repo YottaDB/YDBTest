@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -79,14 +79,6 @@ if ($gtm_platform_size != 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb518"
 endif
 
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
-else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
-	# Disable "ydb607" subtest on SUSE Linux and Ubuntu 23.10 (and above) as we don't have the needed
-	# old versions on that distribution (due to no libtinfo.so.5 package)
-	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
-endif
 if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
 	# On ARMV6L systems with Debian 11, we have seen the below subtest crash the system in mysterious ways.
 	# Running this huge M program (that has 1 million lines) seems to take up a lot more memory than available
@@ -100,6 +92,13 @@ if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
 	# But even when huge pages is disabled, this test takes hours to run and it is not considered worth the
 	# effort to test this heavyweight test on AARCH64. Hence we disable this irrespective of huge pages setting.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb547"
+endif
+
+# ydb607 requires specific older versions for the test. Skip if not present. -ck
+# flag is to prevent the script from killing the test using an exit().
+set rand_ver=`$gtm_tst/com/random_ver.csh -gte V63003 -lt V63007 -ck true`
+if ( "$rand_ver" == "RANDOMVER-E-CANNOTRUN") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
 endif
 
 if ("pro" == "$tst_image") then
