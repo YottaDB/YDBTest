@@ -1,0 +1,153 @@
+# ********************************************************************************************
+# YDB#1145 - Test https://gitlab.com/YottaDB/DB/YDB/-/issues/1145#draft-release-note
+# ********************************************************************************************
+# 
+# The M command VIEW "STP_GCOL_NOSORT":1 signals future garbage collections to happen without sorting
+# and VIEW "STP_GCOL_NOSORT":0 reverts back to garbage collections with sorting. Avoiding sorting will
+# likely improve garbage collection runtimes (~ 50%) but could result in increased memory needs depending
+# on the application. $VIEW("SPSIZESORT") returns a comma-separated list of 2 integers which indicate
+# the memory usage (in bytes) of the stringpool if one used the unsorted approach and the sorted approach
+# respectively. If the application finds these 2 values to be close enough to each other (the sorted value
+# will never be more than the unsorted value), it might benefit from the reduced runtimes by switching to
+# the unsorted approach (see #1145 (comment 2507097811) for examples). The env var ydb_stp_gcol_nosort
+# can also be set to 0 or 1 (or any positive integer value) to choose the sorted or unsorted approach
+# respectively by non-M (and M) applications. The env var initializes the approach at process startup
+# and can be overridden by later VIEW "STP_GCOL_NOSORT" commands. The $VIEW("STP_GCOL_NOSORT") intrinsic
+# function returns a value of 0 if garbage collections use the sorted approach and 1 otherwise. Sorted
+# garbage collections are the default if neither the env var nor VIEW commands are specified. Previously,
+# garbage collections always happened with the sorted approach and there was no unsorted approach choice.
+# 
+
+# Test that Default value of $VIEW("STP_GCOL_NOSORT") is 0. Expect output of 0 below
+0
+
+# ----------------------------------------------------------------------------------------
+# Test that VIEW "STP_GCOL_NOSORT":N treats positive values as 1 and all other values as 0
+# ----------------------------------------------------------------------------------------
+## Testing [N=0]. Expect output of 1 if N is positive and 0 otherwise
+0
+## Testing [N=1]. Expect output of 1 if N is positive and 0 otherwise
+1
+## Testing [N=2]. Expect output of 1 if N is positive and 0 otherwise
+1
+## Testing [N=100]. Expect output of 1 if N is positive and 0 otherwise
+1
+## Testing [N=-1]. Expect output of 1 if N is positive and 0 otherwise
+0
+## Testing [N=-2]. Expect output of 1 if N is positive and 0 otherwise
+0
+## Testing [N=-100]. Expect output of 1 if N is positive and 0 otherwise
+0
+## Testing [N="a"]. Expect output of 0 if N is non-numeric
+0
+
+# -------------------------------------------------------------------------------------
+# Test that ydb_stp_gcol_nosort=N treats positive values as 1 and all other values as 0
+# -------------------------------------------------------------------------------------
+## Testing [ydb_stp_gcol_nosort=0]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+0
+## Testing [ydb_stp_gcol_nosort=1]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+1
+## Testing [ydb_stp_gcol_nosort=2]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+1
+## Testing [ydb_stp_gcol_nosort=100]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+1
+## Testing [ydb_stp_gcol_nosort=-1]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+0
+## Testing [ydb_stp_gcol_nosort=-2]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+0
+## Testing [ydb_stp_gcol_nosort=-100]. Expect output of 1 if ydb_stp_gcol_nosort is positive and 0 otherwise
+0
+
+# Testing [$VIEW("S")]. Expect a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter S is ambiguous
+
+# Testing [$VIEW("SP")]. Expect a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter SP is ambiguous
+
+# Testing [$VIEW("SPS")]. Expect a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter SPS is ambiguous
+
+# Testing [$VIEW("SPSI")]. Expect a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter SPSI is ambiguous
+
+# Testing [$VIEW("SPSIZ")]. Expect a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter SPSIZ is ambiguous
+
+# Testing [$VIEW("SPSIZE")]. Expect NO VIEWAMBIG error.
+##TEST_AWK[0-9]*,[0-9]*,0
+
+# Testing [$VIEW("SPSIZES")]. Expect NO VIEWAMBIG error.
+##TEST_AWK[0-9]*,[0-9]*
+
+# Testing [$VIEW("SPSIZESO")]. Expect NO VIEWAMBIG error.
+##TEST_AWK[0-9]*,[0-9]*
+
+# Testing [$VIEW("SPSIZESOR")]. Expect NO VIEWAMBIG error.
+##TEST_AWK[0-9]*,[0-9]*
+
+# Testing [$VIEW("SPSIZESORT")]. Expect NO VIEWAMBIG error.
+##TEST_AWK[0-9]*,[0-9]*
+
+## Test that substring is accepted as VIEW parameter as long as it is unambiguous.
+## See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2318#note_2531350804 for more details.
+# Testing [$VIEW("B")]. Should not generate a VIEWAMBIG error.
+%YDB-E-VIEWAMBIG, View parameter B is ambiguous
+
+# Testing [$VIEW("BA")]. Should not generate a VIEWAMBIG error.
+1
+
+# Testing [$VIEW("BAD")]. Should not generate a VIEWAMBIG error.
+1
+
+# Testing [$VIEW("BADC")]. Should not generate a VIEWAMBIG error.
+1
+
+# Testing [$VIEW("BADCH")]. Should not generate a VIEWAMBIG error.
+1
+
+# Testing [$VIEW("BADCHA")]. Should not generate a VIEWAMBIG error.
+1
+
+# Testing [$VIEW("BADCHAR")]. Should not generate a VIEWAMBIG error.
+1
+
+## Test that VIEW "STP_GCOL_NOSORT" with no subparameters issues error
+# Run [VIEW "STP_GCOL_NOSORT"]. Expect VIEWARGCNT error.
+%YDB-E-VIEWARGCNT, View parameter STP_GCOL_NOSORT has inappropriate number of subparameters
+
+# Test that VIEW "STP_GCOL_NOSORT" with too many subparameters issues error
+# Run [VIEW "STP_GCOL_NOSORT":1:2]. Expect VIEWARGCNT error.
+%YDB-E-VIEWARGCNT, View parameter STP_GCOL_NOSORT has inappropriate number of subparameters
+
+# Test $VIEW("SPSIZESORT") when there is 0% memory sharing across local variable nodes
+# This is example 1 of https://gitlab.com/YottaDB/DB/YDB/-/issues/1145#note_2507097811
+# We expect the unsorted stringpool memory usage (1st number below) to be almost the same as the sorted (2nd number below)
+##TEST_AWK1000[0-9]{5},1000[0-9]{5}
+
+# Test $VIEW("SPSIZESORT") when there is 100% memory sharing across local variable nodes
+# This is example 2 of https://gitlab.com/YottaDB/DB/YDB/-/issues/1145#note_2507097811
+# We expect the unsorted stringpool memory usage (1st number below) to be LOT greater than the sorted (2nd number below)
+##TEST_AWK1000[0-9]{5},[0-9]{4}
+
+# Print stringpool memory usage using $VIEW("SPSIZE")
+# For 2 workloads, 0% memory sharing and 100% memory sharing across local variable nodes.
+# And for values of ydb_stp_gcol_nosort=0 and 1
+# We expect stpgcol.Shared.0 (shared lvns with ydb_stp_gcol_nosort=0) to need only 1Kb of stringpool
+# We expect stpgcol.Shared.1 (shared lvns with ydb_stp_gcol_nosort=1) to need 100Mb of stringpool
+# We expect stpgcol.Unshared.0 (unshared lvns with ydb_stp_gcol_nosort=0) to need 100Mb of stringpool
+# We expect stpgcol.Unshared.1 (unshared lvns with ydb_stp_gcol_nosort=1) to need 100Mb of stringpool
+##TEST_AWK   stpgcol.Shared.0 :      [0-9]{4}
+##TEST_AWK   stpgcol.Shared.1 : 1000[0-9]{5}
+##TEST_AWK stpgcol.Unshared.0 : 1000[0-9]{5}
+##TEST_AWK stpgcol.Unshared.1 : 1000[0-9]{5}
+
+##SUSPEND_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
+# Test that VIEW "STP_GCOL_NOSORT":1 is better in runtime when there is a lot of lvn sharing
+# This is an implementation of Test 2 in https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1668#note_2445424537
+# We measure the total instructions for ydb_stp_gcol_nosort=0 and ydb_stp_gcol_nosort=1
+# We expect the =1 instructions to be at least 5% less than the =0 instructions.
+# If so we issue a PASS. Otherwise we issue FAIL.
+PASS from gctest2verify
+
+##ALLOW_OUTPUT DBG HOST_LINUX_ARMVXL HOST_LINUX_AARCH64 ASAN_ENABLED CLANG_BUILD MPROF_ON
