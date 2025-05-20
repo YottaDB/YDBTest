@@ -530,9 +530,10 @@ if (`cat ${TMP_FILE_PREFIX}_submit_tests_temp3 | $grep -v "#" ` == "") then
 	#the file does exist, but is it empty (or just has canceled elements)
 	#the reason of a test's cancellation starts with a #
 	$tst_awk '$1 ~/#/ {print }' $submit_tests
-	echo "TEST-E-NOTESTS No test specified, or all requested tests excluded"
-	echo "Exiting now. ${TMP_FILE_PREFIX}_* files will not be cleaned up"
-	exit 14
+	echo "TEST-W-NOTESTS No test specified, or all requested tests excluded"
+	echo "Exiting now."
+	$gtm_test_com_individual/clean_and_exit.csh
+	exit 0
 endif
 # remove canceled tests altogether
 $grep -v "#" ${TMP_FILE_PREFIX}_submit_tests_temp3 >! ${TMP_FILE_PREFIX}_submit_tests_temp4
