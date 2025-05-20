@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,7 +91,9 @@ EOF
 		if ("15" == $killsig) then
 			# In case of SIGTERM/SIG-15, a FORCEDHALT message is expected to show up.
 			# Filter that out so the error catching test framework does not see it.
-			$gtm_tst/com/check_error_exist.csh ${prog}${run}.out "%YDB-F-FORCEDHALT" >&! /dev/null
+			foreach file (${prog}${run}*.out)
+				$gtm_tst/com/check_error_exist.csh $file "%YDB-F-FORCEDHALT" >&! ${file:r}.check.outx
+			end
 		endif
 	end
 	echo "done"

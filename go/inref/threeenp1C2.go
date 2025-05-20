@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -44,7 +44,7 @@ import (
 // subsequent parms telling the process what it needs to be doing. This is described in subsequent comments.
 //
 // Note threeenp1C2, since it is multi-process, each spawned process writes to its own combined (stdout, stderr) output
-// file with the form "threeenp1C2_timestamp.outx". The "threeenp1C2" part of the filename can be replaced by the value
+// file with the form "threeenp1C2_timestamp.out". The "threeenp1C2" part of the filename can be replaced by the value
 // of the $ydb_filepfx_threeenp1C2 envvar if it is set.
 
 // Constant definitions
@@ -363,7 +363,7 @@ func main() {
 			}
 			dir, _ := os.Getwd()
 			proc[index] = exec.Command(dir+"/threeenp1C2", workerTag, fmt.Sprintf("%d", index))
-			stdoutp, err = os.Create("./" + outFilePfx + "-" + fmt.Sprintf("%d", index) + ".outx")
+			stdoutp, err = os.Create("./" + outFilePfx + "-" + fmt.Sprintf("%d", index) + ".out")
 			_ = checkErrorReturn(err)
 			proc[index].Stdout = stdoutp // cmd.Stdout -> output file
 			proc[index].Stderr = stdoutp // cmd.Stderr -> output file
