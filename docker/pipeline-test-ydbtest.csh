@@ -84,7 +84,10 @@ endif
 echo "Currently available versions: "
 ver
 
-set instream_invokelist = ""
+set instream_invokelist_regular = ""
+set instream_invokelist_replic = ""
+set instream_invokelist_reorg = ""
+set instream_invokelist_reorg_replic = ""
 
 # Results collected in result.txt, initially empty
 touch result.txt
@@ -102,6 +105,7 @@ echo $filelist | sed 's/ /\n/g;'
 
 # For each file, check if it is instream.csh or is inside inref
 # If it is, add it so that we invoke the test system with "-t xxx -t yyy -t zzz"
+# Reorg tests are added to a separate list, as they are run with -reorg
 foreach file ($filelist)
 	set filename = $file:t
 	set directory_name = `echo $file | cut -d / -f 2`
@@ -118,29 +122,84 @@ foreach file ($filelist)
 			echo "Skipping test [$test] on pipeline as it is a heavyweight test"
 			continue
 		endif
-		# If test is already there, don't add it again
-		if ( "$instream_invokelist" !~ "*-t $test*" ) then
-			set instream_invokelist = "$instream_invokelist -t $test"
+
+		# Is this a regular test?
+		grep -q ${test}'.* E$' com/SUITE
+		@ is_regular_test = ! $status
+		# Is this a reorg test?
+		grep -q ${test}'.* E REORG$' com/SUITE
+		@ is_reorg_test = ! $status
+		# Is this a replic test?
+		grep -q ${test}'.* E REPLIC$' com/SUITE
+		@ is_replic_test = ! $status
+		# Is this a reorg-replic test?
+		grep -q ${test}'.* E REPLIC REORG$' com/SUITE
+		@ is_reorg_replic_test = ! $status
+
+		# Construct test lists. If test is already there, don't add it again.
+		if ($is_reorg_test) then
+			if ( "$instream_invokelist_reorg" !~ " *-t $test* " ) then
+				set instream_invokelist_reorg = "$instream_invokelist_reorg -t $test "
+			endif
+		endif
+		if ($is_replic_test) then
+			if ( "$instream_invokelist_replic" !~ " *-t $test* " ) then
+				set instream_invokelist_replic = "$instream_invokelist_replic -t $test "
+			endif
+		endif
+		if ($is_regular_test) then
+			if ( "$instream_invokelist_regular" !~ " *-t $test* " ) then
+				set instream_invokelist_regular = "$instream_invokelist_regular -t $test "
+			endif
+		endif
+		if ($is_reorg_replic_test) then
+			if ( "$instream_invokelist_reorg_replic " !~ " *-t $test* " ) then
+				set instream_invokelist_reorg_replic = "$instream_invokelist_reorg_replic -t $test "
+			endif
 		endif
 	endif
 end
 
-echo "Test list: $instream_invokelist (replic/nonreplic)"
+echo "Regular list: $instream_invokelist_regular"
+echo "Replic list: $instream_invokelist_replic"
+echo "Reorg test list: $instream_invokelist_reorg"
+echo "Reorg replic test list: $instream_invokelist_reorg_replic"
 
 # The test system has the capability of running multiple instreams at once, so let's do that.
 
-if ( "$instream_invokelist" != "" ) then
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist"
+if ( "$instream_invokelist_regular" != "" ) then
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_regular"
 	if ($status) then
-		echo "${instream_invokelist}: FAIL (non-replic)" >> result.txt
+		echo "${instream_invokelist_regular}: FAIL (non-replic)" >> result.txt
 	else
-		echo "${instream_invokelist}: PASS (non-replic)" >> result.txt
+		echo "${instream_invokelist_regular}: PASS (non-replic)" >> result.txt
 	endif
-	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist -replic"
+endif
+
+if ( "$instream_invokelist_replic" != "" ) then
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_replic -replic"
 	if ($status) then
-		echo "${instream_invokelist}: FAIL (replic)" >> result.txt
+		echo "${instream_invokelist_replic}: FAIL (replic)" >> result.txt
 	else
-		echo "${instream_invokelist}: PASS (replic)" >> result.txt
+		echo "${instream_invokelist_replic}: PASS (replic)" >> result.txt
+	endif
+endif
+
+if ( "$instream_invokelist_reorg" != "" ) then
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg -reorg"
+	if ($status) then
+		echo "${instream_invokelist_reorg}: FAIL (reorg)" >> result.txt
+	else
+		echo "${instream_invokelist_reorg}: PASS (reorg)" >> result.txt
+	endif
+endif
+
+if ( "$instream_invokelist_reorg_replic" != "" ) then
+	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg_replic -reorg -replic"
+	if ($status) then
+		echo "${instream_invokelist_reorg_replic}: FAIL (reorg replic)" >> result.txt
+	else
+		echo "${instream_invokelist_reorg_replic}: PASS (reorg replic)" >> result.txt
 	endif
 endif
 
@@ -158,54 +217,78 @@ foreach file ($filelist)
 			echo "Skipping test [$test] on pipeline as it is a heavyweight test"
 			continue
 		endif
-		set subtest = $file:r:t
-		# Collect subtests and figure out which ones are replic vs not, as we cannot invoke a non-replic test in replic mode and vice versa
-		grep "setenv subtest_list_" ${test}/instream.csh > instream_setenvs
+
+		# Is this a regular test?
+		grep -q ${test}'.* E$' com/SUITE
+		@ is_regular_test = ! $status
+
+		# Is this a reorg test?
+		grep -q ${test}'.* E REORG$' com/SUITE
+		@ is_reorg_test = ! $status
+
+		# Is this a replic test?
+		grep -q ${test}'.* E REPLIC$' com/SUITE
+		@ is_replic_test = ! $status
+
+		# Is this a reorg-replic test?
+		grep -q ${test}'.* E REPLIC REORG$' com/SUITE
+		@ is_reorg_replic_test = ! $status
+		if ($is_reorg_replic_test) then
+			set is_reorg_test = 1
+			set is_replic_test = 1
+		endif
+
+		set reorg_flag = ""
+		set replic_flag = ""
+		if ($is_reorg_test) set reorg_flag = "-reorg"
+		if ($is_replic_test) set replic_flag = "-replic"
+
+		# We define them to prevent undefs
+		setenv subtest_list
+		setenv subtest_list_non_replic
+		setenv subtest_list_replic
+		setenv subtest_list_common
+		grep "setenv subtest_list" ${test}/instream.csh > instream_setenvs
 		source instream_setenvs
 		rm instream_setenvs
-		if ( ! ( $?subtest_list_non_replic ) && ! ( $?subtest_list_common ) && ! ( $?subtest_list_replic ) ) then
-			echo "Couldn't find subtest_list_non_replic, subtest_list_common, nor subtest_list_replic in instream.csh"
-			continue
-		endif
-		if ( "$subtest_list_non_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
-			# If test was invoked as a suite from instream (non-replic), don't add it to the invoke list
-			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-				echo "Running $test/$subtest"
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest"
+
+		set subtest = $file:r:t
+
+		# Regular tests
+		if ( " $subtest_list_non_replic " =~ " *$subtest* " || " $subtest_list_common " =~ " *$subtest* " || ( " $subtest_list " =~ " *$subtest* " && $is_regular_test ) ) then
+			# If test was invoked as a suite from instream, don't add it to the invoke list
+			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
+				echo "Running $test/$subtest $reorg_flag"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest $reorg_flag"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (non-replic)" >> result.txt
 				else
 					echo "$test/${subtest}: PASS (non-replic)" >> result.txt
 				endif
 			endif
-		else if ( "$subtest_list_replic" =~ "*$subtest*" || "$subtest_list_common" =~ "*$subtest*" ) then
-			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
-			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-				echo "Running $test/$subtest -replic"
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test/$subtest -replic"
+		# Replic tests
+		else if ( " $subtest_list_replic " =~ " *$subtest* " || " $subtest_list_common " =~ " *$subtest* " || ( " $subtest_list " =~ " *$subtest* " && $is_replic_test ) ) then
+			# If test was invoked as a suite from instream, don't add it to the invoke list
+			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
+				echo "Running $test/$subtest -replic $reorg_flag"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest -replic $reorg_flag"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (replic)" >> result.txt
 				else
 					echo "$test/${subtest}: PASS (replic)" >> result.txt
 				endif
 			endif
+		# Unclassifiable tests
 		else
 			# Subtest in the u_inref or outref is not a known subtest. Run whole test.
-			# If test was invoked as a suite from instream (replic), don't add it to the invoke list
-			if ( "$instream_invokelist" !~ "*-t $test*" ) then
-				echo "Running $test"
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test"
+			# If test was invoked as a suite from instream, don't add it to the invoke list
+			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
+				echo "Running $test $reorg_flag $replic_flag"
+			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test $reorg_flag $replic_flag"
 				if ($status) then
-					echo "${test}: FAIL (non-replic)" >> result.txt
+					echo "${test}: FAIL (flags: $reorg_flag $replic_flag)" >> result.txt
 				else
-					echo "${test}: PASS (non-replic)" >> result.txt
-				endif
-				echo "Running $test -replic"
-			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -replic"
-				if ($status) then
-					echo "${test}: FAIL (replic)" >> result.txt
-				else
-					echo "${test}: PASS (replic)" >> result.txt
+					echo "${test}: PASS (flags: $reorg_flag $replic_flag)" >> result.txt
 				endif
 			endif
 		endif
