@@ -41,13 +41,41 @@ if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	# Copy over the test system to $gtm_tst
 	# This is ineffecient, but not worth optimizing. It copies everything over rather than only changed files.
 	setenv gtm_tst "/usr/library/gtm_test/T999"
-	rsync . -ar --delete --exclude=.git $gtm_tst
+	rsync . -ar --delete $gtm_tst
 	chown -R gtmtest:gtc $gtm_tst
+	git config --global --add safe.directory $gtm_tst
 else
 	# Test system passed in /YDBTest, use that
 	rm -r /usr/library/gtm_test/T999
 	ln -s /YDBTest /usr/library/gtm_test/T999
 endif
+
+# See if we need to build a branch version of YottaDB to match the current branch
+pushd /usr/library/gtm_test/T999
+
+# https://forum.gitlab.com/t/why-i-cant-get-the-branch-name/72462/6
+# Gitlab detaches the git tree (i.e. a checkout creates a detached tree, so rev-parse of HEAD just returns HEAD)
+# The rev-parse way is left in order to be able to test this pipeline locally.
+if ( $?CI_COMMIT_REF_NAME ) then
+	set ydbtest_branch = $CI_COMMIT_REF_NAME
+else
+	set ydbtest_branch = `git rev-parse --abbrev-ref HEAD`
+endif
+
+echo "ydbtest_branch: $ydbtest_branch"
+curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=opened" > ydb_open_mrs.json
+set ydb_branches = `jq -r '.[].source_branch' ydb_open_mrs.json`
+echo "ydb_branches: $ydb_branches"
+
+if ( $ydbtest_branch != "master" && " $ydb_branches " =~ " *$ydbtest_branch* " ) then
+	# We have a match... grab corresponding YDB MR number
+	echo "Building YottaDB branch $ydbtest_branch"
+	set filter = ".[] | select(.source_branch == \"$ydbtest_branch\") | .iid"
+	set mr_id = `jq -r "$filter" ydb_open_mrs.json`
+	/usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg $mr_id
+endif
+rm ydb_open_mrs.json
+popd
 
 # Set-up testareas to be in the current directory so we can upload the artifacts
 mkdir testarea{1,2,3}

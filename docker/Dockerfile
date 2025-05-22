@@ -92,6 +92,7 @@ RUN apt-get update && \
                     netbase \
                     clang \
                     openssh-server \
+                    jq \
                     && \
                     apt-get clean
 

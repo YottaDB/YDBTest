@@ -19,6 +19,7 @@ set verbose
 if ( $1 != "") set verno = $1
 if ( $2 != "") set git_tag = $2
 if ( $3 != "") set dbgpro = $3
+if ( $4 != "") set mrbranch = $4
 
 if (! $?verno ) set verno = "V999_R999"
 if (! $?git_tag ) set git_tag = "master"
@@ -45,9 +46,17 @@ else
 	# We only have one source tree; we checkout a different tag if necessary and use that to build
 	set source_dir = "/Distrib/YottaDB"
 	pushd /Distrib/YottaDB/
+
 	# Discard sr_*/release_name.h changes from a previous run
 	git checkout .
-	git checkout $git_tag
+
+	if ( $?mrbranch ) then
+		# We are testing against a specific MR branch
+		git fetch origin merge-requests/${mrbranch}/head:mr-${mrbranch}
+		git checkout mr-${mrbranch}
+	else
+		git checkout $git_tag
+	endif
 	# Remove "-ggdb3" from CMAKE_ASM_FLAGS_DEBUG else AARCH64 build fails (see commit f88b9698 for more details)
 	# The below sed command is structured to work for r1.38 (pre f88b9698) or r2.00 (post f88b9698) so we do not
 	# need to check if the git tag is less than or equal to r1.38 in order to do this removal.

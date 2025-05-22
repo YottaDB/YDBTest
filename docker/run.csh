@@ -57,9 +57,6 @@ if ( -f /YDBTest/com/gtmtest.csh ) then
 	ln -s /YDBTest /usr/library/gtm_test/T999
 endif
 
-# Sudo tests rely on the source code for ydbinstall to be in a specific location
-ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
-
 setenv ydb_test_inside_docker 1
 set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker -w gtm_curpro"
 
@@ -71,6 +68,9 @@ endif
 if ( "$argv[1]" == "-rootshell") then
 	exec su - $pass_env
 endif
+
+# Sudo tests rely on the source code for ydbinstall to be in a specific location
+ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
 
 if ( "$argv[1]" == "-shell") then
 	echo "Try running gtmtest -t r134"
