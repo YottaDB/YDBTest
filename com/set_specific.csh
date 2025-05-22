@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,6 @@ setenv df "df -kP"
 setenv ss "ss -an"
 setenv ssh "ssh -x"
 setenv rsh "$ssh"
-setenv rcp "scp -q"
 setenv atrm atrm
 setenv ps "ps -ef"
 setenv psuser "ps -fu $USER"
@@ -40,10 +39,12 @@ if ($?gtm_test_com_individual) then
 	setenv mkdir	"$gtm_test_com_individual/mkdir.csh"
 	setenv kill	"$gtm_test_com_individual/safe_kill.csh"
 	setenv cprcp	"$gtm_test_com_individual/cp_remote_file.csh"
+	setenv rcp	"$gtm_test_com_individual/scp.csh"
 else
 	setenv tail tail
 	setenv head head
 	setenv mkdir mkdir
+	setenv rcp "scp -q"
 endif
 $uptime >&! /dev/null
 if ($status) setenv uptime "echo COULD NOT GET LOAD INFORMATION BY uptime"
@@ -59,75 +60,75 @@ setenv convert_to_gtm_chset :
 setenv strings "strings"
 switch ($HOSTOS)
 case "AIX":
-   setenv truss "/usr/bin/truss -d"
-   setenv ps "eval ps -ef |& cat"
-   setenv psuser "eval ps -fu $USER |& cat"
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv ci_ldpath "-L "
-   breaksw
+	setenv truss "/usr/bin/truss -d"
+	setenv ps "eval ps -ef |& cat"
+	setenv psuser "eval ps -fu $USER |& cat"
+	setenv rsh_to_vms "rsh"
+	setenv rcp_to_vms "rcp"
+	setenv ci_ldpath "-L "
+	breaksw
 case "HP-UX":
-   setenv truss "/usr/local/bin/tusc -T %x:%X"
-   setenv atrm "at -r"
-   setenv ps "ps -xef"
-   setenv psuser "ps -xfu $USER"
-   setenv dbx /opt/langtools/bin/gdb
-   setenv rsh_to_vms "remsh"
-   setenv rcp_to_vms "rcp"
-   setenv ci_ldpath "+b "
-   breaksw
+	setenv truss "/usr/local/bin/tusc -T %x:%X"
+	setenv atrm "at -r"
+	setenv ps "ps -xef"
+	setenv psuser "ps -xfu $USER"
+	setenv dbx /opt/langtools/bin/gdb
+	setenv rsh_to_vms "remsh"
+	setenv rcp_to_vms "rcp"
+	setenv ci_ldpath "+b "
+	breaksw
 case "OSF1":
-   setenv truss "/usr/local/bin/truss"
-   setenv ps "eval ps -ef |& cat"
-   setenv psuser "eval ps -fu $USER |& cat"
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv dbx "/usr/bin/dbx"
-   setenv ci_ldpath "-Wl,-rpath,"
-   breaksw
+	setenv truss "/usr/local/bin/truss"
+	setenv ps "eval ps -ef |& cat"
+	setenv psuser "eval ps -fu $USER |& cat"
+	setenv rsh_to_vms "rsh"
+	setenv rcp_to_vms "rcp"
+	setenv dbx "/usr/bin/dbx"
+	setenv ci_ldpath "-Wl,-rpath,"
+	breaksw
 case "SunOS":
-   setenv grep /usr/xpg4/bin/grep   # has -f option
-   alias grep '/usr/xpg4/bin/grep'   # has -f option
-   setenv dbx /opt/SUNWspro/bin/dbx
-   setenv SUNW_NO_UPDATE_NOTIFY "TRUE" # Disable Update Notification from dbx in test system
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv pflags '/usr/bin/pflags'
-   setenv truss '/usr/bin/truss -d'
-   setenv ci_ldpath "-R "
-   breaksw
+	setenv grep /usr/xpg4/bin/grep   # has -f option
+	alias grep '/usr/xpg4/bin/grep'   # has -f option
+	setenv dbx /opt/SUNWspro/bin/dbx
+	setenv SUNW_NO_UPDATE_NOTIFY "TRUE" # Disable Update Notification from dbx in test system
+	setenv rsh_to_vms "rsh"
+	setenv rcp_to_vms "rcp"
+	setenv pflags '/usr/bin/pflags'
+	setenv truss '/usr/bin/truss -d'
+	setenv ci_ldpath "-R "
+	breaksw
 case "Linux":
-   setenv grep "grep -a"		# Process a binary file as if it were text
-   setenv truss "/usr/bin/strace -tT"
-   # Normally we could just test $gtm_test_linux_distrib but set_gtm_machtype.csh hasn't been run yet so do this
-   # check manually.
-   set distrib = `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
-   if ("alpine" == "$distrib") then
-	setenv ps "ps -ef"
-   else
-	setenv ps "ps -efww --forest"		# Double "w" to mean infinite width in ps output display
-   endif
-   setenv psuser "ps -fwwu $USER"
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv ci_ldpath "-Wl,-rpath,"
-   setenv gtt_cc_shl_options 	"-c -fPIC"
-   if (-e /usr/local/bin/gdb) then
-	   setenv dbx /usr/local/bin/gdb
-   else
-	   setenv dbx /usr/bin/gdb
-   endif
-   breaksw
+	setenv grep "grep -a"		# Process a binary file as if it were text
+	setenv truss "/usr/bin/strace -tT"
+	# Normally we could just test $gtm_test_linux_distrib but set_gtm_machtype.csh hasn't been run yet so do this
+	# check manually.
+	set distrib = `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
+	if ("alpine" == "$distrib") then
+		setenv ps "ps -ef"
+	else
+		setenv ps "ps -efww --forest"		# Double "w" to mean infinite width in ps output display
+	endif
+	setenv psuser "ps -fwwu $USER"
+	setenv rsh_to_vms "rsh"
+	setenv rcp_to_vms "rcp"
+	setenv ci_ldpath "-Wl,-rpath,"
+	setenv gtt_cc_shl_options 	"-c -fPIC"
+	if (-e /usr/local/bin/gdb) then
+		setenv dbx /usr/local/bin/gdb
+	else
+		setenv dbx /usr/bin/gdb
+	endif
+	breaksw
 case "CYGWIN*":
-   setenv atrm "echo ""CYGWIN-E-NOAT no at on Cygwin""; exit 1"
-   setenv dbx "gdb -nw"
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv ci_ldpath "-Wl,-rpath,"
-   breaksw
+	setenv atrm "echo ""CYGWIN-E-NOAT no at on Cygwin""; exit 1"
+	setenv dbx "gdb -nw"
+	setenv rsh_to_vms "rsh"
+	setenv rcp_to_vms "rcp"
+	setenv ci_ldpath "-Wl,-rpath,"
+	breaksw
 default:
-   echo "(Error) Unsupported Operating System while choosing platform tools"
-   exit 1
+	echo "(Error) Unsupported Operating System while choosing platform tools"
+	exit 1
 endsw
 
 # For the below env variables, if the corresponding tool is not present on a server,
