@@ -29,18 +29,6 @@ foreach test ($random_test_list)
 	set subtest_list_to_randomize_nonreplic="$subtest_list_non_replic $subtest_list_common"
 	set subtest_list_to_randomize_replic="$subtest_list_common $subtest_list_replic"
 
-	# Remove subtests that don't run in Docker today
-	# r120 fails in ydbdist (process id issue)
-	if ($test == "r120") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydbdist//`
-	# r122 fails in tprestart (log related)
-	if ($test == "r122") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/tprestart//`
-	# r136 fails in gtm8863a (v V63011_R134 is not installed)
-	if ($test == "r136") then
-		set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/gtm8863a//`
-	endif
-	# v70000 fails in ydb531_v6to7 (imptp invocation)
-	if ($test == "v70000") set subtest_list_to_randomize_nonreplic=`echo $subtest_list_to_randomize_nonreplic:s/ydb531_v6tov7//`
-
 	# Choose 5 non-replic tests at random
 	set random_nonreplic_subtest_list=`shuf -n5 -e $subtest_list_to_randomize_nonreplic`
 	# Choose 1 replic test at random
