@@ -530,8 +530,7 @@ To troubleshoot `docker/pipeline-test-ydb.csh` (used in the YDB pipeline), run e
 
 1. To troubleshoot the script itself, run this:
 ```
-docker run --init --cap-add SYS_ADMIN --cap-add SYS_TIME -e CI_PIPELINE_ID=1 -it -v $PWD:/YDBTest -v ~/work/gitlab/YDB:/builds/shabiel/YDB -v /testarea/sam/:/testarea
-1/ --rm -w /builds/shabiel/YDB --entrypoint /usr/library/gtm_test/T999/docker/pipeline-test-ydb.csh registry.gitlab.com/yottadb/db/ydbtest
+docker run --init --cap-add SYS_ADMIN --cap-add SYS_TIME -e CI_COMMIT_BRANCH=master -it [-v $PWD:/YDBTest] -v ~/work/gitlab/YDB:/builds/shabiel/YDB -v /testarea/sam/:/testarea1/ --rm -w /builds/shabiel/YDB --entrypoint /usr/library/gtm_test/T999/docker/pipeline-test-ydb.csh registry.gitlab.com/yottadb/db/ydbtest
 ```
 
 2. To replicate the YDB pipeline, go to YDB repo and run these steps:
