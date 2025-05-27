@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -54,11 +57,42 @@ if (-e $tst_general_dir/timing.subtest) then
 		$grep -w $file:h $tst_general_dir/timing.subtest	>>! ${TMP_FILE_PREFIX}_mail
 		echo "--- $file ---"					>>! ${TMP_FILE_PREFIX}_mail
 		if (`wc -l $tst_general_dir/$file |  $tst_awk '{print $1}'`> $max_lines ) then
-			echo "# \$head -n $headlines $file"		>>! ${TMP_FILE_PREFIX}_mail
-			$head -n $headlines $tst_general_dir/$file	>>! ${TMP_FILE_PREFIX}_mail
-			echo "# \$tail -n $taillines $file"		>>! ${TMP_FILE_PREFIX}_mail
-			$tail -n $taillines $tst_general_dir/$file	>>! ${TMP_FILE_PREFIX}_mail
-			echo "... more in the diff file: $file"		>>! ${TMP_FILE_PREFIX}_mail
+			set basename = $tst_general_dir/${file:r}
+			set gunzipped = 0
+			set errors_exist = 0
+			if (-e $basename.log_actual.gz) then
+				$tst_gunzip $basename.log_actual.gz
+				set gunzipped = 1
+				set errors_exist = 1
+			else if (-e $basename.log_actual) then
+				set errors_exist = 1
+			endif
+			# If -E-, -W- etc. type of errors exist, then include all of that in the failure email
+			if ($errors_exist) then
+				@ actuallines = `wc -l $basename.log_actual | $tst_awk '{print $1}'`
+				if ($gunzipped) then
+					$tst_gzip $basename.log_actual	# Undo the gunzip done above
+				endif
+				@ actuallines = $actuallines + 1
+				echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+				echo "# tail -n +$actuallines ${basename:t}.log"			>>! ${TMP_FILE_PREFIX}_mail
+				echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+				$tail -n +$actuallines $basename.log					>>! ${TMP_FILE_PREFIX}_mail
+				echo									>>! ${TMP_FILE_PREFIX}_mail
+			endif
+			# The actual diff might be huge so only include a small portion of the head/tail
+			# of it in the email. To avoid a huge failure email.
+			echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+			echo "# head -n $headlines $file"					>>! ${TMP_FILE_PREFIX}_mail
+			echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+			$head -n $headlines $tst_general_dir/$file				>>! ${TMP_FILE_PREFIX}_mail
+			echo									>>! ${TMP_FILE_PREFIX}_mail
+			echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+			echo "# \$tail -n $taillines $file"					>>! ${TMP_FILE_PREFIX}_mail
+			echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+			$tail -n $taillines $tst_general_dir/$file				>>! ${TMP_FILE_PREFIX}_mail
+			echo									>>! ${TMP_FILE_PREFIX}_mail
+			echo "... more in the diff file: $file"					>>! ${TMP_FILE_PREFIX}_mail
 		else
 			cat $tst_general_dir/$file			>>! ${TMP_FILE_PREFIX}_mail
 		endif
