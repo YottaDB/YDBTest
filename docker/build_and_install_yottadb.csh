@@ -160,8 +160,6 @@ else
 		endif
 	popd
 endif
-mkdir -p $gtm_root/$verno/$dbgpro/obj
-find . -name '*.a' -exec cp {} $gtm_root/$verno/$dbgpro/obj \;
 mkdir -p $gtm_root/$verno/tools
 
 cd $source_dir
@@ -203,12 +201,19 @@ foreach dir (gen genused)
 	endif
 end
 
-# Sudo tests require `ydbinstall` that is part of the intermediate build process (yuck); so leave the build directory around for master commit
-# Otherwise delete to save space
-if ( "$git_tag" != "master" ) then
+# Sudo tests require `ydbinstall` that is part of the intermediate build process (yuck)
+# But the intermediate objects take up about 5GB
+# So try to preserve `ydbinstall`, but delete the rest
+# /Distrib/YottaDB/${gtm_verno}/${tst_image}/yottadb_r*/ydbinstall
+if ( "$git_tag" == "master" ) then
+	set ydbinstall = `find ${source_dir}/${dbgpro} -name 'ydbinstall' -not -path '*utf8*'`
+	mv $source_dir/$dbgpro/yottadb_r*/ydbinstall /tmp/
+	rm -rf $source_dir/$dbgpro
+	mkdir -p $ydbinstall:h
+	mv /tmp/ydbinstall $ydbinstall:h
+else
 	rm -rf $source_dir/$dbgpro
 endif
-
 
 # Install gtmcrypt plugin
 setenv ydb_dist /usr/library/$verno/$dbgpro

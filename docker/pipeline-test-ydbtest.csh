@@ -10,45 +10,7 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
-
-# Ensure that our hostname does not have dashes as that crashes multiple parts of the test system
-# (it converts hostnames into variables)
-echo "HOSTNAME: $HOST"
-
-# Preamble
-# Start log server; needed by test framework
-rsyslogd
-# needed to create the /var/log/syslog file; as otherwise it won't exist at start
-logger test
-
-# The file is created asynchronously, so this ensures we don't proceed till it's created
-while ( ! -e /var/log/syslog)
-	sleep .01
-end
-
-# Next two seds, fix the serverconf.txt file
-## Correct the host; as it differs each time we start docker
-sed -i "s/HOST/$HOST/" /usr/library/gtm_test/serverconf.txt
-sed -i 's|LOG|/var/log/syslog|' /usr/library/gtm_test/serverconf.txt
-
-# Fix HOST on tstdirs.csh file
-sed -i "s/HOST/$HOST/" /usr/library/gtm_test/tstdirs.csh
-
-# Runner job does not set TERM
-setenv TERM xterm
-
-if ( ! -f /YDBTest/com/gtmtest.csh ) then
-	# Copy over the test system to $gtm_tst
-	# This is ineffecient, but not worth optimizing. It copies everything over rather than only changed files.
-	setenv gtm_tst "/usr/library/gtm_test/T999"
-	rsync . -ar --delete $gtm_tst
-	chown -R gtmtest:gtc $gtm_tst
-	git config --global --add safe.directory $gtm_tst
-else
-	# Test system passed in /YDBTest, use that
-	rm -r /usr/library/gtm_test/T999
-	ln -s /YDBTest /usr/library/gtm_test/T999
-endif
+source /usr/library/gtm_test/T999/docker/shared-setup.csh
 
 # See if we need to build a branch version of YottaDB to match the current branch
 pushd /usr/library/gtm_test/T999
@@ -77,19 +39,8 @@ endif
 rm ydb_open_mrs.json
 popd
 
-# Set-up testareas to be in the current directory so we can upload the artifacts
-mkdir testarea{1,2,3}
-# tst_dir can only be one test area, the main one
-echo "setenv tst_dir ${PWD}/testarea1" >> ~gtmtest/.cshrc
-chmod 777 ${PWD}/testarea{1,2,3}
-sed -i "s|/testarea|$PWD/testarea|g" /usr/library/gtm_test/tstdirs.csh
-
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
 ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
-
-# Set-up some environment variables to pass to the test system
-setenv ydb_test_inside_docker 1
-set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
 
 if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	# Get list of changed files

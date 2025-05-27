@@ -10,6 +10,20 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
+source /usr/library/gtm_test/T999/docker/shared-setup.csh
+
+set echo
+set verbose
+
+# This block is active when we are inside of a YDB pipeline
+if ( $?CI_PIPELINE_ID ) then
+	git config --global --add safe.directory `pwd`
+	# Link the source code to the directory build_and_install_yottadb.csh is aware of
+	ln -s `pwd` /Distrib/YottaDB/V999_R999
+	ls -lrt /Distrib/YottaDB/V999_R999/
+	/usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg
+endif
+
 pushd $gtm_tst
 set test_list=`echo basic sudo r1* r2* v7*`
 echo "test_list: $test_list"
@@ -40,10 +54,10 @@ foreach test ($random_test_list)
 	# Note that we use "fg", because if we use "bg", the shell does not know that there are child jobs to "wait" for.
 	# using fg with & gives us what we want: run multiple tests concurrently and wait for all of them to finish
 	if ( $random_nonreplic_subtest_list_with_commas != "" ) then
-		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt &
+		su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt" &
 	endif
 	if ( $random_replic_subtest_list_with_commas != "" ) then
-		/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt &
+		su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt" &
 	endif
 end
 
