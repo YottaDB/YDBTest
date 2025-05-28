@@ -31,7 +31,18 @@ if (-e $log_out_file) then
 				echo $log_out_file
 			endif
 			echo $log_out_file >>&  err_file_names.logx
-			$grep -n -f $gtm_tst/com/errors_catch.txt $log_out_file | $grep -v -f $gtm_tst/com/errors_ignore.txt
+			if ($suppr == "") then
+				# This means the caller is "com/gtm_test_sendresultmail.csh". In this case, include
+				# line numbers as it will help provide more context in the failure email.
+				set grepflag = "-n"
+			else
+				# This means the caller is "com/errors.csh". In this case, do not include line numbers
+				# as otherwise we would need to update potentially hundreds of reference files which
+				# will now have a line number before patterns like "-E-" (which were caught by the test
+				# framework from various *.out files etc. and ended up being part of the reference file).
+				set grepflag = ""
+			endif
+			$grep $grepflag -f $gtm_tst/com/errors_catch.txt $log_out_file | $grep -v -f $gtm_tst/com/errors_ignore.txt
 		endif
 	endif
 else
