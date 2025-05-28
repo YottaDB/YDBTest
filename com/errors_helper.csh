@@ -2,6 +2,9 @@
 #								#
 #	Copyright 2007, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -10,8 +13,14 @@
 #################################################################
 #errors_catch.txt is a list of the expresssions we want to catch
 #errors_ignore.txt is a list of the expresssions we want to allow
+if (! $?suppr) then
+	# "suppr" variable (expected by this script) is not defined. If caller did not define it, set it to empty string.
+	# That would let this script run on the "$log_out_file" file without treating it as a suppressed file name.
+	set suppr = ""
+endif
+
 if (-e $log_out_file) then
-	if ("$log_out_file:t" != $suppr) then
+	if ("$log_out_file:t" != "$suppr") then
 		$grep -f $gtm_tst/com/errors_catch.txt $log_out_file | $grep -v -f $gtm_tst/com/errors_ignore.txt >& /dev/null
 		if (! $status) then
 			# the seperator requires reference file updates, since there are some expected errors
@@ -22,7 +31,7 @@ if (-e $log_out_file) then
 				echo $log_out_file
 			endif
 			echo $log_out_file >>&  err_file_names.logx
-			$grep -f $gtm_tst/com/errors_catch.txt $log_out_file | $grep -v -f $gtm_tst/com/errors_ignore.txt
+			$grep -n -f $gtm_tst/com/errors_catch.txt $log_out_file | $grep -v -f $gtm_tst/com/errors_ignore.txt
 		endif
 	endif
 else

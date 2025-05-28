@@ -70,6 +70,12 @@ if (-e $tst_general_dir/timing.subtest) then
 			# If -E-, -W- etc. type of errors exist, then include all of that in the failure email
 			if ($errors_exist) then
 				@ actuallines = `wc -l $basename.log_actual | $tst_awk '{print $1}'`
+				echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+				echo "# Checking for errors in ${basename:t}.log_actual"		>>! ${TMP_FILE_PREFIX}_mail
+				echo "# ###########################################################"	>>! ${TMP_FILE_PREFIX}_mail
+				set log_out_file = $basename.log_actual
+				source $gtm_tst/com/errors_helper.csh					>>! ${TMP_FILE_PREFIX}_mail
+				echo									>>! ${TMP_FILE_PREFIX}_mail
 				if ($gunzipped) then
 					$tst_gzip $basename.log_actual	# Undo the gunzip done above
 				endif
