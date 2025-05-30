@@ -3,7 +3,7 @@
 ; Copyright (c) 2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -59,15 +59,6 @@ gen	;
 	. . ; randomly convert one char to upper case (xth character) - x is $r(2*length) to increase the probability of not changing the case
 	. . set x=$random(2*retlen)
 	. . set ret=$extract(retx,1,x)_$zconvert($extract(retx,x+1),"U")_$extract(retx,x+2,retlen)
-	. . ; append a random string (only if ret is "yes" or "true" for TRUE case)
-	. . ; $r(2*len)-len increases the probability of negative numbers.
-	. . ; RANDSTR returns null for negative length which would result in retaining the original string
-	. . if ((0=type)!("yes"=retx)!("true"=retx)) do
-	. . . ; Note it is possible in the FALSE (type=0) case that "ret" is 0 and "suffix" is a numeric value (all decimal digits)
-	. . . ; in which case appending "suffix" to "ret" would cause "ret" to evaluates to a non-zero number (i.e. TRUE)
-	. . . ; hence the $$istrue check below
-	. . . for  set suffix=$$^%RANDSTR($random(2*len)-len)  quit:(type=1)!('$$istrue(ret_suffix))
-	. . . set ret=ret_suffix
 	. use debugfile write $zdate($horolog,"DD-MON-YEAR 24:60:SS")_" : "_type_" : "_ret,!
 	. use $PRINCIPAL write ret,!
 	quit
@@ -81,4 +72,4 @@ check	;
 istrue(input)	;
 	set (true("y"),true("ye"),true("yes"),true("t"),true("tr"),true("tru"),true("true"))=1
 	set x=$zconvert(input,"L")
-	quit (((x?.N)&x)!($data(true(x)))!("yes"=$extract(x,1,3))!("true"=$extract(x,1,4)))
+	quit (((x?.N)&x)!($data(true(x))))
