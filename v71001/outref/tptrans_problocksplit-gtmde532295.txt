@@ -1,0 +1,36 @@
+# ********************************************************************************************
+# Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE532295)
+# 
+# GT.M disables proactive block splitting by default as well as within a TP transaction. FIS made this change after observing that, under certain conditions, the setting could incur spurious restarts and split blocks which were not subject to contention. To enable the feature outside of transaction processing, use a MUPIP SET -PROBLKSPLIT=n, where n is the number of nodes at which GT.M considers based on the number of restarts whether to split a block in advance of its becoming full. Previously, starting in V7.0-001, the default threshold for a proactive block split was 5 nodes and the feature applied to TP as well as non-TP. The performance issue was only ever observed in testing and not reported by a customer; it was not associated with any correctness or integrity concerns. (GTM-DE532295)
+# 
+
+## Test 1: GT.M disables proactive block splitting by default
+## Test the first test case described at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/677#note_2515082291
+# Create database file
+# Confirm proactive block splitting is disabled
+Proactive Block Splitting                0
+
+## Test 2: GT.M disables proactive block splitting inside TP transactions
+## Test the second test case described at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/677#note_2515082291
+# Create database file
+# Set -problksplit=1
+# Create a routine to update database nodes inside TP transactions
+# Run the routine
+# Confirm Data blocks is 1, indicating that PROBLKSPLIT is non-zero in the database file
+# but proactive block splitting was nevertheless disabled.
+Data                1    1
+
+## Test 3: Upgrading the database to V7.1-001 resets the Proactive Block Split value in the database file header to the default value of 0
+## Test the test case described at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/677#note_2515117359
+# Since proactive block splitting behavior varies with different versions, do not randomly choose older V6 version for dbcreate.csh.
+# Test proactive split behavior for current version being tested, i.e. V7.
+# Create database file using a version between V70002 and V71000
+# Set -problksplit=10
+# Check that proactive block splitting is 10
+Proactive Block Splitting               10
+# Switch back to the version under test, i.e. r2.03 or greater
+# Check that proactive block splitting is 0, indicating that it was reset
+Proactive Block Splitting                0

@@ -26,6 +26,7 @@
 # ztimeout_tpdefer-gtmde519525			[jon]	Test $ZTIMEOUT deferred during a TP transaction
 # viewjnlpool_multiinst-gtmf135040		[jon]	Test $VIEW("JNLPOOL") with multiple instances
 # inplaceupgrade_concurrent-gtmf225097		[jon]	Test Second phase of in-place conversion from V6 to V7 database formats supports operation with concurrent activity
+# tptrans_problocksplit-gtmde532295		[jon]	Test GT.M disables proactive block splitting within TP transactions and by default
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -45,6 +46,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic atlongexpr_zshowvtolcl-
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_critinterrupt-gtmde513980"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_tpdefer-gtmde519525"
 setenv subtest_list_non_replic	"$subtest_list_non_replic inplaceupgrade_concurrent-gtmf225097"
+setenv subtest_list_non_replic	"$subtest_list_non_replic tptrans_problocksplit-gtmde532295"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic viewjnlpool_multiinst-gtmf135040"
 
