@@ -62,6 +62,9 @@ if ( $?CI_COMMIT_BRANCH ) then
 	rm ydbtest_open_mrs.json
 endif
 
+# Sudo tests rely on the source code for ydbinstall to be in a specific location
+ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
+
 if ( $?filelist ) then
 	exec $gtm_tst/docker/pipeline-run-changed-tests.csh
 else
