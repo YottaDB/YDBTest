@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # reorg_levelrestrict-gtmde549071	[jon]	Test REORG traverses the database correctly and accepts restrictions on which levels it processes
+# reorgblocksplit-gtmde549072		[jon]	Test REORG successful block splitting and correct database traversal [#684][#685]
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -23,6 +24,7 @@ echo "v71002 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_levelrestrict-gtmde549071"
+setenv subtest_list_non_replic	"$subtest_list_non_replic reorgblocksplit-gtmde549072"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

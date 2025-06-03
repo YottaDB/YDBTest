@@ -1,0 +1,27 @@
+# ********************************************************************************************
+# GTM-DE549072 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-DE549072)
+# 
+# MUPIP REORG correctly handles block splits at the index level which are caused by a reorg-related block split at a lower-level index or data block. Previously, GT.M would sometimes fail to split these blocks, which prevented the original lower data- or index-level split from taking place. Together, these could prevent REORG from enforcing the provided fill factor and/or reserved bytes setting; a failure which persisted on all subsequent attempts, or until the database structure has changed as a result of new updates. As a workaround, users of previous releases can address a subset of the failures-to-split by passing a slightly different -fill_factor, provided that reserved bytes are disabled. (GTM-DE549072)
+# 
+
+### Test MUPIP REORG correctly splits blocks according to fill factor in a single pass
+### Note that this test is not a complete test case for the release note, since it was determined
+### that an exact test case would be too time-consuming to come up with, per the thread at:
+### https://gitlab.com/YottaDB/DB/YDBTest/-/issues/685#note_2517977770
+# Create a database
+# Fill 500-543 global nodes with data
+# Run MUPIP REORG with -index_fill_factor to 50% multiple times, then check the results with MUPIP INTEG
+# Confirm that 1 block was split on the first pass only
+# Prior to V7.2-002, 0 blocks would be split over an indefinite number of passes.
+Blocks split        : 1 
+Blocks split        : 0 
+Blocks split        : 0 
+Blocks split        : 0 
+Blocks split        : 0 
+# Confirm that less than 50% of the index is used on the first and all subsequent passes.
+# Prior to V7.2-002, upwards of 90% of the index would be used over an indefinite number of passes,
+# despite -index_fill_factor being set to 50.
+PASS
