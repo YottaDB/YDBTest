@@ -1,0 +1,45 @@
+# ********************************************************************************************
+# GTM-DE549701 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-DE549071)
+# 
+# MUPIP REORG traverses all index blocks and achieves a compact and optimally-structured database with a single pass. Previously, REORG failed to visit certain categories of blocks, including the root block and blocks it newly created or modified, and it required an indefinite number of passes to achieve optimal block structure. As a workaround for previous releases, users may consider repeating REORG operations until the command reports few blocks coalesced and split. In addition, REORG now recognizes a new qualifier, -MIN_LEVEL=n, which specifies the minimum level of block it may process. The default is -MIN_LEVEL=0. -MIN_LEVEL=1 instructs reorg only to process index blocks and can be understood as the REORG equivalent of an INTEG -FAST. (GTM-DE549071)
+# 
+
+### Test 1: MUPIP REORG -MIN_LEVEL=0
+### This tests the above release note per the thread at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/684#note_2515981216
+# Create a database
+# Populate the database with data using multiple subscripts
+# Run MUPIP REORG -MIN_LEVEL=0 to process all database blocks
+# Run MUPIP INTEG to check results of MUPIP REORG
+# Confirm all data blocks and index blocks processed
+PASS: All index blocks and data blocks processed by MUPIP REORG -MIN_LEVEL=0.
+
+### Test 2: MUPIP REORG -MIN_LEVEL=1
+### This tests the above release note per the thread at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/684#note_2515981216
+# Create a database
+# Populate the database with data using multiple subscripts
+# Run MUPIP REORG -MIN_LEVEL=1 to process only index blocks at or above block level 1
+# Run MUPIP INTEG to check results of MUPIP REORG
+# Confirm only index blocks processed, not data blocks
+PASS: Only index blocks were processed by MUPIP REORG -MIN_LEVEL=1.
+
+### Test 3: MUPIP REORG -MIN_LEVEL=2
+### This tests the above release note per the comment at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/684#note_2544003501
+# Create a database
+# Fill the database so that there are > 2 block levels
+# using a generated routine from reorg/u_inref/hightree.csh.
+# Run MUPIP REORG -MIN_LEVEL=2 to process only index blocks at or above block level 2
+# Run MUPIP INTEG to check results of MUPIP REORG
+# Confirm there are blocks at level 2
+
+File  	##TEST_PATH##/T3.dat
+Region	DEFAULT
+
+DSE> 
+##TEST_AWKBlock 3   Size 20[0-9]   Level 2   TN [0-9A-Z]* V[67]
+
+DSE> 
+# Confirm that the number of blocks processed is the same as the number of index blocks at block level 2 or higher
+PASS: Data blocks at level 0 and index blocks at level 1 were not processed by MUPIP REORG -MIN_LEVEL=2.

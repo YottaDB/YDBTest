@@ -14,6 +14,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# reorg_levelrestrict-gtmde549071	[jon]	Test REORG traverses the database correctly and accepts restrictions on which levels it processes
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -21,6 +22,7 @@ echo "v71002 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_levelrestrict-gtmde549071"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -44,4 +46,3 @@ endif
 $gtm_tst/com/submit_subtest.csh
 
 echo "v71002 test DONE."
-
