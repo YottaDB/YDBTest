@@ -1,0 +1,29 @@
+# ********************************************************************************************
+# GTM-F221672 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-001_Release_Notes.html#GTM-DE506361)
+# 
+# GTMSECSHR appropriately handles a rare condition when two processes attempt to start a GTMSECSHR process at a coincident time. Previously, this could start more than one GTMSECSHR process, and, although a single GTMSECSHR process handled all the requests, their shutting down produced syslog error messages. (GTM-DE506361)
+# 
+
+### Test no GTMSECSHRGETSEMFAIL or GTMSECSHRREMSEMFAIL errors due to gtmsecshr race conditions
+# In v7.1-001, a race condition caused GTMSECSHRGETSEMFAIL or GTMSECSHRREMSEMFAIL errors to appear in the following manner:
+# 1. Two gtmsecshr processes are started at the same time
+# 2. One gtmsecshr process creates the semaphore
+# 3. On exit, the second gtmsecshr incorrectly attempts to close the semaphore, though it doesn't own it
+# 4. GTMSECSHRGETSEMFAIL or GTMSECSHRREMSEMFAIL errors are emitted by the second gtmsecshr process due to its failure to close the semaphore.
+# For details, see the following discussions:
+# https://gitlab.com/YottaDB/DB/YDBTest/-/issues/663#note_2515342546
+# https://gitlab.com/YottaDB/DB/YDBTest/-/issues/663#note_2515494884
+
+## To test the above race condition scenario:
+# Run 2 instances of gtmsecshr_racecondition-gtmde506361.sh simultaneously 50 times
+# to ensure enough chances for the race condition to occur.
+# During each run, each instance of gtmsecshr_racecondition-gtmde506361.sh will:
+# 1. Sleep until the other process is ready to begin
+# 2. Start a new gtmsecshr process
+# 3. Sleep for 1 second
+# 4. Kill the new gtmsecshr process
+# Then, check the syslog to confirm that no GTMSECSHRGETSEMFAIL or GTMSECSHRREMSEMFAIL errors were produced.
+# Note that this test fails only 25-50% of the time, depending on whether the timing condition for the race condition was reproduced.
