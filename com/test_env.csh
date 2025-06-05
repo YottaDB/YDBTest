@@ -42,7 +42,6 @@ setenv ydb_test_exclude_V5_tests 1   # switch off old tests because they didn't 
 setenv ydb_test_exclude_sem_counter 1   # most people are not set up to run the manually_start/sem_counter subtest
 #limit descriptors 4096   # required to run on Debian 10 and Ubuntu 18.10
 if ( $shlvl == 2 ) limit stacksize 32768 kbytes   # Required for clang builds; do only @shlvl 2 or v63000/gtm8394 will fail
-setenv gtm_test_tls FALSE   # Without a default for this, gtmtest creates errors when -norandomsettings is selected
 
 
 # Some tests won't tolerate any unusual prompts
@@ -95,9 +94,9 @@ set path = (. $original_path $gtm_tst/com/)
 # You can create this file manually if you don't like it in your .cshrc-int
 setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
 if ( ! -e "$gtm_test_serverconf_file" ) then
-  mkdir -p $gtm_test
-  echo >! $gtm_test_serverconf_file "# servername #buddy1(SE)  #buddy2(SE)  #buddy3(OE)  #GT.CM buddy1   #GT.CM buddy2   #alt server  syslog file       syslogpidfile           Java home"
-  echo >> $gtm_test_serverconf_file "$HOST        NA           NA           NA           NA              NA              NA           /var/log/syslog   /var/run/rsyslogd.pid   NA"
+	mkdir -p $gtm_test
+	echo >! $gtm_test_serverconf_file "# servername #buddy1(SE)  #buddy2(SE)  #buddy3(OE)  #GT.CM buddy1   #GT.CM buddy2   #alt server  syslog file       syslogpidfile           Java home"
+	echo >> $gtm_test_serverconf_file "$HOST        NA           NA           NA           NA              NA              NA           /var/log/syslog   /var/run/rsyslogd.pid   NA"
 endif
 
 # Set up JAVA_HOME etc. (needed by test system)
@@ -107,7 +106,7 @@ if ( -e $gtm_test_com_individual/set_java_paths.csh ) source $gtm_test_com_indiv
 # Set vars in gtm_env.csh -- needed to build with YDBDevOps, in case the user has that
 if ! ( $?gtm_version_change ) setenv gtm_version_change 1   # needed for gtm_env.csh if $work_dir/YDB is set to a GT.M branch
 set __save_ver=`alias ver`   # save/restore `ver` alias because gtm_env.csh overwrites it
-  if ( -e $gtm_tools/gtm_env.csh ) source $gtm_tools/gtm_env.csh
-  unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
+	if ( -e $gtm_tools/gtm_env.csh ) source $gtm_tools/gtm_env.csh
+	unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
 alias ver "$__save_ver"
 unset __save_ver
