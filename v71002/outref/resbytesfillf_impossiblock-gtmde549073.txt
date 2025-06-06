@@ -1,0 +1,31 @@
+# ********************************************************************************************
+# GTM-DE549073- Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-DE549073)
+# 
+# MUPIP REORG enforces a minimum target block size of the block size minus the maximum reserved bytes. Previously, GT.M failed to reject a combination of reserved bytes and -fill_factor which effectively reserved a space larger than the database block size and caused database damage. Users of previous releases should use either reserved bytes or -fill_factor, but not both, as a means of achieving REORG sparseness. (GTM-DE549073)
+# 
+
+### Test MUPIP REORG enforces minimum target block size combination of reserve bytes and minimum block size
+# Create a database
+# Set a value for -RESERVED_BYTES that approaches the limit for reserved bytes (920)
+##TEST_AWKDatabase file ##TEST_PATH##/T1.dat now has [5-9][0-9][0-9] reserved bytes
+# Populate the database with data using multiple subscripts
+# Run MUPIP REORG -FILL_FACTOR=50 to create a conflict with previously set -RESERVED_BYTES
+# Expect MUPIP REORG to complete successfully. Previously, it emitted an assert failure like:
+# %GTM-F-ASSERT, Assert failed in SRC_PATH/sr_port/reorg_funcs.c line 106 for expression ((first_key != second_key) || mu_upgrade_in_prog)
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2349#note_2565749924 for more details on expected output.
+Fill Factor:: Index blocks 50%: Data blocks 50%
+   
+Global: x (region DEFAULT)
+##TEST_AWKBlocks processed    : [0-9]* 
+##TEST_AWKBlocks coalesced    : [0-9]* 
+##TEST_AWKBlocks split        : [0-9]* 
+##TEST_AWKBlocks swapped      : [0-9]* 
+##TEST_AWKBlocks freed        : [0-9]* 
+##TEST_AWKBlocks reused       : [0-9]* 
+##TEST_AWKBlocks extended     : [0-9]* 
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

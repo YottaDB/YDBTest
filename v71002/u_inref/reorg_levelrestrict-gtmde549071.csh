@@ -10,8 +10,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-# Note that this test is similar to and partially derived from
-# v71000/inplaceconv_V6toV7-gtmf13547.
 cat << CAT_EOF | sed 's/^/# /;'
 ********************************************************************************************
 GTM-DE549701 - Test the following release note
