@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,6 +22,7 @@
 # dollarzicuver-gtmf229760			[jon]	Test $ZICUVER provide the ICU version if available
 # resbytes_indepindexdata-gtmf197635		[jon]	Test GT.M supports independent index and data reserved bytes values
 # tcpbufsize_repl-gtmf235980			[jon]	Test GT.M supports increased user control of tcp buffer sizing in replication
+# rwsocket_noactive-gtmde533918			[jon]	Test error on READ or WRITE to a SOCKET device with no active sockets
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -36,6 +37,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic resbytesfillf_impossibl
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupipupgrade_maxtreedepth-gtmde556760"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarzicuver-gtmf229760"
 setenv subtest_list_non_replic	"$subtest_list_non_replic resbytes_indepindexdata-gtmf197635"
+setenv subtest_list_non_replic	"$subtest_list_non_replic rwsocket_noactive-gtmde533918"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic tcpbufsize_repl-gtmf235980"
 

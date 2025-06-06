@@ -1,0 +1,43 @@
+# ********************************************************************************************
+# GTM-DE533918 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-DE533918)
+# 
+# GT.M issues an NOSOCKETINDEV error the first time a process in direct mode attempts to read from or write to a socket principal device with no socket descriptors, and issues a fatal NOPRINCIO error upon a subsequent attempt. Previously a process that entered direct mode with an empty socket principal device would loop indefinitely and consume CPU resources. (GTM-DE533918)
+# 
+
+### Test various scenarios of READ/WRITE commands on a SOCKET device with no active sockets
+### See the following discussions for more details:
+###   1. https://gitlab.com/YottaDB/DB/YDBTest/-/issues/681#note_3102029773
+###   2. https://gitlab.com/YottaDB/DB/YDBTest/-/issues/681#note_3102111987
+
+## Test 1: test READ command on a SOCKET device with no active sockets
+# Run [T1.m]
+# Expect the routine to complete without errors.
+# Previously, the routine never returned because it waited for the jobbed off child, which looped indefinitely.
+PASS: Parent routine complete
+
+## Test 2: test READ command on a SOCKET device with no active sockets, and child job output redirected to a file
+# Run [T2.m]
+# Expect parent routine to complete and the child job to issue a NOSOCKETINDEV error. Previously, no error was issued.
+PASS: Parent routine complete
+----------
+Error YDB-E-NOSOCKETINDEV seen in T2.out as expected:
+$ZSTATUS="150379162,child+6^T2,%YDB-E-NOSOCKETINDEV, There is no socket in the current socket device"
+----------
+
+## Test 3: test WRITE command on a SOCKET device with no active sockets
+# Run [T3.m]
+# Expect the routine to complete without errors.
+# Previously, the routine never returned because it waited for the jobbed off child, which looped indefinitely.
+PASS: Parent routine complete
+
+## Test 4: test WRITE command on a SOCKET device with no active sockets, and child job output redirected to a file
+# Run [T4.m]
+# Expect parent routine to complete and the child job to issue a NOSOCKETINDEV error. Previously, no error was issued.
+PASS: Parent routine complete
+----------
+Error YDB-E-NOSOCKETINDEV seen in T4.out as expected:
+$ZSTATUS="150379162,child+6^T4,%YDB-E-NOSOCKETINDEV, There is no socket in the current socket device"
+----------
