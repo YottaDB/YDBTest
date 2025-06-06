@@ -1,0 +1,22 @@
+# ********************************************************************************************
+# GTM-DE534846 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-DE534846)
+# 
+# $ZTIMEOUT presents the time remaining value to microsecond precision; previously it only showed time with precision in milliseconds or less. (GTM-DE534846)
+# 
+
+# Test $ZTIMEOUT shows time remaining to microsecond resolution
+# Also test YDB#1151 : $ZTIMEOUT returns correct millisecond/microsecond value
+# Run [gtmde534846.m] to:
+# 1. Set $ZTIMEOUT to 0.1 seconds
+# 2. Hang for 0.045678 seconds
+# 3. ZWRITE the new value of $ZTIMEOUT
+# Expect the resulting value of $ZTIMEOUT to be less than 0.1 minus 0.45678 = 0.054322 seconds.
+# Test case derived from discussion threads at:
+# 1. https://gitlab.com/YottaDB/DB/YDBTest/-/issues/682#note_2515828547
+# 2. https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2345#note_2551769584
+##TEST_AWK\$ZTIMEOUT="0.054[0-9][0-9][0-9]"
+##TEST_AWK\$ZTIMEOUT="0.00[67][0-9][0-9][0-9]"
+##TEST_AWK\$ZTIMEOUT="0.00[01][0-9][0-9][0-9]"
