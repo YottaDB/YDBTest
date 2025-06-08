@@ -2,7 +2,7 @@
 ; This module is derived from FIS GT.M.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -66,7 +66,7 @@ ldopttab;system,load command, options, file input cmd note: may need trailing sp
 	;HP-UX IA64;$gt_ld_m_shl_linker -b -o;.so; -c ; ;
 	;Linux armv6l;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
 	;Linux armv7l;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
-	;Linux aarch64;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
-	;Linux x86_64;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
+	;Linux aarch64;$gt_ld_m_shl_linker -fPIC -shared -z noexecstack -o;.so; @; ;
+	;Linux x86_64;$gt_ld_m_shl_linker -fPIC -shared -z noexecstack -o;.so; @; ;
 	;Solaris SPARC;$gt_ld_m_shl_linker -G -64 -o;.so; `cat ; ` ;
 	;Linux S390X;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
