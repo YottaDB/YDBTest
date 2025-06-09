@@ -15,15 +15,17 @@ source /usr/library/gtm_test/T999/docker/shared-setup.csh
 # This block is active when we are inside of a YDB pipeline
 if ( $?CI_COMMIT_BRANCH ) then
 	git config --global --add safe.directory `pwd`
-	# Link the source code to the directory build_and_install_yottadb.csh is aware of
-	ln -s `pwd` /Distrib/YottaDB/V999_R999
-	ls -lrt /Distrib/YottaDB/V999_R999/
 
 	set ydb_branch = $CI_COMMIT_BRANCH
 	echo "ydb_branch: $ydb_branch"
 
 	# Build the branch if not master
-	if ( $ydb_branch != "master" ) /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg
+	if ( $ydb_branch != "master" ) then
+		# Link the source code to the directory build_and_install_yottadb.csh is aware of
+		ln -s `pwd` /Distrib/YottaDB/V999_R999
+		# Build
+		/usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg
+	endif
 
 	# 7957113 is YDBTest Gitlab project id
 	curl -s -k "https://gitlab.com/api/v4/projects/7957113/merge_requests?scope=all&state=opened" > ydbtest_open_mrs.json
@@ -63,7 +65,14 @@ if ( $?CI_COMMIT_BRANCH ) then
 endif
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
-ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
+# but if we go through a rebuild of YDB, then it will be already defined, so don't
+# do it again
+if ( ! -d /Distrib/YottaDB/V999_R999 ) ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
+
+# Verify contents of source/build directory
+echo "Contents of /Distrib/YottaDB/V999_R999: "
+ls -lrt /Distrib/YottaDB/V999_R999/
+find /Distrib/YottaDB/V999_R999/dbg
 
 if ( $?filelist ) then
 	exec $gtm_tst/docker/pipeline-run-changed-tests.csh

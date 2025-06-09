@@ -42,7 +42,6 @@ RUN apt-get update && \
                     pkg-config \
                     git \
                     tcsh \
-                    less \
                     libconfig-dev \
                     libelf-dev \
                     libgcrypt-dev \
@@ -93,6 +92,7 @@ RUN apt-get update && \
                     clang \
                     openssh-server \
                     jq \
+                    libjansson-dev \
                     && \
                     apt-get clean
 
