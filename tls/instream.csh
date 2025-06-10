@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,7 @@
 # errors				[karthikk]	Test various error scenarios.
 # libconfig				[karthikk]	Test that both encryption and TLS configuration files can reside in the same file.
 # gtmtlslib_cipherversion-gtmf167995	[jon]		Test the GT.M TLS plugin library exposes an external call interface providing cipher suite and version information
+# connaccept_TLSCONVSOCK-gtmde556365	[jon]		Test receiver Server continues to accept connections after a TLSCONVSOCK error
 
 echo "tls test starts..."
 
@@ -36,6 +37,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gtmtlslib_cipherversion
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic errors"
 setenv subtest_list_replic     "$subtest_list_replic libconfig"
+setenv subtest_list_replic     "$subtest_list_replic connaccept_TLSCONVSOCK-gtmde556365"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
