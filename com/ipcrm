@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,6 +65,9 @@ if ($HOSTOS != "Linux") then
 	end
 else
 	#Linux
+	# Execute the system ipcrm command.
+	# All YottaDB supported Linux distributions have ipcrm in /usr/bin/ipcrm so we hardcode that path here.
+	set ipcrmPATH = "/usr/bin/ipcrm"
 	setenv ipcs_linux  "$gtm_tst/com/ipcs"
 	@ argc1 = 1
 	while ($argc1 <= $#argv)
@@ -87,15 +90,15 @@ else
 
 		switch ($arg)
 		case "-m" :
-			\ipcrm shm $argv[$argc1] >>&! $outfile
+			$ipcrmPATH shm $argv[$argc1] >>&! $outfile
 			@ ipcrm_status = $ipcrm_status + $status
 			breaksw
 		case "-s" :
-			\ipcrm sem $argv[$argc1] >>&! $outfile
+			$ipcrmPATH sem $argv[$argc1] >>&! $outfile
 			@ ipcrm_status = $ipcrm_status + $status
 			breaksw
 		case "-q" :
-			\ipcrm msg $argv[$argc1] >>&! $outfile
+			$ipcrmPATH msg $argv[$argc1] >>&! $outfile
 			@ ipcrm_status = $ipcrm_status + $status
 			breaksw
 		case "-M" :
@@ -106,7 +109,7 @@ else
 				exit
 			endif
 			if ($ipcrm_ipc) then
-				\ipcrm shm $ipcrm_ipc >>&! $outfile
+				$ipcrmPATH shm $ipcrm_ipc >>&! $outfile
 				@ ipcrm_status = $ipcrm_status + $status
 			endif
 			breaksw
@@ -118,7 +121,7 @@ else
 				exit
 			endif
 			if ($ipcrm_ipc) then
-				\ipcrm sem $ipcrm_ipc >>&! $outfile
+				$ipcrmPATH sem $ipcrm_ipc >>&! $outfile
 				@ ipcrm_status = $ipcrm_status + $status
 			endif
 			breaksw
@@ -130,7 +133,7 @@ else
 				exit
 			endif
 			if ($ipcrm_ipc) then
-				\ipcrm msg $ipcrm_ipc >>&! $outfile
+				$ipcrmPATH msg $ipcrm_ipc >>&! $outfile
 				@ ipcrm_status = $ipcrm_status + $status
 			endif
 			breaksw

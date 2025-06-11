@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -61,8 +61,10 @@ while (-f $log_name)
 	set log_name = "${log_prefix}ipcs_${timestamp}_${count}"
 end
 
-# Execute the ipcs command.
-\ipcs $argv >&! $log_name
+# Execute the system ipcs command.
+# All YottaDB supported Linux distributions have ipcs in /usr/bin/ipcs so we hardcode that path here.
+set ipcsPATH = "/usr/bin/ipcs"
+$ipcsPATH $argv >&! $log_name
 set ipcs_status = $status
 
 # Check if the "Option not allowed" message was printed.
@@ -73,7 +75,7 @@ set grep_status = $status
 if (! $grep_status) then
 	echo "Status of the operation: $ipcs_status" >> $log_name
 	mv $log_name $log_name.bak
-	\ipcs $argv >&! $log_name
+	$ipcsPATH $argv >&! $log_name
 	set ipcs_status = $status
 endif
 
