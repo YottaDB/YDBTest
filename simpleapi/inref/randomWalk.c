@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -115,9 +115,9 @@ int runProc_driver(testSettings *settings){
 	sprintf(filename, "pid%d.log", getpid());
 
 	/* for ydb464 which uses this source code we redirect all logging to /dev/null
- 	* since it is unimportant and clutters the test directory with log files
+	 * since it is unimportant and clutters the test directory with log files
 	* we also want to change the stdout/stderr redirect to a unique file to avoid clobber
- 	*/
+	 */
 #ifndef NO_PRINT
 	logfile = fopen(filename, "w");
 #else
@@ -138,7 +138,7 @@ int runProc_driver(testSettings *settings){
 	int i, estimateMult = 0;
 	time_t estimate = 0;
 	/* we want at least 5 seconds of runtime prior to
-	 * estimate to ensure an accurate calcualtion
+	 * estimate to ensure an accurate calculation
 	 */
 	while (estimate < 5){
 		for(i = 0; i < 100000; i++){
@@ -220,7 +220,7 @@ int runProc(testSettings* settings, int curDepth){
 	}
 
 	int action = rand() % 100;
-	if (action < 20) { //ydb_set_s() case gets bias towards occurance
+	if (action < 20) { //ydb_set_s() case gets bias towards occurrence
 		logprint("set ", &t, "=\"MySecretValue\"");
 
 		ydb_buffer_t value;
@@ -247,7 +247,7 @@ int runProc(testSettings* settings, int curDepth){
 			}
 		}
 
-	} else if (action < 20 + remainingOdds * (2 / 15.0f)) { //ydb_get_s() case
+	} else if (action < 20 + remainingOdds * (2 / 17.0f)) { //ydb_get_s() case
 		logprint("set x=$get(", &t, ")");
 		ydb_buffer_t retvalue;
 		YDB_MALLOC_BUFFER(&retvalue, 16);
@@ -275,7 +275,7 @@ int runProc(testSettings* settings, int curDepth){
 		YDB_FREE_BUFFER(&retvalue);
 
 
-	} else if (action < 20 + remainingOdds * (3 / 15.0f)) { //ydb_data_s() case
+	} else if (action < 20 + remainingOdds * (3 / 17.0f)) { //ydb_data_s() case
 		logprint("set x=$data(", &t, ")");
 		unsigned int retvalue;
 
@@ -317,7 +317,7 @@ int runProc(testSettings* settings, int curDepth){
 			}
 		}
 
-	} else if (action < 20 + remainingOdds * (4 / 15.0f)){ //ydb_node_next_s() and ydb_node_previous_s() case
+	} else if (action < 20 + remainingOdds * (4 / 17.0f)){ //ydb_node_next_s() and ydb_node_previous_s() case
 		int retnumsubs = 4; //max number of possible subs
 		ydb_buffer_t *subsList, retsubs[retnumsubs];
 		int i;
@@ -377,7 +377,7 @@ int runProc(testSettings* settings, int curDepth){
 		for(i = 0; i < retnumsubs; ++i)
 		       YDB_FREE_BUFFER(&retsubs[i]);
 
-	} else if (action < 20 + remainingOdds * (5 / 15.0f)){ //ydb_subscript_next_s() and ydb_subscript_previous_s() calls
+	} else if (action < 20 + remainingOdds * (5 / 17.0f)){ //ydb_subscript_next_s() and ydb_subscript_previous_s() calls
 		ydb_buffer_t retvalue;
 		YDB_MALLOC_BUFFER(&retvalue, 16);
 
@@ -431,7 +431,7 @@ int runProc(testSettings* settings, int curDepth){
 		}
 		YDB_FREE_BUFFER(&retvalue);
 
-	} else if (action < 20 + remainingOdds * (6 / 15.0f)){ //ydb_incr_s() case
+	} else if (action < 20 + remainingOdds * (6 / 17.0f)){ //ydb_incr_s() case
 		logprint("set x=$increment(", &t, ",$random(5))");
 		int incr_amount = rand() / (RAND_MAX / 5); //rand int [0, 5]
 		char incr_str[3];	/* 2 digits to store the 2-digit number + 1 byte for null terminator byte */
@@ -452,7 +452,7 @@ int runProc(testSettings* settings, int curDepth){
 		YDB_FREE_BUFFER(&retvalue);
 		YDB_FREE_BUFFER(&increment);
 
-	} else if (action < 20 + remainingOdds * (7 / 15.0f)){ //ydb_lock*_s() case
+	} else if (action < 20 + remainingOdds * (7 / 17.0f)){ //ydb_lock*_s() case
 		ydb_buffer_t lockVar;
 		char lockBuf[13];	/* 10 bytes for max 4-byte pid + 2 bytes for "^a" + 1 byte for null terminator */
 		lockVar.buf_addr = lockBuf;
@@ -557,7 +557,7 @@ int runProc(testSettings* settings, int curDepth){
 			}
 		}
 
-	} else if (action < 20 + remainingOdds * (8 / 15.0f)){ //ydb_str2zwr case
+	} else if (action < 20 + remainingOdds * (8 / 17.0f)){ //ydb_str2zwr case
 		ydb_buffer_t strIn, strOut;
 		char* compStr = "\"a\"_$C(10)_\"b\"_$C(9)_\"c\"";
 
@@ -575,7 +575,7 @@ int runProc(testSettings* settings, int curDepth){
 		}
 		YDB_FREE_BUFFER(&strOut);
 
-	} else if (action < 20 + remainingOdds * (9 / 15.0f)){ //ydb_zwr2str case
+	} else if (action < 20 + remainingOdds * (9 / 17.0f)){ //ydb_zwr2str case
 		ydb_buffer_t strIn, strOut;
 		char* compStr = "a\nb\tc";
 
@@ -593,7 +593,7 @@ int runProc(testSettings* settings, int curDepth){
 		}
 		YDB_FREE_BUFFER(&strOut);
 
-	} else if (action < 20 + remainingOdds * (10 / 15.0f) && curDepth > 0){ //ydb_exit() case, don't call from main thread
+	} else if (action < 20 + remainingOdds * (10 / 17.0f) && curDepth > 0){ //ydb_exit() case, don't call from main thread
 		status = ydb_exit();
 		if(status != -YDB_ERR_INVYDBEXIT){
 			ydb_zstatus(errbuf, sizeof(errbuf));
@@ -601,14 +601,14 @@ int runProc(testSettings* settings, int curDepth){
 		}
 		status = YDB_OK;
 
-	} else if (action < 20 + remainingOdds * (11 / 15.0f)){ //ydb_init() case
+	} else if (action < 20 + remainingOdds * (11 / 17.0f)){ //ydb_init() case
 		status = ydb_init();
 		if(status != YDB_OK){
 			ydb_zstatus(errbuf, sizeof(errbuf));
 			printf("Unexpected return code (%d) issued from ydb_init()! %s\n", status, errbuf);
 		}
 
-	}else if (action < 20 + remainingOdds * (12 / 15.0f)){ //ydb_message() case
+	}else if (action < 20 + remainingOdds * (12 / 17.0f)){ //ydb_message() case
 		ydb_buffer_t errOut;
 		YDB_MALLOC_BUFFER(&errOut, 2048);
 
@@ -622,11 +622,11 @@ int runProc(testSettings* settings, int curDepth){
 		}
 		YDB_FREE_BUFFER(&errOut);
 
-	} else if (action < 20 + remainingOdds * (13 / 15.0f)){ //ydb_zstatus() case
+	} else if (action < 20 + remainingOdds * (13 / 17.0f)){ //ydb_zstatus() case
 		ydb_zstatus(errbuf, sizeof(errbuf));//no check can be done here just ensuring no sig11
 		status = YDB_OK;
 
-	}else if (action < 20 + remainingOdds * (14 / 15.0f)){ //ydb_delete_s() case
+	}else if (action < 20 + remainingOdds * (14 / 17.0f)){ //ydb_delete_s() case
 		int type = rand();
 		if (type < RAND_MAX/2){
 			logprint("kill ", &t, "");
@@ -640,7 +640,7 @@ int runProc(testSettings* settings, int curDepth){
 			printf("Unexpected return code (%d) issued from ydb_delete_s()! %s\n", status, errbuf);
 		}
 
-	} else if (action < 20 + remainingOdds * (15 / 15.0f)){ //ydb_delete_excl_s() case
+	} else if (action < 20 + remainingOdds * (15 / 17.0f)){ //ydb_delete_excl_s() case
 		if (t.arr[0][0] != '^'){ //if its a local
 			int startLen = t.length;
 			t.length = 1;
@@ -653,6 +653,54 @@ int runProc(testSettings* settings, int curDepth){
 		if (status != YDB_OK && status != YDB_TP_RESTART){
 			ydb_zstatus(errbuf, sizeof(errbuf));
 			printf("Unexpected return code (%d) issued from ydb_delete_excl_s()! %s\n", status, errbuf);
+		}
+
+	} else if (action < 20 + remainingOdds * (16 / 17.0f)) { //ydb_encode_s() case
+		ydb_buffer_t jsonout;
+		int type = rand() % 2;
+
+		if (type)
+			memcpy(t.arr[0], "^JsonDataS", BASE_LEN);
+		else
+			memcpy(t.arr[0], "JsonDataSX", BASE_LEN);
+		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
+		YDB_ASSERT(status);
+		YDB_MALLOC_BUFFER(&jsonout, 4096); //the M arrays created by ydb_decode_s() can grow, 4096 should be enough
+		logprint("encode ", &t, "");
+		status = ydb_encode_s(&basevar, t.length - 1, subs, "JSON", &jsonout);
+		if (status != YDB_OK) {
+			switch (status) {
+				case YDB_ERR_GVUNDEF:
+					status = YDB_OK;
+					break;
+				case YDB_ERR_LVUNDEF:
+					status = YDB_OK;
+					break;
+				case YDB_TP_RESTART:
+					break;
+				default:
+					ydb_zstatus(errbuf, sizeof(errbuf));
+					printf("Unexpected return code (%d) issued from ydb_encode_s()! %s\n", status, errbuf);
+			}
+		}
+		YDB_FREE_BUFFER(&jsonout);
+
+	} else if (action < 20 + remainingOdds * (17 / 17.0f)) { //ydb_decode_s() case
+		int type = rand() % 2;
+		char *jsonStr = "{\"\": 15, \"key\": \"value\", \"anotherKey\": \"anotherValue\", "
+				"\"array\": [\"one\", 2, null, 2.5, false, -3e2, true, \"\", \"null\"]}";
+
+		if (type)
+			memcpy(t.arr[0], "^JsonDataS", BASE_LEN);
+		else
+			memcpy(t.arr[0], "JsonDataSX", BASE_LEN);
+		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
+		YDB_ASSERT(status);
+		logprint("decode ", &t, "");
+		status = ydb_decode_s(&basevar, t.length - 1, subs, "JSON", jsonStr);
+		if (status != YDB_OK && status != YDB_TP_RESTART) {
+			ydb_zstatus(errbuf, sizeof(errbuf));
+			printf("Unexpected return code (%d) issued from ydb_decode_s()! %s\n", status, errbuf);
 		}
 
 	} else if (action <= 100){ //ydb_tp_s() case
