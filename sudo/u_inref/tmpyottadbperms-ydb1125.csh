@@ -186,3 +186,4 @@ sh ./tmpyottadbperms-ydb1125.sh 12 "nogroup" "rel"
 $sudostr rm -rf test*/gtmsecshrdir
 $sudostr rm -rf test*/utf8/gtmsecshrdir
 $sudostr chmod g+rwx,o+rwx -R test*
+$sudostr chown -R $USER\:$group ./*

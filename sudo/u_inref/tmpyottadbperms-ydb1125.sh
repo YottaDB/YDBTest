@@ -59,7 +59,7 @@ echo '# Get the initial permissions of $ydb_tmp/.. if it exists'
 if [ "rel" = "$tmpdir" ]; then
 	tmp_parent_perms_init="----------"
 else
-	if [ "$tmp_parent_dir" = "/tmp/yottadb" ] && [ ! -d "$DIRECTORY" ]; then
+	if [ "$tmp_parent_dir" = "/tmp/yottadb" ] && [ ! -d "$tmp_parent_dir" ]; then
 		tmp_parent_perms_init="drwxrwxrwt"
 	else
 		tmp_parent_perms_init=$($sudostr -E $gtm_tst/com/lsminusl.csh -L "$tmp_parent_dir/.." | grep $(basename $tmp_parent_dir) | cut -d" " -f 1)
