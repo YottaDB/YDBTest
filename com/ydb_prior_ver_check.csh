@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,24 +69,18 @@ if ($?ydb_environment_init) then
 			endif
 		endif
 	endif
-	# Check if libgtmtls.so has issues with finding libssl.so library. We noticed this in Ubuntu 22.04 systems where
-	# they decided to switch to libssl 3.0 (from version 1.1). In Ubuntu 21.10 systems we found a libssl1.1 package
-	# that provided the needed libraries for version 1.1. But in Ubuntu 22.04 LTS, they decided to do away with that
-	# package so the only solution was to recompile the older binaries with the newer libssl 3.0. Since there were
-	# other issues preventing the recompile from happening easily, we decided to disable TLS in the test in such cases.
-	# For the record, an example output from such an older build on a Ubuntu 22.04 system is the following.
-	#
-	# $ ldd $gtm_root/R134/pro/plugin/libgtmtls.so
-	#   .
-	#   .
-	#	libssl.so.1.1 => not found
-	#   .
-	#   .
-	#
-	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep libssl.so | grep "not found"`
+	# Check if libgtmtls.so has issues with finding libssl.so or libconfig.so or any other dependent library.
+	# a) We noticed libssl.so missing this in Ubuntu 22.04 where they decided to switch to libssl 3.0 (from version 1.1).
+	#    In Ubuntu 21.10 we found a libssl1.1 package that provided the needed libraries for version 1.1.
+	#    But in Ubuntu 22.04 LTS, they decided to do away with that package so the only solution was to recompile the
+	#    older binaries with the newer libssl 3.0. Since there were other issues preventing the recompile from happening
+	#    easily, we decided to disable TLS in the test in such cases.
+	# b) We noticed libconfig.so.9 missing in Ubuntu 25.04. For similar reasons as (a), it was not possible to rebuild
+	#    the older version with the available libconfig.so.11 and so we decided to disable TLS in the test in such cases.
+	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
 	if ("" != "$notfound") then
 		set disabletls = 1
-		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1 libssl.so not found)" >>&! settings.csh
+		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1) : [$notfound]" >>&! settings.csh
 	endif
 	if ($disabletls) then
 		echo "setenv gtm_test_tls FALSE" >>&! settings.csh
