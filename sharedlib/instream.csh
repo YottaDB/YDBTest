@@ -6,7 +6,7 @@
 # Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,13 +39,6 @@ setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 setenv subtest_list "zro_search incr_link excall objfile_test gtm6330 gtm7905"
 
-if ( "HOST_LINUX_IA64" == $gtm_test_os_machtype || "HOST_LINUX_X86_64" == $gtm_test_os_machtype || "HOST_LINUX_S390X" == $gtm_test_os_machtype) then
-    setenv gt_ld_m_shl_options "-shared"
-endif
-#Added -G option to gt_ld_m_shl_options for produces a shared object
-if ( "HOST_SUNOS_SPARC" == $gtm_test_os_machtype) then
-	setenv gt_ld_m_shl_options "-G"
-endif
 if ($LFE == "E") then
 	setenv subtest_list "$subtest_list shared_lib_zb shl_relinks shlib_zstep_long shlib_call_ins_extcall"
 endif

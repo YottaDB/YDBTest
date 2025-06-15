@@ -4,7 +4,7 @@
 # Copyright (c) 2001-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,13 +21,6 @@ set dlltest_version = $1
 #
 # Switch to version
 source $gtm_tst/com/switch_gtm_version.csh $dlltest_version $tst_image #$gtm_ver_save will be set to the original version set
-#
-# Setting gt_ld_m_shl_options is needed because previous versions did not have these
-# set in gtm_env_sp.csh for these system types and ver commands overwrites the ones from the instream
-#
-if ( "HOST_LINUX_IA64" == $gtm_test_os_machtype || "HOST_LINUX_X86_64" == $gtm_test_os_machtype) then
-    setenv gt_ld_m_shl_options "-shared"
-endif
 $gtm_exe/mumps $gtm_tst/$tst/inref/helloworld.m
 #
 # Link ^helloworld into a shared library and drive it

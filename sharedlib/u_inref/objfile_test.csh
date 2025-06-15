@@ -1,13 +1,21 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 cp $gtm_tst/$tst/inref/largefile.m .
 echo "Compile M file"
 $gtm_exe/mumps largefile.m
-if ( "HOST_LINUX_IA64" == $gtm_test_os_machtype || "HOST_LINUX_X86_64" == $gtm_test_os_machtype) then
-    setenv gt_ld_m_shl_options "-shared"
-endif
-if ( "HOST_SUNOS_SPARC" == $gtm_test_os_machtype) then
-        setenv gt_ld_m_shl_options "-G"
-endif
 echo "Create shared library for largefile.o"
 $gt_ld_m_shl_linker $gt_ld_m_shl_options -o largefile$gt_ld_shl_suffix largefile.o >& largefile.out
 if ( $HOSTOS == "OS/390" ) then
