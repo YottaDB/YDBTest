@@ -18,6 +18,7 @@
 # reorgblocksplit-gtmde549072			[jon]	Test REORG successful block splitting and correct database traversal [#684][#685]
 # ztimeout_microresolution-gtmde534846		[jon]	Test $ZTIMEOUT presents the time remaining value to microsecond resolution
 # resbytesfillf_impossiblock-gtmde549073	[jon]	REORG no longer accepts a combination of reserved bytes and fill factor which together target an impossible block size
+# mupipupgrade_maxtreedepth-gtmde556760		[jon]	Test MUPIP UPGRADE appropriately processes V6 database files that exceed the maximum tree depth (7 levels) associated with pre-V7 versions
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -29,6 +30,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_levelrestrict-gtm
 setenv subtest_list_non_replic	"$subtest_list_non_replic reorgblocksplit-gtmde549072"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_microresolution-gtmde534846"
 setenv subtest_list_non_replic	"$subtest_list_non_replic resbytesfillf_impossiblock-gtmde549073"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupipupgrade_maxtreedepth-gtmde556760"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
