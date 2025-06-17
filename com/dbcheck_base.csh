@@ -146,9 +146,8 @@ else
 	if (! $?dbcheck_base_skip_upgrade_check && $gtm_test_use_V6_DBs) then
 		# The caller subtest script created DBs in V6 format (as part of a prior dbcreate.csh call).
 		# So the .dat file would be in V6 format. Test "mupip upgrade" of that V6 DB to V7 format.
-		set bakdir = dbcheck_base_bakdir_$$
-		mkdir $bakdir
-		set logfile = dbcheck_base_mupip_backup_$$.out
+		set bakdir = `mktemp -p . -d dbcheck_base_bakdir_XXXXXX`
+		set logfile = $bakdir.out
 
 		# Most tests would only define gtmgbldir env var but some tests might define ydb_gbldir env var
 		# Therefore check for both. Note that ydb_gbldir prevails over gtmgbldir.
