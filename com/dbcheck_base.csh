@@ -143,6 +143,22 @@ else
 		# in V7 format). In either case, skip the "mupip upgrade" check below.
 		set dbcheck_base_skip_upgrade_check = 1
 	endif
+	# If $tst_ver is a pure GT.M build (e.g. V71002) or a YottaDB version before r1.32, skip the upgrade check
+	# as that logic requires support for $$^%PEEKBYNAME("gd_segment.sname",...) which exists only from r1.32 onwards.
+	# But the upgrade logic can only happen for V7 format YottaDB releases. And that starts from r2.00 so check for that.
+	if ($tst_ver =~ "V*_R*") then
+		# This is a YottaDB build (e.g. V70005_R202)
+		# Check if the YottaDB release i.e. xxx in Rxxx is less than 124.
+		# Note that some versions might have been named V63009_R131C etc. In that case, only take 131
+		# and ignore the trailing C etc. Hence the "cut" command below.
+		set ydbrel = `echo $tst_ver | sed 's/.*_R//g' | cut -b 1-3`
+		if ($ydbrel < 200) then
+			set dbcheck_base_skip_upgrade_check = 1
+		endif
+	else
+		# This is a pure GT.M build (e.g. V71002)
+		set dbcheck_base_skip_upgrade_check = 1
+	endif
 	if (! $?dbcheck_base_skip_upgrade_check && $gtm_test_use_V6_DBs) then
 		# The caller subtest script created DBs in V6 format (as part of a prior dbcreate.csh call).
 		# So the .dat file would be in V6 format. Test "mupip upgrade" of that V6 DB to V7 format.
