@@ -326,6 +326,11 @@ BEGIN {
 		envir[no_options] = "NON_SUSE_LINUX"	# Used to help identify non-SUSE-SLED type systems
 	}
 	#
+	if ("rhel" != ENVIRON["gtm_test_linux_distrib"]) {
+		options_names[++no_options] = "NOT-RHEL"
+		envir[no_options] = "NON_RHEL_LINUX"	# Used to help identify non-RHEL type systems
+	}
+	#
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])
 		envir[no_options] = "ONECPU"

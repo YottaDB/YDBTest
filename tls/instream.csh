@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,8 +18,9 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 
-# errors    [karthikk]	Test various error scenarios.
-# libconfig [karthikk]	Test that both encryption and TLS configuration files can reside in the same file.
+# errors				[karthikk]	Test various error scenarios.
+# libconfig				[karthikk]	Test that both encryption and TLS configuration files can reside in the same file.
+# gtmtlslib_cipherversion-gtmf167995	[jon]		Test the GT.M TLS plugin library exposes an external call interface providing cipher suite and version information
 
 echo "tls test starts..."
 
@@ -31,7 +32,10 @@ endif
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_replic     "errors libconfig"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtmtlslib_cipherversion-gtmf167995"
+setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic errors"
+setenv subtest_list_replic     "$subtest_list_replic libconfig"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -43,6 +47,7 @@ endif
 setenv subtest_exclude_list	""
 if ("NON_ENCRYPT" == "$test_encryption") then
 	setenv subtest_exclude_list "$subtest_exclude_list libconfig"
+	setenv subtest_exclude_list "$subtest_exclude_list gtmtlslib_cipherversion-gtmf167995"
 endif
 
 # Submit the list of subtests

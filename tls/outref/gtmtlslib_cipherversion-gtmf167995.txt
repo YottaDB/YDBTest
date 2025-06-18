@@ -1,0 +1,218 @@
+# ********************************************************************************************
+# GTM-F167995 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-F167995)
+# 
+# 	The GT.M TLS plugin library exposes an external call interface providing ciphersuite and version information. The four new functions are:
+# 
+# 		getversion:            xc_long_t gtm_tls_get_version(O:xc_char_t*[2048])
+# 		gettlslibsslversion:   xc_long_t gtm_tls_get_TLS_version(O:xc_char_t*[2048],I:xc_char_t*,O:xc_char_t*[2048])
+# 		getdefaultciphers:     xc_long_t gtm_tls_get_defaultciphers(O:xc_char_t*[4096],I:xc_char_t*,O:xc_char_t*[2048])
+# 		getciphers:            xc_long_t gtm_tls_get_ciphers(O:xc_char_t*[4096],I:xc_char_t*,I:xc_char_t*,I:xc_char_t*,I:xc_char_t*,O:xc_char_t*[2048])
+# 
+# 	The following entry points provide the supported cipher suite information. Except where noted, the $gtmcrypt_conf configuration file and gtmtls_passwd_<TLS_ID> are not required.
+# 
+# 	getdefaultciphers
+# 
+# 		1st parameter contains the default list of ciphers based on the 2nd parameter
+# 
+# 		2nd parameter directs the interface to report the OpenSSL default cipher suite for TLSv1.2 ("tls1_2") or TLSv1.3 ("tls1_3")
+# 
+# 		3rd parameter is an error string (allocated by the external call interface).
+# 
+# 		The function returns negative as failure and positive for the number of colon delimited pieces in the return string.
+# 
+# 	getciphers
+# 
+# 		1st parameter contains the list of available ciphers based on the 2nd parameter
+# 
+# 		2nd parameter directs the interface to report the OpenSSL default cipher suite for TLSv1.2 ("tls1_2") or TLSv1.3 ("tls1_3")
+# 
+# 		3rd parameter directs the interface to report the cipher suite using the cipher suite defaults for "SOCKET" Device or "REPLICATION" server
+# 
+# 		(optional) 4th parameter directs the interface to use the name TLS ID from the $gtmcrypt_conf configuration file. Using the null string makes $gtmcrypt_config optional. Using a TLS ID with certificates requires $gtmtls_passwd_
+# 
+# 		(optional) 5th parameter directs the interface to use the supplied cipher suite string when determining supported ciphers
+# 
+# 		6th parameter is an error string (allocated by the external call interface)
+# 
+# 		The function returns negative as failure and positive for the number of colon delimited pieces in the return string
+# 
+# 	The following entry points provide version information.
+# 
+# 	getversion
+# 
+# 		1st parameter contains the GT.M TLS plugin version as a string.
+# 
+# 		The function returns the GT.M TLS plugin version as a number.
+# 
+# 	gettlslibversion
+# 
+# 		1st parameter contains the OpenSSL string
+# 
+# 		2nd parameter directs the function to report the "run-time" or "compile-time" OpenSSL version
+# 
+# 		3rd parameter is an error string (allocated by the external call interface)
+# 
+# 		The function returns the OpenSSL version number or negative on failure
+# 
+# 	(GTM-F167995)
+# 
+
+### Test 1: getversion
+# TLS version: 7
+# TLS details: libgtmtls.so(Linux) 7 (debug)
+
+### Test 2: gettlslibsslversion
+## Pass "run-time" option:
+##TEST_AWK# libssl version: [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+##TEST_AWK# libssl details: OpenSSL [1-9]+.[0-9]+.[0-9]+.*
+## Pass "compile-time" option:
+##TEST_AWK# libssl version: [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+##TEST_AWK# libssl details: OpenSSL [1-9]+.[0-9]+.[0-9]+.*
+## Pass "badoption" option (error case):
+# gettlslibsslversion issued error: 'badoption' is not a valid library version mode. Please use either 'run-time' or 'compile-time'
+
+### Test 3: getdefaultciphers
+## Pass tlsversion="tls1_2":
+#   ALL
+#   !COMPLEMENTOFDEFAULT
+#   !eNULL
+## Pass tlsversion="tls1_3":
+#   TLS_AES_256_GCM_SHA384
+#   TLS_CHACHA20_POLY1305_SHA256
+#   TLS_AES_128_GCM_SHA256
+## Pass tlsversion="tls1_4" (error case):
+# getdefaultciphers issued error: 'tls1_4' is not a valid TLS version. Please use either 'tls1_2' or 'tls1_3'
+
+### Test 4: getciphers
+##SUSPEND_OUTPUT SUSE_LINUX
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE1": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE1": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE1": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE1": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE1": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE2": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE2": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE2": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE2": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE2": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE3": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE3": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE3": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE3": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="SOCKET" tlsid="INSTANCE3": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_2" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE1": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE1": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE1": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE1": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE1": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE2": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE2": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE2": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE2": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE2": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE3": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE3": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE3": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE3": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="SOCKET" tlsid="INSTANCE3": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE1": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE2": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="ALL":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="RSA":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="DHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="tls1_3" context="REPLICATION" tlsid="INSTANCE3": ciphersuite="ECDHE":
+PASS: getciphers returned the expected ciphers
+## Pass tlsversion="NOTAVERSION" (error case)
+getciphers issued error: 'NOTAVERSION' is not a valid TLS version. Please use either 'tls1_2' or 'tls1_3'
+##ALLOW_OUTPUT SUSE_LINUX
+##SUSPEND_OUTPUT NON_SUSE_LINUX
+# Skipping test case for OpenSUSE platform
+# Output differs, but the reason for this was not investigated.
+# See discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2362#note_2616237386 for more information.
+##ALLOW_OUTPUT NON_SUSE_LINUX
