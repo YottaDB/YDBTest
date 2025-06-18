@@ -1,0 +1,351 @@
+# ********************************************************************************************
+# GTM-F197635- Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-F197635)
+# 
+# The -INDEX_RESERVED_BYTES and -DATA_RESERVED_BYTES qualifiers for MUPIPSET (and DSE CHANGE -FHEAD) allow independent adjustment of reserved bytes for each block type. Previously GT.M did not provide the flexibility to set these values independently. The -RESERVED_BYTES qualifier continues to adjust both types of block to the same value. When the command specifies -RESERVED_BYTES along one of the more specific qualifiers, MUPIP applies the more general -RESERVED_BYTES value to the block type unspecified by the other qualifier. MUPIP DUMPFHEAD reports the number of bytes reserved for each type of block (as does DSE DUMP -FHEAD). Reserving additional bytes in index blocks can reduce the number of records in any given index block and may reduce invalidation and search restarts in some workloads. (GTM-F197635)
+# 
+
+### Test 1: -INDEX_RESERVED_BYTES and -DATA_RESERVED_BYTES can be set independently
+# Create a database
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T1 mupip 2048 omit 512 1024]
+# Run [mupip set -index_reserved_bytes=512 -data_reserved_bytes=1024 -reg '*']
+Database file ##TEST_PATH##/T1.dat now has 512 index reserved bytes
+Database file ##TEST_PATH##/T1.dat now has 1024 data reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                   512
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 252
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 67: 1517 (0x5ED)
+        Block C5: 1506 (0x5E2)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T1 dse 2048 omit 1024 512]
+# Run [dse change -fileheader -index_reserved_bytes=1024 -data_reserved_bytes=512]
+
+File  	##TEST_PATH##/T1.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                  1024
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 112
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1004 (0x3EC)
+
+### Test 2: When -DATA_RESERVED_BYTES is omitted, it is set to -RESERVED_BYTES when -RESERVED_BYTES and -INDEX_RESERVED_BYTES are set
+# Create a database
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T2 mupip 2048 1024 512 omit]
+# Run [mupip set -index_reserved_bytes=512 -reserved_bytes=1024 -reg '*']
+Database file ##TEST_PATH##/T2.dat now has 1024 reserved bytes
+Database file ##TEST_PATH##/T2.dat now has 512 index reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                   512
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 252
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 67: 1517 (0x5ED)
+        Block C5: 1506 (0x5E2)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T2 dse 2048 512 1024 omit]
+# Run [dse change -fileheader -index_reserved_bytes=1024 -reserved_bytes=512]
+
+File  	##TEST_PATH##/T2.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                  1024
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 112
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1004 (0x3EC)
+
+### Test 3: When -INDEX_RESERVED_BYTES is omitted, it is set to -RESERVED_BYTES when -RESERVED_BYTES and -DATA_RESERVED_BYTES are set
+# Create a database
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T3 mupip 2048 1024 omit 512]
+# Run [mupip set  -data_reserved_bytes=512 -reserved_bytes=1024 -reg '*']
+Database file ##TEST_PATH##/T3.dat now has 512 reserved bytes
+Database file ##TEST_PATH##/T3.dat now has 512 data reserved bytes
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                  1024
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 112
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1004 (0x3EC)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T3 dse 2048 512 omit 1024]
+# Run [dse change -fileheader  -data_reserved_bytes=1024 -reserved_bytes=512]
+
+File  	##TEST_PATH##/T3.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=512 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                   512
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 252
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 67: 1517 (0x5ED)
+        Block C5: 1506 (0x5E2)
+
+### Test 4: -INDEX_RESERVED_BYTES and -DATA_RESERVED_BYTES are set to -RESERVED_BYTES when only -RESERVED_BYTES is specified
+# Create a database
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T4 mupip 2048 512 omit omit]
+# Run [mupip set  -reserved_bytes=512 -reg '*']
+Database file ##TEST_PATH##/T4.dat now has 512 reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                   512
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 167
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 66: 1512 (0x5E8)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T4 dse 2048 1024 omit omit]
+# Run [dse change -fileheader  -reserved_bytes=1024]
+
+File  	##TEST_PATH##/T4.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                  1024
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 169
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1000 (0x3E8)
+        Block 86: 1005 (0x3ED)
+
+### Test 5: Setting -INDEX_RESERVED_BYTES and omitting both -DATA_RESERVED_BYTES and -RESERVED_BYTES leaves -DATA_RESERVED_BYTES unchanged
+# Create a database
+# Run [mupip set -reserved_bytes=512 -reg '*'] to initialize -data_reserved_bytes and -index_reserved_bytes
+Database file ##TEST_PATH##/T5.dat now has 512 reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                   512
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T5 mupip 2048 init512 1024 omit]
+# Run [mupip set -index_reserved_bytes=1024 -reg '*']
+Database file ##TEST_PATH##/T5.dat now has 1024 index reserved bytes
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                  1024
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 112
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1004 (0x3EC)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+# Run [mupip set -reserved_bytes=1024 -reg '*'] to initialize -data_reserved_bytes and -index_reserved_bytes
+Database file ##TEST_PATH##/T5.dat now has 1024 reserved bytes
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                  1024
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T5 dse 2048 init1024 512 omit]
+# Run [dse change -fileheader -index_reserved_bytes=512]
+
+File  	##TEST_PATH##/T5.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=512 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                   512
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 252
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 67: 1517 (0x5ED)
+        Block C5: 1506 (0x5E2)
+
+### Test 6: Setting -DATA_RESERVED_BYTES and omitting both -INDEX_RESERVED_BYTES and -RESERVED_BYTES leaves -INDEX_RESERVED_BYTES unchanged
+# Create a database
+# Run [mupip set -reserved_bytes=512 -reg '*'] to initialize -data_reserved_bytes and -index_reserved_bytes
+Database file ##TEST_PATH##/T6.dat now has 512 reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                   512
+## Test with MUPIP: Run [resbytes_indepindexdata-gtmf197635.sh T6 mupip 2048 init512 omit 1024]
+# Run [mupip set  -data_reserved_bytes=1024 -reg '*']
+Database file ##TEST_PATH##/T6.dat now has 1024 data reserved bytes
+# Expect index_reserved_bytes=512 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=512
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                   512
+# Populate the database with a data value (1040) that exceeds available data block size (1024):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1040 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1536):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1552 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Data blocks > 90% of block size but still in bounds: 252
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 67: 1517 (0x5ED)
+        Block C5: 1506 (0x5E2)
+# Cleanup global variables before changing any reserved bytes qualifiers with DSE
+# Run [mupip set -reserved_bytes=1024 -reg '*'] to initialize -data_reserved_bytes and -index_reserved_bytes
+Database file ##TEST_PATH##/T6.dat now has 1024 reserved bytes
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=1024
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=1024
+  Data Reserved Bytes                          1024  Index Reserved Bytes                  1024
+## Test with DSE: Run [resbytes_indepindexdata-gtmf197635.sh T6 dse 2048 init1024 omit 512]
+# Run [dse change -fileheader  -data_reserved_bytes=512]
+
+File  	##TEST_PATH##/T6.dat
+Region	DEFAULT
+
+# Expect index_reserved_bytes=1024 and data_reserved_bytes=512
+record("sgmnt_data.i_reserved_bytes")=1024
+record("sgmnt_data.reserved_bytes")=512
+  Data Reserved Bytes                           512  Index Reserved Bytes                  1024
+# Populate the database with a data value (1552) that exceeds available data block size (1536):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1552 set ^x=^x_"b"']
+# Populate the database with a subscripted global variable to create index blocks that exceed the available index block size (1024):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:1040 set ^y(i,j)=$j(i_j,25)']
+# Confirm that:
+# 1. No data blocks are more than -block_size minus -data_reserve_bytes (2048 - 512 = 1536 (0x600)):
+------> Data blocks > 90% of block size but still in bounds: 112
+# 2. No index blocks are more than -block_size minus -index_reserve_bytes (2048 - 1024 = 1024 (0x400)):
+------> Index blocks > 90% of block size but still in bounds:
+        Block 47: 1004 (0x3EC)
+
+### Test 7: Setting a GVN to a value greater than a database block can hold causes a block split and creates spanning nodes
+# Create a database
+# Reserve a lot of bytes (1556) relative to block size (2048) to decrease available block space and make it easier to cause a block split:
+# Run [mupip set -data_reserved_bytes=1556 -reg '*']
+Database file ##TEST_PATH##/T7.dat now has 1556 data reserved bytes
+# Expect data_reserved_bytes=1556
+record("sgmnt_data.i_reserved_bytes")=0
+record("sgmnt_data.reserved_bytes")=1556
+  Data Reserved Bytes                          1556  Index Reserved Bytes                     0
+# Populate the database with a data value (1556) that exceeds available data block size (492):
+# [mumps -run %XCMD 'set ^x="a" for i=0:1:1556 set ^x=^x_"b"']
+## Confirm that the block was split and spanning nodes were generated
+# Get the block containing the target key (^x):
+# Run [($gtm_dist/dse find -key=^x >&! /dev/stdout) | tail -1 | cut -f 1 -d ":" | tr -d "	"]
+# Dump that block and confirm that #SPAN records were created
+Rec:1  Blk 4  Off 10  Size 14  Cmpc 0  Ptr 3  Key ^x(#SPAN1*)
+Rec:2  Blk 4  Off 24  Size 10  Cmpc 4  Ptr 7  Key ^x(#SPAN2*)
+Rec:3  Blk 4  Off 34  Size 10  Cmpc 4  Ptr A  Key ^x(#SPAN3*)
+Rec:4  Blk 4  Off 44  Size 10  Cmpc 4  Ptr B  Key ^x(#SPAN4*)
+
+### Test 8: Test that it is not possible create an index block that is larger than available database block space
+## Scenario A: MUPIPSET2BIG
+## To create an index block that exceeds the database block size it is necessary to
+## store a key that exceeds the space available after subtracting the number of index reserved bytes
+## from the total block size. However, it is not possible to set index_reserved_bytes to more than
+## the block_size - max_key_size - 40 (block overhead). Attempting to do so results in a MUPIPSET2BIG error.
+# Create a database with: -block_size=1024 -record_size=1024 -key_size=492
+# Attempt to reserve more index bytes (493) than available (492), i.e. (block_size - key_size - block overhead)=(1024 - 492 - 40)
+# Run [mupip set -index_reserved_bytes=493 -reg '*']
+# Expect MUPIPSET2BIG
+%GTM-W-MUPIPSET2BIG, 493 too large, maximum INDEX_RESERVED_BYTES allowed is 492
+%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+## Scenario B: Index block split
+# Populate multiple GVNs in the database with using subscripts with lengths close to the value of -index_reserved_bytes
+# to create more records than can fit in a single index block, thus causing a split of the records across multiple index blocks.
+# This operation should succeed, with each split block having a size less than the block_size - index_reserved_bytes.
+# Run [mupip set -index_reserved_bytes=450 -reg '*']
+Database file ##TEST_PATH##/T8.dat now has 450 index reserved bytes
+# Expect index_reserved_bytes=450
+record("sgmnt_data.i_reserved_bytes")=450
+record("sgmnt_data.reserved_bytes")=0
+  Data Reserved Bytes                             0  Index Reserved Bytes                   450
+# Populate the database with subscripted global variable nodes to create index blocks that exceed the max index reserved bytes size (400):
+# [mumps -run %XCMD 'for i=1:1:5 for j=1:1:400 set ^y($j(i,400),j)=$j(i_j,25)']
+# Dump the headers for the index blocks created by the above M command and confirm that the size of none exceed the maximum number of index bytes available (block_size - num_index_reserved_bytes) (1024 - 450 = 574 = 0x23e)
+##TEST_AWKBlock 1   Size 1C   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 4   Size 1C0   Level 3   TN [0-9A-F]* V7
+##TEST_AWKBlock E   Size 222   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock F   Size 1C1   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 18   Size 221   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 21   Size 234   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 2B   Size 222   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 34   Size 231   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 3E   Size 224   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 47   Size 231   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 51   Size 221   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 5A   Size 232   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 5B   Size 228   Level 2   TN [0-9A-F]* V7
+##TEST_AWKBlock 5C   Size 205   Level 2   TN [0-9A-F]* V7
+##TEST_AWKBlock 66   Size 221   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 6F   Size 234   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 79   Size 222   Level 1   TN [0-9A-F]* V7
+##TEST_AWKBlock 82   Size 231   Level 1   TN [0-9A-F]* V7
