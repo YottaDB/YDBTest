@@ -82,6 +82,9 @@ Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 %YDB-E-REPLBRKNTRANS, Replication subsystem found seqno ##SEQNO## broken or missing in the journal files
 ----------
 =>Turning permissions back on ajnl subdirectory before starting source server from INST1 to INST3
+=>Check that JNLCLOSED and REPLSTATE messages were emitted in the syslog when the replication state changed from ON to WAS_ON
+  Prior to GT.M V7.1-002, these messages were not emitted during this replication state change.
+##TEST_AWK.* YDB-MUMPS-INSTANCE1\[[0-9]+\]: %YDB-E-JNLCLOSED, Journaling closed for database file ##TEST_PATH##/a.dat at transaction number 0x[0-9A-F]+, %YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/a.dat is now WAS_ON, %YDB-I-TEXT, Replication will continue using records in the replication journal pool, but will fail if operation requires access to journal files -- generated from 0x[0-9A-F]+.
 =>Turning replication back ON those regions that lost them
 =>Check that AREG has replication state ON (not WAS_ON)
   Journal File: ##TEST_PATH##/ajnl/a.mjl

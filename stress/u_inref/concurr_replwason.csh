@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -156,6 +156,9 @@ if ($gtm_test_trigger) then
 	# Load test-specific trigger definitions in the database.
 	$MUPIP trigger -triggerfile=$gtm_tst/$tst/inref/replwason.trg -noprompt >& trg_replwason.log
 endif
+
+set syslog_begin = `date +"%b %e %H:%M:%S"`
+echo "syslog_begin = $syslog_begin" > syslog_time1
 
 # Spawn off concurrent GT.M updates
 $GTM << xyz
@@ -319,6 +322,13 @@ $gtm_tst/com/check_error_exist.csh SRC_$time_msr.log REPLBRKNTRANS |& sed 's/seq
 
 echo "=>Turning permissions back on ajnl subdirectory before starting source server from INST1 to INST3"
 chmod u+w ajnl
+
+set syslog_end = `date +"%b %e %H:%M:%S"`
+echo "syslog_end = $syslog_end" >> syslog_time1
+echo "=>Check that JNLCLOSED and REPLSTATE messages were emitted in the syslog when the replication state changed from ON to WAS_ON"
+echo "  Prior to GT.M V7.1-002, these messages were not emitted during this replication state change."
+$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog1.txt "" ".*YDB-E-JNLCLOSED.*YDB-I-REPLSTATE.*"
+grep -E ".*%YDB-E-JNLCLOSED.*%YDB-I-REPLSTATE.*" test_syslog1.txt
 
 # Re-enable replication on those regions that lost them
 echo "=>Turning replication back ON those regions that lost them"

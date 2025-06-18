@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,14 +13,45 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-#
+
+echo "STRESS test starts..."
+unset echo
+unset verbose
+setenv subtest_list_common	""
+setenv subtest_list_non_replic	""
+setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic manyvars"
+setenv subtest_list_replic	"$subtest_list_replic concurr_small"
+setenv subtest_list_replic	"$subtest_list_replic concurr"
+setenv subtest_list_replic	"$subtest_list_replic concurr_replwason"
+
+if ($?test_replic == 1) then
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
+else
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+endif
+
+setenv subtest_exclude_list ""
+
+# Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+
+if ("dbg" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+# Disable certain heavyweight tests on single-cpu systems
+if ($gtm_test_singlecpu) then
+	setenv subtest_exclude_list "$subtest_exclude_list concurr_small concurr"
+endif
+
 # Enable white-box testing and trigger errors in the midst of commit. Do not do that very frequently as that might
 # slow down GT.M update rate (due to frequent cache recoveries). We want to do this in the stress test to ensure that
 # errors in the midst of commit are handled properly in all possible configurations (the stress test tests a wide
 # variety of codepaths by running as many processes concurrently as are allowed e.g. mupip load, backup, reorg etc.).
 # Note that white-box testing is active within GT.M only in case of a dbg image. Therefore in case of a pro image,
 # this white-box testing block does not change the code coverage of the test in any way.
-
 if ($?gtm_test_replay) then
 	source $gtm_test_replay
 else
@@ -58,17 +89,6 @@ if ($hostn !~ {atlst2000,pfloyd,atlhxit1,charybdis,lespaul}) then
 			setenv is_syncio ",sync_io"
 		endif
 	endif
-endif
-
-echo "STRESS test starts..."
-unset echo
-unset verbose
-setenv subtest_list "manyvars concurr_small concurr concurr_replwason"
-setenv subtest_exclude_list ""
-
-# Disable certain heavyweight tests on single-cpu systems
-if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list concurr_small concurr"
 endif
 
 $gtm_tst/com/submit_subtest.csh
