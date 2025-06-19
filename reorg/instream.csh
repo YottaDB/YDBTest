@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,48 @@ if ("$test_reorg" == "NON_REORG") then
 	echo "This test is not applicable to NON_REORG"
 	exit 1
 endif
+
+echo "REORG test Starts..."
+setenv subtest_list_common	""
+setenv subtest_list_common	"$subtest_list_common on_tp_jnl_multi_reorg"
+setenv subtest_list_common	"$subtest_list_common on_ntp_njnl_reorg"
+setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic coalsce"
+setenv subtest_list_non_replic	"$subtest_list_non_replic star_rec"
+setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_stat"
+setenv subtest_list_non_replic	"$subtest_list_non_replic hightree"
+setenv subtest_list_non_replic	"$subtest_list_non_replic restrict_region"
+setenv subtest_list_non_replic	"$subtest_list_non_replic truncate_simple"
+setenv subtest_list_non_replic	"$subtest_list_non_replic truncate"
+setenv subtest_list_non_replic	"$subtest_list_non_replic truncate_crash"
+setenv subtest_list_non_replic	"$subtest_list_non_replic truncate_hasht"
+setenv subtest_list_non_replic	"$subtest_list_non_replic collation"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm7519"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm7688"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm7430"
+setenv subtest_list_replic	""
+
+if ( $LFE == "L" ) then
+	# A "LIGHT" test run. Only run the below-specified tests
+	setenv subtest_list	""
+	setenv subtest_list	"$subtest_list coalsce"
+	setenv subtest_list	"$subtest_list star_rec"
+	setenv subtest_list	"$subtest_list reorg_stat"
+	setenv subtest_list	"$subtest_list hightree"
+	setenv subtest_list	"$subtest_list restrict_region"
+	setenv subtest_list	"$subtest_list truncate_simple"
+	setenv subtest_list	"$subtest_list truncate"
+	setenv subtest_list	"$subtest_list truncate_crash"
+	setenv subtest_list	"$subtest_list truncate_hasht"
+else
+	# Run the full test suite, with or without -replic
+	if (0 == $?test_replic) then
+		setenv subtest_list "$subtest_list_non_replic $subtest_list_common"
+	else
+		setenv subtest_list "$subtest_list_replic $subtest_list_common"
+	endif
+endif
+
 #Some of the tests do not use online-reorg, so set test_reorg to NON_REORG
 
 #Calculate the number of global buffers being used, based on gtm_poollimit setting.
@@ -45,18 +87,6 @@ if ("MM" == $acc_meth) then
 	set pllimit=0
 endif
 setenv gtm_poollimit_value $pllimit
-
-echo "REORG test Starts..."
-if ( $LFE == "L" ) then
-	setenv subtest_list "coalsce star_rec reorg_stat hightree restrict_region truncate_simple truncate truncate_crash truncate_hasht"
-else
-	if (0 == $?test_replic) then
-		setenv subtest_list "coalsce star_rec reorg_stat hightree restrict_region collation truncate_simple truncate truncate_crash"
-		setenv subtest_list "$subtest_list truncate_hasht on_tp_jnl_multi_reorg on_ntp_njnl_reorg gtm7519 gtm7688 gtm7430"
-	else
-		setenv subtest_list "on_tp_jnl_multi_reorg on_ntp_njnl_reorg"
-	endif
-endif
 
 set hostn = $HOST:ar
 # If it is a replic run on charybdis with eotf enabled, limit align size to 16MB
@@ -86,7 +116,7 @@ if ("pro" == "$tst_image") then
 endif
 # filter out tests that cannot run on platforms that don't support triggers
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
-        setenv subtest_exclude_list "$subtest_exclude_list truncate_hasht"
+	setenv subtest_exclude_list "$subtest_exclude_list truncate_hasht"
 endif
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
