@@ -39,6 +39,19 @@ Validate Receiver log for Online Rollback
 %YDB-S-JNLSUCCESS, Rollback successful
 ###################################################################
 Check syslog for Online Rollback messages from both primary and secondary sides
+Check syslog for ORLBKROLLED messages indicating the logical state changes in the database
+Prior to GT.M V7.1-002, these messages would not be emitted.
+Run [grep ORLBKROLLED orlbksyslog.txt | grep "$gtm_tst_out" | sed 's/^.*\(%YDB-W-ORLBKROLLED.*\)$/\1/' | sort]
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE1 region AREG corresponding to ##TEST_PATH##/a.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE1 region BREG corresponding to ##TEST_PATH##/b.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE1 region CREG corresponding to ##TEST_PATH##/c.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE1 region DEFAULT corresponding to ##TEST_PATH##/mumps.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE1 region DREG corresponding to ##TEST_PATH##/d.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE2 region AREG corresponding to .*/instance2/a.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE2 region BREG corresponding to .*/instance2/b.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE2 region CREG corresponding to .*/instance2/c.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE2 region DEFAULT corresponding to .*/instance2/mumps.dat to a prior state -- generated from 0x[0-9A-F]*.
+##TEST_AWK%YDB-W-ORLBKROLLED, ONLINE ROLLBACK took the database for instance INSTANCE2 region DREG corresponding to .*/instance2/d.dat to a prior state -- generated from 0x[0-9A-F]*.
 online rollback syslog report complete
 ###################################################################
 Validate the combined logs for Online Rollback

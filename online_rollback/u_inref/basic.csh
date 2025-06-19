@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,6 +66,10 @@ $tst_awk -f $gtm_tst/$tst/inref/checkoutput.awk rollseqno=$roll_seqno jnlseqno=$
 $echoline
 echo "Check syslog for Online Rollback messages from both primary and secondary sides"
 $gtm_tst/com/getoper.csh "$ts1" "" orlbksyslog.txt "" "ORLBKCMPLT.*${PWD:h:h:t}"
+echo "Check syslog for ORLBKROLLED messages indicating the logical state changes in the database"
+echo "Prior to GT.M V7.1-002, these messages would not be emitted."
+echo 'Run [grep ORLBKROLLED orlbksyslog.txt | grep "$gtm_tst_out" | sed '"'s/^.*\(%YDB-W-ORLBKROLLED.*\)"'$'"/\\1/' | sort]"
+grep ORLBKROLLED orlbksyslog.txt | grep "$gtm_tst_out" | sed 's/^.*\(%YDB-W-ORLBKROLLED.*\)$/\1/' | sort
 # expect STARTs and STOPs from the primary and secondary sides
 $tst_awk -f $gtm_tst/$tst/inref/orlbksyslogreport.awk td="${PWD:h:h:t}" checknostop=1 orlbksyslog.txt
 
