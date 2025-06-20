@@ -1267,6 +1267,9 @@ if (0 != $ydb_test_4g_db_blks) then
 	# as that can result in bigger files than the original files (gzip does not handle sparse files well).
 	# Therefore set the env var that is enabled as if this test was submitted using "gtmtest.csh -nozip".
 	setenv test_dont_zip
+	# Also add this to "settings.csh" so -replay test run will have this env var set
+	echo "# test_dont_zip env var set because of non-zero ydb_test_4g_db_blks env var"	>>&! $settingsfile
+	echo "setenv test_dont_zip 1"								>>&! $settingsfile
 endif
 
 setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
