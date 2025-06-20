@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -460,6 +460,14 @@ testI() {
 	# Beginning of test setup code
 	testNum=24 # keep track of what number directory to move things to
 	testCaseNum=test$testNum
+
+	# Subtest B below has been seen to fail with a "%SYSTEM-E-ENO12, Cannot allocate memory" error from mmap()
+	# if the "ydb_test_4g_db_blks" env var is set to a non-zero value. This is not surprising since the YDBJNLF
+	# region (created by ydb_env_set) has MM access method and "com/do_random_settings.csh" sets this env var
+	# to 0 in case of MM access method for that exact same reason. Therefore, set this env var to 0 for at least
+	# this particular stage of the test to avoid such errors.
+	export ydb_test_4g_db_blks=0
+
 	mkdir $testCaseNum
 	ls -1 > filesA.list # make a list of all files that exist before the test starts
 	old_gtmroutines=$gtmroutines
