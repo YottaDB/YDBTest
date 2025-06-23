@@ -138,8 +138,10 @@ COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
 # Otherwise build_and_install_yottadb.csh script will fail.
 COPY docker/serverconf.txt /usr/library/gtm_test/T999/docker/serverconf.txt
 COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
+
 # build_and_install_yottadb.csh <folder in /usr/library> <git tag in YDB> <dbg/pro>
-RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71000 V7.1-000 pro
+# GT.M version we are currently developing against
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71003 V7.1-003 pro
 
 # v6 DB
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 pro
