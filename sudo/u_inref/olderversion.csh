@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,6 +42,23 @@ foreach mode ("M" "UTF-8")
 		endif
 		echo "# $dir"
 		setenv ydb_dist $PWD/$dir
+		# Note that at this point "ydb_routines" and "gtmroutines" env vars are unset.
+		# This means $zroutines will be set to $ydb_dist/libyottadbutil.so at process startup.
+		if (`where execstack` != "") then
+			# "execstack" utility/command is installed on this system.
+			# Use it to mark $ydb_dist/libyottadbutil.so as not requiring executable stack.
+			# This is because libyottadbutil.so before r2.04 did not clear this bit explicitly
+			# and that meant Ubuntu 25.04 considered that case as requiring executable stack
+			# resulting in a DLLNOOPEN error.
+			if ("M" == $mode) then
+				# libyottadbutil.so used will be under $ydb_dist
+				set subdir = ""
+			else
+				# libyottadbutil.so used will be under $ydb_dist/utf8
+				set subdir = "utf8/"
+			endif
+			$sudostr execstack --clear-execstack $ydb_dist/${subdir}libyottadbutil.so
+		endif
 		$ydb_dist/yottadb -run %XCMD 'zwrite $zroutines,$zchset,$zyrelease'
 	end
 end
