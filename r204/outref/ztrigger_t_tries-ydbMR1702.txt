@@ -1,0 +1,20 @@
+# Test YDB!1702 : $ztrigger("item") clears t_tries in case of errors
+# Run dbcreate.csh
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [mumps -run ydbMR1702]
+## See commit message of YDB@1df7180b0 for test case details
+No matching triggers found for deletion
+# Add a trigger named a1Added SET trigger on ^a named a1
+# Attempt to add another trigger named a1. Expect a [trigger named a1 already exists] error.Error : SET trigger on ^a not added as another trigger named a1 already exists
+# Verify that t_tries is not 3 at this point by concurrently running [dse crit -seize]
+# And trying to run [$ztrigger("select")]# Before YDB@1df7180b0, this would hang. After that, it would run without any hang (expected behavior)
+;trigger name: a1 (region DEFAULT)  cycle: 1
++^a(1) -name=a1 -commands=S -xecute="w 123"
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

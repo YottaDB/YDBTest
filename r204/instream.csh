@@ -18,7 +18,8 @@
 # mureorgupgrade-ydb1027	 [jon]	Test 2 MUPIP REORG -UPGRADE test cases for YDB#1027
 # remove_stpmove-ydb1673	 [jon]	Test remove unnecessary stp_move() call when linking multiple copies of same routine
 # stp_gcol_nosort-ydb1145	 [nars]	Test VIEW "STP_GCOL_NOSORT", $VIEW("STP_GCOL_NOSORT"), $VIEW("SPSIZESORT") and ydb_stp_gcol_nosort
-# encode_decode_simpleapi-ydb474 [bdw,david]	Tests ydb_encode_s(), ydb_decode_s(), and their threaded variants
+# encode_decode_simpleapi-ydb474 [bdw,david] Test ydb_encode_s(), ydb_decode_s(), and their threaded variants
+# ztrigger_t_tries-ydbMR1702     [nars] Test $ztrigger("item") clears t_tries in case of errors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -39,6 +40,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mureorgupgrade-ydb1027"
 setenv subtest_list_non_replic	"$subtest_list_non_replic remove_stpmove-ydb1673"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_nosort-ydb1145"
 setenv subtest_list_non_replic	"$subtest_list_non_replic encode_decode_simpleapi-ydb474"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_t_tries-ydbMR1702"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
