@@ -22,3 +22,8 @@ YDB>
 YDB>
 
 YDB>
+# Test 3: Test $ztrigger with gtmgbldir pointing to non-existent global directory does not assert fail
+# This is a test of YDB@955add16d. We expect to see a ZGBLDIRACC error below.
+# In r2.00 and r2.02, we used to see an assert failure in op_trollback.c.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/nonexist.gld.  Cannot continue.
+%SYSTEM-E-ENO2, No such file or directory

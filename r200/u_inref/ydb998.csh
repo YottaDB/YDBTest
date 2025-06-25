@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,3 +26,10 @@ tstart ()
 set ^|"mumps.gld"|x=1
 tcommit
 GTM_EOF
+
+echo '# Test 3: Test $ztrigger with gtmgbldir pointing to non-existent global directory does not assert fail'
+echo '# This is a test of YDB@955add16d. We expect to see a ZGBLDIRACC error below.'
+echo '# In r2.00 and r2.02, we used to see an assert failure in op_trollback.c.'
+setenv gtmgbldir nonexist.gld
+$gtm_dist/mumps -run %XCMD 'set x=$ztrigger("item","-*")'
+
