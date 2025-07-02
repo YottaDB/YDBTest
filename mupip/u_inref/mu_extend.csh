@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -53,8 +53,8 @@ $MUPIP EXTEND FREELUNCH -BLOCKS=400
 #
 $MUPIP EXTEND DEFAULT -BLOCKS=400
 if ( $status > 0 ) then
-    echo ERROR from extend 400.
-    exit 1
+	echo ERROR from extend 400.
+	exit 1
 endif
 #
 #
@@ -67,10 +67,11 @@ bbbb
 source $gtm_tst/$tst/u_inref/check_core_file.csh "ex" "$corecnt"
 #
 #
-$MUPIP EXTEND DEFAULT
+# Region Name in Mixed cases should be accepted
+$MUPIP EXTEND Default
 if ( $status > 0 ) then
-    echo ERROR from extend default.
-    exit 2
+	echo ERROR from extend default.
+	exit 2
 endif
 #
 #

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,7 +30,7 @@ setenv test_reorg NON_REORG
 setenv gtmgbldir "./create.gld"
 #
 if (-f tempcr.com) then
-    \rm tempcr.com
+	\rm tempcr.com
 endif
 #
 echo "change -segment DEFAULT -file=create" >!  tempcr.com
@@ -48,7 +51,7 @@ $convert_to_gtm_chset tempcr.com
 $GDE @tempcr.com
 #
 if("ENCRYPT" == $test_encryption) then
-        $gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
+	$gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
 endif
 echo "#"
 echo "# Create with a bad region"
@@ -57,32 +60,33 @@ $MUPIP create -region=FREELUNCH
 #
 $MUPIP create -region=REG1
 if ($status > 0) then
-    echo "ERROR from mupip create with region qualifier."
-    exit 1
+	echo "ERROR from mupip create with region qualifier."
+	exit 1
 endif
 if (!(-f create1.dat)) then
-    echo "create1.dat was not created."
-    exit 2
+	echo "create1.dat was not created."
+	exit 2
 endif
 #
-$MUPIP create -region=REG2
+# Region Name in Mixed cases should be accepted
+$MUPIP create -region=Reg2
 if ($status > 0) then
-    echo "ERROR from mupip create with region qualifier."
-    exit 3
+	echo "ERROR from mupip create with region qualifier."
+	exit 3
 endif
 if (!(-f create2.dat)) then
-    echo "create2.dat was not created."
-    exit 4
+	echo "create2.dat was not created."
+	exit 4
 endif
 #
 $MUPIP create
 if ($status == 0) then
-    echo "ERROR from mupip create with region qualifier."
-    exit 5
+	echo "ERROR from mupip create with region qualifier."
+	exit 5
 endif
 if (!(-f create.dat)) then
-    echo "create.dat was not created."
-    exit 6
+	echo "create.dat was not created."
+	exit 6
 endif
 #
 $gtm_exe/mumps -run %XCMD 'do fill1^myfill("set")'

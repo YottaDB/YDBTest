@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,7 +42,7 @@ EOF
 set verbose
 $MUPIP reorg -region "*"
 $MUPIP reorg -region AREG			# error expected
-$MUPIP reorg -region DEFAULT
+$MUPIP reorg -region Default			# Region Name in Mixed cases should be accepted
 $MUPIP reorg -region CREG
 unset verbose
 

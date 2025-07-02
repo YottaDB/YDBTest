@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -70,7 +70,8 @@ $MUPIP dumpfhead -reg "BREG,AREG" >& dumpfhead_2.out ; grep "Fileheader dump of 
 echo ""
 echo "# Run MUPIP Dumpfhead of database files in a specific order where 3 regions are explicitly specified."
 echo "# Expect CREG,AREG,BREG"
-$MUPIP dumpfhead -reg "CREG,AREG,BREG" >& dumpfhead_3.out ; grep "Fileheader dump of region" dumpfhead_3.out
+# Region Name in Mixed cases should be accepted
+$MUPIP dumpfhead -reg "Creg,areG,breg" >& dumpfhead_3.out ; grep "Fileheader dump of region" dumpfhead_3.out
 echo ""
 echo '# Run MUPIP Dumpfhead of database files in a wildcard ("*REG")'
 echo "# Expect AREG,BREG,CREG,DREG"
