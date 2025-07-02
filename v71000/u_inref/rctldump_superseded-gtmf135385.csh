@@ -34,16 +34,25 @@ setenv gtmroutines "obj*(src) $gtmroutines"
 echo ''
 echo '# Generate the first test routine version in src/gtmf135385.m'
 echo 'runTest write $zroutines set $ZINTERRUPT="zhalt 1" for i=1:1  hang 1' > src/gtmf135385.m
-echo '# Run the first version of the test routine in the background and capture the PID in gtmf135385-v1.pid'
-($gtm_exe/mumps -run runTest^gtmf135385 & ; echo $! >&! gtmf135385-v1.pid) >&! gtmf135385-v1.out
-set v1PID = `cat gtmf135385-v1.pid`
+echo '# Precompile src/gtmf135385.m into src/gtmf135385.o to ensure compilation completes before new routine'
+echo '#   versions are compiled in the loop below. This is done to prevent a rare failure case where the above'
+echo '#   version of the routine completes compilation after a subsequent version of the routine is compiled in'
+echo '#   the below foreach loop. In that case, the above M code will execute more than once, causing multiple'
+echo '#   mumps processes to hang indefinitely. In turn, this will prevent the below `foreach` loop from exiting'
+echo '#   causing the test to hang indefinitely and thus to fail with a test execution timeout.'
+cd obj
+$gtm_exe/mumps ../src/gtmf135385.m
+cd ..
+echo '# Run the first version of the test routine in the background and capture the PID in gtmf135385-v0.pid'
+($gtm_exe/mumps -run runTest^gtmf135385 & ; echo $! >&! gtmf135385-v0.pid) >&! gtmf135385-v0.out
+set v0PID = `cat gtmf135385-v0.pid`
 echo '# Wait up to 300 seconds for backgrounded mumps process to start'
 set max_wait = 3000
-$gtm_tst/com/is_proc_alive.csh $v1PID
+$gtm_tst/com/is_proc_alive.csh $v0PID
 while ((1 == $status) && ($max_wait > 0))
 	sleep 0.1
 	@ max_wait = $max_wait - 1
-	$gtm_tst/com/is_proc_alive.csh $v1PID
+	$gtm_tst/com/is_proc_alive.csh $v0PID
 end
 echo '# Run MUPIP RCTLDUMP to get the initial `superseded` value'
 $gtm_exe/mupip rctldump >& rctldump.out
@@ -59,6 +68,6 @@ echo ''
 echo '# Check if `superseded` values are present and incremented in the output from the preceding MUPIP RCTLDUMP calls'
 cat rctldump.out | grep 'superseded:' | sed 's/\(.*\)objhash: [a-z0-9]*  numvers: [0-9]*  objlen: [a-z0-9]*  shmlen: [a-z0-9]*/\1objhash: HASH  numvers: NUM  objlen: LEN shmlen: LEN/g'
 echo '# Terminate the initial test process using MUPIP INTRPT'
-$gtm_exe/mupip intrpt $v1PID >>& gtmf135385-v1.out
+$gtm_exe/mupip intrpt $v0PID >>& gtmf135385-v0.out
 echo '# Wait for the initial test process to die using wait_for_proc_to_die.csh'
-$gtm_tst/com/wait_for_proc_to_die.csh $v1PID
+$gtm_tst/com/wait_for_proc_to_die.csh $v0PID

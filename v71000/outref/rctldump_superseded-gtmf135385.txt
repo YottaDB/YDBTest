@@ -11,7 +11,13 @@
 # Set gtmroutines to use routine directories with autorelink enabled
 
 # Generate the first test routine version in src/gtmf135385.m
-# Run the first version of the test routine in the background and capture the PID in gtmf135385-v1.pid
+# Precompile src/gtmf135385.m into src/gtmf135385.o to ensure compilation completes before new routine
+#   versions are compiled in the loop below. This is done to prevent a rare failure case where the above
+#   version of the routine completes compilation after a subsequent version of the routine is compiled in
+#   the below foreach loop. In that case, the above M code will execute more than once, causing multiple
+#   mumps processes to hang indefinitely. In turn, this will prevent the below `foreach` loop from exiting
+#   causing the test to hang indefinitely and thus to fail with a test execution timeout.
+# Run the first version of the test routine in the background and capture the PID in gtmf135385-v0.pid
 # Wait up to 300 seconds for backgrounded mumps process to start
 # Run MUPIP RCTLDUMP to get the initial `superseded` value
 
