@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,8 @@ echo
 echo '# Create database'
 # Keep small values of allocation/extension as that greatly increases the chances of DEXA and AFRA statistic being non-zero,
 # something the test expects. We have seen occasional failures where DEXA/AFRA were 0 with default allocation/extension.
-$gtm_tst/com/dbcreate.csh mumps -allocation=50 -extension_count=5
+# Keep global buffers at minimum of 64 to induce non-zero value of BREA. See comment in v70001/inref/gtm9422.m for more details.
+$gtm_tst/com/dbcreate.csh mumps -allocation=50 -extension_count=5 -global_buffer_count=64
 echo
 echo '# Enable stat sharing'
 $MUPIP set -stats -region "*"

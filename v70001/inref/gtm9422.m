@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -84,7 +84,7 @@ gtm9422
 	; Print final failure/success message (see if all our monitored stats had a non-zero event)
 	;
 	set seenIncrementedStats=1
-	for i=1:1:$zlength(statIncrementeds,",") do	; Check all stats so we mention any that were always zero
+	for i=1:1:$zlength(statIncrementeds,",") do	 ; Check all stats so we mention any that were always zero
 	. set stat=$zpiece(statIncrementeds,",",i)
 	. if 0=$get(statIncremented(stat),0) do
 	. . set seenIncrementedStats=0
@@ -109,6 +109,13 @@ workerBee
 	. lock ^a(1)
 	. set ^a(1)=^a(1)+1
 	. lock
+	. ;
+	. ; The merge done below (with ^a as the RHS) is needed to induce non-zero value of BREA (which the test expects).
+	. ; It will cause a disk read of all blocks of ^a and with the minimum global buffers (64) set in the caller script
+	. ; dbcreate.csh call, this should cause reads of ^a from disk since ^a will over the course of this test occupy
+	. ; 4x or 5x times the number of blocks than the 64 global buffers can hold.
+	. kill twin merge twin=^a
+	. ;
 	. tstart ():(serial:transaction="BATCH")	; Use batch transactions for better throughput to see non-zero stats
 	. for j=1:1:25 set ^a(tr,$job,j)=$justify(j,10)
 	. tcommit
