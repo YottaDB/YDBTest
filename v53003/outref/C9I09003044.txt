@@ -234,64 +234,64 @@ YDB>
 # 3) Test that DSE DUMP -FILE -ALL outputs the gvstats in same order as $VIEW("GVSTATS") except for CTN.
 Region	AREG
 Region          AREG
-##TEST_AWK  SET : # of SET   operations                   0x.*
-  KIL : # of KILl  operations                   0x0000000000000028
-##TEST_AWK  GET : # of GET   operations                   0x.*
-  DTA : # of DaTA  operations                   0x0000000000000069
-  ORD : # of ORDer operations                   0x0000000000000040
-  ZPR : # of ZPRevious operations               0x0000000000000049
-  QRY : # of QueRY operations                   0x000000000000001B
-  LKS : # of LocK calls that Succeeded          0x0000000000000001
+##TEST_AWK  SET  : # of SET   operations                   0x.*
+  KIL  : # of KILl  operations                   0x0000000000000028
+##TEST_AWK  GET  : # of GET   operations                   0x.*
+  DTA  : # of DaTA  operations                   0x0000000000000069
+  ORD  : # of ORDer operations                   0x0000000000000040
+  ZPR  : # of ZPRevious operations               0x0000000000000049
+  QRY  : # of QueRY operations                   0x000000000000001B
+  LKS  : # of LocK calls that Succeeded          0x0000000000000001
 ##SUSPEND_OUTPUT  MM
-  DRD : # of Disk ReaDs from database file      0x0000000000000003
-##TEST_AWK  DWT : # of Disk WriTes to database file       0x.*
+  DRD  : # of Disk ReaDs from database file      0x0000000000000003
+##TEST_AWK  DWT  : # of Disk WriTes to database file       0x.*
 ##ALLOW_OUTPUT  MM
-  NTW : # of Non-tp Tns that were read-Write    0x000000000000006F
-  NTR : # of Non-tp Tns that were Read-only     0x000000000000014F
-  NBW : # of Non-tp induced Block Writes        0x0000000000000074
-  NBR : # of Non-tp induced Block Reads         0x000000000000039A
-  TTW : # of Tp Tns that were read-Write        0x00000000000000E3
-  TTR : # of Tp Tns that were Read-only         0x0000000000000114
-  TBW : # of Tp induced Block Writes            0x00000000000000EC
-  TBR : # of Tp induced Block Reads             0x00000000000003F5
+  NTW  : # of Non-tp Tns that were read-Write    0x000000000000006F
+  NTR  : # of Non-tp Tns that were Read-only     0x000000000000014F
+  NBW  : # of Non-tp induced Block Writes        0x0000000000000074
+  NBR  : # of Non-tp induced Block Reads         0x000000000000039A
+  TTW  : # of Tp Tns that were read-Write        0x00000000000000E3
+  TTR  : # of Tp Tns that were Read-only         0x0000000000000114
+  TBW  : # of Tp induced Block Writes            0x00000000000000EC
+  TBR  : # of Tp induced Block Reads             0x00000000000003F5
 ##SUSPEND_OUTPUT  MM
-##TEST_AWK  BTD : # of Block Transitions to Dirty         0x.*
+##TEST_AWK  BTD  : # of Block Transitions to Dirty         0x.*
 ##ALLOW_OUTPUT  MM
 Region	DEFAULT
 Region          DEFAULT
 ##TEST_AWK  SET . . of SET   operations                   0x.*
-  KIL : # of KILl  operations                   0x000000000000000B
+  KIL  : # of KILl  operations                   0x000000000000000B
 ##TEST_AWK  GET . . of GET   operations                   0x.*
-  DTA : # of DaTA  operations                   0x0000000000000008
-  ORD : # of ORDer operations                   0x0000000000000008
-  ZPR : # of ZPRevious operations               0x0000000000000008
-  QRY : # of QueRY operations                   0x0000000000000002
+  DTA  : # of DaTA  operations                   0x0000000000000008
+  ORD  : # of ORDer operations                   0x0000000000000008
+  ZPR  : # of ZPRevious operations               0x0000000000000008
+  QRY  : # of QueRY operations                   0x0000000000000002
 ##TEST_AWK  LKS . . of LocK calls that Succeeded          0x.*
 ##TEST_AWK  LKF . . of LocK calls that Failed             0x.*
 ##SUSPEND_OUTPUT  MM
-  DRD : # of Disk ReaDs from database file      0x0000000000000003
-##TEST_AWK  DWT : # of Disk WriTes to database file       0x.*
+  DRD  : # of Disk ReaDs from database file      0x0000000000000003
+##TEST_AWK  DWT  : # of Disk WriTes to database file       0x.*
 ##ALLOW_OUTPUT  MM
-##TEST_AWK  NTW : # of Non-tp Tns that were read-Write    0x.*
-##TEST_AWK  NTR : # of Non-tp Tns that were Read-only     0x.*
-##TEST_AWK  NBW : # of Non-tp induced Block Writes        0x.*
-##TEST_AWK  NBR : # of Non-tp induced Block Reads         0x.*
-##TEST_AWK  NR0 : # of Non-tp Retries .0.                 0x.*
-##TEST_AWK  NR1 : # of Non-tp Retries .1.                 0x.*
-##TEST_AWK  NR2 : # of Non-tp Retries .2.                 0x.*
-##TEST_AWK  TTW : # of Tp Tns that were read-Write        0x.*
-  TTR : # of Tp Tns that were Read-only         0x0000000000000012
-  TRB : # of Tp tns that were Rolled Back       0x0000000000000002
-##TEST_AWK  TBW : # of Tp induced Block Writes            0x.*
-##TEST_AWK  TBR : # of Tp induced Block Reads             0x.*
-##TEST_AWK  TR0 : # of Tp total Retries .0.               0x.*
-##TEST_AWK  TR1 : # of Tp total Retries .1.               0x.*
-##TEST_AWK  TR2 : # of Tp total Retries .2.               0x.*
-##TEST_AWK  TC0 : # of Tp Conflict retries .0.            0x.*
-##TEST_AWK  TC1 : # of Tp Conflict retries .1.            0x.*
-##TEST_AWK  TC2 : # of Tp Conflict retries .2.            0x.*
+##TEST_AWK  NTW  : # of Non-tp Tns that were read-Write    0x.*
+##TEST_AWK  NTR  : # of Non-tp Tns that were Read-only     0x.*
+##TEST_AWK  NBW  : # of Non-tp induced Block Writes        0x.*
+##TEST_AWK  NBR  : # of Non-tp induced Block Reads         0x.*
+##TEST_AWK  NR0  : # of Non-tp Retries .0.                 0x.*
+##TEST_AWK  NR1  : # of Non-tp Retries .1.                 0x.*
+##TEST_AWK  NR2  : # of Non-tp Retries .2.                 0x.*
+##TEST_AWK  TTW  : # of Tp Tns that were read-Write        0x.*
+  TTR  : # of Tp Tns that were Read-only         0x0000000000000012
+  TRB  : # of Tp tns that were Rolled Back       0x0000000000000002
+##TEST_AWK  TBW  : # of Tp induced Block Writes            0x.*
+##TEST_AWK  TBR  : # of Tp induced Block Reads             0x.*
+##TEST_AWK  TR0  : # of Tp total Retries .0.               0x.*
+##TEST_AWK  TR1  : # of Tp total Retries .1.               0x.*
+##TEST_AWK  TR2  : # of Tp total Retries .2.               0x.*
+##TEST_AWK  TC0  : # of Tp Conflict retries .0.            0x.*
+##TEST_AWK  TC1  : # of Tp Conflict retries .1.            0x.*
+##TEST_AWK  TC2  : # of Tp Conflict retries .2.            0x.*
 ##SUSPEND_OUTPUT  MM
-##TEST_AWK  BTD : # of Block Transitions to Dirty         0x.*
+##TEST_AWK  BTD  : # of Block Transitions to Dirty         0x.*
 ##ALLOW_OUTPUT  MM
 # 7) Test that MUPIP ENDIANCVT preserves the global statistics as part of endian converting the database file.
 ##FILTERED##%YDB-I-ENDIANCVT, Converted database file a.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system

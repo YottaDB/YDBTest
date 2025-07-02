@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -73,30 +73,30 @@ test1ex	;
 	; ------------------------------------------------------------
 	; Ensure following counters get non-zero values
 	; ------------------------------------------------------------
-	; SET : # of SET   operations (tp and non-tp)
-	; KIL : # of KILl  operations (kill as well as zwithdraw, tp and non-tp)
-	; GET : # of GET   operations (tp and non-tp)
-	; DTA : # of DaTA  operations (tp and non-tp)
-	; ORD : # of ORDer operations (tp and non-tp)
-	; ZPR : # of ZPRevious (reverse order) operations (tp and non-tp)
-	; QRY : # of QueRY operations (tp and non-tp)
-	; NTW : # of Non-tp committed Transactions that were read-Write on this database
-	; NTR : # of Non-tp committed Transactions that were Read-only on this database
-	; TTW : # of Tp committed Transactions that were read-Write on this database
-	; TTR : # of Tp committed Transactions that were Read-only on this database
+	; SET  : # of SET   operations (tp and non-tp)
+	; KIL  : # of KILl  operations (kill as well as zwithdraw, tp and non-tp)
+	; GET  : # of GET   operations (tp and non-tp)
+	; DTA  : # of DaTA  operations (tp and non-tp)
+	; ORD  : # of ORDer operations (tp and non-tp)
+	; ZPR  : # of ZPRevious (reverse order) operations (tp and non-tp)
+	; QRY  : # of QueRY operations (tp and non-tp)
+	; NTW  : # of Non-tp committed Transactions that were read-Write on this database
+	; NTR  : # of Non-tp committed Transactions that were Read-only on this database
+	; TTW  : # of Tp committed Transactions that were read-Write on this database
+	; TTR  : # of Tp committed Transactions that were Read-only on this database
 	;
 	; Note the following points from the spec
 	; -----------------------------------------
 	; $Order(xxx,1) operations get recorded under the ORD category while $Order(xxx,-1) operations get recorded under ZPR.
 	;
 	; The following counters should have non-zero values and are automatically tested by the below db operations.
-	; CTN : Current Transaction Number of the database for the last committed read-write transaction (tp or non-tp)
-	; DRD : # of Disk ReaDs from the database file by this process (tp and non-tp, committed and rolled-back)
-	; DWT : # of Disk WriTes to the database file by this process (tp and non-tp, committed and rolled-back)
-	; NBW : # of Non-tp committed transaction induced Block Writes on this database
-	; NBR : # of Non-tp committed transaction induced Block Reads on this database
-	; TBW : # of Tp transaction induced Block Writes on this database
-	; TBR : # of Tp transaction induced Block Reads on this database
+	; CTN  : Current Transaction Number of the database for the last committed read-write transaction (tp or non-tp)
+	; DRD  : # of Disk ReaDs from the database file by this process (tp and non-tp, committed and rolled-back)
+	; DWT  : # of Disk WriTes to the database file by this process (tp and non-tp, committed and rolled-back)
+	; NBW  : # of Non-tp committed transaction induced Block Writes on this database
+	; NBR  : # of Non-tp committed transaction induced Block Reads on this database
+	; TBW  : # of Tp transaction induced Block Writes on this database
+	; TBR  : # of Tp transaction induced Block Reads on this database
 	;
 	; The following line from the func spec is also automatically tested by the ZSHOW "G" below.
 	; The aggregated statistics line in the ZSHOW "G" output (GLD:*,REG:* line) will always have the value for the CTN

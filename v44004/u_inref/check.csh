@@ -1,4 +1,19 @@
-#!/usr/local/bin/tcsh
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # dbcreate.csh called by callers.
 if (! $?count) setenv count 1
 set echoline = "echo ---------------------------------------------------------------"
@@ -99,7 +114,7 @@ if (! $status) then
 	$echoline
 endif
 # Search for GVSTAT information
-$grep -E "Region| SET : # of | GET : # of | NTW : # of | TTW : # of " dse_dump_file.out >! transaction.out
+$grep -E "Region| SET  : # of | GET  : # of | NTW  : # of | TTW  : # of " dse_dump_file.out >! transaction.out
 cat transaction.out >>! $outfile
 
 echo "TEST-I-OUTPUT, Relevant information is in $outfile"

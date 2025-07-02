@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #								#
 #################################################################
 
-setenv check_all "DFL :|DFS :|JFL :|JFS :|JBB :|JFB :|JFW :|JRL :|JRP :|JRE :|JRO :|JRI :|JEX :|DEX :"
+setenv check_all "DFL  :|DFS  :|JFL  :|JFS  :|JBB  :|JFB  :|JFW  :|JRL  :|JRP  :|JRE  :|JRO  :|JRI  :|JEX  :|DEX  :"
 alias stats 	'$DSE dump -file -gvstats |& tee -a dse.\!:1 | $grep -E "$check_all" >& \!:1'
 alias mask 	"sed 's/0x................/0x##MASKED##/'"
 alias resetstat '$DSE change -file -gvstatsreset >>& reset_stats.out ; if ($status) echo "gvststsreset FAILED"'
@@ -72,35 +72,35 @@ cat << EOF
 EOF
 
 cat >> jnl_before.stat << jnlstat_EOF
-  DFL : # of Database FLushes                   0x##MASKED##
-  DFS : # of Database FSyncs                    0x0000000000000001
-  JFL : # of Journal FLushes                    0x0000000000000002
-  JFS : # of Journal FSyncs                     0x0000000000000004
-  JBB : # of Bytes written to Journal Buffer    0x##MASKED##
-  JFB : # of Bytes written to Journal File      0x##MASKED##
-  JFW : # of Journal File Writes                0x000000000000000.
-  JRL : # of Logical Journal Records            0x0000000000000001
-  JRP : # of Pblk Journal Records               0x0000000000000002
-  JRE : # of Regular Epoch Journal Records      0x0000000000000001
-  JRO : # of Other Journal Records              0x0000000000000003
+  DFL  : # of Database FLushes                   0x##MASKED##
+  DFS  : # of Database FSyncs                    0x0000000000000001
+  JFL  : # of Journal FLushes                    0x0000000000000002
+  JFS  : # of Journal FSyncs                     0x0000000000000004
+  JBB  : # of Bytes written to Journal Buffer    0x##MASKED##
+  JFB  : # of Bytes written to Journal File      0x##MASKED##
+  JFW  : # of Journal File Writes                0x000000000000000.
+  JRL  : # of Logical Journal Records            0x0000000000000001
+  JRP  : # of Pblk Journal Records               0x0000000000000002
+  JRE  : # of Regular Epoch Journal Records      0x0000000000000001
+  JRO  : # of Other Journal Records              0x0000000000000003
 jnlstat_EOF
 
 
 cat >> jnl_nobefore.stat << jnlstat_EOF
-  DFL : # of Database FLushes                   0x##MASKED##
-  JFL : # of Journal FLushes                    0x0000000000000002
-  JFS : # of Journal FSyncs                     0x0000000000000004
-  JBB : # of Bytes written to Journal Buffer    0x##MASKED##
-  JFB : # of Bytes written to Journal File      0x##MASKED##
-  JFW : # of Journal File Writes                0x000000000000000.
-  JRL : # of Logical Journal Records            0x0000000000000001
-  JRE : # of Regular Epoch Journal Records      0x0000000000000001
-  JRO : # of Other Journal Records              0x0000000000000003
+  DFL  : # of Database FLushes                   0x##MASKED##
+  JFL  : # of Journal FLushes                    0x0000000000000002
+  JFS  : # of Journal FSyncs                     0x0000000000000004
+  JBB  : # of Bytes written to Journal Buffer    0x##MASKED##
+  JFB  : # of Bytes written to Journal File      0x##MASKED##
+  JFW  : # of Journal File Writes                0x000000000000000.
+  JRL  : # of Logical Journal Records            0x0000000000000001
+  JRE  : # of Regular Epoch Journal Records      0x0000000000000001
+  JRO  : # of Other Journal Records              0x0000000000000003
 jnlstat_EOF
 
 $gtm_exe/mumps -run %XCMD 's ^a=1'
 stats 1update.out
-$tst_awk ' {if ($0 ~ /DFL : |JBB :|JFB :/) {sub("0x.*","0x##MASKED##")} ; if ($0 ~ /JFW :/) {sub("000[3-9]","000.")} ; print}' 1update.out >&! 1update_filtered.out
+$tst_awk ' {if ($0 ~ /DFL  : |JBB  :|JFB  :/) {sub("0x.*","0x##MASKED##")} ; if ($0 ~ /JFW  :/) {sub("000[3-9]","000.")} ; print}' 1update.out >&! 1update_filtered.out
 diff 1update_filtered.out jnl_{$b4nob4}.stat
 
 # second set of updates

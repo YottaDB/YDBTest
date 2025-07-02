@@ -23,13 +23,13 @@ AREG: 64
 # When Block 0 is read for the second time, it has to be read from disk and overwrites
 # the next oldest global buffer position, which is Block 1.
 # When Block 1 is read for the second time, it follows this pattern, and so on.
-  DRD : # of Disk ReaDs from database file      0x0000000000000042
+  DRD  : # of Disk ReaDs from database file      0x0000000000000042
 
 # With ydb_poollimit set to 33, DRD value should be 0x21 (33 in decimal)
 # With POOLLIMIT set to 33, the DSE process will read the first 33 Blocks from disk
 # and write into the global buffer cache, which has 33 spaces. Since the last 33
 # Blocks are duplicate, each remaining read block request does not need to read
 # from disk, and can instead read from the global buffer cache
-  DRD : # of Disk ReaDs from database file      0x0000000000000021
+  DRD  : # of Disk ReaDs from database file      0x0000000000000021
 
 # Check database
