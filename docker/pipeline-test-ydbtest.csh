@@ -25,7 +25,8 @@ else
 endif
 
 echo "ydbtest_branch: $ydbtest_branch"
-curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=opened" > ydb_open_mrs.json
+# Get the last 20 MRs (open/closed/merged) in reverse chronological order
+curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=all" > ydb_open_mrs.json
 set ydb_branches = `jq -r '.[].source_branch' ydb_open_mrs.json`
 echo "ydb_branches: $ydb_branches"
 
