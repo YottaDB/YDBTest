@@ -1,0 +1,37 @@
+# ********************************************************************************************
+# GTM-DE201175 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE201175)
+# 
+# The Source and Receiver Servers start appropriately when input is redirected from /dev/null. Previously, FIS recommended starting the Source Server with input redirected from /dev/null to workaround GTM-8576. GT.M V6.3-004 included a fix for GTM-8576 that resulted in the workaround causing the Source Server to fail, so the workaround was to not use the obsolete workaround. (GTM-DE201175)
+# 
+
+# Create a 1 region DB with gbl_dir mumps.gld and region DEFAULT
+# Configure replication
+# Create a replication instance
+# Start replication on source and receiver servers with input redirect from /dev/null
+# Shutdown the source server in case it is still running (expected in passing case)
+# Start the source server to ensure there is a JNLPOOL for the receiver
+##TEST_AWK.* : Initiating START of source server for secondary instance \[INSTANCE1\]
+# Expect no %GTM-E-TCSETATTR or %SYSTEM-E-ENO25 errors from the source or receiver server logs (source.log and receive.log).
+# Prior to V7.1-003 and after V6.3-004, these errors would be issued.
+##TEST_AWK.* : ##SOURCE_REALPATH##/mupip replicate -source -start -passive -instsecondary=INSTANCE1 -buffsize=1048576 -log=source.log
+##TEST_AWK.* : %GTM-I-REPLINFO, GTM Replication Source Server with Pid \[[0-9]+\] started for Secondary Instance \[INSTANCE1\]
+##TEST_AWK.* : Created jnlpool with shmid = \[[0-9]+\] and semid = \[[0-9]+\]
+##TEST_AWK.* : %GTM-I-REPLINFO, GTM Replication Source Server Shutdown signalled
+##TEST_AWK.* : REPL INFO - Current Jnlpool Seqno : 1
+##TEST_AWK.* : REPL INFO - Last Seqno written in jnlpool : 0  Last Seqno sent : 0  Number of unsent Seqno : 0
+##TEST_AWK.* : REPL INFO - Jnl Total : 0  Msg Total : 0  CmpMsg Total : 0
+##TEST_AWK.* : Source server exiting...
+
+##TEST_AWK.* : ##SOURCE_REALPATH##/mupip replicate -source -start -passive -instsecondary=INSTANCE1 -buffsize=1048576 -log=source.log
+##TEST_AWK.* : %GTM-I-REPLINFO, GTM Replication Source Server with Pid \[[0-9]+\] started for Secondary Instance \[INSTANCE1\]
+##TEST_AWK.* : Created jnlpool with shmid = \[[0-9]+\] and semid = \[[0-9]+\]
+##TEST_AWK.* : ##SOURCE_REALPATH##/mupip replicate -receiver -start -listen=[0-9]+ -log=receive.log
+##TEST_AWK.* : %GTM-I-REPLINFO, GTM Replication Receiver Server with Pid \[[0-9]+\] started on replication instance \[mumps.repl\]
+##TEST_AWK.* : Attached to existing jnlpool with shmid = \[[0-9]+\] and semid = \[[0-9]+\]
+##TEST_AWK.* : Created recvpool with shmid = \[[0-9]+\] and semid = \[[0-9]+\]
+##TEST_AWK.* : Update Process started. PID [0-9]+ \[0x[0-9A-F]*\]
+##TEST_AWK.* : Waiting for a connection...
+# Stopping source server and receiver server
