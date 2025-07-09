@@ -1,0 +1,27 @@
+# ********************************************************************************************
+# GTM-DE540134 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE540134)
+# 
+# $STORAGE reports the difference between the current $ZREALSTOR as a subtrahend and, in order of precedence, $ZMALLOCLIM if it has a non-zero value, the process R_LIMIT if it is not unlimited or less than the current the end of the process's data segment address, and otherwise the maximum of a 32-bit address space. Previously, $STORAGE reported a large value that had little objective usefulness. (GTM-DE540134)
+# 
+
+Note that this test does not test the case when R_LIMIT is not unlimited and
+is less than the current end address of the process's data segment. This is because
+it is difficult to identify the end address of process's data segment.
+For more information, see the discussion at:
+https://gitlab.com/YottaDB/DB/YDBTest/-/issues/699#note_2629398665
+
+### Test 1: Check $STORAGE when:
+# $ZMALLOCLIM=0
+##TEST_AWK# \$ZREALSTOR=[0-9]*
+## Confirm $STORAGE=((2**31)-$ZREALSTOR-1), i.e. "the maximum of a 32-bit address space" minus $ZREALSTOR:
+##TEST_AWKPASS: \$STORAGE="[0-9]*"=\(\(2\*\*31\)-\$ZREALSTOR-1\)=\(2147483648-[0-9]*-1\)
+
+### Test 2: Check $STORAGE when:
+# $ZMALLOCLIM=5000000
+##TEST_AWK# \$ZREALSTOR=[0-9]*
+## Confirm $STORAGE=($ZMALLOCLIM-$ZREALSTOR), i.e. "$ZMALLOCLIM if it has a non-zero value" minus $ZREALSTOR:
+##TEST_AWKPASS: \$STORAGE="[0-9]*"=\(\$ZMALLOCLIM-\$ZREALSTOR\)=\(5000000-[0-9]*\)
+

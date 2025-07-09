@@ -18,6 +18,7 @@
 # noconsumer_jnlfileonly-gtmf228991	[nars]	Test no journal pool writes happen if the only source server is -JNLFILEONLY
 # jnlwritereserve_order-gtmf228991	[nars]	Test t_end() calls jnl_write_reserve() before it takes the instance lock
 # srcrecserver_redirdevnull-gtmde201175		[jon]	Test source and receivers servers start with input redirected to /dev/null
+# dollarstorage-gtmde540134	[jon]	Test $STORAGE attempts to be more useful
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -27,6 +28,7 @@ setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic noconsumer_passivesrc-gtmf228991"
 setenv subtest_list_non_replic	"$subtest_list_non_replic srcrecserver_redirdevnull-gtmde201175"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dollarstorage-gtmde540134"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"
