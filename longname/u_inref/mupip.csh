@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -192,53 +192,57 @@ $gtm_tst/com/backup_dbjnl.csh mupip1 "*.dat *.gld *.mjl* *.mjf*" mv
 endif
 # create the default gld and dat files
 $GDE <<gde_end
-   change -region default -key_size=200
-   exit
+	change -region default -key_size=200
+	exit
 gde_end
 $MUPIP create
-foreach iter (3 5 15 25 30 31)
-   set reg="A"
-   set names = ""
-   @ inner = 2
-   while ($inner <= $iter)
-	@ num = $inner % 10
-	set reg = "$reg""$num"
-	set names = "$names""A"
-	@ inner = $inner + 1
-   end
-   setenv gbl "^$names"
-   set names = "$names""*"
+# checking various different lengths for region names, 32 should error but not explode
+foreach iter (3 5 15 25 30 31 32)
+	set reg="A"
+	set names = ""
+	@ inner = 2
+	while ($inner <= $iter)
+		@ num = $inner % 10
+		set reg = "$reg""$num"
+		set names = "$names""A"
+		@ inner = $inner + 1
+	end
+	setenv gbl "^$names"
+	set names = "$names""*"
 $GDE << gde_end
-   add -name $names -reg=$reg
-   add -reg $reg -dyn=$reg -key_size=200
-   add -seg $reg -file=$reg.dat
-   exit
+	add -name $names -reg=$reg
+	add -reg $reg -dyn=$reg -key_size=200
+	add -seg $reg -file=$reg.dat
+	exit
 gde_end
 # mupip commands
-   $MUPIP create -region=$reg
-   $MUPIP extend $reg
-   $MUPIP freeze -off $reg >& freeze_$reg.out
-   $MUPIP set -journal="on,enable,before" -reg $reg
-   $GTM << gtm_end
-	set gbl=\$ztrnlnm("gbl")
-        set @gbl=1
-        set gbl=gbl_"b"
-        set @gbl=2
-        halt
+	$MUPIP create -region=$reg
+	$MUPIP extend $reg
+	$MUPIP freeze -off $reg >& freeze_$reg.out
+	$MUPIP set -journal="on,enable,before" -reg $reg
+	$GTM << gtm_end
+		set gbl=\$ztrnlnm("gbl")
+		set @gbl=1
+		set gbl=gbl_"b"
+		set @gbl=2
+		halt
 gtm_end
-   $MUPIP journal -extract=$reg.mjf -forw $reg.mjl
-   $tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' $reg.mjf
-   $MUPIP integ -reg $reg
-   $MUPIP rundown -reg $reg
-   $MUPIP backup $reg $reg.bak
+	# the previous command will fail to create a journal file when using a 32 character region, so skip the journal extract
+	if (32 > $iter) then
+		$MUPIP journal -extract=$reg.mjf -forw $reg.mjl
+		$tst_awk '{n=split($0,f,"\\");if (f[1]=="05") print f[n]}' $reg.mjf
+	endif
+	$MUPIP integ -reg $reg
+	$MUPIP rundown -reg $reg
+	$MUPIP backup $reg $reg.bak
 echo ""
 echo ""
 end
-# checking 32 and 64 region names. GTM shoud error but not explode
+# checking 40 and 64 character region names, they should error but not explode
 $gtm_exe/mumps -run GDE << gde_end
-        add -name q -reg=regionasaverylongnametotest89012
-        add -name q -reg=regionasaverylongnametotest8901234567890123456789012345678901234
-        quit
+	add -name q -reg=regionasaverylongnametotest8901234567890
+	add -name q -reg=regionasaverylongnametotest8901234567890123456789012345678901234
+	quit
 gde_end
 
 #checking the MUPIP EXTRACT file_spec -format=BIN -select=global-name

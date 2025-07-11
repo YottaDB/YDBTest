@@ -2109,7 +2109,49 @@ Total             200               7              NA             4
 
 
 GDE> 
-%GDE-E-VALTOOLONG, REGIONASAVERYLONGNAMETOTEST89012 exceeds the maximum length of 31 for a region
+%GDE-E-VALTOOLONG, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA* exceeds the maximum length of 31 for a name
+
+GDE> 
+%GDE-E-VALTOOLONG, A2345678901234567890123456789012 exceeds the maximum length of 31 for a region
+
+GDE> 
+%GDE-E-VALTOOLONG, A2345678901234567890123456789012 exceeds the maximum length of 31 for a segment
+
+GDE> 
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+%YDB-E-CLISTRTOOLONG, REGION specified is 32 bytes long which is greater than the allowed maximum of 31 bytes
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-CLISTRTOOLONG, REG_NAME specified is 32 bytes long which is greater than the allowed maximum of 31 bytes
+%YDB-E-MUNODBNAME, A database name or the region qualifier must be specified
+32 exceeds maximum REGION name length of 31 characters.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+32 exceeds maximum REGION name length of 31 characters.
+%YDB-E-DBNOREGION, None of the database regions accessible
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+32 exceeds maximum REGION name length of 31 characters.
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+32 exceeds maximum REGION name length of 31 characters.
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+
+
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> 
+%GDE-E-VALTOOLONG, REGIONASAVERYLONGNAMETOTEST8901234567890 exceeds the maximum length of 31 for a region
 
 GDE> 
 %GDE-E-VALTOOLONG, REGIONASAVERYLONGNAMETOTEST8901234567890123456789012345678901234 exceeds the maximum length of 31 for a region
@@ -2128,3 +2170,5 @@ LOAD TOTAL		Key Cnt: 118  Max Subsc Len: 76  Max Data Len: 76
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
+##TEST_PATH##/freeze_A2345678901234567890123456789012.out
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
