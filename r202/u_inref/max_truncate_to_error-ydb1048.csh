@@ -91,28 +91,28 @@ foreach chset (UTF-8 M)
 			echo "# send a command shorter than 32k"
 
 			if ("gtcm_gnp_server" == $util) then
-				$gtm_dist/$util -bad_command $under_32k |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util -bad_command $under_32k |& tee -a cmdline.out | grep '^#\|%YDB-'
 			else
-				$gtm_dist/$util bad_command $under_32k |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util bad_command $under_32k |& tee -a cmdline.out | grep '^#\|%YDB-'
 			endif
 
 			echo "# send a command around 32k"
-			$gtm_dist/$util bad_command $at_32k |& tee -a cmdline.out | grep '^\#\|%YDB-'
+			$gtm_dist/$util bad_command $at_32k |& tee -a cmdline.out | grep '^#\|%YDB-'
 
 			if ("gtcm_gnp_server" != $util) then
 				echo "# send multiple commands, two longer than 32k, one shorter, redirect from file"
 				echo $over_32k > string_super_long.txt
 				echo $over_32k >> string_super_long.txt
 				echo bad_command >> string_super_long.txt
-				$gtm_dist/$util < string_super_long.txt |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util < string_super_long.txt |& tee -a cmdline.out | grep '^#\|%YDB-'
 				rm string_super_long.txt
 
 				echo "# send a random $chset string around 32k, redirect from file"
-				$gtm_dist/$util < ydb1048_at_32k_rnd_$chset.txt |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util < ydb1048_at_32k_rnd_$chset.txt |& tee -a cmdline.out | grep '^#\|%YDB-'
 				echo "# send a random $chset string longer than 32k, redirect from file"
-				$gtm_dist/$util < ydb1048_over_32k_rnd_$chset.txt |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util < ydb1048_over_32k_rnd_$chset.txt |& tee -a cmdline.out | grep '^#\|%YDB-'
 				echo "# send a random $chset string longer than 320k, redirect from file"
-				$gtm_dist/$util < ydb1048_over_320k_rnd_$chset.txt |& tee -a cmdline.out | grep '^\#\|%YDB-'
+				$gtm_dist/$util < ydb1048_over_320k_rnd_$chset.txt |& tee -a cmdline.out | grep '^#\|%YDB-'
 			endif
 
 			echo "# ...$name finished"
@@ -125,17 +125,17 @@ foreach chset (UTF-8 M)
 
 		# Test directly, which goes through a slightly different code path
 		echo "# send a command around 32k directly"
-		$gtm_dist/yottadb "bad_command $at_32k" |& tee -a cmdline.out | grep '^\#\|%YDB-'
+		$gtm_dist/yottadb "bad_command $at_32k" |& tee -a cmdline.out | grep '^#\|%YDB-'
 		echo "# send a command longer than 32k directly"
-		$gtm_dist/yottadb "bad_command $over_32k" |& tee -a cmdline.out | grep '^\#\|%YDB-'
+		$gtm_dist/yottadb "bad_command $over_32k" |& tee -a cmdline.out | grep '^#\|%YDB-'
 
 		# Test via %XCMD, which goes through a slightly different code path
 		echo "# send a command shorter than 32k via %XCMD"
-		$gtm_dist/yottadb -run %XCMD "bad_command $under_32k" |& tee -a cmdline.out | grep '^\#\|%YDB-'
+		$gtm_dist/yottadb -run %XCMD "bad_command $under_32k" |& tee -a cmdline.out | grep '^#\|%YDB-'
 		echo "# send a command around 32k via %XCMD"
-		$gtm_dist/yottadb -run %XCMD "bad_command $at_32k" |& tee -a cmdline.out | grep '^\#\|%YDB-'
+		$gtm_dist/yottadb -run %XCMD "bad_command $at_32k" |& tee -a cmdline.out | grep '^#\|%YDB-'
 		echo "# send a command longer than 32k via %XCMD"
-		$gtm_dist/yottadb -run %XCMD "bad_command $over_32k" |& tee -a cmdline.out | grep '^\#\|%YDB-'
+		$gtm_dist/yottadb -run %XCMD "bad_command $over_32k" |& tee -a cmdline.out | grep '^#\|%YDB-'
 
 		echo "# ...YOTTADB finished"
 		$echoline
@@ -158,7 +158,7 @@ foreach chset (UTF-8 M)
 		mv expect.out expect_$chset-$idx.outx
 		mv expect.dbg expect_$chset-$idx.dbg
 		perl $gtm_tst/com/expectsanitize.pl expect_$chset-$idx.outx > expect_sanitized_$chset-$idx.outx
-		grep '^\#\|%YDB-' expect_sanitized_$chset-$idx.outx
+		grep '^#\|%YDB-' expect_sanitized_$chset-$idx.outx
 	end
 end
 
