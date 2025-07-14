@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -72,9 +75,9 @@ $DSE <<DSE_EOF >>&! dse_df_all.out
 	find -reg=DEFAULT
 	dump -file -all
 DSE_EOF
-$grep -E "^Region| : # of " dse_df_all.out >&! dse_df_all_stats.out
+$grep -E "^Region|  : # of " dse_df_all.out >&! dse_df_all_stats.out
 # Filter out Journaling related stats as journaling is only randomly turned on and crit data which depends on circumstance
-setenv check_all "DFL :|DFS :|JFL :|JFS :|JBB :|JFB :|JFW :|JRL :|JRP :|JRE :|JRI :|JRO :|JEX :|CAT :|CFE :|CFS :|CFT :|CQS :|CQT :|CYS :|CYT :"
+setenv check_all "DFL  :|DFS  :|JFL  :|JFS  :|JBB  :|JFB  :|JFW  :|JRL  :|JRP  :|JRE  :|JRI  :|JRO  :|JEX  :|CAT  :|CFE  :|CFS  :|CFT  :|CQS  :|CQT  :|CYS  :|CYT  :"
 $grep -vE "$check_all" dse_df_all_stats.out
 
 source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access (mupip endiancvt)
