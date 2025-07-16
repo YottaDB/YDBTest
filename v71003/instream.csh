@@ -21,6 +21,7 @@
 # dollarstorage-gtmde540134	[jon]	Test $STORAGE attempts to be more useful
 # statsdb_exclinstfrz-gtmde551455	[jon]	Test statsdb excluded from Instance Freeze
 # ztimeoutdefer_zinterrupt-gtmde376113		[jon]	Test $ZTIMEOUT deferred during $ZINTERRUPT
+# pattalterr_memleak-gtmde559768	[jon]	Test YottaDB frees memory associated with a pattern alternation when encountering an error in compiling it
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -32,6 +33,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic noconsumer_passivesrc-g
 setenv subtest_list_non_replic	"$subtest_list_non_replic srcrecserver_redirdevnull-gtmde201175"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarstorage-gtmde540134"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeoutdefer_zinterrupt-gtmde376113"
+setenv subtest_list_non_replic	"$subtest_list_non_replic pattalterr_memleak-gtmde559768"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"

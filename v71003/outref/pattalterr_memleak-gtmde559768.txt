@@ -1,0 +1,56 @@
+# ********************************************************************************************
+# GTM-F229760 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE559768)
+# 
+# GT.M frees memory associated with processing a pattern alternation, such as the '2U' in '.3(1N,2U)', when the processing encounters an error. Previously, GT.M failed to free this memory along certain error paths, resulting in a memory leak. (GTM-DE559768)
+# 
+
+# The below test is based on the test case described at: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/702#note_2649354002
+
+# Run the gtmde559768 routine to perform pattern alternation operations in succession over a variety of iterations
+# and check the memory allocation before and after each series of successive operations, e.g. check the memory before
+# and after executing the pattern alternation 1 time, before and after executing it 2 times, etc. Expect an increase
+# in memory allocation for the execution of the pattern alternation in the first iteration only.
+# All successive series of iterations should show an allocation increase of 0 confirming that there is no accumulating memory leak.
+
+# Run the pattern match label 'pat' 1 times
+# Expect allocation increase > 0:
+##TEST_AWKAllocation increase for \[1\] iterations = [1-9][0-9]+ \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 2 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[2\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 3 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[3\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 4 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[4\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 5 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[5\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 6 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[6\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 7 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[7\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 8 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[8\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 9 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[9\] iterations = 0 \([0-9]+-[0-9]+\)
+
+# Run the pattern match label 'pat' 10 times
+# Expect allocation increase = 0 (previously, increase was > 0):
+##TEST_AWKAllocation increase for \[10\] iterations = 0 \([0-9]+-[0-9]+\)
