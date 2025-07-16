@@ -69,7 +69,7 @@ gtmf167995 ;
 	write "### Test 4: getciphers",!
 	; RHEL systems don't include the lsb_release command. In that case, we know it isn't a SUSE system.
 	; So, check if lsb_release command exists and, if so, run it to check for an openSUSE system.
-	zsystem "command -v lsb_release >& /dev/null && lsb_release -a | grep openSUSE > lsb_release.out"
+	zsystem "cat /etc/os-release | grep SUSE > lsb_release.out"
 	if $zsystem=0  do
 	. write "# Skipping test case for OpenSUSE platform",!
 	. write "# Output differs, but the reason for this was not investigated.",!
@@ -93,24 +93,17 @@ gtmf167995 ;
 	. . . . . set cipherStr=ciphersuite
 	. . . . set basename=tlsversion_"-"_context_"-"_tlsid_"-"_cipherStr_".out"
 	. . . . ; Get the list of expected ciphers and store in a file for later comparison
-	. . . . if "tls1_2"=tlsversion  do
-	. . . . . ; In the case of TLS 1.2, get also the TLS 1.3 ciphers
-	. . . . . if ciphersuite=""  do
-	. . . . . . zsystem "openssl ciphers -tls1_3 -s -v | cut -f 1 -d ' ' > "_basename_".exp"
-	. . . . . . ; Systems may set a different default SECLEVEL, causing different ciphers to be output and leading to erroneous test failures
-	. . . . . . ; so, enforce a the same SECLEVEL for all systems explicitly when calling openssl ciphers. This behavior has only been observed
-	. . . . . . ; with TLS 1.2, so only apply to the below call.
+	. . . . if ciphersuite=""  do
+	. . . . . ; Systems may set a different default SECLEVEL, causing different ciphers to be output and leading to erroneous test failures
+	. . . . . ; so, enforce the same SECLEVEL for all systems explicitly when calling openssl ciphers. Note that this behavior has only been
+	. . . . . ; observed with TLS 1.2.
+	. . . . . if "tls1_2"=tlsversion  do
 	. . . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v 'DEFAULT:@SECLEVEL=1' | cut -f 1 -d ' ' >> "_basename_".exp"
-	. . . . . . zsystem "sort -o "_basename_".exp "_basename_".exp"
 	. . . . . else  do
-	. . . . . . zsystem "openssl ciphers -tls1_3 -s -v "_"'"_ciphersuite_"' | cut -f 1 -d ' ' > "_basename_".exp"
-	. . . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v "_"'"_ciphersuite_"' | cut -f 1 -d ' ' >> "_basename_".exp"
-	. . . . . . zsystem "sort -o "_basename_".exp "_basename_".exp"
+	. . . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v | cut -f 1 -d ' ' >> "_basename_".exp"
 	. . . . else  do
-	. . . . . if ciphersuite=""  do
-	. . . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v | cut -f 1 -d ' ' | sort > "_basename_".exp"
-	. . . . . else  do
-	. . . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v "_"'"_ciphersuite_"' | cut -f 1 -d ' ' | sort > "_basename_".exp"
+	. . . . . zsystem "openssl ciphers -"_tlsversion_" -s -v "_"'"_ciphersuite_"' | cut -f 1 -d ' ' >> "_basename_".exp"
+	. . . . zsystem "sort -o "_basename_".exp "_basename_".exp"
 	. . . . set outFile=basename_".act"
 	. . . . open outFile:New
 	. . . . use outFile
