@@ -17,8 +17,10 @@ echo "Copy all C programs that need to be tested"
 cp $gtm_tst/$tst/inref/ydb474* .
 
 echo "# Create database"
-# Create database with a big enough key and record size since ydb474_st.c needs that
-$gtm_tst/com/dbcreate.csh mumps -key_size=1019 -record_size=2048 >& dbcreate.out
+# Create database with a big enough key and record size to handle the ydb474_large.json file in both ydb474_s.c and ydb474_st.c,
+# but small enough to hit the global size limits when testing the json_long_key_buffer and json_long_value_buffer strings in
+# ydb474_st.c (which tests global arrays).
+$gtm_tst/com/dbcreate.csh mumps -key_size=256 -record_size=256 >& dbcreate.out
 if ($status) then
 	echo "# dbcreate.csh failed. Output of dbcreate.out follows"
 	cat dbcreate.out

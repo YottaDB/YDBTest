@@ -16,15 +16,18 @@ int main(void)
 {
 	int		i, status, done;
 	ydb_buffer_t	variable, subscripts[YDB_MAX_SUBS], data;
-	char		errbuf[YDB_MAX_ERRORMSG], *json_large_buffer, *json_long_keyvalue_buffer, *buf_addr;
+	char		errbuf[YDB_MAX_ERRORMSG], *json_large_buffer, *buf_addr;
 	const char	*json_object = "{\"\": \"root\", \"key\": \"value\", \"anotherKey\": \"anotherValue\"}";
 	const char	*json_array = "[\"Score\", 1.7, 42, 3.1, 7.4, 0.5, 8.8, 6, 5.4]";
 	const char	*json_object_max_depth = "{\"one\": {\"2\": {\"three\": {\"4\": {\"five\": {\"6\": {\"seven\": {\"8\": {\"nine\": {\"10\": {\"eleven\": {\"12\": {\"thirteen\": {\"14\": {\"fifteen\": {\"16\": {\"seventeen\": {\"18\": {\"nineteen\": {\"20\": {\"twentyone\": {\"22\": {\"twentythree\": {\"24\": {\"twentyfive\": {\"26\": {\"twentyseven\": {\"28\": {\"twentynine\": {\"30\": {\"thirtyone\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
-	const char	*json_array_after_max_depth = "{\"1\": {\"2\": {\"3\": {\"4\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"10\": {\"11\": {\"12\": {\"13\": {\"14\": {\"15\": {\"16\": {\"17\": {\"18\": {\"19\": {\"20\": {\"21\": {\"22\": {\"23\": {\"24\": {\"25\": {\"26\": {\"27\": {\"28\": {\"29\": {\"30\": {\"array\": [1, 2, 3]}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
+	const char	*json_object_array_max_depth = "{\"1\": {\"2\": {\"3\": {\"4\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"10\": {\"11\": {\"12\": {\"13\": {\"14\": {\"15\": {\"16\": {\"17\": {\"18\": {\"19\": {\"20\": {\"21\": {\"22\": {\"23\": {\"24\": {\"25\": {\"26\": {\"27\": {\"28\": {\"29\": {\"30\": {\"array\": [1, 2, 3]}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
+	const char	*json_array_over_max_size = "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]";
 	const char	*json_true_false_null = "{\"ThisIsTrue\": true, \"ThisIsNull\": null, \"ThisIsFalse\": false, \"trueString\": \"true\", \"nullString\": \"null\", \"falseString\": \"false\"}";
 	const char	*json_too_many_subscripts = "{\"one\": {\"two\": {\"three\": {\"four\": {\"five\": {\"six\": {\"seven\": {\"eight\": {\"nine\": {\"ten\": {\"eleven\": {\"twelve\": {\"thirteen\": {\"fourteen\": {\"fifteen\": {\"sixteen\": {\"seventeen\": {\"eighteen\": {\"nineteen\": {\"twenty\": {\"twentyone\": {\"twentytwo\": {\"twentythree\": {\"twentyfour\": {\"twentyfive\": {\"twentysix\": {\"twentyseven\": {\"twentyeight\": {\"twentynine\": {\"thirty\": {\"thirtyone\": {\"thirtytwo\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
 	const char	*json_data_and_children = "{\"Population\": {\"Belgium\": 13670000, \"Thailand\": 84140000, \"USA\": {\"\": 325737000, \"17900802\": 3929326, \"18000804\": 5308483, \"20100401\": 308745538}}, \"Capital\": {\"Belgium\": \"Brussels\", \"Thailand\": \"Bangkok\", \"USA\": \"Washington,DC\"}}";
-	const char	*json_invalid= "\"Life, the universe, and everything\"";
+	const char	*json_invalid = "\"Life, the universe, and everything\"";
+	const char	*json_long_key_buffer = "{\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\": \"y\"}";
+	const char	*json_long_value_buffer = "{\"x\": \"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\"}";
 	const char	*format = "JSON";
 
 	printf("### Test decodes of JSON data in to M global arrays in ydb_decode_st() ###\n");
@@ -41,8 +44,6 @@ int main(void)
 	YDB_MALLOC_BUFFER(&data, YDB_MAX_STR);
 	json_large_buffer = read_json_file("./ydb474_large.json");
 	YDB_ASSERT(NULL != json_large_buffer);
-	json_long_keyvalue_buffer = read_json_file("./ydb474_long_keyvalue.json");
-	YDB_ASSERT(NULL != json_long_keyvalue_buffer);
 	status = ydb_init();
 	if (YDB_OK != status)
 	{
@@ -126,11 +127,23 @@ int main(void)
 		fflush(stdout);
 		goto clean;
 	}
-	printf("# Decode JSON array after max depth\n");
+	printf("# Decode JSON object with array of max depth\n");
 	fflush(stdout);
-	YDB_COPY_LITERAL_TO_BUFFER("^jsonArrayAfterMaxDepth", &variable, done);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonObjectArrayMaxDepth", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, json_array_after_max_depth);
+	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, json_object_array_max_depth);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
+		printf("Error: %s:%d: ydb_decode_st() : %s\n", __FILE__, __LINE__, errbuf);
+		fflush(stdout);
+		/* No goto here because we expect this to fail and the rest of the tests should still run */
+	}
+	printf("# Decode JSON array over max size\n");
+	fflush(stdout);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonArrayOverMaxSize", &variable, done);
+	YDB_ASSERT(done);
+	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, YDB_MAX_SUBS, subscripts, format, json_array_over_max_size);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -218,11 +231,23 @@ int main(void)
 		fflush(stdout);
 		goto clean;
 	}
-	printf("# Decode long key/value JSON from a file\n");
+	printf("# Decode long key JSON from a string\n");
 	fflush(stdout);
-	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongKeyValueBuffer", &variable, done);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongKeyBuffer", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, json_long_keyvalue_buffer);
+	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, json_long_key_buffer);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
+		printf("Error: %s:%d: ydb_decode_st() : %s\n", __FILE__, __LINE__, errbuf);
+		fflush(stdout);
+		/* No goto here because we expect this to fail and the rest of the tests should still run */
+	}
+	printf("# Decode long value JSON from a string\n");
+	fflush(stdout);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongValueBuffer", &variable, done);
+	YDB_ASSERT(done);
+	status = ydb_decode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, json_long_value_buffer);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -397,9 +422,27 @@ int main(void)
 	printf("%s\n", data.buf_addr);
 	fflush(stdout);
 	data.len_used = 0;
-	printf("# Encode JSON array after max depth\n");
+	printf("# Encode JSON object with array of max depth\n");
 	fflush(stdout);
-	YDB_COPY_LITERAL_TO_BUFFER("^jsonArrayAfterMaxDepth", &variable, done);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonObjectArrayMaxDepth", &variable, done);
+	YDB_ASSERT(done);
+	status = ydb_encode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, &data);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
+		printf("Error: %s:%d: ydb_encode_st() : %s\n", __FILE__, __LINE__, errbuf);
+		fflush(stdout);
+		/* No goto here because we expect this to fail and the rest of the tests should still run */
+	}
+	else
+	{
+		printf("%s\n", data.buf_addr);
+		fflush(stdout);
+	}
+	data.len_used = 0;
+	printf("# Encode JSON array over max size\n");
+	fflush(stdout);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonArrayOverMaxSize", &variable, done);
 	YDB_ASSERT(done);
 	status = ydb_encode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, &data);
 	if (YDB_OK != status)
@@ -549,9 +592,27 @@ int main(void)
 	printf("%s\n", data.buf_addr);
 	fflush(stdout);
 	data.len_used = 0;
-	printf("# Encode long key/value JSON originally from a file\n");
+	printf("# Encode long key JSON originally from a string\n");
 	fflush(stdout);
-	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongKeyValueBuffer", &variable, done);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongKeyBuffer", &variable, done);
+	YDB_ASSERT(done);
+	status = ydb_encode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, &data);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
+		printf("Error: %s:%d: ydb_encode_st() : %s\n", __FILE__, __LINE__, errbuf);
+		fflush(stdout);
+		/* No goto here because we expect this to fail and the rest of the tests should still run */
+	}
+	else
+	{
+		printf("%s", data.buf_addr);
+		fflush(stdout);
+	}
+	data.len_used = 0;
+	printf("# Encode long value JSON originally from a string\n");
+	fflush(stdout);
+	YDB_COPY_LITERAL_TO_BUFFER("^jsonLongValueBuffer", &variable, done);
 	YDB_ASSERT(done);
 	status = ydb_encode_st(YDB_NOTTP, NULL, &variable, 0, subscripts, format, &data);
 	if (YDB_OK != status)
@@ -573,7 +634,6 @@ clean:
 		YDB_FREE_BUFFER(&subscripts[i]);
 	YDB_FREE_BUFFER(&data);
 	free(json_large_buffer);
-	free(json_long_keyvalue_buffer);
 	printf("\n# Exit SimpleThreadAPI\n");
 	fflush(stdout);
 	status = ydb_exit();
