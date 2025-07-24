@@ -28,7 +28,6 @@ set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash i
 if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
 
 # Print file list so we can find out which tests are running in the pipeline
-echo "Filelist changed: "
 echo $filelist | sed 's/ /\n/g;'
 
 # For each file, check if it is instream.csh or is inside inref
@@ -88,47 +87,62 @@ foreach file ($filelist)
 	endif
 end
 
-echo "Regular list: $instream_invokelist_regular"
-echo "Replic list: $instream_invokelist_replic"
-echo "Reorg test list: $instream_invokelist_reorg"
-echo "Reorg replic test list: $instream_invokelist_reorg_replic"
+echo -n "# Regular list: "
+echo $instream_invokelist_regular
+echo -n "# Replic list: "
+echo $instream_invokelist_replic
+echo -n "# Reorg test list: "
+echo $instream_invokelist_reorg
+echo -n "# Reorg replic test list: "
+echo $instream_invokelist_reorg_replic
+echo " "
+
+echo "### Run tests"
 
 # The test system has the capability of running multiple instreams at once, so let's do that.
 
 if ( "$instream_invokelist_regular" != "" ) then
+	echo "Run: [su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_regular\"]"
 	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_regular"
 	if ($status) then
 		echo "${instream_invokelist_regular}: FAIL (non-replic)" >> result.txt
 	else
 		echo "${instream_invokelist_regular}: PASS (non-replic)" >> result.txt
 	endif
+	echo " "
 endif
 
 if ( "$instream_invokelist_replic" != "" ) then
+	echo "Run: [su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_replic -replic\"]"
 	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_replic -replic"
 	if ($status) then
 		echo "${instream_invokelist_replic}: FAIL (replic)" >> result.txt
 	else
 		echo "${instream_invokelist_replic}: PASS (replic)" >> result.txt
 	endif
+	echo " "
 endif
 
 if ( "$instream_invokelist_reorg" != "" ) then
+	echo "Run: [su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg -reorg\"]"
 	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg -reorg"
 	if ($status) then
 		echo "${instream_invokelist_reorg}: FAIL (reorg)" >> result.txt
 	else
 		echo "${instream_invokelist_reorg}: PASS (reorg)" >> result.txt
 	endif
+	echo " "
 endif
 
 if ( "$instream_invokelist_reorg_replic" != "" ) then
+	echo "Run: [su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg_replic -reorg -replic\"]"
 	su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 $instream_invokelist_reorg_replic -reorg -replic"
 	if ($status) then
 		echo "${instream_invokelist_reorg_replic}: FAIL (reorg replic)" >> result.txt
 	else
 		echo "${instream_invokelist_reorg_replic}: PASS (reorg replic)" >> result.txt
 	endif
+	echo " "
 endif
 
 # Next, check if the file is "test/u_inref/xxx.csh" or "test/outref/xxx.txt".
@@ -186,44 +200,51 @@ foreach file ($filelist)
 		if ( " $subtest_list_non_replic " =~ " *$subtest* " || " $subtest_list_common " =~ " *$subtest* " || ( " $subtest_list " =~ " *$subtest* " && $is_regular_test ) ) then
 			# If test was invoked as a suite from instream, don't add it to the invoke list
 			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
-				echo "Running $test/$subtest $reorg_flag"
+				echo -n "# Running $test/$subtest ${reorg_flag}: "
+			        echo "[su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest $reorg_flag\"]"
 			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest $reorg_flag"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (non-replic)" >> result.txt
 				else
 					echo "$test/${subtest}: PASS (non-replic)" >> result.txt
 				endif
+				echo " "
 			endif
 		# Replic tests
 		else if ( " $subtest_list_replic " =~ " *$subtest* " || " $subtest_list_common " =~ " *$subtest* " || ( " $subtest_list " =~ " *$subtest* " && $is_replic_test ) ) then
 			# If test was invoked as a suite from instream, don't add it to the invoke list
 			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
-				echo "Running $test/$subtest -replic $reorg_flag"
+				echo -n "# Running $test/$subtest -replic ${reorg_flag}: "
+			        echo "[su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest -replic $reorg_flag\"]"
 			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test -st $subtest -replic $reorg_flag"
 				if ($status) then
 					echo "$test/${subtest}: FAIL (replic)" >> result.txt
 				else
 					echo "$test/${subtest}: PASS (replic)" >> result.txt
 				endif
+				echo " "
 			endif
 		# Unclassifiable tests
 		else
 			# Subtest in the u_inref or outref is not a known subtest. Run whole test.
 			# If test was invoked as a suite from instream, don't add it to the invoke list
 			if ( "$instream_invokelist_regular" !~ " *-t $test* " && "$instream_invokelist_reorg" !~ " *-t $test* " && "$instream_invokelist_replic" !~ " *-t $test* " && "$instream_invokelist_reorg_replic" !~ " *-t $test* " ) then
-				echo "Running $test $reorg_flag $replic_flag"
+				echo -n "# Running $test $reorg_flag ${replic_flag}: "
+			        echo "[su -l gtmtest $pass_env -c \"/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test $reorg_flag $replic_flag\"]"
 			        su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -fg -env gtm_ipv4_only=1 -stdout 2 -t $test $reorg_flag $replic_flag"
 				if ($status) then
 					echo "${test}: FAIL (flags: $reorg_flag $replic_flag)" >> result.txt
 				else
 					echo "${test}: PASS (flags: $reorg_flag $replic_flag)" >> result.txt
 				endif
+				echo " "
 			endif
 		endif
 	endif
 end
 
 # Fail if any of the tests failed
+echo "# Final report:"
 cat result.txt
 grep -q FAIL result.txt
 # Grep reverses the exit: 0 means found, 1 means not found, not found is good!

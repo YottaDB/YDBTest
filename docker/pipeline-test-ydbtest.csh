@@ -12,8 +12,13 @@
 #################################################################
 source /usr/library/gtm_test/T999/docker/shared-setup.csh
 
-# See if we need to build a branch version of YottaDB to match the current branch
-pushd /usr/library/gtm_test/T999
+# Note that some echo commands below include only a space since the GitLab CI
+# will not emit newlines unless they are preceded by a printable character.
+# So, include a space in the echos that are meant to generate newlines to create the
+# desired effect.
+
+echo " "
+pushd /usr/library/gtm_test/T999 >& /dev/null
 
 # https://forum.gitlab.com/t/why-i-cant-get-the-branch-name/72462/6
 # Gitlab detaches the git tree (i.e. a checkout creates a detached tree, so rev-parse of HEAD just returns HEAD)
@@ -23,45 +28,65 @@ if ( $?CI_COMMIT_BRANCH ) then
 else
 	set ydbtest_branch = `git rev-parse --abbrev-ref HEAD`
 endif
+echo "# ydbtest_branch: $ydbtest_branch"
 
-echo "ydbtest_branch: $ydbtest_branch"
 # Get the last 20 MRs (open/closed/merged) in reverse chronological order
 curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=all" > ydb_open_mrs.json
 set ydb_branches = `jq -r '.[].source_branch' ydb_open_mrs.json`
-echo "ydb_branches: $ydb_branches"
+echo "# ydb_branches: $ydb_branches"
 
 if ( $ydbtest_branch != "master" && " $ydb_branches " =~ " *$ydbtest_branch* " ) then
 	# We have a match... grab corresponding YDB MR number
-	echo "Building YottaDB branch $ydbtest_branch"
+	echo " "
+	echo -n "### Building YottaDB branch $ydbtest_branch to match the current branch (MR ID: "
 	set filter = ".[] | select(.source_branch == \"$ydbtest_branch\") | .iid"
 	set mr_id = `jq -r "$filter" ydb_open_mrs.json`
-	/usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg $mr_id
+	echo "$mr_id)"
+	if ( $?CI_PROJECT_DIR ) then
+		# If running in the pipeline, make sure the build output is in a location that can be included in the artifacts
+		/usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg $mr_id >& $CI_PROJECT_DIR/pipeline-test-ydbtest-build.out
+	else
+		# Otherwise, just use the current directory
+		/usr/library/gtm_test/build_and_install_yottadb.csh V999_R999 master dbg $mr_id >& pipeline-test-ydbtest-build.out
+	endif
+else
+	echo "### YottaDB master branch already built"
 endif
 rm ydb_open_mrs.json
-popd
+popd >& /dev/null
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
 ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
+echo " "
 
+echo "### Adding YDBTest remote"
 if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	# Get list of changed files
-	# https://forum.gitlab.com/t/ci-cd-pipeline-get-list-of-changed-files/26847
+	# See also: https://forum.gitlab.com/t/ci-cd-pipeline-get-list-of-changed-files/26847.
 	set upstream_repo = "https://gitlab.com/YottaDB/DB/YDBTest.git"
-	echo "# Add $upstream_repo as remote"
+	echo "# YDBTest not found: adding $upstream_repo as remote:"
 	git remote -v
 	git remote | grep -q upstream_repo
 	if ($status) git remote add upstream_repo "$upstream_repo"
 	git fetch upstream_repo
 	set basecommit = `git merge-base HEAD upstream_repo/master`
-	setenv filelist `git diff --name-only $basecommit`
+	setenv filelist `git diff --name-only $basecommit ':(exclude)docker' ':(exclude)com'`
 else
-	# Test system passed in /YDBTest
+	echo "# YDBTest already present at /YDBTest: no fetch needed"
 	git config --global --add safe.directory /YDBTest
 	set basecommit = `git merge-base HEAD master`
-	setenv filelist `git diff --name-only $basecommit`
+	setenv filelist `git diff --name-only $basecommit | grep -v "docker/"`
+endif
+echo " "
+
+if ("$filelist" == "") then
+	echo "### No tests to run, exiting"
+	exit
 endif
 
-echo "Currently available versions: "
+echo "### Show currently available versions"
 ver
+echo " "
 
+echo "### Show changed tests"
 exec /usr/library/gtm_test/T999/docker/pipeline-run-changed-tests.csh
