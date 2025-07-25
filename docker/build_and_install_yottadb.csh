@@ -61,8 +61,6 @@ else
 	# The below sed command is structured to work for r1.38 (pre f88b9698) or r2.00 (post f88b9698) so we do not
 	# need to check if the git tag is less than or equal to r1.38 in order to do this removal.
 	sed -i '/-ggdb3/d' sr_linux/platform.cmake
-	# Remove -g3 from CMAKE_C_FLAGS_DEBUG as that inflates size of libmumps.a from 145M to 990M.
-	sed -i 's/\${CMAKE_C_FLAGS_DEBUG} -O0 -g3/\${CMAKE_C_FLAGS_DEBUG} -O0/' CMakeLists.txt
 	popd
 endif
 
