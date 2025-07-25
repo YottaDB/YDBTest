@@ -1,0 +1,20 @@
+#--------------------------------------------------------------------------------------------------------------
+# Test MUPIP REORG -MIN_LEVEL=1 does not assert fail in gvcst_expand_any_key.c or fail with a MUREORGFAIL error
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1724
+# Test case based off https://gitlab.com/YottaDB/DB/YDB/-/issues/1027#note_2651501799
+#---------------------------------------------------------------------------
+
+# Create database
+
+# Load 1000s of nodes in ^x with random subscript length and random values
+# Take backup of mumps.dat BEFORE mupip reorg commands are run just in case it is needed to reproduce a rare failure
+# Run 10 iterations of MUPIP REORG -MIN_LEVEL where level =1,2,3 and with random -fill_factor
+# We do not expect any errors from any of the reorg commands
+# Previously (from YDB@8c8975447 to YDB@4d2533c14) this used to fail assert fail (in Debug builds)
+# and fail with MUREORGFAIL (in Release builds).
+# We expect to see a PASS line below.
+PASS : All MUPIP REORG -MIN_LEVEL commands returned with 0 exit status
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

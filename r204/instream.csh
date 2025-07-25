@@ -20,6 +20,7 @@
 # stp_gcol_nosort-ydb1145	 [nars]	Test VIEW "STP_GCOL_NOSORT", $VIEW("STP_GCOL_NOSORT"), $VIEW("SPSIZESORT") and ydb_stp_gcol_nosort
 # encode_decode_simpleapi-ydb474 [bdw,david] Test ydb_encode_s(), ydb_decode_s(), and their threaded variants
 # ztrigger_t_tries-ydbMR1702     [nars] Test $ztrigger("item") clears t_tries in case of errors
+# gvcst_expand_any_key-ydb1027   [nars] Test MUPIP REORG -MIN_LEVEL=1 does not assert fail in gvcst_expand_any_key.c
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -41,6 +42,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic remove_stpmove-ydb1673"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_nosort-ydb1145"
 setenv subtest_list_non_replic	"$subtest_list_non_replic encode_decode_simpleapi-ydb474"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_t_tries-ydbMR1702"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gvcst_expand_any_key-ydb1027"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
