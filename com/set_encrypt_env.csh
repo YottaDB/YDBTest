@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -86,9 +86,6 @@ else
 		exit
 	endif
 
-	# Setup library paths
-	source $gtm_tst/com/set_ldlibpath.csh
-
 	# Note that it depends on the version of gpg, not gpg2, whether gpg-agent is used to retrieve passphrases.
 	set gtm_old_gpg_exact_version = `gpg --no-permission-warning --version | $tst_awk '/gpg/ {print $3}' | $tst_awk -F '.' '{printf "%d%02d%02d",$1,$2,$3}'`
 	# The below script had to kill a running gpg-agent, which causes test failures. Rely on the presence or absence of gpg-agent instead
@@ -121,8 +118,12 @@ else
 	setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 	echo "GTMXC_gpgagent=$gtm_dist/plugin/gpgagent.tab" >> $outfile
 
-	echo "LIBPATH=$LIBPATH" >> $outfile
-	echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $outfile
+	if ($?LIBPATH) then
+		echo "LIBPATH=$LIBPATH" >> $outfile
+	endif
+	if ($?LD_LIBRARY_PATH) then
+		echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $outfile
+	endif
 
 	setenv gpg_ignore_str "gpg"
 	echo "gpg_ignore_str=$gpg_ignore_str" >> $outfile

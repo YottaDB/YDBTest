@@ -145,8 +145,7 @@ source $gtm_tst/com/set_ydb_build_env_vars.csh
 # Set gtm_icu_version/ydb_icu_version env vars at startup
 source $gtm_tst/com/set_icu_version.csh
 
-source $gtm_tst/com/set_gtm_machtype.csh # do this before as it defines gtm_test_os_machtype env var (needed by set_ldlibpath.csh)
-source $gtm_tst/com/set_ldlibpath.csh
+source $gtm_tst/com/set_gtm_machtype.csh
 # Various checks and exits :
 if ( $USER =~ {library,,root} ) then
 	echo "TEST-E-USER Do not run the tests as root or library"
@@ -410,31 +409,6 @@ if ( ($?exclude_servers) && !($?gtm_test_nomultihost) ) then
 		echo "-x GT.CM" >>! $test_list
 	endif
 
-endif
-
-############
-# Exclude "go" test if ASAN is enabled, CLANG is the compiler (not GCC), Go version is less than 1.18 or Linux distribution is RHEL.
-# --------------------------------------------------------------------------
-# In this case we get errors like the following from a "go build".
-#	/usr/bin/ld: dbg/libyottadb.so: undefined reference to `__asan_stack_free_7'
-# Interestingly, this does not happen if GCC is the compiler.
-# I suspect the issue is that "go build" is compiling the main executable without "-fsanitize=address"
-# and is linking with "libyottadb.so" which has been compiled/linked with "-fsanitize=address".
-# The solution suggested to work around this (see https://github.com/google/sanitizers/wiki/AddressSanitizerAsDso)
-# is to use LD_PRELOAD which sounds risky and so I am not going there for now.
-# Also https://go-review.googlesource.com/c/go/+/368834/2/doc/go1.18.html seems to suggest a new "-asan" option in "go build"
-# which will let it interoperate with C code compiled with the address sanitizer.
-#
-# Therefore, we disable all "go" test when:
-# 1) ASAN is enabled
-# 2) YottaDB was build with CLANG
-# 3) Go version is less than 1.18
-# 4) Linux distribution is RHEL
-# For the discussion why we need to disable go tests for RHEL
-# Discussion in https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2053#note_2043556763
-#
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
-	echo "-x go" >>! $test_list
 endif
 
 #############################################

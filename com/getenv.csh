@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,5 +38,4 @@ setenv GDE "$gtm_exe/mumps -run GDE"
 # gtm_chset will be randomly chosen to either UTF-8 or M and so we need to set the proper locale
 # and gtmroutines as a part of env. setup.
 source $gtm_tst/com/set_locale.csh
-source $gtm_tst/com/set_ldlibpath.csh
 source $gtm_tst/com/reset_gtmroutines.csh

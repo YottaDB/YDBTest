@@ -96,13 +96,6 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				# Disable Rust testing since ASAN and Rust do not work well together.
 				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to ASAN"
 				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
-				if (("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
-					# Disable Go testing if ASAN, CLANG and Go version less than 1.18.
-					# We also disabled all Go tests for ASAN+CLANG combination for all RHEL Machines.
-					# See similar code in "com/gtmtest.csh" for details.
-					echo "# Disabling ydb_imptp_flavor=4 (YDBGo) due to ASAN + CLANG + Go version < 1.18 or RHEL"
-					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4"
-				endif
 			endif
 			if ($gtm_test_libyottadb_asan_enabled && ("ENCRYPT" == "$test_encryption")) then
 				# We have seen python imptp.py hang when run with ASAN + Encrypted databases

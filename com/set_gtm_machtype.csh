@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -216,22 +216,6 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 			setenv ydb_test_openssl3_plus 1
 		endif
 	endif
-endif
-
-# Determine Go version if it less than 1.18 or not. Go version less than 1.18
-# combined with ASAN and CLANG will causing error in some tests.
-# We also disabled ASAN+CLANG combination for all go tests in all RHEL machine.
-set go_version = `go version | $tst_awk -F " go" '{print $2}' | $tst_awk -F "." '{print $1"."$2}'`
-if (( `expr $go_version \< "1.18"` ) || ("rhel" == $gtm_test_linux_distrib)) then
-	setenv ydb_test_gover_lt_118_or_rhel 1
-else
-	setenv ydb_test_gover_lt_118_or_rhel 0
-endif
-
-if ( `expr $go_version \< "1.18"` ) then
-	setenv ydb_test_gover_lt_118 1
-else
-	setenv ydb_test_gover_lt_118 0
 endif
 
 set anyerror

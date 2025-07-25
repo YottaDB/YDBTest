@@ -3,7 +3,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -48,8 +48,6 @@ endif
 
 setenv LC_CTYPE $utflocale
 setenv LC_COLLATE C # because regular unix commands like ls, sort etc. rely on LC_COLLATE to be "C" for sorting names
-
-source $gtm_tst/com/set_ldlibpath.csh
 
 # ??? other platforms???
 # note down what the settings are in some file in the output directory

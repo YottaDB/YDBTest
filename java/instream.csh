@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -97,7 +97,11 @@ echo "cd $tst_general_dir/tmp"								>> $tst_general_dir/set_java_env.csh
 echo "setenv JAVA_HOME $JAVA_HOME"							>> $tst_general_dir/set_java_env.csh
 echo "setenv gtmji_dir $gtmji_dir"							>> $tst_general_dir/set_java_env.csh
 echo "setenv LD_LIBRARY_PATH $LD_LIBRARY_PATH"						>> $tst_general_dir/set_java_env.csh
-echo "setenv LIBPATH $LIBPATH"								>> $tst_general_dir/set_java_env.csh
+if ($?LIBPATH) then
+	echo "setenv LIBPATH $LIBPATH"							>> $tst_general_dir/set_java_env.csh
+else
+	echo "unsetenv LIBPATH"								>> $tst_general_dir/set_java_env.csh
+endif
 echo "setenv lib_preload_init $lib_preload_init"					>> $tst_general_dir/set_java_env.csh
 echo "setenv lib_preload $lib_preload"							>> $tst_general_dir/set_java_env.csh
 echo 'setenv jvm_flags "'$jvm_flags'"'							>> $tst_general_dir/set_java_env.csh

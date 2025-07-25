@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,9 @@ $gtm_tst/com/dbcreate.csh mumps 3
 setenv gtm_passwd	# Set gtm_passwd to empty string forcing GT.M startup to load the encryption plugin and ask for password
 # nullify the LD_LIBRARY_PATH and LIBPATH so that the dlopen of the encryption plugin will fail on at least a few platforms
 set save_ld_library_path = $LD_LIBRARY_PATH
-set save_libpath = $LIBPATH
+if ($?LIBPATH) then
+	set save_libpath = $LIBPATH
+endif
 if ($?gtm_chset) then
 	set save_utf8 = $gtm_chset
 	set save_gtmroutines = "$gtmroutines"
@@ -39,7 +41,11 @@ endif
 $gtm_tst/com/check_error_exist.csh emptypassphrase.out CRYPTDLNOOPEN2 >&! capturerror.outx
 # Bring back sanity
 setenv LD_LIBRARY_PATH $save_ld_library_path
-setenv LIBPATH $save_libpath
+if ($?save_libpath) then
+	setenv LIBPATH $save_libpath
+else
+	unsetenv LIBPATH
+endif
 
 # OK, now that we have a working encrypted database we can verify that maskpass and GT.M mask the same way.
 

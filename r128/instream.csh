@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,16 @@ echo "r128 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "v63006 v63006B v63006C ydb469 ydb477 ydb480 ydb478"
+
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic v63006"
+setenv subtest_list_non_replic "$subtest_list_non_replic v63006B"
+setenv subtest_list_non_replic "$subtest_list_non_replic v63006C"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb469"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb477"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb480"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb478"
+
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -39,12 +48,6 @@ endif
 setenv subtest_exclude_list    ""
 # filter out test that needs to run pro-only (dbg gets different results because of how gtm_fork_n_core() works)
 if ("pro" != "$tst_image") then
-       setenv subtest_exclude_list "$subtest_exclude_list ydb478"
-endif
-
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
-	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb478"
 endif
 

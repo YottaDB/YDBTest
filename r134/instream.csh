@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,23 +36,34 @@ echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758 ydb557 ydb840 ydb781"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb846 ydb845"
+
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb757"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb775"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb782"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb772"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb785"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb734"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb828"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb831"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb555"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb546"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb758"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb557"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb840"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb781"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb846"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb845"
+
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
-       setenv subtest_list "$subtest_list_common $subtest_list_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
-       setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 
 setenv subtest_exclude_list    ""
-
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler) && $ydb_test_gover_lt_118_or_rhel) then
-	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
-	setenv subtest_exclude_list "$subtest_exclude_list ydb785"
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

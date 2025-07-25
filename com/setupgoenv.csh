@@ -147,13 +147,20 @@ set gotest = "go test"
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with asan enabled. Do the same with the go executables.
-	if ($ydb_test_gover_lt_118) then
-		set asanflags = "'-fsanitize=address'"
-	else
-		set asanflags = "-asan"
-	endif
+	set asanflags = "-asan"
 	set gobuild = "$gobuild $asanflags"
 	set gotest = "$gotest $asanflags"
+
+	# ------------------------------------------------------------------------------------
+	# The below comment and code is similar to that in sudo/u_inref/setinstalloptions.csh
+	# ------------------------------------------------------------------------------------
+	# If libyottadb.so has been built with CLANG + ASAN, we started seeing link time errors like the following
+	# from a "go build" when run on a SUSE SLED SP7 system or a RHEL 9 system.
+	#	undefined reference to `__sanitizer_internal_memcpy'
+	# To avoid such errors, we set the compiler for the go build to be "clang" instead of the default "gcc".
+	if ("clang" == $gtm_test_asan_compiler) then
+		setenv CC "clang"
+	endif
 endif
 
 # Random Go environment settings
