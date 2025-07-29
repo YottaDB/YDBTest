@@ -1,0 +1,26 @@
+# ********************************************************************************************
+# GTM-DE376113 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE376113)
+# 
+# GT.M correctly defers executing the $ZTIMEOUT vector when its timeout coincides with an invocation of $ZINTERRUPT occurring during a long running command. Previously, due a regression introduced in V7.0-002, $ZTIMEOUT did not execute its vector in this rare case. The workaround was to minimize the chance of using long running commands when $ZTIMEOUT expiry and $ZINTERRUPT processing overlap. This was only seen in development and not reported by a customer. (GTM-DE376113)
+# 
+
+### Overview of gtmde376113 test routine:
+# 1. Sets $ZTIMEOUT to print a digit every 0.01 seconds and reset the timeout, so that approximately 100 ZTIMEOUTs occur in 1 second.
+# 2. Repeats this process for 10 seconds, yielding a total of ~1000 ZTIMEOUTs
+# Expect a PASS message showing that ~1000 ztimeouts occurred, but accept as few as 700, in case fewer occured due to transient system load.
+# Prior to GT.M V7.1-003, much fewer than 1000 digits are output, regardless of system load, signifying that much fewer than 1000
+# ztimeouts occur in the 10 second window. This means that the $ZTIMEOUT stops happening mid-way through the routine in that case.
+# This test case is based on the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/698#note_2657097388.
+
+### Start test routine [$gtm_dist/mumps -r gtmde376113]
+# Set $ZTIMEOUT to periodically print a digit every 0.01 seconds
+# Set $ZINTERRUPT to do nothing when this process receives a signal, i.e. SIGUSR1 from kill^gtmde376113.
+# Spawn a job to periodically send SIGUSR1 to this process
+# Hang for 10 seconds while $ZTIMEOUT executes every 0.01 seconds and SIGUSR1 is sent by kill^gtmde376113:
+
+# Verify the number of times $ZTIMEOUT executed (ztimeoutcnt).
+# This is to ensure that $ZTIMEOUT executed at least 700 times, i.e. within 70 percent of the 1000 times expected.
+##TEST_AWKPASS: ztimeoutcnt=[7-9][0-9][0-9]
