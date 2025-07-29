@@ -22,6 +22,7 @@
 # statsdb_exclinstfrz-gtmde551455	[jon]	Test statsdb excluded from Instance Freeze
 # ztimeoutdefer_zinterrupt-gtmde376113		[jon]	Test $ZTIMEOUT deferred during $ZINTERRUPT
 # pattalterr_memleak-gtmde559768	[jon]	Test YottaDB frees memory associated with a pattern alternation when encountering an error in compiling it
+# tlsreneg_msg-gtmde567908		[jon]		Test the GT.M TLS plugin library exposes an external call interface providing cipher suite and version information
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -38,6 +39,7 @@ setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic statsdb_exclinstfrz-gtmde551455"
+setenv subtest_list_replic	"$subtest_list_replic tlsreneg_msg-gtmde567908"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -46,6 +48,11 @@ else
 endif
 
 setenv subtest_exclude_list ""
+
+if ("TRUE" != $gtm_test_tls) then
+	# The below test requires TLS to be enabled, so exclude the test if TLS is disabled
+	setenv subtest_exclude_list "$subtest_exclude_list tlsreneg_msg-gtmde567908"
+endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
