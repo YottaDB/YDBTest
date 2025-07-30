@@ -1,0 +1,16 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test that %YDB-E-CITABENV error is not issued when calling an M function via a function handle returned by a previous call to ydb_cip_t
+# -------------------------------------------------------------------------------------------------------------
+
+# Build a C program [ydb1161.c] to test that a %YDB-E-CITABENV error is not issued when reusing a call-in function:
+
+# Run the compiled [ydb1161.c] program:
+# ydb1161.c: Open an M call-in table, [table1.ci]
+# ydb1161.c: Switch to the open call-in table [table1.ci] using ydb_cip_tab_switch()
+# ydb1161.c: Call an M function, [ydb1161], from the open call-in table [table1.ci], causing the YDB SimpleAPI to cache it
+# ydb1161.c: Restore the open call-in table, [table1.ci]
+# ydb1161.c: Call the M function, [ydb1161], again to cause the YDB SimpleAPI to load it from the cache
+#            Expect no errors. Previously, this would issue a %YDB-E-CITABENV error due to the SimpleAPI
+#            attempting to reload the M function from the restored call-in table, rather than the cache.
+#            The previous workaround was to skip the above ydb_ci_tab_switch_t() to avoid this error.
+PASS: No %YDB-E-CITABENV error issued

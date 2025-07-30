@@ -14,13 +14,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# mupipstop_readlineterm-ydb1128 [jon]	Test MUPIP STOP terminates DSE/LKE/MUPIP even if they hold a critical section when ydb_readline=1
-# mureorgupgrade-ydb1027	 [jon]	Test 2 MUPIP REORG -UPGRADE test cases for YDB#1027
-# remove_stpmove-ydb1673	 [jon]	Test remove unnecessary stp_move() call when linking multiple copies of same routine
-# stp_gcol_nosort-ydb1145	 [nars]	Test VIEW "STP_GCOL_NOSORT", $VIEW("STP_GCOL_NOSORT"), $VIEW("SPSIZESORT") and ydb_stp_gcol_nosort
-# encode_decode_simpleapi-ydb474 [bdw,david] Test ydb_encode_s(), ydb_decode_s(), and their threaded variants
-# ztrigger_t_tries-ydbMR1702     [nars] Test $ztrigger("item") clears t_tries in case of errors
-# gvcst_expand_any_key-ydb1027   [nars] Test MUPIP REORG -MIN_LEVEL=1 does not assert fail in gvcst_expand_any_key.c
+# mupipstop_readlineterm-ydb1128	[jon]		Test MUPIP STOP terminates DSE/LKE/MUPIP even if they hold a critical section when ydb_readline=1
+# mureorgupgrade-ydb1027		[jon]		Test 2 MUPIP REORG -UPGRADE test cases for YDB#1027
+# remove_stpmove-ydb1673		[jon]		Test remove unnecessary stp_move() call when linking multiple copies of same routine
+# stp_gcol_nosort-ydb1145		[nars]		Test VIEW "STP_GCOL_NOSORT", $VIEW("STP_GCOL_NOSORT"), $VIEW("SPSIZESORT") and ydb_stp_gcol_nosort
+# encode_decode_simpleapi-ydb474	[bdw,david]	Test ydb_encode_s(), ydb_decode_s(), and their threaded variants
+# ztrigger_t_tries-ydbMR1702		[nars]		Test $ztrigger("item") clears t_tries in case of errors
+# gvcst_expand_any_key-ydb1027		[nars]		Test MUPIP REORG -MIN_LEVEL=1 does not assert fail in gvcst_expand_any_key.c
+# ydbcitab_norestore-ydb1161		[jon]		Test %YDB-E-CITABENV error is not issued when calling an M function via a function handle returned by a previous call to ydb_cip_t
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -43,6 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_nosort-ydb1145
 setenv subtest_list_non_replic	"$subtest_list_non_replic encode_decode_simpleapi-ydb474"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_t_tries-ydbMR1702"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvcst_expand_any_key-ydb1027"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcitab_norestore-ydb1161"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
