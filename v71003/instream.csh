@@ -23,6 +23,7 @@
 # ztimeoutdefer_zinterrupt-gtmde376113		[jon]	Test $ZTIMEOUT deferred during $ZINTERRUPT
 # pattalterr_memleak-gtmde559768	[jon]	Test YottaDB frees memory associated with a pattern alternation when encountering an error in compiling it
 # tlsreneg_msg-gtmde567908		[jon]		Test the GT.M TLS plugin library exposes an external call interface providing cipher suite and version information
+# tlsconf_default-gtmde568389	[jon]	Test Receiver Server TLS configuration default change
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf2289
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic statsdb_exclinstfrz-gtmde551455"
 setenv subtest_list_replic	"$subtest_list_replic tlsreneg_msg-gtmde567908"
+setenv subtest_list_replic	"$subtest_list_replic tlsconf_default-gtmde568389"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -48,6 +50,14 @@ else
 endif
 
 setenv subtest_exclude_list ""
+set sslver = `openssl version | cut -f 2 -d ' ' | cut -f 1 -d '.'`
+if (3 > $sslver) then
+	# OpenSSL is less than version 3, but tlsconf_default-gtmde568389 tests the internal usage of the
+	# SSL_VERIFY_FAIL_IF_NO_PEER_CERT flag, which is only in OpenSSL version 3+. So, skip the test
+	# when OpenSSL is less than version 3. For more details see the discussion at:
+	# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2404#note_2670041807
+	setenv subtest_exclude_list "$subtest_exclude_list tlsconf_default-gtmde568389"
+endif
 
 if ("TRUE" != $gtm_test_tls) then
 	# The below test requires TLS to be enabled, so exclude the test if TLS is disabled
