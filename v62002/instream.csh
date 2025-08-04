@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,6 +71,11 @@ else if ("zfs" == "$tst_dir_fstype") then
 	# On ZFS, "du" on a newly created file does not return the allocated size immediately after a "mupip create". It could
 	# take a few seconds before it returns the fully allocated size (these are called "pending changes" in ZFS). That can
 	# cause the "gtm5894" subtest to fail as it does "du" on the file a lot of times. Therefore disable this subtest if ZFS.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm5894"
+else if ("xfs" == "$tst_dir_fstype") then
+	# On xfs, we have seen that the allocation/extent of sparse files can be noticeably high and cause the "gtm5894"
+	# subtest to fail because it has strict checks on how much space a sparse .dat file can occupy in the file system.
+	# Therefore disable this subtest in that case.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm5894"
 endif
 # Remove rtnxfertst, gtm8290 and gtm8240 subtests from Linux-32bit and HPUX-IA64 as they involve auto-relink or recursive-relink
