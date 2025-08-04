@@ -3,7 +3,7 @@
  * Copyright (c) 2013, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The class generating all GTMJI test cases. All tests roughly follow the same template for M
@@ -465,15 +467,26 @@ public class TestXC {
 				"\t\tSystem.out.println(new char[]{'a', 'b'}[3]);\n",
 				"\t\tSystem.out.println(1 / 0);\n"};
 		final String[] errorTexts;
+		int intver;
 		int numOfErrorCases = errorCodes.length;
 		TestCase[] testCases = new TestCase[numOfErrorCases];
 		String javaVersion = System.getProperty("java.version");
+		Pattern pattern = Pattern.compile("[0-9]+-ea", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(javaVersion);
+		boolean matchFound = matcher.find();
+		// Check for the javaVersion format and parse it accordingly
+		if(matchFound) {
+			// It is an "early access" release, of the format: `[0-9]+-ea`
+			intver = Integer.parseInt(javaVersion.split("-")[0]);
+		} else {
+			// It is a standard release, of the format: major_version.minor_version
+			intver = Integer.parseInt(javaVersion.split("\\.")[0]);
+		}
 		/* Starting Java 11.* (e.g. 11.0.3) we have found the error string to be more descriptive
 		 * so allow for that below. So we split the version string into 2 parts with "." as delimiter.
 		 * The first part is the major version we are looking for. As long as it is < 11, we use the older
 		 * error message. Otherwise we use the newer error message format.
 		 */
-		int	intver = Integer.parseInt(javaVersion.split("\\.")[0]);
 		if (intver >= 11)
 		{
 			errorTexts = new String[]{

@@ -27,7 +27,17 @@ setenv gtm_test_unicode "TRUE"
 $switch_chset "UTF-8" >&! switch_utf8.log
 
 # List the subtests separated by spaces under the appropriate environment variable name.
-setenv subtest_list  "callins callouts"
+setenv subtest_list_common	""
+setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic "$subtest_list_non_replic callins"
+setenv subtest_list_non_replic "$subtest_list_non_replic callouts"
+setenv subtest_list_replic	""
+
+if ($?test_replic == 1) then
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
+else
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS.
 setenv subtest_exclude_list	""

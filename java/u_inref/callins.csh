@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,7 +40,7 @@ $JAVA_HOME/bin/${bin_subdir}/java $jvm_flags com.test.ji.TestCI "$tst_working_di
 
 # Prepare the compilation and execution commands for the tests.
 set javac_exe = "$JAVA_HOME/bin/${bin_subdir}javac -encoding utf-8 -classpath $gtmji_dir/gtmji.jar"
-set java_exe = "$JAVA_HOME/bin/${bin_subdir}java $jvm_flags -Djava.library.path=$gtmji_dir -classpath ${tst_working_dir}:$gtmji_dir/gtmji.jar"
+set java_exe = "$JAVA_HOME/bin/${bin_subdir}java $jvm_flags --enable-native-access=ALL-UNNAMED -Djava.library.path=$gtmji_dir -classpath ${tst_working_dir}:$gtmji_dir/gtmji.jar"
 
 # Save Java environment settings in a special file.
 echo 'setenv tst_working_dir `pwd`'	>> set_java_env.csh
