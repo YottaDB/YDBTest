@@ -222,15 +222,9 @@ if ($?gtm_test_noggtoolsdir) then
 	setenv subtest_exclude_list "$subtest_exclude_list trigthrash"
 endif
 
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
-else if ("dbg" == "$tst_image") then
-	# We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
-	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
-else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
-	# Disable gtm7083 subtest on SUSE Linux and Ubuntu 23.10 (and above) as we don't have the needed
-	# on that distribution (due to no libncurses.so.5 package)
+# The gtm7083 subtest requires a build <= V62000 to exist.
+# Check if V62000 exists. If not, it is unlikely other prior builds exist. So disable this subtest in that case.
+if (! -e $gtm_root/V62000/$tst_image) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
 endif
 

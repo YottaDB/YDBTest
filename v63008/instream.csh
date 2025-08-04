@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,12 +42,10 @@ setenv subtest_exclude_list	""
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list "
 endif
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm9082"
-else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
-	# Disable gtm9082 subtest on SUSE Linux and Ubuntu 23.10 (and above) as we don't have the needed
-	# old versions on that distribution (due to no libtinfo.so.5 package)
+
+# The gtm9082 subtest requires a build < V63003 to exist.
+# Check if V63002 exists. If not, it is unlikely other prior builds exist. So disable this subtest in that case.
+if (! -e $gtm_root/V63002/$tst_image) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9082"
 endif
 
