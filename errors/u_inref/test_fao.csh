@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,12 +24,7 @@ if ($status) then
 	echo "TEST-E-CC Error from Compiler ($gt_cc_compiler).  See file compiler.out for details"
 	exit 1
 endif
-# Certain tests that link with libmumps.a (errors/test_fao, v62001/hash, v62002/zwritesvn) fail with the default linker (ld)
-# in case of "pro" builds (which have -flto turned on). They only work with the "gold" linker. Not sure why "ld" does not work
-# but since linking with libmumps.a is not representative of the YottaDB user (they only have libyottadb.so, not libmumps.a)
-# we consider this acceptable and add the gold linker directive ("-fuse-ld=gold") whenever "-lmumps" is used in the test system.
-# Also use $gtt_ld_shl_options to ensure we use same compilation flags at link time too (necessary for LTO).
-$gt_ld_linker $gt_ld_options_common $gtt_ld_shl_options -o runfaotest test_fao.o -L$gtm_obj -lmumps -fuse-ld=gold $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
+$gt_ld_linker $gt_ld_options_common $gtt_ld_shl_options -o runfaotest test_fao.o -L$gtm_obj -lmumps $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
 if ($status) then
 	echo "TEST-E-LINK Error from Linker ($gt_cc_compiler).  See file linker.out for details"
 	exit 1
