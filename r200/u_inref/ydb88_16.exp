@@ -1,7 +1,7 @@
 #!/usr/bin/env expect
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,7 +25,7 @@ spawn_ydb
     send "hang 99\r"
 ignore_ydb_answer
 
-spawn -noecho "/bin/bash"
+spawn -noecho /bin/bash -norc
     comment "stty should show 'echo', not '-echo'"
     send "stty -a | grep '\ echo\ '\r"
     send "exit\r"

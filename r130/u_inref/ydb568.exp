@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
-send -- "bash\r"
+send -- "bash -norc\r"
 send -- ". ./.bashrc\r"
 expect -- "SHELL$ "
 
