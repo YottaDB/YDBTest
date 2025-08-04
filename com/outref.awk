@@ -285,9 +285,7 @@ BEGIN {
 		} else if ("rhel" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "RHEL_LINUX_X86_64"
 			option_names[++no_options] = "OS_ARCH_VER"
-			if ("7.9" == ENVIRON["gtm_test_linux_version"])
-				envir[no_options] = "RHEL_7.9"
-			else if (1 == ENVIRON["gtm_test_rhel9_plus"])
+			if (1 == ENVIRON["gtm_test_rhel9_plus"])
 				envir[no_options] = "RHEL_9_PLUS"
 		} else if ("suse" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "SUSE_LINUX_X86_64"

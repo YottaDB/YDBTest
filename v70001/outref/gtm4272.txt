@@ -72,17 +72,15 @@ Simulated mv returns an error.
 ##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv '##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat' '##TEST_PATH##/mumps_backup.dat'
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT PRO
-##SUSPEND_OUTPUT RHEL_7.9
 
 ###################################################################
 
 # Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR
 #   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
-##TEST_AWK(/usr|)/bin/cp: cannot create regular file ./tmp/nonexist42/efgh.repl.: No such file or directory
+##TEST_AWK.*cp: cannot create regular file ./tmp/nonexist42/efgh.repl.: No such file or directory
 ##TEST_AWK%YDB-E-CMDERR, Error running command : unalias -a; (/usr|)/bin/cp ##TEST_PATH##/mumps.repl /tmp/nonexist42/efgh.repl
 Error backing up replication instance file ##TEST_PATH##/mumps.repl. Moving on to other backups.
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-##ALLOW_OUTPUT RHEL_7.9
 
 ###################################################################
 

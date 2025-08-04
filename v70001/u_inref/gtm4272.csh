@@ -91,17 +91,12 @@ endif
 #
 # Test #4
 #
-# We restrict this test from running on RHEL 7.9 as the error message it prints about the bad file is surrounded by unicode single
-# quotes in that version which we don't consider worth matching given this is old RHEL 7 in a reference file due to the quote's
-# multi-byte representation so this subtest is bypassed under RHEL 7.9.
-if (("rhel" != $gtm_test_linux_distrib) || ("7.9" != $gtm_test_linux_version)) then
-	echo
-	$echoline
-	echo
-	echo '# Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR'
-	echo '#   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl'
-	$MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
-endif
+echo
+$echoline
+echo
+echo '# Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR'
+echo '#   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl'
+$MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
 #
 echo
 $echoline
