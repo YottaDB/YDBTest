@@ -118,24 +118,17 @@ else
 
 		set subtest_list_to_randomize_nonreplic="$subtest_list_non_replic $subtest_list_common"
 		set subtest_list_to_randomize_replic="$subtest_list_common $subtest_list_replic"
-		echo "$subtest_list_to_randomize_replic" | grep -q '[^[:space:]]' >& /dev/null
-		if ($status == 0) then
-			set replic_present = 1
-		else
-			set replic_present = 0
-		endif
 
 		set random_nonreplic_subtest_list=`shuf -n5 -e $subtest_list_to_randomize_nonreplic`
 		set random_nonreplic_subtest_list_with_commas=`echo "$random_nonreplic_subtest_list" | tr ' ' ','`
 		echo -n "# For $test non-replic, choose 5 random subtests: "
 		echo $random_nonreplic_subtest_list
 
-		if ($replic_present == 1) then
-			echo -n "# For $test replic, choose 1 random subtest: "
-			set random_replic_subtest_list=`shuf -n1 -e $subtest_list_to_randomize_replic`
-			set random_replic_subtest_list_with_commas=`echo "$random_replic_subtest_list" | tr ' ' ','`
-			echo $random_replic_subtest_list_with_commas
-		endif
+		echo -n "# For $test replic, choose 1 random subtest: "
+		set random_replic_subtest_list=`shuf -n1 -e $subtest_list_to_randomize_replic`
+		set random_replic_subtest_list_with_commas=`echo "$random_replic_subtest_list" | tr ' ' ','`
+		echo $random_replic_subtest_list_with_commas
+
 		echo " "
 
 		# If we have tests, run them async, saving results in /tmp/test-testname.txt.
@@ -145,7 +138,7 @@ else
 			echo "# Starting $test non-replic tests:"
 			su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_nonreplic_subtest_list_with_commas >>& /tmp/test-${test}.txt" &
 		endif
-		if ( $?random_replic_subtest_list_with_commas != "" ) then
+		if ( $random_replic_subtest_list_with_commas != "" ) then
 			echo "# Starting $test replic tests:"
 			su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -env gtm_ipv4_only=1 -stdout 0 -fg -t $test -st $random_replic_subtest_list_with_commas -replic >>& /tmp/test-${test}.txt" &
 		endif
