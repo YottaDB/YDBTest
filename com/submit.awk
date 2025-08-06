@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ BEGIN {
 	# Setting $SHELL to /usr/local/bin/tcsh because tcsh is the only supported shell for the test system and it needs to be the default/login shell
 	# or else tests that use ZSYSTEM might fail
 	# e.g., "basic" test fails, when $SHELL is not set correctly, because of the command `ZSYSTEM "echo tracing fifo2 "_$job_" >>&! dbx_c_stack_trace_fifo2.trace"`
-	# which in turn fails because the bash shell(default shell) encounters >>&! which is tcsh syntax 
+	# which in turn fails because the bash shell(default shell) encounters >>&! which is tcsh syntax
 	print "setenv SHELL /usr/local/bin/tcsh"
 	gtm_tst_out = ENVIRON["gtm_tst_out"]
       }
@@ -89,12 +89,15 @@ $1 !~ /#/ {testname = $2 "_" $1
  if (ENVIRON["test_want_concurrency"]=="yes") printf " &"
  printf "\n"
  print "set teststat = $status"
- print "# It is possible the test got kill -9ed (by gtm_test_watchdog.csh due to a TIMEDOUT alert)."
- print "# In that case, the exit status would be 128 + 9 (kill -9) = 137. Handle that specially."
- print "if ((137 == $teststat) && $?test_distributed) then"
+ print "if ($?test_distributed) then"
+ print "	if ($teststat == 0) then"
+ print"			set log_line_stat = PASSED"
+ print "	else"
+ print"			set log_line_stat = FAILED"
+ print "	endif"
  print "	set donefile = ${test_distributed}.done"
  print "	# Note down in the file that this test is done"
- print "	$test_distributed_srvr \"$gtm_tst/com/distributed_test_pick.csh donetest $testname $short_host FAILED $donefile $gtm_tst\""
+ print "	$test_distributed_srvr \"$gtm_tst/com/distributed_test_pick.csh donetest $testname $short_host $log_line_stat $donefile $gtm_tst\""
  print "endif"
  print "end_"testname":"
  print "if ($teststat != 0 ) set stat = $teststat"

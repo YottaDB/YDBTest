@@ -31,38 +31,15 @@ umask 002
 set short_host = $HOST:r:r:r:r
 $gtm_tst/com/chkPWDnoHome.csh
 if ($status == "6") then
-	set tmp_exit_stat = "6"
-	# atlhxit* has some issues due to which it switches to home directory randomly with
-	# "pwd: No such file or directory" error in the log
-	# In such case, check if we can get back to tst_working_dir and if so, proceed
-	# Not limiting this check to atlhxit*, since it doesn't harm doing everywhere.
-	if !($?tst_working_dir) then
-		echo "chkPWDnoHome.csh returned status 6 AND <tst_working_dir> does not exist" >>! $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit $tmp_exit_stat
-	endif
+	set stat = "6"
 	if !(-d $tst_working_dir) then
-		echo "chkPWDnoHome.csh returned status 6 AND <tst_working_dir> exists but is not a directory" >>! $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit $tmp_exit_stat
+		echo "chkPWDnoHome.csh returned status 6 : tst_working_dir = [$tst_working_dir] is not a directory" >>! $tst_general_dir/diff.log
+		goto failed
 	endif
 	cd $tst_working_dir
 	if ($status) then
-		echo "chkPWDnoHome.csh returned status 6 AND <tst_working_dir> exists and is a directory but cd to it failed (e.g. permissions)" >>! $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit $tmp_exit_stat
+		echo "chkPWDnoHome.csh returned status 6 : cd to tst_working_dir [cd $tst_working_dir] failed (e.g. permissions)" >>! $tst_general_dir/diff.log
+		goto failed
 	endif
 endif
 
@@ -125,12 +102,8 @@ if !($?test_norandomsettings) then
 	if ($status) then
 		echo "TEST-E-FAIL : do_random_settings.csh exited with non-zero status and below error." >>! $tst_general_dir/diff.log
 		cat $tst_general_dir/tmp/do_random_settings.out >> $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 1
+		set stat = 1
+		goto failed
 	endif
 else
 	setenv ydb_test_4g_db_blks 0	# Define this env var so we don't need to use "$?ydb_test_4g_db_blks" in all later usages
@@ -172,12 +145,8 @@ set path = ($path_base $gtm_tst/$tst/inref $gtm_tst/$tst/u_inref $gtm_tst/com .)
 
 if ( ($?test_replic) && ($?test_gtm_gtcm_one) ) then
 	echo "TEST-E-REPLIC_GTCM REPLICATION AND GT.CM should not be specified together" >>! $tst_general_dir/diff.log
-	cat $tst_general_dir/diff.log
-	$gtm_tst/com/write_logs.csh FAILED
-	if (!($?tst_dont_send_mail)) then
-		$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-	endif
-	exit 1
+	set stat = 1
+	goto failed
 endif
 if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
 	set echo
@@ -211,12 +180,8 @@ if ($?test_replic) then
 		if ($#allsrvrs != $#uniqsrvrs) then
 			echo "remote servers should be uniq and different from tst_org_host in : $allsrvrs" >>! $tst_general_dir/diff.log
 			echo "Not submitting the multi-host test $tst" >>! $tst_general_dir/diff.log
-			cat $tst_general_dir/diff.log
-			$gtm_tst/com/write_logs.csh FAILED
-			if (!($?tst_dont_send_mail)) then
-				$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-			endif
-			exit 4
+			set stat = 4
+			goto failed
 		endif
 	endif
 endif
@@ -229,11 +194,8 @@ if ($?test_gtm_gtcm_one) then
 	if ($status) then
 		echo "$gtm_tst/com/gtcm_server_check.csh failed with the above"
 		echo "$gtm_tst/com/gtcm_server_check.csh failed" >>! $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 4
+		set stat = 4
+		goto failed
 	endif
 	set serverstocheck = "$tst_gtcm_server_list"
 	# Generate a list of random boolean values, one per gtcm host. This will later be used by dbcreate_multi.awk
@@ -256,18 +218,27 @@ unset check_setup_failed
 foreach server ($serverstocheck)
 	set stat = `$rsh $server "setenv gtm_test_serverconf_file $gtm_test_serverconf_file ; source $gtm_test_com_individual/check_setup_dependencies.csh $gtm_test_com_individual"`
 	if ("0" != "$stat") then
+		# Check if tcsh is not login shell for user on the remote host. If so mention that as the specific issue as it
+		# would be a more helpful error message to the user. If not, include the full $rsh output in the failure mail.
+		set login_shell = `$rsh $server 'echo $0'`
+		if ("$login_shell" != "tcsh") then
+			echo "SETUP-E-FAIL : Check for setup dependencies failed on host [$server]" >>! $tst_general_dir/diff.log
+			echo "SETUP-E-INFO : [$rsh $server] was expecting [tcsh] as login shell but found [$login_shell] instead." >>! $tst_general_dir/diff.log
+			echo "SETUP-E-EXIT : Cannot continue with test. Exiting." >>! $tst_general_dir/diff.log
+		else
+			$rsh $server "setenv gtm_test_serverconf_file $gtm_test_serverconf_file ; source $gtm_test_com_individual/check_setup_dependencies.csh $gtm_test_com_individual" >& $tst_general_dir/check_setup_${server}.log
+			echo "SETUP-E-FAIL : Check for setup dependencies failed on host [$server]" >>! $tst_general_dir/diff.log
+			echo "SETUP-E-INFO : Output of [$rsh $server] is pasted below from $tst_general_dir/check_setup_${server}.log" >> $tst_general_dir/diff.log
+			cat $tst_general_dir/check_setup_${server}.log >> $tst_general_dir/diff.log
+			echo "SETUP-E-EXIT : Cannot continue with test. Exiting." >>! $tst_general_dir/diff.log
+		endif
+		echo "" >> $tst_general_dir/diff.log
 		set check_setup_failed
-		echo "SETUP-E-FAIL Check for setup dependencies failed on the server $server with status $stat" >>! $tst_general_dir/diff.log
 	endif
 end
 if ($?check_setup_failed) then
-	# Can we switch to single-host at this point if it was randomly chosen?
-	cat $tst_general_dir/diff.log
-	$gtm_tst/com/write_logs.csh FAILED
-	if (!($?tst_dont_send_mail)) then
-		$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-	endif
-	exit 1
+	set stat = 1
+	goto failed
 endif
 
 set cleanup_script = $tst_dir/$gtm_tst_out/cleanup.csh
@@ -289,12 +260,8 @@ if ($?test_replic) then
 	endif
 	if ("$tst_remote_dir" == "") then
 		echo "TEST-E-REMOTE Remote directory [$tst_remote_dir_orig] could not be created (maybe permissions issue). Exiting." >>! $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 61
+		set stat = 61
+		goto failed
 	endif
 endif
 
@@ -456,12 +423,8 @@ if ($?test_gtm_gtcm_one) then
 		set dir_error = 1
 	endif
 	if ($dir_error) then
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 6
+		set stat = 6
+		goto failed
 	endif
 	echo "primary $tst_org_host $tst_dir/$gtm_tst_out" >>&! $tst_dir/$gtm_tst_out/primary_dir
 	echo "setenv local_dir  $tst_dir/$gtm_tst_out" >>&! $tst_dir/$gtm_tst_out/testdirs
@@ -525,12 +488,8 @@ if ($?test_replic) then
 			# output the actual error found first
 			echo $h1_check >>! $tst_general_dir/diff.log
 			echo "Problem with $gtm_ver on $h1 or Connection problem - exiting!" >>! $tst_general_dir/diff.log
-			cat $tst_general_dir/diff.log
-			$gtm_tst/com/write_logs.csh FAILED
-			if (!($?tst_dont_send_mail)) then
-				$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-			endif
-			exit 2
+			set stat = 2
+			goto failed
 		endif
 		set cmd1=`$rsh $serverstocheck[1] "$gtm_tools/check_utf8_support.csh"`
 		setenv h1_utf8 "$cmd1"
@@ -540,12 +499,8 @@ if ($?test_replic) then
 			# output the actual error found first
 			echo $h2_check >>! $tst_general_dir/diff.log
 			echo "Problem with $gtm_ver on $h2 or Connection problem - exiting!" >>! $tst_general_dir/diff.log
-			cat $tst_general_dir/diff.log
-			$gtm_tst/com/write_logs.csh FAILED
-			if (!($?tst_dont_send_mail)) then
-				$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-			endif
-			exit 2
+			set stat = 2
+			goto failed
 		endif
 		set cmd2=`$rsh $serverstocheck[2] "$gtm_tools/check_utf8_support.csh"`
 		setenv h2_utf8 "$cmd2"
@@ -598,15 +553,11 @@ if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
 		echo "#################################################" >> $tst_general_dir/diff.log
 		$sec_shell "hostname; ls -l $gtm_root/$remote_ver/" >>& $tst_general_dir/diff.log
 		echo "#################################################" >> $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
 		$gtm_test_com_individual/clean_and_exit.csh
 		\rm -r $tst_working_dir
 		source $gtm_tst/com/create_resolution.csh
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 40
+		set stat = 40
+		goto failed
 	endif
 endif
 
@@ -708,14 +659,10 @@ if (!( -d $gtm_tst/$tst)) then
 	echo "Exiting" >>! $tst_general_dir/outstream.log
 	echo "Could not find the test directory for test $tst" >>! $tst_general_dir/diff.log
 	echo "Exiting" >>! $tst_general_dir/diff.log
-	cat $tst_general_dir/diff.log
-	$gtm_tst/com/write_logs.csh FAILED
 	$gtm_test_com_individual/clean_and_exit.csh
 	\rm -r $tst_working_dir
-	if (!($?tst_dont_send_mail)) then
-		$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-	endif
-	exit 50
+	set stat = 50
+	goto failed
 endif
 #########################################################################
 # prepare cleanup.csh
@@ -779,17 +726,15 @@ if (! $?gtm_test_dryrun) then
 	else
 		echo "TEST-E-SPACE, Will not run test $tst due to lack of space:" >>&! $tst_general_dir/diff.log
 		cat $tst_general_dir/check_space.out >>&! $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
 		# disk_space_mailed.txt shows whether another test encountered the problem earlier
 		if (!(-e $tst_dir/$gtm_tst_out/disk_space_mailed.txt)) then
 			touch $tst_dir/$gtm_tst_out/disk_space_mailed.txt
 			if (!($?tst_dont_send_mail)) then
 				echo "Any test that requires the above full disk will not run until the disk is freed up. This will be the only warning that will be sent." >>&! $tst_general_dir/diff.log
-				$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
 			endif
 		endif
-		exit 50
+		set stat = 50
+		goto failed
 	endif
 endif
 #########################################################################
@@ -802,14 +747,10 @@ if ($?test_replic) then
 			echo "TEST-E-REMOTE_GTM_EXE no executable" >>! $tst_general_dir/diff.log
 			echo "Check that the remote gtm version exists" >> $tst_general_dir/diff.log
 			echo "vercheck: $vercheck" >> $tst_general_dir/diff.log
-			cat $tst_general_dir/diff.log
-			$gtm_tst/com/write_logs.csh FAILED
 			$gtm_test_com_individual/clean_and_exit.csh
 			source $gtm_tst/com/create_resolution.csh
-			if (!($?tst_dont_send_mail)) then
-				$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-			endif
-			exit 40
+			stat = 40
+			goto failed
 		endif
 	endif
 	# we currently do not check the remote hosts for MULTISITE
@@ -830,14 +771,10 @@ else if ("GT.CM" == $test_gtm_gtcm) then
 		echo "TEST-E-REMOTE_GTM_EXE no executable" >>! $tst_general_dir/diff.log
 		echo "Check that the remote gtm version exists" >> $tst_general_dir/diff.log
 		echo "Check $tst_working_dir/gtcm_version_check.txt for more info" >> $tst_general_dir/diff.log
-		cat $tst_general_dir/diff.log
-		$gtm_tst/com/write_logs.csh FAILED
 		$gtm_test_com_individual/clean_and_exit.csh
 		source $gtm_tst/com/create_resolution.csh
-		if (!($?tst_dont_send_mail)) then
-			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
-		endif
-		exit 40
+		set stat = 40
+		goto failed
 	endif
 endif
 #########################################################################
@@ -1183,17 +1120,14 @@ if ($?testtiming_log) then
 		cp $tst_general_dir/timing.subtest $subtest_timing_dir/$testname.timing.subtest
 	endif
 endif
-############################################################
-if ($?test_distributed) then
-	set donefile = ${test_distributed}.done
-	# Note down in the file that this test is done
-	$test_distributed_srvr "$gtm_tst/com/distributed_test_pick.csh donetest $testname $short_host $log_line_stat $donefile $gtm_tst"
-endif
-if (1 == $stat) then
-	# Lets signal a "test failure" to the caller (differentiate with the other exit 1 states)
-	exit 99
-else
+
+exit $stat
+
+failed:
+	# This is a common entry point for various failure code paths to avoid code duplication.
+	cat $tst_general_dir/diff.log
+	$gtm_tst/com/write_logs.csh FAILED
+	if (!($?tst_dont_send_mail)) then
+		$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
+	endif
 	exit $stat
-endif
-
-
