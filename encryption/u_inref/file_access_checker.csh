@@ -3,7 +3,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,7 +56,7 @@ else
 	if ($invalidKeyringFlag == 1) then
 		@ fail = 1
 	else if (!(-e $GNUPGHOME/pubring.gpg) || !(-e $GNUPGHOME/secring.gpg)) then
-		if (!(-e $GNUPGHOME/pubring.kbx) || !(-e $GNUPGHOME/pubring.kbx~) || !(-s $GNUPGHOME/pubring.kbx) || !(-r $GNUPGHOME/pubring.kbx)) then
+		if (!(-e $GNUPGHOME/pubring.kbx) || !(-s $GNUPGHOME/pubring.kbx) || !(-r $GNUPGHOME/pubring.kbx)) then
 			@ fail = 2
 		endif
 	else if (!(-s $GNUPGHOME/secring.gpg) || !(-r $GNUPGHOME/secring.gpg)) then
