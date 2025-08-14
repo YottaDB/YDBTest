@@ -54,7 +54,6 @@ if ! ( $?tst_tcsh ) setenv tst_tcsh "tcsh -f"   # let cshdebug.csh predefine thi
 setenv tst_awk "env LC_ALL=C gawk"
 setenv tst_od "od"
 setenv tst_ls "ls"
-setenv lsof  /usr/local/bin/lsof
 setenv tst_ld_yottadb "-lyottadb"
 setenv convert_to_gtm_chset :
 setenv strings "strings"
@@ -142,10 +141,13 @@ if !(-e $fuser) then
 	setenv fuser echo
 endif
 
-if !(-e $lsof) setenv lsof  /usr/sbin/lsof
-if !(-e $lsof) setenv lsof  /usr/bin/lsof
-if !(-e $lsof) then
-	echo "TEST-E-LSOF, cannot find lsof. Test framework will fail"
+if (! $?lsof) then
+	setenv lsof  /usr/local/bin/lsof
+	if !(-e $lsof) setenv lsof  /usr/sbin/lsof
+	if !(-e $lsof) setenv lsof  /usr/bin/lsof
+	if !(-e $lsof) then
+		echo "TEST-E-LSOF, cannot find lsof. Test framework will fail"
+	endif
 endif
 
 setenv tst_gzip /usr/local/bin/gzip
