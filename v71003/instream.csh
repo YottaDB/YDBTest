@@ -25,6 +25,7 @@
 # tlsreneg_msg-gtmde567908		[jon]		Test the GT.M TLS plugin library exposes an external call interface providing cipher suite and version information
 # tlsconf_default-gtmde568389	[jon]	Test Receiver Server TLS configuration default change
 # gvsuboflow_context-gtmf134571		[jon]	Test improve context in GVSUBOFLOW error message
+# sockprinc_sighup-gtmf135133	[jon]	Test SOCKET $PRINCIPAL devices recognize and report SIGHUP signals
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -38,6 +39,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic dollarstorage-gtmde5401
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeoutdefer_zinterrupt-gtmde376113"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pattalterr_memleak-gtmde559768"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvsuboflow_context-gtmf134571"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sockprinc_sighup-gtmf135133"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"

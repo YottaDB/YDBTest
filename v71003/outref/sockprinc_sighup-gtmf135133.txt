@@ -1,0 +1,148 @@
+# ********************************************************************************************
+# GTM-F135133- Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F135133)
+# 
+# USE for a socket device recognizes NOHUPENABLE and HUPENABLE deviceparameters to determine whether to recognize a SIGHUP signal on $PRINCIPAL as an error. The gtm_hupenable environment variable determines the initial setting for the process. Previously, this feature was only available for terminal devices and a process with a socket $PRINCIPAL device ignored all SIGHUP signals. (GTM-F135133)
+# 
+# How the two deviceparameters and the environment variable interact
+# -----------------------------------------------------------------
+# gtm_hupenable establishes the initial setting for the process, and a later USE $PRINCIPAL:(HUPENABLE)
+# or USE $PRINCIPAL:(NOHUPENABLE) overrides it, so the setting applied last is the one in effect. When
+# the setting in effect is HUPENABLE, a SIGHUP received by the process raises a SOCKHANGUP error; when it
+# is NOHUPENABLE, SIGHUP is ignored. Previously, SIGHUP was always ignored by a process whose $PRINCIPAL
+# is a socket device, no matter what either the deviceparameters or the environment variable said.
+# 
+# Reporting a SOCKHANGUP implicitly reverts $PRINCIPAL to NOHUPENABLE, exactly as V7.0-002 documented for
+# TERMHANGUP on a terminal, so a process that anticipates more than one hangup has to reissue
+# USE $PRINCIPAL:(HUPENABLE) after each one.
+# 
+# How each test below drives that
+# -------------------------------
+# Every test runs [parent^gtmf135133], which
+# 	1. OPENs a LISTENing LOCAL socket,
+# 	2. JOBs [child1^gtmf135133], which CONNECTs to it,
+# 	3. DETACHes the accepted (CONNECTED) socket and JOBs [child2^gtmf135133] with that socket as its $PRINCIPAL and child2.mje as its error file, and
+# 	4. waits for both jobbed off processes to terminate.
+# [child2^gtmf135133] then establishes the setting under test, records ZSHOW "D" output for $PRINCIPAL,
+# and sends SIGHUP to itself with $ZSIGPROC. Each test checks both the ZSHOW "D" output, which reports
+# the recorded HUPENABLE setting, and whether SOCKHANGUP reached child2.mje, which is what shows that a
+# SIGHUP handler is armed. The last test differs: it
+# sets $ETRAP so that it survives the first SOCKHANGUP, and signals itself three times, printing a
+# ZSHOW "D" snapshot after each step rather than relying on child2.mje.
+# See the following discussion for more details: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/712#note_2704303463.
+# 
+
+### T1 : Test that the HUPENABLE deviceparameter on a $PRINCIPAL socket device recognizes SIGHUP as an error.
+# gtm_hupenable is left undefined
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing USE $P:(HUPENABLE) before sending itself a SIGHUP
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" reports HUPENABLE for the $PRINCIPAL socket device
+# Check child2T1.mje for the SOCKHANGUP error raised by the SIGHUP.
+# Previously, SIGHUP was always ignored and no error was issued.
+----------
+Error SOCKHANGUP seen in child2T1.mje as expected:
+%GTM-E-SOCKHANGUP, Socket has disconnected
+----------
+
+### T2 : Test that gtm_hupenable=true alone makes a $PRINCIPAL socket device recognize SIGHUP as an error.
+# Set gtm_hupenable=true
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing USE $P with no deviceparameter before sending itself a SIGHUP
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" reports HUPENABLE for the $PRINCIPAL socket device
+# Check child2T2.mje for the SOCKHANGUP error raised by the SIGHUP.
+# Previously, SIGHUP was always ignored and no error was issued.
+----------
+Error SOCKHANGUP seen in child2T2.mje as expected:
+%GTM-E-SOCKHANGUP, Socket has disconnected
+----------
+
+### T3 : Test that the NOHUPENABLE deviceparameter overrides gtm_hupenable=true, so SIGHUP is ignored.
+# Set gtm_hupenable=true
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing USE $P:(NOHUPENABLE) before sending itself a SIGHUP
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" does not report HUPENABLE for the $PRINCIPAL socket device
+# Confirm no SOCKHANGUP error in child2T3.mje.
+# Previously, SIGHUP was always ignored for a $PRINCIPAL socket device, so this behavior is unchanged.
+
+### T4 : Test that gtm_hupenable=false leaves a $PRINCIPAL socket device ignoring SIGHUP.
+# Set gtm_hupenable=false
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing USE $P with no deviceparameter before sending itself a SIGHUP
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" does not report HUPENABLE for the $PRINCIPAL socket device
+# Confirm no SOCKHANGUP error in child2T4.mje.
+# Previously, SIGHUP was always ignored for a $PRINCIPAL socket device, so this behavior is unchanged.
+
+### T5 : Test that the NOHUPENABLE deviceparameter turns off SIGHUP recognition that HUPENABLE turned on earlier in the same process.
+# gtm_hupenable is left undefined
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing USE $P:(HUPENABLE) and then USE $P:(NOHUPENABLE) before sending itself a SIGHUP
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" does not report HUPENABLE for the $PRINCIPAL socket device
+# Confirm no SOCKHANGUP error in child2T5.mje.
+# Previously, SIGHUP was always ignored for a $PRINCIPAL socket device, so this behavior is unchanged.
+
+### T6 : Test that a SOCKHANGUP implicitly reverts $PRINCIPAL to NOHUPENABLE, so a second SIGHUP is ignored until USE $P:(HUPENABLE) is reissued.
+# gtm_hupenable is left undefined
+# Run [parent^gtmf135133], with [child2^gtmf135133] doing the [hupreset^gtmf135133] sequence, which traps SOCKHANGUP with $ETRAP and signals itself three times
+##TEST_AWKParent process pid = [0-9]*
+# Open a LISTENing socket
+# Job child1, which will CONNECT to the LISTENing socket
+##TEST_AWKchild1 process pid = [0-9]*
+# Wait until child1's connection is accepted,
+# then job off child2 with the CONNECTED socket device as $PRINCIPAL
+##TEST_AWKchild2 process pid = [0-9]*
+# Wait for jobbed off child2 and child1 processes to terminate
+# Check the ZSHOW "D" output taken by [child2^gtmf135133] for the recorded HUPENABLE setting.
+# ZSHOW "D" does not report HUPENABLE for the $PRINCIPAL socket device
+# Trace written by [hupreset^gtmf135133], one line per step:
+after USE $P:(HUPENABLE): ZSHOW "D" reports HUPENABLE = yes
+trapped SOCKHANGUP: ZSHOW "D" reports HUPENABLE = no
+after first SIGHUP: ZSHOW "D" reports HUPENABLE = no
+after second SIGHUP: ZSHOW "D" reports HUPENABLE = no
+after reissuing USE $P:(HUPENABLE): ZSHOW "D" reports HUPENABLE = yes
+trapped SOCKHANGUP: ZSHOW "D" reports HUPENABLE = no
+after third SIGHUP: ZSHOW "D" reports HUPENABLE = no
+# Confirm no SOCKHANGUP error in child2T6.mje.
+# Previously, SIGHUP was always ignored, so neither the SOCKHANGUP nor the implicit reset could happen.
+
