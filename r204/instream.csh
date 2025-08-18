@@ -22,6 +22,7 @@
 # ztrigger_t_tries-ydbMR1702		[nars]		Test $ztrigger("item") clears t_tries in case of errors
 # gvcst_expand_any_key-ydb1027		[nars]		Test MUPIP REORG -MIN_LEVEL=1 does not assert fail in gvcst_expand_any_key.c
 # ydbcitab_norestore-ydb1161		[jon]		Test %YDB-E-CITABENV error is not issued when calling an M function via a function handle returned by a previous call to ydb_cip_t
+# boolean_envvars-ydb1150		[jon]		Test Boolean environment variables only accept substrings of yes, no, true, and false, but not superstrings
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -45,6 +46,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic encode_decode_simpleapi
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_t_tries-ydbMR1702"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvcst_expand_any_key-ydb1027"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcitab_norestore-ydb1161"
+setenv subtest_list_non_replic	"$subtest_list_non_replic boolean_envvars-ydb1150"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

@@ -1,0 +1,299 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test that Boolean environment variables only accept substrings of yes, no, true, and false, but not superstrings
+# -------------------------------------------------------------------------------------------------------------
+
+# Create a list of the macros that internally map to the affected Boolean environment variables
+# for later check to confirm that ydb_logical_truth_value() is called exactly once for each macro.
+
+### Test 1: Test $VIEW() shows the correct values for keywords that map to Boolean environment variables
+### when those variables are set using sub- and superstrings of 'yes', 'no', 'true', and 'false'
+### See the following discussion for why this is a valid test: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/831#note_2698917473
+##SUSPEND_OUTPUT UNICODE_MODE
+### Skipping test for ydb_badchar when running in M mode (setting ignored in this case)
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+### Test setting ydb_badchar:
+# ydb_badchar=y:
+  $VIEW("badchar")=1
+# ydb_badchar=ye:
+  $VIEW("badchar")=1
+# ydb_badchar=yes:
+  $VIEW("badchar")=1
+# ydb_badchar=yesa:
+  $VIEW("badchar")=1
+# ydb_badchar=yesab:
+  $VIEW("badchar")=1
+# ydb_badchar=yesabc:
+  $VIEW("badchar")=1
+# ydb_badchar=t:
+  $VIEW("badchar")=1
+# ydb_badchar=tr:
+  $VIEW("badchar")=1
+# ydb_badchar=tru:
+  $VIEW("badchar")=1
+# ydb_badchar=true:
+  $VIEW("badchar")=1
+# ydb_badchar=truea:
+  $VIEW("badchar")=1
+# ydb_badchar=trueab:
+  $VIEW("badchar")=1
+# ydb_badchar=trueabc:
+  $VIEW("badchar")=1
+# ydb_badchar=n:
+  $VIEW("badchar")=0
+# ydb_badchar=no:
+  $VIEW("badchar")=0
+# ydb_badchar=noa:
+  $VIEW("badchar")=1
+# ydb_badchar=noab:
+  $VIEW("badchar")=1
+# ydb_badchar=noabc:
+  $VIEW("badchar")=1
+# ydb_badchar=f:
+  $VIEW("badchar")=0
+# ydb_badchar=fa:
+  $VIEW("badchar")=0
+# ydb_badchar=fal:
+  $VIEW("badchar")=0
+# ydb_badchar=fals:
+  $VIEW("badchar")=0
+# ydb_badchar=false:
+  $VIEW("badchar")=0
+# ydb_badchar=falsea:
+  $VIEW("badchar")=1
+# ydb_badchar=falseab:
+  $VIEW("badchar")=1
+# ydb_badchar=falseabc:
+  $VIEW("badchar")=1
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+### Test setting ydb_gdscert:
+# ydb_gdscert=y:
+  $VIEW("gdscert")=1
+# ydb_gdscert=ye:
+  $VIEW("gdscert")=1
+# ydb_gdscert=yes:
+  $VIEW("gdscert")=1
+# ydb_gdscert=yesa:
+  $VIEW("gdscert")=0
+# ydb_gdscert=yesab:
+  $VIEW("gdscert")=0
+# ydb_gdscert=yesabc:
+  $VIEW("gdscert")=0
+# ydb_gdscert=t:
+  $VIEW("gdscert")=1
+# ydb_gdscert=tr:
+  $VIEW("gdscert")=1
+# ydb_gdscert=tru:
+  $VIEW("gdscert")=1
+# ydb_gdscert=true:
+  $VIEW("gdscert")=1
+# ydb_gdscert=truea:
+  $VIEW("gdscert")=0
+# ydb_gdscert=trueab:
+  $VIEW("gdscert")=0
+# ydb_gdscert=trueabc:
+  $VIEW("gdscert")=0
+# ydb_gdscert=n:
+  $VIEW("gdscert")=0
+# ydb_gdscert=no:
+  $VIEW("gdscert")=0
+# ydb_gdscert=noa:
+  $VIEW("gdscert")=0
+# ydb_gdscert=noab:
+  $VIEW("gdscert")=0
+# ydb_gdscert=noabc:
+  $VIEW("gdscert")=0
+# ydb_gdscert=f:
+  $VIEW("gdscert")=0
+# ydb_gdscert=fa:
+  $VIEW("gdscert")=0
+# ydb_gdscert=fal:
+  $VIEW("gdscert")=0
+# ydb_gdscert=fals:
+  $VIEW("gdscert")=0
+# ydb_gdscert=false:
+  $VIEW("gdscert")=0
+# ydb_gdscert=falsea:
+  $VIEW("gdscert")=0
+# ydb_gdscert=falseab:
+  $VIEW("gdscert")=0
+# ydb_gdscert=falseabc:
+  $VIEW("gdscert")=0
+
+### Test setting ydb_noundef:
+# ydb_noundef=y:
+  $VIEW("undef")=0
+# ydb_noundef=ye:
+  $VIEW("undef")=0
+# ydb_noundef=yes:
+  $VIEW("undef")=0
+# ydb_noundef=yesa:
+  $VIEW("undef")=1
+# ydb_noundef=yesab:
+  $VIEW("undef")=1
+# ydb_noundef=yesabc:
+  $VIEW("undef")=1
+# ydb_noundef=t:
+  $VIEW("undef")=0
+# ydb_noundef=tr:
+  $VIEW("undef")=0
+# ydb_noundef=tru:
+  $VIEW("undef")=0
+# ydb_noundef=true:
+  $VIEW("undef")=0
+# ydb_noundef=truea:
+  $VIEW("undef")=1
+# ydb_noundef=trueab:
+  $VIEW("undef")=1
+# ydb_noundef=trueabc:
+  $VIEW("undef")=1
+# ydb_noundef=n:
+  $VIEW("undef")=1
+# ydb_noundef=no:
+  $VIEW("undef")=1
+# ydb_noundef=noa:
+  $VIEW("undef")=1
+# ydb_noundef=noab:
+  $VIEW("undef")=1
+# ydb_noundef=noabc:
+  $VIEW("undef")=1
+# ydb_noundef=f:
+  $VIEW("undef")=1
+# ydb_noundef=fa:
+  $VIEW("undef")=1
+# ydb_noundef=fal:
+  $VIEW("undef")=1
+# ydb_noundef=fals:
+  $VIEW("undef")=1
+# ydb_noundef=false:
+  $VIEW("undef")=1
+# ydb_noundef=falsea:
+  $VIEW("undef")=1
+# ydb_noundef=falseab:
+  $VIEW("undef")=1
+# ydb_noundef=falseabc:
+  $VIEW("undef")=1
+
+### Test setting ydb_statshare:
+# ydb_statshare=y:
+  $VIEW("statshare")=1
+# ydb_statshare=ye:
+  $VIEW("statshare")=1
+# ydb_statshare=yes:
+  $VIEW("statshare")=1
+# ydb_statshare=yesa:
+  $VIEW("statshare")=0
+# ydb_statshare=yesab:
+  $VIEW("statshare")=0
+# ydb_statshare=yesabc:
+  $VIEW("statshare")=0
+# ydb_statshare=t:
+  $VIEW("statshare")=1
+# ydb_statshare=tr:
+  $VIEW("statshare")=1
+# ydb_statshare=tru:
+  $VIEW("statshare")=1
+# ydb_statshare=true:
+  $VIEW("statshare")=1
+# ydb_statshare=truea:
+  $VIEW("statshare")=0
+# ydb_statshare=trueab:
+  $VIEW("statshare")=0
+# ydb_statshare=trueabc:
+  $VIEW("statshare")=0
+# ydb_statshare=n:
+  $VIEW("statshare")=0
+# ydb_statshare=no:
+  $VIEW("statshare")=0
+# ydb_statshare=noa:
+  $VIEW("statshare")=0
+# ydb_statshare=noab:
+  $VIEW("statshare")=0
+# ydb_statshare=noabc:
+  $VIEW("statshare")=0
+# ydb_statshare=f:
+  $VIEW("statshare")=0
+# ydb_statshare=fa:
+  $VIEW("statshare")=0
+# ydb_statshare=fal:
+  $VIEW("statshare")=0
+# ydb_statshare=fals:
+  $VIEW("statshare")=0
+# ydb_statshare=false:
+  $VIEW("statshare")=0
+# ydb_statshare=falsea:
+  $VIEW("statshare")=0
+# ydb_statshare=falseab:
+  $VIEW("statshare")=0
+# ydb_statshare=falseabc:
+  $VIEW("statshare")=0
+
+### Test 2: Test that all macros mapping to Boolean environment variables are called by ydb_logical_truth_value() in YottaDB
+### This is done to confirm appropriate sub- and superstring parsing behavior for Boolean environment variables that
+### do not map to $VIEW() keywords. Fully testing these cases is not straightforward, so this is done as a workaround
+### based on the fact that Test 1 above tests the correct behavior of ydb_logical_truth_value() itself. So, this test
+### assumes that ydb_logical_truth_value() behaves correctly, then confirms that it is called for all affected Boolean environment variables.
+### See the following discussion for why this is a valid test: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/831#note_2698917473
+# Find all calls to ydb_logical_truth_value and store in a file, to avoid repeated `grep` calls in below loop over each Boolean environment variable macro
+# Loop over each Boolean environment variable macro and confirm that it is passed to exactly one call to ydb_logical_truth_value()
+# Macro YDBENVINDX_AUTORELINK_KEEPRTN called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_BADCHAR called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_DBFILEXT_SYSLOG_DISABLE called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_DIRTREE_COLLHDR_ALWAYS called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_DMTERM called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_DOLLAR_TEST called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_DONT_TAG_UTF8_ASCII called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_ENVIRONMENT_INIT called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_GDSCERT called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_GVUNDEF_FATAL called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_HUGETLB_SHM called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_HUPENABLE called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_IPV4_ONLY called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_LCT_STDNULL called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_NOCENABLE called in:
+    cenable.c
+# Macro YDBENVINDX_NOFFLF called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_NOUNDEF called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_PINSHM called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_QUIET_HALT called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_READLINE called in:
+    readline.c
+# Macro YDBENVINDX_RECOMPILE_NEWER_SRC called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_STATSHARE called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_STDXKILL called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_STP_GCOL_NOSORT called in:
+    gtm_startup.c
+# Macro YDBENVINDX_TEST_AUTORELINK_ALWAYS called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_TEST_FAKE_ENOSPC called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_TREAT_SIGUSR2_LIKE_SIGUSR1 called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_USESECSHR called in:
+    gtm_env_init_sp.c
+# Macro YDBENVINDX_ZQUIT_ANYWAY called in:
+    gtm_env_init.c
+# Macro YDBENVINDX_ZTRAP_NEW called in:
+    gtm_env_init.c
