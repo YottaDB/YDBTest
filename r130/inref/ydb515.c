@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -27,10 +27,10 @@ int main()
 	int		status, errors;
 
 	errors = 0;
-	YDB_LITERAL_TO_BUFFER("x", &varname);					/* A (currently) non-existant local var */
+	YDB_LITERAL_TO_BUFFER("$xyz", &varname);				/* A (currently) non-existant ISV */
 	memset(&errstr, 0, sizeof(errstr));					/* Unallocated errstr */
 	YDB_MALLOC_BUFFER(&value, 100);
-	status = ydb_get_st(YDB_NOTTP, &errstr, &varname, 0, NULL, &value);	/* Fetch non-existent local var */
+	status = ydb_get_st(YDB_NOTTP, &errstr, &varname, 0, NULL, &value);	/* Fetch non-existent ISV */
 	if (YDB_OK == status)
 	{
 		printf("ydb515: ERROR - found value that doesn't exist !?!?\n");

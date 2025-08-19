@@ -206,14 +206,14 @@ Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expec
 ydb_get_s() [255]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_s() call
 Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test of GVUNDEF error from ydb_get_s()
-ydb_get_s() [282]: 150372994,(SimpleAPI),%YDB-E-GVUNDEF, Global variable undefined: ^baselv("x","x")
+ydb_get_s() [281]: Return value : Expected = -150372994 (YDB_ERR_GVUNDEF) : Actual = -150372994
 # Demonstrate our progress by executing a gvnZWRITE in a call-in
 ^baselv="A question"
 ^baselv("","x","x","x","x")="A question"
 ^baselv("x","x","x","","x")="A question"
 ^baselv("x","x","x","x","x")="A question"
 # Test of ISVSUBSCRIPTED error
-ydb_get_s() [301]: 151028082,(SimpleAPI),%YDB-E-ISVSUBSCRIPTED, ISV variable name $trestart specified with a non-zero subscript count of 1
+ydb_get_s() [300]: 151028082,(SimpleAPI),%YDB-E-ISVSUBSCRIPTED, ISV variable name $trestart specified with a non-zero subscript count of 1
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

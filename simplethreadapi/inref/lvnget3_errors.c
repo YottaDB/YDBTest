@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -254,8 +254,7 @@ int main()
 	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 2, subscr32, &ret_value);
 	if (YDB_OK != status)
 	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_get_st() [r]: %s\n", errbuf);
+		printf("ydb_get_st() [r]: Return value : Expected = -150373850 (YDB_ERR_LVUNDEF) : Actual = %d\n", status);
 		fflush(stdout);
 	}
 	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);

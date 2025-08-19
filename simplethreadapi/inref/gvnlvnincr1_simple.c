@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -69,8 +69,10 @@ int main(int argc, char** argv)
 	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_get_st[%d]: %s\n", __LINE__, errbuf);
+		if ('^' == basevar.buf_addr[0])
+			printf("ydb_get_st() [%d]: Return value : Expected = -150372994 (YDB_ERR_GVUNDEF) : Actual = %d\n", __LINE__, status);
+		else
+			printf("ydb_get_st() [%d]: Return value : Expected = -150373850 (YDB_ERR_LVUNDEF) : Actual = %d\n", __LINE__, status);
 		fflush(stdout);
 	}
 	printf("# ydb_incr_st() will set the value of %s to 0, and then perform the increment.\n", basevar.buf_addr); fflush(stdout);

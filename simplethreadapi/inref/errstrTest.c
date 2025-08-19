@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -50,19 +50,19 @@ void* threadDriverA(void* args){
 	int i, status;
 	YDB_MALLOC_BUFFER(&errstr, 1024);
 	YDB_MALLOC_BUFFER(&retval, 5);
-	YDB_LITERAL_TO_BUFFER("^MyVal", &basevar);
+	YDB_LITERAL_TO_BUFFER("$MyVal", &basevar);
 
 	while (doRun) {
 		errstr.len_alloc = 1024;
 		status = ydb_get_st(YDB_NOTTP, &errstr, &basevar, 0, NULL, &retval);
 		YDB_ASSERT(YDB_OK != status);
-		if (NULL == strstr(errstr.buf_addr, "%YDB-E-GVUNDEF"))
-			printf("FAIL: errstr does not contain \"%%YDB-E-GVUNDEF\"; Contents of errstr.buf_addr: %s\n", errstr.buf_addr);
+		if (NULL == strstr(errstr.buf_addr, "%YDB-E-INVSVN"))
+			printf("FAIL: errstr does not contain \"%%YDB-E-INVSVN\"; Contents of errstr.buf_addr: %s\n", errstr.buf_addr);
 		errstr.len_alloc = 5;
 		status = ydb_get_st(YDB_NOTTP, &errstr, &basevar, 0, NULL, &retval);
 		YDB_ASSERT(YDB_OK != status);
-		if (77 != errstr.len_used)
-			printf("FAIL: errstr.len_used is not correct. Expected: 77; Got: %d\n", errstr.len_used);
+		if (72 != errstr.len_used)
+			printf("FAIL: errstr.len_used is not correct. Expected: 72; Got: %d\n", errstr.len_used);
 	}
 	YDB_FREE_BUFFER(&errstr);
 	YDB_FREE_BUFFER(&retval);

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -16,7 +16,7 @@
 
 #define ERRBUF_SIZE	1024
 
-#define BASEVAR "basevar"
+#define BASEVAR "$basevar"
 #define VALUE 	"value"
 
 int main(void)

@@ -5,7 +5,7 @@
 
 # Test ydb_incr_st() on ^X, which is not initially set.
 # Check to make sure ^X is not set
-ydb_get_st[73]: 150372994,(SimpleThreadAPI),%YDB-E-GVUNDEF, Global variable undefined: ^X
+ydb_get_st() [73]: Return value : Expected = -150372994 (YDB_ERR_GVUNDEF) : Actual = -150372994
 # ydb_incr_st() will set the value of ^X to 0, and then perform the increment.
 # *increment is set to NULL, which defaults to 1
 # Get ^X to confirm the value has incremented.
@@ -237,7 +237,7 @@ ydb_incr_st() [229]: 151027794,(SimpleThreadAPI),%YDB-E-SUBSARRAYNULL, Non-zero 
 
 # Test ydb_incr_st() on X, which is not initially set.
 # Check to make sure X is not set
-ydb_get_st[73]: 150373850,(SimpleThreadAPI),%YDB-E-LVUNDEF, Undefined local variable: X
+ydb_get_st() [75]: Return value : Expected = -150373850 (YDB_ERR_LVUNDEF) : Actual = -150373850
 # ydb_incr_st() will set the value of X to 0, and then perform the increment.
 # *increment is set to NULL, which defaults to 1
 # Get X to confirm the value has incremented.

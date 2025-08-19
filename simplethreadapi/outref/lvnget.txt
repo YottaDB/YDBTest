@@ -176,7 +176,7 @@ Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expec
 ydb_get_st() [p]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_get_st() call
 Attempting get with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test of LVUNDEF error from ydb_get_st()
-ydb_get_st() [r]: 150373850,(SimpleThreadAPI),%YDB-E-LVUNDEF, Undefined local variable: baselv("x","x")
+ydb_get_st() [r]: Return value : Expected = -150373850 (YDB_ERR_LVUNDEF) : Actual = -150373850
 Demonstrate our progress by executing a ZWRITE in a call-in
 baselv="A question"
 baselv("","x","x","x","x")="A question"
