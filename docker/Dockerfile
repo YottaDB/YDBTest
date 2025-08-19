@@ -22,7 +22,7 @@
 # - docker run --init -it -v <local directory>:/testarea1/ --cap-add PERFMON --rm ydbtest -rootshell
 
 # When the following line changes, remove the lines installing a custom version of gawk below
-ARG OS_VSN=bookworm
+ARG OS_VSN=trixie
 FROM debian:${OS_VSN}
 
 VOLUME /testarea1
@@ -77,7 +77,7 @@ RUN apt-get update && \
                     libffi-dev \
                     curl \
                     iproute2 \
-                    openjdk-17-jdk \
+                    openjdk-25-jdk \
                     golang \
                     screen \
                     sudo \
@@ -95,12 +95,19 @@ RUN apt-get update && \
                     openssh-server \
                     jq \
                     libjansson-dev \
+                    rustc \
+                    cargo \
                     && \
                     apt-get clean
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=en_US.UTF-8
+
+# openssh-server installs systemd, which provides /usr/bin/journalctl, but this
+# makes the test system think we have systemd jorunaling. We use rsyslog.
+RUN mv /usr/bin/journalctl /usr/bin/journalctl-dontuse
+
 # gtmtest1 is the ssh user
 RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
     groupadd gtc && \
@@ -108,10 +115,6 @@ RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
     useradd gtmtest1 -g gtc -G adm,sudo -m -s /usr/local/bin/tcsh
 # Allow gtmtest as a member of the sudo group to use sudo with no password for the sudo tests
 RUN echo "%sudo\tALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/gtmtest-sudo
-
-# Install Rust
-RUN su - gtmtest -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
-ENV PATH="/home/gtmtest/.cargo/bin:${PATH}"
 
 # Install Gawk 5.2.2, as 5.2.1 has a bug: https://lists.gnu.org/archive/html/bug-gawk/2023-02/msg00015.html
 RUN wget https://ftp.gnu.org/gnu/gawk/gawk-5.2.2.tar.gz && \
@@ -143,7 +146,9 @@ COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_instal
 
 # build_and_install_yottadb.csh <folder in /usr/library> <git tag in YDB> <dbg/pro>
 # GT.M version we are currently developing against
-RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71003 V7.1-003 pro
+# Commented out for now as no users are using GT.M versions to develop against in Docker
+# Can be re-enabled in the future as needed
+#RUN /usr/library/gtm_test/build_and_install_yottadb.csh V71005 V7.1-005 pro
 
 # v6 DB
 RUN /usr/library/gtm_test/build_and_install_yottadb.csh V63014_R138 r1.38 pro
@@ -178,8 +183,7 @@ RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
 # SSH gtmuser -> gtmuser1 set-up
 #     gtmuser -> gtmuser set-up (for replication tests)
-RUN mkdir /run/sshd && \
-    su - gtmtest -c 'mkdir ~/.ssh/' && su - gtmtest1 -c 'mkdir ~/.ssh/' && \
+RUN su - gtmtest -c 'mkdir ~/.ssh/' && su - gtmtest1 -c 'mkdir ~/.ssh/' && \
     su - gtmtest -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa' && \
     cp ~gtmtest/.ssh/id_rsa.pub ~gtmtest1/.ssh/authorized_keys && \
     chmod 600 ~gtmtest1/.ssh/authorized_keys && chown gtmtest1:gtc ~gtmtest1/.ssh/authorized_keys && \

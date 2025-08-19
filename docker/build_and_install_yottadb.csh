@@ -61,6 +61,10 @@ else
 	# The below sed command is structured to work for r1.38 (pre f88b9698) or r2.00 (post f88b9698) so we do not
 	# need to check if the git tag is less than or equal to r1.38 in order to do this removal.
 	sed -i '/-ggdb3/d' sr_linux/platform.cmake
+
+	# Replace Gold linker as Debian 13 does not ship with it any more. Only necessary for r1.38, r2.00 release.
+	sed -i 's/ld.gold/ld/' sr_unix/configure.gtc sr_unix/ydbinstall.sh
+	sed -i 's/ -fuse-ld=gold//' sr_linux/platform.cmake
 	popd
 endif
 

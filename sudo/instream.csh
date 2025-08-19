@@ -150,12 +150,18 @@ if ($?ydb_test_inside_docker) then
 		# Disable the following subtest until YDB commit 31205c980c04a21f63b201a740e6fd5065b5c987 is released, since
 		# this commit contains the changes under test. Until then, this test is guaranteed to fail when run in Docker
 		# due to the Docker test container's reliance on published releases. Since commit 31205c98 is not yet released
-		# any release pulled by the Docker container for testing will omit the relevant changes, causing the test to reliably fail.
+		# any release pulled by the Docker container for testing will omit the relevant changes, causing the test to
+		# reliably fail.
 		setenv subtest_exclude_list "$subtest_exclude_list tmpyottadbperms-ydb1125"
 		# Disable the following subtest due to https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2206#note_2274448098
 		setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_tmp-ydb1112"
 		# Disable the following subtest due to similar reasons as the above subtest
 		setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_env_set-ydb1112"
+		# Disable the following subtest because in docker, we don't keep the artifacts of building YottaDB, so we download
+		# a tarball from the internet. The test tries to run ydbinstall.sh on this tarball, and as a result it doesn't
+		# necessarily work. The specific problem here is that the Docker image is Debian 13, but the tarball is made
+		# for Debian 12, and Debian 12 uses ld.gold in configure.gtc, which is no longer available in Debian 13.
+		setenv subtest_exclude_list "$subtest_exclude_list ydb894"
 	endif
 endif
 
