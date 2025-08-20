@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -55,7 +55,7 @@ echo exit \$stat >>! $run_all
 #for debugging@@@
 #print out everyting that is set
 if ($?test_debug) then
-  setenv >! $tst_dir/$gtm_tst_out/env.outfile
+	setenv >! $tst_dir/$gtm_tst_out/env.outfile
 endif
 
 source $run_all
@@ -69,13 +69,13 @@ set total_runtime = `echo $alltests_begin.$alltests_end | $tst_awk -F \. -f $gtm
 touch $tst_dir/$gtm_tst_out/report.txt
 set no_tests = `wc -l $tst_dir/$gtm_tst_out/report.txt| $tst_awk '{print $1}'`
 if ($no_tests < 2 ) then
-   if !($?test_send_report) setenv test_send_report OFF
+	if !($?test_send_report) setenv test_send_report OFF
 endif
 
 if ($?tst_dont_send_mail) then
-   if !($?test_send_report) setenv test_send_report OFF
+	if !($?test_send_report) setenv test_send_report OFF
 else
-   if !($?test_send_report) setenv test_send_report  ON
+	if !($?test_send_report) setenv test_send_report  ON
 endif
 
 if ("$test_send_report" == "ON") then
@@ -97,11 +97,12 @@ if ("$test_send_report" == "ON") then
 	endif
 	@ countall = $countfail + $countnotrun + $countpass
 	@ countall_full = $countall + $count_skipped_distributed
-	set st_passed = `$tst_awk '{cnt=cnt+$2} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
-	set st_failed = `$tst_awk '{cnt=cnt+$3} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
-	set st_excluded = `$tst_awk '{cnt=cnt+$4} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_passed   = `$tst_awk '{cnt=cnt+$2} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_failed   = `$tst_awk '{cnt=cnt+$3} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_hung     = `$tst_awk '{cnt=cnt+$4} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
+	set st_excluded = `$tst_awk '{cnt=cnt+$5} END {print cnt}' $gtm_test_local_debugdir/test_subtest.info`
 	echo "Total runtime : $total_runtime " 							>&!  ${TMP_FILE_PREFIX}_final_report
-	echo "Subtests - Passed : $st_passed ; Failed : $st_failed ; Excluded : $st_excluded"	>>&! ${TMP_FILE_PREFIX}_final_report
+	echo "Subtests - Passed : $st_passed ; Failed : $st_failed ; Hung : $st_hung; Excluded : $st_excluded"	>>&! ${TMP_FILE_PREFIX}_final_report
 	if ($no_tests != $countall_full) then
 		# This means the no.of tests in submitted_tests doesn't match with report.txt
 		# List the missing tests in the final report mail

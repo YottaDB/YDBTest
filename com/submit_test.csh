@@ -1063,10 +1063,11 @@ endif
 source $gtm_tst/com/write_logs.csh $log_line_stat
 ############################################################
 
-set st_passed = `$grep -c "PASS from" $tst_general_dir/outstream.log`
-set st_failed = `$grep -c "FAIL from" $tst_general_dir/outstream.log`
+set st_passed   = `$grep -c "PASS from" $tst_general_dir/outstream.log`
+set st_failed   = `$grep -c "FAIL from" $tst_general_dir/outstream.log`
+set st_hung     = 0		# since this test finished running, no subtests hung
 set st_disabled = `$grep -wc "$testname" $gtm_test_local_debugdir/excluded_subtests.list`
-echo "$testname	$st_passed	$st_failed	$st_disabled" >> $gtm_test_local_debugdir/test_subtest.info
+echo "$testname	$st_passed	$st_failed	$st_hung	$st_disabled" >> $gtm_test_local_debugdir/test_subtest.info
 
 ############# Routine to display failed subtest diff files ############
 if ($tst_stdout == 2 || $tst_stdout == 3) then

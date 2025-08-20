@@ -128,20 +128,39 @@ while !( -e $exit_file)
 			# Copy settings.csh to debuglogs
 			if (-e settings.csh) cp settings.csh $gtm_test_debuglogs_dir/${testname}_${cursubtestdir}_TIMEDOUT_settings.csh
 			cd -
-			# Kill just submit_test.csh
-			cd $tst_general_dir
-			set submit_test_pid = `$tst_awk '/submit_test.csh PID/ { print $NF}' $tst_general_dir/config.log`
-			$kill9 $submit_test_pid
-			$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk $tst_general_dir/outstream.log $outref_txt >&! $tst_general_dir/outstream.cmp
-			\diff $tst_general_dir/outstream.cmp $tst_general_dir/outstream.log >& $tst_general_dir/diff.log
-			# Send TEST-E-TIMEDOUT email
-			$gtm_tst/com/gtm_test_sendresultmail.csh TIMEDOUT
+			# --------------------------------------------------
+			# At this point submit_test.csh is hung. We expect it to be hung for a bit more.
+			# So keep that process alive and generate artifacts to record the fact that the test hung/failed.
+			# And then finally kill submit_test.csh but not its child which is <test>/instream.csh.
+			# This way the script that submitted a bunch of submit_test.csh commands (to correspond to
+			# a list of tests that need to be run) can move on to the next submit_test.csh call while still
+			# letting this hung test run in the background (for debugging/analysis of the hang).
+			# --------------------------------------------------
+			# Generate diff.log
+			echo "FAIL from $cursubtestdir. Please check $cursubtestdir/$cursubtestdir.diff" >> outstream.log
+			mv outstream.cmp outstream.cmp.original
+			head -1 $tst_general_dir/outstream.log | grep -iE "tests? (start|begin)"	> outstream.cmp
+			cat outstream.cmp.original							>> outstream.cmp
+			\diff outstream.cmp outstream.log >& diff.log
 			# Keep the generated diff.log as is that way scripts that check for failures find this abnormal event.
 			# Note that it is possible the killed test runs to completion after all in which case it will
 			# regenerate diff.log. If so, that is fine. But in case the test is hung eternally, we do want a
 			# non-zero diff.log hence keeping this one until it gets overwritten in case the killed test completes.
+
+			# Given that submit_test.csh is going to be killed, complete what it would have done to record the fact
+			# that 1 subtest failed/hung in case a final report email is going to be sent.
+			set st_passed   = `$grep -c "PASS from" outstream.log`
+			set st_failed   = `$grep -c "FAIL from" outstream.log`
+			set st_hung     = 1		# we know at least one subtest hung so record that
+			set st_disabled = `$grep -wc "$testname" $gtm_test_local_debugdir/excluded_subtests.list`
+			echo "$testname	$st_passed	$st_failed	$st_hung	$st_disabled" >> $gtm_test_local_debugdir/test_subtest.info
+			# Send TEST-E-TIMEDOUT email
+			$gtm_tst/com/gtm_test_sendresultmail.csh TIMEDOUT
+			# Kill submit_test.csh finally now that all artifacts to record this hang/failure have been generated.
+			set submit_test_pid = `$tst_awk '/submit_test.csh PID/ { print $NF}' config.log`
+			$kill9 $submit_test_pid
+			# --------------------------------------------------
 			set test_killed = 1
-			cd -
 			touch $exit_file
 		endif
 	endif
