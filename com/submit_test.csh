@@ -281,13 +281,14 @@ if ($?test_replic) then
 			setenv tst_remote_dir "$tst_dir/remote"
 		endif
 	endif
+	set tst_remote_dir_orig = $tst_remote_dir
 	if ($tst_org_host == $tst_remote_host) then
 		setenv tst_remote_dir `mkdir -p $tst_remote_dir >& /dev/null && cd $tst_remote_dir && pwd`
 	else
 		setenv tst_remote_dir `$rsh $tst_remote_host "mkdir -p $tst_remote_dir >& /dev/null && cd $tst_remote_dir && pwd"`
 	endif
 	if ("$tst_remote_dir" == "") then
-		echo "TEST-E-REMOTE Remote directory could not be created. Exiting." >>! $tst_general_dir/diff.log
+		echo "TEST-E-REMOTE Remote directory [$tst_remote_dir_orig] could not be created (maybe permissions issue). Exiting." >>! $tst_general_dir/diff.log
 		cat $tst_general_dir/diff.log
 		$gtm_tst/com/write_logs.csh FAILED
 		if (!($?tst_dont_send_mail)) then
@@ -591,7 +592,7 @@ endif
 if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
 	set exewc = `echo $remote_gtm_exe | wc -w`
 	if (1 != $exewc) then
-		echo "TEST-E-REMOTE_GTM_EXE not a single word" >>! $tst_general_dir/diff.log
+		echo "TEST-E-REMOTE_GTM_EXE [$remote_gtm_exe] not a single word" >>! $tst_general_dir/diff.log
 		echo "Check that the remote gtm version exists" >> $tst_general_dir/diff.log
 		echo "remote_gtm_exe: $remote_gtm_exe" >> $tst_general_dir/diff.log
 		echo "#################################################" >> $tst_general_dir/diff.log

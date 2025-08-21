@@ -2,6 +2,9 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -132,7 +135,7 @@ while ($loopcnt <= $totalinsno)
 	# create DBDIR
 	$logon mkdir -p $dbdirx
 	if ( $status ) then
-		echo "TEST-E-REMOTEDIR, could not create DBDIR on the remote side"
+		echo "TEST-E-REMOTEDIR, could not create DBDIR [$dbdirx] on the remote side"
 	endif
 	if ($?roundcnt) then    #i.e. multiple remote hosts involved
 		# if running on multiple servers, don't worry about jnldir or bakdir, use defaults
@@ -145,13 +148,13 @@ while ($loopcnt <= $totalinsno)
 		# create JNLDIR
 		$logon mkdir -p $jnldirx
 		if ( $status ) then
-			echo "TEST-E-REMOTEDIR, could not create JNLDIR on the remote side"
+			echo "TEST-E-REMOTEDIR, could not create JNLDIR [$jnldirx] on the remote side"
 		endif
 	endif
 	# create BAKDIR
 	$logon mkdir -p $bakdirx
 	if ( $status ) then
-		echo "TEST-E-REMOTEDIR, could not create BAKDIR on the remote side"
+		echo "TEST-E-REMOTEDIR, could not create BAKDIR [$bakdirx] on the remote side"
 	endif
 	if ($detailedhost < $hostcnt) then	#if we have not detailed this host yet
 		echo "HOST$hostcnt	NAME:	$tst_remote_host_loopcnt" >>&! $file
