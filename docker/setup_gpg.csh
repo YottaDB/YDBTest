@@ -1,7 +1,7 @@
 #!/bin/tcsh -fe
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,8 +28,16 @@ echo "no-secmem-warning" >> gpg.conf
 echo "no-permission-warning" >> gpg.conf
 mv gpg-agent.conf gpg-agent.conf.bak
 awk '/pinentry-program/{gsub(/\/.*/,"'$PWD'/pinentry-test-gtm.sh")};{print}' gpg-agent.conf.bak > gpg-agent.conf
-echo 'no-use-standard-socket' >> gpg-agent.conf
 echo 'auto-expand-secmem' >> gpg-agent.conf
+# Make the socket in a short directory, to prevent an error like this
+# gpg-agent[1151]: socket name '/builds/shabiel/YDBTest/testarea1/tst_V999_R999_dbg_01_250821_144607_n22/encryption_0/tmp/.gnupg/S.gpg-agent' is too long
+# https://craigweston.ca/2023/12/22/socket-redirection-with-gpg/
+rm S.gpg-agent*
+printf '%%Assuan%%\nsocket=/home/gtmtest/S.gpg-agent\n' > S.gpg-agent
+printf '%%Assuan%%\nsocket=/home/gtmtest/S.gpg-agent.ssh\n' > S.gpg-agent.ssh
+printf '%%Assuan%%\nsocket=/home/gtmtest/S.dirmngr\n' > S.dirmngr
+echo 'extra-socket /home/gtmtest/S.gpg-agent.extra' >> gpg-agent.conf
+echo 'browser-socket /home/gtmtest/S.gpg-agent.browser' >> gpg-agent.conf
 unsetenv GNUPGHOME
 setenv gtm_chset M
 setenv LC_ALL C

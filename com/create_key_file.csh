@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -165,10 +165,12 @@ foreach db ($dblist)
 
 	else
 		# Generate a new symmetric key, making sure to specify the --no-tty option on remote boxes.
-		setenv gtm_encrypt_notty "--no-permission-warning"
+		setenv gtm_encrypt_notty "--no-permission-warning --batch"
 		if ("$hostn" != "$tst_org_host") then
 			setenv gtm_encrypt_notty "$gtm_encrypt_notty --no-tty"
 		endif
+		# This command is for debugging if GPG cannot start. Left here for reference.
+		# $ gpg-agent -vvv --debug-all --daemon --batch
 		$gtm_tst_ver_gtmcrypt_dir/gen_sym_key.sh 0 $key
 		if (1 < $gtm_test_eotf_keys) then
 			set i = 2

@@ -61,7 +61,7 @@ if ( ! -f /YDBTest/com/gtmtest.csh && -f ${PWD}/com/gtmtest.csh ) then
 	# Copy over the test system to $gtm_tst
 	# This is ineffecient, but not worth optimizing. It copies everything over rather than only changed files.
 	setenv gtm_tst "/usr/library/gtm_test/T999"
-	rsync . -ar --delete $gtm_tst
+	rsync . -ar --delete --exclude=.git $gtm_tst
 	chown -R gtmtest:gtc $gtm_tst
 	git config --global --add safe.directory $gtm_tst
 endif

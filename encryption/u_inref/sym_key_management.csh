@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,7 @@ echo $iv > iv.txt
 
 echo "Case 1"
 
+$gtm_tst/com/reset_gpg_agent.csh
 setenv GNUPGHOME_OLD $GNUPGHOME
 setenv GNUPGHOME ${GNUPGHOME_OLD}1
 cp -r $GNUPGHOME_OLD $GNUPGHOME
@@ -43,7 +44,7 @@ database : {
 	} );
 };
 files : {
-        mumps:	"$PWD/mumps_dat_key";
+	mumps:	"$PWD/mumps_dat_key";
 };
 EOF
 
