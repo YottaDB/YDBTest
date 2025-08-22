@@ -25,6 +25,7 @@
 # boolean_envvars-ydb1150		[jon]		Test Boolean environment variables only accept substrings of yes, no, true, and false, but not superstrings
 # GDE_CTRLc-ydb883		        [ben]		Test that <Ctrl+c> in GDE interface exits environment
 # gvdbnakedmismatch_mergelock-ydb665	[jon]		Test of GVDBGNAKEDMISMATCH errors from MERGE and LOCK command
+# ydbcliops-ydb1102			[jon]		Test enhancements to yottadb CLI options
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -51,6 +52,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcitab_norestore-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic boolean_envvars-ydb1150"
 setenv subtest_list_non_replic	"$subtest_list_non_replic GDE_CTRLc-ydb883"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvdbnakedmismatch_mergelock-ydb665"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcliops-ydb1102"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
