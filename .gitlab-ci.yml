@@ -35,7 +35,7 @@ build-imptp-rs:
   script:
     - apt-get update
     - apt-get install -yq --no-install-recommends build-essential bindgen
-    - cd com/imptp-rs; . $HOME/.cargo/env; cargo check --no-default-features
+    - cd com/imptp-rs; . $HOME/.cargo/env; cargo check
 
 # Run changed tests on every push
 run-tests:
