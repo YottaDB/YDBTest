@@ -1,0 +1,206 @@
+# ********************************************************************************************
+# YDB#1018 - Test of MUPIP UPGRADE for 3 scenarios when journal file is missing
+# ********************************************************************************************
+# 
+# Test the following scenarios from:
+# 1. https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2695983616
+# 2. https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2702018996 (basically previous bullet but with -replic=on also)
+# 3. https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2696001560
+# 
+
+### Test 1: No DBUPGRDREQ error when running MUPIP UPGRADE after an earlier failed MUPIP UPGRADE due to a missing journal file path
+# Create V6 database files
+# Create V6 journal file in journal file path
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/default/T1.mjl created for region DEFAULT with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Set version to: V7
+# Remove journal file path
+# Upgrade the global directory T1.gld : GDE exit
+
+# Run MUPIP UPGRADE
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T1.dat)
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/default/T1.mjl not found
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 140 for journal file ##TEST_PATH##/default/T1.mjl, database file ##TEST_PATH##/T1.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 220 for journal file ##TEST_PATH##/default/T1.mjl, database file ##TEST_PATH##/T1.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-JNLSWITCHFAIL, Failed to switch journal file ##TEST_PATH##/default/T1.mjl for database file ##TEST_PATH##/T1.dat
+  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Run MUPIP INTEG
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           0.488            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+# Set version to: V6
+# Restore the original V6 .gld to prevent %GTM-E-GDINVALID errors with V63010 and V63011
+# Disable journaling
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+# Set version to: V7
+# Upgrade the global directory T1.gld to prevent GDINVALID errors due to restored v6 .gld file above: GDE exit
+# Run MUPIP UPGRADE
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T1.dat)
+Region DEFAULT : WARNING, region is currently empty. MUPIP UPGRADE will adjust the region
+Region DEFAULT : Please considering recreating the region with V7 for optimal results
+Region DEFAULT : Not enough free blocks to extend the master map & provide additional index blocks. Attempting a file extension on the database.
+Region DEFAULT : File extension of 0x4002 blocks succeeded. DB size temporarily at 0x4087 blocks.
+Region DEFAULT : Region is currently empty. Reinitializing it results in a loss of space.
+Region DEFAULT : Please considering recreating the region with V7 for optimal results
+Region DEFAULT : MUPIP MASTERMAP UPGRADE of ##TEST_PATH##/T1.dat completed
+
+### Test 2: No DBUPGRDREQ error when running MUPIP UPGRADE after an earlier failed MUPIP UPGRADE due to a missing journal file path and REPLJNLCNFLCT error when replication is enabled
+# Create V6 database files
+# Create V6 journal file in journal file path
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/default/T2.mjl created for region DEFAULT with BEFORE_IMAGES
+##SUSPEND_OUTPUT JNL_OFF
+%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/default/T2.mjl created for database file ##TEST_PATH##/T2.dat
+##ALLOW_OUTPUT JNL_OFF
+%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Set version to: V7
+# Remove journal file path
+# Upgrade the global directory T2.gld : GDE exit
+
+# Run MUPIP UPGRADE
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T2.dat)
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/default/T2.mjl not found
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 140 for journal file ##TEST_PATH##/default/T2.mjl, database file ##TEST_PATH##/T2.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 220 for journal file ##TEST_PATH##/default/T2.mjl, database file ##TEST_PATH##/T2.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-JNLSWITCHFAIL, Failed to switch journal file ##TEST_PATH##/default/T2.mjl for database file ##TEST_PATH##/T2.dat
+  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Run MUPIP INTEG
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           0.488            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
+
+# Set version to: V6
+# Restore the original V6 .gld to prevent %GTM-E-GDINVALID errors with V63010 and V63011
+# Disable journaling
+%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/T2.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+# Set version to: V7
+# Upgrade the global directory T2.gld to prevent GDINVALID errors due to restored v6 .gld file above: GDE exit
+# Run MUPIP UPGRADE
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T2.dat)
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/default/T2.mjl not found
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 140 for journal file ##TEST_PATH##/default/T2.mjl, database file ##TEST_PATH##/T2.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 220 for journal file ##TEST_PATH##/default/T2.mjl, database file ##TEST_PATH##/T2.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-JNLSWITCHFAIL, Failed to switch journal file ##TEST_PATH##/default/T2.mjl for database file ##TEST_PATH##/T2.dat
+  Moving onto next region.
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+### Test 3: No assert failure or SIG-11 when running MUPIP UPGRADE after an earlier failed MUPIP UPGRADE due to a missing journal file path
+# Create V6 database files
+# Create V6 journal file in journal file path
+%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/breg/b.mjl created for region BREG with BEFORE_IMAGES
+%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+# Set version to: V7
+# Remove journal file path
+# Upgrade the global directory T3.gld : GDE exit
+
+# Run MUPIP UPGRADE
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region AREG : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region AREG : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/a.dat)
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/[abT1-3]+.mjl is renamed to ##TEST_PATH##/[abT1-3]+.mjl_[_0-9]*
+##ALLOW_OUTPUT JNL_OFF
+Region AREG : MUPIP UPGRADE -MASTERMAP started.
+Region AREG : Not enough free blocks to extend the master map & provide additional index blocks. Attempting a file extension on the database.
+Region AREG : File extension of 0x100A blocks succeeded. DB size temporarily at 0x1077 blocks.
+Region AREG : Continuing with master bitmap extension.
+Region AREG : Master map required 0x1000 blocks; Size is now at 0x278 blocks after any extension.
+Region AREG : MUPIP UPGRADE -MASTERMAP completed.
+Region AREG : Relocated 2 root blocks and 2 other blocks.
+Region AREG : Removed 0 KILL'ed globals, freeing 0 blocks and 0 bytes from directory tree.
+Region AREG : Upgraded 2 directory tree blocks, splitting 0 blocks, adding 0 directory tree levels.
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/[abT1-3]+.mjl is renamed to ##TEST_PATH##/[abT1-3]+.mjl_[_0-9]*
+##ALLOW_OUTPUT JNL_OFF
+##SUSPEND_OUTPUT NOASYNCIO
+Region AREG : Restoring ASYNCIO setting for ##TEST_PATH##/a.dat
+##ALLOW_OUTPUT NOASYNCIO
+Region AREG : MUPIP MASTERMAP UPGRADE of ##TEST_PATH##/a.dat completed
+##SUSPEND_OUTPUT NOASYNCIO
+Region BREG : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region BREG : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/b.dat)
+%GTM-I-JNLFNF, Journal file ##TEST_PATH##/breg/b.mjl not found
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 140 for journal file ##TEST_PATH##/breg/b.mjl, database file ##TEST_PATH##/b.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+##TEST_AWK%GTM-W-JNLCRESTATUS, .*/sr_port/cre_jnl_file.c at line 220 for journal file ##TEST_PATH##/breg/b.mjl, database file ##TEST_PATH##/b.dat encountered error
+%SYSTEM-E-ENO2, No such file or directory
+%GTM-E-JNLSWITCHFAIL, Failed to switch journal file ##TEST_PATH##/breg/b.mjl for database file ##TEST_PATH##/b.dat
+  Moving onto next region.
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T3.dat)
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/[abT1-3]+.mjl is renamed to ##TEST_PATH##/[abT1-3]+.mjl_[_0-9]*
+##ALLOW_OUTPUT JNL_OFF
+Region DEFAULT : MUPIP UPGRADE -MASTERMAP started.
+Region DEFAULT : Not enough free blocks to extend the master map & provide additional index blocks. Attempting a file extension on the database.
+Region DEFAULT : File extension of 0x100A blocks succeeded. DB size temporarily at 0x1077 blocks.
+Region DEFAULT : Continuing with master bitmap extension.
+Region DEFAULT : Master map required 0x1000 blocks; Size is now at 0x278 blocks after any extension.
+Region DEFAULT : MUPIP UPGRADE -MASTERMAP completed.
+Region DEFAULT : Relocated 2 root blocks and 2 other blocks.
+Region DEFAULT : Removed 0 KILL'ed globals, freeing 0 blocks and 0 bytes from directory tree.
+Region DEFAULT : Upgraded 2 directory tree blocks, splitting 0 blocks, adding 0 directory tree levels.
+##SUSPEND_OUTPUT JNL_OFF
+##TEST_AWK%GTM-I-FILERENAME, File ##TEST_PATH##/[abT1-3]+.mjl is renamed to ##TEST_PATH##/[abT1-3]+.mjl_[_0-9]*
+##ALLOW_OUTPUT JNL_OFF
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Restoring ASYNCIO setting for ##TEST_PATH##/T3.dat
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE of ##TEST_PATH##/T3.dat completed
+%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
