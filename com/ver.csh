@@ -1,6 +1,6 @@
 ###########################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -62,6 +62,7 @@ setenv gtm_exe $gtm_dist
 setenv GTM "$gtm_exe/mumps -direct"   # not strictly needed as settest sets this, but makes many scripts run without settest
 unsetenv gtm_exe_realpath; if ( -e $gtm_exe/mumps ) setenv gtm_exe_realpath `realpath $gtm_exe`
 setenv gtm_obj $gtm_exe/obj
+setenv tst_image $image
 
 # Go-related switches
 setenv PKG_CONFIG_PATH $ydb_dist
@@ -76,8 +77,8 @@ if ( ! $?quiet ) echo '   $gtm_dist set to '$gtm_dist
 # Note: gtm_env.csh overrides ver alias so save/restore it, and remove other aliases it defines
 #
 set __save_ver=`alias ver`
-  if ! ( $?gtm_linux_compiler ) setenv gtm_linux_compiler gcc   # needed to run GTM's gtm_env.csh which doesn't set it properly
-  if ( -e $gtm_tools/gtm_env.csh ) source $gtm_tools/gtm_env.csh
-  unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
+	if ! ( $?gtm_linux_compiler ) setenv gtm_linux_compiler gcc   # needed to run GTM's gtm_env.csh which doesn't set it properly
+	if ( -e $gtm_tools/gtm_env.csh ) source $gtm_tools/gtm_env.csh
+	unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
 alias ver "$__save_ver"
 unset __save_ver
