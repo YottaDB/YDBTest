@@ -175,8 +175,8 @@ set fixlist = ""
 foreach file ($filelist)
 	if ($file =~ */instream.csh) then
 		foreach testtype ("subtest_list_common" "subtest_list_non_replic" "subtest_list_replic")
-			grep '^setenv '"$testtype"'[[:space:]]*"..*"' $file | grep -v '"$'"$testtype"' .*"' >& /dev/null
-			if ($status == 0) then
+			grep -q "^setenv $testtype" $file
+			if ($status == 1) then
 				set fixlist = "$fixlist $file"
 				# We don't need to report the same file multiple times
 				continue
