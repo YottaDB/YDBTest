@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -90,7 +90,6 @@ set time_after = `date +"%b %e %H:%M:%S"`
 # Both parent and child should have been terminated with a kill -15; check that.
 $gtm_tst/com/check_error_exist.csh mumps.out FORCEDHALT
 $gtm_tst/com/check_error_exist.csh ith.mje FORCEDHALT
-\mv ith.mjex ith.outx
 
 # Verify that GTMSECSHRDMNSTARTED for our version was printed in the syslog.
 $gtm_tst/com/getoper.csh "$time_before" "" "secshr_in_syslog.txt" "" GTMSECSHRDMNSTARTED

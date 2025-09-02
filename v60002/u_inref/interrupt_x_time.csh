@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,8 +62,6 @@ endif
 $grep FORCEDHALT intrptxtime.mje >&! /dev/null
 if (! $status) then
 	$gtm_tst/com/check_error_exist.csh intrptxtime.mje FORCEDHALT >&! check_forcedhalt_exists_in_child.outx
-	# Rename the .mjex file to avoid false alarms.
-	mv intrptxtime.mjex intrptxtime-child.outx
 endif
 
 # Under heavy load we might accumulate a backlog of MUPIP processes, so wait for up to 5 minutes for them to terminate.

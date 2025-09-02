@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -113,7 +113,6 @@ foreach m_test ( test?.m test??.m )
 		setenv gtm_test_fake_enospc $fake_enospc
 		unsetenv GTMCI
 		$gtm_tst/com/check_error_exist.csh test8.mje "YDB-F-FORCEDHALT" | uniq
-		\mv test8.mjex test8.job.logx
 	else if ($test_name == "test11") then
 		cp test11.outx test11.outx.bak
 		$grep -v "location" test11.outx.bak > test11.outx

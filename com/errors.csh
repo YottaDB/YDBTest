@@ -39,7 +39,10 @@ foreach pattern ("*.out" "*.log" "*.err*" "*.log.updproc" "*.mje*" "*.mjo*" "*.D
 	# - sort creates temporary files in it's processing, but find is going through the list of files
 	#   at the same time, and sort's work files might step on find's toes (find sees the temporary files
 	#   at one point, but not later in it's processing)
-	find `pwd` -name "$pattern" ! -name "*.gz" >! file_list.tmp
+	# Note that we need to exclude files that end in "x" as they are most likely to have been created by
+	# "com/check_error_exist.csh" (for example, a "*.mjex" file was created from a "*.mje" file). Hence the
+	# [! -name "*x"] usage below.
+	find `pwd` -name "$pattern" ! -name "*.gz" ! -name "*.*x" >! file_list.tmp
 	sort -T . file_list.tmp >>! log_and_out_files.txt
 	set stat = $status
 	if ($stat) then

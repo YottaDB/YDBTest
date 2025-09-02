@@ -3,7 +3,7 @@
 #								#
 # Copyright 2011, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -96,13 +96,10 @@ $gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 if ($status) then
 	echo "TEST-E-ERROR process $pid did not die."
 endif
-# Note: The below would move the JOBSTARTCMDFAIL error from mtest.mje to mtest.mjex
 $gtm_tst/com/check_error_exist.csh mtest.mje "YDB-E-JOBSTARTCMDFAIL"
 echo "Output from mtest.mjo:"
 cat mtest.mjo
 echo "Output from mtest.mje:"
 cat mtest.mje
-# To avoid catching "-E-" in YDB-E-JOSTARTCMDFAIL by test system.
-mv mtest.mjex mtest.bkup
 echo "Output from badecho.out:"
 cat badecho.out

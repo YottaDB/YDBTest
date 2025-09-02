@@ -107,14 +107,12 @@ foreach java_test ($java_files)
 	if ($test_name == "Test10") then
 		setenv gtm_test_fake_enospc $fake_enospc
 		$gtm_tst/com/check_error_exist.csh test10.mje "YDB-F-FORCEDHALT"
-		\mv test10.mjex test10.job.logx
 	else if ($test_name == "Test17") then
 		cp Test17.outx Test17.outx.bak
 		$grep -E "(YDB|lbl|###)" Test17.outx.bak | sed -e "s;${tst_working_dir};\.;" -e "s;column [0-9][0-9];column xx;" > Test17.outx
 	else if ($test_name == "Test22") then
 		setenv gtm_test_fake_enospc $fake_enospc
 		$gtm_tst/com/check_error_exist.csh test22.mje "YDB-F-FORCEDHALT"
-		\mv test22.mjex test22.job.logx
 	endif
 	diff $test_name.cmp $test_name.outx
 	echo
