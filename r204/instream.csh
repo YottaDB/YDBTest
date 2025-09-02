@@ -24,6 +24,7 @@
 # ydbcitab_norestore-ydb1161		[jon]		Test %YDB-E-CITABENV error is not issued when calling an M function via a function handle returned by a previous call to ydb_cip_t
 # boolean_envvars-ydb1150		[jon]		Test Boolean environment variables only accept substrings of yes, no, true, and false, but not superstrings
 # GDE_CTRLc-ydb883		        [ben]		Test that <Ctrl+c> in GDE interface exits environment
+# gvdbnakedmismatch_mergelock-ydb665	[jon]		Test of GVDBGNAKEDMISMATCH errors from MERGE and LOCK command
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -49,6 +50,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gvcst_expand_any_key-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcitab_norestore-ydb1161"
 setenv subtest_list_non_replic	"$subtest_list_non_replic boolean_envvars-ydb1150"
 setenv subtest_list_non_replic	"$subtest_list_non_replic GDE_CTRLc-ydb883"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gvdbnakedmismatch_mergelock-ydb665"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

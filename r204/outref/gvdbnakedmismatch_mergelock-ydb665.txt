@@ -1,0 +1,13 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test of GVDBGNAKEDMISMATCH errors from MERGE and LOCK command
+# -------------------------------------------------------------------------------------------------------------
+
+## Test 1: No GVDBGNAKEDMISMATCH error from sr_port/m_merge.c
+# Run [ydb665a.m] and confirm no GVDBGNAKEDMISMATCH error is issued. Expect no output in this case.
+# Previously, this would issue a GVDBGNAKEDMISMATCH error from sr_port/m_merge.c.
+# See the following discussion for source program: https://gitlab.com/YottaDB/DB/YDB/-/issues/665#note_2730583550
+
+## Test 2: No GVDBGNAKEDMISMATCH error from sr_port/m_lock.c
+# Run [ydb665b.m] and confirm no GVDBGNAKEDMISMATCH error is issued. Expect no output in this case.
+# Previously, this would issue a GVDBGNAKEDMISMATCH error from sr_port/m_lock.c.
+# See the following discussion for source program: https://gitlab.com/YottaDB/DB/YDB/-/issues/665#note_2707941795
