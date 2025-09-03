@@ -1,0 +1,45 @@
+# ********************************************************************************************
+# GTM-F235505 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F235505)
+# 
+# When $ZGBLDIR is set to a global directory specifying a replication instance and replication has started, the Replication Journal Pool for that instance becomes the source of data reported by $ZPEEK() and thus %PEEKBYNAME(). Those tools report on replication related blocks including GSL (gtmsource_local_struct,) GLF (gtmsrc_lcl,) JPC (jnlpool_ctl_struct,) and RIH (repl_inst_hdr.) If a global directory does not specify a Replication Instance, the gtm_repl_instance environment variable determines the Instance for its replicated regions. Previously, $ZPEEK() and %PEEKBYNAME() used the most recently accessed Replication Journal Pool which made reliance on its results problematic. (GTM-F235505)
+# 
+
+# Create the DB
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# On the primaries, do 10 updates just to have done *something*
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_dist/mumps -run ^%XCMD "for i=1:1:10 set ^b(i)=i"'==
+# Sync the primaries to the secondaries to ensure replication has occurred
+
+# Record INST3's jnlpool semid and shmid for later comparison
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_dist/mumps -run jnlpool^gtmf235505 | grep "," >&! INST3-jnlpool-semshm.out'==
+# Specify INST3's replication instance in INST3's global directory
+
+## Test 1: The replication journal pool for the replication instance specified in the global directory pointed at by $ZGBLDIR is the data source for %PEEKBYNAME()
+# INST1: Run [$$^%PEEKBYNAME("repl_inst_hdr.inst_info.this_instname")] with $ZGBLDIR set to INST3. Expect INSTANCE3 to be reported.
+##REMOTE_TEST_PATH##/instance3/mumps.gld: INSTANCE3
+
+## Test 2: gtm_repl_instance determines the replication instance when the global directory doesn't specify one
+# Set the replication instance for INST1 to INST3 via gtm_repl_instance
+# Ensure INST1 is using its own global directory
+# INST1: Run [$$^%PEEKBYNAME("repl_inst_hdr.inst_info.this_instname")] with $ZGBLDIR set to no instance. Expect INSTANCE3 to be reported.
+##TEST_PATH##/mumps.gld: INSTANCE3
+
+# Confirm the jnlpool shmid and semid of INST1 correspond to those of INST3
+# INST1: Run [$$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid")] and [$$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")]
+PASS: INST1 and INST3 jnlpool have the same shmid,semid
+
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
