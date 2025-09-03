@@ -1,0 +1,43 @@
+#################################################################
+#								#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+#tests that Ctrl-C exits program, returning to it's previous program
+#5 seconds
+set timeout 5
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+#intended to enter the GDE interface
+puts "\n#entering GDE from shell"
+send "$::env(gtm_dist)/mumps -run ^GDE\r"
+expect "GDE>"
+# Send Ctrl-C
+puts "\n#sending Ctrl+C"
+send -- "\003"
+#we expect to drop back to the shell
+puts "#checking that program exited"
+expect "SHELL"
+#next check CTRL+c from YDB
+puts "\n#entering YDB"
+send "$::env(gtm_dist)/mumps -direct\r"
+expect "YDB>"
+#go in from YDB
+puts "\n#entering GDE from YDB"
+send "DO ^GDE\r"
+expect "GDE>"
+#sent CTRL+c
+puts "\n#sending Ctrl+C"
+send -- "\003"
+expect "YDB>"
+#exiting form YDB
+puts "\n#exiting YDB with Ctrl+D"
+send -- "\004"
+expect "SHELL"

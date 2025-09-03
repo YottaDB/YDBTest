@@ -1,0 +1,32 @@
+# test that ctrl+c quits the GDE interface
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL
+#entering GDE from shell
+##SOURCE_PATH##/mumps -run ^GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+#sending Ctrl+C
+#checking that program exited
+SHELL
+#entering YDB
+##SOURCE_PATH##/mumps -direct
+
+YDB>
+#entering GDE from YDB
+DO ^GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> 
+#sending Ctrl+C
+
+YDB>
+#exiting YDB with Ctrl+D
+
+SHELL
