@@ -161,7 +161,13 @@ if ($?ydb_test_inside_docker) then
 		# a tarball from the internet. The test tries to run ydbinstall.sh on this tarball, and as a result it doesn't
 		# necessarily work. The specific problem here is that the Docker image is Debian 13, but the tarball is made
 		# for Debian 12, and Debian 12 uses ld.gold in configure.gtc, which is no longer available in Debian 13.
-		setenv subtest_exclude_list "$subtest_exclude_list ydb894"
+		# These tests should be re-enabled after r2.04 is released.
+		setenv subtest_exclude_list "$subtest_exclude_list ydb894 diffDir ydb306 gtm9116 plugins ydb783 ydb880 ydb924 gtm8517 configure_rmfile-gtmde201825 support"
+		# The test will start failing once we release R204 as $gtm_curpro will change. When this happens, delete the previous line and others around it.
+		if ( $gtm_curpro =~ "V*_R204" ) then
+			echo "TEST-E-FAIL Need to reenable the sudo tests"
+			exit -1
+		endif
 	endif
 endif
 

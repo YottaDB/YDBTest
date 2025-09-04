@@ -84,5 +84,6 @@ if ( $?CI_PIPELINE_ID ) then
 endif
 
 # Set-up some environment variables to pass to the test system
+# All environment variables not in the docker/cshrc file need to be added here
 setenv ydb_test_inside_docker 1
-setenv pass_env "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
+setenv pass_env "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker -w gtm_curpro"
