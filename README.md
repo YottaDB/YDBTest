@@ -140,7 +140,7 @@ The following of these environment variables, defined in `.cshrc` will be refere
 
 ```sh
 setenv build_id 996                # Your build number: any 9xx no.; assigned by YottaDB on their servers: avoids clobbering others' builds
-setenv verno V${build_id}_R139     # Change Rxxx to match the revision of yottadb you will install and test aginst
+setenv verno V${build_id}_R203     # Change Rxxx to match the revision of yottadb you will install and test aginst
 setenv work_dir ~/work             # Where you wish to check out YDB, YDBTest, etc.
 setenv gtm_root /usr/library       # Where your (and others') installed binaries go
 setenv gtm_test $gtm_root/gtm_test # Where to hold a temporary copy of the tester code to run; it needn't be under $gtm_root

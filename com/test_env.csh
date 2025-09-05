@@ -60,7 +60,7 @@ if ! ( $?settest_args ) setenv settest_args "$gtmtest_args"
 # Testing aliases
 alias tsync '$gtm_test_com_individual/tsync.csh --info=stats0,flist0 \!*'   # sync YDBTest code from current dir to run dir
 # note: tcsh is spawned for gtmtest to capture ^C and still run lasttest.csh
-alias gtmtest    'tsync; tcsh -fc "$gtm_test_com_individual/gtmtest.csh $gtmtest_args \!*:q"; source $gtm_test_com_individual/lasttest.csh'
+alias gtmtest    'tsync; tcsh -fc "$gtm_tst/com/gtmtest.csh $gtmtest_args \!*:q"; source $gtm_test_com_individual/lasttest.csh'
 alias test_env   'source $gtm_test_com_individual/test_env.csh'   # refresh gtmtest environment setup
 alias ver        'source $gtm_test_com_individual/ver.csh \!*'   # change version of database invoked by gtmtest
 # settest/runtest and related aliases to set-up environment and collate results into $r
@@ -77,6 +77,9 @@ alias cleantests 'set _latest_test=`find $gtm_test/ -maxdepth 1 -name "tst_*" -t
 # command-line completion for test specification via the -t switch
 complete gtmtest 'c|*|`$gtm_test_com_individual/tstmatch.csh`|'
 complete settest 'c|*|`$gtm_test_com_individual/tstmatch.csh`|'
+# complete ver
+complete ver 'p@1@D:/usr/library/@ @' 'p@2@(pro dbg)@'
+
 # YottaDB historical names for these actions
 alias s test_env
 alias S test_env
@@ -84,8 +87,15 @@ alias rst tsync
 
 # Build aliases -- these depend on YDBDevOps (not a public repository)
 alias buildrel '$work_dir/YDBDevOps/devtools/buildrel.csh'
+alias runall '$work_dir/YDBDevOps/devtools/runall.csh'
 alias build 'buildrel $verno'
 alias rebuild 'build -nof'
+
+# Clean-up aliases
+alias rmproc '$work_dir/YDBDevOps/devtools/rmproc.csh'
+alias rmtst '$work_dir/YDBDevOps/devtools/rmtst.csh'
+alias rmtmp '$work_dir/YDBDevOps/devtools/rmtmp.csh'
+alias cln 'sudo -v; rmproc; rmtst; rmtmp'
 
 if ( ! $?original_path ) setenv original_path "$path"   # set only the first time we run this
 set path = (. $original_path $gtm_tst/com/)

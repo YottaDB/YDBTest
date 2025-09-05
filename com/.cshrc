@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 ###########################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -54,6 +54,9 @@ alias egrep 'egrep --color=auto'
 alias gitlog 'git log --graph --pretty=format:"%C(auto)%ad %h%d %s" --date="short"'
 alias gitup 'git fetch upstream && git rebase upstream/master'
 alias gitsquash 'git log --pretty=format:"%C(auto)%h%d:%n%B" origin/master..HEAD && git reset --soft origin/master && git status && echo "Squashed to origin/master. Now check and commit."'
+alias up              'git checkout master && git fetch upstream && git merge upstream/master && git push -o ci.skip && git checkout - && git rebase master'
+alias re              'git checkout master && git fetch upstream && git merge upstream/master && git push -o ci.skip'
+alias pushplus        'git push origin +HEAD'
 
 # USER-SPECIFIC LOCATIONS for YottaDB's gtmtest
 setenv mailid berwyn@yottadb.com   # Replace with your email here
@@ -64,8 +67,6 @@ setenv gtm_root /usr/library   # Where your (and others') installed binaries go
 setenv gtm_test $gtm_root/gtm_test   # Where to hold a copy of $work_dir/YDBTest to run from: it needn't be under $gtm_root
 setenv tst_dir /testarea1/$USER   # Where to put the output of your test
 setenv r ~/.gtmresults   # Where to create symlink that points to latest test results directory; short name for easy access
-#setenv gtm_test_com_individual $work_dir/YDBTest-dev/com   # Use your own tester-command scripts, not main YDBTest checkout (useful for when you are developing YDBTest/com separately from writing tests)
-#setenv force_gtm_test_com_individual   # gtmtest normally re-runs itself from gtmtest.csh in the test source dir. Prevent this.
 
 # Other settings you're less likely to want to change
 setenv tst_image dbg   # Select default production/debug build image (dbg/pro) to test against; change later with 'ver' alias
@@ -73,7 +74,7 @@ setenv tst_image dbg   # Select default production/debug build image (dbg/pro) t
 if ! ($?gtm_curpro) setenv gtm_curpro $verno   # Subst for current production release used to createdb.csh and by some tests
 
 # set args for gtmtest alias -- select useful ones for a developer
-setenv gtmtest_args "-fg -noencrypt -k -nomail -dontzip -stdout 2"
+setenv gtmtest_args "-fg -k -nomail -dontzip -stdout 2"
 # TEMPLATE: to prevent randomized test settings, use the following for settest_args and/or gtmtest_args
 #   (all settings are necessary to avoid test errors when --norandomsettings is included)
 setenv settest_args "$gtmtest_args -norandomsettings -nospanreg -noco -jnl nobefore -env eall_noinverse=1"

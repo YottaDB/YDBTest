@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,7 @@ set timeout -1
 match_max 100000
 
 # Start up a TCSH shell first. You could spawn $env(SHELL) if you like
-spawn /usr/local/bin/tcsh
+spawn /usr/local/bin/tcsh -f
 set mainid $spawn_id
 
 # Capture and sanitze the prompt. Note that expect uses \r to send carriage

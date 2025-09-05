@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,7 +12,7 @@
 # This module is derived from FIS GT.M.
 #################################################################
 set timeout 300
-spawn $env(SHELL)
+spawn $env(SHELL) -f
 # convince HP-UX to accept ctrl-c
 send -- "stty intr ^c\r"
 expect "stty intr ^c"
