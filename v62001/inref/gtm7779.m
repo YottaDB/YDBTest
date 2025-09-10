@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -41,14 +41,23 @@ gtm7779	; generate some contention to show the effect on crit data in gvstats
 	set t=val("G",0)
 	kill ^t
 	merge ^t=t
-	for i=1:1:$length(t,",") set x=$piece(t,",",i),$extract(x,4)="=",@x,name=$extract(x,1,3) if 0=@name,$increment(cnt) do
+	;
+	; Check crit statistics
+	; Note that they are differently maintained if mutex_type=PTHREAD (i.e. 3) vs if mutex_type=YDB (2) or ADAPTIVE (0)
+	; If mutex_type=3, CFS is maintained. Otherwise it will be 0.
+	;
+	set mutexType=$$^%PEEKBYNAME("mutex_struct.curr_mutex_type","DEFAULT")
+	set ispthread=(mutexType=3)
+	for i=1:1:$length(t,",") set x=$piece(t,",",i),$extract(x,4)="=",@x,name=$extract(x,1,3) if (ispthread!("CFS"'=name)),0=@name,$increment(cnt) do
 	. write !,"Expected non-zero value for ",name," but:"
 	. zwrite @name
 	if CFE>CFT,$increment(cnt) write !,"CFE should not be more than CFT",! zwrite CFE,CFT
-	for name="CFT" set square=$extract(name,1,2)_"S" if @name>@square,$increment(cnt) do
-	. write !,name," should be less than ",square,! zwrite @name,@square
-	for name="CFT" set pname=$extract(name,1,2)_"N" if @pname>@name,$increment(cnt) do
-	. write !,pname," should be less than ",name,! zwrite @pname,@name
+	if 'ispthread do
+	. if CFS,$increment(cnt) write !,"CFS should be 0 (even if CFT is non-zero)",! zwrite CFT,CFS
+	else  do
+	. if CFT>CFS,$increment(cnt) write !,"CFT should be less than CFS",! zwrite CFT,CFS
+	;
+	if CFN>CFT,$increment(cnt) write !,"CFN should be less than CFT",! zwrite CFN,CFT
 	if PCAT<CAT,$increment(cnt) do
 	. write !,"the probecrit CAT should be more than that from the process private CAT",! zwrite PCAT,CAT
 	set t=$view("gvstats","DEFAULT"),GCAT=+$piece(t,"CAT:",2),t=$view("probecrit","DEFAULT"),PCAT=+$piece(t,"CAT:",2)
