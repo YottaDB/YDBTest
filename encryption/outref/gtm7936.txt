@@ -14,18 +14,18 @@ Region	DEFAULT
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
 Region DEFAULT :  critical           = 0x000000000001F000
-Region DEFAULT :  shmpool_buffer     = 0x0000000000020000
-Region DEFAULT :  lock_space         = 0x0000000000124000
-Region DEFAULT :  cache_queues_state = 0x0000000000140000
-Region DEFAULT :  cache_que_header   = 0x0000000000140030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
-Region DEFAULT :  cache_record       = 0x0000000000178650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
-Region DEFAULT :  global_buffer      = 0x00000000001B1000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x00000000005B1000
-Region DEFAULT :  bt_que_header      = 0x00000000009B1000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x00000000009C11D0
-Region DEFAULT :  bt_record          = 0x00000000009C1200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  shmpool_buffer     = 0x000000000002E000
+Region DEFAULT :  lock_space         = 0x0000000000132000
+Region DEFAULT :  cache_queues_state = 0x000000000014E000
+Region DEFAULT :  cache_que_header   = 0x000000000014E030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x0000000000186650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x00000000001BF000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x00000000005BF000
+Region DEFAULT :  bt_que_header      = 0x00000000009BF000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x00000000009CF1D0
+Region DEFAULT :  bt_record          = 0x00000000009CF200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x00000000009D2000
+Region DEFAULT :  shared_memory_size = 0x00000000009E0000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000000A00000
@@ -44,10 +44,10 @@ Region	DEFAULT
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
 Region DEFAULT :  critical           = 0x000000000001F000
-Region DEFAULT :  shmpool_buffer     = 0x0000000000020000
-Region DEFAULT :  lock_space         = 0x0000000000124000
+Region DEFAULT :  shmpool_buffer     = 0x000000000002E000
+Region DEFAULT :  lock_space         = 0x0000000000132000
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x0000000000540000
+Region DEFAULT :  shared_memory_size = 0x000000000054E000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000000600000
@@ -71,21 +71,21 @@ Region	DEFAULT
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
 Region DEFAULT :  critical           = 0x000000000001F000
-Region DEFAULT :  jnl_buffer_struct  = 0x0000000000020400
-Region DEFAULT :  jnl_buffer_data    = 0x00000000000506E8
-Region DEFAULT :  shmpool_buffer     = 0x0000000000173000
-Region DEFAULT :  lock_space         = 0x0000000000277000
-Region DEFAULT :  cache_queues_state = 0x0000000000293000
-Region DEFAULT :  cache_que_header   = 0x0000000000293030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
-Region DEFAULT :  cache_record       = 0x00000000002CB650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
-Region DEFAULT :  global_buffer      = 0x0000000000304000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  encrypted_globuff  = 0x0000000000704000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x0000000000B04000
-Region DEFAULT :  bt_que_header      = 0x0000000000F04000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x0000000000F141D0
-Region DEFAULT :  bt_record          = 0x0000000000F14200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  jnl_buffer_struct  = 0x000000000002E400
+Region DEFAULT :  jnl_buffer_data    = 0x000000000005E6E8
+Region DEFAULT :  shmpool_buffer     = 0x0000000000181000
+Region DEFAULT :  lock_space         = 0x0000000000285000
+Region DEFAULT :  cache_queues_state = 0x00000000002A1000
+Region DEFAULT :  cache_que_header   = 0x00000000002A1030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x00000000002D9650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x0000000000312000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  encrypted_globuff  = 0x0000000000712000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x0000000000B12000
+Region DEFAULT :  bt_que_header      = 0x0000000000F12000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x0000000000F221D0
+Region DEFAULT :  bt_record          = 0x0000000000F22200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x0000000000F25000
+Region DEFAULT :  shared_memory_size = 0x0000000000F33000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000001000000
