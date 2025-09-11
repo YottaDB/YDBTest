@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -69,15 +72,15 @@ tp      ;
 	.	tcommit
 	quit
 dsecrit ;
-        set dev="dse"
-        open dev:(command="dse":exception="goto badopen")::"PIPE"
+	set dev="dse"
+	open dev:(command="$gtm_dist/dse":exception="goto badopen")::"PIPE"
 	use dev
-        write "find -reg=DEFAULT",!
+	write "find -reg=DEFAULT",!
 	; read/write find output from dse
 	; The 8 lines of output will include the path to a.dat, Region AREG, blank line followed by DSE prompt then
 	; the same information for mumps.dat and Region DEFAULT
 	do readwrite(8,dev)
-        for i=1:1 quit:^stop=1  do
+	for i=1:1 quit:^stop=1  do
 	.	write "crit -seize",!
 	.	; read 3 lines returned for each command sent
 	.	; an example of the 3 lines returned for crit -seize is:
@@ -101,6 +104,6 @@ badopen
 	zshow "d"
 	halt
 sstep   ;
-        set $zstep="set %zsaveio=$io use $p w:$x ! w $zpos,?11,"": $trestart="",$trestart,"" : "" zp @$zpos  use %zsaveio zstep into"
-        zb sstep+3^gtm7552:"zstep into"
-        set %zsaveio=$io use $p write !,"Stepping STARTED",!  use %zsaveio
+	set $zstep="set %zsaveio=$io use $p w:$x ! w $zpos,?11,"": $trestart="",$trestart,"" : "" zp @$zpos  use %zsaveio zstep into"
+	zb sstep+3^gtm7552:"zstep into"
+	set %zsaveio=$io use $p write !,"Stepping STARTED",!  use %zsaveio

@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -12,7 +15,7 @@ gtm7510
 	set jdetach=1
 	set jmaxwait=0
 	set unix=$zversion'["VMS"
-	if unix set cmdstr="lke show -wait >& jwait_queue.list"
+	if unix set cmdstr="$gtm_dist/lke show -wait >& jwait_queue.list"
 	else  set cmdstr="pipe DEFINE/USER_MODE SYS$ERROR NL: ; lke show/wait > jwait_queue.list ; purge jwait_queue.list"
 	set found=0
 	lock ^a

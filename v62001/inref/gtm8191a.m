@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -91,7 +94,7 @@ limit(bts,xiter,tired,stoptime)
 	. use odev
 	. write !,"Round:",$justify(i,3),"  At:",$zdate(endtime," 24:60:SS"),"  Time:",$justify(time,3)
 	. write "  Poollimit:",$justify($view("POOLLIMIT","DEFAULT"),6),"  Ops:",$justify(j,8)
-	. open sdev:(command="mupip size -select=^x -region=DEFAULT":exception="goto deviceprob")::"PIPE"
+	. open sdev:(command="$gtm_dist/mupip size -select=^x -region=DEFAULT":exception="goto deviceprob")::"PIPE"
 	. use sdev:exception="goto sdeveof"
 	. write !
 	. for  read resp use odev write resp,! use sdev			; transcribe size output
