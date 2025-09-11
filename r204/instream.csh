@@ -26,6 +26,7 @@
 # GDE_CTRLc-ydb883		        [ben]		Test that <Ctrl+c> in GDE interface exits environment
 # gvdbnakedmismatch_mergelock-ydb665	[jon]		Test of GVDBGNAKEDMISMATCH errors from MERGE and LOCK command
 # ydbcliops-ydb1102			[jon]		Test enhancements to yottadb CLI options
+# mupipload_zwrlgbin-ydb1172		[jon]		Test of MUPIP LOAD accepts ZWR format extracts that contain large binary data
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -53,6 +54,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic boolean_envvars-ydb1150
 setenv subtest_list_non_replic	"$subtest_list_non_replic GDE_CTRLc-ydb883"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvdbnakedmismatch_mergelock-ydb665"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcliops-ydb1102"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupipload_zwrlgbin-ydb1172"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

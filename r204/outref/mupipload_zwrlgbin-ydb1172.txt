@@ -1,0 +1,27 @@
+# ********************************************************************************************
+# YDB#1172 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from https://gitlab.com/YottaDB/DB/YDB/-/issues/1172):
+# 
+# MUPIP LOAD of ZWR format extract files works even if the extracted nodes contain huge binary data (e.g. closer to the maximum of 1MiB). Previously, this issued an EXTRFMT error due to the zwrite format representation of those huge node values taking up more than 1MiB of space in the extract file.
+# 
+
+# Set large binary data in the database:
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Run [$gtm_dist/mumps -run %XCMD 'zhalt ^x'=$translate($justify(" ",2**19)," ",$char(255))']
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+# Run [$gtm_dist/mumps -run %XCMD 'zhalt ^x'=$translate($justify(" ",2**20)," ",$zchar(255))']
+##ALLOW_OUTPUT UNICODE_MODE
+# Extract the large binary data from the database:
+# Reload the large binary data into the database from the EXTRACTed ZWR file
+# Verify the large binary data was successfully loaded into the database
+# Previously, the MUPIP LOAD failed with a %YDB-E-EXTRFMT error.
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Run [$gtm_dist/mumps -run %XCMD 'zhalt ^x'=$translate($justify(" ",2**19)," ",$char(255))']
+##ALLOW_OUTPUT NONUNICODE_MODE
+##SUSPEND_OUTPUT UNICODE_MODE
+# Run [$gtm_dist/mumps -run %XCMD 'zhalt ^x'=$translate($justify(" ",2**20)," ",$zchar(255))']
+##ALLOW_OUTPUT UNICODE_MODE
+TEST-S-VERIFY_PASS : Verification after mupip load PASSED,!
