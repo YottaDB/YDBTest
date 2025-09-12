@@ -1,0 +1,51 @@
+# ********************************************************************************************
+# GTM-F248691 - Test the following part of the release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F248691)
+# 
+# GT.M applies these configuration options only to GT.M replication Servers and ignores them for SOCKET devices
+# because these options are part of the replication protocol. Applications using SOCKET devices can imitate either
+# fallback option by checking $DEVICE for the TLS connection failure reason and reacting appropriately.
+# 
+# The replication half of this release note is tested by v71003/tlsconfig_posthandshake-gtmf248691.
+# 
+
+# Create a database
+
+### Test 1: 'post-handshake-fallback' is ignored for SOCKET devices
+## The server TLSID requires Post Handshake Authentication while the client TLSID uses SSL_VERIFY_NONE,
+## so the client never sends the PHA extension. That is the configuration which makes a Receiver Server
+## with 'post-handshake-fallback' temporarily drop SSL_VERIFY_POST_HANDSHAKE, as Test 3 of
+## v71003/tlsconfig_posthandshake-gtmf248691 shows. Expect a SOCKET device to behave the same way whether
+## or not the option is in effect.
+
+# Server requires PHA, client does not advertise it
+# Run with 'post-handshake-fallback' commented out
+# Uncomment 'post-handshake-fallback' and run again
+
+# Confirm the plugin read both configurations, so that the comparison below is not between two
+# identical failures to read the file, which would pass without testing anything
+TEST-I-PASSED Both configurations were read successfully
+# Compare the two outcomes
+TEST-I-PASSED SOCKET device behaved identically, so 'post-handshake-fallback' was ignored
+
+### Test 2: 'plaintext-fallback' is ignored for SOCKET devices
+## The server TLSID requires a peer certificate that the client cannot present, so the TLS handshake
+## cannot succeed. That is the configuration which makes a replication Server with 'plaintext-fallback'
+## reconnect without TLS, as Test 8 of v71003/tlsconfig_posthandshake-gtmf248691 shows. A SOCKET device
+## has no such fallback, so expect the same outcome whether or not the option is in effect. An
+## application wanting that behavior has to check $DEVICE and reconnect itself.
+
+# Server requires a peer certificate, and the client has no certificate to present
+# Run with 'plaintext-fallback' commented out
+# Uncomment 'plaintext-fallback' in both TLSIDs and run again
+
+# Confirm the plugin read both configurations
+TEST-I-PASSED Both configurations were read successfully
+# Confirm the handshake really did fail, so that the comparison below means something
+TEST-I-PASSED TLS handshake failed as intended
+# Compare the two outcomes
+TEST-I-PASSED SOCKET device behaved identically, so 'plaintext-fallback' was ignored
+
+# Restore the initial TLS configuration

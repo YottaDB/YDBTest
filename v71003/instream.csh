@@ -29,6 +29,8 @@
 # recservop_ontlserr-gtmde567906	[jon]	Test Receiver Server continues to operate after a TLSHANDSHAKE or REPLNOTLS error
 # zpeekbyname_multirepl-gtmf235505	[jon]	Test $ZPEEK() / %PEEKBYNAME() access to multiple replication instances
 # spcfcbufdelay_pid-gtmde568333		[jon]	Test SPCFCBUFDELAY includes the PID of the block resource holder
+# tlsconfig_posthandshake-gtmf248691	[jon]	Test TLS configuration and behavior for replication
+# tlsfallback_socket-gtmf248691	[jon]	Test the TLS fallback configuration options are ignored for SOCKET devices
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -44,6 +46,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic pattalterr_memleak-gtmd
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvsuboflow_context-gtmf134571"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sockprinc_sighup-gtmf135133"
 setenv subtest_list_non_replic	"$subtest_list_non_replic spcfcbufdelay_pid-gtmde568333"
+setenv subtest_list_non_replic	"$subtest_list_non_replic tlsfallback_socket-gtmf248691"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"
@@ -52,6 +55,7 @@ setenv subtest_list_replic	"$subtest_list_replic tlsreneg_msg-gtmde567908"
 setenv subtest_list_replic	"$subtest_list_replic tlsconf_default-gtmde568389"
 setenv subtest_list_replic	"$subtest_list_replic recservop_ontlserr-gtmde567906"
 setenv subtest_list_replic	"$subtest_list_replic zpeekbyname_multirepl-gtmf235505"
+setenv subtest_list_replic	"$subtest_list_replic tlsconfig_posthandshake-gtmf248691"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

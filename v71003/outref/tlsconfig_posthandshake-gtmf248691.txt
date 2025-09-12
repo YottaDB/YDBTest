@@ -1,0 +1,284 @@
+# ********************************************************************************************
+# GTM-F248691 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F248691)
+# 
+# GT.M Database Replication implements Post Handshake Authentication (PHA) when using TLSv1.3. Previously, GT.M Replication ignored the SSL_VERIFY_POST_HANDSHAKE verification mode, rejected, or in V7.0-004 through V7.1-001, incorrectly applied it. To negotiate a TLS connection using PHA, the configured TLS ID must specify SSL_VERIFY_PEER and SSL_VERIFY_POST_HANDSHAKE in the verify-mode. Using other SSL_VERIFY_* options without SSL_VERIFY_PEER results in an error, either TLSINIT at server startup or TLSCONVSOCK when the Server reads the TLS configuration for its TLSID. While GT.M versions V7.0-004 through V7.1-001 do not support SSL_VERIFY_POST_HANDSHAKE, they do not reject it. Receiver Servers from V7.0-004 through V7.1-001, when configured with SSL_VERIFY_POST_HANDSHAKE, issue TLSCONNINFO messages because the Receiver Server fails to request the peer certificate. This happens whether or not the configuration for the Source Server specifies PHA. Receiver Servers configured with SSL_VERIFY_FAIL_IF_NO_PEER_CERT fail to connect in this situation.
+# 
+# This change adds two new configuration options to the TLS configuration file: "post-handshake-fallback" and "plaintext-fallback" which each take an integer value. Any positive integer value enables the configuration. GT.M applies these configuration options only to GT.M replication Servers and ignores them for SOCKET devices because these options are part of the replication protocol. Applications using SOCKET devices can imitate either fallback option by checking $DEVICE for the TLS connection failure reason and reacting appropriately. Please see the GT.M Programmer's Guide section about WRITE /TLS for more information.
+# 
+# "plaintext-fallback" option sets a default action, which can be overridden by the MUPIP command line option -[no]plaintextfallback, to disallow or allow the servers to fallback to plaintext when they fail to negotiate a TLS connection
+# 
+# "post-handshake-fallback" enables Receiver Servers configured with SSL_VERIFY_POST_HANDSHAKE to temporarily drop SSL_VERIFY_POST_HANDSHAKE when a TLS handshake (TLSHANDSHAKE) with the Source Server fails due to missing support for SSL_VERIFY_POST_HANDSHAKE. After the next successful connection, the Receiver Server restores SSL_VERIFY_POST_HANDSHAKE for subsequent connections. This allows misconfigured peers, including prior versions, to establish a connection while the Receiver Server periodically issues a warning message.
+# 
+# The OpenSSL project documentation states that client mode connections should only use SSL_VERIFY_PEER and no other option. The GT.M reference TLS plugin ignores all verify-mode options except SSL_VERIFY_PEER to avoid any unintended operation for client mode connections. GT.M does this to allow sharing of configuration between both client mode TLS processes and server mode TLS processes. (GTM-F248691)
+# 
+
+# Create a database
+
+### Test 1: TLS with Post Handshake Authentication (PHA)
+## Basic case. Confirm that PHA can successfully be enabled with SSL_VERIFY_POST_HANDSHAKE,
+## and a connection can be established without error.
+## Previously:
+## 1. With v70004-v71001 the TLS connection succeeds, but TLSCONNINFO be emitted by the Receiver Server
+## 2. With v70003 the TLS connection fails, and TLSHANDSHAKE is emitted by the receiver
+
+# Set TLS configuration setting 'verify-mode' to SSL_VERIFY_PEER with SSL_VERIFY_POST_HANDSHAKE on the Receiver Server, INST2
+# This is done on INST2 only since it is the 'server' as far as OpenSSL is concerned, and SSL_VERIFY_POST_HANDSHAKE only applies to the server role.
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+### Test 2: TLS with Post Handshake Authentication (PHA) and Receiver server with SSL_VERIFY_FAIL_IF_NO_PEER_CERT
+## Expect TLS connection to succeed without errors.
+## Previously, TLS connection failed with TLSCONNINFO message when run against GT.M versions v70004-v71001.
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+### Test 3: TLS with PHA and 'post-handshake-fallback' configuration setting enabled, but Source Server does not support PHA
+## Expect the Receiver Server to report that the Source Server did not send the PHA extension, issue a
+## TLSHANDSHAKE warning, and temporarily drop SSL_VERIFY_POST_HANDSHAKE for the next connection attempt.
+## After the next successful connection the Receiver Server restores SSL_VERIFY_POST_HANDSHAKE, so the
+## fallback fires again on the connection after that.
+
+# Restore the initial Receiver Server (INST2) config, so Test 2's SSL_VERIFY_FAIL_IF_NO_PEER_CERT is not inherited
+# Receiver Server (INST2): require PHA, and enable 'post-handshake-fallback'
+# Source Server (INST1): SSL_VERIFY_NONE, so the reference plugin never calls SSL_set_post_handshake_auth()
+# and the Source Server does not send the PHA extension in its CLIENT_HELLO. To the Receiver Server this is
+# indistinguishable from a peer without PHA support, which the release note covers: the fallback 'allows
+# misconfigured peers, including prior versions, to establish a connection'.
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the first post-handshake fallback
+# Stop source replication instance
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+# Start source replication instance. SSL_VERIFY_POST_HANDSHAKE is temporarily dropped, so expect this connection to succeed
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Stop source replication instance
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+
+# Start source replication instance. SSL_VERIFY_POST_HANDSHAKE was restored after the successful connection
+# above, so expect the fallback to fire a second time
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Stop source replication instance
+==Executing MULTISITE_REPLIC 'STOP INST1'==
+# Start source replication instance once more
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the Receiver Server reported that the Source Server did not send the PHA extension
+TEST-I-PASSED Receiver Server reported a post-handshake authentication failure
+# Confirm the Receiver Server issued TLSHANDSHAKE as a warning, not as an error, because the fallback is enabled
+TEST-I-PASSED Receiver Server issued %GTM-W-TLSHANDSHAKE
+# Confirm the fallback fired at least twice. The Source Server configuration never changed across the
+# connections above, so a second fallback means the Receiver Server restored SSL_VERIFY_POST_HANDSHAKE
+# after the successful connection in between.
+TEST-I-PASSED Receiver Server fell back at least twice, so it restored SSL_VERIFY_POST_HANDSHAKE
+
+### Test 4: TLS with PHA and 'post-handshake-fallback' disabled, and Source Server does not support PHA
+## The counterpart to Test 3. With the fallback disabled the Receiver Server keeps SSL_VERIFY_POST_HANDSHAKE
+## instead of temporarily dropping it, so expect TLSHANDSHAKE at error severity rather than as a warning,
+## no fallback message, and no connection ever succeeding.
+
+# Restore both configs to their initial state
+# Receiver Server (INST2): require PHA, but do not enable 'post-handshake-fallback'
+# Source Server (INST1): SSL_VERIFY_NONE, so it does not send the PHA extension, as in Test 3
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the Receiver Server to report the missing PHA extension
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the Receiver Server reported that the Source Server did not send the PHA extension
+TEST-I-PASSED Receiver Server reported a post-handshake authentication failure
+# Confirm TLSHANDSHAKE came out at error severity, since neither fallback is enabled
+TEST-I-PASSED Receiver Server issued %GTM-E-TLSHANDSHAKE and no warning
+# Confirm the Receiver Server did not fall back, since 'post-handshake-fallback' is not enabled
+TEST-I-PASSED Receiver Server issued no post-handshake fallback message
+# Confirm no connection succeeded, since SSL_VERIFY_POST_HANDSHAKE was never dropped
+TEST-I-PASSED No TLS connection succeeded
+
+### Test 5: verify-mode with another SSL_VERIFY_* option but without SSL_VERIFY_PEER, in a TLSID section
+## Expect TLSCONVSOCK when the Server reads the TLS configuration for its TLSID. The reference plugin
+## reports 'needs SSL_VERIFY_PEER to enable other options' as the accompanying TEXT.
+## This stage enables plaintext fallback with the MUPIP -plaintextfallback qualifier, which turns the
+## otherwise fatal TLSCONVSOCK into a warning and keeps the Receiver Server alive. That keeps the output
+## deterministic, and covers the same plugin check as the fatal form does.
+
+# Restore both configs to their initial state
+# Receiver Server (INST2): SSL_VERIFY_FAIL_IF_NO_PEER_CERT with no SSL_VERIFY_PEER to enable it
+
+# Pass -plaintextfallback to both replication servers
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the Receiver Server to reject the TLSID configuration
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the Receiver Server issued TLSCONVSOCK when it read the configuration for its TLSID
+TEST-I-PASSED Receiver Server issued %GTM-W-TLSCONVSOCK
+# Confirm the accompanying TEXT names the missing SSL_VERIFY_PEER as the reason
+TEST-I-PASSED Reason reported as needing SSL_VERIFY_PEER to enable other options
+# Confirm the Receiver Server fell back to plaintext rather than terminating
+TEST-I-PASSED Receiver Server fell back to plaintext
+
+### Test 6: verify-mode with another SSL_VERIFY_* option but without SSL_VERIFY_PEER, outside any TLSID section
+## The same misconfiguration in the global part of the TLS configuration file is read at server startup
+## rather than when the Server reads its TLSID, so expect TLSINIT instead of TLSCONVSOCK.
+## Plaintext fallback is again supplied on the command line to keep the Source Server alive.
+
+# Restore both configs to their initial state
+# Source Server (INST1): put the bad verify-mode in the global section, outside any TLSID
+
+# Pass -plaintextfallback to both replication servers
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Wait for the Source Server to reject the configuration at startup
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the Source Server issued TLSINIT at startup
+TEST-I-PASSED Source Server issued %GTM-W-TLSINIT
+# Confirm the accompanying TEXT names the missing SSL_VERIFY_PEER as the reason
+TEST-I-PASSED Reason reported as needing SSL_VERIFY_PEER to enable other options
+# Confirm the Source Server gave up on TLS for the rest of its run rather than terminating
+TEST-I-PASSED Source Server fell back to plaintext for the rest of its run
+
+### Test 7: 'plaintext-fallback' enabled in the configuration file, and TLS negotiation succeeds
+## Expect the fallback action not to execute: the connection is negotiated with TLS as usual and no
+## plaintext fallback message appears. 'plaintext-fallback' only sets a default action for failures.
+
+# Restore both configs to their initial state
+# Enable 'plaintext-fallback' on both sides, leaving the rest of the configuration healthy
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the TLS connection to be established
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the connection was negotiated with TLS
+TEST-I-PASSED Receiver Server enabled secure communication
+# Confirm the fallback action did not execute, since nothing failed
+TEST-I-PASSED No plaintext fallback and no TLSHANDSHAKE
+
+### Test 8: 'plaintext-fallback' enabled in the configuration file, and TLS negotiation fails
+## Expect the fallback action to execute: TLSHANDSHAKE comes out as a warning rather than an error and
+## both Servers reconnect without TLS. The negotiation is made to fail by removing the Source Server's
+## client certificate, which the Receiver Server requires because its TLSID specifies no verify-mode and
+## therefore defaults to SSL_VERIFY_PEER with SSL_VERIFY_FAIL_IF_NO_PEER_CERT, per GTM-DE568389.
+
+# Restore both configs to their initial state
+# Enable 'plaintext-fallback' on both sides
+# Remove the Source Server's client certificate so the TLS handshake cannot succeed
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the Receiver Server to fall back to plaintext
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm TLSHANDSHAKE came out as a warning rather than an error, because the fallback is enabled
+TEST-I-PASSED Receiver Server issued %GTM-W-TLSHANDSHAKE and no error
+# Confirm the fallback action executed
+TEST-I-PASSED Receiver Server fell back to plaintext
+
+### Test 9: MUPIP -plaintextfallback with 'plaintext-fallback' absent from the configuration file
+## The configuration file sets the default action, and the command line qualifier overrides it. With no
+## 'plaintext-fallback' in the configuration the default is not to fall back, so -plaintextfallback on the
+## command line is what allows the fallback here. The negotiation is made to fail exactly as in Test 8.
+##
+## Note that only this direction of the override is reachable. The Servers compute plaintext fallback as
+## the logical OR of the command line qualifier and the configuration file setting, so -noplaintextfallback
+## cannot disallow a fallback that the configuration file has enabled. See the thread at
+## https://gitlab.com/YottaDB/DB/YDBTest/-/issues/716 for details.
+
+# Restore both configs to their initial state, leaving 'plaintext-fallback' out of both
+# Remove the Source Server's client certificate so the TLS handshake cannot succeed
+
+# Pass -plaintextfallback to both replication servers
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the Receiver Server to fall back to plaintext
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the command line qualifier allowed the fallback that the configuration file did not
+TEST-I-PASSED Receiver Server warned and fell back to plaintext
+
+### Test 10: MUPIP -plaintextfallback, and TLS negotiation succeeds
+## The counterpart to Test 9, and to Test 7 for the command line rather than the configuration file.
+## Expect the fallback action not to execute, because nothing failed.
+
+# Restore both configs to their initial state, leaving 'plaintext-fallback' out of both
+
+# Pass -plaintextfallback to both replication servers
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for the TLS connection to be established
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Confirm the connection was negotiated with TLS
+TEST-I-PASSED Receiver Server enabled secure communication
+# Confirm the fallback action did not execute, even though the command line allowed it
+TEST-I-PASSED No plaintext fallback and no TLSHANDSHAKE
+
