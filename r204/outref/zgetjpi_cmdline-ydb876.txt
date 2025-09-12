@@ -1,0 +1,41 @@
+# Test that running $ZGETJPI with the keyword CMDLINE gives the command line of process
+
+# Starting background process to get their command lines
+# Starting process with small command line
+# Starting process with exactly 1024 length command line
+# Starting process with more than 1024 length command line
+
+# Now testing $ZGETJPI
+# Running with small command line
+sh -c sleep 15 && echo '9'
+# And the zlength of that output is
+26
+# Running with exactly 1024 len command line
+##TEST_AWKsh -c sleep 15 && echo '[9]{999}'
+# And the zlength of that output is
+1024
+# Running with over 1024 len command line. is exactly length 1025, the cutoff char at the end is a single quote
+##TEST_AWKsh -c sleep 15 && echo '[9]{1000}
+# And the zlength of that output is
+1024
+# Running with nonexistent PID -1
+
+# Killing background processes
+
+# Now testing PID=0, this should give the PID of the current YottaDB process
+
+YDB>
+##SOURCE_PATH##/mumps -direct
+YDB>
+# Shutting down YottaDB process
+##TEST_AWKSTOP issued to process [0-9]*
+
+# Trying out all PID's to make sure that none produce an error, this will not output anything.
+
+
+# In this section, we will compile a c program that will edit it's own command line to end with a space
+# Build a C program 
+# Run the compiled ydb876.c program:
+# Getting the CMDLINE
+##TEST_PATH##/ydb876  
+# Test is done.
