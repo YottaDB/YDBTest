@@ -1,0 +1,41 @@
+# ********************************************************************************************
+# GTM-9272 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE197637272)
+# 
+# MUPIP CREATE gives database files permissions based on the umask setting of the target directory. Previously new database files always took 0666 as their permission regardless umask setting. (GTM-9272)
+# 
+
+## Test mumps.dat is created with same permissions as umask.
+## Previously, mumps.dat would be created with umask 666 in all cases.
+
+# Set umask: 027
+# Create directory: tmp027
+# Show directory permissions:
+total 8.0K
+##TEST_AWKdrwxr-x--- 2 .* .
+##TEST_AWKdrwxrwxr-x 3 .* ..
+# Create a database
+# Show database permissions. Expect 640. Previously, was 666.
+640
+
+# Set umask: 022
+# Create directory: tmp022
+# Show directory permissions:
+total 8.0K
+##TEST_AWKdrwxr-xr-x 2 .* .
+##TEST_AWKdrwxrwxr-x 4 .* ..
+# Create a database
+# Show database permissions. Expect 644. Previously, was 666.
+644
+
+# Set umask: 000
+# Create directory: tmp000
+# Show directory permissions:
+total 8.0K
+##TEST_AWKdrwxrwxrwx 2 .* .
+##TEST_AWKdrwxrwxr-x 5 .* ..
+# Create a database
+# Show database permissions. Expect 666. Previously, was 666.
+666
