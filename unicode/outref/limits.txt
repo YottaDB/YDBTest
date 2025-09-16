@@ -5,20 +5,7 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-----------
-Error YDB-W-MUNOSTRMBKUP seen in redirected_dbcreate.out as expected:
-%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
-----------
-----------
-Error TEST-E-DBCREATE seen in redirected_dbcreate.out as expected:
-TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
-----------
-----------
-Error YDB-W-MUNOSTRMBKUP seen in dbcreate.out as expected:
-%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
-----------
 ###################################################################
 ---- Expected Error on ¨ exceeding 1MB at I = 24577 ----
 ---- Expected Error on 夁 exceeding 1MB at I = 12289 ----

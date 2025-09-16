@@ -40,10 +40,13 @@ Small block size
 OK
 
 Large block size
+MUNOSTRMBKUP retired for V7, only expected for V6 database.
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ----------
 Error MUNOSTRMBKUP seen in dbcreate.out as expected:
 ##TEST_AWK%(GTM|YDB)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ----------
+##ALLOW_OUTPUT V7_DB_FORMAT
 OK
 
 Create a normal database

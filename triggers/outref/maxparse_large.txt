@@ -1,7 +1,9 @@
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ---------------------------------------------------------------
 TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ---------------------------------------------------------------
+##ALLOW_OUTPUT V7_DB_FORMAT
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -207,5 +209,7 @@ Reload Test
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ##TEST_PATH##/dbcreate.out
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##ALLOW_OUTPUT V7_DB_FORMAT

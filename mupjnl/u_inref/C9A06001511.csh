@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,4 +41,5 @@ if ($stat1 != 0 || $stat2 != 0 || $stat3 != 0) then
 endif
 #
 $grep PBLK mumps.mjf |$tst_awk '{split($0,items," ");printf("PBLK record size is: %s\n",items[2])}'
+echo "# now preforming dbcheck"
 $gtm_tst/com/dbcheck.csh

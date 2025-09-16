@@ -32,6 +32,7 @@
 # jobcmdslow_gtm9058-ydb1181		[nars]		Test JOB command is not slow and other JOB command tests
 # rtnlaboff-ydbMR1762			[jon]		Test RTNLABOFF error message replacement for JOBLABOFF
 # zgetjpi_cmdline-ydb876                [ben]           Test that $ZGETJPI(PID,keyword) with keyword CMDLINE gives the command line of the indicated process
+# large_block_backup-ydb1169		[ben]		This is a test to ensure that you  can create a backup of a database with a large block size. The size 50176 is used.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -65,6 +66,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic valtoobig-ydb1130"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jobcmdslow_gtm9058-ydb1181"
 setenv subtest_list_non_replic	"$subtest_list_non_replic rtnlaboff-ydbMR1762"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgetjpi_cmdline-ydb876"
+setenv subtest_list_non_replic	"$subtest_list_non_replic large_block_backup-ydb1169"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

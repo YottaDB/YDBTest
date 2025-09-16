@@ -14,6 +14,7 @@
 #################################################################
 ##some of the allowed SUSPEND_OUTPUT/ALLOW_OUTPUT options:
 #HOST_ALL
+#V6 and V7 for database version
 # server name, such as: dingo (or DINGO, case insensitive)
 # platform, recognized platforms are (see defaults_csh)
 #HOST_AIX_RS6000
@@ -348,6 +349,13 @@ BEGIN {
 	option_names[++no_options] = "ydb_test_exclude_V5_tests"
 	if (1 == ENVIRON["ydb_test_exclude_V5_tests"])
 		envir[no_options] = "EXCLUDE_V5_TESTS"
+	#
+	option_names[++no_options] = "gtm_test_use_V6_DBs"
+	if (1 == ENVIRON["gtm_test_use_V6_DBs"])
+		envir[no_options] = "V6_DB_FORMAT"
+	#
+	if (0 == ENVIRON["gtm_test_use_V6_DBs"])
+		envir[no_options] = "V7_DB_FORMAT"
 	#
 	option_names[++no_options] = "ydb_test_exclude_ydb749"
 	if (1 == ENVIRON["ydb_test_exclude_ydb749"])

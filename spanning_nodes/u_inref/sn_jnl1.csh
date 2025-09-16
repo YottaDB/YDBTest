@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -253,7 +253,10 @@ echo "Large block size"
 @ record_size = $MIN_BLOCK_SIZE
 @ block_size = $MAX_BLOCK_SIZE
 $gtm_tst/com/dbcreate.csh mumps 1 $key_size $record_size $block_size >&! dbcreate-n.out
-$gtm_tst/com/check_error_exist.csh dbcreate.out MUNOSTRMBKUP
+echo "MUNOSTRMBKUP retired for V7, only expected for V6 database."
+if ($gtm_test_use_V6_DBs) then
+	$gtm_tst/com/check_error_exist.csh dbcreate.out MUNOSTRMBKUP
+endif
 egrep "-I-|-E-" dbcreate.out >&! /dev/null
 if ($status) then
 	echo "OK"

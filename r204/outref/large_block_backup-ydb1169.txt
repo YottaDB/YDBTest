@@ -1,0 +1,35 @@
+# Test to make sure that you can backup a file with a blocksize of >32768,
+# in V6 databases this should create a MUNOSTRMBKUP error, in V7 databases
+# this no longer produces an error. This discrepancy is checked in the outref file.
+
+# Creating database.
+##SUSPEND_OUTPUT V7_DB_FORMAT
+---------------------------------------------------------------
+TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+---------------------------------------------------------------
+##ALLOW_OUTPUT V7_DB_FORMAT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT V7_DB_FORMAT
+----------
+Error MUNOSTRMBKUP seen in dbcreate.out as expected:
+##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+----------
+##ALLOW_OUTPUT V7_DB_FORMAT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+TEST-E-ERRORNOTSEEN MUNOSTRMBKUP was expected in dbcreate.out
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+##ALLOW_OUTPUT V6_DB_FORMAT
+# add transaction to database so that bytestream backup can work
+# creating backup with mupip
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bkup/mumps.dat
+##TEST_AWK[0-9]* blocks saved.
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x.* to 0x.* are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully

@@ -1,3 +1,4 @@
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ---------------------------------------------------------------
 TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
@@ -9,6 +10,7 @@ TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ---------------------------------------------------------------
+##ALLOW_OUTPUT V7_DB_FORMAT
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -233,6 +235,7 @@ MUPIP journal -recov -forw *
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/f.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/g.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ##TEST_PATH##/dbcreate.out
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
@@ -242,3 +245,4 @@ MUPIP journal -recov -forw *
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ##TEST_AWK%(YDB|GTM)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##ALLOW_OUTPUT V7_DB_FORMAT

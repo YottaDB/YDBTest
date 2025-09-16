@@ -1,9 +1,19 @@
 Verify that autoswitch occurs as expected when non-spanning globals are used.
 
+# If gtm_test_use_V6_DBs=1 we expect a MUNOSTRMBKUP error, otherwise we do not.
+##SUSPEND_OUTPUT V7_DB_FORMAT
 ----------
 Error MUNOSTRMBKUP seen in dbcreate.out as expected:
 ##TEST_AWK%(GTM|YDB)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ----------
+##ALLOW_OUTPUT V7_DB_FORMAT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+TEST-E-ERRORNOTSEEN MUNOSTRMBKUP was expected in dbcreate.out
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-
+##ALLOW_OUTPUT V6_DB_FORMAT
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

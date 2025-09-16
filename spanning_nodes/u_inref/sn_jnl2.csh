@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 ###############################################################################################
 # Set minimum autoswitch limit and maximum block size. Make sure that the maximum record size #
@@ -21,8 +35,9 @@ source $gtm_tst/com/set_limits.csh
 
 # Create the database with the above configuration
 $gtm_tst/com/dbcreate.csh mumps 1 $key_size $record_size $block_size >&! db_create.outx
+echo "# If gtm_test_use_V6_DBs=1 we expect a MUNOSTRMBKUP error, otherwise we do not."
+# The discrepancy described above is not dealt with here but in the outref file.
 $gtm_tst/com/check_error_exist.csh dbcreate.out MUNOSTRMBKUP
-
 echo
 
 # Enable nobefore-image journaling on all regions

@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,18 +14,13 @@
 #								#
 #################################################################
 #
-# Disable use of V6 mode DBs using random V6 versions to create DBs as this causes MUNOSTRMBKUP warning that is
-# searched for by the test (not just a reference file issue).
+# MUNOSTRMBKUP is a retired error message it use to be expected in this test but should no longer occur
 setenv gtm_test_use_V6_DBs 0
 #
 # Test for limits on string length, source line length, db keysize, db record size.
-# because of larger block size we will end up with a YDB-W-MUNOSTRMBKUP warning and hence a subsequent dbcreate error
-# to avoid it from getting displayed redirect the output and have it checked instead.
-#
 $gtm_tst/com/dbcreate.csh mumps 1 -key=255 -rec=32767 -blk=65024 -alloc=10 -glo=64 >&! redirected_dbcreate.out
 cat dbcreate.out
-$gtm_tst/com/check_error_exist.csh redirected_dbcreate.out "YDB-W-MUNOSTRMBKUP" "TEST-E-DBCREATE"
-$gtm_tst/com/check_error_exist.csh dbcreate.out "YDB-W-MUNOSTRMBKUP"
+#$gtm_tst/com/check_error_exist.csh redirected_dbcreate.out "TEST-E-DBCREATE"
 #
 $echoline
 # 1 MB string length limit
