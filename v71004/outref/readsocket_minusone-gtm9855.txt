@@ -1,0 +1,14 @@
+# ********************************************************************************************
+# GTM-9855 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE197637855)
+# 
+# READ * from a socket returns minus one (-1) if the read fails; previously it returned a zero (0) in that case, which was inconsistent with other devices and with the standard. (GTM-9855)
+# 
+
+## Run [gtm9855.m] routine to test the return value of a failed READ * command,!
+# Job child which will have a connecting LOCAL socket, parent will have a listening LOCAL socket
+# Do READ * on the child process, but timeout before any data is received to force a READ failure
+# Check the result of READ *. Expect -1. Previously, 0 would be issued.
+# Result: -1 ($TEST: 0)
