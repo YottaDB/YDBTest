@@ -28,6 +28,7 @@
 # ydbcliops-ydb1102			[jon]		Test enhancements to yottadb CLI options
 # mupipload_zwrlgbin-ydb1172		[jon]		Test of MUPIP LOAD accepts ZWR format extracts that contain large binary data
 # mupgrade_jnlmissing-ydb1018		[jon]		Test of MUPIP UPGRADE for 3 scenarios when journal file is missing
+# valtoobig-ydb1130			[ben]		Test that allocation=7340026 autoswitchlimit=7340025 gives VALTOOBIG error
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -57,6 +58,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gvdbnakedmismatch_merge
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbcliops-ydb1102"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupipload_zwrlgbin-ydb1172"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupgrade_jnlmissing-ydb1018"
+setenv subtest_list_non_replic	"$subtest_list_non_replic valtoobig-ydb1130"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

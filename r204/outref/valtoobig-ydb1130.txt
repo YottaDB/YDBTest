@@ -1,0 +1,11 @@
+# Test that allocation=7340026 autoswitchlimit=7340025 gives VALTOOBIG error
+# Previously, due to a syntax error with unbalanced quotes when using indirection, we got %YDB-F-CMD, Command expected but not found instead.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VALTOOBIG, 7340026 is larger than the maximum of 7340025 for a (AUTOSWITCHLIMIT) for a ALLOCATION
+
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
