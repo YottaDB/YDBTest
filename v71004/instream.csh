@@ -17,6 +17,7 @@
 # jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
 # ztrapexception_stpgcol-gtm10688	[nars]	Test SET $ZTRAP and EXCEPTION keep the right value if a garbage collection happens while they are validated
 # dbperms_umask-gtm9272		[jon]	Test create database files with permissions from umask
+# dollarstorage_rlimitdata-gtm9833	[jon]	Test $STORAGE reports the correct value when there is a restriction on the data segment limit (RLIMIT_DATA) of a process
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -27,6 +28,7 @@ setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlext_maxvalue-gtm10687"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrapexception_stpgcol-gtm10688"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dbperms_umask-gtm9272"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dollarstorage_rlimitdata-gtm9833"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
