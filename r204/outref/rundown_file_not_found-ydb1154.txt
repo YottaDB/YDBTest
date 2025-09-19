@@ -1,0 +1,12 @@
+# Test that mupip rundown runs successfully even if the file pointed to by gtm_repl_instance/ydb_repl_instance does not exist.
+# Creating database.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Setting gtm_repl_instance to ##SOURCE_PATH##/fake.repl
+# Running mupip rundown.
+%YDB-W-FILENOTFND, File ##SOURCE_PATH##/fake.repl not found
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
