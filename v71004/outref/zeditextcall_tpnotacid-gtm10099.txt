@@ -1,0 +1,20 @@
+# ********************************************************************************************
+# GTM-10099 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410099)
+# 
+# GT.M uses TPNOTACID behavior for all external calls and for ZEDIT; previously, external calls and the ZEDIT command were exempted from TPNOTACID handling. (GTM-10099)
+# 
+
+### Test 1: TPNOTACID call issued to syslog when ZEDIT called within a transaction
+# Call [gtm10099.m] routine to run ZEDIT in a transcation to produce TPNOTACID in syslog
+# Confirm TPNOTACID appeared in syslog output for ZEDIT call
+# Previously, no TPNOTACID message would appear for the ZEDIT call in gtm10099.m.
+##TEST_AWK.* %GTM-W-TPNOTACID, ZEDIT at trans\+4\^gtm10099 violates ACID properties of a TRANSACTION and could exceed 2000 milliseconds; 3 RESTARTs have occurred -- generated from 0x[0-9A-F]*.
+
+### Test 2: TPNOTACID call issued to syslog when external call made within a transaction
+# Call [gtm10099.m] routine to make external call to the gtm10099() C function in a transaction to produce TPNOTACID in syslog
+# Confirm TPNOTACID appeared in syslog output for external call
+# Previously, no TPNOTACID message would appear for the external call in gtm10099.m.
+##TEST_AWK.* %GTM-W-TPNOTACID, CALL OUT at trans\+6\^gtm10099 violates ACID properties of a TRANSACTION and could exceed 2000 milliseconds; 3 RESTARTs have occurred -- generated from 0x[0-9A-F]*.
