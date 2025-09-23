@@ -1,0 +1,112 @@
+# ********************************************************************************************
+# GTM-10123 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410123)
+# 
+# $VIEW "GVSTAT", ZSHOW "G" and %YGBLSTAT report the count of $INCREMENT() operations labeled INC. $INCREMENT() operations are are still included in the SET count. Previously, these operations were only included in the SET count. (GTM-10123)
+# 
+
+### Test $VIEW "GVSTAT", ZSHOW "G" and %YGBLSTAT report the count of $INCREMENT() operations labeled INC
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 1 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>11, INC=11. Previously, INC would not appear.
+SET:13:INC:11
+# Run [ZSHOW "G"]. Expect SET>11, INC=11. Previously, INC would not appear.
+SET:12,INC:11
+SET:12,INC:11
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>11, INC=11. Previously, INC would not appear.
+SET:12,INC:11
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 1 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>22, INC=22. Previously, INC would not appear.
+SET:25:INC:22
+# Run [ZSHOW "G"]. Expect SET>11, INC=11. Previously, INC would not appear.
+SET:12,INC:11
+SET:12,INC:11
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>11, INC=11. Previously, INC would not appear.
+SET:12,INC:11
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 4 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>36, INC=36. Previously, INC would not appear.
+SET:40:INC:36
+# Run [ZSHOW "G"]. Expect SET>14, INC=14. Previously, INC would not appear.
+SET:15,INC:14
+SET:15,INC:14
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>14, INC=14. Previously, INC would not appear.
+SET:15,INC:14
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 4 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>50, INC=50. Previously, INC would not appear.
+SET:55:INC:50
+# Run [ZSHOW "G"]. Expect SET>14, INC=14. Previously, INC would not appear.
+SET:15,INC:14
+SET:15,INC:14
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>14, INC=14. Previously, INC would not appear.
+SET:15,INC:14
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 10 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>70, INC=70. Previously, INC would not appear.
+SET:76:INC:70
+# Run [ZSHOW "G"]. Expect SET>20, INC=20. Previously, INC would not appear.
+SET:21,INC:20
+SET:21,INC:20
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>20, INC=20. Previously, INC would not appear.
+SET:21,INC:20
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 10 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>90, INC=90. Previously, INC would not appear.
+SET:97:INC:90
+# Run [ZSHOW "G"]. Expect SET>20, INC=20. Previously, INC would not appear.
+SET:21,INC:20
+SET:21,INC:20
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>20, INC=20. Previously, INC would not appear.
+SET:21,INC:20
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 20 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>120, INC=120. Previously, INC would not appear.
+SET:128:INC:120
+# Run [ZSHOW "G"]. Expect SET>30, INC=30. Previously, INC would not appear.
+SET:31,INC:30
+SET:31,INC:30
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>30, INC=30. Previously, INC would not appear.
+SET:31,INC:30
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 20 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>150, INC=150. Previously, INC would not appear.
+SET:159:INC:150
+# Run [ZSHOW "G"]. Expect SET>30, INC=30. Previously, INC would not appear.
+SET:31,INC:30
+SET:31,INC:30
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>30, INC=30. Previously, INC would not appear.
+SET:31,INC:30
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 100 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>260, INC=260. Previously, INC would not appear.
+SET:270:INC:260
+# Run [ZSHOW "G"]. Expect SET>110, INC=110. Previously, INC would not appear.
+SET:111,INC:110
+SET:111,INC:110
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>110, INC=110. Previously, INC would not appear.
+SET:111,INC:110
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 100 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>370, INC=370. Previously, INC would not appear.
+SET:381:INC:370
+# Run [ZSHOW "G"]. Expect SET>110, INC=110. Previously, INC would not appear.
+SET:111,INC:110
+SET:111,INC:110
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>110, INC=110. Previously, INC would not appear.
+SET:111,INC:110
+
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^y)] 2000 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>2380, INC=2380. Previously, INC would not appear.
+SET:2392:INC:2380
+# Run [ZSHOW "G"]. Expect SET>2010, INC=2010. Previously, INC would not appear.
+SET:2011,INC:2010
+SET:2011,INC:2010
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>2010, INC=2010. Previously, INC would not appear.
+SET:2011,INC:2010
+## Run [$INCREMENT(^x)] 10 times and [$INCREMENT(^z)] 2000 times
+# Run [$VIEW("GVSTAT","DEFAULT")]. Expect SET>4390, INC=4390. Previously, INC would not appear.
+SET:4403:INC:4390
+# Run [ZSHOW "G"]. Expect SET>2010, INC=2010. Previously, INC would not appear.
+SET:2011,INC:2010
+SET:2011,INC:2010
+# Run [$$STAT^%YGBLSTAT($JOB,"INC,SET")]. Expect SET>2010, INC=2010. Previously, INC would not appear.
+SET:2011,INC:2010

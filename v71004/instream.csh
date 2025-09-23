@@ -20,6 +20,7 @@
 # dollarstorage_rlimitdata-gtm9833	[jon]	Test $STORAGE reports the correct value when there is a restriction on the data segment limit (RLIMIT_DATA) of a process
 # readsocket_minusone-gtm9855		[jon]	Test READ * from a socket returns -1 if the read fails
 # zeditextcall_tpnotacid-gtm10099	[jon]	Check ZEDIT and external calls for TPNOTACID issues
+# incrstat-gtm10123	[jon]	Test add $INCREMENT() statistic
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -33,6 +34,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic dbperms_umask-gtm9272"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarstorage_rlimitdata-gtm9833"
 setenv subtest_list_non_replic	"$subtest_list_non_replic readsocket_minusone-gtm9855"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zeditextcall_tpnotacid-gtm10099"
+setenv subtest_list_non_replic	"$subtest_list_non_replic incrstat-gtm10123"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
