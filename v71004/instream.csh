@@ -22,6 +22,7 @@
 # zeditextcall_tpnotacid-gtm10099	[jon]	Check ZEDIT and external calls for TPNOTACID issues
 # incrstat-gtm10123	[jon]	Test add $INCREMENT() statistic
 # dollarref_zwrite-gtm10679	[jon]	Test maintain $REFERENCE to the last node it successfully processed for ZWRITE of a gvn
+# zmaxtptime_mseclim-gtm10603	[jon]	Test provide millisecond accuracy and 60 second limit for $ZMAXTPTIME
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -37,6 +38,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic readsocket_minusone-gtm
 setenv subtest_list_non_replic	"$subtest_list_non_replic zeditextcall_tpnotacid-gtm10099"
 setenv subtest_list_non_replic	"$subtest_list_non_replic incrstat-gtm10123"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarref_zwrite-gtm10679"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_mseclim-gtm10603"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
