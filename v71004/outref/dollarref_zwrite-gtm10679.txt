@@ -1,0 +1,70 @@
+# ********************************************************************************************
+# GTM-10679 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410679)
+# 
+# ZWRITE of a gvn maintains $REFERENCE to the last node it successfully processed. If you use ZWRITE as a debugging tool, or unlikely, in application code, in a circumstance where preserving $REFERENCE has importance, note $REFERENCE and restore it, as you would for any other command or function that references a global. Previously, ZWRITE restored the $REFERENCE to the value it had prior to the ZWRITE. (GTM-10679)
+# 
+
+### Test that ZWRITE updates $REFERENCE after a variety of other operations update $REFERENCE
+## Test 1: $REFERENCE updated by SET
+# set ^x=1
+# set ^y=2
+# set ^z=3
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^z.
+$REFERENCE=^x
+
+## Test 2: $REFERENCE updated by $GET
+# $GET(^y)=2
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^y.
+$REFERENCE=^x
+
+## Test 3: $REFERENCE updated by postconditional
+# write:^z
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^z.
+$REFERENCE=^x
+
+## Test 4: $REFERENCE updated by OPEN
+set ^socket="socket"
+open ^socket::"SOCKET"
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^socket.
+$REFERENCE=^x
+
+## Test 5: $REFERENCE updated by USE
+# use ^socket
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^socket.
+$REFERENCE=^x
+
+## Test 6: $REFERENCE updated by CLOSE
+# close ^socket
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^socket.
+$REFERENCE=^x
+
+## Test 7: $REFERENCE updated by NEW
+# if $DATA(^y)
+# zwrite ^x
+^x=1
+# Check $REFERENCE: Expect ^x, previously ^y.
+$REFERENCE=^x
+
+## Test 8: Restore $REFERENCE from variable
+# if ^y
+# zwrite ^x
+^x=1
+# set restore=$REFERENCE
+# if @restore
+# Check $REFERENCE: Expect ^x, previously ^y.
+$REFERENCE=^x
