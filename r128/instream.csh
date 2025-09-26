@@ -19,7 +19,6 @@
 # v63006C		[mmr]		New r128/V63006C subtest to test that mupip trigger -select prints a newline (just a newline) after being ran interactively
 # ydb469		[see]		Test new $FNUMBER() formatting option
 # ydb477		[see]		New test to verify that $TEST can be NEW'd
-# ydb478		[see]		New test to verify after ydb_exit() a Go signal handler altstack is still in place
 # ydb480		[see]		New test to verify $incr() of non-existant var or var set to 0 with floating pt value works
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -35,7 +34,6 @@ setenv subtest_list_non_replic "$subtest_list_non_replic v63006C"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb469"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb477"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb480"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb478"
 
 setenv subtest_list_replic     ""
 
@@ -46,14 +44,6 @@ else
 endif
 
 setenv subtest_exclude_list    ""
-# filter out test that needs to run pro-only (dbg gets different results because of how gtm_fork_n_core() works)
-if ("pro" != "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list ydb478"
-endif
-
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
