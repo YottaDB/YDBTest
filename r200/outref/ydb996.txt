@@ -22,10 +22,5 @@ cmdop(6)=""
 # Test passing a LISTENing TCP socket to a child through JOB command STDIN issues SOCKNAMERR error
 # Before YDB@99c64bd4, this used to cause a SIG-11 in the child process created by the JOB command
 # -----------------------
-%YDB-E-JOBFAIL, JOB command failure,%YDB-I-TEXT, Job error in fork
-		At M source location +59^ydb996
-%YDB-W-NOTPRINCIO, Output currently directed to device socket
-
-YDB>
 ##TEST_PATH##/child2.mje
 %YDB-E-GETSOCKNAMERR, Getting the socket name failed from getsockname(): (errno==107) Transport endpoint is not connected
