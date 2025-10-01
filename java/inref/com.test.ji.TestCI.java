@@ -3,7 +3,7 @@
  * Copyright (c) 2013-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -1784,7 +1784,7 @@ public class TestCI {
 					if (codeIndex == 0)
 						return "150373978,(Call-In),%YDB-E-ZLINKFILE, Error while zlinking \"abc\",%YDB-E-FILENOTFND, File abc.m not found,%YDB-E-FILENOTFND, File abc.o not found\n";
 					else
-						return "150373122,(Call-In),%YDB-E-JOBLABOFF, Label and offset not found in created process\n";
+						return "150373122,(Call-In),%YDB-E-RTNLABOFF, Label abc and/or offset 0 not found in routine test23\n";
 				}
 
 				@Override

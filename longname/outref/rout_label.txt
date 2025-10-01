@@ -306,11 +306,11 @@ unset echo
 ###########################################################################################
 label names are more than 31 characters
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901a^toolong
-%YDB-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-RTNLABOFF, Label x234567890123456789012345678901 and/or offset 0 not found in routine toolong
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901b^toolong
-%YDB-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-RTNLABOFF, Label x234567890123456789012345678901 and/or offset 0 not found in routine toolong
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901c^toolong
-%YDB-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-RTNLABOFF, Label x234567890123456789012345678901 and/or offset 0 not found in routine toolong
 unset echo
 ###########################################################################################
 ##SOURCE_PATH##/mupip
