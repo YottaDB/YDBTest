@@ -15,7 +15,7 @@ d ^zjobdrv(5)
 YDB>
 zjobi^zjobdrv
 ##TEST_AWK[0-9][0-9]*
-%YDB-E-JOBFAIL, JOB command failure,%YDB-I-TEXT, Job error in routine specification. Label and offset not found in created process
+%YDB-E-JOBFAIL, JOB command failure,%YDB-I-TEXT, Job error in routine or label or offset specification.
 		At M source location zjobi+3^zjobdrv
 
 YDB>
@@ -28,4 +28,4 @@ YDB>
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_PATH##/zjobi.mje
-%YDB-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-RTNLABOFF, Label invlab and/or offset 0 not found in routine zjob
