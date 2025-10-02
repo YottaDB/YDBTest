@@ -1,0 +1,149 @@
+# -----------------------------------------------------------------------------------------------
+# Test1) Test JOB command performance slowdown regression in GT.M V6.3-007 (as part of GTM-9058)
+# -----------------------------------------------------------------------------------------------
+# The cause of the performance slowdown was that the middle child used to wait for a message from
+# the grandchild that indicated whether it was able to invoke the M entryref fine or not.
+# This would show up as a read() call right after a sendto() call in an strace output where the
+# sendto() call sent 8264 bytes (8 job parameters approximately 1Kib each).
+# The fix of the performance slowdown was to REMOVE the read() call and so we test that there is
+# NO read() after the sendto() call of 8264 bytes.
+# -----------------------------------------------------------------------------------------------
+# Create [test1.m] which does nothing but a [quit]
+# Run [job ^test1] through [mumps -direct] and [strace -T -ff] to trace the system calls invoked.
+# The [-ff] will cause all forked child/grandchild processes to also be traced and each would
+# create a [trace.out.PID] file. There will be a total of 3 such files and the file corresponding
+# to the middle child would be the middle of those in a [ls -1 trace.out.*] output.
+# Run [grep -A 1 -n "sendto("] on that middle [trace.out.*] file
+# Expect to see NO read() call line AFTER the sendto() line which returned 8264
+# When run without the fix, one would see a read() call show up and the time taken (due to "-T")
+# would be significantly higher than the time taken by the sendto() calls. If the sendto() calls
+# take the order of 20 to 50 microseconds, the read() call would take 65,000 microseconds.
+# The reference file allows for up to 100 microseconds for the sendto() calls. While this is okay on
+# x86_64, on aarch64 this can take even 1000 microseconds or more so run this only on x86_64.
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+
+YDB>
+
+YDB>
+##TEST_AWKsendto\(.*, .*, 4, 0, NULL, 0\) .*= 4 <0.000...>
+##TEST_AWKsendto\(.*, .*..., 8264, 0, NULL, 0\) .*= 8264 <0.000...>
+##TEST_AWKsendto\(.*, .*, 4, 0, NULL, 0\) .*= 4 <0.000...>
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+
+# ----------------------------------------------------------------------------------------------------------------
+# Test2) Test that JOB command middle child is no longer attached to relinkctl shared memory in case of no errors
+# ----------------------------------------------------------------------------------------------------------------
+# This is a test where we set [gtmroutines=".*"], then run [job ^test2], wait for the jobbed off child to terminate
+# and then run [zprint ^test2] to attach to the relinkctl shared memory and then run [zshow "a"]. With an incomplete
+# fix we used to see 2 processes attached (the current process as well as the middle child of the JOB command which
+# has long terminated) whereas we expect to only see 1 (the current process).
+# Run [grep "#" test2.out]. We expect to see [# of attached processes] equal to 1, [# of routines] equal to 1,
+# one line listing [Rtnobj shared memory # 1] and one line listing [test2] as the rtnname.
+# of routines / max      : 1 / 50000
+# of attached processes  : 1
+##TEST_AWKRtnobj shared memory # 1 : shmid: .* shmlen: .* shmused: .* shmfree: .* objlen: .*
+##TEST_AWK    rec#1: rtnname: test2  cycle: 1  objhash: .* numvers: 1  objlen: .* shmlen: .* superseded: 1
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# Test3) Test that JOB command middle child is no longer attached to relinkctl shared memory in case of JOBFAIL/FILENOTFND errors
+# --------------------------------------------------------------------------------------------------------------------------------
+# This is a test where we set [gtmroutines=".*"], then run [job ^test3], where test3.m does not exist (FILENOTFND error),
+# and then run [zprint ^test3] to attach to the relinkctl shared memory and then run [zshow "a"]. With an incomplete
+# fix we used to see 2 processes attached (the current process as well as the middle child of the JOB command which
+# has long terminated) whereas we expect to only see 1 (the current process).
+# Run [cat test3.out]
+# Expecting JOBFAIL error from JOB command
+# Expecting ZLINKFILE/FILENOTFOUND errors for [test3.m]
+# Expecting [# of routines] to be 0
+# Expecting [# of attached processes] to be 1
+# Expecting no line of output indicating test3 as rtnname (like test2 showed up in Test 2 stage)
+
+YDB>
+%YDB-E-JOBFAIL, JOB command failure
+%YDB-I-TEXT, Job error in routine or label or offset specification.
+
+YDB>
+%YDB-E-ZLINKFILE, Error while zlinking "test3"
+%YDB-E-FILENOTFND, File test3.m not found
+%YDB-E-FILENOTFND, File test3.o not found
+
+YDB>
+Object Directory         : ##TEST_PATH##
+##TEST_AWKRelinkctl filename       : .*
+# of routines / max      : 0 / 50000
+# of attached processes  : 1
+##TEST_AWKRelinkctl shared memory  : shmid: .* shmlen: .*
+
+YDB>
+# Run [cat test3.mje]. We expect to see ZLINKFILE/FILENOTFND error in this file too
+%YDB-E-ZLINKFILE, Error while zlinking "test3"
+%YDB-E-FILENOTFND, File test3.m not found
+%YDB-E-FILENOTFND, File test3.o not found
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+# Test4) Test that JOB command middle child does not leave relinkctl shared memory lying around in case of JOBFAIL/RTNLABOFF error
+# ---------------------------------------------------------------------------------------------------------------------------------
+# This is a test where we set [gtmroutines=".*"], then run [job child^test4], where test4.m does exist but child label
+# does not, and then run [zprint ^test4] to attach to the relinkctl shared memory and then run [zshow "a"]. With an
+# incomplete fix we used to see 2 processes attached (the current process as well as the middle child of the JOB command
+# which has long terminated) whereas we expect to only see 1 (the current process).
+# Run [cat test4.out]
+# Expecting JOBFAIL error from JOB command
+# Expecting [# of routines] to be 1
+# Expecting [# of attached processes] to be 1
+# Expecting 1 line of output indicating test4 as rtnname
+
+YDB>
+%YDB-E-JOBFAIL, JOB command failure
+%YDB-I-TEXT, Job error in routine or label or offset specification.
+
+YDB>
+ quit
+
+YDB>
+Object Directory         : ##TEST_PATH##
+##TEST_AWKRelinkctl filename       : .*
+# of routines / max      : 1 / 50000
+# of attached processes  : 1
+##TEST_AWKRelinkctl shared memory  : shmid: .* shmlen: .*
+##TEST_AWKRtnobj shared memory # 1 : shmid: .* shmlen: .* shmused: .* shmfree: .* objlen: .*
+##TEST_AWK    rec#1: rtnname: test4  cycle: 1  objhash: .* numvers: 1  objlen: .* shmlen: .* superseded: 1
+
+YDB>
+# Run [cat test4.mje]. We expect to see RTNLABOFF error in this file
+%YDB-E-RTNLABOFF, Label child and/or offset 0 not found in routine test4
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+# Test5) Test that JOB command middle child does not leave relinkctl shared memory lying around in case of JOBFAIL/RTNLABOFF error
+# ---------------------------------------------------------------------------------------------------------------------------------
+# This is a test where we set [gtmroutines=".*"], then run [job child+10^test5], where test5.m does exist and [child] label
+# exists but line number [child+10] does not, and then run [zprint ^test5] to attach to the relinkctl shared memory and then
+# run [zshow "a"]. With an incomplete fix we used to see 2 processes attached (the current process as well as the middle
+# child of the JOB command which has long terminated) whereas we expect to only see 1 (the current process).
+# Run [cat test5.out]
+# Expecting JOBFAIL error from JOB command
+# Expecting [# of routines] to be 1
+# Expecting [# of attached processes] to be 1
+# Expecting 1 line of output indicating test5 as rtnname
+
+YDB>
+%YDB-E-JOBFAIL, JOB command failure
+%YDB-I-TEXT, Job error in routine or label or offset specification.
+
+YDB>
+child
+ quit
+
+YDB>
+Object Directory         : ##TEST_PATH##
+##TEST_AWKRelinkctl filename       : .*
+# of routines / max      : 1 / 50000
+# of attached processes  : 1
+##TEST_AWKRelinkctl shared memory  : shmid: .* shmlen: .*
+##TEST_AWKRtnobj shared memory # 1 : shmid: .* shmlen: .* shmused: .* shmfree: .* objlen: .*
+##TEST_AWK    rec#1: rtnname: test5  cycle: 1  objhash: .* numvers: 1  objlen: .* shmlen: .* superseded: 1
+
+YDB>
+# Run [cat test5.mje]. We expect to see RTNLABOFF error in this file
+%YDB-E-RTNLABOFF, Label child and/or offset 10 not found in routine test5
+
