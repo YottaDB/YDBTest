@@ -36,7 +36,7 @@ litlab
 	write "# Check that the longest running iteration takes no more than twice as long as the shortest running iteration to complete.",!
 	write "# This will ensure that all iterations complete within a sufficiently similar time period.",!
 	if longest>(shortest*2) do
-	. write "FAIL: Longest iteration time ["_longest_" seconds] was greater than twice the shortest iteration time ["_shortest_" seconds]",!
+	. write "FAIL: Longest iteration time ["_longest_" seconds] was greater than two times the shortest iteration time ["_shortest_" seconds]",!
 	else  do
 	. write "PASS: All iterations completed within an acceptable time period.",!
 	quit

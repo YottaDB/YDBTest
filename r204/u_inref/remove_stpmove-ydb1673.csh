@@ -41,6 +41,9 @@ And all of this is unnecessary in my opinion (reasoning is included in a comment
 CAT_EOF
 echo
 
+# Disable storage debugging as that have been seen to cause runtime slowdowns that may cause this performance test to fail
+unsetenv gtmdbglvl
+
 echo "# Run litlab^ydb1673 routine to:"
 echo "# 1. Create 1000 copies of test.m"
 echo "# 2. ZLINK them one by one in the same process"
