@@ -30,6 +30,7 @@
 # mupgrade_jnlmissing-ydb1018		[jon]		Test of MUPIP UPGRADE for 3 scenarios when journal file is missing
 # valtoobig-ydb1130			[ben]		Test that allocation=7340026 autoswitchlimit=7340025 gives VALTOOBIG error
 # jobcmdslow_gtm9058-ydb1181		[nars]		Test JOB command is not slow and other JOB command tests
+# rtnlaboff-ydbMR1762			[jon]		Test RTNLABOFF error message replacement for JOBLABOFF
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -61,6 +62,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mupipload_zwrlgbin-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupgrade_jnlmissing-ydb1018"
 setenv subtest_list_non_replic	"$subtest_list_non_replic valtoobig-ydb1130"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jobcmdslow_gtm9058-ydb1181"
+setenv subtest_list_non_replic	"$subtest_list_non_replic rtnlaboff-ydbMR1762"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
