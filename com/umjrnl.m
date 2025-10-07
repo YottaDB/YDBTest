@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2002, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -281,7 +281,7 @@ SPLIT(X,p1,p2,subs)  ; Split journal record correctly at =
 	set ptr=0
 	set remains=$p(p1,"(",2,9999),remains=$e(remains,1,$l(remains)-1)
 	;
-	new cindex,j,var,var,seq,ii
+	new cindex,j,var,seq,ii
 	set cindex=0,j=0,var=""
 	for  d  quit:'cindex
 	.       set cindex=$f(remains,"$C",cindex)

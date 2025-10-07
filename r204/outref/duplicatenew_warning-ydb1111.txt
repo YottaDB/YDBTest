@@ -1,0 +1,93 @@
+# Test for warning when YDB compiles mumps program. Warning will be
+# %YDB-W-DUPLICATENEW variable [variable name] appears twice in the same new command
+# Warning should happen when the same variable appears twice on 1 line with the new command
+		new test1,test2,test1
+		                ^-----
+		At column 18, line 15, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable test1 appears twice in the same NEW command
+		new @a,@a
+		         ^-----
+		At column 11, line 20, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable @a appears twice in the same NEW command
+		new $test,a,$test
+		             ^-----
+		At column 15, line 25, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable $test appears twice in the same NEW command
+		new a,b,(a,a)
+		           ^-----
+		At column 13, line 29, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable a appears twice in the same NEW command
+		new a,(a),a
+		          ^-----
+		At column 12, line 30, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable a appears twice in the same NEW command
+		new (a,a)
+		       ^-----
+		At column 9, line 31, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable a appears twice in the same NEW command
+		new (@a,@a)
+		          ^-----
+		At column 12, line 33, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable @a appears twice in the same NEW command
+		new b,b,b   ; This line should trigger 2 warnings.
+		      ^-----
+		At column 8, line 37, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable b appears twice in the same NEW command
+		new b,b,b   ; This line should trigger 2 warnings.
+		        ^-----
+		At column 10, line 37, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable b appears twice in the same NEW command
+		new a,b,a,b ; This line should trigger a warning for both a and b.
+		        ^-----
+		At column 10, line 38, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable a appears twice in the same NEW command
+		new a,b,a,b ; This line should trigger a warning for both a and b.
+		          ^-----
+		At column 12, line 38, source module ##IN_TEST_PATH##/inref/ydb1111.m
+%YDB-W-DUPLICATENEW, Variable b appears twice in the same NEW command
+
+# Now testing various cases with a syntax error to ensure that no fake warnings are issued.
+# This tests the code to clear the error buffer after a syntax error
+# is encountered before the next command starts.
+# First case is to check when a variable name starts with an illegal character.
+		n a,|
+		    ^-----
+		At column 6, line 15, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+# Second case is trying to use indirection on an intrinsic special variable.
+		n a,$@,c
+		     ^-----
+		At column 7, line 13, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr2.m
+%YDB-E-SVNEXPECTED, Special variable expected in this context
+# Third case is having an illegal character instead of a comma after a variable being NEWed in parentheses.
+		new a,(b#
+		        ^-----
+		At column 10, line 13, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr3.m
+%YDB-E-RPARENMISSING, Right parenthesis expected
+# Fourth case is having an illegal character starting a variable name with an indirected variable.
+		new a,@|
+		       ^-----
+		At column 9, line 13, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr4.m
+%YDB-E-EXPR, Expression expected but not found
+# Fifth case is having an illegal character starting a variable name with an indirected variable in parentheses.
+		new (@a,@|)
+		         ^-----
+		At column 11, line 13, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr5.m
+%YDB-E-EXPR, Expression expected but not found
+# Sixth case is having an illegal character starting a variable being NEWed in parentheses.
+		n (a,|)
+		     ^-----
+		At column 7, line 13, source module ##IN_TEST_PATH##/inref/ydb1111SyntaxErr6.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+# Now testing that no DUPLICATENEW warnings are issued during runtime.
+
+YDB>
+
+YDB>
+%YDB-E-RPARENMISSING, Right parenthesis expected
+	new a,@(cat
+	           ^-----
+
+YDB>
+
+YDB>

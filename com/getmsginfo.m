@@ -2,7 +2,7 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -223,7 +223,7 @@ parseMsgs(file,out)
 ; expressions to indicate that the search boundaries are confined by either the beginning or end of the line.       ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 getMsgArgCount(msg,mnemonic)
-	new i,count,piece,length,preChars,postChars,postCharsFlushed,i,char,msgLength,line
+	new i,count,piece,length,preChars,postChars,postCharsFlushed,char,msgLength,line
 
 	; First, make sure that there are no explicit tabs in the text.
 	set count=$length(msg,$char(9))

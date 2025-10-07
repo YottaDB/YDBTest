@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2004, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -35,7 +35,7 @@ memstrss;
 strssjob;
 	set $ztrap="set $ztrap="""" g ERROR^memstrss"
 	new repcnt,arrlen,repno,hname
-	new maxlclen,maxgblen,longstr,tmp,longstr,ascval,i,istp,adata,bdata,cdata,ddata
+	new maxlclen,maxgblen,longstr,tmp,ascval,i,istp,adata,bdata,cdata,ddata
 	set hname=^hname
 	set repcnt=^repcnt
 	set arrlen=^arrlen
@@ -65,7 +65,7 @@ strssjob;
 	. do fillop^memstrss("kill",arrlen)
 	do fillop^memstrss("set",arrlen)
 	do devop^memstrss(repno,arrlen)
-        Q
+	Q
 	;
 fillop(act,arrlen);
 	new index,atprqwertyuiopasdfghjklzxcvbnm1,btpr,ctpr,dtpr,etpr,ftpr,gtpr,atprqwer
@@ -131,9 +131,9 @@ fillop(act,arrlen);
 	. if repno=^repcnt,jobindex=1 do
 	. .  set fn="zwr1.txt"
 	. .  open fn:newversion
- 	. .  use fn
+	. .  use fn
 	. .  zwr longstr
- 	. .  close fn
+	. .  close fn
 	;
 	if act="kill" do
 	. for index=1:1:arrlen do
@@ -199,20 +199,20 @@ devop(repno,arrlen);
 	set $ztrap="g ERROR"
 	set start=((repno-1)*arrlen)+1
 	set end=start+arrlen-1
-        for fno=start:1:end do
-        .  set fname(fno)="MEMLEAK"_$j_fno
-        .  open fname(fno):(newversion:exception="g DEVERR")
-        .  use fname(fno):(exception="g DEVERR")
-        .  write $j," ",fno,!
-        .  close fname(fno):delete
-        quit
+	for fno=start:1:end do
+	.  set fname(fno)="MEMLEAK"_$j_fno
+	.  open fname(fno):(newversion:exception="g DEVERR")
+	.  use fname(fno):(exception="g DEVERR")
+	.  write $j," ",fno,!
+	.  close fname(fno):delete
+	quit
 
 DEVERR;
 	write "$zstatus=",$zstatus,!
 	if $tlevel trollback
-        halt
+	halt
 ERROR;
 	write "$zstatus=",$zstatus,!
 	if $data(index) zwrite index
 	if $tlevel trollback
-        halt
+	halt

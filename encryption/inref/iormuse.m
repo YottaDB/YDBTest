@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -27,7 +30,7 @@
 
 iormuse
 	new i,CASE,CASENUM,CURIKEY,CURIIV,CUROKEY,CUROIV,READDONE,WRITEDONE,ERROR
-	new FILE,FILE1,FILE2,KEY1,IV2,KEY2,IV2
+	new FILE,FILE1,FILE2,KEY1,KEY2,IV1,IV2
 	set FILE1=$piece($zcmdline," ",1)
 	set FILE2=$piece($zcmdline," ",2)
 	set KEY1=$piece($zcmdline," ",3)

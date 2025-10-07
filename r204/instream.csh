@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,6 +39,7 @@
 # fallintoflst-ydb1142			[ben]		Test that that FALLINTOFLST compile time warning occurs and that compiler finishes compilation without issue.
 # socketspinloop-ydb1195		[jon]		Test that WRITE /WAIT on socket device with multiple listening sockets return even with a timeout
 # mcomm_deserialize-ydb1152		[jon]		Test M commands to serialize/deserialize local or global variable subtree
+# duplicatenew_warning-ydb1111		[ben]		Test that mumps compiler correctly gives a DUPLICATENEW warning when attempting to new a variable twice on the same line.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -78,6 +79,8 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic rundown_file_not_found-
 setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1142"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socketspinloop-ydb1195"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mcomm_deserialize-ydb1152"
+setenv subtest_list_non_replic	"$subtest_list_non_replic duplicatenew_warning-ydb1111"
+
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
 

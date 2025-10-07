@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 gtmf167995 ;
-	new version,verNum,tlsid,pieces,sslversion,ciphers,ciphersuite,tlsversion,tlstype,context,tlsid,ciphersuite,err,outFile,cipherStr
+	new version,verNum,tlsid,pieces,sslversion,ciphers,ciphersuite,tlsversion,tlstype,context,err,outFile,cipherStr
 	write "### Test 1: getversion",!
 	write "# TLS version: "_$&libgtmtls.getversion(.version),!
 	write "# TLS details: "_version,!

@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+; Portions Copyright (c) Fidelity National			;
+; Information Services, Inc. and/or its subsidiaries.		;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 arith(precis)	; Test of arithmetic operators -  ** Incomplete **
 	s ITEM="Numeric Test "
 	w ITEM,!
@@ -71,7 +85,7 @@ modop(I)
 	i ERR=0	 w "mo PASS",!
 	q
 
-un(sg,i,x) 
+un(sg,i,x)
 	new neg,as,rev
 	s as=$$biased(i,x)
 	s neg=(sg'=$p(sign,",",i))
@@ -88,7 +102,7 @@ add(i,j,x,y)
 	s da=$$dot(i,x),db=$$dot(j,y),diff=da-db
 	s rght=$$max($l(as),$l(bs))+$s(diff>0:diff,1:0)
 	s sum="",c=0
-	f k=rght:-1:1 q:($e(as,k)'="")!($e(bs,k-diff)'="") 
+	f k=rght:-1:1 q:($e(as,k)'="")!($e(bs,k-diff)'="")
 	f k=k:-1:$s(diff'<0:diff+1,1:1)  s d=c+$e(as,k)+$e(bs,k-diff)  s:d<10 sum=d_sum,c=0  s:d'<10 c=1,sum=(d-10)_sum
 	f k=diff:-1:1    s d=c+$e(as,k)       s:d<10 sum=d_sum,c=0  s:d'<10 c=1,sum=(d-10)_sum
 	f k=0:-1:diff+1  s d=c+$e(bs,k-diff)  s:d<10 sum=d_sum,c=0  s:d'<10 c=1,sum=(d-10)_sum
@@ -101,7 +115,7 @@ sub(op,i,j,x,y)
 	; subtracts numbers scaled by BIAS
 	new bor,sum,as,bs,dot,k,l
 	s da=$$dot(i,x),db=$$dot(j,y),diff=da-db
-	s as=$$biased(i,x),bs=$$biased(j,y)  
+	s as=$$biased(i,x),bs=$$biased(j,y)
 	s rght=$$max($l(as),$l(bs))+$s(diff>0:diff,1:0)
 	f l=rght:-1:1 q:(($e(as,l)'="")!($e(bs,l-diff)'=""))
 	s sum="",bor=0,at=0,d=0
@@ -118,14 +132,14 @@ sub(op,i,j,x,y)
 	q $$fix2can(neg,dot,sum,shrink)
 
 
-mul(i,j,x,y) 
+mul(i,j,x,y)
 	new k,d,la,as,bs,ps
-	s as=$$biased(i,x),la=$l(as)  
+	s as=$$biased(i,x),la=$l(as)
 	s bs=$$biased(j,y),lb=$l(bs)
 	s da=$$dot(i,x),db=$$dot(j,y),dot=da+db
 	s ps=$$times(as,bs)
 	i $l(ps)'=(la+lb)  s dot=dot-1
-	f k=0:1:dot  q:$e(ps,k+1)'=0 
+	f k=0:1:dot  q:$e(ps,k+1)'=0
 	s ps=$e(ps,k+1,60),dot=dot-k
 	s neg=$p(sign,",",j)'=$p(sign,",",i)
 	q $$fix2can(neg,dot,ps,0)
@@ -133,7 +147,7 @@ mul(i,j,x,y)
 times(gs,fs)
 	new g,ts,k
 	s ts=""
-	f k=$l(gs):-1:1 s g=$e(gs,k),ts=$$S(g,fs,ts),fs=fs_0  
+	f k=$l(gs):-1:1 s g=$e(gs,k),ts=$$S(g,fs,ts),fs=fs_0
 	q ts
 
 S(q,xs,ys)
@@ -141,7 +155,7 @@ S(q,xs,ys)
 	s ss="",c=0,j=$l(ys),m=$l(xs),low=$s(j>m:m-j+1,1:1)
 	f k=m:-1:low  d
 	.	s w=c+(q*$e(xs,k))+$e(ys,j),j=j-1
-	.	s:w<10 c=0,d=w  s:w'<10 c=$e(w,1),d=$e(w,2)  
+	.	s:w<10 c=0,d=w  s:w'<10 c=$e(w,1),d=$e(w,2)
 	.	s ss=d_ss
 	q $s(c'=0:c_ss,1:ss)
 
@@ -173,15 +187,15 @@ dot(i,n) ; position of the decimal point
 	q $p(intl,",",i)+$p(expo,",",i)
 
 fix2can(neg,dot,fix,shr)
-	new d,ds,c,d,L,ld,prec
+	new d,ds,c,L,ld,prec
 	i +fix=0  q 0
 	s L=$l(fix),prec=precis-shr
 	f  q:$e(fix,L)'=0  s L=L-1
 	f k=1:1:L  q:$e(fix,k)'=0
-	s c=0  
+	s c=0
 	i L-k+1>prec  s L=prec s:$e(fix,L)>5 c=1  f  q:$e(fix,L)'=0  s L=L-1
 	i c=1  f L=L:-1:1  q:$e(fix,L)'=9
-	s ds=""  
+	s ds=""
 	f k=dot-1:-1:L s ds=ds_0
 	f k=L:-1:dot+1 s d=($e(fix,k)+c)  s:d<10 ds=d_ds,c=0  s:d'<10 ds=(d-10)_ds,c=1
 	i dot<L  s ds="."_ds,k=k-1
@@ -193,7 +207,7 @@ fix2can(neg,dot,fix,shr)
 EXAM(ind,item,vcomp,vcorr)
 	i vcorr=vcomp  q
 	s ERR=ERR+1
-	w ind,"  ** FAIL ",item,! 
+	w ind,"  ** FAIL ",item,!
 	w "         CORRECT  = ",vcorr,!
 	w "         COMPUTED = ",vcomp,!
 	q

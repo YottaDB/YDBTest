@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -133,7 +133,7 @@ dumplogs
 ; actually looking the (3 at this time) messages that also come out with the EXITSTATUS as we want all of them to be
 ; shown in the reference file.
 checkForEXITSTATUS(iteration)
-	new i,foundCnt,pidText,foundMsg,msgIndx,msgFound,foundMsg,msgName
+	new i,foundCnt,pidText,foundMsg,msgIndx,msgFound,msgName
 	write:debug "Entering checkforEXITSTATUS(",iteration,")",!
 	; First, if we are not on the first iteration, remove the existing extract
 	zsystem:(0'=iteration) "rm -f "_outFile_">& /dev/null"
