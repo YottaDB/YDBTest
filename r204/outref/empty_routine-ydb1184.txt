@@ -1,0 +1,5 @@
+# Test to make sure that running "gtm_dist/mumps -run ^" will produce the correct error.
+# previously caused an assert to fail in sr_unix/lref_parse.c.
+%YDB-E-RUNPARAMERR, Error accessing parameter for run command
+# this should also produce the same error message.
+%YDB-E-RUNPARAMERR, Error accessing parameter for run command
