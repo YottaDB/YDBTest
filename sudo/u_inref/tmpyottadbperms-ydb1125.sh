@@ -25,6 +25,7 @@ unset ydb_chset gtm_chset
 
 echo "# Set test case variables"
 install_dir="$(pwd)/$dirname"
+linkexec_dir="$(pwd)/${dirname}_linkexec"
 install_group=$2
 relname=$tmp_relname
 test_vars="test$1-vars.out"
@@ -80,11 +81,11 @@ echo -n "# Run ydbinstall/ydbinstall.sh: "
 if [ "nogroup" = "$install_group" ]; then
 	echo "without --group-restriction"
 	# Use --linkexec to reduce instance of failures in concurrently running tests that access /usr/local/bin
-	$sudostr -E $source_directory/ydbinstall --installdir $install_dir --overwrite-existing --utf8 --linkexec $install_dir
+	$sudostr -E $source_directory/ydbinstall --installdir $install_dir --overwrite-existing --utf8 --linkexec $linkexec_dir
 else
 	echo "with --group-restriction --group $install_group"
 	# Use --linkexec to reduce instance of failures in concurrently running tests that access /usr/local/bin
-	$sudostr -E $source_directory/ydbinstall --installdir $install_dir --overwrite-existing --utf8 --group-restriction --group $install_group --linkexec $install_dir
+	$sudostr -E $source_directory/ydbinstall --installdir $install_dir --overwrite-existing --utf8 --group-restriction --group $install_group --linkexec $linkexec_dir
 fi
 
 echo "# Invoke ydb_env_set as $USER"
