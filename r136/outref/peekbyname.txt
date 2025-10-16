@@ -24,6 +24,9 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type union
 --
+set x=$$^%PEEKBYNAME("mutex_struct.mutex","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
+--
 set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type unix_file_id
 --
@@ -32,6 +35,9 @@ set x=$$^%PEEKBYNAME("unix_db_info.key","DEFAULT")
 # Check errors on receiver side PEEKBYNAME calls
 set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type union
+--
+set x=$$^%PEEKBYNAME("mutex_struct.mutex","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
 --
 set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type unix_file_id
