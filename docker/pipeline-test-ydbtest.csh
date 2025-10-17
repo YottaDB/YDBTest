@@ -30,17 +30,30 @@ else
 endif
 echo "# ydbtest_branch: $ydbtest_branch"
 
-# Get the last 20 MRs (open/closed/merged) in reverse chronological order
-curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=all" > ydb_open_mrs.json
-set ydb_branches = `jq -r '.[].source_branch' ydb_open_mrs.json`
-echo "# ydb_branches: $ydb_branches"
+set filter = ".[] | select(.source_branch == \"$ydbtest_branch\") | .iid"
+echo "# Get the open MR that matches the name of the current YDBTest MR:"
+curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=opened&source_branch=${ydbtest_branch}" > ydb_mr.json
+set ydb_branch = `jq -r '.[].source_branch' ydb_mr.json`
 
-if ( $ydbtest_branch != "master" && " $ydb_branches " =~ " *$ydbtest_branch* " ) then
+if ( $ydb_branch == "" ) then
+	echo "# Branch name matching YDB open branch not found..."
+	echo "# Get a merged branch that matches the name of the current YDBTest MR:"
+	curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=merged" > ydb_mr.json
+	set ydb_branches = `jq -r '.[].source_branch' ydb_mr.json`
+	echo "# Merged branches: $ydb_branches"
+	if ( " $ydb_branches " =~ " *$ydbtest_branch* " ) set mr_id = `jq -r "$filter" ydb_mr.json`
+	if ( $?mr_id ) then
+		echo "# MR ID for merged branch is $mr_id"
+	endif
+else
+	set mr_id = `jq -r "$filter" ydb_mr.json`
+	echo "# MR ID for open branch is $mr_id"
+endif
+
+if ( $ydbtest_branch != "master" && $?mr_id ) then
 	# We have a match... grab corresponding YDB MR number
 	echo " "
 	echo -n "### Building YottaDB branch $ydbtest_branch to match the current branch (MR ID: "
-	set filter = ".[] | select(.source_branch == \"$ydbtest_branch\") | .iid"
-	set mr_id = `jq -r "$filter" ydb_open_mrs.json`
 	echo "$mr_id)"
 	if ( $?CI_PROJECT_DIR ) then
 		# If running in the pipeline, make sure the build output is in a location that can be included in the artifacts
@@ -52,7 +65,7 @@ if ( $ydbtest_branch != "master" && " $ydb_branches " =~ " *$ydbtest_branch* " )
 else
 	echo "### YottaDB master branch already built"
 endif
-rm ydb_open_mrs.json
+rm ydb_mr.json
 popd >& /dev/null
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
