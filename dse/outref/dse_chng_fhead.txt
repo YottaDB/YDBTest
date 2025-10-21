@@ -67,7 +67,7 @@ Region          DEFAULT
   StatsDB Allocation                           2050
   Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
-  Reorg Sleep Nanoseconds                         0
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
 command: change -fileheader -location=NULL -size=1 -value=1 ...
 command: change -fileheader -location=10 -size=z -value=1...
 command: change -fileheader -location=Z -size=1 -value=1...
@@ -163,7 +163,7 @@ Region          DEFAULT
   StatsDB Allocation                           2050
   Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
-  Reorg Sleep Nanoseconds                         0
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
 Check -nocrit qualifier...
 Seize critical section for process A-----------------------------
 
