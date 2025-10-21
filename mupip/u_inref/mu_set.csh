@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,7 @@ setenv test_reorg NON_REORG
 @ corecnt = 1
 setenv gtmgbldir "./set.gld"
 if (-f tempse.com) then
-    \rm tempse.com
+	\rm tempse.com
 endif
 echo "change -segment DEFAULT -file=set" >!  tempse.com
 echo "add -name a* -region=rega"         >>! tempse.com
@@ -101,11 +101,11 @@ $MUPIP set -region RegA -lock=262145
 echo "#"
 echo "# Set with a bad mutex slots"
 echo "#"
-$MUPIP set -file set.dat -mutex=63
+$MUPIP set -file set.dat -mutex_slots=63
 echo "#"
 echo "# Set with a bad mutex slots"
 echo "#"
-$MUPIP set -region RegA -MUTEX=32769
+$MUPIP set -region RegA -MUTEX_SLOTS=32769
 echo "#"
 echo "# Set with a bad record size"
 echo "#"
@@ -157,30 +157,30 @@ source $gtm_tst/$tst/u_inref/check_core_file.csh "se" "$corecnt"
 set mupip_set_output = mupip_set.out
 $MUPIP set -file set.dat -g=2048 -access_method=BG -EPOCHT -extension_CO=2000 -rec=2048 -spin=3000 -sleep=4 >>& $mupip_set_output
 if ($status > 0) then
-    echo "ERROR from $MUPIP set file set.dat g 2048. Please check $mupip_set_output"
-    exit 2
+	echo "ERROR from $MUPIP set file set.dat g 2048. Please check $mupip_set_output"
+	exit 2
 endif
 #Region Name in Mixed cases should be accepted
 $MUPIP set -region Rega,REGB -g=3096  |& sort -f >>& $mupip_set_output
 if ($status > 0) then
-    echo "ERROR from $MUPIP set region rega regb g 3096. Please check $mupip_set_output"
-    exit 3
+	echo "ERROR from $MUPIP set region rega regb g 3096. Please check $mupip_set_output"
+	exit 3
 endif
 $MUPIP set -region "*" -res=7 |& sort -f >>& $mupip_set_output
 if ($status > 0) then
-    echo "ERROR from $MUPIP set -r asterisk res 7. Please check $mupip_set_output"
-    exit 4
+	echo "ERROR from $MUPIP set -r asterisk res 7. Please check $mupip_set_output"
+	exit 4
 endif
 # -nodefer_alloc is not supported on solaris and hpux itanium
 if ($HOSTOS =~ {SunOS,HP-UX}) then
-    set nodefer = ""
+	set nodefer = ""
 else
-    set nodefer = "-nodefer_alloc"
+	set nodefer = "-nodefer_alloc"
 endif
 $MUPIP set -region "*" -lock=4000 -MUTEX_SLOTS=1500 -qdbrundown -key=255 $nodefer |& sort -f >>& $mupip_set_output
 if ($status > 0) then
-    echo "ERROR from $MUPIP set r asterisk lock etc. Please check $mupip_set_output"
-    exit 4
+	echo "ERROR from $MUPIP set r asterisk lock etc. Please check $mupip_set_output"
+	exit 4
 endif
 
 # <argumentless_rundown_causes_test_failure/resolution_v2> Filter out SHMREMOVED messages in case there is an argumentless MUPIP
