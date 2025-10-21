@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,6 +28,7 @@ $MUPIP set -file mumps.dat -mutex_slots=16384
 $gtm_exe/mumps -run %XCMD "set ^x=4"
 $MUPIP set -file mumps.dat -mutex_slots=2048
 $gtm_exe/mumps -run %XCMD "set ^x=5"
+echo "# Verify mutex settings in file header by doing a [grep -i Mutex] of [dse dump -file] output"
 $DSE dump -fileheader |& $grep -i "Mutex"
 
 echo "# Expect MUPIP SET errors"
