@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,6 +56,7 @@ while (1)
 	# The variable *ret* stores exit statuses after each mupip invocation so the test stops in case any sub process exits with error.
 	# This is the case for multisrv_crash test case which deliberately kills online_reorg sub processes
 	set tmpoutput = "online_reorg_$$.outx.$cnt"
+	source $gtm_tst/com/random_mutex_type.csh >>& $tmpoutput
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
 	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>&!  $tmpoutput
 	if ($cnt % 5 == 2) then

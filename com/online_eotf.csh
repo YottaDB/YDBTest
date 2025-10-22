@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -48,6 +51,7 @@ while (1)
 			set eotfend
 			break
 		endif
+		source $gtm_tst/com/random_mutex_type.csh
 		echo "# `date` : Region : $region"
 		eval 'set key = $keys_'$region'['$keycnt']'
 		alias do '$MUPIP reorg -encrypt='$key' -region '$region''

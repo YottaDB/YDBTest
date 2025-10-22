@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,3 +91,6 @@ endif
 # the caller subtest script.
 setenv gtm_test_use_V6_DBs 0
 
+# Set mutex_type to DEFAULT this way if dbcreate.csh happens to use a version older than r2.04,
+# it will not try to run [mupip set -mutex_type=...] which is unsupported.
+setenv ydb_test_mutex_type DEFAULT

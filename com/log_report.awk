@@ -163,6 +163,7 @@ BEGIN {
 		if ( "ydb_readline" == rname ) printf "RL:%-1s ",rval[i]
 		if ( "gtm_statshare" == rname ) printf "STATS:%-1s ",rval[i]
 		if ( "ydb_stp_gcol_nosort" == rname ) printf "GCOL_NOSORT:%-1s ",rval[i]
+		if ( "ydb_test_mutex_type" == rname ) printf "MUTEX_TYPE:%-1s ",rval[i]
 	}
 	print "",$3
 }

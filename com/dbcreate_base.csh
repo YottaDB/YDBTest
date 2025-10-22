@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -353,6 +353,33 @@ if ($?restore_gtm_custom_errors) then
 	unsetenv restore_gtm_custom_errors
 endif
 
+if ($?ydb_test_mutex_type) then
+	switch ("$ydb_test_mutex_type")
+	case "YDB":
+	case "PTHREAD":
+	case "ADAPTIVE":
+		if ("GT.CM" != "$test_gtm_gtcm") then
+			echo '# Running [mupip set -mutex_type=$ydb_test_mutex_type -region "*"]' >>&! dbcreate.out
+			$gtm_dist/mupip set -mutex_type=$ydb_test_mutex_type -region "*" >>&! dbcreate.out
+		else
+			# This is a GT.CM test and so some regions would be remote.
+			# Therefore, MUPIP SET -MUTEX_TYPE=... -REG "*" cannot be run as it works only on local regions.
+			# So skip the command in this case.
+			echo '# Skipping [mupip set -mutex_type=$ydb_test_mutex_type -region "*"] as it is a GT.CM test' >>&! dbcreate.out
+		endif
+		breaksw
+	case "RANDOM":
+	case "DEFAULT":
+		# Do nothing. See comment in com/do_random_settings.csh for more details.
+		breaksw
+	default:
+		echo "TEST-E-UNKNOWN : ydb_test_mutex_type env var has unknown mutex type [$ydb_test_mutex_type]"
+		exit 1
+		breaksw
+	endsw
+endif
+
+source $gtm_tst/com/
 if (($gtm_test_trigger) && ($?test_specific_trig_file)) then
 	if ("GT.CM" == $test_gtm_gtcm) then
 		echo "TEST-E-GTCMvsTRIGGERS Triggers and hence \$test_specific_trig_file are not supported for GT.CM testing"

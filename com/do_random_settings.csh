@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 52 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 53 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1418,6 +1418,34 @@ endif
 echo "setenv ydb_stp_gcol_nosort $ydb_stp_gcol_nosort"						>>&! $settingsfile
 
 setenv tst_random_all "$tst_random_all ydb_stp_gcol_nosort"
+###########################################################################
+
+###########################################################################
+### Random option - 53 ### Randomly set MUTEX_TYPE
+#
+if !($?ydb_test_mutex_type) then
+	if (20 >= $randnumbers[53]) then
+		setenv ydb_test_mutex_type "YDB"	# dbcreate_base.csh sets mutex type to YDB
+	else if (40 >= $randnumbers[53]) then
+		setenv ydb_test_mutex_type "PTHREAD"	# dbcreate_base.csh sets mutex type to PTHREAD
+	else if (60 >= $randnumbers[53]) then
+		setenv ydb_test_mutex_type "ADAPTIVE"	# dbcreate_base.csh sets mutex type to ADAPTIVE
+	else if (80 >= $randnumbers[53]) then
+		setenv ydb_test_mutex_type "RANDOM"	# dbcreate_base.csh does NOT set mutex type in this case
+							# but some tests using online_reorg.csh and eotf.csh will
+							# repeatedly switch mutex type to a random value from YDB,
+							# PTHREAD or ADAPTIVE for a random set of regions in the gld
+	else
+		setenv ydb_test_mutex_type "DEFAULT"	# Neither dbcreate_base.csh nor online_reorg.csh or eotf.csh will
+							# set mutex type explicitly. It will stay at default value.
+	endif
+	echo "# ydb_test_mutex_type set by do_random_settings.csh"				>>&! $settingsfile
+else
+	echo "# ydb_test_mutex_type was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+echo "setenv ydb_test_mutex_type $ydb_test_mutex_type"						>>&! $settingsfile
+
+setenv tst_random_all "$tst_random_all ydb_test_mutex_type"
 ###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report

@@ -65,7 +65,6 @@ if ($?ydb_environment_init) then
 			if ($ydbrel < 124) then
 				set disabletls = 1
 				echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3 (prior_ver = $1 < R124)" >>&! settings.csh
-			else
 			endif
 		endif
 	endif
@@ -90,5 +89,26 @@ if ($?ydb_environment_init) then
 	# (see https://gitlab.com/YottaDB/DB/YDB/issues/193 for details). Therefore, set ydb_msgprefix to "GTM" in that case.
 	if ($1 == "V63003A_R120") then
 		setenv ydb_msgprefix "GTM"
+	endif
+	# If the prior version is less than r2.04, then [mupip set -mutex_type] is not supported. In that case, disable
+	# random mutex_type setting in dbcreate_base.csh by setting ydb_test_mutex_type to DEFAULT.
+	set disable_mutex_type = 0
+	if (!($1 =~ "V*_R*")) then
+		# This is a pure GT.M build because it does not have a _Rxxx suffix (e.g. _R122)
+		set disable_mutex_type = 1
+		echo "# Overriding setting of ydb_test_mutex_type by ydb_prior_ver_check.csh (prior_ver = $1 is pure GT.M build)" >>&! settings.csh
+	else
+		# Check if the YottaDB release i.e. xxx in Rxxx is less than 204.
+		# Note that some versions might have been named V63009_R131C etc. In that case, only take 131
+		# and ignore the trailing C etc. Hence the "cut" command below.
+		set ydbrel = `echo $1 | sed 's/.*_R//g' | cut -b 1-3`
+		if ($ydbrel < 204) then
+			set disable_mutex_type = 1
+			echo "# Overriding setting of ydb_test_mutex_type by ydb_prior_ver_check.csh (prior_ver = $1 < R204)" >>&! settings.csh
+		endif
+	endif
+	if ($disable_mutex_type) then
+		echo "setenv ydb_test_mutex_type DEFAULT" >>&! settings.csh
+		setenv ydb_test_mutex_type "DEFAULT"
 	endif
 endif
