@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,7 +84,7 @@ endif
 #in case dbcreate.csh is used outside test suite, and tst_rf_log is undefined
 if( (!($?tst_rf_log))||("$tst_rf_log" == "")) setenv tst_rf_log  "log"
 if ("$tst_rf_log" == "nolog") then
-        setenv SRC_LOG_FILE "/dev/null"
+	setenv SRC_LOG_FILE "/dev/null"
 else
 	if ($?SRC_LOG_FILE == 0) then
 		setenv SRC_LOG_FILE "$PRI_SIDE/SRC_${time_stamp}.log"
@@ -160,13 +160,13 @@ echo "Starting Active Source Server in Host: $HOST:r:r:r:r"
 echo "In directory:`pwd`"
 # If the quotes around the filter is not provided, include it. Otherwise src start will fail with CLIERR for -RUN
 if($?gtm_tst_ext_filter_src) then
-    if ( '"' == `echo $gtm_tst_ext_filter_src | cut -c 1` ) then
-    	setenv filter_arg "-filter=$gtm_tst_ext_filter_src"
-    else
-        set filterwithquote = \""$gtm_tst_ext_filter_src"\"
-    	setenv filter_arg "-filter=$filterwithquote"
-    endif
-    echo "TEST-I-SRC Turning on external filter ($filter_arg)..."
+	if ( '"' == `echo $gtm_tst_ext_filter_src | cut -c 1` ) then
+		setenv filter_arg "-filter=$gtm_tst_ext_filter_src"
+	else
+		set filterwithquote = \""$gtm_tst_ext_filter_src"\"
+		setenv filter_arg "-filter=$filterwithquote"
+	endif
+	echo "TEST-I-SRC Turning on external filter ($filter_arg)..."
 endif
 
 if ($?gtm_test_repl_src_cmplvl) then
@@ -214,10 +214,35 @@ else
 	set connectparams = ""
 endif
 
+if ($?gtm_test_sendbuffsize) then
+	if ("-nosendbuffsize" == $gtm_test_sendbuffsize) then
+		set sendbuffsize = $gtm_test_sendbuffsize
+	else
+		set sendbuffsize = "-sendbuffsize=$gtm_test_sendbuffsize"
+	endif
+else
+	set sendbuffsize = ""
+endif
+if ($?gtm_test_recvbuffsize) then
+	if ("-norecvbuffsize" == $gtm_test_recvbuffsize) then
+		set recvbuffsize = $gtm_test_recvbuffsize
+	else
+		set recvbuffsize = "-recvbuffsize=$gtm_test_recvbuffsize"
+	endif
+else
+	set recvbuffsize = ""
+endif
+set replic_suffix = ""
+if ($?gtm_test_replic_prefix) then
+	set replic_prefix = "$gtm_test_replic_prefix"
+else
+	set replic_prefix = ""
+endif
+
 source $gtm_tst/com/set_var_trigupdatestr.csh	# sets "trigupdatestr" variable to contain "" or "-trigupdate"
 
 # Prepare the source server startup command. Set an environment variable as we want this to be accessible from within "sh" below.
-setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $connectparams $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg $trigupdatestr"
+setenv srcstartcmd "$replic_prefix $MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $connectparams $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg $trigupdatestr $sendbuffsize $recvbuffsize"
 # Note that "echo $srcstartcmd" will issue an "echo: No match" error in tcsh as it is possible "$srcstartcmd" contains
 # strings of the form "-secondary=[::1]:36023". Therefore, we use the below trick to print the value of it using "env".
 # That is the equivalent of an "echo $srcstartcmd" but avoids the "echo: No match" error.
@@ -228,7 +253,22 @@ if (! $?src_srvr_stdin_is_terminal) then
 	# It is possible for usages like "-secondary=[::ffff:127.0.0.1]:36008" to be there in $srcstartcmd
 	# Do not error out for those cases (tcsh would try to evaluate :). Hence the nonomatch below.
 	set nonomatch
-	$srcstartcmd
+	echo "$replic_prefix" | grep "strace" >& /dev/null
+	# Run strace in the background
+	if ($status == 0) then
+		($srcstartcmd >&! srcstartcmd.out & ; echo $! >&! srcstartcmd.pid) >&! srcstartcmd-bg.out
+		set source_chkhealth_file=SRC_checkhealth_strace_${time_stamp}_`date +%H%M%S`.outx
+		$MUPIP replicate -source -checkhealth $gtm_test_instsecondary | & tee $source_chkhealth_file
+		while ("" == `$grep "server is alive" $source_chkhealth_file`)
+			$MUPIP replicate -source -checkhealth $gtm_test_instsecondary | & tee $source_chkhealth_file
+			sleep 0.1
+		end
+		echo "Active Source Server started"
+		# echo "Could not check health of Active Source Server!"
+		# exit_checkhealth_error
+	else
+		$srcstartcmd
+	endif
 	unset nonomatch
 else
 	# src_srvr_stdin_is_terminal is set implying the subtest (currently only r122/ydb210) wants to start the source server

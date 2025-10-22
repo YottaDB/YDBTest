@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,16 +35,16 @@ if ( ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) || ("V50000" == `echo $gtm_exe:h:t|
 endif
 setenv repl_state "$1"
 if ($2 == "") then
-        echo "Needs port number to start receiver server!"
-        exit 1
+	echo "Needs port number to start receiver server!"
+	exit 1
 else
-        set portno=$2
-        echo "Using port $portno (passed in as arg 2)"
+	set portno=$2
+	echo "Using port $portno (passed in as arg 2)"
 endif
 if ($3 == "") then
-        setenv time_stamp `date +%H_%M_%S`
+	setenv time_stamp `date +%H_%M_%S`
 else
-        set time_stamp=$3
+	set time_stamp=$3
 	shift
 endif
 if ("" != "$argv") shift
@@ -246,21 +246,65 @@ if ($?gtm_test_autorollback == 1) then
 	if ($gtm_test_autorollback == "TRUE") set autorollback = "-autorollback"
 endif
 
+if ($?gtm_test_sendbuffsize) then
+	if ("-nosendbuffsize" == $gtm_test_sendbuffsize) then
+		set sendbuffsize = $gtm_test_sendbuffsize
+	else
+		set sendbuffsize = "-sendbuffsize=$gtm_test_sendbuffsize"
+	endif
+else
+	set sendbuffsize = ""
+endif
+if ($?gtm_test_recvbuffsize) then
+	if ("-norecvbuffsize" == $gtm_test_recvbuffsize) then
+		set recvbuffsize = $gtm_test_recvbuffsize
+	else
+		set recvbuffsize = "-recvbuffsize=$gtm_test_recvbuffsize"
+	endif
+else
+	set recvbuffsize = ""
+endif
+if ($?gtm_test_replic_prefix) then
+	set replic_prefix = "$gtm_test_replic_prefix"
+else
+	set replic_prefix = ""
+endif
+
+
 echo "Starting Receiver Source Server"
 setenv filter_arg ""
 if($?gtm_tst_ext_filter_rcvr) then
-    # If the quotes around the filter is not provided, include it. Otherwise rcvr start will fail with CLIERR for -RUN
-    if ( '"' == `echo $gtm_tst_ext_filter_rcvr | cut -c 1` ) then
-	    setenv filter_arg "-filter=$gtm_tst_ext_filter_rcvr"
-    else
-	    set filterwithquote = \""$gtm_tst_ext_filter_rcvr"\"
-	    setenv filter_arg "-filter=$filterwithquote"
-    endif
-    echo "TEST-I-RCVR Turning on external filter ($filter_arg)..."
+	# If the quotes around the filter is not provided, include it. Otherwise rcvr start will fail with CLIERR for -RUN
+	if ( '"' == `echo $gtm_tst_ext_filter_rcvr | cut -c 1` ) then
+		setenv filter_arg "-filter=$gtm_tst_ext_filter_rcvr"
+	else
+		set filterwithquote = \""$gtm_tst_ext_filter_rcvr"\"
+		setenv filter_arg "-filter=$filterwithquote"
+	endif
+	echo "TEST-I-RCVR Turning on external filter ($filter_arg)..."
 endif
 set other_qual_arg = "$other_qualifiers ${cmplvlstr} ${autorollback}"
-echo "$MUPIP replic -receiv -start -listenport=$portno -buffsize=$tst_buffsize $other_qual_arg -log=$RCVR_LOG_FILE $filter_arg $updateresyncarg $tlsparm $helper_parm"
-$MUPIP replic -receiv -start -listenport=$portno -buffsize=$tst_buffsize $other_qual_arg -log=$RCVR_LOG_FILE $filter_arg $updateresyncarg $tlsparm $helper_parm
+setenv recvstartcmd "$replic_prefix $MUPIP replic -receiv -start -listenport=$portno -buffsize=$tst_buffsize $other_qual_arg -log=$RCVR_LOG_FILE $filter_arg $updateresyncarg $tlsparm $helper_parm $sendbuffsize $recvbuffsize"
+echo $recvstartcmd
+echo "$replic_prefix" | grep "strace" >& /dev/null
+if ($status == 0) then
+	# Run strace in the background
+	($recvstartcmd >&! recvstartcmd.out & ; echo $! >&! recvstartcmd.pid) >&! recvstartcmd-bg.out
+	set receiver_chkhealth_file=RCVR_rcvr_checkhealth_strace_${time_stamp}_`date +%H%M%S`_$$.outx
+	$MUPIP replicate -receiv -checkhealth >>&  $receiver_chkhealth_file
+	## set start_status = $status
+	while ("" == `$grep "server is alive" $receiver_chkhealth_file`)
+		## set start_status = $status
+		$MUPIP replicate -receiv -checkhealth >>& $receiver_chkhealth_file
+		sleep 0.1
+	end
+	echo "Receiver Server has started"
+	# echo "Could not start Receiver Server!"
+	# exit_checkhealth_error
+else
+	$recvstartcmd
+endif
+# $replic_prefix $MUPIP replic -receiv -start -listenport=$portno -buffsize=$tst_buffsize $other_qual_arg -log=$RCVR_LOG_FILE $filter_arg $updateresyncarg $tlsparm $helper_parm $gtm_test_sendbuffsize $gtm_test_recvbuffsize $replic_suffix
 set start_status = $status
 
 if (! $?gtm_test_repl_skiprcvrchkhlth) then

@@ -21,6 +21,7 @@
 # mupipupgrade_maxtreedepth-gtmde556760		[jon]	Test MUPIP UPGRADE appropriately processes V6 database files that exceed the maximum tree depth (7 levels) associated with pre-V7 versions
 # dollarzicuver-gtmf229760			[jon]	Test $ZICUVER provide the ICU version if available
 # resbytes_indepindexdata-gtmf197635		[jon]	Test GT.M supports independent index and data reserved bytes values
+# tcpbufsize_repl-gtmf235980			[jon]	Test GT.M supports increased user control of tcp buffer sizing in replication
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -36,6 +37,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mupipupgrade_maxtreedep
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarzicuver-gtmf229760"
 setenv subtest_list_non_replic	"$subtest_list_non_replic resbytes_indepindexdata-gtmf197635"
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic tcpbufsize_repl-gtmf235980"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -52,6 +54,11 @@ endif
 
 if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+
+# Disable TCP socket buffer test on Docker, as it requires reading /proc/sys which is not normally readable within Docker
+if ($?ydb_test_inside_docker) then
+	if (1 == $ydb_test_inside_docker) setenv subtest_exclude_list "$subtest_exclude_list tcpbufsize_repl-gtmf235980"
 endif
 
 # Submit the list of subtests

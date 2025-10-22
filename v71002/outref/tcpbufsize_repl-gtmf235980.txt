@@ -1,0 +1,242 @@
+# ********************************************************************************************
+# GTM-F235980 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-F235980)
+# 
+# GT.M recognizes the -[NO]{SEND|RECV}BUFFSIZE=n qualifiers for use with MUPIP REPLICATE -{SOURCE|RECEIVER} -START invocations. These qualifiers affect the TCP send and receive buffers associated with the socket GT.M uses for replication, rather than the receive/journal pools. When invoked with -{SEND|RECV}BUFFSIZE=n, where n is a positive decimal or hexadecimal (0x) integer, GT.M attempts to increase the specified socket buffer size to match the provided value. If the specified buffer is already larger than the provided value, GT.M does not attempt to reduce its size. By default, GT.M attempts to increase the size of the send buffer (SO_SNDBUF) or receive buffer (SO_RCVBUF) if either is smaller than the internal default value specified below.
+# 
+# 		SO_SNDBUF	SO_RCVBUF
+# Source		1MiB		1KiB
+# Receiver	1KiB		1MiB
+# 
+# If a user requests a size for either buffer smaller than necessary to support GT.M replication, GT.M will print a BUFFSIZETOOSMALL warning, act as if the minimum size had been specified instead, and continue. Due to a quirk in how the Linux kernel reports socket buffer sizes, users of GT.M on Linux can expect GT.M to report a final size approximately twice what is requested; the additional space is used internally by the kernel. When invoked with -NO{SEND|RECV}BUFFSIZE, GT.M leaves the management of the initial size of the specified buffer to the execution environment, including the system defaults, local configuration settings, and operating system. In some cases, such as when the operating system dynamically manages the size of the relevant buffers, this can may lead to better performance in conditions which call for larger sizes than the GT.M default. Previously GT.M enforced a fixed minimum size for each buffer and did not permit the explicit request of receive and send buffer sizes. In addition, GT.M now correctly sets the buffer sizes, when warranted, before establishing a connection. Previously, GT.M waited until after the source and receiver had established a connection to perform any modification of the buffer sizes, which prevented the TCP connection from taking full advantage of any increase in size. (GTM-F236066) (GTM-F235980)
+# 
+
+# Initialize variables with default and max buffer size limits
+
+### Test 1: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE set too low
+## Source server
+#  1. -SENDBUFFSIZE between 1 and 1 less than the minimum (16384 - 1), expect the minimum value (16384)
+#  2. -RECVBUFFSIZE between 1 and 1 less than the minimum (512 - 1), expect the minimum value (512)
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+#  1. -SENDBUFFSIZE between 1 and 1 less than the minimum (512 - 1), expect the minimum value (512)
+#  2. -RECVBUFFSIZE between 1 and 1 less than the minimum (16384 - 1), expect the minimum value (16384)
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for BUFFSIZETOOSMALL and correct SO_SNDBUF and SO_RCVBUF values
+# Confirm setsockopt on SOURCE set SO_SNDBUF=16384
+PASS: SO_SNDBUF=16384 for -sendbuffsize=16384
+# Confirm SOURCE reports at least 16384 for send buffer, i.e. the internal minimum
+##TEST_AWKPASS: SOURCE reports send buffer set to [0-9]*
+# Confirm setsockopt on SOURCE set SO_RCVBUF=512
+PASS: SO_RCVBUF=512 for -recvbuffsize=512
+# Confirm SOURCE reports at least 512 for receive buffer, i.e. the internal minimum
+##TEST_AWKPASS: SOURCE reports receive buffer set to [0-9]*
+# Confirm setsockopt on RECEIVER set SO_SNDBUF=512
+PASS: SO_SNDBUF=512 for -sendbuffsize=512
+# Confirm RECEIVER reports at least 512 for send buffer, i.e. the internal minimum
+##TEST_AWKPASS: RECEIVER reports send buffer set to [0-9]*
+# Confirm setsockopt on RECEIVER set SO_RCVBUF=16384
+PASS: SO_RCVBUF=16384 for -recvbuffsize=16384
+# Confirm RECEIVER reports at least 16384 for receive buffer, i.e. the internal minimum
+##TEST_AWKPASS: RECEIVER reports receive buffer set to [0-9]*
+# Expect BUFFSIZETOOSMALL errors
+GTM-W-BUFFSIZETOOSMALL, TCP send buffer size passed to source too small, setting to minimum size of 16384.
+GTM-W-BUFFSIZETOOSMALL, TCP recv buffer size passed to source too small, setting to minimum size of 512.
+GTM-W-BUFFSIZETOOSMALL, TCP send buffer size passed to receiver too small, setting to minimum size of 512.
+GTM-W-BUFFSIZETOOSMALL, TCP recv buffer size passed to receiver too small, setting to minimum size of 16384.
+
+### Test 2: MUPIP REPLICATE without -SENDBUFFSIZE or -RECVBUFFSIZE
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+# On the source server, expect SO_SNDBUF=1048576 (GT.M internal default value) and SO_RCVBUF unset
+PASS: SO_SNDBUF=1048576, 1048576 expected
+PASS: SO_RCVBUF not set by source instance, -RECVBUFFSIZE not set
+# On the replicating server, expect SO_RCVBUF=1048576 (GT.M internal default value) and SO_SNDBUF unset
+PASS: SO_RCVBUF=1048576, 1048576 expected
+PASS: SO_SNDBUF not set by replicating instance, -SENDBUFFSIZE not set
+
+### Test 3: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the GT.M minimum and system default SO_SNDBUF and SO_RCVBUF values
+## Source server
+##TEST_AWK#  1. -SENDBUFFSIZE between minimum \(16384\) and system default \([0-9]*\), expect no change in value
+##TEST_AWK#  2. -RECVBUFFSIZE between minimum \(512\) and system default \([0-9]*\), expect no change in value
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+##TEST_AWK#  1. -SENDBUFFSIZE between minimum \(512\) and system default \([0-9]*\), expect no change in value
+##TEST_AWK#  2. -RECVBUFFSIZE between minimum \(16384\) and system default \([0-9]*\), expect no change in value
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+## Expect no change to either buffer on either server, since the system default is chosen whenever it exceeds the GT.M minimum.
+PASS: No change to SNDBUF on SOURCE server
+PASS: No change to RCVBUF on SOURCE server
+PASS: No change to SNDBUF on RECEIVER server
+PASS: No change to RCVBUF on RECEIVER server
+
+### Test 4: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the system default SO_SNDBUF and SO_RCVBUF values and 1 MiB
+## Source server
+##TEST_AWK#  1. -SENDBUFFSIZE between the system default \([0-9]*\) and 1 MiB \(1048576\), expect the specified value
+##TEST_AWK#  2. -RECVBUFFSIZE between the system default \([0-9]*\) and 1 MiB \(1048576\), expect the specified value
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+##TEST_AWK#  1. -SENDBUFFSIZE between the system default \([0-9]*\) and 1 MiB \(1048576\), expect the specified value
+##TEST_AWK#  2. -RECVBUFFSIZE between the system default \([0-9]*\) and 1 MiB \(1048576\), expect the specified value
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+# Confirm SOURCE SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on SOURCE set SO_SNDBUF=[0-9]*
+##TEST_AWKPASS: SO_SNDBUF=[0-9]* for -sendbuffsize=[0-9]*
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports send buffer set to [0-9]*
+# Confirm SOURCE SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on SOURCE set SO_RCVBUF=[0-9]*
+##TEST_AWKPASS: SO_RCVBUF=[0-9]* for -recvbuffsize=[0-9]*
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports receive buffer set to [0-9]*
+# Confirm RECEIVER SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on RECEIVER set SO_SNDBUF=[0-9]*
+##TEST_AWKPASS: SO_SNDBUF=[0-9]* for -sendbuffsize=[0-9]*
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports send buffer set to [0-9]*
+# Confirm RECEIVER SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on RECEIVER set SO_RCVBUF=[0-9]*
+##TEST_AWKPASS: SO_RCVBUF=[0-9]* for -recvbuffsize=[0-9]*
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports receive buffer set to [0-9]*
+
+### Test 5: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE at exactly their internal default values
+## Source server
+# Set gtm_test_sendbuffsize to the internal default SO_SNDBUF value (1048576)
+# Set gtm_test_recvbuffsize to the internal default SO_RCVBUF value (1024)
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+# Set gtm_test_sendbuffsize to the internal default SO_SNDBUF value (1048576)
+# Set gtm_test_recvbuffsize to the internal default SO_RCVBUF value (1024)
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+# Confirm SOURCE SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+# Confirm setsockopt on SOURCE set SO_SNDBUF=1048576
+PASS: SO_SNDBUF=1048576 for -sendbuffsize=1048576
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports send buffer set to [0-9]*
+# Confirm SO_RCVBUF not set by SOURCE server
+PASS: SO_RCVBUF not set by SOURCE server, when -recvbuffsize set to internal default
+# Confirm SO_SNDBUF not set by RECEIVER server
+PASS: SO_SNDBUF not set by RECEIVER server, when -sendbuffsize set to internal default
+# Confirm RECEIVER SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+# Confirm setsockopt on RECEIVER set SO_RCVBUF=1048576
+PASS: SO_RCVBUF=1048576 for -recvbuffsize=1048576
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports receive buffer set to [0-9]*
+
+### Test 6: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the larger of the system default and the internal default, and INT_MAX (to avoid NUMERR from MUPIP CLI)
+## Source server
+##TEST_AWK#  1. -SENDBUFFSIZE between the larger of the system default and the internal default \([0-9]*\) and INT_MAX \([0-9]*\), expect the specified value
+##TEST_AWK#  2. -RECVBUFFSIZE between the larger of the system default and the internal default \([0-9]*\) and INT_MAX \([0-9]*\), expect the specified value
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+##TEST_AWK#  1. -SENDBUFFSIZE between the larger of the system default and the internal default \([0-9]*\) and INT_MAX \([0-9]*\), expect the specified value
+##TEST_AWK#  2. -RECVBUFFSIZE between the larger of the system default and the internal default \([0-9]*\) and INT_MAX \([0-9]*\), expect the specified value
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+# Confirm SOURCE SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on SOURCE set SO_SNDBUF=[0-9]*
+##TEST_AWKPASS: SO_SNDBUF=[0-9]* for -sendbuffsize=[0-9]*
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports send buffer set to [0-9]*
+# Confirm SOURCE SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on SOURCE set SO_RCVBUF=[0-9]*
+##TEST_AWKPASS: SO_RCVBUF=[0-9]* for -recvbuffsize=[0-9]*
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports receive buffer set to [0-9]*
+# Confirm RECEIVER SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on RECEIVER set SO_SNDBUF=[0-9]*
+##TEST_AWKPASS: SO_SNDBUF=[0-9]* for -sendbuffsize=[0-9]*
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports send buffer set to [0-9]*
+# Confirm RECEIVER SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on RECEIVER set SO_RCVBUF=[0-9]*
+##TEST_AWKPASS: SO_RCVBUF=[0-9]* for -recvbuffsize=[0-9]*
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports receive buffer set to [0-9]*
+
+### Test 7: MUPIP REPLICATE with -NOSENDBUFFSIZE and -NORECVBUFFSIZE
+## Source server
+##TEST_AWK#  1. -NOSENDBUFFSIZE, expect the greater of system default SO_SNDBUF \([0-9]*\) and internal default \([0-9]*\)
+##TEST_AWK#  2. -NORECVBUFFSIZE, expect the greater of system default SO_RCVBUF \([0-9]*\) and internal default \([0-9]*\)
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+## Receiver server
+##TEST_AWK#  1. -NOSENDBUFFSIZE, expect the greater of system default SO_SNDBUF \([0-9]*\) and internal default \([0-9]*\)
+##TEST_AWK#  2. -NORECVBUFFSIZE, expect the greater of system default SO_RCVBUF \([0-9]*\) and internal default \([0-9]*\)
+# Start the receiver server
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+## Check output for correct SO_SNDBUF and SO_RCVBUF values
+# Confirm SOURCE SO_SNDBUF set BEFORE connection established
+PASS: SO_SNDBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on SOURCE set SO_SNDBUF=[0-9]*
+##TEST_AWKPASS: SO_SNDBUF=[0-9]* for -sendbuffsize=[0-9]*
+##TEST_AWK# Confirm SOURCE reports 2x [0-9]* for send buffer, i.e. [0-9]*
+##TEST_AWKPASS: SOURCE reports send buffer set to [0-9]*
+# Confirm SO_RCVBUF not set by SOURCE server
+PASS: SO_RCVBUF not set by SOURCE server, when -recvbuffsize set to system default
+# Confirm SO_SNDBUF not set by RECEIVER server
+PASS: SO_SNDBUF not set by RECEIVER server, when -sendbuffsize set to system default
+# Confirm RECEIVER SO_RCVBUF set BEFORE connection established
+PASS: SO_RCVBUF set prior to connection being established
+##TEST_AWK# Confirm setsockopt on RECEIVER set SO_RCVBUF=[0-9]*
+##TEST_AWKPASS: SO_RCVBUF=[0-9]* for -recvbuffsize=[0-9]*
+##TEST_AWK# Confirm RECEIVER reports 2x [0-9]* for receive buffer, i.e. [0-9]*
+##TEST_AWKPASS: RECEIVER reports receive buffer set to [0-9]*
+
