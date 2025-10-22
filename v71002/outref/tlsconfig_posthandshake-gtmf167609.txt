@@ -1,0 +1,37 @@
+# ********************************************************************************************
+# GTM-F229760 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_Release_Notes.html#GTM-F167609)
+# 
+# When using TLS configuration verify-mode option SSL_VERIFY_PEER, GT.M enables TLSv1.3 Post Handshake Authentication (PHA) for client connections. When using TLS configuration verify-mode options SSL_VERIFY_PEER and SSL_VERIFY_POST_HANDSHAKE, GT.M enables TLSv1.3 PHA for server connections. By itself, SSL_VERIFY_POST_HANDSHAKE does not enable PHA. Previously, GT.M did not support TLSv1.3's PHA capability. This could cause problems when connecting to some TLSv1.3 servers that require PHA. (GTM-F167609)
+# 
+
+# Create a database
+
+### Test TLS with Post Handshake Authentication (PHA)
+## Confirm that a connection can be established without error when PHA is enabled with SSL SSL_VERIFY_POST_HANDSHAKE in the encryption configuration
+## Previously:
+## 1. With v70004-v71001 the TLS connection succeeds, but TLSCONNINFO is emitted by the Receiver Server
+## 2. With v70003 the TLS connection fails, and TLSHANDSHAKE is emitted by the receiver
+## See the first paragraph of the release note at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/716
+## and the thread at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/716#note_2746268352
+## for details on why the above behaviors are expected for the given versions.
+##
+## Note that it is not straightforward to test whether PHA is actually enabled by the configuration setting, per the discussions at:
+## + https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2473#note_2856994777
+## + https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2473#note_2857481633
+## + https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2473#note_3114015706
+
+# Set TLS configuration setting 'verify-mode' to SSL_VERIFY_PEER with SSL_VERIFY_POST_HANDSHAKE on the Receiver Server, INST2
+# This is done on INST2 only since it is the 'server' as far as OpenSSL is concerned, and SSL_VERIFY_POST_HANDSHAKE only applies to the server role.
+
+# Start source replication instance
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start receiver replication instance
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Stop both replication instances
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##

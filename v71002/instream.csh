@@ -23,6 +23,7 @@
 # resbytes_indepindexdata-gtmf197635		[jon]	Test GT.M supports independent index and data reserved bytes values
 # tcpbufsize_repl-gtmf235980			[jon]	Test GT.M supports increased user control of tcp buffer sizing in replication
 # rwsocket_noactive-gtmde533918			[jon]	Test error on READ or WRITE to a SOCKET device with no active sockets
+# tlsconfig_posthandshake-gtmf167609		[jon]	Test SOCKET Devices support TLSv1.3 Post Handshake Authentication
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71002 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic resbytes_indepindexdata
 setenv subtest_list_non_replic	"$subtest_list_non_replic rwsocket_noactive-gtmde533918"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic tcpbufsize_repl-gtmf235980"
+setenv subtest_list_replic	"$subtest_list_replic tlsconfig_posthandshake-gtmf167609"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
