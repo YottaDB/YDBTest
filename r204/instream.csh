@@ -35,12 +35,14 @@
 # large_block_backup-ydb1169		[ben]		This is a test to ensure that you  can create a backup of a database with a large block size. The size 50176 is used.
 # zgetjpi_cmdline-ydb876		[ben]		Test that $ZGETJPI(PID,keyword) with keyword CMDLINE gives the command line of the indicated process
 # empty_routine-ydb1184			[ben]		Test mumps -run with empty routine name produces the correct error
+# mutex_type-ydb1178			[nars]		Various tests of MUTEX_TYPE being YDB, PTHREAD or ADAPTIVE
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
+
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_statshare-ydb254"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_v-ydb873"
@@ -70,7 +72,9 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic rtnlaboff-ydbMR1762"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgetjpi_cmdline-ydb876"
 setenv subtest_list_non_replic	"$subtest_list_non_replic large_block_backup-ydb1169"
 setenv subtest_list_non_replic	"$subtest_list_non_replic empty_routine-ydb1184"
+
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

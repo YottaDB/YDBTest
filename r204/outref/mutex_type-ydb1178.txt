@@ -1,0 +1,145 @@
+# Run [dbcreate.csh] to create database with 3 regions AREG, BREG and DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Run [mumps -run startbg^ydb1178] to start a background process that updates all 3 regions
+# Run [MUPIP SET -MUTEX_TYPE=YDB -REG "*"]
+# Pipe the output through [sort] to avoid arbitrary order of output (.dat file with lower inode gets printed first)
+Database file ##TEST_PATH##/a.dat now has mutex type set to YDB
+Database file ##TEST_PATH##/b.dat now has mutex type set to YDB
+Database file ##TEST_PATH##/mumps.dat now has mutex type set to YDB
+# Verify using DSE ALL -DUMP that Mutex Manager Type is YDB on all regions
+# Note that if statshare is randomly enabled by test framework, DSE ALL -DUMP will also include stats regions
+# (with lower case name). In that case, those should always show up with a Mutex Manager Type of YDB as
+# that is the only value allowed currently for statsdb regions.
+Region          AREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          BREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          areg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          breg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          default
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Also verify the same (DSE output) using PEEKBYNAME
+# This also verifies that mutex manager type can be obtained through PEEKBYNAME
+Mutex Manager Type for region [AREG] = YDB
+Mutex Manager Type for region [BREG] = YDB
+Mutex Manager Type for region [DEFAULT] = YDB
+##SUSPEND_OUTPUT NON_STATSHARE
+Mutex Manager Type for region [areg] = YDB
+Mutex Manager Type for region [breg] = YDB
+Mutex Manager Type for region [default] = YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Run [MUPIP SET -MUTEX_TYPE=PTHREAD -REG AREG,DEFAULT]
+Database file ##TEST_PATH##/a.dat now has mutex type set to PTHREAD
+Database file ##TEST_PATH##/mumps.dat now has mutex type set to PTHREAD
+# Verify using DSE ALL -DUMP that Mutex Manager Type is PTHREAD in AREG and DEFAULT, YDB in BREG
+# And because a background process is still updating the database files, this and later MUPIP SET -MUTEX_TYPE commands
+# also verify that MUPIP SET -MUTEX_TYPE does not need standalone access to the database file.
+Region          AREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+Region          BREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          areg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          breg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          default
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Also verify the same (DSE output) using PEEKBYNAME
+Mutex Manager Type for region [AREG] = PTHREAD
+Mutex Manager Type for region [BREG] = YDB
+Mutex Manager Type for region [DEFAULT] = PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Mutex Manager Type for region [areg] = YDB
+Mutex Manager Type for region [breg] = YDB
+Mutex Manager Type for region [default] = YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Run [MUPIP SET -MUTEX_TYPE=ADAPTIVE -REG AREG]
+Database file ##TEST_PATH##/a.dat now has mutex type set to ADAPTIVE
+# Verify using DSE ALL -DUMP that Mutex Manager Type is ADAPTIVE in AREG, PTHREAD in DEFAULT, YDB in BREG
+Region          AREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+Region          BREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          areg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          breg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          default
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Also verify the same (DSE output) using PEEKBYNAME
+Mutex Manager Type for region [AREG] = ADAPTIVE
+Mutex Manager Type for region [BREG] = YDB
+Mutex Manager Type for region [DEFAULT] = PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Mutex Manager Type for region [areg] = YDB
+Mutex Manager Type for region [breg] = YDB
+Mutex Manager Type for region [default] = YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Run [MUPIP SET -MUTEX_TYPE=PTHREAD -FILE b.dat]. To test that -MUTEX_TYPE -FILE also works.
+Database file b.dat now has mutex type set to PTHREAD
+# Verify using DSE ALL -DUMP that Mutex Manager Type is ADAPTIVE in AREG, PTHREAD in BREG and DEFAULT
+Region          AREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+Region          BREG
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+Region          DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          areg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          breg
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+Region          default
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Also verify the same (DSE output) using PEEKBYNAME
+Mutex Manager Type for region [AREG] = ADAPTIVE
+Mutex Manager Type for region [BREG] = PTHREAD
+Mutex Manager Type for region [DEFAULT] = PTHREAD
+##SUSPEND_OUTPUT NON_STATSHARE
+Mutex Manager Type for region [areg] = YDB
+Mutex Manager Type for region [breg] = YDB
+Mutex Manager Type for region [default] = YDB
+##ALLOW_OUTPUT NON_STATSHARE
+# Verify using PEEKBYNAME and $ZPEEK that jnlpool crit mutex manager type is set to YDB (cannot be controlled by user)
+# We expect a value of 2 to be seen below as that corresponds to YDB (3 corresponds to PTHREAD, 0 corresponds to ADAPTIVE)
+jnlpool Mutex Manager Type = 2
+# Run [mumps -run stopbg^ydb1178] to stop the background process that updates all 3 regions
+# Run [dbcheck.csh]
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
