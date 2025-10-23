@@ -514,6 +514,18 @@ BEGIN {
 	else
 		envir[no_options] = "HUGEPAGES_OFF"
 	#
+	option_names[++no_options] = "ydb_test_mutex_type"
+	if ("ADAPTIVE" == ENVIRON["ydb_test_mutex_type"])
+		envir[no_options] = "MUTEX_TYPE_ADAPTIVE"
+	else if ("YDB" == ENVIRON["ydb_test_mutex_type"])
+		envir[no_options] = "MUTEX_TYPE_YDB"
+	else if ("PTHREAD" == ENVIRON["ydb_test_mutex_type"])
+		envir[no_options] = "MUTEX_TYPE_PTHREAD"
+	else if ("RANDOM" == ENVIRON["ydb_test_mutex_type"])
+		envir[no_options] = "MUTEX_TYPE_RANDOM"
+	else
+		envir[no_options] = "MUTEX_TYPE_DEFAULT"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported

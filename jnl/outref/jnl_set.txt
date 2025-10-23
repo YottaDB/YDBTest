@@ -66,7 +66,17 @@ Region          DEFAULT
   StatsDB Allocation                           2050
   Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
+##SUSPEND_OUTPUT MUTEX_TYPE_PTHREAD
+##SUSPEND_OUTPUT MUTEX_TYPE_YDB
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+##ALLOW_OUTPUT MUTEX_TYPE_YDB
+##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+##ALLOW_OUTPUT MUTEX_TYPE_PTHREAD
+##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
 
 YDB>
 %YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
@@ -133,7 +143,17 @@ Region          DEFAULT
   StatsDB Allocation                           2050
   Data Reserved Bytes                             0  Index Reserved Bytes                     0
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
+##SUSPEND_OUTPUT MUTEX_TYPE_PTHREAD
+##SUSPEND_OUTPUT MUTEX_TYPE_YDB
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+##ALLOW_OUTPUT MUTEX_TYPE_YDB
+##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
+##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+##ALLOW_OUTPUT MUTEX_TYPE_PTHREAD
+##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
+##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
 End jnl_set test.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
