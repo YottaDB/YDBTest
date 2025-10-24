@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,7 +59,7 @@ endif
 set tmp_dir = "$tmp_dir/$USER"
 if (((-M $gnupghome_source/gpg.conf) > (-M $tmp_dir/gpg.conf))					\
 		|| ((-M $gnupghome_source/gpg-agent.conf) > (-M $tmp_dir/gpg-agent.conf))) then
-	chmod -R 775 $tmp_dir >>&! $log_file		# Make things so we CAN remove dir
+	chmod -R 700 $tmp_dir >>&! $log_file		# Make things so we CAN remove dir
 	rm -rf $tmp_dir >>&! $log_file
 	if ($status) then
 		echo "Removing stale $tmp_dir failed"
@@ -76,12 +76,12 @@ if (! -d $tmp_dir) then
 	echo "`date` : copied $gnupghome_source to $tmp_dir" >>&! $log_file
 endif
 
-# If we are the owner, ensure that the directory is user- and group-writable and -readable; if not, error out.
+# If we are the owner, ensure that the directory is user writable and readable; if not, error out.
 @ is_owner = `filetest -o $tmp_dir`
 if (1 == $is_owner) then
-	chmod 1775 $tmp_dir >>&! $log_file	# The leading 1 is to set sticky bit to prevent accidental deletion by non-owners
+	chmod 1700 $tmp_dir >>&! $log_file	# The leading 1 is to set sticky bit to prevent accidental deletion by non-owners
 	if ($status) then
-		echo "Changing permissions to 1775 on $tmp_dir failed"
+		echo "Changing permissions to 1700 on $tmp_dir failed"
 		exit 7
 	endif
 	# The below files disappear mysteriously on a few boxes. Making them read-only, hoping we'll catch it when a test attempts to remove them.
@@ -97,8 +97,8 @@ else
 endif
 
 # Verify permissions.
-@ perm = `filetest -P770 $tmp_dir`
-if ($perm < 770) then
-	echo "Expected permissions on $tmp_dir are 77x while got $perm"
+@ perm = `filetest -P700 $tmp_dir`
+if ($perm < 700) then
+	echo "Expected permissions on $tmp_dir are 7xx while got $perm"
 	exit 9
 endif
