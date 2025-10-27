@@ -23,10 +23,10 @@ $MUPIP set -journal=enable,before -reg "*"
 echo "THE DATABASE ENCRYPTION HEADER FIELDS ARE"
 
 $DSE dump -f -all >&! dse_dump.outx
-# grep -v filters out lines that contain YDBTest (which has DB in it)
-# This happens if $tst_dir has YDBTest (happens in YDBTest pipeline)
-$grep -E "(DB|Database).*encr" dse_dump.outx | $grep -v YDBTest
-
+# Search for lines in the dse dump output that contain DB or Database.
+# Make sure those show up as full words by searching for a space before and after those words.
+# Or else we would match unrelated lines that contain say `DB` as a substring and cause false test failures.
+$grep -E " (DB|Database) .*encr" dse_dump.outx
 
 echo "THE JOURNAL FILE  ENCRYPTION HEADER FIELDS ARE"
 $DSE dump -f |& $grep "Journal State"
