@@ -1,10 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                               ;
+; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.       ;
+; All rights reserved.                                          ;
+;                                                               ;
+; Portions Copyright (c) Fidelity National                      ;
+; Information Services, Inc. and/or its subsidiaries.           ;
+;                                                               ;
+;       This source code contains the intellectual property     ;
+;       of its copyright holder(s), and is made available       ;
+;       under a license.  If you do not know the terms of       ;
+;       the license, please stop and do not read further.       ;
+;                                                               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 c002698	;
 	; ------------------------------------------------------------------------------------------------------
 	; C9E12002698 [Narayanan] KILL of globals in TP transactions cause database damage and assert failures
 	; ------------------------------------------------------------------------------------------------------
 	set ^stop=0
 	set ^maxindex=100
-	for i=1:1:^maxindex  do 
+	for i=1:1:^maxindex  do
 	.	for j=1:1:^maxindex  do
 	.	.	set ^x(i,j)=$j(j,350)
 	set jmaxwait=0
@@ -54,9 +69,9 @@ thread	;
 	quit
 
 oneiter	;
-	if $data(playverbose)=0 set playverbose=0 
+	if $data(playverbose)=0 set playverbose=0
 	if playverbose=1 write "    tstart ():serial",!
-	else  tstart ():serial 
+	else  tstart ():serial
 	do
 	.	for num=1:1:loopiter  do
 	.	.	;
@@ -65,11 +80,11 @@ oneiter	;
 	.	.	; -------------------------------------------------------------------------
 	.	.	;
 	.	.	if playverbose write "        tstart ():serial",!
-	.	.	else  tstart ():serial 
+	.	.	else  tstart ():serial
 	.	.	for k1=1:1:k1max(num)  do
 	.	.	.	set xstr="set ^x("_j1(num)_","_k1_")=$j("_jobindex_",300)"
 	.	.	.	if playverbose write "        ",xstr,!
-	.	.	.	else  xecute xstr  
+	.	.	.	else  xecute xstr
 	.	.	if x1(num)=0  do
 	.	.	.	if playverbose write "        tcommit",!
 	.	.	.	else  tcommit
@@ -82,10 +97,10 @@ oneiter	;
 	.	.	; -------------------------------------------------------------------------
 	.	.	;
 	.	.	if playverbose write "        tstart ():serial",!
-	.	.	else  tstart ():serial 
+	.	.	else  tstart ():serial
 	.	.	set xstr="kill ^x("_j2(num)_","_k2(num)_")"
 	.	.	if playverbose write "        ",xstr,!
-	.	.	else  xecute xstr  
+	.	.	else  xecute xstr
 	.	.	if x2(num)=0  do
 	.	.	.	if playverbose write "        tcommit",!
 	.	.	.	else  tcommit
@@ -94,7 +109,7 @@ oneiter	;
 	.	.	.	else  trollback 1
 	.	.	;
 	.	.	; -------------------------------------------------------------------------------
-	.	.	; $GET of level I subscript tree underneath followed by random TROLLBACK/TCOMMIT 
+	.	.	; $GET of level I subscript tree underneath followed by random TROLLBACK/TCOMMIT
 	.	.	;	The ideal way to do this is a ZWRITE of the global but that will print
 	.	.	;	output which we want to avoid. The work around used is to do a MERGE of
 	.	.	;	the GLOBAL's level I subscript into a LOCAL. This achieves the same
@@ -102,10 +117,15 @@ oneiter	;
 	.	.	; -------------------------------------------------------------------------------
 	.	.	;
 	.	.	if playverbose write "        tstart ():serial",!
-	.	.	else  tstart ():serial 
-	.	.	set xstr="merge lclmerge=^x("_j3(num)_")"
+	.	.	else  tstart ():serial
+	.	.	; Randomly choose whether to test MERGE or ZYENCODE/ZYDECODE. Only do the ZYENCODE/ZYDECODE
+	.	.	; test when j3(num) is defined, otherwise a ZYENCODESRCUNDEF error will be issued.
+	.	.	if ($RANDOM(2)&$data(j3(num)))  do
+	.	.	.	set xstr="zyencode encv=^x("_j3(num)_") zydecode decv=encv"
+	.	.	else  do
+	.	.	.	set xstr="merge lclmerge=^x("_j3(num)_")"
 	.	.	if playverbose write "        ",xstr,!
-	.	.	else  xecute xstr  
+	.	.	else  xecute xstr
 	.	.	if x3(num)=0  do
 	.	.	.	if playverbose write "        tcommit",!
 	.	.	.	else  tcommit
@@ -118,10 +138,10 @@ oneiter	;
 	.	.	; -------------------------------------------------------------------------
 	.	.	;
 	.	.	if playverbose write "        tstart ():serial",!
-	.	.	else  tstart ():serial 
+	.	.	else  tstart ():serial
 	.	.	set xstr="kill ^x("_j2(num)_")"
 	.	.	if playverbose write "        ",xstr,!
-	.	.	else  xecute xstr  
+	.	.	else  xecute xstr
 	.	.	if x3(num)=0  do
 	.	.	.	if playverbose write "        tcommit",!
 	.	.	.	else  tcommit

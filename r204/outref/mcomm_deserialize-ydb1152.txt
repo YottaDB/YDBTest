@@ -1,0 +1,413 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test M commands to serialize/deserialize local or global variable subtree
+# -------------------------------------------------------------------------------------------------------------
+
+### Test 1: ZYENCODE error cases
+# Run [set src("key1")="value1"]
+# Run [set src("key1","key2")="value1"]
+# Run [set ^src("key1")="value1"]
+# Run [set ^src("key1","key2")="value1"]
+
+## Test 1a: Source is descendant of destination (%YDB-E-ZYENCODEDESC)
+# Run [zyencode src("key1")=src("key1","key2")]
+# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
+ZSTATUS=T1+16^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: src("key1","key2") is a descendant of src("key1")
+
+## Test 1b: Destination is descendant of source (%YDB-E-ZYENCODEDESC)
+# Run [zyencode src("key1","key2")=src("key1")]'
+# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
+ZSTATUS=T1+22^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: src("key1","key2") is a descendant of src("key1")
+# Run [zyencode ^src("key1","key2")=^src("key1")]'
+# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
+ZSTATUS=T1+25^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
+
+## Test 1c: Undefined local variable passed as source raises %YDB-E-ZYENCODESRCUNDEF
+# Run [zyencode src("key1","key2")=notanlvn]'
+# Expect '%YDB-E-ZYENCODESRCUNDEF'
+ZSTATUS=T1+31^ydb1152,%YDB-E-ZYENCODESRCUNDEF, Error encountered during ZYENCODE; source variable must not be undefined
+
+## Test 1d: Error from the underlying ydb_encode_s(): $ZSTATUS is set and %YDB-W-ZYENCODEINCOMPL issued
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+37\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = x : data = .* - in ydb_encode_s\(\) call
+
+### Test 2: ZYDECODE error cases
+# Run [set src("key1")="value1"]
+# Run [set src("key1","key2")="value1"]
+# Run [set ^src("key1")="value1"]
+# Run [set ^src("key1","key2")="value1"]
+
+## Test 2a: Source is descendant of destination (%YDB-E-ZYDECODEDESC)
+# Run [zydecode src("key1")=src("key1","key2")]'
+# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src("key1","key2") is a descendant of src("key1")'
+ZSTATUS=T2+18^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: src("key1","key2") is a descendant of src("key1")
+# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. ^src("key1","key2") is a descendant of ^src("key1")'
+ZSTATUS=T2+20^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
+
+## Test 2b: Destination is descendant of source (%YDB-E-ZYDECODEDESC)
+# Run [zydecode src("key1","key2")=src("key1")]'
+# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src("key1","key2") is a descendant of src("key1")'
+ZSTATUS=T2+26^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: src("key1","key2") is a descendant of src("key1")
+
+## Test 2c: Root node of source = 0 (%YDB-E-ZYDECODEWRONGCNT)
+# Run [set src=0]
+# Run [zydecode dest=src("key1","key2")]'
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+34^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## Test 2b: Root node of source < 0 (%YDB-E-ZYDECODEWRONGCNT)
+# Run [set src=-1]
+# Run [zydecode dest=src("key1","key2")]'
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+42^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## Test 2c: Root node of source = non-numeric string (%YDB-E-ZYDECODEWRONGCNT)
+# Run [set src="abc"]
+# Run [zydecode dest=src("key1","key2")]'
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+50^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## Test 2d: Root node of source = positive floating point value (%YDB-E-ZYDECODEWRONGCNT)
+# Run [set src=1.1]
+# Run [zydecode dest=src("key1","key2")]'
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+58^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## Test 2e: LVN in series starting from root node's positive integer doesn't exist (%YDB-E-LVUNDEF)
+# Run:
+#  [kill]
+#  [set src=3]
+#  [set src(1)="{"key1":"value1","]
+#  (skip setting src(2))
+#  [set src=""key3"":""value3""}"]
+# Run [zydecode dest=src]'
+# Expect '%YDB-E-LVUNDEF'
+ZSTATUS=T2+74^ydb1152,%YDB-E-LVUNDEF, Undefined local variable: src(2)
+
+## Test 2f: GVN in series starting from root node's positive integer doesn't exist (%YDB-E-GVUNDEF)
+# Run:
+#  [set ^src=3]#  [set ^src(1)="{"key1":"value1","]
+#  (skip setting ^src(2))
+#  [set ^src=""key3"":""value3""}"]
+# Run [zydecode ^dest=^src]
+# Expect '%YDB-E-GVUNDEF'
+ZSTATUS=T2+89^ydb1152,%YDB-E-GVUNDEF, Global variable undefined: ^src(2)
+
+## Test 2g: Error from the underlying ydb_decode_s(): $ZSTATUS is set and %YDB-W-ZYDECODEINCOMPL issued
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONINVALIDJSON
+ZSTATUS=T2+96^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-JANSSONINVALIDJSON, Invalid JSON: unable to decode byte 0xa7 near '"' - in ydb_decode_s() call
+
+### Test 3: ZYENCODE properly handles input trees containing ~1MiB of data (YDB max string length)
+### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
+## Test 3a: ZYENCODE properly handles input trees containing exactly 1MiB (1048576 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048576 bytes of data in the \["[\^]*T3aI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T3aO.*=[\^]*T3aI.*\] to encode the generated tree into JSON format in the [\^]*T3aI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T3aO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^T3aO]*.*
+# Log encoded JSON to file [T3a.json]
+# Confirm the root node reports the correct number of output nodes. Expect 1:
+PASS : Expected 1 output node(s). Got 1 output node(s).
+# Confirm the JSON output is of the correct size.  Expect 1048576:
+PASS : Expected JSON output of size 1048576. Got JSON output of size 1048576.
+
+## Test 3b: ZYENCODE properly handles input trees containing exactly 1MiB-1 (1048575 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048575 bytes of data in the \["[\^]*T3bI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T3bO.*=[\^]*T3bI.*\] to encode the generated tree into JSON format in the [\^]*T3bI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T3bO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^T3bO]*.*
+# Log encoded JSON to file [T3b.json]
+# Confirm the root node reports the correct number of output nodes. Expect 1:
+PASS : Expected 1 output node(s). Got 1 output node(s).
+# Confirm the JSON output is of the correct size.  Expect 1048575:
+PASS : Expected JSON output of size 1048575. Got JSON output of size 1048575.
+
+## Test 3c: ZYENCODE properly handles input trees containing exactly 1MiB-2 (1048574 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048574 bytes of data in the \["[\^]*T3cI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T3cO.*=[\^]*T3cI.*\] to encode the generated tree into JSON format in the [\^]*T3cI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T3cO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^T3cO]*.*
+# Log encoded JSON to file [T3c.json]
+# Confirm the root node reports the correct number of output nodes. Expect 1:
+PASS : Expected 1 output node(s). Got 1 output node(s).
+# Confirm the JSON output is of the correct size.  Expect 1048574:
+PASS : Expected JSON output of size 1048574. Got JSON output of size 1048574.
+
+## Test 3d: ZYENCODE properly handles input trees containing exactly 1MiB+1 (1048577 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048577 bytes of data in the \["[\^]*T3dI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T3dO.*=[\^]*T3dI.*\] to encode the generated tree into JSON format in the [\^]*T3dI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T3dO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^T3dO]*.*
+# Log encoded JSON to file [T3d.json]
+# Confirm the root node reports the correct number of output nodes. Expect 2:
+PASS : Expected 2 output node(s). Got 2 output node(s).
+# Confirm the JSON output is of the correct size.  Expect 1048577:
+PASS : Expected JSON output of size 1048577. Got JSON output of size 1048577.
+
+## Test 3e: ZYENCODE properly handles input trees containing exactly 1MiB+2 (1048578 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048578 bytes of data in the \["[\^]*T3eI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T3eO.*=[\^]*T3eI.*\] to encode the generated tree into JSON format in the [\^]*T3eI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T3O]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^T3O]*.*
+# Log encoded JSON to file [T3e.json]
+# Confirm the root node reports the correct number of output nodes. Expect 2:
+PASS : Expected 2 output node(s). Got 2 output node(s).
+# Confirm the JSON output is of the correct size.  Expect 1048578:
+PASS : Expected JSON output of size 1048578. Got JSON output of size 1048578.
+
+### Test 4: ZYENCODE properly handles input trees containing arbitrary (random) data sizes
+### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
+## Test 4a: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T4aI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T4aO.*=[\^]*T4aI.*\] to encode the generated tree into JSON format in the [\^]*T4aI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T4aO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^Ta4O]*.*
+# Log encoded JSON to file [T4a.json]
+##TEST_AWK# Confirm the root node reports the correct number of output nodes. Expect [0-9]*:
+##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
+##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
+##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
+## Test 4b: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T4bI"\] variable
+# Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
+##TEST_AWK# Run \[zyencode [\^]*T4bO.*=[\^]*T4bI.*\] to encode the generated tree into JSON format in the [\^]*T4bI variable
+# Store the value of $REFERENCE
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^TbaO]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^Tb4O]*.*
+# Log encoded JSON to file [T4b.json]
+##TEST_AWK# Confirm the root node reports the correct number of output nodes. Expect [0-9]*:
+##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
+##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
+##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
+
+### Test 5: ZYDECODE properly handles input trees containing ~1MiB of data (YDB max string length)
+### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
+## Test 5a: ZYDECODE properly handles input trees containing exactly 1MiB (1048576 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048576 bytes of data in the \["[\^]*T5a"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T5aE.*=[\^]*T5aI.*] to encode the generated tree into JSON format in the [\^]*T5aE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T5aO.*=[\^]*T5aE.*] to decode the encoded tree from JSON format into the [\^]*T5aO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^T5aOlst]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T5aOlst]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+## Test 5b: ZYDECODE properly handles input trees containing exactly 1MiB-1 (1048575 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048575 bytes of data in the \["[\^]*T5b"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T5bE.*=[\^]*T5bI.*] to encode the generated tree into JSON format in the [\^]*T5bE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T5bO.*=[\^]*T5bE.*] to decode the encoded tree from JSON format into the [\^]*T5bO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T5bOlast]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T5bOlast]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+## Test 5c: ZYDECODE properly handles input trees containing exactly 1MiB-2 (1048574 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048574 bytes of data in the \["[\^]*T5c"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T5cE.*=[\^]*T5c.*] to encode the generated tree into JSON format in the [\^]*T5cE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T5cO.*=[\^]*T5cE.*] to decode the encoded tree from JSON format into the [\^]*T5cO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T5cOlast]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T5cOlast]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+## Test 5d: ZYDECODE properly handles input trees containing exactly 1MiB+1 (1048577 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048577 bytes of data in the \["[\^]*T5d"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T5dE.*=[\^]*T5d.*] to encode the generated tree into JSON format in the [\^]*T5dE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T5dO.*=[\^]*T5dE.*] to decode the encoded tree from JSON format into the [\^]*T5dO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T5dOlast]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T5dOlast]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+## Test 5e: ZYDECODE properly handles input trees containing exactly 1MiB+2 (1048578 bytes) of data
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with 1048578 bytes of data in the \["[\^]*T5e"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T5eE.*=[\^]*T5eI.*] to encode the generated tree into JSON format in the [\^]*T5eE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T5eO.*=[\^]*T5eE.*] to decode the encoded tree from JSON format into the [\^]*T5eO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T5eOlast]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T5eOlast]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+### Test 6: ZYDECODE properly handles input trees containing arbitrary (random) data sizes
+### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
+## Test 6a: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T6a"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T6aE.*=[\^]*T6a.*] to encode the generated tree into JSON format in the [\^]*T6aE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T6aO.*=[\^]*T6aE.*] to decode the encoded tree from JSON format into the [\^]*T6aO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T6aOlst]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T6aOlst]*.*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+## Test 6b: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T6b"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T6bE.*=[\^]*T6b.*] to encode the generated tree into JSON format in the [\^]*T6bE.* variable
+# Run ZYDECODE to decode encoded input data
+##TEST_AWK# Run \[zydecode [\^]*T6bO.*=[\^]*T6bE.*] to decode the encoded tree from JSON format into the [\^]*T6bO.* variable
+##TEST_AWK# Confirm \$REFERENCE \(the naked indicator\) is correctly set to the [\^]*[T6bOlast]*.* variable:
+##TEST_AWKPASS: \$REFERENCE=[\^]*[T6bOlast].*
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+
+### Test 7: Data encoded with ZYENCODE can be decoded with ZYDECODE and re-encoded with ZYENCODE to produce the same result as the initial ZYENCODE call
+##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T7.*"\] variable
+##TEST_AWK# Run \[zyencode [\^]*T7E.*=[\^]*T7I.*] to encode the generated tree into JSON format in the [\^]*T7E.* variable
+# Log generated JSON
+# Log encoded JSON to file [T7a.json]
+# Confirm encoding output is valid
+##TEST_AWK# Confirm the root node reports the correct number of output nodes. Expect [0-9]*:
+##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
+##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
+##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
+##TEST_AWK# Run \[zydecode [\^]*T7O.*=[\^]*T7E.*] to decode the encoded tree from JSON format into the [\^]*T7O.* variable
+# Check each node of the decoded data against the input data.
+# Expect the values to be identical.
+PASS: ZYDECODE output mirrors input data
+##TEST_AWK# Log [\^]*T7O to node-T7b-.*.out file
+##TEST_AWK# Run \[zyencode [\^]*T7S.*=[\^]*T7O.*] to encode the generated tree into JSON format in the [\^]*T7S.* variable
+##TEST_AWK# Log [\^]*T7S to node-T7c-.*.out file
+# Log generated JSON
+# Log encoded JSON to file [T7b.json]
+# Confirm encoding output is valid
+##TEST_AWK# Confirm the root node reports the correct number of output nodes. Expect [0-9]*:
+##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
+##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
+##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
+
+### Test 8: No ZYDECODEWRONGCNT for trees with many subscripts at the same level
+### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740
+## Test 8a: Using global variables
+# Set a random length subscript, up to (10)
+# Set a random length value, up to (16384)
+# Set 10000 global variable nodes to the random value
+# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error
+# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
+## Test 8b: Using local variables# Set a random length subscript, up to (10)
+# Set a random length value, up to (16384)
+# Set 10000 local variable nodes to the random value
+# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error
+# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
+
+### Test 9: Confirm no INVSTRLEN error for subscripts or values less than the maximum string length (4294967295)
+### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740
+## Test 9a: Using global variables
+# Set a random length subscript, up to the maximum (64)
+# Set a random length value, up to the maximum (16384)
+# Set 10000 global variable nodes to the random value
+# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error
+# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error
+## Test 9b: Using local variables
+# Set a random length subscript, up to the maximum length (64)
+# Set a random length value, up to the maximum (16384)
+# Set 10000 local variable nodes to the random value
+# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error
+# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error
+
+### Test 10: ZYENCODE behavior with null subscripts
+## Test 10a: No assert failure for ZYENCODE with null subscript and string node value
+## See: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854172324
+## Test 10b: No hang for ZYENCODE with null subscript and integer node value
+## See: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854172331
+
+### Test 11: ZYDECODE can nest with triggers
+### See: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854196286
+## Test 11a: Trigger combination 1, expect no ASSERT failures
+# Set triggers
+No matching triggers found for deletion
+Added SET trigger on ^x named x#1
+# Set nodes in LVN
+# Run ZYENCODE to encode nodes into ^x
+ZSTATUS=T11c+3^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
+ZSTATUS=T11c+4^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T11b+8^ydb1152,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger x#1#. Transaction level must be the same at exit as when the trigger started
+# Run MERGE of ^x into ^y
+# Kill ^x
+# Run ZYDECODE of ^y into ^x
+# Expect no ASSERT failure
+## Test 17b: Trigger combination 2, expect no ASSERT failures
+# Set triggers
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+# Set nodes in LVN
+# Run ZYENCODE to encode nodes into ^x
+ZSTATUS=T11d+2^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
+ZSTATUS=T11d+3^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T11b+8^ydb1152,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger x#1#. Transaction level must be the same at exit as when the trigger started
+# Run MERGE of ^x into ^y
+# Kill ^x
+# Run ZYDECODE of ^y into ^x
+# Expect no ASSERT failure
+ZSTATUS=T11b+15^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+### Test 12: CTRL-C during long-running ZYENCODE does not cause GTMASSERT2 failure on subsequent command
+PASS: Long-running ZYENCODE completed without GTMASSERT2 failure
+
+### Test 13: Test that running ZYENCODE and ZYDECODE with 31 1MiB subscripts in a local variable does not cause a heap-buffer-overflow, or ZYDECODEINCOMPL or PARAMINVALID errors
+# Run [T13^ydb1152] routine to pass 31 1MiB subscripts to ZYENCODE and ZYDECODE
+# Confirm no PARAMINVALID and ZYDECODEINCOMPL errors were generated
+PASS: [T13^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
+
+### Test 14: Test that sending MUPIP INTRPT to ZYENCODE and ZYDECODE does not produce any of the following errors: ZYENCODEINCOMPL, ZYDECODEINCOMPL, TEST-E-FAIL
+### See also:
+###   1. https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2850600795
+###   2. https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2851162582
+# Run [T14^ydb1152] routine in the background
+# Confirm no ZYENCODEINCOMPL, ZYDECODEINCOMPL, or TEST-E-FAIL errors were generated
+PASS: [T14^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
+
+### Test 15: No REC2BIG error is issued when values at default database record size
+### are encoded and decoded when the database is created with default values
+# Create a new database with default settings
+# Run [T15^ydb1152] routine
+# Confirm no REC2BIG errors were generated
+PASS: [T15^ydb1152] did not emit REC2BIG
+
+### Test 16: No assert failure indirection is used to encode value at the default database record size
+### For details: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2851331998
+# Create a new database with default settings
+# Run [T16^ydb1152] routine
+# Confirm no assert failure occurred and a ZYENCODESRCUNDEF error was issued
+PASS: [T16^ydb1152] did not cause an assert failure
+----------
+Error ZYENCODESRCUNDEF seen in T16.out as expected:
+%YDB-E-ZYENCODESRCUNDEF, Error encountered during ZYENCODE; source variable must not be undefined
+----------
+
+### Test 17: Test ZYENCODE within TSTART/TCOMMIT with restarts does not produce ZYDECODEINCOMPL or ZYENCODEINCOMPL errors
+### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2853870076
+# Run [T17^ydb1152] routine
+# Confirm no ZYENCODEINCOMPL, ZYDECODEINCOMPL, or other errors were generated
+PASS: [T17^ydb1152] did not emit any errors.
+
+# Check all ZYENCODE JSON output files for valid JSON
+PASS: T3a.json contains valid JSON
+PASS: T3b.json contains valid JSON
+PASS: T3c.json contains valid JSON
+PASS: T3d.json contains valid JSON
+PASS: T3e.json contains valid JSON
+PASS: T4a.json contains valid JSON
+PASS: T4b.json contains valid JSON
+PASS: T7a.json contains valid JSON
+PASS: T7b.json contains valid JSON
+

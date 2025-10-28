@@ -38,13 +38,13 @@
 # rundown_file_not_found-ydb1154	[ben]		Test that mupip rundown runs successfully even if the file pointed to by gtm_repl_instance/ydb_repl_instance does not exist.
 # fallintoflst-ydb1142			[ben]		Test that that FALLINTOFLST compile time warning occurs and that compiler finishes compilation without issue.
 # socketspinloop-ydb1195		[jon]		Test that WRITE /WAIT on socket device with multiple listening sockets return even with a timeout
+# mcomm_deserialize-ydb1152		[jon]		Test M commands to serialize/deserialize local or global variable subtree
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_statshare-ydb254"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshow_v-ydb873"
@@ -77,7 +77,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic empty_routine-ydb1184"
 setenv subtest_list_non_replic	"$subtest_list_non_replic rundown_file_not_found-ydb1154"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1142"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socketspinloop-ydb1195"
-
+setenv subtest_list_non_replic	"$subtest_list_non_replic mcomm_deserialize-ydb1152"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
 
