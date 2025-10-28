@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,11 +24,6 @@
 # Testing of various internal, external, DO, $$, and indirect invocations          #
 ####################################################################################
 echo 'Testing various types of invocations using DO and \$\$...'
-
-# docalls.m/doundefs.m etc. induce errors in the middle of evaluating boolean expressions and moves on to execute more
-# bool exprs which can cause the boolexpr nesting depth to go more than 4 (the default allowed depth in the code).
-# Therefore set this dbg-only env var to a higher value to allow for more nesting depth just for this test.
-setenv ydb_max_boolexpr_nesting_depth 16
 
 # this should generate several error messages
 $gtm_dist/mumps -run docalls
