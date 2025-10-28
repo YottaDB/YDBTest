@@ -82,7 +82,7 @@ Mutex Manager Type for region [default] = YDB
 Database file ##TEST_PATH##/a.dat now has mutex type set to ADAPTIVE
 # Verify using DSE ALL -DUMP that Mutex Manager Type is ADAPTIVE in AREG, PTHREAD in DEFAULT, YDB in BREG
 Region          AREG
-  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type          ADAPTIVE (YDB)
 Region          BREG
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                     YDB
 Region          DEFAULT
@@ -108,7 +108,7 @@ Mutex Manager Type for region [default] = YDB
 Database file b.dat now has mutex type set to PTHREAD
 # Verify using DSE ALL -DUMP that Mutex Manager Type is ADAPTIVE in AREG, PTHREAD in BREG and DEFAULT
 Region          AREG
-  Reorg Sleep Nanoseconds                         0  Mutex Manager Type                ADAPTIVE
+  Reorg Sleep Nanoseconds                         0  Mutex Manager Type          ADAPTIVE (YDB)
 Region          BREG
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
 Region          DEFAULT
