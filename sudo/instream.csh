@@ -96,11 +96,9 @@ else if (("debian" == $gtm_test_linux_distrib) && ("13" == $gtm_test_linux_versi
 	# Disable "olderversion" subtest on Debian 13 since no YottaDB r1.38, r2.00 and r2.02 ydbinstall
 	# uses configure that in turn relies on ld.gold which is not available in Debian 13.
 	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
-else if ("suse" == $gtm_test_linux_distrib) then
-	# olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
-	if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
-	endif
+else if ("suse" == $gtm_test_linux_distrib && "16.0" == $gtm_test_linux_version) then
+	# olderversion/configure_rmfile-gtmde201825 disabled for SUSE 16 (no releases yet as of 2025-10-30)
+	setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
