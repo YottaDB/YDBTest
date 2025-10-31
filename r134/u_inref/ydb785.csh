@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,39 +15,20 @@
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
-set status1 = $status
-if ($status1) then
-	echo "[source $gtm_tst/$tst/u_inref/setupgoenv.csh] failed with status [$status1]. Exiting..."
-	exit 1
-endif
+# Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $ydbgo_url, $goflags)
+source $gtm_tst/com/setupgoenv.csh >& setupgoenv.out || \
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status]:" && cat setupgoenv.out && exit 1
 
-cd go/src
-mkdir ydb785
-cd ydb785
-ln -s $gtm_tst/$tst/inref/ydb785.go .
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link ydb785.go to current directory ($PWD)"
-    exit 1
-endif
 # Build our routine (must be built due to use of cgo).
 echo "# Building ydb785"
-$gobuild >& go_build.log
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build ydb785.go. go_build.log output follows"
-    cat go_build.log
-    exit 1
-endif
-# Need a subdir to put our M routine in or else Go has trouble with it.
-mkdir mroutines
-ln -s $gtm_tst/$tst/inref/ydb785.m mroutines/.
+$gobuild $gtm_tst/$tst/inref/ydb785.go >& go_build.log || \
+	echo "TEST-E-FAILED : Unable to build ydb785.go. go_build.log output follows" && cat go_build.log && exit 1
+ln -s $gtm_tst/$tst/inref/ydb785.m .
 # Create the call table
 setenv ydb_ci ./ydb785.ci
 cat > $ydb_ci << EOF
 GimeLVUNDEF : void entry^ydb785()
 EOF
-# Add this directory to $gtmroutines
-setenv gtmroutines "$gtmroutines ./mroutines"
 #
 # Run ydb785
 #

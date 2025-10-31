@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 ###########################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -22,4 +22,6 @@ if ( $? || ! -e "${__tsyncdir:q}/com/gtmtest.csh" ) then
 	set __tsyncdir = "${work_dir:q}/YDBTest"
 endif
 
-rsync $* -av --delete --exclude=.git "${__tsyncdir:q}/" $gtm_tst/
+# The --delete-excluded below prevents "cannot delete non-empty directory" errors
+# if the test creates an excluded in the destination
+rsync $* -av --delete --delete-excluded --exclude=.git "${__tsyncdir:q}/" $gtm_tst/

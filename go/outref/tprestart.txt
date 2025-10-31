@@ -2,7 +2,6 @@
 # call, it returns YDB_TP_RESTART (error text is a fast-path 'TPRESTART'). But we also want this return code if,
 # in the transaction callback routine, some M code is driven which causes a TP restart. Prior to YDB#619, this
 # flavor returned TPRETRY instead.
-# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
 # Building tprestart
 # Running tprestart
 *** In TP transaction - testing with SimpleThreadAPI call to cause restart

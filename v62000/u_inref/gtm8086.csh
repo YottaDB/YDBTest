@@ -1,11 +1,11 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                          #
+#								#
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
-# All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -180,7 +180,7 @@ while ($jobnum < $gtm_test_jobcnt)
 	mv impjob_imptp1.mjo${jobnum} impjob_imptp1.xmjo${jobnum}x
 	$grep -vE 'JNLEXTEND|JNLSWITCHFAIL' impjob_imptp1.xmjo${jobnum}x > impjob_imptp1.mjo${jobnum}
 	mv impjob_imptp1.mje${jobnum} impjob_imptp1.xmje${jobnum}x
-	$grep -vE 'JNLEXTEND|JNLCLOSE|NOTALLDBRNDWN|GVRUNDOWN' impjob_imptp1.xmje${jobnum}x > impjob_imptp1.mje${jobnum}
+	$grep -vE 'JNLEXTEND|JNLSWITCHFAIL|JNLCLOSE|NOTALLDBRNDWN|GVRUNDOWN' impjob_imptp1.xmje${jobnum}x > impjob_imptp1.mje${jobnum}
 end
 
 # Tests GTM-8883 in V63004

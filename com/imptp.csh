@@ -37,6 +37,7 @@ if (-e $gtm_tools/check_trigger_support.csh) then
 	endif
 endif
 
+if !($?gtm_test_trigger) setenv gtm_test_trigger 0
 if (($gtm_test_trigger) && !($?test_specific_trig_file)) set trigger_load=1
 \pwd
 if ($gtm_test_crash == 1)	echo "This is a crash test"
@@ -59,19 +60,19 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		# If rand = 1 (i.e. ydb_app_ensures_isolation env var is not set) -> do VIEW "NOISOLATION" command later in imptp.m
 	endif
 	if (($?trigger_load) && ($gtm_test_dbfill == "IMPTP")) then
-		# Test has specified -trigger and we are going to use imptp.m.
+		# Test has specified -trigger and we are going to use the imptp implementation of dbfill
 		# Load triggers in the database.
 		$gtm_exe/mumps -run dollarztrigger $gtm_tst/com/imptp.trg
 		$gtm_exe/mumps -run ztrsupport 'if $ztrigger("file",$ztrnlnm("gtm_tst")_"/com/imptpztr.trg")'
 	endif
 	setenv gtm_badchar "no"
 	set rust_supported = `tcsh $gtm_tst/com/is_rust_supported.csh`
-	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Python (rand=3), Golang (rand=4), or Rust (rand=5) version of imptp
+	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Python (rand=3), YDBGo v1 (rand=4), Rust (rand=5) version of imptp, YDBGo v2 (rand=6)
 	# Note that if a new choice gets added above, "imptpflavor" entryref in "com/imptp.m" needs to be correspondingly updated.
 	if (! $?gtm_test_replay || ! $?ydb_imptp_flavor) then
 		if ($?ydb_imptp_flavor) then
-			if ((0 > $ydb_imptp_flavor) || (5 < $ydb_imptp_flavor)) then
-				echo "TEST-E-FAILED : Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"
+			if ((0 > $ydb_imptp_flavor) || (6 < $ydb_imptp_flavor)) then
+				echo "TEST-E-FAILED : Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0 to 6"
 				exit 1
 			else if (5 == $ydb_imptp_flavor && true != $rust_supported) then
 				echo "# TEST-E-FAILED : rust flavor was explicitly specified, but Rust is not supported on this platform"
@@ -234,7 +235,7 @@ xyz
 			source python/.venv/bin/activate.csh
 		endif
 		# Using YDBPython with ASAN requires 2 env vars to be set.
-		# ASAN_OPTIONS and LD_PRELOAD. See YottaDB/Lang/YDBPython@479e80a2 for details.
+		# ASAN_OPTIONS and LD_PRELOAD. For details see: https://gitlab.com/YottaDB/Lang/YDBPython/-/commit/479e80a2
 		# YDBTest test framework already sets ASAN_OPTIONS. So only need to set LD_PRELOAD.
 		if ($gtm_test_libyottadb_asan_enabled) then
 			setenv LD_PRELOAD `gcc -print-file-name=libasan.so`
@@ -244,55 +245,12 @@ xyz
 		set exefile = "imptp.py"
 		breaksw
 	case 4: # Run Golang wrapper (uses SimpleThreadAPI) flavor of imptp
-		if (! -e go) then # if no go environment setup yet, do it
-			source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
-			set status1 = $status
-			if ($status1) then
-				echo "TEST-E-FAILED : [source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]"
-				exit 1
-			endif
-		endif
-		if (! -e imptpgo) then # if imptpgo hasn't been built yet, get it and impjobgo built
-			cd go/src
-			mkdir imp
-			mkdir imptpgo
-			mkdir impjobgo
-			ln -s $gtm_tst/com/imp.go imp/imp.go
-			set status1 = $status
-			if ($status1) then
-				echo "TEST-E-FAILED : Unable to soft link imp.go to current directory ($PWD)"
-				exit 1
-			endif
-			ln -s $gtm_tst/com/imptpgo.go imptpgo/imptpgo.go
-			if ($status1) then
-				echo "TEST-E-FAILED : Unable to soft link imptpgo.go to current directory ($PWD)"
-				exit 1
-			endif
-			ln -s $gtm_tst/com/impjobgo.go impjobgo/impjobgo.go
-			if ($status1) then
-				echo "TEST-E-FAILED : Unable to soft link impjobgo.go to current directory ($PWD)"
-				exit 1
-			endif
-			cd imptpgo
-			$gobuild
-			if (0 != $status) then
-				echo "TEST-E-FAILED : Unable to build imptpgo.go"
-				exit 1
-			endif
-			cd ../impjobgo
-			$gobuild
-			if (0 != $status) then
-				echo "TEST-E-FAILED : Unable to build impjobgo.go"
-				exit 1
-			endif
-			cd ../../.. # back to main test directory
-			# Now make a link to imptpgo from main test directory
-			ln -s go/src/imptpgo/imptpgo .
-			if ($status1) then
-				echo "TEST-E-FAILED : Unable to soft link imptpgo.go to main test directory ($PWD)"
-				exit 1
-			endif
-		endif
+		source $gtm_tst/com/setupgoenv.csh || \
+			echo "TEST-E-FAILED : [source $gtm_tst/com/setupgoenv.csh] failed with status [$status]" && exit 1
+		echo "# Running : $gobuild -o imptpgo $gtm_tst/com/{imp,imptpgo}.go && $gobuild -o impjobgo $gtm_tst/com/{imp,impjobgo}.go"
+		$gobuild -o imptpgo  $gtm_tst/com/{imp,imptpgo}.go   >! go.out && \
+		$gobuild -o impjobgo $gtm_tst/com/{imp,impjobgo}.go >>& go.out || \
+			echo "TEST-E-FAILED : Unable to build {imp,imptpgo}.go and {imp,impjobgo}.go with status [$status]:" && cat go.out && exit 1
 		set exefile = "imptpgo"
 		breaksw
 	case 5: # Run Rust wrapper using SimpleThreadAPI flavor of imptp
@@ -357,6 +315,15 @@ xyz
 			exit 1
 		endif
 		set exefile = "imptprust"
+		breaksw
+	case 6: # Run Golang wrapper v2 flavor of imptp
+		source $gtm_tst/com/setupgoenv.csh || \
+			echo "TEST-E-FAILED : [source $gtm_tst/com/setupgoenv.csh] failed with status [$status]" && exit 1
+		cp $gtm_tst/com/imptpgo2.go imptpgo2.go
+		echo "# Running : $gobuild imptpgo2.go"
+		$gobuild imptpgo2.go >! go.out || \
+			echo "TEST-E-FAILED : Unable to build imptpgo2.go with status [$status]:" && cat go.out && exit 1
+		set exefile = "imptpgo2"
 		breaksw
 	endsw
 	# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,28 +17,17 @@
 # Set up the golang environment and sets up our repo
 #
 echo "# Setting up go environment"
-source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
-set status1 = $status
-if ($status1) then
-	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
-	exit 1
-endif
+# Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $ydbgo_url, $goflags)
+source $gtm_tst/com/setupgoenv.csh >& setupgoenv.out || \
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status]:" && cat setupgoenv.out
 
-cd go/src
-mkdir ydbgo37
-cd ydbgo37
-ln -s $gtm_tst/$tst/inref/ydbgo37.go .
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link ydbgo37.go to current directory ($PWD)"
-    exit 1
-endif
 # Build our routine (must be built due to use of cgo).
 echo "# Building ydbgo37"
-$gobuild >& go_build.log
+$gobuild $gtm_tst/$tst/inref/ydbgo37.go >& go_build.log
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build ydbgo37.go. go_build.log output follows"
-    cat go_build.log
-    exit 1
+	echo "TEST-E-FAILED : Unable to build ydbgo37.go. go_build.log output follows"
+	cat go_build.log
+	exit 1
 endif
 $echoline
 echo "# Driving ydbgo37"

@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 # This source code contains the intellectual property           #
@@ -78,7 +78,6 @@ RUN apt-get update && \
                     curl \
                     iproute2 \
                     openjdk-25-jdk \
-                    golang \
                     screen \
                     sudo \
                     bison \
@@ -100,6 +99,10 @@ RUN apt-get update && \
                     gcovr \
                     && \
                     apt-get clean
+
+RUN rm -rf /usr/local/go && wget -O - https://go.dev/dl/go1.25.4.linux-amd64.tar.gz | tar -C /usr/local -xz
+RUN echo "set auto-load safe-path /" >> /etc/gdb/gdbinit  # enable loading of gdb debugging symbols for Go
+# path to Go is added to PATH in cshrc file
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \

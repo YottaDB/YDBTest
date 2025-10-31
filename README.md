@@ -254,7 +254,7 @@ This means the developer cannot get easily "divide and conquer" to locate the of
 
 The solution is to use `settest` which sets up all the environment variables just like the above script layers, ready for the developer to directly invoke any specific test script.
 
-* `settest` alias takes the same arguments as `gtmtest`, e.g. `-t <test> and -st <subtest>`
+* `settest` alias takes the same arguments as `gtmtest`, e.g. `-t <test>/<subtest>`
 
 This sets the environment so the developer can jump in at any of the layers mentioned above, as follows:
 
@@ -263,9 +263,9 @@ This sets the environment so the developer can jump in at any of the layers ment
 * `runtest` alias invokes `submit_test.csh` to run the test selected by `settest`, leaving artifacts in `$r`
 * `runsubtest` similar to `runtest` but skips `submit_test.csh` and goes straight to `submit_subtest.csh` (fewer tester layers). Cannot run an entire test suite: only the subtest selected by `settest -st`.
 * `YDBTest/com/*.csh` scripts can also be run directly (or with `runscript` to collate artifacts)
-* `gtmtest` run a set of tests (see gtmtest -h), e.g. `gtmtest -t <test> and -st <subtest>`
+* `gtmtest` run a set of tests (see gtmtest -h), e.g. `gtmtest -t <test>/<subtest>`
 
-To run a test script at any one of the above configurations, simply invoke the `settest` alias. It takes the same arguments specified by `gtmtest -help`, e.g. `-t <test>`, `-st <subtest>`.
+To run a test script at any one of the above configurations, simply invoke the `settest` alias. It takes the same arguments specified by `gtmtest -help`, e.g. `-t <test>/<subtest>`.
 
 ### Examples
 

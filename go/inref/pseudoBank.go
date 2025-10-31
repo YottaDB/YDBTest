@@ -3,7 +3,7 @@
 // Copyright (c) 2019 T.N. Incorporation Ltd (TNI) and/or	//
 // its subsidiaries. All rights reserved.			//
 //								//
-// Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	//
+// Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	//
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -20,7 +20,7 @@ import (
 	"lang.yottadb.com/go/yottadb"
 	"math"
 	"math/rand"
-	"pseudoBank/dataObject"
+	"dataObject"
 	"runtime"
 	"strconv"
 	"sync"

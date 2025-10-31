@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,40 +18,19 @@ echo '# This test uses the threeenp* subtests as sample processes'
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
-set status1 = $status
-if ($status1) then
-	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
-	exit 1
-endif
-# Note: We need to set the global directory to an absolute path because we are operating in a subdirectory
-# ($tstpath/go/src/threeenp*) where the default test framework assignment of ydb_gbldir
-# to a relative path (i.e. mumps.gld) is no longer relevant.
+# Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $ydbgo_url, $goflags)
+source $gtm_tst/com/setupgoenv.csh >& setupgoenv.out || \
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status]:" && cat setupgoenv.out && exit 1
 
 # we test on each one of the threenp* programs
 foreach prog (threeenp1B1 threeenp1B2 threeenp1C2)
 	setenv ydb_gbldir $tstpath/$prog.gld
-	$gtm_tst/com/dbcreate.csh $prog -gld_has_db_fullpath >>& dbcreate.out
-	if ($status) then
-	    echo "# dbcreate failed. Output of dbcreate.out follows"
-	    cat dbcreate.out
-	endif
-	cd go/src
-	mkdir $prog
-	cd $prog
-	ln -s $gtm_tst/$tst/inref/$prog.go .
-	if (0 != $status) then
-	    echo "TEST-E-FAILED : Unable to soft link threeenp1B1.go to current directory ($PWD)"
-	    exit 1
-	endif
+	$gtm_tst/com/dbcreate.csh $prog -gld_has_db_fullpath >>& dbcreate.out || \
+	    echo "# dbcreate failed. Output of dbcreate.out follows" && cat dbcreate.out
 	# Build our routine (must be built due to use of cgo).
 	echo "# Building $prog"
-	$gobuild >& go_build.log
-	if (0 != $status) then
-	    echo "TEST-E-FAILED : Unable to build threeenp1B1.go. go_build.log output follows."
-	    cat go_build.log
-	    exit 1
-	endif
+	$gobuild $gtm_tst/$tst/inref/$prog.go >& go_build.log || \
+	    echo "TEST-E-FAILED : Unable to build threeenp1B1.go. go_build.log output follows." && cat go_build.log && exit 1
 	# this number takes the longest to compute from all numbers [1, 100,000,000]
 	# important so that the program doesn't finish before it can be killed
 	cat >> seed.input << EOF
@@ -97,10 +76,6 @@ EOF
 		endif
 	end
 	echo "done"
-	cd ../../.. # back up to the top of the test directory
-	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.out
-	if (0 != $status) then
-		echo "# dbcheck failed. Output of dbcheck$prog.out"
-		cat dbcheck$prog.out
-	endif
+	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.out || \
+		echo "# dbcheck failed. Output of dbcheck$prog.out" && cat dbcheck$prog.out
 end

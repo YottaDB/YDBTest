@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,8 +35,9 @@ endif
 
 $grep -E "\-E-|-W-|-F-" $1 >& /dev/null
 if (1 != $status) then
-	echo "IMPTP-E-FAIL : imptp.csh invocation had errors in file [$1]. Error output follows."
-	$grep -E "\-E-|-W-|-F-" $1
+	echo "IMPTP-E-FAIL : imptp.csh invocation had errors in file [$1]:"
+	# print from error or "# Running" to end of file
+	sed -En '/-E-|-W-|-F-|# Running/,$p' $1
 	@ exit_status = 1
 else
 	@ exit_status = 0

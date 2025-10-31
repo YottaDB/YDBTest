@@ -1,5 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ; Copyright (c) 2010-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
@@ -106,6 +109,8 @@
 ;     Removing the tabs should give a sequence of updates that will match exactly those in imptp.m
 ; --------------------------------------------------------------------------------------------------------
 ;
+; Stage 1:
+;
 ; $ZTLEVEL=0: set ^arandom(fillid,subsMAX)=val
 ;
 ; $ZTLEVEL=0: set ^brandomv(fillid,subsMAX)=valALT
@@ -124,11 +129,15 @@
 ; $ZTLEVEL=1:     set ^jrandomvariableinimptpfillprogram(fillid,I,I)=val
 ; $ZTLEVEL=2:         set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val
 ;
+; Stage 2:
+;
 ; $ZTLEVEL=0: set ^antp(fillid,subs)=val
 ; $ZTLEVEL=1:     set ^bntp(fillid,subs)=val
 ; $ZTLEVEL=2:         set ^cntp(fillid,subs)=val
 ; $ZTLEVEL=3:             set ^dntp(fillid,subs)="somejunk"		; Set variable to "junk" and set it to val outside trigger
 ; $ZTLEVEL=0: set ^dntp(fillid,subs)=valALT
+;
+; Stage 3:
 ;
 ; $ZTLEVEL=0: set ^entp(fillid,subs)=val
 ; $ZTLEVEL=1:     set ^fntp(fillid,subs)=val_"suffix"
@@ -138,6 +147,8 @@
 ; $ZTLEVEL=1:     set ^hntp(fillid,subsMAX)=valMAX
 ; $ZTLEVEL=1:     set ^intp(fillid,subsMAX)=valMAX
 ; $ZTLEVEL=1:     set ^bntp(fillid,subsMAX)=valMAX
+;
+; Stage 4:
 ;
 ; $ZTLEVEL=0: set ^arandom(fillid,subs,J)=valj
 ; $ZTLEVEL=1:     set ^brandomv(fillid,subs,J)=valj
@@ -149,6 +160,7 @@
 ; $ZTLEVEL=1:     set ^hrandomvariableinimptpfilling(fillid,subs,J)=valj
 ; $ZTLEVEL=2:         set ^irandomvariableinimptpfillprgrm(fillid,subs,J)=valj
 ;
+; Stage 5:
 ;
 ; $ZTLEVEL=0: kill ^arandom(fillid,subs,1)
 ; $ZTLEVEL=1:     kill ^brandomv(fillid,subs,1)
@@ -160,12 +172,18 @@
 ; $ZTLEVEL=3:             kill ^hrandomvariableinimptpfilling(fillid,subs,1)
 ; $ZTLEVEL=1:     kill ^irandomvariableinimptpfillprgrm(fillid,subs,1)
 ;
+; Stage 6:
+;
 ; $ZTLEVEL=0: zkill ^jrandomvariableinimptpfillprogram(fillid,I)
 ; $ZTLEVEL=1:     zkill ^jrandomvariableinimptpfillprogram(fillid,I,I)
+;
+; Stage 7:
 ;
 ; $ZTLEVEL=0: set $piece(^aspan(fillid,I),"|",i)=$piece(valCHUNK,"|",i)
 ; $ZTLEVEL=1:     set $piece(^espan(fillid,I),"|",i)=$piece($ztvalue,"|",$ztupdate)
 ; $ZTLEVEL=2:          set $piece(^bspan(fillid,I),"|",i)=$tr($piece($ztvalue,"|",$ztupdate)," ","") ; padding removed ; not a spanning node
+;
+; Stage 8:
 ;
 ; $ZTLEVEL=0: kill ^antp(fillid,subs)
 ; $ZTLEVEL=1:     kill ^bntp(fillid,subs)
@@ -174,10 +192,16 @@
 ; $ZTLEVEL=3:             zkill ^dntp(fillid,subs)
 ; $ZTLEVEL=0: zkill ^bntp(fillid,subsMAX)
 ;
+; Stage 9 does not appear to cause any triggers
+;
+; Stage 10
+;
 ; $ZTLEVEL=0: kill ^espan(fillid,I)
 ; $ZTLEVEL=0: set $piece(^aspan(fillid,I),"|",i)=$tr($piece(valCHUNK,"|",i)," ","X")
 ; $ZTLEVEL=1:     set $piece(^espan(fillid,I),"|",i)=$piece($ztvalue,"|",$ztupdate)
 ; $ZTLEVEL=2:          set $piece(^bspan(fillid,I),"|",i)=$piece($ztvalue,"|",$ztupdate)
+;
+; Stage 11
 ;
 ; $ZTLEVEL=0: set ^andxarr(fillid,jobno,loop)=I
 ; $ZTLEVEL=1:     set ^bndxarr(fillid,jobno,loop)=I

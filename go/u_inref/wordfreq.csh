@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,44 +12,20 @@
 #
 # This test/demo drives the golang flavor of the word frequency test.
 #
-$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
-if ($status) then
-        echo "# dbcreate failed. Output of dbcreate.out follows"
-        cat dbcreate.out
-endif
+$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out || \
+	echo "# dbcreate failed. Output of dbcreate.out follows" && cat dbcreate.out
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
-set status1 = $status
-if ($status1) then
-	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
-	exit 1
-endif
+# Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $ydbgo_url, $goflags)
+source $gtm_tst/com/setupgoenv.csh >& setupgoenv.out || \
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status]:" && cat setupgoenv.out && exit 1
 
-cd go/src
-mkdir wordfreq
-cd wordfreq
-ln -s $gtm_tst/$tst/inref/wordfreq.go .
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link wordfreq.go to current directory ($PWD)"
-    exit 1
-endif
+
 # Build our routine (must be built due to use of cgo).
 echo "# Building wordfreq"
-$gobuild >& go_build.log
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build wordfreq.go. go_build.log output follows"
-    cat go_build.log
-    exit 1
-endif
-#
-# Run wordfreq
-#
-# Note: We need to set the global directory to an absolute path because we are operating in a subdirectory
-# ($tstpath/go/src/wordfreq) where the default test framework assignment of ydb_gbldir
-# to a relative path (i.e. mumps.gld) is no longer relevant.
-setenv ydb_gbldir $tstpath/mumps.gld
+$gobuild $gtm_tst/$tst/inref/wordfreq.go >& go_build.log || \
+	echo "TEST-E-FAILED : Unable to build wordfreq.go. go_build.log output follows" && cat go_build.log && exit 1
 #
 # Run wordfreq with our standard input and save the output
 #
@@ -65,6 +41,5 @@ endif
 #
 # Validate DB
 #
-cd ../../..
 unsetenv ydb_gbldir
 $gtm_tst/com/dbcheck.csh

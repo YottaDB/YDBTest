@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,135 +12,94 @@
 #
 # This script is meant to be source'd by golang tests to both setup the golang environment and
 # fetch the yottadb package into it before building/running the specific golang test.
-#
+# However, set the following defaults so that the user can run it from the shell for testing purposes
+if ! $?test_encryption setenv test_encryption "NON_ENCRYPT"
+if ! $?test_awk setenv tst_awk awk
+if ! $?grep setenv grep grep
+if ! $?gtm_test_os_machtype source set_gtm_machtype.csh
+
 set tstpath = `pwd`
 setenv PKG_CONFIG_PATH $ydb_dist
-setenv GOPATH $tstpath/go/
-setenv GOPROXY https://proxy.golang.org/cached-only
-setenv GO111MODULE on	# Need this for "go get" to work. Starting "go 1.22", go get fails to work if GO111MODULE=off
-set go_repo="lang.yottadb.com/go/yottadb"
-mkdir go
+# set a GOPATH outside current directory to avoid it being subsequently zipped. This prevents permission
+# errors when zipping test results since GOPATH contains subdirectories with read-only permissions.
+# This particular path makes it common to all subtests run this instance of gtmtest: avoids multiple downloads per gtmtest run.
+setenv GOPATH $tst_dir/$gtm_tst_out/gopath
+# Ensure go toolchains are not downloaded by the test as this creates huge artifacts
+# in GOPATH (up to gigabytes) every time imptp.csh is run.
+# Ensure the machine has a Go version at least as recent as required in go.mod and by YDBGo's go.mod files.
+setenv GOTOOLCHAIN local
+
+# Set cannonical url of YDBGo when properly referenced by 'go get'
+set ydbgo_url="lang.yottadb.com/go/yottadb"
 
 # Now that "go get" is only supported inside of a module, create a go.mod file first.
 # This step was not needed until "go 1.21" as long as "GO111MODULE" env var was set to "off".
 # But starting "go 1.22", that did not work (see YDBTest#387 for more details).
-go mod init gitlab.com/YottaDB/Lang/YDBGo >& go_mod.out
+cp $gtm_tst/com/go.{mod,sum} . >& go_mod.out || \
+	echo "[cp $gtm_tst/com/go.{mod,sum} .] failed with status [$status]:" && cat go_mod.out && exit 1
 
-# Retrieve yottadb package from the repository using "go get".
-set cmdtorunprefix = "go get"
-set cmdtorunsuffix = "-d -v -x -t $go_repo"
-set cmdtorun = "$cmdtorunprefix $cmdtorunsuffix"
-echo "# Running : $cmdtorun"
-# Occasionally we have seen "TLS handshake timeout" or "i/o timeout" failures on slow boxes if the "go get" takes
-# approximately more than 15 seconds to finish (which can happen on the slow ARMV6L boxes or over less than ideal
-# internet connections). That timeout does not seem to be user configurable either so we handle that by retrying
-# the "go get" for a few times before signaling failure.
-set retry = 0
-set maxretry = 5
-while ($retry < $maxretry)
-	$cmdtorun |& $tst_awk '{print strftime("%T"),":",$0}' >& go_get.log
-	set status1 = $status
-	mv go_get.log go_get_$retry.log
-	if (! $status1) then
-		# "go get" succeeded. Break out of retry loop.
-		break
-	endif
-	$grep -q -e "net/http: TLS handshake timeout" go_get_$retry.log
-	if (! $status) then
-		# It was a TLS handshake timeout error. Try with "-insecure" to see if that helps.
-		# This has been seen to really make a difference at least on 1-CPU systems that are otherwise loaded.
-		set cmdtorun = "$cmdtorunprefix -insecure $cmdtorunsuffix"
-	else
-		# It was some other error (e.g. "i/o timeout" or "The requested URL returned error: 500")
-		# We retry on all types of errors.
-		set cmdtorun = "$cmdtorunprefix $cmdtorunsuffix"
-	endif
-	@ retry = $retry + 1
-end
-if ($status1) then
-	echo "TEST-E-FAILED : [$cmdtorun] returned failure status of $status1. Total of $retry retries. Output in go_get*.log"
-	foreach file (go_get*.log)
-		echo " --> Output of $file"
-		cat $file
-	end
-	exit 1
-endif
-
-# go/pkg directory contains subdirectories with read-only permissions after a "go get" so give read-write permissions
-# as later the test framework would try to gzip the files in case of a test failure and that would require creating a
-# new file and fail with a "Permission denied" error.
-chmod -R +w go/pkg
-
-# go get with GO111MODULE=on no longer downloads the git repository. But later parts of this script and the caller test
-# rely on that directory existing. So download the git repo using "git clone".
-mkdir -p go/src/lang.yottadb.com/go/yottadb/
-git clone https://gitlab.com/YottaDB/Lang/YDBGo go/src/lang.yottadb.com/go/yottadb >& gitclone.log
-set status1 = $status
-if ($status1) then
-	echo "TEST-E-FAILED : [git clone] returned failure status of $status1. Output below and in gitclone.log"
-	cat gitclone.log
-	exit 1
-endif
-
-cd go/src/$go_repo
-if ($?ydb_test_go_repo_dir) then
-	# If env var "ydb_test_go_repo_dir" is defined, use this as the path of the go repo instead of the go repo on gitlab.
-	git remote add tmp $ydb_test_go_repo_dir
-	set status1 = $status
-	if ($status1) then
-		echo "TEST-E-FAILED : [git remote add tmp $ydb_test_go_repo_dir] returned failure status of $status1"
-		exit 1
-	endif
-	git fetch tmp >& git_fetch.log
-	set status1 = $status
-	if ($status1) then
-		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status1. Output below and in git_fetch.log"
-		cat git_fetch.log
-		exit 1
-	endif
-	if ($?ydb_test_go_repo_branch) then
-		# If env var "ydb_test_go_repo_branch" is defined, use that as the branch
-		git checkout -b tmp tmp/$ydb_test_go_repo_branch >& git_checkout.log
-		set status1 = $status
-		if ($status1) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status1. Output below and in git_checkout.log"
-			cat git_checkout.log
-			exit 1
-		endif
-	else
-		# Else use "master" branch as the latest developed code
-		git checkout -b tmp tmp/master >& git_checkout.log
-		set status1 = $status
-		if ($status1) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/master] returned failure status of $status1. Output below and in git_checkout.log"
-			cat git_checkout.log
-			exit 1
-		endif
-	endif
+# If $ydbgo_repo points to a URL, check out YDBGo from a git repo instead of using 'go get'.
+# If $ydbgo_repo points to a local filesystem git repo, use that, including any uncommitted changes.
+# If testing with docker, you can mount your local YDBGo repo as a docker volume and point to that.
+# The first half of the if statement would work by itself, but the second 'go get' version to test what users will mostly do.
+if ( $?ydbgo_repo ) then
+	# If it's a pathname, convert it to file:// URL format
+	set ydbgo_repo_path = "$ydbgo_repo"
+	if ( "$ydbgo_repo" !~ "*://*" ) setenv ydbgo_repo "file://$ydbgo_repo"
+	echo "# Cloning $ydbgo_repo to $tstpath/YDBGo"
+	# clone -depth 1 gets only the latest version for testing (faster)
+	rm $tstpath/YDBGo go.work -rf # remove first in case setupgoenv.csh gets run twice
+	git clone -q --depth 1 $ydbgo_repo $tstpath/YDBGo >>& ydbgo_clone.out || \
+		echo "[git clone --depth 1 $ydbgo_repo:q] failed with status [$status]:" && cat ydbgo_clone.out && exit 1
+	# If it's a local file repository diff + apply includes any uncommitted working files from the local YDBGo
+	if ( "$ydbgo_repo" =~ "file://*" ) git -C "$ydbgo_repo_path" diff | git -C $tstpath/YDBGo apply --allow-empty -
+	# include '.' below for several tests that assume it's included
+	go work init . $tstpath/YDBGo $tstpath/YDBGo/v2 |& tee go_work.out
+	set goget = "true" # needn't download ydbgo since it's found via ../go.work (e.g. in pseudoBank.csh)
 else
-	# We used the go repo on gitlab. Check out the "master" branch.
-	git checkout master >& git_checkout.log
-	set status1 = $status
+	# Retrieve yottadb package from the repository using "go get".
+	set goget = "go get -x -t $ydbgo_url $ydbgo_url/v2"
+	echo "# Running : $goget"
+	# Occasionally we have seen "TLS handshake timeout" or "i/o timeout" failures on slow boxes if the "go get" takes
+	# approximately more than 15 seconds to finish (which can happen on the slow ARMV6L boxes or over less than ideal
+	# internet connections). That timeout does not seem to be user configurable either so we handle that by retrying
+	# the "go get" for a few times before signaling failure.
+	set retry = 0
+	set maxretry = 5
+	while ($retry < $maxretry)
+		$goget |& $tst_awk '{print strftime("%T"),":",$0}' >& go_get.log
+		set status1 = $status
+		mv go_get.log go_get_$retry.log
+		if (! $status1) then
+			# "go get" succeeded. Break out of retry loop.
+			break
+		endif
+		$grep -q -e "net/http: TLS handshake timeout" go_get_$retry.log
+		if (! $status) then
+			# It was a TLS handshake timeout error. Try with "-insecure" to see if that helps.
+			# This has been seen to really make a difference at least on 1-CPU systems that are otherwise loaded.
+			setenv GOINSECURE $ydbgo_url
+		endif
+		@ retry = $retry + 1
+	end
 	if ($status1) then
-		echo "TEST-E-FAILED : [git checkout master] returned failure status of $status1. Output below and in git_checkout.log"
-		cat git_checkout.log
+		echo "TEST-E-FAILED : [$goget] returned failure status of $status1. Total of $retry retries. Output in go_get*.log"
+		foreach file (go_get*.log)
+			echo " --> Output of $file"
+			cat $file
+		end
 		exit 1
 	endif
 endif
-cd -
 
 if ("ENCRYPT" == "$test_encryption" ) then
 	# Set env var to absolute path (not relative path) since go processes will start from subdirectories
 	setenv gtmcrypt_config `pwd`/gtmcrypt.cfg
 endif
 
-# When using a pure Go application, one can do 'go run xxx.go' and it will do that. This does not work when cgo is involved -
-# which is 100% of our Go applications currently since they all test the Go wrapper.
-set gobuild = "go build"
-setenv GO111MODULE off	# Keep this off as we rely on this for "go build" commands to work with GOPATH programs in YDBTest
-			# like com/imptpgo.go and com/impjobgo.go. Note that starting go 1.22, "go get" runs as if
-			# GO111MODULE=on irrespective of the env var setting but we handle that separately later.
-set gotest = "go test"
+# Historically, `go run xxx.go` did not work with CGo, so we use go build
+# -buildvcs=false prevents Go from trying to contact the git repository to get version information
+set goflags = "-buildvcs=false"
 
 # If ASAN enabled and Go version < 1.18, using go build flag `-fsanitize=address`
 # But if ASAN enabled and Go version >= 1.18, using `-asan` flag instead
@@ -148,11 +107,10 @@ source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with asan enabled. Do the same with the go executables.
 	set asanflags = "-asan"
-	set gobuild = "$gobuild $asanflags"
-	set gotest = "$gotest $asanflags"
+	set goflags = "$goflags -asan"
 
 	# ------------------------------------------------------------------------------------
-	# The below comment and code is similar to that in sudo/u_inref/setinstalloptions.csh
+	# The following comment and code is similar to that in sudo/u_inref/setinstalloptions.csh
 	# ------------------------------------------------------------------------------------
 	# If libyottadb.so has been built with CLANG + ASAN, we started seeing link time errors like the following
 	# from a "go build" when run on a SUSE SLED SP7 system or a RHEL 9 system.
@@ -165,7 +123,7 @@ endif
 
 # Random Go environment settings
 # ydb_go_race_detector - determines if the go -race flag should be used
-# GOGC - The rate Go does garbage collection; a smaller value increases frequency; default is 100
+# GOGC is the rate at which Go does garbage collection; a smaller value increases frequency; default is 100
 if (! $?gtm_test_replay || ! $?ydb_go_race_detector_on) then
 	echo "# Go environment variables" >> settings.csh
 	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
@@ -186,11 +144,14 @@ if (! $?gtm_test_replay || ! $?ydb_go_race_detector_on) then
 	endif
 endif
 
-if ($ydb_go_race_detector_on) then
-	# Randomly enable go race detector
-	set gobuild = "$gobuild -race"
-	set gotest = "$gotest -race"
-endif
+# Randomly enable go race detector
+if ($ydb_go_race_detector_on) set goflags = "$goflags -race"
+
+# These may be useful but if user needs to use Go "-C" flag they will need to use $goflags directly since -C must be first flag
+set gobuild = "go build $goflags"
+set gotest = "go test $goflags"
+
 # Capture random setting in file for later analysis in case of test failures
 set | $grep ^go >& govars.txt
+# prevent exit code of grep above from being the exit code of this script
 exit 0

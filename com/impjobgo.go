@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////
 //                                                               //
-// Copyright (c) 2019-2020 YottaDB LLC. and/or its subsidiaries. //
+// Copyright (c) 2019-2026 YottaDB LLC. and/or its subsidiaries. //
 // All rights reserved.                                          //
 //                                                               //
 //      This source code contains the intellectual property      //
@@ -14,7 +14,6 @@ package main
 
 import (
 	"fmt"
-	"imp"
 	"lang.yottadb.com/go/yottadb"
 	"math/rand"
 	"os"
@@ -132,7 +131,7 @@ func main() {
 	jobidstr := os.Getenv("gtm_test_jobid")
 	if "" != jobidstr {
 		valint64, err = strconv.ParseInt(jobidstr, 10, 32)
-		imp.CheckErrorReturn(err) // Only panic-able errors should hit here
+		CheckErrorReturn(err) // Only panic-able errors should hit here
 		valint = int32(valint64)
 	} else {
 		valint = 0
@@ -140,56 +139,56 @@ func main() {
 	jobid := valint
 	jobidstr = fmt.Sprintf("%d", jobid) // Reset with now reformatted string
 	// Initialize shared values that need initializing
-	shr.bufvalue = imp.NewBufferT(imp.BigMaxValueLen)
-	shr.bufI = imp.NewBufferT(imp.MaxValueLen)
-	shr.bufloop = imp.NewBufferT(imp.MaxValueLen)
-	shr.bufsubs = imp.NewBufferT(imp.MaxValueLen)
-	shr.bufsubsMAX = imp.NewBufferT(imp.BigMaxValueLen)
-	shr.bufval = imp.NewBufferT(imp.MaxValueLen)
-	shr.bufvalALT = imp.NewBufferT(imp.MaxValueLen)
-	shr.bufvalMAX = imp.NewBufferT(imp.BigMaxValueLen)
-	shr.dlrTRESTART = imp.NewKeyT(tptoken, &errstr, "$TRESTART", 0, 0)
-	shr.lclI = imp.NewKeyT(tptoken, &errstr, "I", 0, 0)
-	shr.lclloop = imp.NewKeyT(tptoken, &errstr, "loop", 0, 0)
-	shr.lclsubs = imp.NewKeyT(tptoken, &errstr, "subs", 0, 0)
-	shr.lclsubsMAX = imp.NewKeyT(tptoken, &errstr, "subsMAX", 0, 0)
-	shr.lclval = imp.NewKeyT(tptoken, &errstr, "val", 0, 0)
-	shr.lclvalALT = imp.NewKeyT(tptoken, &errstr, "valALT", 0, 0)
-	shr.lclvalMAX = imp.NewKeyT(tptoken, &errstr, "valMAX", 0, 0)
-	shr.gblPctImptp = imp.NewKeyT(tptoken, &errstr, "^%imptp", 2, imp.BigMaxValueLen)
-	shr.gblantp = imp.NewKeyT(tptoken, &errstr, "^antp", 2, imp.BigMaxValueLen)
-	shr.gblbntp = imp.NewKeyT(tptoken, &errstr, "^bntp", 2, imp.BigMaxValueLen)
-	shr.gblcntp = imp.NewKeyT(tptoken, &errstr, "^cntp", 2, imp.BigMaxValueLen)
-	shr.gbldntp = imp.NewKeyT(tptoken, &errstr, "^dntp", 2, imp.BigMaxValueLen)
-	shr.gblentp = imp.NewKeyT(tptoken, &errstr, "^entp", 2, imp.BigMaxValueLen)
-	shr.gblfntp = imp.NewKeyT(tptoken, &errstr, "^fntp", 2, imp.BigMaxValueLen)
-	shr.gblgntp = imp.NewKeyT(tptoken, &errstr, "^gntp", 2, imp.BigMaxValueLen)
-	shr.gblhntp = imp.NewKeyT(tptoken, &errstr, "^hntp", 2, imp.BigMaxValueLen)
-	shr.gblintp = imp.NewKeyT(tptoken, &errstr, "^intp", 2, imp.BigMaxValueLen)
-	shr.gblarandom = imp.NewKeyT(tptoken, &errstr, "^arandom", 2, imp.BigMaxValueLen)
-	shr.gblbrandomv = imp.NewKeyT(tptoken, &errstr, "^brandomv", 2, imp.BigMaxValueLen)
-	shr.gblcrandomva = imp.NewKeyT(tptoken, &errstr, "^crandomva", 2, imp.BigMaxValueLen)
-	shr.gbldrandomvariable = imp.NewKeyT(tptoken, &errstr, "^drandomvariable", 2, imp.BigMaxValueLen)
-	shr.gblerandomvariableimptp = imp.NewKeyT(tptoken, &errstr, "^erandomvariableimptp", 2, imp.BigMaxValueLen)
-	shr.gblfrandomvariableinimptp = imp.NewKeyT(tptoken, &errstr, "^frandomvariableinimptp", 2, imp.BigMaxValueLen)
-	shr.gblgrandomvariableinimptpfill = imp.NewKeyT(tptoken, &errstr, "^grandomvariableinimptpfill", 2, imp.BigMaxValueLen)
-	shr.gblhrandomvariableinimptpfilling = imp.NewKeyT(tptoken, &errstr, "^hrandomvariableinimptpfilling", 2, imp.BigMaxValueLen)
-	shr.gblirandomvariableinimptpfillprgrm = imp.NewKeyT(tptoken, &errstr, "^irandomvariableinimptpfillprgrm", 2, imp.BigMaxValueLen)
-	shr.gbljrandomvariableinimptpfillprogram = imp.NewKeyT(tptoken, &errstr, "^jrandomvariableinimptpfillprogr", 4, imp.BigMaxValueLen)
-	shr.gblendloop = imp.NewKeyT(tptoken, &errstr, "^endloop", 1, imp.MaxValueLen)
-	shr.gbllasti = imp.NewKeyT(tptoken, &errstr, "^lasti", 2, imp.MaxValueLen)
-	shr.gblzdummy = imp.NewKeyT(tptoken, &errstr, "^zdummy", 1, imp.MaxValueLen)
-	shr.callhelper1 = imp.NewCallMDesc("helper1")
-	shr.callhelper2 = imp.NewCallMDesc("helper2")
-	shr.callhelper3 = imp.NewCallMDesc("helper3")
-	shr.callimptpdztrig = imp.NewCallMDesc("imptpdztrig")
-	shr.callnoop = imp.NewCallMDesc("noop")
-	shr.callztrcmd = imp.NewCallMDesc("ztrcmd")
-	shr.callztwormstr = imp.NewCallMDesc("ztwormstr")
+	shr.bufvalue = NewBufferT(BigMaxValueLen)
+	shr.bufI = NewBufferT(MaxValueLen)
+	shr.bufloop = NewBufferT(MaxValueLen)
+	shr.bufsubs = NewBufferT(MaxValueLen)
+	shr.bufsubsMAX = NewBufferT(BigMaxValueLen)
+	shr.bufval = NewBufferT(MaxValueLen)
+	shr.bufvalALT = NewBufferT(MaxValueLen)
+	shr.bufvalMAX = NewBufferT(BigMaxValueLen)
+	shr.dlrTRESTART = NewKeyT(tptoken, &errstr, "$TRESTART", 0, 0)
+	shr.lclI = NewKeyT(tptoken, &errstr, "I", 0, 0)
+	shr.lclloop = NewKeyT(tptoken, &errstr, "loop", 0, 0)
+	shr.lclsubs = NewKeyT(tptoken, &errstr, "subs", 0, 0)
+	shr.lclsubsMAX = NewKeyT(tptoken, &errstr, "subsMAX", 0, 0)
+	shr.lclval = NewKeyT(tptoken, &errstr, "val", 0, 0)
+	shr.lclvalALT = NewKeyT(tptoken, &errstr, "valALT", 0, 0)
+	shr.lclvalMAX = NewKeyT(tptoken, &errstr, "valMAX", 0, 0)
+	shr.gblPctImptp = NewKeyT(tptoken, &errstr, "^%imptp", 2, BigMaxValueLen)
+	shr.gblantp = NewKeyT(tptoken, &errstr, "^antp", 2, BigMaxValueLen)
+	shr.gblbntp = NewKeyT(tptoken, &errstr, "^bntp", 2, BigMaxValueLen)
+	shr.gblcntp = NewKeyT(tptoken, &errstr, "^cntp", 2, BigMaxValueLen)
+	shr.gbldntp = NewKeyT(tptoken, &errstr, "^dntp", 2, BigMaxValueLen)
+	shr.gblentp = NewKeyT(tptoken, &errstr, "^entp", 2, BigMaxValueLen)
+	shr.gblfntp = NewKeyT(tptoken, &errstr, "^fntp", 2, BigMaxValueLen)
+	shr.gblgntp = NewKeyT(tptoken, &errstr, "^gntp", 2, BigMaxValueLen)
+	shr.gblhntp = NewKeyT(tptoken, &errstr, "^hntp", 2, BigMaxValueLen)
+	shr.gblintp = NewKeyT(tptoken, &errstr, "^intp", 2, BigMaxValueLen)
+	shr.gblarandom = NewKeyT(tptoken, &errstr, "^arandom", 2, BigMaxValueLen)
+	shr.gblbrandomv = NewKeyT(tptoken, &errstr, "^brandomv", 2, BigMaxValueLen)
+	shr.gblcrandomva = NewKeyT(tptoken, &errstr, "^crandomva", 2, BigMaxValueLen)
+	shr.gbldrandomvariable = NewKeyT(tptoken, &errstr, "^drandomvariable", 2, BigMaxValueLen)
+	shr.gblerandomvariableimptp = NewKeyT(tptoken, &errstr, "^erandomvariableimptp", 2, BigMaxValueLen)
+	shr.gblfrandomvariableinimptp = NewKeyT(tptoken, &errstr, "^frandomvariableinimptp", 2, BigMaxValueLen)
+	shr.gblgrandomvariableinimptpfill = NewKeyT(tptoken, &errstr, "^grandomvariableinimptpfill", 2, BigMaxValueLen)
+	shr.gblhrandomvariableinimptpfilling = NewKeyT(tptoken, &errstr, "^hrandomvariableinimptpfilling", 2, BigMaxValueLen)
+	shr.gblirandomvariableinimptpfillprgrm = NewKeyT(tptoken, &errstr, "^irandomvariableinimptpfillprgrm", 2, BigMaxValueLen)
+	shr.gbljrandomvariableinimptpfillprogram = NewKeyT(tptoken, &errstr, "^jrandomvariableinimptpfillprogr", 4, BigMaxValueLen)
+	shr.gblendloop = NewKeyT(tptoken, &errstr, "^endloop", 1, MaxValueLen)
+	shr.gbllasti = NewKeyT(tptoken, &errstr, "^lasti", 2, MaxValueLen)
+	shr.gblzdummy = NewKeyT(tptoken, &errstr, "^zdummy", 1, MaxValueLen)
+	shr.callhelper1 = NewCallMDesc("helper1")
+	shr.callhelper2 = NewCallMDesc("helper2")
+	shr.callhelper3 = NewCallMDesc("helper3")
+	shr.callimptpdztrig = NewCallMDesc("imptpdztrig")
+	shr.callnoop = NewCallMDesc("noop")
+	shr.callztrcmd = NewCallMDesc("ztrcmd")
+	shr.callztwormstr = NewCallMDesc("ztwormstr")
 	// Initialize local (to this routine) stuff
 	starvar.Alloc(1, 1)
 	err = starvar.SetValStr(tptoken, &errstr, 0, "*")
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 
@@ -198,7 +197,7 @@ func main() {
 	childnumstr := os.Args[1]
 	if "" != childnumstr {
 		valint64, err = strconv.ParseInt(childnumstr, 10, 32)
-		imp.CheckErrorReturn(err) // Only panic-able errors should hit here
+		CheckErrorReturn(err) // Only panic-able errors should hit here
 		valint = int32(valint64)
 	} else {
 		panic("impjobgo: required parameter not supplied")
@@ -206,7 +205,7 @@ func main() {
 	childnum := valint
 	// MCode: set jobindex=index
 	err = yottadb.SetValE(tptoken, &errstr, childnumstr, "jobindex", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Randomly choose whether to complete this imptp worker process by doing a callin to M code or if we want to do it (primarily)
@@ -242,7 +241,7 @@ func main() {
 	fmt.Println("Start Time:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: write "$zro=",$zro,!
 	valstr, err = yottadb.ValE(tptoken, &errstr, "$ZROUTINES", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	fmt.Printf("$zro=%s\n", valstr)
@@ -252,7 +251,7 @@ func main() {
 	// MCode: set jobno=jobindex	; Set by job.m ; not using $job makes imptp resumable after a crash!
 	shr.jobno = childnum
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", shr.jobno), "jobno", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set jobid=+$ztrnlnm("gtm_test_jobid")
@@ -260,83 +259,83 @@ func main() {
 	//
 	// MCode: set fillid=^%imptp("fillid",jobid)
 	fillidstr, err := yottadb.ValE(tptoken, &errstr, "^%imptp", []string{"fillid", jobidstr})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	valint64, err = strconv.ParseInt(fillidstr, 10, 32)
-	imp.CheckErrorReturn(err) // Only panic-able errors should hit here
+	CheckErrorReturn(err) // Only panic-able errors should hit here
 	shr.fillid = int32(valint64)
 	err = yottadb.SetValE(tptoken, &errstr, fillidstr, "fillid", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Fill in subscript 0 of several globals as it is a typical first subscript for them
 	err = shr.gblPctImptp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblantp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblbntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblcntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gbldntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblentp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblfntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblgntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblhntp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblintp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblarandom.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblbrandomv.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblcrandomva.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gbldrandomvariable.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblerandomvariableimptp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblfrandomvariableinimptp.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblgrandomvariableinimptpfill.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblhrandomvariableinimptpfilling.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblirandomvariableinimptpfillprgrm.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gbljrandomvariableinimptpfillprogram.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gblendloop.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gbllasti.Subary.SetValStr(tptoken, &errstr, 0, fillidstr)
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	// MCode: set jobcnt=^%imptp(fillid,"totaljob")
 	jobcnt, err := pctImptpInt32(tptoken, &errstr, &shr, "totaljob", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", jobcnt), "jobcnt", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set prime=^%imptp(fillid,"prime")
 	prime, err := pctImptpInt32(tptoken, &errstr, &shr, "prime", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set root=^%imptp(fillid,"root")
 	root, err = pctImptpInt32(tptoken, &errstr, &shr, "root", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set top=+$GET(^%imptp(fillid,"top"))
 	top, err := pctImptpInt32(tptoken, &errstr, &shr, "top", true)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: if top=0 set top=prime\jobcnt
@@ -345,11 +344,11 @@ func main() {
 	}
 	// MCode: set istp=^%imptp(fillid,"istp")
 	shr.istp, err = pctImptpInt32(tptoken, &errstr, &shr, "istp", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", shr.istp), "istp", []string{}) // istp needs to be local var too
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set tptype=^%imptp(fillid,"tptype")
@@ -360,43 +359,43 @@ func main() {
 			valstr, err = shr.bufvalue.ValStr(tptoken, &errstr)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Value to set into 'tptype' is in valstr
 	err = yottadb.SetValE(tptoken, &errstr, valstr, "tptype", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	tptypestr := valstr
 	// MCode: set tpnoiso=^%imptp(fillid,"tpnoiso")
 	tpnoiso, err := pctImptpInt32(tptoken, &errstr, &shr, "tpnoiso", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set dupset=^%imptp(fillid,"dupset")
 	dupset, err := pctImptpInt32(tptoken, &errstr, &shr, "dupset", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set skipreg=^%imptp(fillid,"skipreg")
 	skipreg, err := pctImptpInt32(tptoken, &errstr, &shr, "skipreg", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set crash=^%imptp(fillid,"crash")
 	shr.crash, err = pctImptpInt32(tptoken, &errstr, &shr, "crash", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Set crash local variable
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", shr.crash), "crash", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set gtcm=^%imptp(fillid,"gtcm")
 	gtcm, err := pctImptpInt32(tptoken, &errstr, &shr, "gtcm", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: ; ONLINE ROLLBACK - BEGIN
@@ -413,7 +412,7 @@ func main() {
 
 	// MCode: set orlbkintp=0
 	err = yottadb.SetValE(tptoken, &errstr, "0", "orlbkintp", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 
@@ -421,32 +420,32 @@ func main() {
 
 	// MCode: set keysize=^%imptp(fillid,"key_size")
 	keysize, err := pctImptpInt32(tptoken, &errstr, &shr, "key_size", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Set keysize local variable
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", keysize), "keysize", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set recsize=^%imptp(fillid,"record_size")
 	recsize, err := pctImptpInt32(tptoken, &errstr, &shr, "record_size", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Set recsize local variable
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", recsize), "recsize", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set span=+^%imptp(fillid,"gtm_test_spannode")
 	span, err := pctImptpInt32(tptoken, &errstr, &shr, "gtm_test_spannode", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Set span local variable
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", span), "span", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: ; Node Spanning Blocks - END
@@ -457,16 +456,16 @@ func main() {
 
 	// MCode: set trigger=^%imptp(fillid,"trigger"),ztrcmd="ztrigger ^lasti(fillid,jobno,loop)",ztr=0,dztrig=0
 	shr.trigger, err = pctImptpInt32(tptoken, &errstr, &shr, "trigger", false)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// Set trigger local variable
 	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", shr.trigger), "trigger", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	err = yottadb.SetValE(tptoken, &errstr, "ztrigger ^lasti(fillid,jobno,loop)", "ztrcmd", []string{})
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	shr.ztr = false
@@ -475,14 +474,14 @@ func main() {
 	if 0 != shr.trigger {
 		// MCode: . set trigname="triggernameforinsertsanddels"
 		err = yottadb.SetValE(tptoken, &errstr, "triggernameforinsertsanddels", "trigname", []string{})
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return
 		}
 		// MCode: . set fulltrig="^unusedbyothersdummytrigger -commands=S -xecute=""do ^nothing"" -name="_trigname
 		err = yottadb.SetValE(tptoken, &errstr,
 			"^unusedbyothersdummytrigger -commands=S -xecute=\"do ^nothing\" -name=triggernameforinsertsanddels",
 			"fulltrig", []string{})
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return
 		}
 		// MCode: . set ztr=(trigger#10)>1  ; ZTRigger command testing
@@ -491,8 +490,8 @@ func main() {
 		shr.dztrig = 10 < shr.trigger
 	}
 	// Set dztrig into M local variable
-	err = yottadb.SetValE(tptoken, &errstr, imp.BoolStr(shr.dztrig), "dztrig", []string{})
-	if imp.CheckErrorReturn(err) {
+	err = yottadb.SetValE(tptoken, &errstr, BoolStr(shr.dztrig), "dztrig", []string{})
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: ; TRIGGERS -  END
@@ -520,9 +519,9 @@ func main() {
 	// But we want to test the SimpleAPI/SimpleThreadAPI lock functions and so have them here just like the M version of imptp.
 	err = shr.gblPctImptp.Subary.SetValStr(tptoken, &errstr, 1, "jsyncnt")
 	if nil == err {
-		err = shr.gblPctImptp.LockIncrST(tptoken, &errstr, imp.LockTimeout)
+		err = shr.gblPctImptp.LockIncrST(tptoken, &errstr, LockTimeout)
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	if 1 == int(rand.Float64()*2) {
@@ -531,11 +530,11 @@ func main() {
 		valptr = nil
 	}
 	err = shr.gblPctImptp.IncrST(tptoken, &errstr, nil, valptr)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	err = shr.gblPctImptp.LockDecrST(tptoken, &errstr)
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: ; lfence is used for the fence type of last segment of updates of *ndxarr at the end
@@ -555,21 +554,21 @@ func main() {
 		lfence = false
 	}
 	// Set "lfence" M variable
-	err = yottadb.SetValE(tptoken, &errstr, imp.BoolStr(lfence), "lfence", []string{})
-	if imp.CheckErrorReturn(err) {
+	err = yottadb.SetValE(tptoken, &errstr, BoolStr(lfence), "lfence", []string{})
+	if CheckErrorReturn(err) {
 		return
 	}
 	// MCode: if tpnoiso do tpnoiso^imptp
 	if 0 != tpnoiso {
 		_, err = yottadb.CallMT(tptoken, &errstr, 0, "tpnoiso")
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return
 		}
 	}
 	// MCode: if dupset view "GVDUPSETNOOP":1
 	if 0 != dupset {
 		_, err = yottadb.CallMT(tptoken, &errstr, 0, "dupsetnoop")
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return
 		}
 	}
@@ -582,12 +581,12 @@ func main() {
 	//
 	// MCode: set lasti=+$get(^lasti(fillid,jobno))
 	err = shr.gbllasti.Subary.SetValStr(tptoken, &errstr, 1, fmt.Sprintf("%d", shr.jobno))
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	err = shr.gbllasti.ValST(tptoken, &errstr, shr.bufvalue)
 	if (nil != err) && (yottadb.YDB_ERR_GVUNDEF == yottadb.ErrorCode(err)) {
 		lasti = 0
 	} else {
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return
 		}
 		valstr, err = shr.bufvalue.ValStr(tptoken, &errstr)
@@ -597,7 +596,7 @@ func main() {
 				lasti = int32(valint64)
 			}
 		}
-		imp.CheckErrorReturn(err)
+		CheckErrorReturn(err)
 	}
 	// MCode: zwrite lasti
 	fmt.Printf("lasti=%d\n", lasti)
@@ -627,7 +626,7 @@ func main() {
 		if nil == err {
 			err = shr.lclI.SetValST(tptoken, &errstr, shr.bufvalue)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -637,7 +636,7 @@ func main() {
 		if nil == err {
 			err = shr.lclloop.SetValST(tptoken, &errstr, shr.bufvalue)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -655,7 +654,7 @@ func main() {
 		// MCode: set subsMAX=$j(subs,keypad)
 		// MCode: if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
 		_, err = shr.callhelper1.CallMDescT(tptoken, &errstr, 0)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -663,42 +662,42 @@ func main() {
 		}
 		// Initialize some local variables for use by later function calls ("tpfnStage1", etc.)
 		err = shr.lclI.ValST(tptoken, &errstr, shr.bufI)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
 			break
 		}
 		err = shr.lclsubs.ValST(tptoken, &errstr, shr.bufsubs)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
 			break
 		}
 		err = shr.lclsubsMAX.ValST(tptoken, &errstr, shr.bufsubsMAX)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
 			break
 		}
 		err = shr.lclval.ValST(tptoken, &errstr, shr.bufval)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
 			break
 		}
 		err = shr.lclvalALT.ValST(tptoken, &errstr, shr.bufvalALT)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
 			break
 		}
 		err = shr.lclvalMAX.ValST(tptoken, &errstr, shr.bufvalMAX)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -711,7 +710,7 @@ func main() {
 			err = starvar.TpST(tptoken, &errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 				return tpfnStage1(tptoken, errstr, &shr)
 			}, tptypestr)
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 				}
@@ -738,7 +737,7 @@ func main() {
 		// MCode: . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error
 		// MCode: . . goto:'ztrigret ERROR
 		_, err = shr.callhelper2.CallMDescT(tptoken, &errstr, 0)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -753,7 +752,7 @@ func main() {
 				err = shr.gblantp.SetValST(tptoken, &errstr, shr.bufval)
 			}
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -766,7 +765,7 @@ func main() {
 			if nil == err {
 				err = shr.gblbntp.SetValST(tptoken, &errstr, shr.bufval)
 			}
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 				}
@@ -777,7 +776,7 @@ func main() {
 			if nil == err {
 				err = shr.gblcntp.SetValST(tptoken, &errstr, shr.bufval)
 			}
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 				}
@@ -789,7 +788,7 @@ func main() {
 		if nil == err {
 			err = shr.gbldntp.SetValST(tptoken, &errstr, shr.bufval)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -803,7 +802,7 @@ func main() {
 			err = starvar.TpST(tptoken, &errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 				return tpfnStage3(tptoken, errstr, &shr)
 			}, tptypestr)
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 				}
@@ -931,7 +930,7 @@ func main() {
 		// MCode: . if istp=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop
 		// MCode: . if lfence=1 tcommit
 		_, err = shr.callhelper3.CallMDescT(tptoken, &errstr, 0)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 			}
@@ -945,7 +944,7 @@ func main() {
 			if yottadb.YDB_ERR_GVUNDEF == yottadb.ErrorCode(err) {
 				continue
 			}
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				if yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err) {
 					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
 				}
@@ -953,9 +952,9 @@ func main() {
 			}
 		}
 		valstr, err = shr.bufvalue.ValStr(tptoken, &errstr)
-		imp.CheckErrorReturn(err)
+		CheckErrorReturn(err)
 		valint64, err = strconv.ParseInt(valstr, 10, 32)
-		imp.CheckErrorReturn(err) // Only panic-able errors should hit here
+		CheckErrorReturn(err) // Only panic-able errors should hit here
 		if 0 != valint64 {
 			break
 		}
@@ -984,28 +983,28 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 			err = shr.gblarandom.SetValST(tptoken, errstr, shr.bufval)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	err = shr.gbljrandomvariableinimptpfillprogram.Subary.SetElemUsed(tptoken, errstr, 2) // Only use 2 subscripts at first
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	if (0 != shr.istp) && (0 != shr.crash) {
 		// MCode: . . set rndm=$r(10)
 		rndm = int32(rand.Float64() * 10)
 		// MCode: . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time
 		err = shr.dlrTRESTART.ValST(tptoken, errstr, shr.bufvalue)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		valstr, err = shr.bufvalue.ValStr(tptoken, errstr)
-		imp.CheckErrorReturn(err)
+		CheckErrorReturn(err)
 		valint64, err = strconv.ParseInt(valstr, 10, 32)
-		imp.CheckErrorReturn(err) // Only panic-able errors should hit here
+		CheckErrorReturn(err) // Only panic-able errors should hit here
 		dollartrestart = int32(valint64)
 		if 2 < dollartrestart {
 			if 1 == rndm {
 				_, err = shr.callnoop.CallMDescT(tptoken, errstr, 0)
-				if imp.CheckErrorReturn(err) {
+				if CheckErrorReturn(err) {
 					return int32(yottadb.ErrorCode(err))
 				}
 			}
@@ -1017,14 +1016,14 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		}
 		// MCode: . . if $TRESTART set ^zdummy($TRESTART)=jobno	; In case of restart cause different TP transaction flow
 		if 0 != dollartrestart {
-			err = shr.gblzdummy.Subary.SetValStr(tptoken, errstr, 0, valstr) // valstr still has $ZRESTART value from above
+			err = shr.gblzdummy.Subary.SetValStr(tptoken, errstr, 0, valstr) // valstr still has $TRESTART value from above
 			if nil == err {
 				err = shr.bufvalue.SetValStr(tptoken, errstr, fmt.Sprintf("%d", shr.jobno)) // set up value to store
 				if nil == err {
 					err = shr.gblzdummy.SetValST(tptoken, errstr, shr.bufvalue)
 				}
 			}
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				return int32(yottadb.ErrorCode(err))
 			}
 		}
@@ -1034,7 +1033,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 	if nil == err {
 		err = shr.gblbrandomv.SetValST(tptoken, errstr, shr.bufvalALT)
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
@@ -1044,7 +1043,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblcrandomva.SetValST(tptoken, errstr, shr.bufvalALT)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}
@@ -1056,7 +1055,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 			err = shr.gbldrandomvariable.SetValST(tptoken, errstr, shr.bufvalALT)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
@@ -1066,7 +1065,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblerandomvariableimptp.SetValST(tptoken, errstr, shr.bufvalALT)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		// MCode: . . set ^frandomvariableinimptp(fillid,subs)=valALT
@@ -1074,7 +1073,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblfrandomvariableinimptp.SetValST(tptoken, errstr, shr.bufvalALT)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}
@@ -1083,7 +1082,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 	if nil == err {
 		err = shr.gblgrandomvariableinimptpfill.SetValST(tptoken, errstr, shr.bufval)
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
@@ -1093,7 +1092,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblhrandomvariableinimptpfilling.SetValST(tptoken, errstr, shr.bufval)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		// MCode: . . set ^irandomvariableinimptpfillprgrm(fillid,subs)=val
@@ -1101,14 +1100,14 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblirandomvariableinimptpfillprgrm.SetValST(tptoken, errstr, shr.bufval)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	} else {
 		// MCode: . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs"
 		_, err = shr.callztwormstr.CallMDescT(tptoken, errstr, 0)
 		if nil != err {
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				return int32(yottadb.ErrorCode(err))
 			}
 		}
@@ -1122,7 +1121,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 			err = shr.gbljrandomvariableinimptpfillprogram.SetValST(tptoken, errstr, shr.bufval)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
@@ -1138,7 +1137,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 				}
 			}
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		// MCode: . . set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val
@@ -1149,7 +1148,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 				err = shr.gbljrandomvariableinimptpfillprogram.SetValST(tptoken, errstr, shr.bufval)
 			}
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}
@@ -1158,7 +1157,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if shr.ztr {
 			_, err = shr.callztrcmd.CallMDescT(tptoken, errstr, 0)
 			if nil != err {
-				if imp.CheckErrorReturn(err) {
+				if CheckErrorReturn(err) {
 					return int32(yottadb.ErrorCode(err))
 				}
 			}
@@ -1167,7 +1166,7 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gbllasti.SetValST(tptoken, errstr, shr.bufvalue)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}
@@ -1182,7 +1181,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 	if shr.dztrig {
 		_, err = shr.callimptpdztrig.CallMDescT(tptoken, errstr, 0)
 		if nil != err {
-			if imp.CheckErrorReturn(err) {
+			if CheckErrorReturn(err) {
 				return int32(yottadb.ErrorCode(err))
 			}
 		}
@@ -1195,26 +1194,26 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 			err = shr.gblentp.SetValST(tptoken, errstr, shr.bufval)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
 	err = shr.gblfntp.Subary.SetValBAry(tptoken, errstr, 1, baryp) // Fill in 2nd subscript (subs) for both paths below
-	imp.CheckErrorReturn(err)
+	CheckErrorReturn(err)
 	if 0 == shr.trigger {
 		// MCode: . . set ^fntp(fillid,subs)=val
 		err = shr.gblfntp.SetValST(tptoken, errstr, shr.bufval)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	} else {
 		// MCode: . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix"))
 		err = shr.gblfntp.ValST(tptoken, errstr, shr.bufvalue) // Fetch current value ^fntp(fillid,subs)
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		vallen, err := shr.bufvalue.LenUsed(tptoken, errstr)
-		imp.CheckErrorReturn(err)
+		CheckErrorReturn(err)
 		if 6 <= vallen { // 6 == $length("suffix")
 			vallen = vallen - 6
 		} else {
@@ -1227,7 +1226,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblfntp.SetValST(tptoken, errstr, shr.bufvalue)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}
@@ -1239,7 +1238,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 			err = shr.gblgntp.SetValST(tptoken, errstr, shr.bufvalMAX)
 		}
 	}
-	if imp.CheckErrorReturn(err) {
+	if CheckErrorReturn(err) {
 		return int32(yottadb.ErrorCode(err))
 	}
 	// MCode: . if 'trigger do
@@ -1249,7 +1248,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblhntp.SetValST(tptoken, errstr, shr.bufvalMAX)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		// MCode: . . set ^intp(fillid,subsMAX)=valMAX
@@ -1257,7 +1256,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblintp.SetValST(tptoken, errstr, shr.bufvalMAX)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 		// MCode: . . set ^bntp(fillid,subsMAX)=valMAX
@@ -1265,7 +1264,7 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if nil == err {
 			err = shr.gblbntp.SetValST(tptoken, errstr, shr.bufvalMAX)
 		}
-		if imp.CheckErrorReturn(err) {
+		if CheckErrorReturn(err) {
 			return int32(yottadb.ErrorCode(err))
 		}
 	}

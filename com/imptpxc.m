@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -12,6 +12,10 @@
 ;
 ; These are collection of helper M routines used by simpleapi_imptp.c
 ;
+xecute(str)
+	xecute str
+	quit
+
 dupsetnoop;
 	view "GVDUPSETNOOP":1
 	quit
@@ -114,7 +118,7 @@ helper3	;
 	. zkill ^jrandomvariableinimptpfillprogram(fillid,I,I)
 	if istp=1 tcommit
 	; Stage 7 : delimited spanning nodes to be changed in Stage 10
-	; At the end of ithis transaction, ^aspan=^espan and $tr(^aspan," ","")=^bspan
+	; At the end of this transaction, ^aspan=^espan and $tr(^aspan," ","")=^bspan
 	; Partial completion due to crash results in: 1. ^aspan is defined and ^[be]span are undef
 	;				 		2. ^aspan=^espan and ^bspan is undef
 	if istp=1 tstart (orlbkcycle):(serial:transaction=tptype) do:orlbkintp>0 ifneeded^orlbkresume(istp)
@@ -147,7 +151,7 @@ helper3	;
 	set cntseq=$incr(^cntseq(fillid),(13+jobcnt))
 	if flag=1,lfence=1 tcommit
 	; Stage 10 : More SET $piece
-	; At the end of ithis transaction, $tr(^aspan," ","")=^bspan and $p(^aspan,"|",targetpiece)=$p(^espan,"|",targetpiece)
+	; At the end of this transaction, $tr(^aspan," ","")=^bspan and $p(^aspan,"|",targetpiece)=$p(^espan,"|",targetpiece)
 	; NOTE that ZKILL ^espan means that the SET $PIECE of ^espan will only create pieces up to the target piece
 	; Partial completion due to crash results in: 1. ^espan is undef and $tr(^aspan," ","")=^bspan
 	;				   		2. ^espan is undef and $p(^aspan,"|",targetpiece)=$tr($p(^bspan,"|",targetpiece)," ","X")

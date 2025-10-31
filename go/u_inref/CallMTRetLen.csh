@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,28 +19,17 @@ if ($?test_replic) then
 	# Need to use MSR framework whenever -gld_has_db_fullpath is in use (non-MSR replication does not work currently)
 	$MULTISITE_REPLIC_PREPARE 2	# Create two instances INST1 (primary side) and INST2 (secondary side)
 endif
-$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
-if ($status) then
-        echo "# dbcreate failed. Output of dbcreate.out follows"
-        cat dbcreate.out
-endif
+$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out || \
+	echo "# dbcreate failed. Output of dbcreate.out follows" && cat dbcreate.out
 if ($?test_replic) then
-    $MSR START INST1 INST2 # Start replication servers
+	$MSR START INST1 INST2 # Start replication servers
 endif
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
-set status1 = $status
-if ($status1) then
-	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
-	exit 1
-endif
-ln -s $gtm_tst/$tst/inref/CallMTRetLen.go .
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link go source file"
-    exit 1
-endif
+# Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $ydbgo_url, $goflags)
+source $gtm_tst/com/setupgoenv.csh >& setupgoenv.out || \
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status]:" && cat setupgoenv.out && exit 1
 
 setenv ydb_ci `pwd`/CallMTRetLen.tab
 echo $ydb_ci
@@ -53,16 +42,12 @@ xx
 
 echo "# Running Go program"
 # Since there are many outputs, and more will come over time, just grep for problems after
-$gobuild CallMTRetLen.go >& go_build.log
-if (0 != $status) then
-	echo "TEST-E-FAILED : Build of test failed"
-	cat go_build.log
-	exit 1
-endif
+$gobuild $gtm_tst/$tst/inref/CallMTRetLen.go >& go_build.log || \
+	echo "TEST-E-FAILED : Build of test failed" && cat go_build.log && exit 1
 
 cat >> testciret.m << xxx
 testciret()
- quit "abcdefghijklmnopqrstuvwxyz"
+	quit "abcdefghijklmnopqrstuvwxyz"
 xxx
 
 `pwd`/CallMTRetLen
@@ -75,26 +60,13 @@ xxx
 echo
 echo "****** Part 2 - parameter testing"
 echo
-ln -s $gtm_tst/$tst/inref/CallMParmTesting.go .
-if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link go source file"
-    exit 1
-endif
-
 echo "# Running Go program"
-$gobuild CallMParmTesting.go >& go_build.log
-if (0 != $status) then
-	echo "TEST-E-FAILED : Build of test failed"
-	cat go_build.log
-	exit 1
-endif
+$gobuild $gtm_tst/$tst/inref/CallMParmTesting.go >& go_build.log || \
+	echo "TEST-E-FAILED : Build of test failed" && cat go_build.log && exit 1
 
 `pwd`/CallMParmTesting
 
 
-$gtm_tst/com/dbcheck.csh -extract >>& dbcheck.out
-if ($status) then
-        echo "# dbcheck failed. Output of dbcheck.out follows"
-        cat dbcheck.out
-endif
+$gtm_tst/com/dbcheck.csh -extract >>& dbcheck.out || \
+	echo "# dbcheck failed. Output of dbcheck.out follows" && cat dbcheck.out
 echo "# Done!"
