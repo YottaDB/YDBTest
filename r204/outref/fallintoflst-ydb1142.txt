@@ -1,0 +1,37 @@
+# Test to ensure the mumps compile time warning FALLINTOFLST occurs
+# when expected and that the program still compiles after triggering it.
+# Tests the fixes for issue 1142 https://gitlab.com/YottaDB/DB/YDB/-/issues/1142
+# Starting test a, ydb1142a.m.
+# previously the compiler would give an error and fail to compile the file
+# Now the compiler should only give 2 FALLINTOFLST warnings and compile
+	label1(x) ; First fall through here.
+	       ^-----
+##TEST_AWK		At column 8, line [0-9]*, source module ##IN_TEST_PATH##/inref/ydb1142a.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
+	label2(x)
+	       ^-----
+##TEST_AWK		At column 8, line [0-9]*, source module ##IN_TEST_PATH##/inref/ydb1142a.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
+
+# Starting test b, ydb1142b.m, indented dot edge case.
+# This test makes sure that there are no problems in the edge case where
+# a FALLINTOFLST warning is given for a label that is indented.
+		. do
+		  ^-----
+##TEST_AWK		At column 4, line [0-9]*, source module ##IN_TEST_PATH##/inref/ydb1142b.m
+%YDB-W-BLKTOODEEP, Block level too deep
+	LABLE(x) . w "Test"
+	           ^-----
+##TEST_AWK		At column 12, line [0-9]*, source module ##IN_TEST_PATH##/inref/ydb1142b.m
+%YDB-E-NESTFORMP, Formal parameter list cannot be combined with nested line
+
+# Starting test c, ydb1142c.m, the one fallthrough case.
+# This case makes sure that nothing goes wrong when only one
+# FALLINTOFLST warning is issued.
+	label2(x)
+	       ^-----
+##TEST_AWK		At column 8, line [0-9]*, source module ##IN_TEST_PATH##/inref/ydb1142c.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
