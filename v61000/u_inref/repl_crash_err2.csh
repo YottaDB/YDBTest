@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #								#
 #################################################################
 
-# This test verifies REPLREQROLLBACK is issued properly
+# This test verifies DBFLCORRP is issued properly
 setenv acc_meth "BG" # Before image journaling does not work with MM
 # Online rollback does not do backward processing without before image
 setenv gtm_test_jnl_nobefore 0
@@ -55,10 +55,10 @@ $MUPIP replic -source -shut -time=0 >& replic_shut.out1
 $gtm_tst/com/check_error_exist.csh replic_shut.out1 "NOJNLPOOL"
 
 $MUPIP replic -source -shut -time=0 >& replic_shut.out2
-$gtm_tst/com/check_error_exist.csh replic_shut.out2 "REPLREQROLLBACK"
+$gtm_tst/com/check_error_exist.csh replic_shut.out2 "NOJNLPOOL"
 
 $MUPIP replic -source -start -passive -log=passive_source.log -buf=$tst_buffsize -instsecondary=INSTA >& replic_start.out1
-$gtm_tst/com/check_error_exist.csh replic_start.out1 "REPLREQROLLBACK"
+$gtm_tst/com/check_error_exist.csh passive_source.log "DBFLCORRP" "DBNOREGION"
 
 echo "# Do a healthy rollback"
 $gtm_tst/com/mupip_rollback.csh "*" >& rollback2.out

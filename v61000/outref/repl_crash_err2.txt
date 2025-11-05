@@ -36,12 +36,23 @@ Error NOJNLPOOL seen in replic_shut.out1 as expected:
 %YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 ----------
-Error REPLREQROLLBACK seen in replic_shut.out2 as expected:
-%YDB-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+Error NOJNLPOOL seen in replic_shut.out2 as expected:
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 ----------
-Error REPLREQROLLBACK seen in replic_start.out1 as expected:
-%YDB-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+Error DBFLCORRP seen in passive_source.log as expected:
+%YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/b.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/c.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/d.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/e.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/f.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/g.dat Header indicates database file is corrupt
+----------
+----------
+Error DBNOREGION seen in passive_source.log as expected:
+%YDB-E-DBNOREGION, None of the database regions accessible
 ----------
 # Do a healthy rollback
 ##SOURCE_PATH##/mupip
