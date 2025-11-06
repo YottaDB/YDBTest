@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ foreach exe (mumps yottadb)
 		if ("" == "$pathname") then
 			# Add $ydb_dist to $PATH
 			set origpath=($path)
-			set path=($origpath $ydb_dist)
+			set path=($ydb_dist $origpath) #YottaDB is now in /usr/local/bin so $ydb_dist now must be first in path so that it gets picked up first.
 		endif
 		${pathname}${exe} -run ydb592
 		if ("" == "$pathname") then
