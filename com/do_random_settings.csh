@@ -1424,20 +1424,27 @@ setenv tst_random_all "$tst_random_all ydb_stp_gcol_nosort"
 ### Random option - 53 ### Randomly set MUTEX_TYPE
 #
 if !($?ydb_test_mutex_type) then
-	if (20 >= $randnumbers[53]) then
-		setenv ydb_test_mutex_type "YDB"	# dbcreate_base.csh sets mutex type to YDB
-	else if (40 >= $randnumbers[53]) then
-		setenv ydb_test_mutex_type "PTHREAD"	# dbcreate_base.csh sets mutex type to PTHREAD
-	else if (60 >= $randnumbers[53]) then
-		setenv ydb_test_mutex_type "ADAPTIVE"	# dbcreate_base.csh sets mutex type to ADAPTIVE
-	else if (80 >= $randnumbers[53]) then
-		setenv ydb_test_mutex_type "RANDOM"	# dbcreate_base.csh does NOT set mutex type in this case
-							# but some tests using online_reorg.csh and eotf.csh will
-							# repeatedly switch mutex type to a random value from YDB,
-							# PTHREAD or ADAPTIVE for a random set of regions in the gld
+	if ($tst_ver =~ "V*_R*") then
+		# This is a YottaDB build (e.g. V70005_R202)
+		if (20 >= $randnumbers[53]) then
+			setenv ydb_test_mutex_type "YDB"	# dbcreate_base.csh sets mutex type to YDB
+		else if (40 >= $randnumbers[53]) then
+			setenv ydb_test_mutex_type "PTHREAD"	# dbcreate_base.csh sets mutex type to PTHREAD
+		else if (60 >= $randnumbers[53]) then
+			setenv ydb_test_mutex_type "ADAPTIVE"	# dbcreate_base.csh sets mutex type to ADAPTIVE
+		else if (80 >= $randnumbers[53]) then
+			setenv ydb_test_mutex_type "RANDOM"	# dbcreate_base.csh does NOT set mutex type in this case
+								# but some tests using online_reorg.csh and eotf.csh will
+								# repeatedly switch mutex type to a random value from YDB,
+								# PTHREAD or ADAPTIVE for a random set of regions in the gld
+		else
+			setenv ydb_test_mutex_type "DEFAULT"	# Neither dbcreate_base.csh nor online_reorg.csh or eotf.csh will
+								# set mutex type explicitly. It will stay at default value.
+		endif
 	else
-		setenv ydb_test_mutex_type "DEFAULT"	# Neither dbcreate_base.csh nor online_reorg.csh or eotf.csh will
-							# set mutex type explicitly. It will stay at default value.
+		# This is a pure GT.M build (e.g. V71002)
+		setenv ydb_test_mutex_type "DEFAULT"	# The test is running against GT.M, so -MUTEX_TYPE is not supported
+							# Set to default to prevent superfluous CLIERR errors for an unsupported option.
 	endif
 	echo "# ydb_test_mutex_type set by do_random_settings.csh"				>>&! $settingsfile
 else
