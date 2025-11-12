@@ -1,0 +1,33 @@
+# Test to make sure that ECODE race condition problem does not occur.
+# There was a bug where after a call to ydb_ci[p]_t the dollar_ecode buffer
+# would not be cleared. This would result in the program remaining in an error
+# state after the erroring thread had closed. The solution is the empty the
+# dollar_ecode buffer at the start and end of every ydb_ci[p]_t call.
+# First, test a will test for this bug by running a mumps program with a
+# division by 0 error in C code with ydb_ci_t.
+# Then, it will run code that only produces a TPTIMEOUT error if not already in an error state.
+# This is easy as a TPTIMEOUT is deferred until $ECODE is cleared.
+# If ydb_ci_t reset the dollar_ecode then a TPTIMEOUT error will be recorded.
+# So, as this bug has been fixed, we expect to get a TPTIMEOUT error.
+# Afterwards, test b will be the same test but using ydb_cip_t instead of ydb_ci_t.
+# More information about where this test came form: https://gitlab.com/YottaDB/DB/YDB/-/issues/1180#note_2887736924
+
+# Building call in table.
+
+# Starting test a with ydb_ci_t ydb1180a.c.
+# Starting compilation.
+# Starting linking.
+# As stated above, the program will time out if it finds it is not in an error state.
+# So first we expect a zero division error from ydb_ci_t.
+# Than, if the dollar_ecode is properly cleared, we should also get a TPTIMEOUT error
+# Runing the compiled ydb1180a.c program:
+150373210,+16^ydb1180ma,%YDB-E-DIVZERO, Attempt to divide by zero
+ydb_tp_st() : status = -150377322 : 150377322,(SimpleThreadAPI),%YDB-E-TPTIMEOUT, Transaction timeout
+
+# Starting test b with ydb_cip_t ydb1180b.c.
+# Starting compilation.
+# Starting linking.
+# Same as test a, we expect a zero division error and a TPTIMEOUT error.
+# Runing the compiled ydb1180b.c program:
+150373210,+16^ydb1180mb,%YDB-E-DIVZERO, Attempt to divide by zero
+ydb_tp_st() : status = -150377322 : 150377322,(SimpleThreadAPI),%YDB-E-TPTIMEOUT, Transaction timeout
