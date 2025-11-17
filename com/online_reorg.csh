@@ -58,7 +58,7 @@ while (1)
 	set tmpoutput = "online_reorg_$$.outx.$cnt"
 	source $gtm_tst/com/random_mutex_type.csh >>& $tmpoutput
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
-	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>&!  $tmpoutput
+	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>>&!  $tmpoutput
 	if ($cnt % 5 == 2) then
 		foreach heuristic ("arsample,samples=$samples" "impsample,samples=$samples" "scan,level=1")
 			echo "# `date` : $try_nice $MUPIP size -heuristic=\"$heuristic\""	>>& $tmpoutput
