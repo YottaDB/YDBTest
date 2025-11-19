@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 ###########################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -44,7 +44,13 @@ if ( "$tst" == "" ) then
 endif
 
 echo 'Latest test results are available via symlink at $r'
-ln -fns $last_tst_dir/${tst}_0 "$r"
+grep "\-replic" $last_tst_dir/config.log >& /dev/null
+if ($status == 0) then
+	# The test was a -replic test, so the last directory ends in 1 instead of 0
+	ln -fns $last_tst_dir/${tst}_1 "$r"
+else
+	ln -fns $last_tst_dir/${tst}_0 "$r"
+endif
 
 # extract last subtest run -- may be by aliases, e.g. to auto-diff the last subtest (see meldtest alias)
 if ( -e $last_tst_dir/${tst}_0/config.log ) then
