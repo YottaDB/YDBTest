@@ -235,11 +235,11 @@ OC_GVREVERSEQUERY
 OC_LINESTART
 OC_CALLSP
 OC_GVNAME
-# Test that a global reference with a variable subscript does not misoptimize the next global access
+# Test that a global reference with a variable subscript does optimize the next global access
 OC_LINESTART
 OC_GVNAME
 OC_GVPUT
-OC_GVNAME
+OC_GVNAMENAKED
 OC_GVPUT
 OC_RET
 # Test that a call to an extrinsic function does not misoptimize the next global access

@@ -207,7 +207,7 @@ echo ' do  if $data(^names(1)) do\
 $gtm_exe/mumps -run dosequence
 $gtm_tst/$tst/inref/list.csh dosequence.m 1 | head -n3
 
-echo '# Test that a global reference with a variable subscript does not misoptimize the next global access'
+echo '# Test that a global reference with a variable subscript does optimize the next global access'
 echo ' set x=1,^Y(x,2)=2,^Y(x,3)=3' > varsubscript.m
 $gtm_tst/$tst/inref/list.csh varsubscript.m 1
 $gtm_exe/mumps -run varsubscript
