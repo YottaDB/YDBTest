@@ -69,7 +69,7 @@ end
 
 if (! $?remotehosts) set remotehosts = ""
 foreach host ($remotehosts)
-	set vers = `ssh -x $host "\ls $gtm_root/" | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?(_R[1-9][0-9][02468])?$'`
+	set vers = `$ssh $host "\ls $gtm_root/" | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?(_R[1-9][0-9][02468])?$'`
 	set newlist = ""
 	foreach ver ($vers)
 		if ( "$allverlist " =~ "*$ver *") then

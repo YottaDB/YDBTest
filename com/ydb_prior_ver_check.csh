@@ -12,6 +12,9 @@
 #################################################################
 #
 # $1 - prior version to do checks against
+# $2 - if specified, name of the host (local or remote) to specifically do the checks
+#      this is currently needed to check if TLS needs to be disabled based on "ldd libgtmtls.so"
+#      output on remote host in case of a multi-host "filter" test setup.
 #
 if ($?ydb_environment_init) then
 	# This is a YDB setup.
@@ -76,10 +79,18 @@ if ($?ydb_environment_init) then
 	#    easily, we decided to disable TLS in the test in such cases.
 	# b) We noticed libconfig.so.9 missing in Ubuntu 25.04. For similar reasons as (a), it was not possible to rebuild
 	#    the older version with the available libconfig.so.11 and so we decided to disable TLS in the test in such cases.
-	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
+	if ("$2" == "") then
+		# Remote host name has not been specified. Do TLS check on local host.
+		set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
+		set hoststr = ""
+	else
+		# Remote host name has been specified. Do TLS check on remote host.
+		set notfound = `$ssh $2 "ldd $gtm_root/$1/pro/plugin/libgtmtls.so" |& grep "not found"`
+		set hoststr = "on host = [$2] "
+	endif
 	if ("" != "$notfound") then
 		set disabletls = 1
-		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1) : [$notfound]" >>&! settings.csh
+		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [$notfound]" >>&! settings.csh
 	endif
 	if ($disabletls) then
 		echo "setenv gtm_test_tls FALSE" >>&! settings.csh
