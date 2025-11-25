@@ -97,6 +97,7 @@ RUN apt-get update && \
                     libjansson-dev \
                     rustc \
                     cargo \
+                    gcovr \
                     && \
                     apt-get clean
 

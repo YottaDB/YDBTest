@@ -28,6 +28,7 @@ if (! $?dbgpro ) set dbgpro = "dbg"
 
 set gtm_ver = "$gtm_root/$verno"
 set is_gtm = 0
+set compile_with_coverage = 0
 
 if ( "$git_tag" =~ "V*" ) set is_gtm = 1
 
@@ -42,6 +43,7 @@ endif
 if ( -d /Distrib/YottaDB/V999_R999 ) then
 	# Directory /Distrib/YottaDB/V999_R999/ is created in the YDB pipeline as an new layer on the ydbtest image
 	set source_dir = "/Distrib/YottaDB/V999_R999"
+	set compile_with_coverage = 1
 else
 	# We only have one source tree; we checkout a different tag if necessary and use that to build
 	set source_dir = "/Distrib/YottaDB"
@@ -140,7 +142,11 @@ unset nonomatch
 mkdir -p $source_dir/$dbgpro
 cd $source_dir/$dbgpro
 if ( "$dbgpro" == "dbg" ) then
-	cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD $source_dir/
+	if ( $compile_with_coverage ) then
+		cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD -D ENABLE_PROFILING="ON" $source_dir/
+	else
+		cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD $source_dir/
+	endif
 else
 	cmake -Wno-dev -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_INSTALL_PREFIX:PATH=$PWD $source_dir/
 endif
@@ -211,7 +217,10 @@ end
 # But the intermediate objects take up about 5GB
 # So try to preserve `ydbinstall`, but delete the rest
 # /Distrib/YottaDB/${gtm_verno}/${tst_image}/yottadb_r*/ydbinstall
-if ( "$git_tag" == "master" ) then
+if ( $compile_with_coverage ) then
+	# Keep the files if we want coverage. Only done in the YDB pipeline.
+	# This does not result in intemediate large layers, so it's okay
+else if ( "$git_tag" == "master" ) then
 	set ydbinstall = `find ${source_dir}/${dbgpro} -name 'ydbinstall' -not -path '*utf8*'`
 	mv $source_dir/$dbgpro/yottadb_r*/ydbinstall /tmp/
 	rm -rf $source_dir/$dbgpro

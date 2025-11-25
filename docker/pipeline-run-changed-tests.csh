@@ -246,6 +246,10 @@ end
 # Fail if any of the tests failed
 echo "# Final report:"
 cat result.txt
+
+# Coverage for YDB pipeline
+/usr/library/gtm_test/T999/docker/coverage.csh
+
 grep -q FAIL result.txt
 # Grep reverses the exit: 0 means found, 1 means not found, not found is good!
 exit ( ! $status )

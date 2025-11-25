@@ -34,6 +34,10 @@ if ( $?CI_COMMIT_BRANCH ) then
 			# Otherwise, just use the current directory
 			/usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg >& pipeline-test-ydb-build.out
 		endif
+
+		# For coverage, make sure that the directory is writable by gtmtest:gtc so tests can write .gcda files into that directory
+		chown -R gtmtest:gtc /Distrib/YottaDB/V999_R999/dbg
+		setenv calculate_coverage 1
 	endif
 
 	echo " "
@@ -89,7 +93,6 @@ echo " "
 
 echo "### Verify contents of source/build directory (/Distrib/YottaDB/V999_R999):"
 ls -lrt /Distrib/YottaDB/V999_R999/
-find /Distrib/YottaDB/V999_R999/dbg
 echo " "
 
 if ( $?filelist ) then
@@ -182,5 +185,7 @@ else
 		echo " "
 	end
 
+	# Coverage for YDB pipeline
+	/usr/library/gtm_test/T999/docker/coverage.csh
 	exit $test_status
 endif
