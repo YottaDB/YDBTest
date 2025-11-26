@@ -1,0 +1,152 @@
+# zwrite ^a with the default $zgbldir = ##TEST_PATH##/mumps.gld
+^a=1
+^a(0)=0
+^a(1)=1
+^a(2)=2
+^a(3)=3
+^a(4)=4
+^a(5)=5
+^a(6)=6
+^a(7)=7
+^a(8)=8
+^a(9)=9
+^a(10)=10
+^a(11)=11
+^a(12)=12
+^a(13)=13
+^a(14)=14
+^a(15)=15
+^a(16)=16
+^a(17)=17
+^a(18)=18
+^a(19)=19
+^a(20)=20
+^a(21)=21
+^a(22)=22
+^a(23)=23
+^a(24)=24
+^a(25)=25
+^a(26)=26
+^a(27)=27
+^a(28)=28
+^a(29)=29
+^a(30)=30
+^a(31)=31
+^a(32)=32
+^a(33)=33
+^a(34)=34
+^a(35)=35
+^a(36)=36
+^a(37)=37
+^a(38)=38
+^a(39)=39
+^a(40)=40
+# zyencode with extended reference ^|x.gld|a(1)=^a
+# zwrite ^a  : $zgbldir = x.gld
+^a(1)=2
+^a(1,1)="{"""": 1, ""0"": 0, ""1"": 1, ""2"": 2, ""3"": 3, ""4"": 4, ""5"": 5, ""6"": 6, ""7"": 7, ""8"": 8, ""9"": 9, ""10"": 10, ""11"": 11, ""12"": 12, ""13"": 13, ""14"": 14, ""15"": 15, ""16"": 16, ""17"": 17, ""18"": 18, ""19"": 19, ""20"": 20, ""21"": 21, ""22"": 22, ""23"": 23, ""24"": 24, ""25"": 25, ""26"": 26"
+^a(1,2)=", ""27"": 27, ""28"": 28, ""29"": 29, ""30"": 30, ""31"": 31, ""32"": 32, ""33"": 33, ""34"": 34, ""35"": 35, ""36"": 36, ""37"": 37, ""38"": 38, ""39"": 39, ""40"": 40}"
+# zyencode with extended reference ^|mumps.gld|a=^|x.gld|a
+# zydecode with extended reference ^|mumps.gld|a=^|x.gld|a
+%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+		At M source location zycode+13^zycode
+
+YDB>
+#### Test zyencode/zydecode with spanning regions where
+####     - there is an intersection in the src and target gvn
+####     - AND source and target globals have a range of regions that intersect
+# case 1 setup : zyencode/zydecode source : mumps.gld : ^a    spans areg and breg
+#                zyencode/zydecode target : other.gld : ^a(1) spans breg and creg
+# zyencode ^|other.gld|a(1)=^a should issue YDB-E-ZYENCODEDESC as breg intersects src(^a) and dest(^a(1))
+
+YDB>
+%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^a(1) is a descendant of ^a
+
+YDB>
+# zydecode ^|other.gld|a(1)=^a should issue YDB-E-ZYDECODEDESC as breg intersects src(^a) and dest(^a(1))
+
+YDB>
+%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: ^a(1) is a descendant of ^a
+
+YDB>
+# case 2 setup : zyencode/zydecode source : mumps.gld : ^a    spans areg    and breg
+#                zyencode/zydecode target : other.gld : ^a(1) spans default and creg
+# zyencode ^|other.gld|a(1)=^a should work as src(^a) spans areg and breg ; but dest(^a(1)) spans default and creg
+
+YDB>
+
+YDB>
+^a(1)=1
+^a(1,1)="{""2"": {""1"": 1, ""2"": 2}}"
+^a(2,1)=1
+# zydecode ^a=^|other.gld|a(1) should work as src(^a) spans areg and breg ; but dest(^a(1)) spans default and creg
+
+YDB>
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		zydecode ^a=^|other.gld|a(1)
+		                   ^-----
+
+YDB>
+^a(1)=1
+^a(1,1)="{""2"": {""1"": 1, ""2"": 2}}"
+^a(2,1)=1
+# case 3 setup : zyencode/zydecode source : mumps.gld : ^a spans areg and breg
+#                zyencode/zydecode target : other.gld : ^a(1) maps to breg and does not span regions
+# zyencode ^|other.gld|a(1)=^a should issue YDB-E-ZYENCODEDESC as breg intersects src(^a) and dest(^a(1))
+
+YDB>
+%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^a(1) is a descendant of ^a
+
+YDB>
+# zydecode ^|other.gld|a(1)=^a should issue YDB-E-ZYDECODEDESC as breg intersects src(^a) and dest(^a(1))
+
+YDB>
+%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+YDB>
+# case 4 setup : zyencode_decode source : other.gld : ^a(2) maps to areg - no spanning
+#                zyencode_decode target : mumps.gld : ^a spans areg and breg
+# zyencode ^|mumps.gld|a(1)=^a should issue YDB-E-ENCODEDESC as areg intersects src(^a(2)) and dest(^a)
+
+YDB>
+
+YDB>
+%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^a(2) is a descendant of ^a
+
+YDB>
+# zydecode ^|mumps.gld|a(1)=^a should issue YDB-E-DECODEDESC as areg intersects src(^a(2)) and dest(^a)
+
+YDB>
+
+YDB>
+%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+YDB>
+# case 5 setup : zyencode_decode source : other.gld : ^a(2) maps to areg - no spanning
+#                zyencode_decode target : mumps.gld : ^a spans areg breg creg and default
+# zyencode ^|mumps.gld|a=^a(2) should issue YDB-E-ZYENCODEDESC as areg intersects src(^a(2)) and target(^a)
+
+YDB>
+%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^a(2) is a descendant of ^a
+
+YDB>
+# zydecode ^|mumps.gld|a=^a(2) should issue YDB-E-ZYDECODEDESC as areg intersects src(^a(2)) and target(^a)
+
+YDB>
+%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+YDB>
+# case 6 setup : zyencode/decode source : other.gld : ^a maps to areg - no spanning
+#                zyencode/decode target : mumps.gld : ^a(2) spans areg breg creg and default
+# zyencode ^|mumps.gld|a(1)=^a should issue YDB-E-ZYENCODEDESC as areg intersects src(^a(2)) and dest(^a(2))
+
+YDB>
+%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^a(2) is a descendant of ^a
+
+YDB>
+# zydecode ^|mumps.gld|a(1)=^a should issue YDB-E-ZYDECODEDESC as areg intersects src(^a(2)) and dest(^a(2))
+
+YDB>
+%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+YDB>

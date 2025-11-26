@@ -2,99 +2,424 @@
 # Test M commands to serialize/deserialize local or global variable subtree
 # -------------------------------------------------------------------------------------------------------------
 
-### Test 1: ZYENCODE error cases
+### Test 0: Test ZYENCODE and ZYDECODE compilation errors 
+## T0a: Compile [ydb1152.m] routine
+# Expect a series of compilation errors.
+		zyen dst(1,=src ; 46
+		           ^-----
+		At column 13, line 38, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen ^dst(1,=src ; 62
+		            ^-----
+		At column 14, line 40, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen @lhs@ ; 80
+		          ^-----
+		At column 12, line 42, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyen 123=src ; 108-109
+		     ^-----
+		At column 7, line 46, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyen dst,=src ; 113-114
+		        ^-----
+		At column 10, line 48, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EQUAL, Equal sign expected but not found
+		zyen dst=src(1, ; 123
+		               ^-----
+		At column 17, line 50, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen dst=^src(1, ; 130
+		                ^-----
+		At column 18, line 52, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen @lhs=@rhs@ ; 138-139
+		               ^-----
+		At column 17, line 54, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyen dst=123 ; 151-152
+		         ^-----
+		At column 11, line 56, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyde dst(1,=src ; 46
+		           ^-----
+		At column 13, line 65, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde ^dst(1,=src ; 62
+		            ^-----
+		At column 14, line 67, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde @lhs@ ; 80
+		          ^-----
+		At column 12, line 69, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyde 123=src ; 108-109
+		     ^-----
+		At column 7, line 73, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyde dst,=src ; 113
+		        ^-----
+		At column 10, line 75, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EQUAL, Equal sign expected but not found
+		zyde dst=src(1, ; 123
+		               ^-----
+		At column 17, line 77, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde dst=^src(1, ; 130
+		                ^-----
+		At column 18, line 79, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde @lhs=@rhs@ ; 138-139
+		               ^-----
+		At column 17, line 81, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyde dst=123 ; 151-152
+		         ^-----
+		At column 11, line 83, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyen dst(1,=src ; 46
+		           ^-----
+		At column 13, line 101, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen ^dst(1,=src ; 62
+		            ^-----
+		At column 14, line 103, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen @lhs@ ; 80
+		          ^-----
+		At column 12, line 105, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyen 123=src ; 108-109
+		     ^-----
+		At column 7, line 111, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyen dst,=src ; 113-114
+		        ^-----
+		At column 10, line 113, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EQUAL, Equal sign expected but not found
+		zyen dst=src(1, ; 123
+		               ^-----
+		At column 17, line 115, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen dst=^src(1, ; 130
+		                ^-----
+		At column 18, line 117, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyen @lhs=@rhs@ ; 138-139
+		               ^-----
+		At column 17, line 119, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyen dst=123 ; 151-152
+		         ^-----
+		At column 11, line 121, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyde dst(1,=src ; 46
+		           ^-----
+		At column 13, line 154, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde ^dst(1,=src ; 62
+		            ^-----
+		At column 14, line 156, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde @lhs@ ; 80
+		          ^-----
+		At column 12, line 158, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyde 123=src ; 108-109
+		     ^-----
+		At column 7, line 165, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+		zyde dst=src(1, ; 123
+		               ^-----
+		At column 17, line 167, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde dst=^src(1, ; 130
+		                ^-----
+		At column 18, line 169, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-EXPR, Expression expected but not found
+		zyde @lhs=@rhs@ ; 138-139
+		               ^-----
+		At column 17, line 171, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-LPARENMISSING, Left parenthesis expected
+		zyde dst=123 ; 151-152
+		         ^-----
+		At column 11, line 173, source module ##IN_TEST_PATH##/inref/ydb1152.m
+%YDB-E-VAREXPECTED, Variable expected in this context
+
+## Test 0b: Various tests of code paths in sr_port/m_zyencode.c, sr_port/op_indzyencode.c, sr_port/op_zyencode.c, sr_port/op_zydecode.c, sr_port/m_zydecode.c, and sr_port/op_indzydecode.c.
+## See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973
+## Run a series of commands and expect a series runtime error in each case.
+# Run [s src("key")="value"]
+# Run [s lhs="dst",rhs="src",sub=1]
+# Run [zyen dst(1,=src ; 46]
+ZSTATUS=T0b+11^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyen ^dst(1,=src ; 62]
+ZSTATUS=T0b+13^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyen @lhs@ ; 80]
+ZSTATUS=T0b+15^ydb1152,%YDB-E-LPARENMISSING, Left parenthesis expected
+# Run [zyen @lhs ; 83-86]
+ZSTATUS=T0b+17^ydb1152,%YDB-E-EQUAL, Equal sign expected but not found
+# Run [zyen @lhs=src]
+# Run [zyen 123=src ; 108-109]
+ZSTATUS=T0b+21^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyen dst,=src ; 113-114]
+ZSTATUS=T0b+23^ydb1152,%YDB-E-EQUAL, Equal sign expected but not found
+# Run [zyen dst=src(1, ; 123]
+ZSTATUS=T0b+25^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyen dst=^src(1, ; 130]
+ZSTATUS=T0b+27^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyen @lhs=@rhs@ ; 138-139]
+ZSTATUS=T0b+29^ydb1152,%YDB-E-LPARENMISSING, Left parenthesis expected
+# Run [zyen dst=123 ; 151-152]
+ZSTATUS=T0b+31^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyen dst(sub)=@rhs ; 162-164]
+# Run [s src("key")="value"]
+# Run [s rhs="src",at="@rhs"]
+# Run [zyen dst=@at ; 76, 78-86]
+# Run [s at=123]
+# Run [zyen dst=@at ;]
+ZSTATUS=T0b+44^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyen ^lhs=^empty ; 103: make sure that ^empty has a $DATA of 0]
+ZSTATUS=T0b+47^ydb1152,%YDB-E-ZYENCODESRCUNDEF, Error encountered during ZYENCODE; source variable must not be undefined
+# Run [s ^src(1,$zch(136))=5]
+# Run [zyen dst=@at ;]
+##TEST_AWKZSTATUS=T0b\+51\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^src : subscript = \$[ZCH]*\(136\) : data = 5 - in ydb_encode_s\(\) call
+# Run [s src(1,$zch(136))=5]
+# Run [zyen dst=src(1) ; 355]
+##TEST_AWKZSTATUS=T0b\+55\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = src : subscript = \$[ZCH]*\(136\) : data = 5 - in ydb_encode_s\(\) call
+# Run [zyen ^dst=src(1) ; 450-458]
+##TEST_AWKZSTATUS=T0b\+57\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = src : subscript = \$[ZCH]*\(136\) : data = 5 - in ydb_encode_s\(\) call
+# Run [s src=1,src(1)="{""key":""value""}"]# Run [s lhs="dst",rhs="src",sub=1]
+# Run [zyde dst(1,=src ; 46]
+ZSTATUS=T0b+64^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyde ^dst(1,=src ; 62]
+ZSTATUS=T0b+66^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyde @lhs@ ; 80]
+ZSTATUS=T0b+68^ydb1152,%YDB-E-LPARENMISSING, Left parenthesis expected
+# Run [zyde @lhs ; 83-86]
+ZSTATUS=T0b+70^ydb1152,%YDB-E-EQUAL, Equal sign expected but not found
+# Run [zyde @marray=@json ; 100-102] (also tests sr_port/format_key_mvals.c:48, per https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2973059636)
+ZSTATUS=T0b+73^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: src(1) is a descendant of src
+# Run [zyde 123=src ; 108-109]
+ZSTATUS=T0b+75^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyde dst=src(1, ; 123]
+ZSTATUS=T0b+77^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyde dst=^src(1, ; 130]
+ZSTATUS=T0b+79^ydb1152,%YDB-E-EXPR, Expression expected but not found
+# Run [zyde @lhs=@rhs@ ; 138-139]
+ZSTATUS=T0b+81^ydb1152,%YDB-E-LPARENMISSING, Left parenthesis expected
+# Run [zyde dst=123 ; 151-152]
+ZSTATUS=T0b+83^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyde dst(sub)=@rhs ; 162-164]
+# Run [zyde dst=@at ; 76, 78-86]
+# Run [zyde dst=@at ; 88]
+ZSTATUS=T0b+93^ydb1152,%YDB-E-VAREXPECTED, Variable expected in this context
+# Run [zyde dst=^src ; 275-281]
+ZSTATUS=T0b+97^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+# Run [zyde dst=^src ; 328-332]
+ZSTATUS=T0b+100^ydb1152,%YDB-E-GVUNDEF, Global variable undefined: ^src(1)
+# Run [zyde ^dst(1)=src ; 542-553, 561]
+# Run [zyde ^dst=src ; 550-559]
+ZSTATUS=T0b+106^ydb1152,%YDB-E-LVUNDEF, Undefined local variable: src(2)
+
+#### Test 1: ZYENCODE error cases
 # Run [set src("key1")="value1"]
 # Run [set src("key1","key2")="value1"]
 # Run [set ^src("key1")="value1"]
 # Run [set ^src("key1","key2")="value1"]
 
-## Test 1a: Source is descendant of destination (%YDB-E-ZYENCODEDESC)
+### Test 1a: Source is descendant of destination (%YDB-E-ZYENCODEDESC)
 # Run [zyencode src("key1")=src("key1","key2")]
 # Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
 ZSTATUS=T1+16^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: src("key1","key2") is a descendant of src("key1")
+# Run [set x="a"]
+# Run [zyencode x=x]
+# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. x is a descendant of x
+ZSTATUS=T1+21^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: x is a descendant of x
 
-## Test 1b: Destination is descendant of source (%YDB-E-ZYENCODEDESC)
+### Test 1b: Destination is descendant of source (%YDB-E-ZYENCODEDESC)
 # Run [zyencode src("key1","key2")=src("key1")]'
 # Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
-ZSTATUS=T1+22^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: src("key1","key2") is a descendant of src("key1")
+ZSTATUS=T1+27^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: src("key1","key2") is a descendant of src("key1")
 # Run [zyencode ^src("key1","key2")=^src("key1")]'
-# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src("key1","key2") is a descendant of src("key1")'
-ZSTATUS=T1+25^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
+# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. ^src("key1","key2") is a descendant of ^src("key1")'
+ZSTATUS=T1+30^ydb1152,%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
 
-## Test 1c: Undefined local variable passed as source raises %YDB-E-ZYENCODESRCUNDEF
-# Run [zyencode src("key1","key2")=notanlvn]'
+### Test 1c: Undefined local variable passed as source raises %YDB-E-ZYENCODESRCUNDEF
+# Run [zyencode dest=notanlvn]'
 # Expect '%YDB-E-ZYENCODESRCUNDEF'
-ZSTATUS=T1+31^ydb1152,%YDB-E-ZYENCODESRCUNDEF, Error encountered during ZYENCODE; source variable must not be undefined
+ZSTATUS=T1+36^ydb1152,%YDB-E-ZYENCODESRCUNDEF, Error encountered during ZYENCODE; source variable must not be undefined
 
-## Test 1d: Error from the underlying ydb_encode_s(): $ZSTATUS is set and %YDB-W-ZYENCODEINCOMPL issued
+### Test 1d: Errors from the underlying ydb_encode_s()
+## Test $ZSTATUS is set and %YDB-W-ZYENCODEINCOMPL issued
+# Run [set x=$ZCH(167)]
+# Run [zyencode dest=x]
 # Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
-##TEST_AWKZSTATUS=T1\+37\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = x : data = .* - in ydb_encode_s\(\) call
+##TEST_AWKZSTATUS=T1\+45\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = x : data = .* - in ydb_encode_s\(\) call
+## Test invalid node value between multiple nodes at same subscript level
+# Run [set ^y=3,^y(1)="value1",^y(2)=$ZCH(167),^y(3)="value3"]
+# Run [zyencode z=^y]
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+52\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^y : subscript = 2 : data = .* - in ydb_encode_s\(\) call
+# Run [zyencode z=^y(2)]
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+55\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^y : data = .* - in ydb_encode_s\(\) call
+## Test invalid subscript value in separate subtree under a single root node
+# Run [set ^y(1,2,3)=1,^y(4,$ZCH(167),6)=2]
+# Run [zyencode z=^y]
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+62\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^y : subscript = .* - in ydb_encode_s\(\) call
+## Test invalid subscript value in subtree under a single root node
+# Run [set ^y(1)=1,^y(1,$ZCH(167))=2]
+# Run [zyencode z=^y]
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+69\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^y : subscript = .* : data = 2 - in ydb_encode_s\(\) call
+## Test invalid subscript value in subtree with its own subtree under a single root node
+# Run [set ^y(1)=1,^y(1,$ZCH(167))=2,^y(1,$ZCH(167),3)=3]
+# Run [zyencode z=^y]
+# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR
+##TEST_AWKZSTATUS=T1\+76\^ydb1152,%YDB-W-ZYENCODEINCOMPL, Error encountered during ZYENCODE; operation may be incomplete,%YDB-E-JANSSONENCODEERROR, JSON encoding error: variable = \^y : subscript = .* - in ydb_encode_s\(\) call
 
-### Test 2: ZYDECODE error cases
+#### Test 2: ZYDECODE error cases
 # Run [set src("key1")="value1"]
 # Run [set src("key1","key2")="value1"]
 # Run [set ^src("key1")="value1"]
 # Run [set ^src("key1","key2")="value1"]
 
-## Test 2a: Source is descendant of destination (%YDB-E-ZYDECODEDESC)
+### Test 2a: Source is descendant of destination (%YDB-E-ZYDECODEDESC)
 # Run [zydecode src("key1")=src("key1","key2")]'
 # Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src("key1","key2") is a descendant of src("key1")'
 ZSTATUS=T2+18^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: src("key1","key2") is a descendant of src("key1")
 # Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. ^src("key1","key2") is a descendant of ^src("key1")'
 ZSTATUS=T2+20^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
 
-## Test 2b: Destination is descendant of source (%YDB-E-ZYDECODEDESC)
+### Test 2b: Destination is descendant of source (%YDB-E-ZYDECODEDESC)
 # Run [zydecode src("key1","key2")=src("key1")]'
 # Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src("key1","key2") is a descendant of src("key1")'
 ZSTATUS=T2+26^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: src("key1","key2") is a descendant of src("key1")
+# Run [zydecode ^src("key1","key2")=^src("key1")]'
+# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. ^src("key1","key2") is a descendant of ^src("key1")'
+ZSTATUS=T2+29^ydb1152,%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible: ^src("key1","key2") is a descendant of ^src("key1")
 
-## Test 2c: Root node of source = 0 (%YDB-E-ZYDECODEWRONGCNT)
+### Test 2c: Various %YDB-E-ZYDECODEWRONGCNT scenarios
+## T2c1: Root node of source = 0 (%YDB-E-ZYDECODEWRONGCNT)
 # Run [set src=0]
 # Run [zydecode dest=src("key1","key2")]'
 # Expect '%YDB-E-ZYDECODEWRONGCNT'
-ZSTATUS=T2+34^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T2+38^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
 
-## Test 2b: Root node of source < 0 (%YDB-E-ZYDECODEWRONGCNT)
+## T2c2: Root node of source < 0 (%YDB-E-ZYDECODEWRONGCNT)
 # Run [set src=-1]
 # Run [zydecode dest=src("key1","key2")]'
 # Expect '%YDB-E-ZYDECODEWRONGCNT'
-ZSTATUS=T2+42^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T2+45^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
 
-## Test 2c: Root node of source = non-numeric string (%YDB-E-ZYDECODEWRONGCNT)
+## T2c3: Root node of source = non-numeric string (%YDB-E-ZYDECODEWRONGCNT)
 # Run [set src="abc"]
 # Run [zydecode dest=src("key1","key2")]'
 # Expect '%YDB-E-ZYDECODEWRONGCNT'
-ZSTATUS=T2+50^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T2+52^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
 
-## Test 2d: Root node of source = positive floating point value (%YDB-E-ZYDECODEWRONGCNT)
+## T2c4: Root node of source = positive floating point value (%YDB-E-ZYDECODEWRONGCNT)
 # Run [set src=1.1]
 # Run [zydecode dest=src("key1","key2")]'
 # Expect '%YDB-E-ZYDECODEWRONGCNT'
-ZSTATUS=T2+58^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+ZSTATUS=T2+59^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
 
-## Test 2e: LVN in series starting from root node's positive integer doesn't exist (%YDB-E-LVUNDEF)
+## T2c5: Source is empty LVN, destination is empty GVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [zydecode ^a=a]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+65^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## T2c6: Source is empty GVN, destination is the same GVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [zydecode ^b=^b]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+71^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## T2c7: Source is empty LVN, destination is the same LVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [zydecode b=b]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+77^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## T2c8: Source is empty LVN, destination is the different empty LVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [zydecode c=d]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+83^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## T2c9: Source is empty LVN, destination is an empty GVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [zydecode ^d=e]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+89^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## T2c10: Source is LVN set to 0 (explicitly indicating an empty JSON tree), destination is an empty GVN or LVN (%YDB-E-ZYDECODEWRONGCNT)
+# Run [set d=0]
+# Run [zydecode ^e=d]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+96^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+# Run [zydecode e=d]
+# Expect '%YDB-E-ZYDECODEWRONGCNT'
+ZSTATUS=T2+99^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+## Test 2d: LVN in series starting from root node's positive integer doesn't exist (%YDB-E-LVUNDEF)
 # Run:
 #  [kill]
 #  [set src=3]
-#  [set src(1)="{"key1":"value1","]
+#  [set src(1)="{""key1"":""value1"","]
 #  (skip setting src(2))
-#  [set src=""key3"":""value3""}"]
+#  [set src(3)=""key3"":""value3""}"]
 # Run [zydecode dest=src]'
 # Expect '%YDB-E-LVUNDEF'
-ZSTATUS=T2+74^ydb1152,%YDB-E-LVUNDEF, Undefined local variable: src(2)
+ZSTATUS=T2+115^ydb1152,%YDB-E-LVUNDEF, Undefined local variable: src(2)
 
-## Test 2f: GVN in series starting from root node's positive integer doesn't exist (%YDB-E-GVUNDEF)
+## Test 2e: GVN in series starting from root node's positive integer doesn't exist (%YDB-E-GVUNDEF)
 # Run:
-#  [set ^src=3]#  [set ^src(1)="{"key1":"value1","]
+#  [set ^src=3]
+#  [set ^src(1)="{""key1"":""value1"","]
 #  (skip setting ^src(2))
-#  [set ^src=""key3"":""value3""}"]
+#  [set ^src(3)=""key3"":""value3""}"]
 # Run [zydecode ^dest=^src]
 # Expect '%YDB-E-GVUNDEF'
-ZSTATUS=T2+89^ydb1152,%YDB-E-GVUNDEF, Global variable undefined: ^src(2)
+ZSTATUS=T2+130^ydb1152,%YDB-E-GVUNDEF, Global variable undefined: ^src(2)
 
-## Test 2g: Error from the underlying ydb_decode_s(): $ZSTATUS is set and %YDB-W-ZYDECODEINCOMPL issued
+## Test 2f: Error from the underlying ydb_decode_s(): $ZSTATUS is set and %YDB-W-ZYDECODEINCOMPL issued
 # Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONINVALIDJSON
-ZSTATUS=T2+96^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-JANSSONINVALIDJSON, Invalid JSON: unable to decode byte 0xa7 near '"' - in ydb_decode_s() call
+ZSTATUS=T2+137^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-JANSSONINVALIDJSON, Invalid JSON: unable to decode byte 0xa7 near '"' - in ydb_decode_s() call
+
+## Test 2g: ZYDECODEINCOMPL and JANSSONINVALIDJSON errors issued when using ZYDECODE to decode a node containing `$C(0)` from a node previously encoded with ZYENCODE
+# Run [x(1)=$c(0)]
+# Run [zyencode y=x]
+# Run [zydecode z=y]
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONINVALIDJSON
+ZSTATUS=T2+147^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-JANSSONINVALIDJSON, Invalid JSON: \u0000 is not allowed without JSON_ALLOW_NUL near '"\u0000"' - in ydb_decode_s() call
+
+## Test 2h: ZYDECODEINCOMPL and GVSUBOFLOW errors issued when using subscripts that meet or exceed key size (256 in this case)
+# Run [set x($justify(1,256))=1]
+# Run [zyencode y=x]
+# Run [zyencode ^z=y]
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
+ZSTATUS=T2+158^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                                                                                                                                                                                                               1")
+# Run [set x($justify(1,64),$justify(1,64),$justify(1,64),$justify(1,64))=1]
+# Run [zyencode y=x]
+# Run [zyencode ^z=y]
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
+ZSTATUS=T2+166^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                               1","                                                               1","                                                               1","                                                               1")
+# Run [set x($justify(1,257))=1]
+# Run [zyencode y=x]
+# Run [zyencode ^z=y]
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
+ZSTATUS=T2+174^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-PARAMINVALID, buf_addr is too small for at least 1 key in JSON input parameter specified in ydb_decode_s() call
+# Run [set x($justify(1,65),$justify(1,64),$justify(1,64),$justify(1,64))=1]
+# Run [zyencode y=x]
+# Run [zyencode ^z=y]
+# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
+ZSTATUS=T2+182^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                1","                                                               1","                                                               1","                                                               1")
+
+## Test 2i: ZYDECODEINCOMPL and PARAMINVALID errors issued when decoding a JSON array with more elements than the maximum allowed number of subscripts (31)
+# Run [set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
+# Run [set f(2)="null, ""string"": ""null""}"]
+# Run [zydecode g=f]
+# Expect ZYDECODEINCOMPL with '%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call'
+ZSTATUS=T2+193^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call
 
 ### Test 3: ZYENCODE properly handles input trees containing ~1MiB of data (YDB max string length)
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
@@ -163,9 +488,9 @@ PASS : Expected 2 output node(s). Got 2 output node(s).
 # Confirm the JSON output is of the correct size.  Expect 1048578:
 PASS : Expected JSON output of size 1048578. Got JSON output of size 1048578.
 
-### Test 4: ZYENCODE properly handles input trees containing arbitrary (random) data sizes
+### Test 4: ZYENCODE properly handles input trees containing random data sizes and arbitrary data types
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
-## Test 4a: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB
+## Test 4a: ZYENCODE properly handles input trees containing random data sizes, up to 3MiB
 ##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T4aI"\] variable
 # Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
 ##TEST_AWK# Run \[zyencode [\^]*T4aO.*=[\^]*T4aI.*\] to encode the generated tree into JSON format in the [\^]*T4aI variable
@@ -177,7 +502,7 @@ PASS : Expected JSON output of size 1048578. Got JSON output of size 1048578.
 ##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
 ##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
 ##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
-## Test 4b: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB
+## Test 4b: ZYENCODE properly handles input trees containing random data sizes, < 1MiB
 ##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T4bI"\] variable
 # Set a GVN to update $REFERENCE and store the last GVN referenced by ZYENCODE.
 ##TEST_AWK# Run \[zyencode [\^]*T4bO.*=[\^]*T4bI.*\] to encode the generated tree into JSON format in the [\^]*T4bI variable
@@ -189,6 +514,19 @@ PASS : Expected JSON output of size 1048578. Got JSON output of size 1048578.
 ##TEST_AWKPASS : Expected [0-9]* output node\(s\). Got [0-9]* output node\(s\).
 ##TEST_AWK# Confirm the JSON output is of the correct size.  Expect [0-9]*:
 ##TEST_AWKPASS : Expected JSON output of size [0-9]*. Got JSON output of size [0-9]*.
+## Test 4c: ZYENCODE properly handles input nodes containing arbitrary data types
+# Run [set ^x=$C(0)_"null"]
+# Run [zyencode z=^x]
+# Expect no errors
+# Run [set ^x=$C(0)_"true"]
+# Run [zyencode z=^y]
+# Expect no errors
+# Run [set ^x=$C(0)_"false"]
+# Run [zyencode z=^z]
+# Expect no errors
+# Run [set ^x(1)=1.1]
+# Run [zyencode z=^z]
+# Expect no errors
 
 ### Test 5: ZYDECODE properly handles input trees containing ~1MiB of data (YDB max string length)
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
@@ -247,7 +585,7 @@ PASS: ZYDECODE output mirrors input data
 # Expect the values to be identical.
 PASS: ZYDECODE output mirrors input data
 
-### Test 6: ZYDECODE properly handles input trees containing arbitrary (random) data sizes
+### Test 6: ZYDECODE properly handles input trees containing arbitrary types and random data sizes 
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
 ## Test 6a: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB
 ##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T6a"\] variable
@@ -269,6 +607,23 @@ PASS: ZYDECODE output mirrors input data
 # Check each node of the decoded data against the input data.
 # Expect the values to be identical.
 PASS: ZYDECODE output mirrors input data
+
+## Test 6c: ZYDECODE properly handles input trees containing arbitrary data types
+# Run [set f=2,f(1)="{""array"": [1, 2, 3, 4, 5], ""key"": ""value"", ""null"": ",f(2)="null, ""string"": ""null"", ""real"": 3.1459, ""bool1"": true, ""bool2"": false}"
+# Run [zydecode g=f]
+# Expect decode to complete without error
+# ZWRITE decoded output [zwrite g]
+g("array",0)=1
+g("array",1)=2
+g("array",2)=3
+g("array",3)=4
+g("array",4)=5
+g("bool1")=$C(0)_"true"
+g("bool2")=$C(0)_"false"
+g("key")="value"
+g("null")=$C(0)_"null"
+g("real")=3.1459
+g("string")="null"
 
 ### Test 7: Data encoded with ZYENCODE can be decoded with ZYDECODE and re-encoded with ZYENCODE to produce the same result as the initial ZYENCODE call
 ##TEST_AWK# Run the \[populateTree\] label to generate a tree with [0-9]* bytes of data in the \["[\^]*T7.*"\] variable
@@ -301,28 +656,28 @@ PASS: ZYDECODE output mirrors input data
 # Set a random length subscript, up to (10)
 # Set a random length value, up to (16384)
 # Set 10000 global variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error
+# Use ZYENCODE to encode the nodes
 # Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 ## Test 8b: Using local variables# Set a random length subscript, up to (10)
 # Set a random length value, up to (16384)
 # Set 10000 local variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error
+# Use ZYENCODE to encode the nodes
 # Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 
-### Test 9: Confirm no INVSTRLEN error for subscripts or values less than the maximum string length (4294967295)
+### Test 9: Confirm no JANSSONINVSTRLEN error for subscripts or values less than the maximum string length (4294967295)
 ### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740
 ## Test 9a: Using global variables
 # Set a random length subscript, up to the maximum (64)
 # Set a random length value, up to the maximum (16384)
 # Set 10000 global variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error
-# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error
+# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error
+# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 ## Test 9b: Using local variables
 # Set a random length subscript, up to the maximum length (64)
 # Set a random length value, up to the maximum (16384)
 # Set 10000 local variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error
-# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error
+# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error
+# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 
 ### Test 10: ZYENCODE behavior with null subscripts
 ## Test 10a: No assert failure for ZYENCODE with null subscript and string node value
@@ -364,9 +719,20 @@ ZSTATUS=T11b+15^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECO
 PASS: Long-running ZYENCODE completed without GTMASSERT2 failure
 
 ### Test 13: Test that running ZYENCODE and ZYDECODE with 31 1MiB subscripts in a local variable does not cause a heap-buffer-overflow, or ZYDECODEINCOMPL or PARAMINVALID errors
-# Run [T13^ydb1152] routine to pass 31 1MiB subscripts to ZYENCODE and ZYDECODE
+### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2843975764.
+# Run [T13a^ydb1152] routine to pass 31 1MiB subscripts to ZYENCODE and ZYDECODE
 # Confirm no PARAMINVALID and ZYDECODEINCOMPL errors were generated
-PASS: [T13^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
+PASS: [T13a^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
+# Run [T13b^ydb1152] routine to pass a single 1MiB subscript to ZYENCODE and ZYDECODE
+# Confirm PARAMINVALID and ZYDECODEINCOMPL errors were generated
+----------
+Error PARAMINVALID seen in T13b.out as expected:
+%YDB-E-PARAMINVALID, buf_addr is too small for at least 1 key in JSON input parameter specified in ydb_decode_s() call
+----------
+----------
+Error ZYDECODEINCOMPL seen in T13b.out as expected:
+%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete
+----------
 
 ### Test 14: Test that sending MUPIP INTRPT to ZYENCODE and ZYDECODE does not produce any of the following errors: ZYENCODEINCOMPL, ZYDECODEINCOMPL, TEST-E-FAIL
 ### See also:
@@ -377,7 +743,8 @@ PASS: [T13^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
 PASS: [T14^ydb1152] did not emit ZYDECODEINCOMPL and/or PARAMINVALID
 
 ### Test 15: No REC2BIG error is issued when values at default database record size
-### are encoded and decoded when the database is created with default values
+### are encoded and decoded when the database is created with default values.
+### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2850600795.
 # Create a new database with default settings
 # Run [T15^ydb1152] routine
 # Confirm no REC2BIG errors were generated
@@ -399,6 +766,18 @@ Error ZYENCODESRCUNDEF seen in T16.out as expected:
 # Run [T17^ydb1152] routine
 # Confirm no ZYENCODEINCOMPL, ZYDECODEINCOMPL, or other errors were generated
 PASS: [T17^ydb1152] did not emit any errors.
+
+### Test 18: GVUNDEF for KILL during ZYENCODE loop shows global variable name
+PASS: GVUNDEF for KILL during ZYENCODE loop shows global variable name
+
+### Test 19: ZYDECODE works with triggers (see test cases at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973)
+# Run [T19^ydb1152] routine
+Added SET trigger on ^dst named dst#1
+# Test sr_port/op_zydecode_arg.c:82ZSTATUS=T19a+2^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
+ZSTATUS=T19+5^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
+Added SET trigger on ^dst2 named dst2#1
+# Test sr_port/op_zydecode_arg.c:120ZSTATUS=T19b+3^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
+ZSTATUS=T19+8^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
 
 # Check all ZYENCODE JSON output files for valid JSON
 PASS: T3a.json contains valid JSON

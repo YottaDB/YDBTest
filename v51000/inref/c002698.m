@@ -119,8 +119,8 @@ oneiter	;
 	.	.	if playverbose write "        tstart ():serial",!
 	.	.	else  tstart ():serial
 	.	.	; Randomly choose whether to test MERGE or ZYENCODE/ZYDECODE. Only do the ZYENCODE/ZYDECODE
-	.	.	; test when j3(num) is defined, otherwise a ZYENCODESRCUNDEF error will be issued.
-	.	.	if ($RANDOM(2)&$data(j3(num)))  do
+	.	.	; test when j3(num) and ^x(js(num)) are defined, otherwise a ZYENCODESRCUNDEF error will be issued.
+	.	.	if $RANDOM(2)&($data(j3(num))#2)&($data(^x(j3(num)))=11)  do
 	.	.	.	set xstr="zyencode encv=^x("_j3(num)_") zydecode decv=encv"
 	.	.	else  do
 	.	.	.	set xstr="merge lclmerge=^x("_j3(num)_")"

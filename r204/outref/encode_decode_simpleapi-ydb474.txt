@@ -30,7 +30,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 # Decode long key JSON from a file
 ##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_decode_s\(\) : 151027770,\(SimpleAPI\),%YDB-E-PARAMINVALID, buf_addr is too small for at least 1 key in JSON input parameter specified in ydb_decode_s\(\) call
 # Decode long value JSON from a file
-##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_decode_s\(\) : 151027770,\(SimpleAPI\),%YDB-E-PARAMINVALID, Size for string value is > YDB_MAX_STR in JSON input parameter specified in ydb_decode_s\(\) call
+##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_decode_s\(\) : 151027770,\(SimpleAPI\),%YDB-E-PARAMINVALID, Size for string value is > max string size in JSON input parameter specified in ydb_decode_s\(\) call
 
 ### Test encodes of M local arrays in to JSON data in ydb_encode_s() ###
 ## Encode the previously decoded strings into JSON ##
@@ -43,7 +43,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 # Encode JSON object with NULL ret_value->buf_addr
 ##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 151027770,\(SimpleAPI\),%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_encode_s\(\) call
 # Encode JSON object with insufficient string length for encoded data
-##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 150375522,\(SimpleAPI\),%YDB-E-INVSTRLEN, Invalid string length [0-9]*: max 0
+##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 151028194,\(SimpleAPI\),%YDB-E-JANSSONINVSTRLEN, Invalid string length [0-9]*: max 0
 # Encode JSON object
 {"": "root", "anotherKey": "anotherValue", "key": "value"}
 # Encode JSON array
@@ -67,7 +67,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 # Encode JSON that includes nodes with both a value and a subtree
 {"Capital": {"Belgium": "Brussels", "Thailand": "Bangkok", "USA": "Washington,DC"}, "Population": {"Belgium": 13670000, "Thailand": 84140000, "USA": {"": 325737000, "17900802": 3929326, "18000804": 5308483, "20100401": 308745538}}}
 # Encode JSON that includes nodes with both a value and a subtree with a buffer that's too small
-##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 150375522,\(SimpleAPI\),%YDB-E-INVSTRLEN, Invalid string length 232: max 100
+##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 151028194,\(SimpleAPI\),%YDB-E-JANSSONINVSTRLEN, Invalid string length 232: max 100
 # Encode invalid JSON, so M array should be undefined
 ##TEST_AWKError: ydb474_s.c:[0-9]*: ydb_encode_s\(\) : 150373850,\(SimpleAPI\),%YDB-E-LVUNDEF, Undefined local variable: 
 # Encode invalid M data (non UTF-8), resulting in a Jansson encode error
@@ -122,7 +122,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 # Encode JSON object with NULL ret_value->buf_addr
 ##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 151027770,\(SimpleThreadAPI\),%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_encode_st\(\) call
 # Encode JSON object with insufficient string length for encoded data
-##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 150375522,\(SimpleThreadAPI\),%YDB-E-INVSTRLEN, Invalid string length [0-9]*: max 0
+##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 151028194,\(SimpleThreadAPI\),%YDB-E-JANSSONINVSTRLEN, Invalid string length [0-9]*: max 0
 # Encode JSON object
 {"": "root", "anotherKey": "anotherValue", "key": "value"}
 # Encode JSON array
@@ -146,7 +146,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 # Encode JSON that includes nodes with both a value and a subtree
 {"Capital": {"Belgium": "Brussels", "Thailand": "Bangkok", "USA": "Washington,DC"}, "Population": {"Belgium": 13670000, "Thailand": 84140000, "USA": {"": 325737000, "17900802": 3929326, "18000804": 5308483, "20100401": 308745538}}}
 # Encode JSON that includes nodes with both a value and a subtree with a buffer that's too small
-##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 150375522,\(SimpleThreadAPI\),%YDB-E-INVSTRLEN, Invalid string length 232: max 100
+##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 151028194,\(SimpleThreadAPI\),%YDB-E-JANSSONINVSTRLEN, Invalid string length 232: max 100
 # Encode invalid JSON, so M array should be undefined
 ##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_encode_st\(\) : 150372994,\(SimpleThreadAPI\),%YDB-E-GVUNDEF, Global variable undefined: 
 # Encode invalid M data (non UTF-8), resulting in a Jansson encode error

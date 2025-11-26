@@ -1,5 +1,16 @@
 #!/usr/local/bin/tcsh -f
-setenv test_reorg "NON_REORG"  
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+setenv test_reorg "NON_REORG"
 $gtm_exe/mumps -dir << aaa
 set cnt=1
 f i=1001:1:1005 for j=1000:1:1005 set cnt=cnt+1 s var1(i,"ind"_i,j)="BBB"_cnt
@@ -27,5 +38,7 @@ MERGE:1 new1longnamevariableswork4merge("bbb")=var1longnamevariableswork4merge(1
 set longvar="new1longnamevariableswork4merge"
 MERGE @longvar@("ccc")=var1longnamevariableswork4merge(1,2,3)
 zwr new1longnamevariableswork4merge
+kill x
+MERGE x(1,2)=x
 halt
 aaa

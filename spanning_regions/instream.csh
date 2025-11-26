@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,16 +31,31 @@
 # noisolation		[kishoreh] tests for view "NOISOLATION" command
 # mixgld		[kishoreh] a few global access scenarios with multiple glds spanning same global differently
 # gv_altkey_corruption	[sopini] test a known case of gv_altkey corruption that leads to bad $zprevious() results
+# zyencode_zydecode	[jon] specific test cases checking zyencode/zydecode with spanning regions and extended global reference
 #-------------------------------------------------------------------------------------
 
 echo "spanning_regions test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gde merge functions1 namelevelorder extgbl viewregion_gvstats mergecoll keysizevary"
-setenv subtest_list_non_replic "$subtest_list_non_replic actcollmismtch gtm7562 collationtests noisolation mixgld"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic gde"
+setenv subtest_list_non_replic "$subtest_list_non_replic merge"
+setenv subtest_list_non_replic "$subtest_list_non_replic functions1"
+setenv subtest_list_non_replic "$subtest_list_non_replic namelevelorder"
+setenv subtest_list_non_replic "$subtest_list_non_replic extgbl"
+setenv subtest_list_non_replic "$subtest_list_non_replic viewregion_gvstats"
+setenv subtest_list_non_replic "$subtest_list_non_replic mergecoll"
+setenv subtest_list_non_replic "$subtest_list_non_replic keysizevary"
+setenv subtest_list_non_replic "$subtest_list_non_replic actcollmismtch"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7562"
+setenv subtest_list_non_replic "$subtest_list_non_replic collationtests"
+setenv subtest_list_non_replic "$subtest_list_non_replic noisolation"
+setenv subtest_list_non_replic "$subtest_list_non_replic mixgld"
 setenv subtest_list_non_replic "$subtest_list_non_replic gv_altkey_corruption"
-setenv subtest_list_replic     "jnl_nojnl"
+setenv subtest_list_non_replic "$subtest_list_non_replic zyencode_zydecode"
+setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic jnl_nojnl"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

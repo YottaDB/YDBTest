@@ -89,27 +89,27 @@ No errors detected by integ.
 
 YDB>
 Error Number=1
-STAT=errors+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(1,aa,12.34,99910) is descendent of abc.
+STAT=errors+4^errors,%YDB-E-MERGEDESC, MERGE operation not possible. abc(1,"aa",12.34,99910) is a descendant of abc.
 Error Number=2
-STAT=errors+12^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc,ddd) is descendent of abc(aaa,bbb,ccc).
+STAT=errors+12^errors,%YDB-E-MERGEDESC, MERGE operation not possible. abc("aaa","bbb","ccc","ddd") is a descendant of abc("aaa","bbb","ccc").
 Error Number=3
-STAT=errors+13^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc) is descendent of abc(aaa,bbb).
+STAT=errors+13^errors,%YDB-E-MERGEDESC, MERGE operation not possible. abc("aaa","bbb","ccc") is a descendant of abc("aaa","bbb").
 a(111)="vala"
 Error Number=4
-STAT=lab2+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  a(111,222) is descendent of a(111).
+STAT=lab2+4^errors,%YDB-E-MERGEDESC, MERGE operation not possible. a(111,222) is a descendant of a(111).
 a(111)="vala"
 Error Number=5
-STAT=lab2+8^errors,%YDB-E-MERGEDESC, Merge operation not possible.  ^a(111,222) is descendent of ^a(111).
+STAT=lab2+8^errors,%YDB-E-MERGEDESC, MERGE operation not possible. ^a(111,222) is a descendant of ^a(111).
 ^a(111)="vala"
 Error Number=6
-STAT=lab3+3^errors,%YDB-E-MERGEDESC, Merge operation not possible.  ^a(111,0,22222) is descendent of ^a(111).
+STAT=lab3+3^errors,%YDB-E-MERGEDESC, MERGE operation not possible. ^a(111,0,22222) is a descendant of ^a(111).
 ^a(111)="vala"
 ^a(1110,22222)="vala"
 ^a(111222)="vala"
 ^b(111)="vala"
 ^bb(111)="vala"
 Error Number=7
-STAT=lab4+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  a(111,0,22222) is descendent of a(111).
+STAT=lab4+4^errors,%YDB-E-MERGEDESC, MERGE operation not possible. a(111,0,22222) is a descendant of a(111).
 a(111)="vala"
 a(1110,22222)="vala"
 a(111222)="vala"

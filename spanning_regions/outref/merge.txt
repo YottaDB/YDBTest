@@ -179,7 +179,7 @@
 # merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
 YDB>
-%YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
+%YDB-E-MERGEDESC, MERGE operation not possible. ^a(1) is a descendant of ^a.
 
 YDB>
 # case 2 setup : merge source : mumps.gld : ^a    spans areg    and breg
@@ -197,7 +197,7 @@ YDB>
 # merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
 YDB>
-%YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
+%YDB-E-MERGEDESC, MERGE operation not possible. ^a(1) is a descendant of ^a.
 
 YDB>
 # case 4 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
@@ -207,7 +207,7 @@ YDB>
 YDB>
 
 YDB>
-%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, MERGE operation not possible. ^a(2) is a descendant of ^a.
 
 YDB>
 # case 5 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
@@ -215,7 +215,7 @@ YDB>
 # merge ^|mumps.gld|a=^a(2) should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)
 
 YDB>
-%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, MERGE operation not possible. ^a(2) is a descendant of ^a.
 
 YDB>
 # case 6 setup : merge source : other.gld : ^a maps to areg - no spanning
@@ -223,6 +223,6 @@ YDB>
 # merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))
 
 YDB>
-%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, MERGE operation not possible. ^a(2) is a descendant of ^a.
 
 YDB>

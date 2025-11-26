@@ -22,14 +22,184 @@ ydb1152 ;
 	do T9^ydb1152
 	do T10^ydb1152
 	do T11a^ydb1152
-	; do T16^ydb1152
-	; do T17a^ydb1152
+
+	quit
+
+T0a ;
+	write "## Test 0a: Various tests of code paths in sr_port/m_zyencode.c and sr_port/m_zydecode.c.",!
+	write "## See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973",!
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution) in various error cases below
+	; sr_port/m_zyencode.c tests
+	write "# Run [s src(""key"")=""value""]",!
+	s src("key")="value"
+	write "# Run [s lhs=""dst"",rhs=""src"",sub=1]",!
+	s lhs="dst",rhs="src",sub=1
+	write "# Run [zyen dst(1,=src ; 46]",!
+	zyen dst(1,=src ; 46
+	write "# Run [zyen ^dst(1,=src ; 62]",!
+	zyen ^dst(1,=src ; 62
+	write "# Run [zyen @lhs@ ; 80]",!
+	zyen @lhs@ ; 80
+	write "# Run [zyen @lhs ; 83-86]",!
+	zyen @lhs ; 83-86
+	write "# Run [zyen 123=src ; 108-109]",!
+	zyen 123=src ; 108-109
+	write "# Run [zyen dst,=src ; 113-114]",!
+	zyen dst,=src ; 113-114
+	write "# Run [zyen dst=src(1, ; 123]",!
+	zyen dst=src(1, ; 123
+	write "# Run [zyen dst=^src(1, ; 130]",!
+	zyen dst=^src(1, ; 130
+	write "# Run [zyen @lhs=@rhs@ ; 138-139]",!
+	zyen @lhs=@rhs@ ; 138-139
+	write "# Run [zyen dst=123 ; 151-152]",!
+	zyen dst=123 ; 151-152
+	write "# Run [zyen dst(sub)=@rhs ; 162-164]",!
+	zyen dst(sub)=@rhs ; 162-164
+	; sr_port/m_zydecode.c
+	write "# Run [s src=1,src(1)=""{""""key"":""""value""""}""]"
+	s src=1,src(1)="{""key"":""value""}"
+	write "# Run [s lhs=""dst"",rhs=""src"",sub=1]",!
+	s lhs="dst",rhs="src",sub=1
+	write "# Run [zyde dst(1,=src ; 46]",!
+	zyde dst(1,=src ; 46
+	write "# Run [zyde ^dst(1,=src ; 62]",!
+	zyde ^dst(1,=src ; 62
+	write "# Run [zyde @lhs@ ; 80]",!
+	zyde @lhs@ ; 80
+	write "# Run [zyde @lhs ; 83-86]",!
+	zyde @lhs ; 83-86
+	write "# Run [zyde 123=src ; 108-109]",!
+	zyde 123=src ; 108-109
+	write "# Run [zyde dst,=src ; 113]",!
+	zyde dst,=src ; 113
+	write "# Run [zyde dst=src(1, ; 123]",!
+	zyde dst=src(1, ; 123
+	write "# Run [zyde dst=^src(1, ; 130]",!
+	zyde dst=^src(1, ; 130
+	write "# Run [zyde @lhs=@rhs@ ; 138-139]",!
+	zyde @lhs=@rhs@ ; 138-139
+	write "# Run [zyde dst=123 ; 151-152]",!
+	zyde dst=123 ; 151-152
+	write "# Run [zyde dst(sub)=@rhs ; 162-164]",!
+	zyde dst(sub)=@rhs ; 162-164
+	write !
+
+	quit
+
+T0b ;
+	write "## Test 0b: Various tests of code paths in sr_port/m_zyencode.c, sr_port/op_indzyencode.c, sr_port/op_zyencode.c, sr_port/op_zydecode.c, sr_port/m_zydecode.c, and sr_port/op_indzydecode.c.",!
+	write "## See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973",!
+	write "## Run a series of commands and expect a series runtime error in each case.",!
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution) in various error cases below
+	; sr_port/m_zyencode.c tests
+	write "# Run [s src(""key"")=""value""]",!
+	s src("key")="value"
+	write "# Run [s lhs=""dst"",rhs=""src"",sub=1]",!
+	s lhs="dst",rhs="src",sub=1
+	write "# Run [zyen dst(1,=src ; 46]",!
+	zyen dst(1,=src ; 46
+	write "# Run [zyen ^dst(1,=src ; 62]",!
+	zyen ^dst(1,=src ; 62
+	write "# Run [zyen @lhs@ ; 80]",!
+	zyen @lhs@ ; 80
+	write "# Run [zyen @lhs ; 83-86]",!
+	zyen @lhs ; 83-86
+	write "# Run [zyen @lhs=src]",!
+	zyen @lhs=src ; 100-102
+	write "# Run [zyen 123=src ; 108-109]",!
+	zyen 123=src ; 108-109
+	write "# Run [zyen dst,=src ; 113-114]",!
+	zyen dst,=src ; 113-114
+	write "# Run [zyen dst=src(1, ; 123]",!
+	zyen dst=src(1, ; 123
+	write "# Run [zyen dst=^src(1, ; 130]",!
+	zyen dst=^src(1, ; 130
+	write "# Run [zyen @lhs=@rhs@ ; 138-139]",!
+	zyen @lhs=@rhs@ ; 138-139
+	write "# Run [zyen dst=123 ; 151-152]",!
+	zyen dst=123 ; 151-152
+	write "# Run [zyen dst(sub)=@rhs ; 162-164]",!
+	zyen dst(sub)=@rhs ; 162-164
+	; sr_port/op_indzyencode.c tests
+	write "# Run [s src(""key"")=""value""]",!
+	s src("key")="value"
+	write "# Run [s rhs=""src"",at=""@rhs""]",!
+	s rhs="src",at="@rhs"
+	write "# Run [zyen dst=@at ; 76, 78-86]",!
+	zyen dst=@at ; 76, 78-86
+	write "# Run [s at=123]",!
+	s at=123
+	write "# Run [zyen dst=@at ;]",!
+	zyen dst=@at ;
+	; sr_port/op_zyencode.c tests
+	write "# Run [zyen ^lhs=^empty ; 103: make sure that ^empty has a $DATA of 0]",!
+	zyen ^lhs=^empty ; 103: make sure that ^empty has a $DATA of 0
+	write "# Run [s ^src(1,$zch(136))=5]",!
+	s ^src(1,$zch(136))=5
+	write "# Run [zyen dst=@at ;]",!
+	zyen ^dst=^src(1) ; 155
+	write "# Run [s src(1,$zch(136))=5]",!
+	s src(1,$zch(136))=5
+	write "# Run [zyen dst=src(1) ; 355]",!
+	zyen dst=src(1) ; 355
+	write "# Run [zyen ^dst=src(1) ; 450-458]",!
+	zyen ^dst=src(1) ; 450-458
+	; sr_port/m_zydecode.c
+	write "# Run [s src=1,src(1)=""{""""key"":""""value""""}""]"
+	s src=1,src(1)="{""key"":""value""}"
+	write "# Run [s lhs=""dst"",rhs=""src"",sub=1]",!
+	s lhs="dst",rhs="src",sub=1
+	write "# Run [zyde dst(1,=src ; 46]",!
+	zyde dst(1,=src ; 46
+	write "# Run [zyde ^dst(1,=src ; 62]",!
+	zyde ^dst(1,=src ; 62
+	write "# Run [zyde @lhs@ ; 80]",!
+	zyde @lhs@ ; 80
+	write "# Run [zyde @lhs ; 83-86]",!
+	zyde @lhs ; 83-86
+	write "# Run [zyde @marray=@json ; 100-102] (also tests sr_port/format_key_mvals.c:48, per https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2973059636)",!
+	s marray="src(1)",json="src"
+	zyde @marray=@json
+	write "# Run [zyde 123=src ; 108-109]",!
+	zyde 123=src ; 108-109
+	write "# Run [zyde dst=src(1, ; 123]",!
+	zyde dst=src(1, ; 123
+	write "# Run [zyde dst=^src(1, ; 130]",!
+	zyde dst=^src(1, ; 130
+	write "# Run [zyde @lhs=@rhs@ ; 138-139]",!
+	zyde @lhs=@rhs@ ; 138-139
+	write "# Run [zyde dst=123 ; 151-152]",!
+	zyde dst=123 ; 151-152
+	write "# Run [zyde dst(sub)=@rhs ; 162-164]",!
+	zyde dst(sub)=@rhs ; 162-164
+	; sr_port/op_indzydecode.c
+	s src=1,src(1)="{""key"":""value""}"
+	s rhs="src",at="@rhs"
+	write "# Run [zyde dst=@at ; 76, 78-86]",!
+	zyde dst=@at ; 76, 78-86
+	s at=123
+	write "# Run [zyde dst=@at ; 88]",!
+	zyde dst=@at ; 88
+	; sr_port/op_zydecode.c
+	s ^src=0,^src(1)="{""key"":""value""}"
+	write "# Run [zyde dst=^src ; 275-281]",!
+	zyde dst=^src ; 275-281
+	write "# Run [zyde dst=^src ; 328-332]",!
+	k ^src(1) s ^src=1
+	zyde dst=^src ; 328-332
+	write "# Run [zyde ^dst(1)=src ; 542-553, 561]",!
+	s src=1,src(1)="{""key"":""value""}"
+	zyde ^dst(1)=src ; 542-553, 561
+	write "# Run [zyde ^dst=src ; 550-559]",!
+	s src=2,src(1)="{""key"":"
+	zyde ^dst=src ; 550-559
 
 	quit
 
 T1 ;
-	write "### Test 1: ZYENCODE error cases",!
-	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; needed to transfer control to next M line after error in "xecute" command
+	write "#### Test 1: ZYENCODE error cases",!
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution) in various error cases below
 	write "# Run [set src(""key1"")=""value1""]",!
 	set src("key1")="value1"
 	write "# Run [set src(""key1"",""key2"")=""value1""]",!
@@ -40,40 +210,79 @@ T1 ;
 	set ^src("key1","key2")="value1"
 	write !
 
-	write "## Test 1a: Source is descendant of destination (%YDB-E-ZYENCODEDESC)",!
+	write "### Test 1a: Source is descendant of destination (%YDB-E-ZYENCODEDESC)",!
 	write "# Run [zyencode src(""key1"")=src(""key1"",""key2"")]",!
 	write "# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src(""key1"",""key2"") is a descendant of src(""key1"")'",!
 	zyencode src("key1")=src("key1","key2")
+	write "# Run [set x=""a""]",!
+	set x="a"
+	write "# Run [zyencode x=x]",!
+	write "# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. x is a descendant of x",!
+	zyencode x=x
 	write !
 
-	write "## Test 1b: Destination is descendant of source (%YDB-E-ZYENCODEDESC)",!
+	write "### Test 1b: Destination is descendant of source (%YDB-E-ZYENCODEDESC)",!
 	write "# Run [zyencode src(""key1"",""key2"")=src(""key1"")]'",!
 	write "# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src(""key1"",""key2"") is a descendant of src(""key1"")'",!
 	zyencode src("key1","key2")=src("key1")
 	write "# Run [zyencode ^src(""key1"",""key2"")=^src(""key1"")]'",!
-	write "# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. src(""key1"",""key2"") is a descendant of src(""key1"")'",!
+	write "# Expect '%YDB-E-ZYENCODEDESC, ZYENCODE operation not possible. ^src(""key1"",""key2"") is a descendant of ^src(""key1"")'",!
 	zyencode ^src("key1","key2")=^src("key1")
 	write !
 
-	write "## Test 1c: Undefined local variable passed as source raises %YDB-E-ZYENCODESRCUNDEF",!
-	write "# Run [zyencode src(""key1"",""key2"")=notanlvn]'",!
+	write "### Test 1c: Undefined local variable passed as source raises %YDB-E-ZYENCODESRCUNDEF",!
+	write "# Run [zyencode dest=notanlvn]'",!
 	write "# Expect '%YDB-E-ZYENCODESRCUNDEF'",!
 	zyencode dest=notanlvn
 	write !
 
-	write "## Test 1d: Error from the underlying ydb_encode_s(): $ZSTATUS is set and %YDB-W-ZYENCODEINCOMPL issued",!
+	write "### Test 1d: Errors from the underlying ydb_encode_s()",!
+	write "## Test $ZSTATUS is set and %YDB-W-ZYENCODEINCOMPL issued",!
+	write "# Run [set x=$ZCH(167)]",!
 	set x=$ZCH(167)
+	write "# Run [zyencode dest=x]",!
 	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
 	zyencode dest=x
-	write !
+	write "## Test invalid node value between multiple nodes at same subscript level",!
+	kill ^y,z
+	write "# Run [set ^y=3,^y(1)=""value1"",^y(2)=$ZCH(167),^y(3)=""value3""]",!
+	set ^y=3,^y(1)="value1",^y(2)=$ZCH(167),^y(3)="value3"
+	write "# Run [zyencode z=^y]",!
+	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
+	zyencode z=^y
+	write "# Run [zyencode z=^y(2)]",!
+	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
+	zyencode z=^y(2)
+	write "## Test invalid subscript value in separate subtree under a single root node",!
+	kill ^y,z
+	write "# Run [set ^y(1,2,3)=1,^y(4,$ZCH(167),6)=2]",!
+	set ^y(1,2,3)=1,^y(4,$ZCH(167),6)=2
+	write "# Run [zyencode z=^y]",!
+	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
+	zyencode z=^y
+	write "## Test invalid subscript value in subtree under a single root node",!
+	kill ^y,z
+	write "# Run [set ^y(1)=1,^y(1,$ZCH(167))=2]",!
+	set ^y(1)=1,^y(1,$ZCH(167))=2
+	write "# Run [zyencode z=^y]",!
+	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
+	zyencode z=^y
+	write "## Test invalid subscript value in subtree with its own subtree under a single root node",!
+	kill ^y,z
+	write "# Run [set ^y(1)=1,^y(1,$ZCH(167))=2,^y(1,$ZCH(167),3)=3]",!
+	set ^y(1)=1,^y(1,$ZCH(167))=2,^y(1,$ZCH(167),3)=3
+	write "# Run [zyencode z=^y]",!
+	write "# Expect '%YDB-W-ZYENCODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONENCODEERROR",!
+	zyencode z=^y
 
+	write !
 	quit
 
 T2 ;
 	kill src
-	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; needed to transfer control to next M line after error in "xecute" command
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution) in various error cases below
 
-	write "### Test 2: ZYDECODE error cases",!
+	write "#### Test 2: ZYDECODE error cases",!
 	write "# Run [set src(""key1"")=""value1""]",!
 	set src("key1")="value1"
 	write "# Run [set src(""key1"",""key2"")=""value1""]",!
@@ -84,7 +293,7 @@ T2 ;
 	set ^src("key1","key2")="value1"
 	write !
 
-	write "## Test 2a: Source is descendant of destination (%YDB-E-ZYDECODEDESC)",!
+	write "### Test 2a: Source is descendant of destination (%YDB-E-ZYDECODEDESC)",!
 	write "# Run [zydecode src(""key1"")=src(""key1"",""key2"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src(""key1"",""key2"") is a descendant of src(""key1"")'",!
 	zydecode src("key1")=src("key1","key2")
@@ -92,54 +301,95 @@ T2 ;
 	zydecode ^src("key1")=^src("key1","key2")
 	write !
 
-	write "## Test 2b: Destination is descendant of source (%YDB-E-ZYDECODEDESC)",!
+	write "### Test 2b: Destination is descendant of source (%YDB-E-ZYDECODEDESC)",!
 	write "# Run [zydecode src(""key1"",""key2"")=src(""key1"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. src(""key1"",""key2"") is a descendant of src(""key1"")'",!
 	zydecode src("key1","key2")=src("key1")
+	write "# Run [zydecode ^src(""key1"",""key2"")=^src(""key1"")]'",!
+	write "# Expect '%YDB-E-ZYDECODEDESC, ZYDECODE operation not possible. ^src(""key1"",""key2"") is a descendant of ^src(""key1"")'",!
+	zydecode ^src("key1","key2")=^src("key1")
 	write !
 
-	write "## Test 2c: Root node of source = 0 (%YDB-E-ZYDECODEWRONGCNT)",!
+	write "### Test 2c: Various %YDB-E-ZYDECODEWRONGCNT scenarios",!
+	write "## T2c1: Root node of source = 0 (%YDB-E-ZYDECODEWRONGCNT)",!
 	write "# Run [set src=0]",!
 	set src=0
 	write "# Run [zydecode dest=src(""key1"",""key2"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
 	zydecode dest=src("key1","key2")
 	write !
-
-	write "## Test 2b: Root node of source < 0 (%YDB-E-ZYDECODEWRONGCNT)",!
+	write "## T2c2: Root node of source < 0 (%YDB-E-ZYDECODEWRONGCNT)",!
 	write "# Run [set src=-1]",!
 	set src=-1
 	write "# Run [zydecode dest=src(""key1"",""key2"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
 	zydecode dest=src("key1","key2")
 	write !
-
-	write "## Test 2c: Root node of source = non-numeric string (%YDB-E-ZYDECODEWRONGCNT)",!
+	write "## T2c3: Root node of source = non-numeric string (%YDB-E-ZYDECODEWRONGCNT)",!
 	write "# Run [set src=""abc""]",!
 	set src="abc"
 	write "# Run [zydecode dest=src(""key1"",""key2"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
 	zydecode dest=src("key1","key2")
 	write !
-
-	write "## Test 2d: Root node of source = positive floating point value (%YDB-E-ZYDECODEWRONGCNT)",!
+	write "## T2c4: Root node of source = positive floating point value (%YDB-E-ZYDECODEWRONGCNT)",!
 	write "# Run [set src=1.1]",!
 	set src=1.1
 	write "# Run [zydecode dest=src(""key1"",""key2"")]'",!
 	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
 	zydecode dest=src("key1","key2")
 	write !
+	write "## T2c5: Source is empty LVN, destination is empty GVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	kill ^a,a
+	write "# Run [zydecode ^a=a]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode ^a=a
+	write !
+	write "## T2c6: Source is empty GVN, destination is the same GVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	kill ^b
+	write "# Run [zydecode ^b=^b]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode ^b=^b
+	write !
+	write "## T2c7: Source is empty LVN, destination is the same LVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	kill b
+	write "# Run [zydecode b=b]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode b=b
+	write !
+	write "## T2c8: Source is empty LVN, destination is the different empty LVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	kill c,d
+	write "# Run [zydecode c=d]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode c=d
+	write !
+	write "## T2c9: Source is empty LVN, destination is an empty GVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	kill ^d,e
+	write "# Run [zydecode ^d=e]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode ^d=e
+	write !
+	write "## T2c10: Source is LVN set to 0 (explicitly indicating an empty JSON tree), destination is an empty GVN or LVN (%YDB-E-ZYDECODEWRONGCNT)",!
+	write "# Run [set d=0]",!
+	set d=0
+	write "# Run [zydecode ^e=d]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode ^e=d
+	write "# Run [zydecode e=d]",!
+	write "# Expect '%YDB-E-ZYDECODEWRONGCNT'",!
+	zydecode e=d
+	write !
 
-	write "## Test 2e: LVN in series starting from root node's positive integer doesn't exist (%YDB-E-LVUNDEF)",!
+	write "## Test 2d: LVN in series starting from root node's positive integer doesn't exist (%YDB-E-LVUNDEF)",!
 	write "# Run:",!
 	write "#  [kill]",!
 	kill
 	write "#  [set src=3]",!
 	set src=3
-	write "#  [set src(1)=""{""key1"":""value1"",""]",!
+	write "#  [set src(1)=""{""""key1"""":""""value1"""",""]",!
 	set src(1)="{""key1"":""value1"","
 	write "#  (skip setting src(2))",!
-	write "#  [set src=""""key3"""":""""value3""""}""]",!
+	write "#  [set src(3)=""""key3"""":""""value3""""}""]",!
 	set src(3)="""key3"":""value3""}"
 	write "# Run [zydecode dest=src]'",!
 	write "# Expect '%YDB-E-LVUNDEF'",!
@@ -147,25 +397,81 @@ T2 ;
 	kill
 	write !
 
-	write "## Test 2f: GVN in series starting from root node's positive integer doesn't exist (%YDB-E-GVUNDEF)",!
+	write "## Test 2e: GVN in series starting from root node's positive integer doesn't exist (%YDB-E-GVUNDEF)",!
 	write "# Run:",!
-	write "#  [set ^src=3]"
+	write "#  [set ^src=3]",!
 	set ^src=3
-	write "#  [set ^src(1)=""{""key1"":""value1"",""]",!
+	write "#  [set ^src(1)=""{""""key1"""":""""value1"""",""]",!
 	set ^src(1)="{""key1"":""value1"","
 	write "#  (skip setting ^src(2))",!
-	write "#  [set ^src=""""key3"""":""""value3""""}""]",!
+	write "#  [set ^src(3)=""""key3"""":""""value3""""}""]",!
 	set ^src(3)="""key3"":""value3""}"
 	write "# Run [zydecode ^dest=^src]",!
 	write "# Expect '%YDB-E-GVUNDEF'",!
 	zydecode ^dest=^src
 	write !
 
-	write "## Test 2g: Error from the underlying ydb_decode_s(): $ZSTATUS is set and %YDB-W-ZYDECODEINCOMPL issued",!
+	write "## Test 2f: Error from the underlying ydb_decode_s(): $ZSTATUS is set and %YDB-W-ZYDECODEINCOMPL issued",!
 	set ^src=1
 	set ^src(1)="{""key1"":"""_$ZCH(167)_"""}"
 	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONINVALIDJSON",!
 	zydecode dest=^src
+	write !
+
+	write "## Test 2g: ZYDECODEINCOMPL and JANSSONINVALIDJSON errors issued when using ZYDECODE to decode a node containing `$C(0)` from a node previously encoded with ZYENCODE",!
+	write "# Run [x(1)=$c(0)]",!
+	set x(1)=$c(0)
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zydecode z=y]",!
+	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-JANSSONINVALIDJSON",!
+	zydecode z=y
+	write !
+
+	write "## Test 2h: ZYDECODEINCOMPL and GVSUBOFLOW errors issued when using subscripts that meet or exceed key size (256 in this case)",!
+	write "# Run [set x($justify(1,256))=1]",!
+	kill x,y,z,^z
+	set x($justify(1,256))=1
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zyencode ^z=y]",!
+	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW",!
+	zydecode ^z=y
+	write "# Run [set x($justify(1,64),$justify(1,64),$justify(1,64),$justify(1,64))=1]",!
+	kill x,y,z,^z
+	set x($justify(1,64),$justify(1,64),$justify(1,64),$justify(1,64))=1
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zyencode ^z=y]",!
+	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW",!
+	zydecode ^z=y
+	write "# Run [set x($justify(1,257))=1]",!
+	kill x,y,z,^z
+	set x($justify(1,257))=1
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zyencode ^z=y]",!
+	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW",!
+	zydecode ^z=y
+	write "# Run [set x($justify(1,65),$justify(1,64),$justify(1,64),$justify(1,64))=1]",!
+	kill x,y,z,^z
+	set x($justify(1,65),$justify(1,64),$justify(1,64),$justify(1,64))=1
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zyencode ^z=y]",!
+	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW",!
+	zydecode ^z=y
+	write !
+
+	write "## Test 2i: ZYDECODEINCOMPL and PARAMINVALID errors issued when decoding a JSON array with more elements than the maximum allowed number of subscripts (31)",!
+	kill f
+	write "# Run [set f=2,f(1)=""{""""array"""": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], """"key"""": """"value"""", """"null"""": """,!
+	set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
+	write "# Run [set f(2)=""null, """"string"""": """"null""""}""]",!
+	set f(2)="null, ""string"": ""null""}"
+	write "# Run [zydecode g=f]",!
+	write "# Expect ZYDECODEINCOMPL with '%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call'",!
+	zydecode g=f
 	write !
 
 	quit
@@ -197,12 +503,34 @@ T3 ;
 	quit
 
 T4 ;
-	write "### Test 4: ZYENCODE properly handles input trees containing arbitrary (random) data sizes",!
+	write "### Test 4: ZYENCODE properly handles input trees containing random data sizes and arbitrary data types",!
 	write "### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278",!
-	write "## Test 4a: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB",!
+	write "## Test 4a: ZYENCODE properly handles input trees containing random data sizes, up to 3MiB",!
 	do runZyencodeTest^ydb1152("T4a",$RANDOM(1048576*3))
-	write "## Test 4b: ZYENCODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB",!
+	write "## Test 4b: ZYENCODE properly handles input trees containing random data sizes, < 1MiB",!
 	do runZyencodeTest^ydb1152("T4b",$RANDOM(1048576))
+	write "## Test 4c: ZYENCODE properly handles input nodes containing arbitrary data types",!
+	kill ^x,^y,^z,z
+	write "# Run [set ^x=$C(0)_""null""]",!
+	set ^x=$C(0)_"null"
+	write "# Run [zyencode z=^x]",!
+	write "# Expect no errors",!
+	zyencode z=^x
+	write "# Run [set ^x=$C(0)_""true""]",!
+	set ^y=$C(0)_"true"
+	write "# Run [zyencode z=^y]",!
+	write "# Expect no errors",!
+	zyencode z=^y
+	write "# Run [set ^x=$C(0)_""false""]",!
+	set ^z=$C(0)_"false"
+	write "# Run [zyencode z=^z]",!
+	write "# Expect no errors",!
+	zyencode z=^z
+	write "# Run [set ^x(1)=1.1]",!
+	set ^x(1)=1.1
+	write "# Run [zyencode z=^z]",!
+	write "# Expect no errors",!
+	zyencode z=^z
 	write !
 
 	quit
@@ -234,14 +562,23 @@ T5 ;
 	quit
 
 T6 ;
-	write "### Test 6: ZYDECODE properly handles input trees containing arbitrary (random) data sizes",!
+	write "### Test 6: ZYDECODE properly handles input trees containing arbitrary types and random data sizes ",!
 	write "### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278",!
 	write "## Test 6a: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB",!
 	do runZydecodeTest^ydb1152("T6a",$RANDOM(1048576*3))
 	write "## Test 6b: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB",!
 	do runZydecodeTest^ydb1152("T6b",$RANDOM(1048576))
 	write !
-
+	write "## Test 6c: ZYDECODE properly handles input trees containing arbitrary data types",!
+	kill f,g
+	write "# Run [set f=2,f(1)=""{""""array"""": [1, 2, 3, 4, 5], """"key"""": """"value"""", """"null"""": "",f(2)=""null, """"string"""": """"null"""", """"real"""": 3.1459, """"bool1"""": true, """"bool2"""": false}""",!
+	set f=2,f(1)="{""array"": [1, 2, 3, 4, 5], ""key"": ""value"", ""null"": ",f(2)="null, ""string"": ""null"", ""real"": 3.1459, ""bool1"": true, ""bool2"": false}"
+	write "# Run [zydecode g=f]",!
+	write "# Expect decode to complete without error",!
+	zydecode g=f
+	write "# ZWRITE decoded output [zwrite g]",!
+	zwrite g
+	write !
 	quit
 
 T7 ;
@@ -301,7 +638,6 @@ T7 ;
 	quit
 
 T8 ;
-	; TODO: Bump vallen limit if possible. At 2**14, full test run takes ~1 minute. At 2**15, ~2 minutes. At 2**16, ~5 minutes.
 	write "### Test 8: No ZYDECODEWRONGCNT for trees with many subscripts at the same level",!
 	write "### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740",!
 	write "## Test 8a: Using global variables",!
@@ -315,7 +651,7 @@ T8 ;
 	set maxi=10000
 	write "# Set "_maxi_" global variable nodes to the random value",!
 	for i=1:1:maxi set ^x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error",!
+	write "# Use ZYENCODE to encode the nodes",!
 	zyencode ^y=^x
 	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode ^z=^y
@@ -331,7 +667,7 @@ T8 ;
 	set maxi=10000
 	write "# Set "_maxi_" local variable nodes to the random value",!
 	for i=1:1:maxi set x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no ZYENCODEWRONGCNT error",!
+	write "# Use ZYENCODE to encode the nodes",!
 	zyencode y=x
 	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode z=y
@@ -340,7 +676,7 @@ T8 ;
 	quit
 
 T9 ;
-	write "### Test 9: Confirm no INVSTRLEN error for subscripts or values less than the maximum string length (4294967295)",!
+	write "### Test 9: Confirm no JANSSONINVSTRLEN error for subscripts or values less than the maximum string length (4294967295)",!
 	write "### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740",!
 	write "## Test 9a: Using global variables",!
 	set maxsubslen=64,maxvallen=2**14
@@ -352,9 +688,9 @@ T9 ;
 	set maxi=10000
 	write "# Set "_maxi_" global variable nodes to the random value",!
 	for i=1:1:maxi set ^x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error",!
+	write "# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error",!
 	zyencode ^y=^x
-	write "# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error",!
+	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode ^z=^y
 
 	write "## Test 9b: Using local variables",!
@@ -367,9 +703,9 @@ T9 ;
 	set maxi=10000
 	write "# Set "_maxi_" local variable nodes to the random value",!
 	for i=1:1:maxi set x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no INVSTRLEN error",!
+	write "# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error",!
 	zyencode y=x
-	write "# Use ZYDECODE to decode the nodes, expect no INVSTRLEN error",!
+	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode z=y
 	write !
 
@@ -401,7 +737,7 @@ T11a ;
 	quit
 
 T11b(tnum) ;
-	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; needed to transfer control to next M line after error in "xecute" command
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
 	write "# Set triggers",!
 	set X=$ztrigger("ITEM","-*")
 	set X=$ztrigger("ITEM","+^x(*) -commands=S -xecute=""do "_tnum_"^ydb1152""")
@@ -420,7 +756,7 @@ T11b(tnum) ;
 	quit
 
 T11c ;
-	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; needed to transfer control to next M line after error in "xecute" command
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
 	set a=1
 	zyencode b=a
 	zydecode c=b
@@ -434,7 +770,7 @@ T11d ;
 
 
 
-T13 ;
+T13a ;
 	write "set maxlen=2**20",!
 	write "set maxstr=$$^%RANDSTR(maxlen)",!
 	for i=1:1:31 do
@@ -442,6 +778,13 @@ T13 ;
 	. set xstr=xstr_"maxstr)=maxstr"
 	. write xstr,!
 	write "zyencode y=x zydecode z=y"
+
+	quit
+
+T13b ;
+	write "set x($justify(1,2**20))=1",!
+	write "zyencode y=x",!
+	write "zydecode ^z=y",!
 
 	quit
 
@@ -453,7 +796,6 @@ T14a ;
 	set vallen=$random(maxvallen)+1
 	set ^ready=0
 	set break=$RANDOM(3)
-	set break=2
 	zwrite subslen,vallen
 
 	set subs=$$^%RANDSTR(subslen)
@@ -461,7 +803,7 @@ T14a ;
 
 	kill ^x,^y,^z
 	set maxi=100000
-	set ^T12=$job
+	set ^T14=$job
 	write "# Set "_maxi_" nodes to the random value",!
 	for i=1:1:maxi set ^x(subs,i)=val
 
@@ -482,24 +824,26 @@ T14a ;
 
 T14b ;
 	write "# Wait for test routine to signal ready for termination",!
-	for i=1:1  quit:($data(^ready)'=0)&^ready  hang 0.001
+	for i=1:1  quit:$get(^ready,0)  hang 0.001
 	write "# Issue MUPIP INTRPT to test routine",!
-	zsystem "$ydb_dist/mupip intrpt "_^T12
+	zsystem "$ydb_dist/mupip intrpt "_^T14
 
 	quit
 
 T15 ;
-	write "# Choose random subscript and value lengths:",!
 	set maxsubslen=32,maxvallen=256
-	set subslen=$random(maxsubslen)+1
-	set vallen=$random(maxvallen)+1
+	set subslen=maxsubslen
+	set vallen=maxvallen
 	zwrite subslen,vallen
+	write "# Randomly generate a subscript and value",!
+	write "# Run [set subs=$$^%RANDSTR(subslen)]",!
 	set subs=$$^%RANDSTR(subslen)
+	write "# Run [set val=$$^%RANDSTR(vallen)]",!
 	set val=$$^%RANDSTR(vallen)
 
 	kill ^x,^y
 	set maxi=10000
-	write "# Set "_maxi_" nodes to the random value",!
+	write "# Set "_maxi_" nodes containing the random subscript to the random value",!
 	for i=1:1:maxi s ^x(subs,i)=val
 	write "# Run ZYENCODE to encode the tree",!
 	zyencode ^y=^x
@@ -572,6 +916,28 @@ T17c ;
 	. tstart ():serial
 	. zyencode ^w($j)=^x
 	. tcommit
+	quit
+
+T19 ;
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
+	set x="test"
+	zyencode src=x
+	set X=$ztrigger("ITEM","+^dst -commands=S -xecute=""do T19a^ydb1152""")
+	zydecode ^dst=src
+
+	set X=$ztrigger("ITEM","+^dst2 -commands=S -xecute=""do T19b^ydb1152""")
+	zydecode ^dst2=src
+	quit
+
+T19a ;
+	write "# Test sr_port/op_zydecode_arg.c:82"
+	zydecode ^dst=src
+	quit
+
+T19b ;
+	write "# Test sr_port/op_zydecode_arg.c:120"
+	merge ^src=src
+	zydecode dst=^src
 	quit
 
 initTest(testNum)

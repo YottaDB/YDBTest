@@ -1,0 +1,50 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 5
+
+set ydb_dist [lrange $argv 0 0]
+
+puts "\n# Spawn the first YDB process (1)"
+spawn $ydb_dist/yottadb -dir
+set ydb_pid1 [exp_pid]
+set ydb_id1 $spawn_id
+puts "\n# Spawn the second YDB process (2)"
+spawn $ydb_dist/yottadb -dir
+set ydb_pid2 [exp_pid]
+set ydb_id2 $spawn_id
+
+expect -i ydb_id1 -exact "YDB>"
+puts "\n# (1) Repeatedly KILL and SET a GVN (^y) in a loop\n"
+send -i ydb_id1 "f j=1:1:2  kill ^y f i=1:1:1000 s ^y(i)=i\r"
+expect -i ydb_id1 -exact "YDB>"
+puts "\n# (2) Run ZYENCODE on the GVN (^y) in an infinite loop in a separate terminal\n"
+send -i ydb_id2 "f i=1:1 zyencode ^x=^y\r"
+puts "\n# (1) Run the KILL and SET loop on GVN (^y) again, while ZYENCODE loop is running in the other terminal\n"
+send -i ydb_id1 "f j=1:1:2  kill ^y f i=1:1:1000 s ^y(i)=i\r"
+expect -i ydb_id1 -exact "YDB>"
+puts "\n# (2) Expect ZYENCODE to terminate with GVUNDEF that specifies ^y as the undefined GVN\n"
+expect -i ydb_id2 -exact "YDB-E-GVUNDEF, Global variable undefined: ^y"
+expect -i ydb_id2 -exact "YDB>"
+send -i ydb_id1 "h\r"
+puts "\n# Wait for first terminal to exit\n"
+expect -i ydb_id1 eof {
+	wait -i $ydb_id1
+}
+puts "\n# Wait for second terminal to exit\n"
+expect -i ydb_id2 eof {
+	wait -i $ydb_id2
+}
+
+exit
+

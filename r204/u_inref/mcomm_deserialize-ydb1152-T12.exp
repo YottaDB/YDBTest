@@ -26,17 +26,19 @@ send -i ydb_id "for i=1:1:10 set ^x(i)=\$j(i,100000)\r"
 expect -i ydb_id -exact "YDB>"
 puts "\n# Encode the ^x GV with ZYENCODE and decode with ZYDECODE\n"
 send -i ydb_id "for i=1:1:100 zyencode x=^x zydecode ^x=x  if i#10=0 write \"i=\",i,\": \$zrealstor = \",\$zrealstor,!\r"
-# expect -i ydb_id -exact "for i=1:1:100 zyencode x=^x zydecode ^x=x  if i#10=0 write \"i=\",i,\": \$zrealstor = \",\$zrealstor,!\r"
 expect -i ydb_id -exact "i=10: \$zrealstor"
-# puts "\n# Send CTRL-C to during ZYENCODE execution\n"
-# puts "\n# Expect message that CTRL_C was encountered\n"
+puts "\n# Send CTRL-C to during ZYENCODE execution\n"
+puts "\n# Expect message that CTRL_C was encountered\n"
 send -i ydb_id "\x03"
 expect -i ydb_id -exact "^C%YDB-I-CTRLC, CTRL_C encountered"
 expect -i ydb_id -exact "YDB>"
 send -i ydb_id "for i=1:1:100 zyencode x=^x zydecode ^x=x  if i#10=0 write \"i=\",i,\": \$zrealstor = \",\$zrealstor,!\r"
-# send -i ydb_id "write \"PASS\",!\r"
-# expect -i ydb_id -exact "PASS"
 expect -i ydb_id -exact "YDB>"
 send -i ydb_id "h\r"
+expect {
+    eof {
+        wait;
+    }
+}
 
 exit
