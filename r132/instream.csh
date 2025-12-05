@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,7 +74,7 @@ endif
 setenv subtest_exclude_list    ""
 # filter out test that needs to run pro-only
 if ("pro" != "$tst_image") then
-       setenv subtest_exclude_list "$subtest_exclude_list ydb632" # ydb632 generates core and stop in dbg, continues in pro
+	setenv subtest_exclude_list "$subtest_exclude_list ydb632" # ydb632 generates core and stop in dbg, continues in pro
 endif
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below subtest on 32-bit ARM since it requires valgrind which is not available on 32-bit ARM
