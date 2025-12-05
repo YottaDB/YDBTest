@@ -1,0 +1,16 @@
+# Test for adding a command line argument with a dash '-' to a job command.
+# There used to be a bug where if the first command line argument passed into a job command
+# starting with a dash it would produce an error. This should not happen anymore.
+
+# Starting test
+# Geting output [cat ydb933.mjo]
+job started
+-port
+# Checking that no error produced by job command [cat ydb933.mje].
+
+# Next test that "$gtm_dist/mumps -dir" has different behavior from a JOBed command.
+# "$gtm_dist/mumps -dir -port" should still be an error
+# As we decided this MR should not change it's behavior.
+# For more details see https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1792#note_2951733798
+# As this should still give an error, we expect a CLIERR error below.
+%YDB-E-CLIERR, Unrecognized option : PORT

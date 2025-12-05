@@ -43,6 +43,7 @@
 # nakedref_varsubs-ydb1177		[jon]		Test naked reference optimization if GVN subscripts are unsubscripted local variables'
 # mupipbackup_brokenfile-ydb1202	[jon]		Test MUPIP BACKUP -ONLINE does not produce broken backup file
 # c_clear_err_buff-ydb1180		[ben]		Test that $ECODE properly reset after ydb_ci[p]_t called in multithread environment.
+# job_cmdline_dash-ydb933		[ben]		Test that JOB command can have a command line where an input starts with a dash without issue.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -86,6 +87,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic duplicatenew_warning-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic nakedref_varsubs-ydb1177"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupipbackup_brokenfile-ydb1202"
 setenv subtest_list_non_replic	"$subtest_list_non_replic c_clear_err_buff-ydb1180"
+setenv subtest_list_non_replic	"$subtest_list_non_replic job_cmdline_dash-ydb933"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
