@@ -35,8 +35,8 @@ if ( $?CI_COMMIT_BRANCH ) then
 			/usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg >& pipeline-test-ydb-build.out
 		endif
 
-		# For coverage, make sure that the directory is writable by gtmtest:gtc so tests can write .gcda files into that directory
-		chown -R gtmtest:gtc /Distrib/YottaDB/V999_R999/dbg
+		# YDB pipeline should calculate coverage, not YDBTest pipeline
+		# Set this var for shared scripts to use
 		setenv calculate_coverage 1
 	endif
 

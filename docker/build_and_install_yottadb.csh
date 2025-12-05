@@ -220,6 +220,8 @@ end
 if ( $compile_with_coverage ) then
 	# Keep the files if we want coverage. Only done in the YDB pipeline.
 	# This does not result in intemediate large layers, so it's okay
+	# For coverage, make sure that the directory is writable by gtmtest:gtc so tests can write .gcda files into that directory
+	chown -R gtmtest:gtc $source_dir/$dbgpro
 else if ( "$git_tag" == "master" ) then
 	set ydbinstall = `find ${source_dir}/${dbgpro} -name 'ydbinstall' -not -path '*utf8*'`
 	mv $source_dir/$dbgpro/yottadb_r*/ydbinstall /tmp/
