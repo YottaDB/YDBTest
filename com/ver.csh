@@ -44,11 +44,6 @@ else if (($image == "b") || ($image == "bta")) then
 else
 	set image = "dbg"
 endif
-if (! -e $gtm_root/$verno/$image) then
-	echo "VERSION-E-VERNOTEXIST : Directory $gtm_root/$verno/$image does not exist. Exiting..."
-	exit -1
-endif
-
 setenv gtm_verno $verno
 setenv gtm_ver $gtm_root/$verno
 setenv ydb_dist $gtm_root/$verno/$image
@@ -82,3 +77,10 @@ set __save_ver=`alias ver`
 	unalias vers versi versio   # remove unnecessary aliases defined by gtm_env.csh
 alias ver "$__save_ver"
 unset __save_ver
+
+if (! -e $gtm_root/$verno/$image) then
+	if ( ! $?quiet ) then
+		echo "VERSION-E-VERNOTEXIST : Directory $gtm_root/$verno/$image does not exist. Exiting..."
+	endif
+	exit -1
+endif
