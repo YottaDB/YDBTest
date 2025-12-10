@@ -37,6 +37,7 @@
 # mutex_type-ydb1178			[nars]		Various tests of MUTEX_TYPE being YDB, PTHREAD or ADAPTIVE
 # rundown_file_not_found-ydb1154	[ben]		Test that mupip rundown runs successfully even if the file pointed to by gtm_repl_instance/ydb_repl_instance does not exist.
 # fallintoflst-ydb1142			[ben]		Test that that FALLINTOFLST compile time warning occurs and that compiler finishes compilation without issue.
+# socketspinloop-ydb1195		[jon]		Test that WRITE /WAIT on socket device with multiple listening sockets return even with a timeout
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -75,6 +76,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic large_block_backup-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic empty_routine-ydb1184"
 setenv subtest_list_non_replic	"$subtest_list_non_replic rundown_file_not_found-ydb1154"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1142"
+setenv subtest_list_non_replic	"$subtest_list_non_replic socketspinloop-ydb1195"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
