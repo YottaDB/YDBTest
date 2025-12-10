@@ -1,0 +1,362 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test naked reference optimization if GVN subscripts are unsubscripted local variables
+# -------------------------------------------------------------------------------------------------------------
+
+# Create database
+
+# Compile [ydb1177.m] routine with -machine
+
+## Test 1: See test case in MR description at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782 where one subscript in the global reference is a local variable y
+# Run [T1^ydb1177] label
+# Confirm OC_GVNAMENAKED present in machine instruction output.
+# Previously, this was omitted and OC_GVNAME instruction was output instead.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAMENAKED
+
+## Test 2: See test case at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2900580851
+# Run [T2^ydb1177] label
+# Confirm OC_GVNAMENAKED present in machine instruction output.
+# Previously, this was omitted and OC_GVNAME instruction was output instead.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAMENAKED
+
+## Test 3: See test case naked8.m at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2900585936
+# Run [T3^ydb1177] label
+# Expect no GVDBGNAKEDMISMATCH error. Previously, "%YDB-E-GVDBGNAKEDMISMATCH, Invalid GVNAKED in gv_optimize: $REFERENCE did not match OP_GVNAKED: ^x(3,1) != ^x(1,1)." was issued
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+## Test 4: See test case naked8a in https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2906212967
+# Run [T4^ydb1177] label
+# Expect no GVDBGNAKEDMISMATCH error. Previously, "%YDB-E-GVDBGNAKEDMISMATCH, Invalid GVNAKED in gv_optimize: $REFERENCE did not match OP_GVNAKED: ^x(2,1) != ^x(1,1)." was issued
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+### Test 5: See test case naked8b in:
+#  https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2928117803
+#  https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2928178104
+#  https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2931493706
+#  https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2933909981
+## T5n1: OC_ADD
+# Compile [^T5n1.m] routine with -machine
+# Run [T5n1] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n2: OC_SUB
+# Compile [^T5n2.m] routine with -machine
+# Run [T5n2] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n3: OC_MUL
+# Compile [^T5n3.m] routine with -machine
+# Run [T5n3] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n4: OC_DIV
+# Compile [^T5n4.m] routine with -machine
+# Run [T5n4] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n5: OC_IDIV
+# Compile [^T5n5.m] routine with -machine
+# Run [T5n5] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n6: OC_MOD
+# Compile [^T5n6.m] routine with -machine
+# Run [T5n6] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n7: OC_NEG
+# Compile [^T5n7.m] routine with -machine
+# Run [T5n7] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n8: OC_FORCENUM
+# Compile [^T5n8.m] routine with -machine
+# Run [T5n8] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n9: OC_CAT
+# Compile [^T5n9.m] routine with -machine
+# Run [T5n9] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n10: OC_FNINCR
+# Compile [^T5n10.m] routine with -machine
+# Run [T5n10] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n11: OC_INDINCR
+# Compile [^T5n11.m] routine with -machine
+# Run [T5n11] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n12: OC_KILL
+# Compile [^T5n12.m] routine with -machine
+# Run [T5n12] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n13: OC_COMMARG
+# Compile [^T5n13.m] routine with -machine
+# Run [T5n13] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n14: OC_NEWVAR
+# Compile [^T5n14.m] routine with -machine
+# Run [T5n14] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n15: OC_READ
+# Compile [^T5n15.m] routine with -machine
+# Run [T5n15] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n16: OC_RDONE
+# Compile [^T5n16.m] routine with -machine
+# Run [T5n16] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n17: OC_READFL
+# Compile [^T5n17.m] routine with -machine
+# Run [T5n17] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n18: OC_STO
+# Compile [^T5n18.m] routine with -machine
+# Run [T5n18] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n19: OC_SETPIECE
+# Compile [^T5n19.m] routine with -machine
+# Run [T5n19] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n20: OC_XKILL
+# Compile [^T5n20.m] routine with -machine
+# Run [T5n20] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n21: OC_LVZWITHDRAW
+# Compile [^T5n21.m] routine with -machine
+# Run [T5n21] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n22: OC_STOLIT
+# Compile [^T5n22.m] routine with -machine
+# Run [T5n22] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n23: OC_SETP1: SETZP1 if M mode, SETP1 if UTF-8 mode
+# Compile [^T5n23.m] routine with -machine
+# Run [T5n23] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n24: OC_SETEXTRACT
+# Compile [^T5n24.m] routine with -machine
+# Run [T5n24] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n25: OC_MERGE_LVARG
+# Compile [^T5n25.m] routine with -machine
+# Run [T5n25] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n26: OC_SETZEXTRACT
+# Compile [^T5n26.m] routine with -machine
+# Run [T5n26] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n27: OC_SETZPIECE
+# Compile [^T5n27.m] routine with -machine
+# Run [T5n27] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n28: OC_SETALS2ALS
+# Compile [^T5n28.m] routine with -machine
+# Run [T5n28] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n29: OC_SETALSIN2ALSCT
+# Compile [^T5n29.m] routine with -machine
+# Run [T5n29] routine
+# Confirm OC_GVNAMENAKED present, per discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2514#note_2972221662
+OC_GVNAME
+OC_GVNAME
+OC_GVNAMENAKED
+## T5n30: OC_SETALSCT2ALSCT
+# Compile [^T5n30.m] routine with -machine
+# Run [T5n30] routine
+# Confirm OC_GVNAMENAKED present, per discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2514#note_2972221662
+OC_GVNAME
+OC_GVNAME
+OC_GVNAMENAKED
+## T5n31: OC_SETALSCTIN2ALS
+# Compile [^T5n31.m] routine with -machine
+# Run [T5n31] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n32: OC_KILLALIAS
+# Compile [^T5n32.m] routine with -machine
+# Run [T5n32] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n33: OC_SETFNRETIN2ALS
+# Compile [^T5n33.m] routine with -machine
+# Run [T5n33] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n34: OC_SETFNRETIN2ALSCT
+# Compile [^T5n34.m] routine with -machine
+# Run [T5n34] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n35: OC_KILLALIASALL
+# Compile [^T5n35.m] routine with -machine
+# Run [T5n35] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n36: OC_KILLALL
+# Compile [^T5n36.m] routine with -machine
+# Run [T5n36] routine
+# Expect LVUNDEF error in the OC_KILLALL case, since it is not possible to restore the local variable
+# without interfering with the OC_GVNAMENAKED optimization.
+----------
+Error LVUNDEF seen in T5n36-mumps.out as expected:
+ZSTATUS=T5+12^T5n36,%YDB-E-LVUNDEF, Undefined local variable: a
+----------
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+## T5n37: OC_XNEW
+# Compile [^T5n37.m] routine with -machine
+# Run [T5n37] routine
+# Confirm OC_GVNAMENAKED not present in machine instruction output, since the optimization is only performed when the local variable value is unchanged.
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+## Test 6: See test case naked10.m at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2900750298
+# Run [T6^ydb1177] label
+# Expect no GVDBGNAKEDMISMATCH error. Previously, "%YDB-E-GVDBGNAKEDMISMATCH, Invalid GVNAKED in gv_optimize: $REFERENCE did not match OP_GVNAKED: ^x(1,2) != ^x(1,1,"R",2)" was issued
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+## Test 7: See test case naked11 in https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2903391035
+# Run [T7^ydb1177] label
+# Expect no GVDBGNAKEDMISMATCH error. Previously, "%YDB-E-GVDBGNAKEDMISMATCH, Invalid GVNAKED in gv_optimize: $REFERENCE did not match OP_GVNAKED: ^x(1,2) != ^x(1,1,"R",2)" was issued
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+## Test 8: See test case naked12 in https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2903524681
+# Run [T8^ydb1177] label
+# Expect no GVDBGNAKEDMISMATCH error. Previously, "%YDB-E-GVDBGNAKEDMISMATCH, Invalid GVNAKED in gv_optimize: $REFERENCE did not match OP_GVNAKED: ^x(1,2) != ^x(1,1,"R",2)" was issued
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+OC_GVNAME
+
+## Test 9: See test case at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1782#note_2925315026
+# Run [T9^ydb1177] label
+# Confirm OC_GVNAMENAKED present in machine instruction output.
+# Previously, this was omitted and OC_GVNAME instruction was output instead.
+OC_GVNAME
+OC_GVNAMENAKED
+
+## Test 10: See test case at https://gitlab.com/YottaDB/DB/YDB/-/issues/1177#todo-list
+# Run [T10^ydb1177] label
+# Confirm OC_GVNAMENAKED present in machine instruction output.
+# Previously, this was omitted and OC_GVNAME instruction was output instead.
+OC_GVNAME
+OC_GVNAMENAKED
+
+## Test 11: See test case at https://gitlab.com/YottaDB/DB/YDB/-/issues/1177#note_2964158415
+# Run [T11^ydb1177] label
+# Expect MERGEDESC error (followed by GVUNDEF) in T11, since this is required to trigger 
+# a previously issued GVDBGNAKEDUNSET that is no longer expected.
+----------
+Error MERGEDESC seen in T11-mumps.out as expected:
+$ZSTATUS="150379322,T11+4^ydb1177,%YDB-E-MERGEDESC, MERGE operation not possible. ^a(111,2) is a descendant of ^a(111)."
+----------
+----------
+Error GVUNDEF seen in T11-mumps.out as expected:
+$ZSTATUS="150372994,T11+8^ydb1177,%YDB-E-GVUNDEF, Global variable undefined: ^a(111,2)"
+----------
+# Expect no GVDBGNAKEDUNSET or GVNAKED errors. Previously, GVDBGNAKEDUNSET was seen in Debug builds and GVNAKED was seen in Pro builds.

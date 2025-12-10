@@ -40,6 +40,7 @@
 # socketspinloop-ydb1195		[jon]		Test that WRITE /WAIT on socket device with multiple listening sockets return even with a timeout
 # mcomm_deserialize-ydb1152		[jon]		Test M commands to serialize/deserialize local or global variable subtree
 # duplicatenew_warning-ydb1111		[ben]		Test that mumps compiler correctly gives a DUPLICATENEW warning when attempting to new a variable twice on the same line.
+# nakedref_varsubs-ydb1177		[jon]		Test naked reference optimization if GVN subscripts are unsubscripted local variables'
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -80,6 +81,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fallintoflst-ydb1142"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socketspinloop-ydb1195"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mcomm_deserialize-ydb1152"
 setenv subtest_list_non_replic	"$subtest_list_non_replic duplicatenew_warning-ydb1111"
+setenv subtest_list_non_replic	"$subtest_list_non_replic nakedref_varsubs-ydb1177"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
@@ -91,6 +93,11 @@ else
 endif
 
 setenv subtest_exclude_list ""
+if ("$gtm_test_dynamic_literals" == "DYNAMIC_LITERALS") then
+	# Disable this test if dynamic literals are enabled, since the optimization under test will not be performed,
+	# causing spurious test failures.
+	setenv subtest_exclude_list "$subtest_exclude_list nakedref_varsubs-ydb1177"
+endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
