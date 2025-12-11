@@ -89,9 +89,17 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 		# RHEL 9 does not have a r1.38 tarball (which the below subtest relies on) so skip in that case
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
 	endif
-else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
-	# olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
-	setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
+else if ("ubuntu" == $gtm_test_linux_distrib) then
+	if ("20.04" == $gtm_test_linux_version) then
+		# disable below subtests since no binaries/tarballs for Ubuntu 20.04 (not all versions supported)
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
+	else if (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version)) then
+		# Disable "olderversion" subtest since no r2.04 binaries/tarballs for Ubuntu 24.04 on AARCH64
+		# Once r2.04 is released, the below line can be removed.
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+		# Disable "configure_rmfile-gtmde201825" subtest since no r1.38 binaries/tarballs for Ubuntu 24.04 on AARCH64
+		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
+	endif
 else if (("debian" == $gtm_test_linux_distrib) && ("13" == $gtm_test_linux_version)) then
 	# Disable "olderversion" subtest on Debian 13 since no YottaDB r1.38, r2.00 and r2.02 ydbinstall
 	# uses configure that in turn relies on ld.gold which is not available in Debian 13.
