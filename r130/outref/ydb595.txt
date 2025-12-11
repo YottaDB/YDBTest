@@ -5,4 +5,19 @@ Upstream base version:   ##ZVERSION##
 Platform:                Linux ##ARCH##
 Build date/time:         ##ZRELDATE##
 Build commit SHA:        ##SHA##
+##SUSPEND_OUTPUT CLANG_BUILD
+Compiler:                GCC
+##ALLOW_OUTPUT CLANG_BUILD
+##SUSPEND_OUTPUT GCC_BUILD
+Compiler:                Clang
+##ALLOW_OUTPUT GCC_BUILD
+##SUSPEND_OUTPUT DBG
+Build Type:              Production
+##ALLOW_OUTPUT DBG
+##SUSPEND_OUTPUT PRO
+Build Type:              Debug
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT ASAN_DISABLED
+ASAN:                    ASAN Enabled
+##ALLOW_OUTPUT ASAN_DISABLED
 PASS: $ZRELDATE contains "(dirty)" only if $ZYRELEASE is a development release (i.e. r9*)

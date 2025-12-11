@@ -108,6 +108,12 @@ PASS
 ##TEST_AWKPlatform:                .*
 ##TEST_AWKBuild date/time:         .*
 ##TEST_AWKBuild commit SHA:        .*
+##TEST_AWKCompiler:                .*
+##TEST_AWKCompiler Version:        .*
+##TEST_AWKBuild Type:              .*
+##SUSPEND_OUTPUT ASAN_DISABLED
+ASAN:                    ASAN Enabled
+##ALLOW_OUTPUT ASAN_DISABLED
 # Test --warnings option [$ydb_dist/yottadb --warnings --run ydb1102]:
 PASS
 
@@ -148,6 +154,12 @@ PASS
 ##TEST_AWKPlatform:                .*
 ##TEST_AWKBuild date/time:         .*
 ##TEST_AWKBuild commit SHA:        .*
+##TEST_AWKCompiler:                .*
+##TEST_AWKCompiler Version:        .*
+##TEST_AWKBuild Type:              .*
+##SUSPEND_OUTPUT ASAN_DISABLED
+ASAN:                    ASAN Enabled
+##ALLOW_OUTPUT ASAN_DISABLED
 # Test -w option [$ydb_dist/yottadb -w --run ydb1102]:
 PASS
 
