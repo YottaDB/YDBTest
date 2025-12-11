@@ -13,6 +13,7 @@ Region	DEFAULT
 
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
+##SUSPEND_OUTPUT PAGE_SIZE_16KB
 Region DEFAULT :  critical           = 0x000000000001F000
 Region DEFAULT :  shmpool_buffer     = 0x000000000002E000
 Region DEFAULT :  lock_space         = 0x0000000000132000
@@ -30,6 +31,26 @@ Region DEFAULT :  shared_memory_size = 0x00000000009E0000
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000000A00000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_16KB
+##SUSPEND_OUTPUT PAGE_SIZE_4KB
+Region DEFAULT :  critical           = 0x0000000000020000
+Region DEFAULT :  shmpool_buffer     = 0x0000000000030000
+Region DEFAULT :  lock_space         = 0x0000000000134000
+Region DEFAULT :  cache_queues_state = 0x0000000000150000
+Region DEFAULT :  cache_que_header   = 0x0000000000150030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x0000000000188650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x00000000001C4000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x00000000005C4000
+Region DEFAULT :  bt_que_header      = 0x00000000009C4000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x00000000009D41D0
+Region DEFAULT :  bt_record          = 0x00000000009D4200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x00000000009E8000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000002000000
+##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_4KB
 ##SUSPEND_OUTPUT NOASYNCIO
 %YDB-E-ASYNCIONOMM, Database file ##TEST_PATH##/mumps.dat has ASYNCIO enabled; cannot enable MM
 ##ALLOW_OUTPUT NOASYNCIO
@@ -43,6 +64,7 @@ Region	DEFAULT
 
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
+##SUSPEND_OUTPUT PAGE_SIZE_16KB
 Region DEFAULT :  critical           = 0x000000000001F000
 Region DEFAULT :  shmpool_buffer     = 0x000000000002E000
 Region DEFAULT :  lock_space         = 0x0000000000132000
@@ -52,6 +74,18 @@ Region DEFAULT :  shared_memory_size = 0x000000000054E000
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000000600000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_16KB
+##SUSPEND_OUTPUT PAGE_SIZE_4KB
+Region DEFAULT :  critical           = 0x0000000000020000
+Region DEFAULT :  shmpool_buffer     = 0x0000000000030000
+Region DEFAULT :  lock_space         = 0x0000000000134000
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x0000000000550000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000002000000
+##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_4KB
 ##TEST_AWKRegion DEFAULT :  db_file_header     = 0x[0-9A-F]{16}
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -70,6 +104,7 @@ Region	DEFAULT
 
 ##TEST_AWKRegion DEFAULT : Shared_memory       = 0x[0-9A-F]{16}
 Region DEFAULT :  node_local         = 0x0000000000000000
+##SUSPEND_OUTPUT PAGE_SIZE_16KB
 Region DEFAULT :  critical           = 0x000000000001F000
 Region DEFAULT :  jnl_buffer_struct  = 0x000000000002E400
 Region DEFAULT :  jnl_buffer_data    = 0x000000000005E6E8
@@ -90,6 +125,29 @@ Region DEFAULT :  shared_memory_size = 0x0000000000F33000
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000001000000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_16KB
+##SUSPEND_OUTPUT PAGE_SIZE_4KB
+Region DEFAULT :  critical           = 0x0000000000020000
+Region DEFAULT :  jnl_buffer_struct  = 0x0000000000030400
+Region DEFAULT :  jnl_buffer_data    = 0x00000000000606E8
+Region DEFAULT :  shmpool_buffer     = 0x000000000018C000
+Region DEFAULT :  lock_space         = 0x0000000000290000
+Region DEFAULT :  cache_queues_state = 0x00000000002AC000
+Region DEFAULT :  cache_que_header   = 0x00000000002AC030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
+Region DEFAULT :  cache_record       = 0x00000000002E4650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
+Region DEFAULT :  global_buffer      = 0x0000000000320000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  encrypted_globuff  = 0x0000000000720000 : Numelems = 0x00000400 : Elemsize = 0x00001000
+Region DEFAULT :  db_file_header     = 0x0000000000B20000
+Region DEFAULT :  bt_que_header      = 0x0000000000F20000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x0000000000F301D0
+Region DEFAULT :  bt_record          = 0x0000000000F30200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+##SUSPEND_OUTPUT HUGEPAGES_ON
+Region DEFAULT :  shared_memory_size = 0x0000000000F44000
+##ALLOW_OUTPUT HUGEPAGES_ON
+##SUSPEND_OUTPUT HUGEPAGES_OFF
+Region DEFAULT :  shared_memory_size = 0x0000000002000000
+##ALLOW_OUTPUT HUGEPAGES_OFF
+##ALLOW_OUTPUT PAGE_SIZE_4KB
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

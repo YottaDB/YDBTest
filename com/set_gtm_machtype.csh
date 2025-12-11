@@ -212,5 +212,18 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 	endif
 endif
 
+# Note down os/memory PAGE_SIZE. It is 4096 bytes (4KiB) for all x86_64 and aarch64 systems.
+# But on an Apple M2 system running Ubuntu via Asahi Linux, it is 16384 bytes (16KiB).
+# So page size cannot be assumed to unconditionally be 4KiB. Hence set an env var to note this down.
+set pagesize = `getconf PAGE_SIZE`
+if (4096 == $pagesize) then
+	setenv is_pagesize_4KiB 1
+else if (16384 == $pagesize) then
+	setenv is_pagesize_4KiB 0
+else
+	echo "SET_GTM_MACHTYPE-E-PAGESIZE : PAGE_SIZE is neither 4KiB nor 16KiB but is [$pagesize]. Exiting..."
+	exit -1
+endif
+
 set anyerror
 ##### HOST SPECIFIC FUNNIES ####

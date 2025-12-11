@@ -526,6 +526,12 @@ BEGIN {
 	else
 		envir[no_options] = "MUTEX_TYPE_DEFAULT"
 	#
+	option_names[++no_options] = "is_pagesize_4KiB"
+	if (1 == ENVIRON["is_pagesize_4KiB"])
+		envir[no_options] = "PAGE_SIZE_4KB"
+	else
+		envir[no_options] = "PAGE_SIZE_16KB"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported
