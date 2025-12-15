@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,11 +31,11 @@ setenv srcdir $1
 set tmp_time = "`date +%H_%M_%S`_$$"
 if ( $?HOSTOS == "0" )  setenv HOSTOS `uname -s`
 if ($HOSTOS == "SunOS") then
-        # if running in UTF-8 locale, punctuation marks get displayed as their octal equivalents due to some tcsh bug
-        # to work around this until tcsh is fixed, we transform such an output to what it should normally be.
+	# if running in UTF-8 locale, punctuation marks get displayed as their octal equivalents due to some tcsh bug
+	# to work around this until tcsh is fixed, we transform such an output to what it should normally be.
 	sed 's/\\\075/=/g' $srcdir/env.txt >&! $srcdir/env_$tmp_time.txt
 	if ($status) then
-       		echo "sed command failed during UTF8 solaris transformation in remote_getenv.csh"
+		echo "sed command failed during UTF8 solaris transformation in remote_getenv.csh"
 	endif
 	mv $srcdir/env_$tmp_time.txt $srcdir/env.txt
 endif
@@ -84,4 +84,13 @@ source $gtm_tst/com/set_gtm_machtype.csh
 # host (in which case the update process/helpers would encounter errors at startup trying to create the statsdb).
 setenv gtm_statshare 0
 unsetenv gtm_statsdir
+
+# Set appropriate compilation flags on the remote side of a multi-host test. Do not inherit the flags from the
+# originating host as they might be different even for the same version. For example, if the originating host
+# has a higher version of clang installed, it might use c compilation flags like "-std=c17" which might not be
+# valid on the remote host in case it only has a lower version of clang installed that supports "-std=c11".
+if (-e $gtm_tools/gtm_env.csh) then
+	source $gtm_tools/gtm_env.csh		# this sets "gt_cc_options_common" etc. correctly to reflect remote host
+	source $gtm_tst/com/set_specific.csh	# this sets "gtt_cc_shl_options" etc. correctly to reflect the remote host
+endif
 
