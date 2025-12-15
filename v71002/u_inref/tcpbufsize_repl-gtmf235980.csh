@@ -88,9 +88,6 @@ setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF 1 $lt_receive
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
 
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
-
 echo "## Check output for BUFFSIZETOOSMALL and correct SO_SNDBUF and SO_RCVBUF values"
 ./logcheck.csh $tnum
 echo "# Expect BUFFSIZETOOSMALL errors"
@@ -98,6 +95,8 @@ grep BUFFSIZETOOSMALL $tnum-SOURCEstart.logx | sed 's/^.*"\(GTM-W-BUFFSIZETOOSMA
 grep BUFFSIZETOOSMALL $SEC_SIDE/$tnum-RECEIVERstart.logx | sed 's/^.*"\(GTM-W-BUFFSIZETOOSMALL, TCP .* buffer size passed to .* too small, setting to minimum size of [0-9]*.\)".*$/\1/g'
 $gtm_tst/com/check_error_exist.csh srcstartcmd.out BUFFSIZETOOSMALL >& ${tnum}SOURCE.errx
 $gtm_tst/com/check_error_exist.csh $SEC_SIDE/recvstartcmd.out BUFFSIZETOOSMALL >& ${tnum}RECEIVER.errx
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 2: MUPIP REPLICATE without -SENDBUFFSIZE or -RECVBUFFSIZE"
@@ -110,13 +109,11 @@ $MSR STARTSRC INST1 INST2
 echo "# Start the receiver server"
 setenv gtm_test_replic_prefix "strace -ttt -s 256 -f -o ${tnum}-RECEIVERstart.logx -e trace=setsockopt,write,writev"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 echo "# On the source server, expect SO_SNDBUF=$source_def_SNDBUF (GT.M internal default value) and SO_RCVBUF unset"
 set log = "${tnum}-SOURCEstart.logx"
 set buffer = SNDBUF
-$gtm_tst/com/wait_for_log.csh -log $log -message $buffer -duration 10
+$gtm_tst/com/wait_for_log.csh -log $log -message $buffer
 set actual_source_SNDBUF = `grep "^.*setsockopt.*SO_$buffer" "$log" | head -1 | sed 's/^.*, \[\([0-9]*\)\].*/\1/'`
 if ($source_def_SNDBUF != $actual_source_SNDBUF) then
 	echo -n "FAIL"
@@ -133,7 +130,7 @@ endif
 echo "# On the replicating server, expect SO_RCVBUF=$receiver_def_RCVBUF (GT.M internal default value) and SO_SNDBUF unset"
 set log = "$SEC_SIDE/${tnum}-RECEIVERstart.logx"
 set buffer = RCVBUF
-$gtm_tst/com/wait_for_log.csh -log $log -message $buffer -duration 10
+$gtm_tst/com/wait_for_log.csh -log $log -message $buffer
 set actual_receiver_RCVBUF = `grep "^.*setsockopt.*SO_$buffer" "$log" | head -1 | sed 's/^.*, \[\([0-9]*\)\].*/\1/'`
 if ($receiver_def_RCVBUF != $actual_receiver_RCVBUF) then
 	echo -n "FAIL"
@@ -147,6 +144,8 @@ if ($status == 1) then
 else
 	echo "FAIL: SO_SNDBUF set by replicating instance, -SENDBUFFSIZE not set"
 endif
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 3: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the GT.M minimum and system default SO_SNDBUF and SO_RCVBUF values"
@@ -167,8 +166,10 @@ setenv gtm_test_sendbuffsize "`setbufsize.sh $tnum RECEIVER SNDBUF $receiver_min
 setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF $receiver_min_RCVBUF $default_RCVBUF`"
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
+# Connection established message of the format: "Connected to secondary, using TCP send buffer size [0-9]* receive buffer size [0-9]*"
+$gtm_tst/com/wait_for_log.csh -log "${tnum}-SOURCEstart.logx" -message "Connected to secondary"
+# Connection established message of the format: "Connection established, using TCP send buffer size [0-9]* receive buffer size [0-9]*"
+$gtm_tst/com/wait_for_log.csh -log "${SEC_SIDE}/${tnum}-RECEIVERstart.logx" -message "Connection established"
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 echo "## Expect no change to either buffer on either server, since the system default is chosen whenever it exceeds the GT.M minimum."
 foreach server ("SOURCE" "RECEIVER")
@@ -186,6 +187,8 @@ foreach server ("SOURCE" "RECEIVER")
 		endif
 	end
 end
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 4: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the system default SO_SNDBUF and SO_RCVBUF values and 1 MiB"
@@ -206,10 +209,10 @@ setenv gtm_test_sendbuffsize "`setbufsize.sh $tnum RECEIVER SNDBUF $default_SNDB
 setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF $default_RCVBUF $MiB`"
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 ./logcheck.csh $tnum
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 5: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE at exactly their internal default values"
@@ -231,10 +234,10 @@ echo "# Set gtm_test_recvbuffsize to the internal default SO_RCVBUF value ($sour
 setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF $receiver_def_RCVBUF $receiver_def_RCVBUF`"
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 ./logcheck.csh $tnum
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 6: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the larger of the system default and the internal default, and INT_MAX (to avoid NUMERR from MUPIP CLI)"
@@ -273,10 +276,10 @@ setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF $min $INT_MAX
 
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 ./logcheck.csh $tnum
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 echo "### Test 7: MUPIP REPLICATE with -NOSENDBUFFSIZE and -NORECVBUFFSIZE"
@@ -315,10 +318,10 @@ setenv gtm_test_recvbuffsize "`setbufsize.sh $tnum RECEIVER RCVBUF $exp $exp`"
 
 echo "# Start the receiver server"
 $MSR STARTRCV INST1 INST2
-echo "# Stop the source and receiver servers"
-$MSR STOP INST1 INST2
 echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 ./logcheck.csh $tnum
+echo "# Stop the source and receiver servers"
+$MSR STOP INST1 INST2
 echo
 
 # It is possible that the strace-prefixed server processes run in the background by 'SRC.csh' and 'RCVR.csh' will attempt"

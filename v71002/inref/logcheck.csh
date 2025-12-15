@@ -26,16 +26,15 @@ foreach server ("SOURCE" "RECEIVER")
 		set sockbufts = `grep "SO_$buffer" $log | head -1 | sed 's/^.* \([0-9]\+\.[0-9]\+\).*setsockopt.*$/\1/g'`
 		# Get timestamp for write(..., SO_$buffer, ...) on $server server
 		if ($server == "SOURCE") then
-			set msg = "Connected to secondary"
-			$gtm_tst/com/wait_for_log.csh -log $log -message $msg -duration 10
 			# Connection established message of the format: "Connected to secondary, using TCP send buffer size [0-9]* receive buffer size [0-9]*"
-			set connestts = `grep "$msg" $log | sed 's/^.* \([0-9]\+\.[0-9]\+\).*write.*$/\1/g'`
+			set msg = "Connected to secondary"
+			$gtm_tst/com/wait_for_log.csh -log $log -message $msg
 		else
-			set msg = "Connection established"
-			$gtm_tst/com/wait_for_log.csh -log $log -message $msg -duration 10
 			# Connection established message of the format: "Connection established, using TCP send buffer size [0-9]* receive buffer size [0-9]*"
-			set connestts = `grep "$msg" $log | sed 's/^.* \([0-9]\+\.[0-9]\+\).*write.*$/\1/g'`
+			set msg = "Connection established"
+			$gtm_tst/com/wait_for_log.csh -log $log -message $msg
 		endif
+		set connestts = `grep "$msg" $log | sed 's/^.* \([0-9]\+\.[0-9]\+\).*write.*$/\1/g'`
 
 		# Set buffer-specific variables for use in various checks below
 		if ($buffer == "SNDBUF") then
@@ -110,7 +109,7 @@ foreach server ("SOURCE" "RECEIVER")
 
 		if (("$bufspec" != "none") && ("T1" != $tnum)) then
 			echo "# Confirm SO_$buffer not set by $server server"
-			$gtm_tst/com/wait_for_log.csh -log $log -message "exited with 0" -duration 10
+			$gtm_tst/com/wait_for_log.csh -log $log -message "exited with 0"
 			grep SO_$buffer $log
 			if ($status == 1) then
 				echo -n "PASS: SO_$buffer not"
@@ -121,10 +120,10 @@ foreach server ("SOURCE" "RECEIVER")
 			continue
 		endif
 		if ("T1" == $tnum) then
-			$gtm_tst/com/wait_for_log.csh -log $log -message BUFFSIZETOOSMALL -duration 10
+			$gtm_tst/com/wait_for_log.csh -log $log -message BUFFSIZETOOSMALL
 			set buf_actual = `grep BUFFSIZETOOSMALL $log | grep $optbuf | head -1 | sed 's/.*"GTM-W-BUFFSIZETOOSMALL, TCP .* buffer size passed to .* too small, setting to minimum size of \([0-9]*\).".*$/\1/g'`
 		else
-			$gtm_tst/com/wait_for_log.csh -log $log -message $buffer -duration 10
+			$gtm_tst/com/wait_for_log.csh -log $log -message $buffer
 			set buf_actual = `grep "^.*setsockopt.*SO_$buffer" $log | head -1 | sed 's/^.*, \[\([0-9]*\)\].*/\1/'`
 			#  setsockopt not called for T1 scenario, so skip the below logic in that case
 			echo "# Confirm $server SO_$buffer set BEFORE connection established"
