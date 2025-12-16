@@ -70,6 +70,8 @@ if (! $is_tst_dir_ssd) then
 	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+
 # Disable largelibtest subtest on hosts that do not have an SSD.
 # On HDD, it takes many hours to finish that the TEST-E-HANG alert kicks in.
 if (! $is_tst_dir_ssd) then
@@ -82,6 +84,14 @@ else if ("HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
 	# can run for hours just to create the shared libraries and then is going to need more than 4GB of memory
 	# which can easily swamp the system.
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
+else if ($gtm_test_libyottadb_asan_enabled) then
+	# Disable largelibtest if ASAN is ON. This is because creating the shared libraries with ASAN has been seen to
+	# take as much as 10 hours even on reasonably fast systems. The same subtest has been seen to run in 1 hour on
+	# the same system. It is not clear exactly what combination of random settings (from the test framework) causes
+	# the huge slowdown. but every long test run has been seen with ASAN:1 random setting. It is not surprising since
+	# there is gigabytes of memory involved in the shared library and ASAN is going to do memory checks on all of that.
+	# It is not considered worth testing this subtest with ASAN given the huge runtime it entails.
+	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
 ## Disable 4g_dbcertify on platforms without a V4 version
@@ -89,7 +99,6 @@ if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
 endif
 
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
 # Disable heavyweight subtests on ARM platform as it takes a long time to run.
 # Also disable these subtests on 1-CPU boxes as it would take a long time to run.
 # The test mostly exercises portable code so it is okay if only multi-CPU x86_64 boxes runs these tests.
