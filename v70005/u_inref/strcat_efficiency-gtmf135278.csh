@@ -12,16 +12,19 @@
 #################################################################
 
 echo '# Check that concatenating strings that already happen to be at the end of the stringpool'
-echo '# produces very fast concatenation operations. For v70005 we expect CPU instructions under 150,000,000.'
-echo '# (Max instructions used by v70005 is 69,020,710 on armv6l dbg; min is 14,714,225 on x86_64 pro.)'
-echo '# (max instructions used by v70004 is 2,735,479,421 on armv6l dbg; min is 529,709,305 on x86_64 pro.)'
+echo '# produces very fast concatenation operations. We have seen the CPU instructions range'
+echo '# from 15 million to 60 million with V70005 and go as high as 530 million with V70004.'
+echo '# So we set the limit at 65,000,000 CPU instructions and treat anything less than that as a PASS.'
 
 # stp_gcol() preserves order of string addresses in the stringpool thereby ensuring garbage collection will
 # continue to keep strings at the end of the stringpool. But stp_gcol_nosort() will not preserve the order
 # Therefore force stp_gcol() to always sort for this test (otherwise the test will fail because it takes longer to run).
 setenv ydb_stp_gcol_nosort 0
 
-set limit = 150000000
+# In UTF-8 mode, the instructions are noticeably more so we disable that to keep the test limits as strict as possible.
+$switch_chset "M" >& switch_chset.log
+
+set limit = 65000000
 
 # first run noop just to precompile the .o file
 $gtm_exe/mumps -run noop^strcatEfficiency

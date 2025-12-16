@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -58,10 +58,11 @@ endif
 # Add tests to space-separated $subtest_exclude_list to disable them, e.g. on a particular host or OS
 setenv subtest_exclude_list ""
 
-# Only run tests that use perf if perf exists and db is not an asan build (slow)
+# Only run the below perf related stage of the subtest if "perf" executable exists and is the YottaDB
+# build is not a DBG or ASAN build (both are slow).
 set perf_missing = `which perf >/dev/null; echo $status`
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
-if ($perf_missing || $gtm_test_libyottadb_asan_enabled) then
+if ($perf_missing || $gtm_test_libyottadb_asan_enabled || ("pro" != "$tst_image")) then
 	setenv subtest_exclude_list "$subtest_exclude_list strcat_efficiency-gtmf135278"
 endif
 
