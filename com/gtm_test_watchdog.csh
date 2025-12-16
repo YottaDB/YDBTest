@@ -109,7 +109,7 @@ while !( -e $exit_file)
 			# Copy settings.csh to debuglogs
 			if (-e settings.csh) cp settings.csh $gtm_test_debuglogs_dir/${testname}_${cursubtestdir}_HANG_settings.csh
 			# Send TEST-E-HANG email
-			mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list < hangalert_email.txt
+			mailx -s "TEST-E-HANG $tst_src/$tst_ver $tst_image $testname/$cursubtestdir $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list < hangalert_email.txt
 			set mailsent = 1
 			echo "TEST-E-HANG : $msg" >> hangalert.out
 			cd -
