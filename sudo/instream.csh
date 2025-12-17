@@ -144,6 +144,17 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list support"
 endif
 
+if ($gtm_test_coverage_enabled) then # Set by $gtm_tst/com/is_libyottadb_asan_enabled.csh
+	# This test creates a user on the fly that runs ydbinstall as non-root
+	# Coverage requires access to be able to write to the gcda files in the
+	# cmake compilation directory, which is owned by $USER:gtc. The new user
+	# has no access to that, resulting in erroneous output in a part of the
+	# ydbinstall script which runs YottaDB to get the current version.
+	#
+	# Hence disable this subtest if coverage is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb924"
+endif
+
 if ("ENCRYPT" == $test_encryption) then
 	# The below subtest uses sudo and su to run as a different userid and exercises the DBPRIVERR error.
 	# But in order to get this error, one needs to pass encryption env vars gtm_passwd/gtmcrypt_config etc.

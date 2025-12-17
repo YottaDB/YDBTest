@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,11 @@ unset anyerror
 # If YottaDB was built with GCC, it will be blank.
 setenv clangmajorver `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}' | gawk 'NR==1{print $1}'`
 set asanlib = `ldd $gtm_exe/libgtmshr.so | grep libasan`
+if ( -f /Distrib/YottaDB/$gtm_verno/$tst_image/CMakeFiles/yottadb.dir/sr_unix/gtm.c.gcno ) then
+	setenv gtm_test_coverage_enabled 1
+else
+	setenv gtm_test_coverage_enabled 0
+endif
 if ("" == "$asanlib") then
 	# With GCC, we link asan dynamically. But with CLANG, we link asan statically. This is the default and recommended
 	# (see https://stackoverflow.com/a/47022141 for detail) option. So check for statically linked asan symbols too.
