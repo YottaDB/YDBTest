@@ -389,19 +389,17 @@ echo '	kill ^y  set ^x(1)=1\
 $gtm_tst/$tst/inref/list.csh openexception.m 2
 $gtm_exe/mumps -run openexception
 
-echo '# Test that ZINTERRUPT handlers save and restore $REFERENCE'
-echo '	kill ^y  lock +y  set $ZINTERRUPT="set ^y=1  lock -y"' > zinterrupt.m
-echo '	; set $REFERENCE and wait for the interrupt to run' >> zinterrupt.m
-echo '	set ^x(1)=1  for  zshow "L":locks  quit:'\'\$'data(locks("L",1))  hang .1' >> zinterrupt.m
-echo '	; verify that $REFERENCE is still ^x(1) and that we have set ^y' >> zinterrupt.m
-echo '	write $REFERENCE,\!,^y,\!' >> zinterrupt.m
-echo '	for  quit:$data(^x(1))'"'=0  hang .1" > waitinterrupt.m
-# use bash for more control over job output
-bash -c " { $gtm_exe/mumps -run zinterrupt 2>&1 & } 2>/dev/null \
-# give signal handlers time to register\
-timeout 30s $gtm_exe/mumps -run waitinterrupt\
-$gtm_exe/mupip intrpt "'$\! 2>&1| sed "s/issued to process .*/issued to process NNNN/" \
-wait'
+echo '## Test that ZINTERRUPT handlers save and restore $REFERENCE'
+echo '# Run [$gtm_exe/mumps -run zinthandle^ydb665] in the background'
+($gtm_exe/mumps -run zinthandle^ydb665 >&! zinthandle.out & ; echo $! >&! zinthandle.pid ) >&! zinthandle-bg.out
+echo '# Give signal handlers time to register: [$gtm_exe/mumps -run waitinterrupt]'
+$gtm_exe/mumps -run waitinterrupt^ydb665
+set zintpid = `cat zinthandle.pid`
+echo '# Issue interrupt to [zinthandle^ydb665] process: [$gtm_exe/mupip intrpt $zintpid]'
+$gtm_exe/mupip intrpt $zintpid
+$gtm_tst/com/wait_for_proc_to_die.csh $zintpid
+echo '# Check [zinthandle^ydb665] process output: [cat zinthandle.out]'
+cat zinthandle.out
 
 echo '# Test that ZTIMEOUT handlers cannot misoptimize a naked reference'
 echo '	set $ZTIMEOUT="1:set ^y=2  write ^y"\

@@ -577,10 +577,17 @@ OC_OPEN
 150379354,+2^openexception,%YDB-E-DEVOPENFAIL, Error opening /not/here,%SYSTEM-E-ENO2, No such file or directory
 ^y
 150379354,+2^openexception,%YDB-E-DEVOPENFAIL, Error opening /not/here,%SYSTEM-E-ENO2, No such file or directory
-# Test that ZINTERRUPT handlers save and restore $REFERENCE
-INTRPT issued to process NNNN
-^x(1)
-1
+## Test that ZINTERRUPT handlers save and restore $REFERENCE
+# Run [$gtm_exe/mumps -run zinthandle^ydb665] in the background
+# Give signal handlers time to register: [$gtm_exe/mumps -run waitinterrupt]
+# Wait up to 30 seconds for zinthandle^ydb665 to signal that an interrupt was received
+# Issue interrupt to [zinthandle^ydb665] process: [$gtm_exe/mupip intrpt $zintpid]
+##TEST_AWKINTRPT issued to process [0-9]*
+# Check [zinthandle^ydb665] process output: [cat zinthandle.out]
+# Set $REFERENCE and wait for the interrupt to run
+# Verify that $REFERENCE is still ^x(1) and that we have set ^y
+$REFERENCE=^x(1)
+^y=1
 # Test that ZTIMEOUT handlers cannot misoptimize a naked reference
 OC_LINESTART
 OC_GVNAME
