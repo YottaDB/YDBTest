@@ -217,4 +217,6 @@ TEST
 <timestamp_masked>; dist=<masked>; src=2; uid=<masked>; euid=<masked>; pid=<masked>; tty=<masked>; command=HALT
 # stop audit_listener and wait for finish
 
+# Checking syslog for expected message.
+##TEST_AWK.* YDB-MUMPS\[[0-9]*\]: %GTM-E-APDLOGFAIL, Audit Principal Device failed to log activity -- generated from 0x[0-9A-F]{16} \(op_read\+0x[0-9A-F]{16}\)\.
 # release port number

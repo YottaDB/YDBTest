@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,7 @@ Release note http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-007_Release
 > Please see the Additional information for GTM-7318 - Audit Principal Device
 > in this document for details. (GTM-7318)
 CAT_EOF
+set start_time = `date "+%Y-%m-%d %H:%M:%S"`
 echo ''
 setenv ydb_msgprefix "GTM"
 setenv ydb_prompt "GTM>"
@@ -180,6 +181,10 @@ GTM_EOF
 	rm -f $aulogfile
 	echo
 end
+
+echo "# Checking syslog for expected message."
+$gtm_tst/com/getoper.csh "$start_time" "" syslog1.txt ""
+grep "Audit Principal Device failed to log activity" syslog1.txt | grep "op_read" | tail -n 1
 
 echo "# release port number"
 $gtm_tst/com/portno_release.csh

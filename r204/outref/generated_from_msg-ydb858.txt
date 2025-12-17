@@ -1,0 +1,52 @@
+# Test to ensure that the new format of the
+# "generated from" syslog messages works correctly.
+# In the new format, the syslog message ends by giving the address
+# of the place in the code that generated the syslog message in
+# library_base+offset format.
+# We will first test this by generating some syslog messages
+# by freezing and unfreezing a database and confirming that the format
+# of the syslog messages is consistent with library_base+offset.
+# Then, we will invoke a Mumps script that will start a new
+# gdb debugging session and check that adding each offset value to the new base value
+# of the library gives the correct code segment, confirming that the offset values are correct.
+
+# Creating database.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# freezing database.
+Region DEFAULT is now FROZEN
+All requested regions frozen
+# Unfreezing database.
+Region DEFAULT is now UNFROZEN
+All requested regions unfrozen
+# saving syslog
+# Checking syslog for DBFREEZEON.
+##TEST_AWK.* YDB-MUPIP\[[0-9]*\]: %YDB-I-DBFREEZEON, Database file ##TEST_PATH##/mumps.dat is FROZEN \(NOOVERRIDE NOONLINE NOAUTOREL\) -- generated from 0x[0-9A-F]{16} \(0x[0-9A-F]{16}\+0x[0-9A-F]{16}\)\.
+# Checking syslog for DBFREEZEOFF.
+##TEST_AWK.* YDB-MUPIP\[[0-9]*\]: %YDB-I-DBFREEZEOFF, Database file ##TEST_PATH##/mumps.dat is UNFROZEN \(NOOVERRIDE NOAUTOREL\) -- generated from 0x[0-9A-F]{16} \(0x[0-9A-F]{16}\+0x[0-9A-F]{16}\)\.
+# extracting offset from line
+##TEST_AWK# resulting DBFREEZEOFF offset is 0x[0-9A-F]{16}
+
+# The next step is to invoke a mumps script that will use a gdb debugging session to
+# print out the place in the code pointed to by the offset value retrieved from
+# the syslog.
+##TEST_AWK# So, the previously calculated value of offset 0x[0-9A-F]{16} is used.
+##TEST_AWK.*[0-9]+			/\* Note, this comment and the next 2 lines after this comment are checked in the test r204/generated_from_msg-ydb858\.
+##TEST_AWK.*[0-9]+			 \* If modified, you need to make the same change in the outref file.
+##TEST_AWK.*[0-9]+			 \*/
+##TEST_AWK.*[0-9]+			send_msg_csa\(CSA_ARG\(csa\) VARLSTCNT\(6\) ERR_DBFREEZEOFF, 4, DB_LEN_STR\(region\), NEG_STR\(override\),
+##TEST_AWK.*[0-9]+									NEG_STR\(cleanup_autorelease\)\);
+# Next, the same test is performed with the DBFREEZEON syslog message.
+# extracting DBFREEZEON offset from line
+##TEST_AWK# resulting DBFREEZEON offset is 0x[0-9A-F]{16}
+
+# And again, call the mumps script to test that
+# the offset value is correct this time with the DBFREEZEON offset value.
+##TEST_AWK.*[0-9]+			/\* Note, this comment and the next 2 lines after this comment are checked in the test r204/generated_from_msg-ydb858\.
+##TEST_AWK.*[0-9]+			 \* If modified, you need to make the same change in the outref file\.
+##TEST_AWK.*[0-9]+			 \*/
+##TEST_AWK.*[0-9]+			send_msg_csa\(CSA_ARG\(csa\) VARLSTCNT\(7\) ERR_DBFREEZEON, 5, DB_LEN_STR\(region\), NEG_STR\(override\), NEG_STR\(online\),
+##TEST_AWK.*[0-9]+									NEG_STR\(online & CHILLED_AUTORELEASE_MASK\)\);
