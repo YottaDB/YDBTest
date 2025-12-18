@@ -20,17 +20,6 @@ source $gtm_tst/com/portno_acquire.csh >>& portno.out
 
 set executables = "mumps mupip dse gtcm_gnp_server gtcm_server gtmsecshr lke"
 
-# gtmsecshr as an suid program runs as root and creates the .gcda with root ownership. For some unknown reason, the coverage
-# program (done by gcc/clang) does not obey the suid, and you get a permission denied error when trying to write coverage, since
-# it seems that it's trying to use the regular user to write the file, not root.
-#
-# There are several ways to try to solve this. "touching" the file is simplest as it ensures the file starts with
-# the correct permissions to begin with. This is only done if the coverage line number mapping file (gcno) exists,
-# which is produced by compilation. If not, no need to run the "touch".
-if ( -f /Distrib/YottaDB/$gtm_verno/$tst_image/CMakeFiles/gtmsecshr.dir/sr_unix/gtmsecshr_wrapper.c.gcno ) then
-	touch /Distrib/YottaDB/$gtm_verno/$tst_image/CMakeFiles/gtmsecshr.dir/sr_unix/gtmsecshr_wrapper.c.gcda
-endif
-
 $echoline
 echo "# Test of <ydb_dist/gtm_dist> env vars and how they affect how executables in $saveydbdist are invoked"
 $echoline

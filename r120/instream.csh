@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,6 +57,14 @@ setenv subtest_exclude_list	""
 # Disable certain time-sensitive tests on single-cpu systems as it uses expect (a terminal and interactive activity)
 if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list readtimeout"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_coverage_enabled) then # Set by $gtm_tst/com/is_libyottadb_asan_enabled.csh
+	# gtmsecshr as an suid program runs as root and creates the .gcda with root ownership (and gtc group, but the default umask
+	# in use by systems gives causes the gtc group to only have read permissions). In any case, it seems the coverage library
+	# runs as a normal user after the suid program exits, and since the .gcda has root ownership, it cannot write to it.
+	setenv subtest_exclude_list "$subtest_exclude_list ydbdist"
 endif
 
 # Submit the list of subtests

@@ -153,6 +153,10 @@ if ($gtm_test_coverage_enabled) then # Set by $gtm_tst/com/is_libyottadb_asan_en
 	#
 	# Hence disable this subtest if coverage is enabled.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb924"
+
+	# The following tests run code as gtmtest1 and gtmsecshr. Disable if coverage is on
+	# as they cannot write the coverage files owned by $USER:gtc (gtc group is only read-only)
+	setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_tmp-ydb1112 gtmsecshrsrvf-ydb_env_set-ydb1112"
 endif
 
 if ("ENCRYPT" == $test_encryption) then
