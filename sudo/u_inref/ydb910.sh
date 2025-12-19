@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,12 +11,13 @@
 #								#
 #################################################################
 
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --from-source --overwrite-existing --utf8 --user $USER $4 > ydbinstall_fromsource.txt 2>&1
+mkdir ydb_build
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --from-source --source-build-dir $PWD/ydb_build --overwrite-existing --utf8 --user $USER $4 > ydbinstall_fromsource.txt 2>&1
 
 status=$?
 if [ 0 != $status ]; then
-    echo "ydbinstall returned a non-zero status: $status"
-    exit $status
+	echo "ydbinstall returned a non-zero status: $status"
+	exit $status
 fi
 
 echo "# Building YottaDB"

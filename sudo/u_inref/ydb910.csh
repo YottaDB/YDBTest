@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,5 +43,5 @@ cd ..
 # Change permissions on the install directory since the files are owned by root
 # Or else the test framework will encounter problems while trying to remove these in case of a passed test run
 set grpname = `id -gn $USER`
-sudo chown -R ${USER}:${grpname} install
-
+$sudostr chown -R ${USER}:${grpname} install
+chmod +w install install/utf8 install/plugin
