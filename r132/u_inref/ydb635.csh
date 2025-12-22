@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 echo "# Testing mupip responds to SIGINT by shutting down cleanly"
 echo "# Running an expect test for mupip integ response to CTRL^C"
 expect $gtm_tst/$tst/u_inref/ydb635.exp > expect.out
-echo "# With the last line in expect.out (File or Region), we can verify that mupip closed successfully"
+echo "# With the last line in expect.out (File:), we can verify that mupip closed successfully"
 # if the last line is different then we know the process didn't quit successfully and remaining exit statements
 # got printed out when the subshell terminated
 echo "# Checking last line of expect.out"

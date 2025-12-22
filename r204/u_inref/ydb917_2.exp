@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -9,9 +9,15 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-set timeout 120
-spawn $env(SHELL)
-send -- "\$gtm_dist/mupip integ\r"
-expect "File:"
-send -- "\003"
-send -- "jobs"
+
+# Test mupip dumpfhead with terminal input and output
+# Timeout 5 seconds
+set timeout 60
+spawn $env(SHELL) -f
+source $::env(gtm_tst)/com/expectinit.exp
+send -- "\r"
+expect SHELL
+send -- "\$gtm_dist/mupip dumpfhead\r"
+expect "File: "
+send -- "fake.txt\r"
+expect SHELL

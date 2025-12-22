@@ -1,0 +1,185 @@
+# There were 5 mupip commands that when run with the -file flag with no files in the command line
+# would display the prompt "File or Region: ", but would only accept a file.
+# These commands are mupip dumpfhead, integ, upgrade, set, and rundown.
+# For dumpfhead and integ the behavior also happens when given no arguments at all.
+# These prompts have been changed to "File: ".
+# This test checks that the prompts are now correct.
+# This test also checks the fix to a mupip dumpfhead bug where the newline that was
+# intended to go after the prompt and before the output would be printed after the output was printed.
+
+# We start by creating a database as some of the tests will test entering
+# real file or region names.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Testing mupip dumpfhead with non-existent file without -file arg.
+# For all non-existent file checks, the name "fake.txt" is used.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+# As the file does not exist we expect a NOTAPATH error.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Next an expect script will test what happens when stdin is a terminal device
+# and when stdin and stdout are both terminal devices.
+# Running the expect script for stdin=terminal stdout=file
+# The file ea.outx has the result of stdin being a terminal device and stdout a file.
+# We will now cat ea.outx and expect to see the File: prompt followed
+# by a file not found error.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+
+# Next, run the expect script for both the input and output streams being a terminal device.
+# We will check the output in this case by greping for the expected output.
+# If the expected output is not found, the entire output will be printed to the log.
+# Otherwise, just a note that the expected output was found.
+# grep found expected output
+
+# Testing mupip dumpfhead with a real DB file.
+# Output stored in dumphead.txt.
+# Checking the number of lines that start with 'record' in the output file.
+# Note that the test will pass if it finds 10 or more such lines.
+##TEST_AWK[0-9][0-9][0-9]*
+# checking that the first line is just 'File:'.
+# Previously there would be not newline after the first line before the 'File:'
+# so that the first line would be something like
+# File:record(sgmnt_data.abandoned_kills)=0
+# but now should just be File:
+File: 
+# Next, check that mupip dumpfhead works when stdin and stdout are not the terminal.
+# First, we will check dumpfhead where stdin is not the terminal.
+# We expect to see that dumpfhead producing output in the proper order,
+# FIRST prompting the user for a file name, THAN reporting a failure to find fake.txt
+# and issuing a general warning about failed mupip commands.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Next, check the case where the output is redirected to a file but the input is from the terminal.
+# We expect the output file to contain the "File:" prompt
+# first on its own line followed by a no file found error message.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+# Next, check mupip dumpfhead when both the input and output device are not
+# a terminal. This test will be tested with directing standard error and out
+# into a file and just directing standard out into a file.
+# as stderr is not redirected we expect an unable to finish all requested actions error.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Now checking the result with just stdout.
+# We expect to see the "FILE:" prompt first and
+# then on a separate line a file not found error.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+# And now checking the result that also has stderr
+# expecting the same result as without stderr but with an error message at the end.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Additionally, at some points there was a TERMWRITE error being sent to the syslog.
+# So now we check to ensure that none of this created a TERMWRITE error.
+# Note that contamination from other concurrent tests on the 
+# system is theoretically possible for this part of the test.
+no TERMWRITE message found in syslog.
+
+# Now checking the error message for mupip upgrade with the -file argument
+# with a non-existent file.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+# Note, for mupip upgrade, the warning prompt is answered with 'y'.
+File: 
+%YDB-I-REGFILENOTFOUND, Database file fake.txt corresponding to region DEFAULT cannot be found
+%SYSTEM-E-ENO2, No such file or directory
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/fake.txt
+%SYSTEM-E-ENO2, No such file or directory
+# And again mupip upgrade, this time with a real region
+# to make sure a real region is not accepted.
+# We expect a "No such file or directory" error message.
+File: 
+%YDB-I-REGFILENOTFOUND, Database file DEFAULT corresponding to region DEFAULT cannot be found
+%SYSTEM-E-ENO2, No such file or directory
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/DEFAULT.dat
+%SYSTEM-E-ENO2, No such file or directory
+
+# Now checking the error message for mupip set with the -file argument
+# with a non-existent file.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+File: 
+# And again mupip set, this time with a real region
+# to make sure a real region is not accepted.
+File: 
+
+# Now checking the error message for mupip rundown with the -file argument
+# with a non-existent file.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+File: 
+%YDB-E-DBOPNERR, Error opening database file fake.txt
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+# And again mupip rundown, this time with a real region
+# to make sure a real region is not accepted.
+# We expect a "No such file or directory" error indicating a region name did not work.
+File: 
+%YDB-E-DBOPNERR, Error opening database file DEFAULT
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+# Now checking the error message for mupip integ with the -file argument
+# with a non-existent file.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+File: 
+%YDB-E-DBOPNERR, Error opening database file fake.txt
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+# As mupip integ, unlike most of the other commands, also works without the -file argument
+# we will now test mupip integ with a non-existent file without the -file argument.
+# This should give exactly the same output as testing with the -file argument above
+File: 
+%YDB-E-DBOPNERR, Error opening database file fake.txt
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+# And again mupip integ, this time with a real region
+# to make sure a real region is not accepted.
+# We expect an "Error opening database file DEFAULT" message indicating that
+# a region name does not work.
+File: 
+%YDB-E-DBOPNERR, Error opening database file DEFAULT
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+# Now mupip integ with a real region name without the -file arg
+# to check that the output is identical to the output with the -file tag above.
+File: 
+%YDB-E-DBOPNERR, Error opening database file DEFAULT
+%SYSTEM-E-ENO2, No such file or directory
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+
+# Now checking the error message for mupip dumpfhead with the -file argument
+# with non-existent file.
+# Previously, this would say File or Region:, but now should just say File:
+# as inputting a region name has never worked with this interface.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path fake.txt does not exist
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# And again mupip dumpfhead, this time with a real region
+# to make sure a real region is not accepted.
+# We expect "Path DEFAULT does not exist" indicating a region does not work.
+File: 
+%DUMPFHEAD-F-NOTAPATH Path DEFAULT does not exist
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Running dbcheck.csh.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
