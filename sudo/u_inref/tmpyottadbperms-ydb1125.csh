@@ -185,5 +185,5 @@ sh ./tmpyottadbperms-ydb1125.sh 12 "nogroup" "rel"
 # Remove test files that will create permission errors during test cleanup
 $sudostr rm -rf test*/gtmsecshrdir
 $sudostr rm -rf test*/utf8/gtmsecshrdir
-$sudostr chmod g+rwx,o+rwx -R test*
+$sudostr chmod u+rwx,g+rwx,o+rwx -R test*
 $sudostr chown -R $USER\:$group ./*

@@ -1,11 +1,28 @@
 # Tests the ydbinstall/ydbinstall.sh --from-source command line option.
 
-# Building YottaDB
+# Building YottaDB with Default Compiler
+# Running [/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --from-source --source-build-dir $PWD/ydb_build --overwrite-existing --utf8 --user $USER $4 > ydbinstall_fromsource.txt 2>&1]
 Building branch master from repo https://gitlab.com/YottaDB/DB/YDB.git
 
-# YottaDB installed
+# YottaDB installed with Default Compiler
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+# Building YottaDB with Clang
+# Running [/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --from-source --compiler clang --source-build-dir $PWD/ydb_build --overwrite-existing --utf8 --user $USER $4 > ydbinstall_fromsource2.txt 2>&1]
+Building branch master from repo https://gitlab.com/YottaDB/DB/YDB.git
+
+# YottaDB installed with Clang
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
+##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+# Installing Octo
+# Running [/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --plugins-only --octo --overwrite-existing --user $USER $4 > ydbinstall_fromsource3.txt 2>&1]
+Now installing YDBAIM
+Now installing YDBPosix
+Now installing YDBOcto
+# Checking that Clang was used to compile YottaDB, Posix Plug-in, and Octo
+##TEST_AWKYottaDB:   \[[0-9a-f ]{6}\]  .*clang version .*
+##TEST_AWKPosix Plug-in:   \[[0-9a-f ]{6}\]  .*clang version .*
+##TEST_AWKOcto:   \[[0-9a-f ]{6}\]  .*clang version .*
 
 YDB>
 ##TEST_AWKYottaDB r.* Linux .*

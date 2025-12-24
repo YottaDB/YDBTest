@@ -44,4 +44,4 @@ cd ..
 # Or else the test framework will encounter problems while trying to remove these in case of a passed test run
 set grpname = `id -gn $USER`
 $sudostr chown -R ${USER}:${grpname} install
-chmod +w install install/utf8 install/plugin
+chmod +w install install/utf8 install/plugin install/plugin/o install/plugin/o/utf8 install/plugin/r
