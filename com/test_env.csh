@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 ###########################################################
 #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -60,7 +60,7 @@ if ! ( $?settest_args ) setenv settest_args "$gtmtest_args"
 # Testing aliases
 alias tsync '$gtm_test_com_individual/tsync.csh --info=stats0,flist0 \!*'   # sync YDBTest code from current dir to run dir
 # note: tcsh is spawned for gtmtest to capture ^C and still run lasttest.csh
-alias gtmtest    'tsync; tcsh -fc "$gtm_tst/com/gtmtest.csh $gtmtest_args \!*:q"; source $gtm_test_com_individual/lasttest.csh'
+alias gtmtest    'tsync; set _argv = ( \!:* ); tcsh -fc "$gtm_tst/com/gtmtest.csh $gtmtest_args $_argv:q"; source $gtm_test_com_individual/lasttest.csh'
 alias test_env   'source $gtm_test_com_individual/test_env.csh'   # refresh gtmtest environment setup
 alias ver        'source $gtm_test_com_individual/ver.csh \!*'   # change version of database invoked by gtmtest
 # settest/runtest and related aliases to set-up environment and collate results into $r
