@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -257,7 +257,7 @@ echo "MUNOSTRMBKUP retired for V7, only expected for V6 database."
 if ($gtm_test_use_V6_DBs) then
 	$gtm_tst/com/check_error_exist.csh dbcreate.out MUNOSTRMBKUP
 endif
-egrep "-I-|-E-" dbcreate.out >&! /dev/null
+$grep -E "-I-|-E-" dbcreate.out >&! /dev/null
 if ($status) then
 	echo "OK"
 	$gtm_tst/$tst/u_inref/try_db.csh >&! dbtry-n.out

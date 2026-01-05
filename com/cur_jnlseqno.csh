@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,7 +29,7 @@ if ("" == "$gtm_test_parm_to_gtm") setenv gtm_test_parm_to_gtm 0
 #
 echo "Current Time:`date +%H:%M:%S`" >>&! cur_jnlseqno.out
 if ("RESYNC" == "$1") then
-	#egrep "Resync Seqno"  df.out | $tst_awk '{printf("%s\n",$3);}' >>&! allseqno.out
+	#$grep -E "Resync Seqno"  df.out | $tst_awk '{printf("%s\n",$3);}' >>&! allseqno.out
 	$MUPIP replic -editinstance -show $gtm_repl_instance >&! instancefile.out
 	set resync_seqno = `$grep "Resync Sequence Number" instancefile.out | $tst_awk '{print $8}'`
 	@ retval = $resync_seqno - $gtm_test_parm_to_gtm

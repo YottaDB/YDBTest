@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,13 +62,13 @@ cat showbacklog.log >>&! $tst_general_dir/$timefile
 ls -l *.dat *.mjl  >>&! $tst_general_dir/$timefile
 #
 if ($tst_remote_host == $tst_org_host) then
-        \cp -f $SEC_SIDE/online.out $tst_general_dir/online.out.recv
-        \cp -f $SEC_SIDE/$timefile $tst_general_dir/$timefile.recv
+	\cp -f $SEC_SIDE/online.out $tst_general_dir/online.out.recv
+	\cp -f $SEC_SIDE/$timefile $tst_general_dir/$timefile.recv
 else
-        $rcp "$tst_remote_host":$SEC_SIDE/online.out $tst_general_dir/online.out.recv
-        $rcp "$tst_remote_host":$SEC_SIDE/$timefile $tst_general_dir/$timefile.recv
+	$rcp "$tst_remote_host":$SEC_SIDE/online.out $tst_general_dir/online.out.recv
+	$rcp "$tst_remote_host":$SEC_SIDE/$timefile $tst_general_dir/$timefile.recv
 endif
-egrep "%YDB-E"  $tst_general_dir/online.out*
-egrep "%YDB-F"  $tst_general_dir/online.out*
+$grep -E "%YDB-E"  $tst_general_dir/online.out*
+$grep -E "%YDB-F"  $tst_general_dir/online.out*
 echo "onlnbkup_rcvr test ends."
 echo "Please look at $timefile for timing information."

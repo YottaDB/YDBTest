@@ -3,7 +3,7 @@
 #								#
 # Copyright 2003, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -81,5 +81,5 @@ endif
 $gtm_tst/com/dbcheck.csh -nosprgde
 if ($status) exit
 #
-egrep "YDB-E|YDB-F" *.out
+$grep -E "YDB-E|YDB-F" *.out
 cat *.mje*

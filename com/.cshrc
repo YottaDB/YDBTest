@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 ###########################################################
 #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -48,7 +48,7 @@ alias la 'ls -A'
 
 alias grep 'grep --color=auto'
 alias fgrep 'fgrep --color=auto'
-alias egrep 'egrep --color=auto'
+alias egrep 'grep -E --color=auto'
 
 # Handy git shortcuts
 alias gitlog 'git log --graph --pretty=format:"%C(auto)%ad %h%d %s" --date="short"'

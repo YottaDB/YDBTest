@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -76,8 +76,8 @@ if ( "MULTISITE" == $test_replic ) then
 endif
 
 # IPCS
-set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& egrep "dat" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
-set repl_ftok_key = `$MUPIP ftok -id=44 $gtm_repl_instance |& egrep "$gtm_repl_instance" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
+set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& $grep -E "dat" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
+set repl_ftok_key = `$MUPIP ftok -id=44 $gtm_repl_instance |& $grep -E "$gtm_repl_instance" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
 setenv ftok_key "$db_ftok_key $repl_ftok_key"
 set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 set jnlipc_private = `$gtm_tst/com/jnlpool_ftok.csh`
@@ -100,9 +100,9 @@ if ($1 == "MU_STOP") then 		# This is SIG TERM
 		$gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 300
 	endif
 	foreach pid ($pidall)
-        	echo "$MUPIP stop $pid" >>& $KILL_LOG
-        	$MUPIP stop $pid >>& $KILL_LOG
-        	if ($status) then
+		echo "$MUPIP stop $pid" >>& $KILL_LOG
+		$MUPIP stop $pid >>& $KILL_LOG
+		if ($status) then
 			echo "TEST-E-$MUPIP stop $pid failed"
 			set stat = 1
 		else
@@ -123,8 +123,8 @@ else if ($1 == "SIGQUIT") then
 		set pidcheck = "$pidcheck|$pidsrc"
 	endif
 	echo "$killit3 $pidall" >>& $KILL_LOG
-        $killit3 $pidall >>& $KILL_LOG
-        if ($status) then
+	$killit3 $pidall >>& $KILL_LOG
+	if ($status) then
 		echo "TEST-E-$killit3 $pidall failed"
 		set stat = 1
 	else
@@ -136,9 +136,9 @@ else if ($1 == "SIGQUIT") then
 	#
 else
 	set killit = "/bin/kill -9"	# BYPASSOK kill -9
-        echo "$killit $pidsrc $pidall" >>& $KILL_LOG
-        $killit $pidsrc $pidall
-        if ($status) then
+	echo "$killit $pidsrc $pidall" >>& $KILL_LOG
+	$killit $pidsrc $pidall
+	if ($status) then
 		echo "TEST-E-$killit $pidsrc $pidall failed"
 		set stat = 1
 	else

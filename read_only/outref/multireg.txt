@@ -691,14 +691,14 @@ set PASS
 YDB>
 chmod 666 b.dat
 $MUPIP integ -FAST -reg "*" > & integr.out1
-egrep "YDB-E|No errors" integr.out1
+$grep -E "YDB-E|No errors" integr.out1
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out2
-egrep "YDB-E|No errors" integr.out2
+$grep -E "YDB-E|No errors" integr.out2
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -709,14 +709,14 @@ echo "***** b.dat R/O *****"
 ***** b.dat R/O *****
 chmod 444 b.dat
 $MUPIP integ -FAST -reg "*" > & integr.out3
-egrep "YDB-E|No errors" integr.out3
+$grep -E "YDB-E|No errors" integr.out3
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out4
-egrep "YDB-E|No errors" integr.out4
+$grep -E "YDB-E|No errors" integr.out4
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -753,14 +753,14 @@ chmod 666 b.dat b.mjl
 echo "***** *.dat R/W *.mjl R/W *****"
 ***** *.dat R/W *.mjl R/W *****
 $MUPIP integ -FAST -reg "*" > & integr.out5
-egrep "YDB-E|No errors" integr.out5
+$grep -E "YDB-E|No errors" integr.out5
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out6
-egrep "YDB-E|No errors" integr.out6
+$grep -E "YDB-E|No errors" integr.out6
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -772,14 +772,14 @@ echo "***** b.dat R/W b.mjl R/O *****"
 chmod 666 b.dat
 chmod 444 b.mjl
 $MUPIP integ -FAST -reg "*" > & integr.out7
-egrep "YDB-E|No errors" integr.out7
+$grep -E "YDB-E|No errors" integr.out7
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out8
-egrep "YDB-E|No errors" integr.out8
+$grep -E "YDB-E|No errors" integr.out8
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -791,14 +791,14 @@ echo "***** b.dat R/O b.mjl R/W *****"
 chmod 444 b.dat
 chmod 666 b.mjl
 $MUPIP integ -FAST -reg "*" > & integr.out9
-egrep "YDB-E|No errors" integr.out9
+$grep -E "YDB-E|No errors" integr.out9
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out10
-egrep "YDB-E|No errors" integr.out10
+$grep -E "YDB-E|No errors" integr.out10
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -810,14 +810,14 @@ echo "***** b.dat R/O b.mjl R/O *****"
 chmod 444 b.dat
 chmod 444 b.mjl
 $MUPIP integ -FAST -reg "*" > & integr.out11
-egrep "YDB-E|No errors" integr.out11
+$grep -E "YDB-E|No errors" integr.out11
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 No errors detected by fast integ.
 mipcmanage
 $MUPIP integ -reg "*" > & integr.out12
-egrep "YDB-E|No errors" integr.out12
+$grep -E "YDB-E|No errors" integr.out12
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -856,7 +856,7 @@ chmod 666 b.dat
 echo "***** *.dat read_write *****"
 ***** *.dat read_write *****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out1
-egrep "YDB-E|No errors" integtn.out1
+$grep -E "YDB-E|No errors" integtn.out1
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -867,7 +867,7 @@ echo "***** b.dat read_only *****"
 ***** b.dat read_only *****
 chmod 444 b.dat
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out2
-egrep "YDB-E|No errors" integtn.out2
+$grep -E "YDB-E|No errors" integtn.out2
 %YDB-E-DBRDONLY, Database file b.dat read only
 %YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.
@@ -910,7 +910,7 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out3
-egrep "YDB-E|No errors" integtn.out3
+$grep -E "YDB-E|No errors" integtn.out3
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -920,7 +920,7 @@ mipcmanage
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out4
-egrep "YDB-E|No errors" integtn.out4
+$grep -E "YDB-E|No errors" integtn.out4
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -930,7 +930,7 @@ mipcmanage
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out5
-egrep "YDB-E|No errors" integtn.out5
+$grep -E "YDB-E|No errors" integtn.out5
 %YDB-E-DBRDONLY, Database file b.dat read only
 %YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.
@@ -942,7 +942,7 @@ mipcmanage
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out6
-egrep "YDB-E|No errors" integtn.out6
+$grep -E "YDB-E|No errors" integtn.out6
 %YDB-E-DBRDONLY, Database file b.dat read only
 %YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.

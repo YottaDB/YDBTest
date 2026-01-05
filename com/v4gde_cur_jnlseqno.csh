@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # cur_jnlseqno.csh [RESYNC|REGION] [number_to_subtract_in_decimal]
 # If not parameter is passed, "REGION" and "0" are used
@@ -18,12 +32,12 @@ awk '{if ((NF==7) &&($1!="Region")) print $1}' gde_reg.out >>&! cur_jnlseqno.out
 foreach region (`awk '{if ((NF==7) &&($1!="Region")) print $1}' gde_reg.out`)
 	$DSE << DSE_EOF >&! df.out
 	find -REG=$region
-	d -f 
+	d -f
 DSE_EOF
 	if ($1 == "RESYNC") then
-		egrep "Resync Seqno"  df.out | $tst_awk '{printf("%s\n",$3);}' >>&! allseqno.out
+		$grep -E "Resync Seqno"  df.out | $tst_awk '{printf("%s\n",$3);}' >>&! allseqno.out
 	else
-		egrep "Region Seqno"  df.out | $tst_awk '{printf("%s\n",$6);}' >>&! allseqno.out
+		$grep -E "Region Seqno"  df.out | $tst_awk '{printf("%s\n",$6);}' >>&! allseqno.out
 	endif
 end
 #

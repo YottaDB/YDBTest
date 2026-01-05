@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,7 @@ zsystem "$kill9 "_KILLPID
 EOF
 
 echo "# get ftok id of mumps.dat"
-setenv ftok_key `$MUPIP ftok -id=43 *.dat |& egrep "dat" | $tst_awk '{printf("%s ",substr($10, 2, 10));}'`
+setenv ftok_key `$MUPIP ftok -id=43 *.dat |& $grep -E "dat" | $tst_awk '{printf("%s ",substr($10, 2, 10));}'`
 set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 
 echo "# do ipcrm"

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,8 +38,8 @@ $psuser | $grep -E "mupip|mumps|simpleapi" >>& $KILL_LOG
 # Get PIDS for all process on Secondary side
 set pidsrc=`$MUPIP replicate -source -checkhealth |& $tst_awk '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }'`
 if ("$pidsrc" == "") then
-        echo "Cannot kill passive source server. Unable to determine pid"
-        exit 1
+	echo "Cannot kill passive source server. Unable to determine pid"
+	exit 1
 endif
 
 set pidUpdate=() pidReceiver=() pidHelper=()
@@ -48,17 +48,17 @@ $MUPIP replicate -receiv -checkhealth -helpers >&! ${rcvhealthfile}
 # Evaluates "set pidUpdate=($pidUpdate 12345) ; set pidReceiver=($pidReceiver 54321) ; set pidHelper=($pidHelper 90125) ; [...]"
 eval `$tst_awk '($1 == "PID") { print "set pid" $3 "=($pid" $3, $2 ") ;" }' ${rcvhealthfile}`
 if ("$pidUpdate" == "") then
-        echo "Cannot kill Update Process. Unable to determine pid"
-        exit 2
+	echo "Cannot kill Update Process. Unable to determine pid"
+	exit 2
 endif
 if ("$pidReceiver" == "") then
-        echo "Cannot kill Receiver Server. Unable to determine pid"
-        exit 2
+	echo "Cannot kill Receiver Server. Unable to determine pid"
+	exit 2
 endif
 setenv pidall "$pidsrc $pidReceiver $pidUpdate $pidHelper"
 
 # IPCS
-set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& egrep "dat" | $tst_awk '{printf("%s ", substr($10, 2, 10));}'`
+set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& $grep -E "dat" | $tst_awk '{printf("%s ", substr($10, 2, 10));}'`
 set repl_ftok_key = `$MUPIP ftok -id=44 $gtm_repl_instance -only |& $tst_awk '{printf("%s ", $5);}'`
 echo "db_ftok_key = $db_ftok_key" > dbg.txt
 echo "repl_ftok_key = $repl_ftok_key" >> dbg.txt
@@ -77,9 +77,9 @@ date >>& $KILL_LOG
 # Otherwise, test output could be non-deterministic
 if ($1 == "MU_STOP") then
 	## This is SIG TERM
-        echo "$MUPIP stop $pidsrc" >>& $KILL_LOG
-        $MUPIP stop $pidsrc >>& $KILL_LOG
-        if ($status) then
+	echo "$MUPIP stop $pidsrc" >>& $KILL_LOG
+	$MUPIP stop $pidsrc >>& $KILL_LOG
+	if ($status) then
 		echo "TEST-E-$MUPIP stop $pidsrc failed"
 		set stat = 1
 	else
@@ -87,9 +87,9 @@ if ($1 == "MU_STOP") then
 	endif
 	#
 	# Followings automatically stops $pidUpdate
-        echo "$MUPIP stop $pidReceiver" >>& $KILL_LOG
-        $MUPIP stop $pidReceiver >>& $KILL_LOG
-        if ($status) then
+	echo "$MUPIP stop $pidReceiver" >>& $KILL_LOG
+	$MUPIP stop $pidReceiver >>& $KILL_LOG
+	if ($status) then
 		echo "TEST-E-$MUPIP stop $pidReceiver failed"
 		set stat = 1
 	else
@@ -126,9 +126,9 @@ else if ($1 == "SIGQUIT") then
 	set pidcheck = "$pidsrc|$pidReceiver|$pidUpdate"
 else
 	set killit = "/bin/kill -9"	# BYPASSOK kill -9
-        echo "$killit $pidall" >>& $KILL_LOG
-        $killit $pidall
-        if ($status) then
+	echo "$killit $pidall" >>& $KILL_LOG
+	$killit $pidall
+	if ($status) then
 		echo "TEST-E-$killit $pidall failed"
 		set stat = 1
 	else

@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,7 +30,7 @@ if ($LFE != "L") then
 	$gtm_exe/mumps -run lkeroutines >&! lkeroutines.out
 	cat lkeroutines.out
 	echo "Start analyzing *.mjo* and *.mje* files..."
-	\egrep "FAIL" *.mjo*
+	$grep -E "FAIL" *.mjo*
 	\cat *.mje*
 	echo "End analyzing *.mjo* and *.mje* files."
 endif
