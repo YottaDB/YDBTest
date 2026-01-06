@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -144,7 +144,7 @@ setenv gtmgbldir mumps.gld
 echo "# Run [$test_num^ydb1152] routine"
 $ydb_dist/yottadb -run ${test_num}a^ydb1152 >& ${test_num}a.out
 echo "# Confirm no ZYENCODEINCOMPL, ZYDECODEINCOMPL, or other errors were generated"
-grep -E "ZYENCODEINCOMPL|ZYDECODEINCOMPL|\-E\-" ${test_num}.mjo*
+grep -E "ZYENCODEINCOMPL|ZYDECODEINCOMPL|-E-" ${test_num}.mjo*
 if (1 == $status) then
 	echo "PASS: [$test_num^ydb1152] did not emit any errors."
 else
