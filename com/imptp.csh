@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -201,8 +201,18 @@ xyz
 		# from a previous "imptp.csh" invocation in the same subtest, skip rebuilding it.
 		if (! -e $exefile) then
 			cp $gtm_tst/com/$file .
-			$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
-			$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+			set cmd = "$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file"
+			echo "-----------"
+			echo "# Compiling"
+			echo "-----------"
+			echo $cmd
+			$cmd
+			set cmd = "$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb $gt_ld_syslibs"
+			echo "-----------"
+			echo "# Linking"
+			echo "-----------"
+			echo "$cmd >& $exefile.map"
+			$cmd >& $exefile.map
 			if (0 != $status) then
 				echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 				exit -1

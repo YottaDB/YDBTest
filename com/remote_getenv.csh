@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,12 +66,6 @@ source $gtm_tst/com/set_specific.csh
 # this will take care of gtmroutines and locale set up defintions along with other regular setups
 source $gtm_tst/com/getenv.csh
 
-# Check if the YottaDB build has ASAN enabled on the remote side of a multi-host test. If so, need to set
-# ASAN_OPTIONS env var (among other things) on the remote side to disable leak check (LSAN) as that can cause failures.
-# Note: Do this BEFORE the "source $gtm_tst/com/set_gtm_machtype.csh" step as that invokes YottaDB and would otherwise
-# fail (due to memory leaks identified) in case ASAN is enabled in the current build.
-source $gtm_tst/com/set_ydb_build_env_vars.csh
-
 # override machtype environment from primary
 source $gtm_tst/com/set_gtm_machtype.csh
 
@@ -93,4 +87,10 @@ if (-e $gtm_tools/gtm_env.csh) then
 	source $gtm_tools/gtm_env.csh		# this sets "gt_cc_options_common" etc. correctly to reflect remote host
 	source $gtm_tst/com/set_specific.csh	# this sets "gtt_cc_shl_options" etc. correctly to reflect the remote host
 endif
+
+# Check if the YottaDB build has ASAN enabled on the remote side of a multi-host test. If so, need to set
+# ASAN_OPTIONS env var (among other things) on the remote side to disable leak check (LSAN) as that can cause failures.
+# Note: Do this BEFORE the "source $gtm_tst/com/set_gtm_machtype.csh" step as that invokes YottaDB and would otherwise
+# fail (due to memory leaks identified) in case ASAN is enabled in the current build.
+source $gtm_tst/com/set_ydb_build_env_vars.csh
 
