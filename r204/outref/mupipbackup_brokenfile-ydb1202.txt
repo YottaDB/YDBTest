@@ -1,0 +1,14 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test YDB#1202 : Mupip backup -online does not produce broken backup file when the backup
+# is being performed on a disk partition different from the one where the database itself resides
+# -------------------------------------------------------------------------------------------------------------
+
+# Create a database
+##TEST_AWK# Create a backup directory on another disk partition \[mkdir .*\]
+# Run [$gtm_dist/mupip backup -replace -database -online "DEFAULT" TARGETDIR/mumps.dat] in the background
+# Run updates in the foreground while the backup is running in the background:
+# [$gtm_dist/mumps -run %XCMD 'kill ^test for i=1:1:1000 set ^test(i)=$j("q",1024)']
+# Run [$gtm_dist/mupip integ -fast TARGETDIR/mumps.dat]
+# Expect NO integrity errors (e.g. DBMRKBUSY, DBTNTOOLG, etc.) in [mupip-integ.out]
+# Previously, in r2.02, DBMRKBUSY and DBTNTOOLG would be emitted by MUPIP INTEG.
+# The test framework will examine MUPIP INTEG output for errors and, if present, display them below.

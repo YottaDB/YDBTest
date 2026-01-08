@@ -41,6 +41,7 @@
 # mcomm_deserialize-ydb1152		[jon]		Test M commands to serialize/deserialize local or global variable subtree
 # duplicatenew_warning-ydb1111		[ben]		Test that mumps compiler correctly gives a DUPLICATENEW warning when attempting to new a variable twice on the same line.
 # nakedref_varsubs-ydb1177		[jon]		Test naked reference optimization if GVN subscripts are unsubscripted local variables'
+# mupipbackup_brokenfile-ydb1202	[jon]		Test MUPIP BACKUP -ONLINE does not produce broken backup file
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -82,9 +83,11 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic socketspinloop-ydb1195"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mcomm_deserialize-ydb1152"
 setenv subtest_list_non_replic	"$subtest_list_non_replic duplicatenew_warning-ydb1111"
 setenv subtest_list_non_replic	"$subtest_list_non_replic nakedref_varsubs-ydb1177"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupipbackup_brokenfile-ydb1202"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
+# setenv subtest_list_replic	"$subtest_list_replic mupipbackup_brokenfile-ydb1202"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
