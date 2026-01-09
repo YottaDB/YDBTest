@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,7 +66,7 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		set maxlimit = `$gtm_dist/mumps -run %XCMD 'write '$limit[$cnt]'*1.05\1'`
 		@ cnt = $cnt + 1
 		set fullcmd = "s y=\$justify(1,10),z=\"1\" for i=1:1:10000000 $cmd"
-		set instructions = `echo $fullcmd | perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -direct`
+		set instructions = `echo $fullcmd | $gtm_tst/com/perfstat.csh $gtm_dist/mumps -direct`
 		if ( "$instructions[3]" == "" ) echo "No instruction count produced by perf: $instructions"`false` || continue
 		if ( "$instructions[3]" > $maxlimit ) echo "FAIL: [Actual=$instructions[3]] more than [Maxlimit=$maxlimit] instructions"`false` || continue
 		echo "PASS: Test of [$cmd]"

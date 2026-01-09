@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -37,7 +37,7 @@ set testmsg = ( \
 foreach test ( 1 2 )
 	echo
 	echo "$testmsg[$test]"
-	set instructions = `perf stat --log-fd 1 "-x " -e instructions $gtm_exe/mumps -run test$test^strcatEfficiency`
+	set instructions = `$gtm_tst/com/perfstat.csh $gtm_exe/mumps -run test$test^strcatEfficiency`
 	echo "CPU instructions=$instructions[1]"
 	if ( "$instructions[1]" == "" ) echo "No instruction count produced by perf: $instructions"`false` || continue
 	if ( "$instructions[1]" > $limit ) echo "FAIL: Test took more than $limit instructions [($instructions[1] instructions]"`false` || continue

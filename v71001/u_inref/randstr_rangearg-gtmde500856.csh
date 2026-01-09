@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -59,7 +59,7 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		else
 			set testname = "missinglimit"
 		endif
-		perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -run $testname^gtmde500856 >& perf.out
+		$gtm_tst/com/perfstat.csh $gtm_dist/mumps -run $testname^gtmde500856 >& perf.out
 		set instructions = `tail -1 perf.out`
 		if ( "$instructions[1]" > $limit ) echo "FAIL: Test took more than $limit instructions"`false` || continue
 		echo "PASS: Took less than $limit instructions"

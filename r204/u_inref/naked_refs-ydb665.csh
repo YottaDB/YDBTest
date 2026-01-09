@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -440,8 +440,8 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo '# On that machine, the optimized version uses 1,645,390,606 instructions and the unoptimized version uses 2,654,613,810'
 	echo '# i.e. an improvement of 38%. Allow it to be as low as 30%, but no lower.'
 	echo "# Run YDB 3 times and average the number of instructions, once on unoptimized code and once on optimized."
-	set noopt_instrs = `perf stat --log-fd 1 "-x " -e instructions -r 3 $gtm_exe/mumps -r simplenoopt | cut -d ' ' -f1`
-	set   opt_instrs = `perf stat --log-fd 1 "-x " -e instructions -r 3 $gtm_exe/mumps -r simpleopt   | cut -d ' ' -f1`
+	set noopt_instrs = `$gtm_tst/com/perfstat.csh -r 3 $gtm_exe/mumps -r simplenoopt | cut -d ' ' -f1`
+	set   opt_instrs = `$gtm_tst/com/perfstat.csh -r 3 $gtm_exe/mumps -r simpleopt   | cut -d ' ' -f1`
 	set in_range = `python3 -c "print(int((${opt_instrs}.0 / ${noopt_instrs}.0) < .7))"`
 	if ($in_range > 0) then
 		echo PASS

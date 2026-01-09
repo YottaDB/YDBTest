@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo "# The test allows for up to 5% more instructions. And signals failure if it exceeds even that."
 	cp $gtm_tst/$tst/inref/bool_expr_andor_mcmds.txt perfcmds.csh
 	cp perfcmds.csh perfcmds.txt
-	sed -i 's/^/echo \'/;s/$/\' | perf stat -x" " -e instructions $gtm_dist\/mumps -direct > \/dev\/null/;' perfcmds.csh
+	sed -i 's/^/echo \'/;s/$/\' | $gtm_tst\/com\/perfstat.csh $gtm_dist\/mumps -direct | grep instructions/;' perfcmds.csh
 	source perfcmds.csh >& perfcmds.out
 	$tst_awk '{printf "%.f\n", $1/1000000;}' perfcmds.out > perfcmds.actual
 	sed -i 's/^set .*000 //;s/ | .*//;s/s //;s/ x=1//;' perfcmds.txt

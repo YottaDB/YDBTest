@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -145,7 +145,7 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo '# If so we issue a PASS. Otherwise we issue FAIL.'
 	foreach value (0 1)
 		setenv ydb_stp_gcol_nosort $value
-		perf stat --log-fd 1 "-x " -e instructions $gtm_dist/mumps -run gctest2^stpgcolydb1145 >& perf.gctest2.$value
+		$gtm_tst/com/perfstat.csh $gtm_dist/mumps -run gctest2^stpgcolydb1145 >& perf.gctest2.$value
 		set instructions$value = `head -1 perf.gctest2.$value | $tst_awk '{print $1}'`
 	end
 	$gtm_dist/mumps -run gctest2verify^stpgcolydb1145 $instructions0 $instructions1
