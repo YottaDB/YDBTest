@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -105,7 +105,7 @@ if ($?gtm_use_same_sym_key) then
 				@ i++
 		end
 		# Copy the shared symmetric key to the remote side.
-		$rcp -r ${tst_org_host}:$tst_general_dir/${shared_sym_key_on_remote_host}'*' $remote_symkey_path
+		$rcp -r ${tst_org_host}:$tst_general_dir/$shared_sym_key_on_remote_host $remote_symkey_path
 
 		# Tag the symmetric key for use on the remote side.
 		$convert_to_gtm_chset $remote_symkey_path/$shared_sym_key_on_remote_host
