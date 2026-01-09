@@ -17,7 +17,7 @@
 # Not having this framework can cause hard to analyze test failures where the
 # scp error at the very beginning of the test can be hidden in obscure log files.
 
-scp -q "$*"
+scp -q $*
 if ($status) then
 	echo "SCP-E-FAIL : [scp -q $*] failed with non-zero status"
 	exit -1
