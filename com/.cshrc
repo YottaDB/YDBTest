@@ -60,13 +60,18 @@ alias pushplus        'git push origin +HEAD'
 
 # USER-SPECIFIC LOCATIONS for YottaDB's gtmtest
 setenv mailid berwyn@yottadb.com   # Replace with your email here
-setenv build_id 996   # Your build number: any 9xx no.; assigned by YottaDB on their servers: avoids clobbering others' builds
-setenv verno V${build_id}_R201   # Change Rxxx to the revision of yottadb you will install and test against
+if ( ! $?build_id ) setenv build_id 996   # Your build number: any 9xx no.; assigned by YottaDB on their servers: avoids clobbering others' builds
+if ( ! $?verno ) setenv verno V${build_id}_R205   # Change Rxxx to the revision of yottadb you will install and test against
 setenv work_dir ~/work   # Where you wish to check out YDB, YDBTest, etc.
 setenv gtm_root /usr/library   # Where your (and others') installed binaries go
 setenv gtm_test $gtm_root/gtm_test   # Where to hold a copy of $work_dir/YDBTest to run from: it needn't be under $gtm_root
 setenv tst_dir /testarea1/$USER   # Where to put the output of your test
 setenv r ~/.gtmresults   # Where to create symlink that points to latest test results directory; short name for easy access
+
+# Uncomment one or both of the following lines if you wish to enforce use of your own developing versions of YDBTest/com scripts
+# (useful for when you are developing YDBTest/com separately from writing tests)
+#setenv gtm_test_com_individual $work_dir/YDBTest-dev/com   # Use your own tester-command scripts, not main YDBTest checkout
+#setenv force_gtm_test_com_individual   # gtmtest normally re-runs itself from gtmtest.csh in the test source dir. Prevent this.
 
 # Other settings you're less likely to want to change
 setenv tst_image dbg   # Select default production/debug build image (dbg/pro) to test against; change later with 'ver' alias
@@ -84,16 +89,23 @@ setenv settest_args "$gtmtest_args -norandomsettings -nospanreg -noco -jnl nobef
 #setenv ydb_cc_choose_asan 0   # asan catches address errors but slows down testing by about 10% (according to Sam)
 
 # Set up the environment for running YottaDB's gtmtest
-source $gtm_test_com_individual/test_env.csh
+if ( $?gtm_test_com_individual ) then
+	source $gtm_test_com_individual/test_env.csh   # user's version of gtmtest scripts
+# Try $work_dir to locate the test_env.csh
+else if ( -e $work_dir/YDBTest/com/test_env.csh ) then
+	source $work_dir/YDBTest/com/test_env.csh
+else
+	echo 'Warning: .cshrc could not find test_env.csh in either $gtm_test_com_individual or $work_dir'
+endif
 
 # Other Convenience settings
 
 set cdpath = ( $work_dir )   # for convenient access to your repositories
 
-# Run cleantests alias to clean up all but the most recent day's test results.
+# Example auto-run on your machine: clean all but most recent day's test results the first time tcsh runs.
 # But only do so, in this template example, if $HOST is your machine and it's the first login below the root bash login.
-if ( "$HOST" == "berwyn" && $shlvl == 2) then
-  cleantests
+if ( "$HOST" == "berwyn" && $shlvl == 2 && `where cleantests` != "" ) then
+	cleantests  # cleantests alias defined in test_env.csh
 endif
 
 # Show git branch in prompt

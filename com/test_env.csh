@@ -40,6 +40,9 @@ setenv gtm_tst $gtm_test/$tst_src   # source of test scripts to test with
 # Setup icu_version required by this system
 source $gtm_test_com_individual/set_icu_version.csh || exit 1
 
+setenv gtmtest_script $gtm_tst/com/gtmtest.csh
+if ( $?force_gtm_test_com_individual ) setenv gtmtest_script $gtm_test_com_individual/gtmtest.csh
+
 # The following are apparently needed by the test system, according to YDBDevOps:devtools/ydb_cshrc.csh
 setenv gtm_test_noggsetup 1   # GG stands for GT.M Groups.
 # Next variable is preset by YDB servers in /etc/csh.cshrc ( which calls $gtm_test/tstdirs.csh).
@@ -66,7 +69,7 @@ if ! ( $?settest_args ) setenv settest_args "$gtmtest_args"
 # Testing aliases
 alias tsync '$gtm_test_com_individual/tsync.csh --info=stats0,flist0 \!*'   # sync YDBTest code from current dir to run dir
 # note: tcsh is spawned for gtmtest to capture ^C and still run lasttest.csh
-alias gtmtest    'tsync; set _argv = ( \!:* ); tcsh -fc "$gtm_tst/com/gtmtest.csh $gtmtest_args $_argv:q"; source $gtm_test_com_individual/lasttest.csh'
+alias gtmtest    'tsync; set _argv = ( \!:* ); date; tcsh -fc "$gtmtest_script $gtmtest_args $_argv:q"; source $gtm_test_com_individual/lasttest.csh'
 alias test_env   'source $gtm_test_com_individual/test_env.csh'   # refresh gtmtest environment setup
 alias ver        'source $gtm_test_com_individual/ver.csh \!*'   # change version of database invoked by gtmtest
 # settest/runtest and related aliases to set-up environment and collate results into $r
