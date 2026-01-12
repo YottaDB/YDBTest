@@ -6,7 +6,7 @@
 # Create database
 ## Run [ydb1195.m] test routine
 # Start 2 child jobs that write 1 line each to a TCP socket
-##TEST_AWK# Wait for each job to start and open a TCP socket on port [0-9]*
+##TEST_AWK# Wait for each job to start and open a TCP socket on ports [ 0-9]*
 # Run write /wait(1) and read commands 7 times in a loop and display the output of $key for each iteration. Wait specifically until $key="". This takes 5 iterations in M mode and 7 in UTF-8 mode.
 # Expect all 7 iterations to complete and all data written by child jobs to be output.
 # Previously, the test would hang in Iteration 3.

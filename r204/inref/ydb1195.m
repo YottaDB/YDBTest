@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,12 +11,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ydb1195 ;
-	set s="socket"
-	set startport=$piece($zcmdline," ",1)
+	set s="socket",ports=""
 	set ^state=0
 	write "# Start 2 child jobs that write 1 line each to a TCP socket",!
-	for i=1:1:2 set port=startport+i open s:(listen=port_":TCP")::"socket" job child(port)
-	write "# Wait for each job to start and open a TCP socket on port "_startport,!
+	for i=1:1:2  do
+	. set port=$piece($zcmdline," ",i)
+	. open s:(listen=port_":TCP")::"socket"
+	. job child(port)
+	. set ports=ports_" "_port
+	write "# Wait for each job to start and open a TCP socket on ports"_ports,!
 	for  quit:^state=2  hang 0.01
 	write "# Run write /wait(1) and read commands 7 times in a loop and display the output of $key for each iteration. Wait specifically until $key="""". This takes 5 iterations in M mode and 7 in UTF-8 mode.",!
 	write "# Expect all 7 iterations to complete and all data written by child jobs to be output.",!
