@@ -66,9 +66,6 @@ source $gtm_tst/com/set_specific.csh
 # this will take care of gtmroutines and locale set up defintions along with other regular setups
 source $gtm_tst/com/getenv.csh
 
-# override machtype environment from primary
-source $gtm_tst/com/set_gtm_machtype.csh
-
 # This script is called to set env vars on the remote side of a multi-host test. But for multi-host tests,
 # "com/do_random_settings.csh" disables "gtm_statshare" (see reasoning in a comment there). So do the same
 # here now that we are setting up the remote host env vars. Note that in addition to setting "gtm_statshare" to 0,
@@ -93,4 +90,7 @@ endif
 # Note: Do this BEFORE the "source $gtm_tst/com/set_gtm_machtype.csh" step as that invokes YottaDB and would otherwise
 # fail (due to memory leaks identified) in case ASAN is enabled in the current build.
 source $gtm_tst/com/set_ydb_build_env_vars.csh
+
+# Override machtype environment from primary.
+source $gtm_tst/com/set_gtm_machtype.csh
 
