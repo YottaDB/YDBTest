@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -88,6 +88,11 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 	if ($gtm_test_rhel9_plus) then
 		# RHEL 9 does not have a r1.38 tarball (which the below subtest relies on) so skip in that case
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
+	endif
+	if (10 == $gtm_test_linux_version:r) then
+		# Disable "olderversion" subtest since no r2.02 binaries/tarballs for RHEL 10
+		# Once r2.04 is released, the below line can be removed.
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
 else if ("ubuntu" == $gtm_test_linux_distrib) then
 	if ("20.04" == $gtm_test_linux_version) then
