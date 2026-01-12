@@ -170,15 +170,20 @@ echo "# Run [$test_num^ydb1152] routine"
 $ydb_dist/yottadb -run ${test_num}^ydb1152
 echo
 
-echo "# Check all ZYENCODE JSON output files for valid JSON"
-foreach file (`ls *.json`)
-	jq . $file >& $file.jq.out
-	if (0 == $status) then
-		echo "PASS: $file contains valid JSON"
-	else
-		echo "FAIL: $file does not contain valid JSON"
-	endif
-end
+which jq >& /dev/null
+if ($status == 1) then
+	echo "ERROR: 'jq' utility not installed. Please install 'jq' before running this test."
+else
+	echo "# Check all ZYENCODE JSON output files for valid JSON"
+	foreach file (`ls *.json`)
+		jq . $file >& $file.jq.out
+		if (0 == $status) then
+			echo "PASS: $file contains valid JSON"
+		else
+			echo "FAIL: $file does not contain valid JSON"
+		endif
+	end
+endif
 echo
 
 $gtm_tst/com/dbcheck.csh mumps >& dbcheck.out
