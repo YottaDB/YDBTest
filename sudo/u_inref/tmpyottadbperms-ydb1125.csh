@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -53,38 +53,16 @@ echo
 
 echo '### Test 1: Install YottaDB under the following conditions:'
 echo '# 1. WITH --group-restriction'
-echo '# 2. Run ydb_env_set as root user'
-echo '# 3. $ydb_tmp is undefined'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
-echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].'
-echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwx---].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 1 $group "undef"
-echo
-
-echo '### Test 2: Install YottaDB under the following conditions:'
-echo '# 1. WITHOUT --group-restriction'
-echo '# 2. Run ydb_env_set as root user'
-echo '# 3. $ydb_tmp is undefined'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
-echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].'
-echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwxrwx].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 2 "nogroup" "undef"
-echo
-
-echo '### Test 3: Install YottaDB under the following conditions:'
-echo '# 1. WITH --group-restriction'
 echo '# 2. Run ydb_env_set as non-root user'
 echo '# 3. $ydb_tmp is undefined'
 echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
 echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt], or unchanged.'
 echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwx---], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 3 $group "undef"
+sh ./tmpyottadbperms-ydb1125.sh 1 $group "undef"
 echo
 
-echo '### Test 4: Install YottaDB under the following conditions:'
+echo '### Test 2: Install YottaDB under the following conditions:'
 echo '# 1. WITHOUT --group-restriction'
 echo '# 2. Run ydb_env_set as non-root user'
 echo '# 3. $ydb_tmp is undefined'
@@ -92,32 +70,10 @@ echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
 echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt], or unchanged.'
 echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwxrwx], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 4 "nogroup" "undef"
+sh ./tmpyottadbperms-ydb1125.sh 2 "nogroup" "undef"
 echo
 
-echo '### Test 5: Install YottaDB under the following conditions:'
-echo '# 1. WITH --group-restriction'
-echo '# 2. Run ydb_env_set as root user'
-echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
-echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
-echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 5 $group "norel"
-echo
-
-echo '### Test 6: Install YottaDB under the following conditions:'
-echo '# 1. WITHOUT --group-restriction'
-echo '# 2. Run ydb_env_set as root user'
-echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
-echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
-echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 6 "nogroup" "norel"
-echo
-
-echo '### Test 7: Install YottaDB under the following conditions:'
+echo '### Test 3: Install YottaDB under the following conditions:'
 echo '# 1. WITH --group-restriction'
 echo '# 2. Run ydb_env_set as non-root user'
 echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
@@ -125,10 +81,10 @@ echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
 echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
 echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 7 $group "norel"
+sh ./tmpyottadbperms-ydb1125.sh 3 $group "norel"
 echo
 
-echo '### Test 8: Install YottaDB under the following conditions:'
+echo '### Test 4: Install YottaDB under the following conditions:'
 echo '# 1. WITHOUT --group-restriction'
 echo '# 2. Run ydb_env_set as non-root user'
 echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
@@ -136,21 +92,87 @@ echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
 echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
 echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 8 "nogroup" "norel"
+sh ./tmpyottadbperms-ydb1125.sh 4 "nogroup" "norel"
+echo
+
+echo '### Test 5: Install YottaDB under the following conditions:'
+echo '# 1. WITH --group-restriction'
+echo '# 2. Run ydb_env_set as non-root user'
+echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
+echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.'
+echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---], or unchanged.'
+sh ./tmpyottadbperms-ydb1125.sh 5 $group "rel"
+echo
+
+echo '### Test 6: Install YottaDB under the following conditions:'
+echo '# 1. WITHOUT --group-restriction'
+echo '# 2. Run ydb_env_set as non-root user'
+echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
+echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.'
+echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx], or unchanged.'
+sh ./tmpyottadbperms-ydb1125.sh 6 "nogroup" "rel"
+echo
+
+echo '### Test 7: Install YottaDB under the following conditions:'
+echo '# 1. WITH --group-restriction'
+echo '# 2. Run ydb_env_set as root user'
+echo '# 3. $ydb_tmp is undefined'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
+echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].'
+echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwx---].'
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 7 $group "undef"
+echo
+
+echo '### Test 8: Install YottaDB under the following conditions:'
+echo '# 1. WITHOUT --group-restriction'
+echo '# 2. Run ydb_env_set as root user'
+echo '# 3. $ydb_tmp is undefined'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
+echo '# 2. Permissions of [/tmp/yottadb/] are [drwxrwxrwt].'
+echo '# 3. Permissions of [/tmp/yottadb/<rel>] are [drwxrwxrwx].'
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 8 "nogroup" "undef"
 echo
 
 echo '### Test 9: Install YottaDB under the following conditions:'
 echo '# 1. WITH --group-restriction'
 echo '# 2. Run ydb_env_set as root user'
+echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
+echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
+echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---].'
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 9 $group "norel"
+echo
+
+echo '### Test 10: Install YottaDB under the following conditions:'
+echo '# 1. WITHOUT --group-restriction'
+echo '# 2. Run ydb_env_set as root user'
+echo '# 3. $ydb_tmp is a directory path, WITHOUT <rel>'
+echo '# Expect the following results:'
+echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
+echo '# 2. Permissions of [$ydb_tmp/..] are unchanged.'
+echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx].'
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 10 "nogroup" "norel"
+echo
+
+echo '### Test 11: Install YottaDB under the following conditions:'
+echo '# 1. WITH --group-restriction'
+echo '# 2. Run ydb_env_set as root user'
 echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
 echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
 echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt].'
 echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 9 $group "rel"
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 11 $group "rel"
 echo
 
-echo '### Test 10: Install YottaDB under the following conditions:'
+echo '### Test 12: Install YottaDB under the following conditions:'
 echo '# 1. WITHOUT --group-restriction'
 echo '# 2. Run ydb_env_set as root user'
 echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
@@ -158,29 +180,7 @@ echo '# Expect the following results:'
 echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
 echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt].'
 echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx].'
-$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 10 "nogroup" "rel"
-echo
-
-echo '### Test 11: Install YottaDB under the following conditions:'
-echo '# 1. WITH --group-restriction'
-echo '# 2. Run ydb_env_set as non-root user'
-echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-x---].'
-echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.'
-echo '# 3. Permissions of [$ydb_tmp] are [drwxrwx---], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 11 $group "rel"
-echo
-
-echo '### Test 12: Install YottaDB under the following conditions:'
-echo '# 1. WITHOUT --group-restriction'
-echo '# 2. Run ydb_env_set as non-root user'
-echo '# 3. $ydb_tmp is a directory path, WITH <rel>'
-echo '# Expect the following results:'
-echo '# 1. Permissions of [$ydb_dist/yottadb] are [-r-xr-xr-x].'
-echo '# 2. Permissions of [$ydb_tmp/..] are [drwxrwxrwt], or unchanged.'
-echo '# 3. Permissions of [$ydb_tmp] are [drwxrwxrwx], or unchanged.'
-sh ./tmpyottadbperms-ydb1125.sh 12 "nogroup" "rel"
+$sudostr -E sh ./tmpyottadbperms-ydb1125.sh 12 "nogroup" "rel"
 
 # Remove test files that will create permission errors during test cleanup
 $sudostr rm -rf test*/gtmsecshrdir
