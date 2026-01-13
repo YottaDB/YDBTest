@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -14,7 +14,8 @@
 setenv ydb_msgprefix "GTM"   # So can run the test under GTM or YDB
 
 # Set OS memory limit to cause failure. Note: 'limit memoryuse' does not appear to do anything
-source $gtm_tst/com/limit_vmemoryuse.csh 120M   # premature failures below 56M and, in occasional circumstances, at 100M
+# Note: A value of 200Mb causes occasional NONUTF8LOCALE errors on RHEL 10 with -unicode. Hence the 400Mb choice.
+source $gtm_tst/com/limit_vmemoryuse.csh 400M
 limit coredumpsize 0M   # We don't need coredumps for this test
 
 $gtm_dist/mumps -run mallocLimit
