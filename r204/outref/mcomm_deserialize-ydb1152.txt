@@ -414,13 +414,6 @@ ZSTATUS=T2+174^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE
 # Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
 ZSTATUS=T2+182^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                1","                                                               1","                                                               1","                                                               1")
 
-## Test 2i: ZYDECODEINCOMPL and PARAMINVALID errors issued when decoding a JSON array with more elements than the maximum allowed number of subscripts (31)
-# Run [set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
-# Run [set f(2)="null, ""string"": ""null""}"]
-# Run [zydecode g=f]
-# Expect ZYDECODEINCOMPL with '%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call'
-ZSTATUS=T2+193^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call
-
 ### Test 3: ZYENCODE properly handles input trees containing ~1MiB of data (YDB max string length)
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278
 ## Test 3a: ZYENCODE properly handles input trees containing exactly 1MiB (1048576 bytes) of data

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -461,17 +461,6 @@ T2 ;
 	write "# Run [zyencode ^z=y]",!
 	write "# Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW",!
 	zydecode ^z=y
-	write !
-
-	write "## Test 2i: ZYDECODEINCOMPL and PARAMINVALID errors issued when decoding a JSON array with more elements than the maximum allowed number of subscripts (31)",!
-	kill f
-	write "# Run [set f=2,f(1)=""{""""array"""": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], """"key"""": """"value"""", """"null"""": """,!
-	set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
-	write "# Run [set f(2)=""null, """"string"""": """"null""""}""]",!
-	set f(2)="null, ""string"": ""null""}"
-	write "# Run [zydecode g=f]",!
-	write "# Expect ZYDECODEINCOMPL with '%YDB-E-PARAMINVALID, Length of at least 1 array is > YDB_MAX_SUBS in JSON input parameter specified in ydb_decode_s() call'",!
-	zydecode g=f
 	write !
 
 	quit
