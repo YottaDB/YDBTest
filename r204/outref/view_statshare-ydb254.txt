@@ -40,7 +40,6 @@ Two cases are covered:
 1. Expect "00" when run with gtm_statshare UNSET, confirming that VIEW "NOSTATSHARE" does not incorrectly override gtm_statshare=0
 2. Expect "11" when run with gtm_statshare SET, confirming that VIEW "NOSTATSHARE" does not incorrectly override gtm_statshare=1
 ##############
-
 # Run ydb254a^ydb254 label
 ##SUSPEND_OUTPUT STATSHARE
 0
@@ -71,8 +70,6 @@ signifying that no .gst file was created when accessing a variable between direc
 When encryption is randomly enabled for the test, expect also an additional directory
 listing for a pipe created during the encryption process.
 ##############
-
-# Create a second database with an additional region
 # Run ydb254b^ydb254 label
 ##SUSPEND_OUTPUT STATSHARE
 0
@@ -80,10 +77,6 @@ listing for a pipe created during the encryption process.
 ##ALLOW_OUTPUT STATSHARE
 1
 ##ALLOW_OUTPUT NON_STATSHARE
-##SUSPEND_OUTPUT NON_ENCRYPT
-LINENUM
-> l-wx------ LINKS USER GROUP FSIZE DATE TIME LNAME -> pipe:[ID]
-##ALLOW_OUTPUT NON_ENCRYPT
 
 ##############
 Test issue 3:
@@ -99,7 +92,6 @@ Previously, $VIEW("STATSHARE") returned:
 1. 0 when run after VIEW "NOSTATSHARE"
 2. 1 in all other cases.
 ##############
-
 # Reset gtmgbldir
 # Run ydb254c^ydb254 label
 0
@@ -112,18 +104,9 @@ Test issue 4:
 $VIEW("STATSHARE",reglist) succeeds and returns "0" when run after VIEW "NOSTATSHARE":reglist.
 Previously, running $VIEW("STATSHARE", reglist) after VIEW "NOSTATSHARE":reglist resulted in a SIG-11.
 ##############
-
 # Run ydb254d^ydb254 label
 0
 
-# Run dbcheck.csh on both databases
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##SOURCE_PATH##/mupip
-##SOURCE_PATH##/mupip integ -REG *
-No errors detected by integ.
-##TEST_PATH##/mupip.log
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
-%SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created

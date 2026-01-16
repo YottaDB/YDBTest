@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -18,10 +18,10 @@ ydb254a ;
 
 ydb254b ;
 	write $view("STATSHARE")
-	view "nostatshare":"REG1"
-	zsys "ls -l /proc/"_$j_"/fd | grep -v mumps.dat > ydb254b-before.out"
+	view "nostatshare":"AREG"
+	zsys "ls -l /proc/"_$j_"/fd > ydb254b-before.log"
 	write $get(^b)
-	zsys "ls -l /proc/"_$j_"/fd | grep -v mumps.dat > ydb254b-after.out"
+	zsys "ls -l /proc/"_$j_"/fd > ydb254b-after.log"
 	quit
 
 ydb254c ;
