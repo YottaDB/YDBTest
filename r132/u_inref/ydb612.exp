@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,6 +59,7 @@ expect "abcd"
 # searched for z", as z contains a bunch of control characters around it. And
 # searching for " causes us to match the first quote. If we don't do this, a
 # test failure we saw is that CTRL-A will get sent before "xyz" is fully typed
+expect "YDB>"
 send -- "\"xyz"
 expect "z"
 send -- "\""
