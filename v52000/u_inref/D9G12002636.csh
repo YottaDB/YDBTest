@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,12 @@ if (-X expect) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 	endif
 	perl $gtm_tst/com/expectsanitize.pl expect.out > expect_sanitized.out
-	cat expect_sanitized.out
+	if ($ydb_readline) then
+		# See comment inside the awk script for why it is needed only when ydb_readline=1
+		$tst_awk -f  $gtm_tst/$tst/inref/D9G12002636.awk expect_sanitized.out
+	else
+		cat expect_sanitized.out
+	endif
 	$gtm_tst/com/dbcheck.csh
 	echo "Done..."
 else
