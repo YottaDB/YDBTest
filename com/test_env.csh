@@ -21,6 +21,7 @@ if ! ( $?gtm_test_com_individual ) setenv gtm_test_com_individual $work_dir/YDBT
 
 if ! ( $?gtm_curpro ) setenv gtm_curpro $verno   # version to use to create test database files
 setenv ydb_dist $gtm_root/$verno/$tst_image
+setenv gtm_dist $ydb_dist
 setenv HOSTOS `uname -s`
 source "$gtm_test_com_individual/ver.csh" --quiet $verno "$ydb_dist:q"   # set database version
 
@@ -31,6 +32,9 @@ setenv gtmgbldir mumps.gld
 setenv gtm_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
 setenv tst_src T${build_id}   # may be set to "" to add no Txxx no subdirectory to gtm_tst
 setenv gtm_tst $gtm_test/$tst_src   # source of test scripts to test with
+
+# Setup icu_version required by this system
+source $gtm_tst/com/set_icu_version.csh || exit 1
 
 # The following are apparently needed by the test system, according to YDBDevOps:devtools/ydb_cshrc.csh
 setenv gtm_test_do_eotf 0   # set whether to do eotf (encryption on the fly). gtmtest doesn't always set it

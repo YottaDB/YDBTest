@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 ###########################################################
 #
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -14,13 +14,8 @@
 # Sets up environments variables to allow direct running of tests of scripts in YDBTest/com -- for easier debugging
 # Documentation for this script is in ../README.md under "Modular Testing"
 
-# Unset some vars that may otherwise cause confusion
-unsetenv ydb_gbldir
-unsetenv ydb_etrap
-unsetenv ydb_routines
-unsetenv ydb_chset
-unsetenv gtm_chset
-unsetenv ydb_readline
+# Unset some env vars that may otherwise cause confusion
+source gtmtest_setup.csh
 
 set __save_ver=`alias ver`   # save/restore `ver` alias because gtm_env.csh overwrites it
 
@@ -30,7 +25,7 @@ source $gtm_tools/gtm_env.csh || goto restore_ver_fail
 source $gtm_tst/com/set_specific.csh || goto fail
 source $gtm_tst/com/set_icu_version.csh || goto fail
 setenv gtm_ver $gtm_root/$verno
-setenv tst_ver $gtm_verno   # may be overridden by: gtmtest -v
+setenv tst_ver $gtm_verno   # may be overridden by: settest -v
 setenv gtm_ver_noecho
 setenv gtm_pct_list $gtm_ver/pct
 setenv gtm_pct $gtm_ver/pct
@@ -104,10 +99,10 @@ setenv tst   # default avoids "tst: Undefined variable" errors
 setenv subtest   # default avoids "subtest: Undefined variable" errors
 setenv subtests   # default avoids "subtests: Undefined variable" errors
 if ( -e $test_list ) then
-  setenv tst `cat $test_list | grep "\-t .*" | tail -1 | cut "-d " -f2`   # extract the last test specified in arguments
-  setenv subtest `echo $gtm_test_st_list | grep -o '[^,]*$'`   # extract last subtest from comma-separated list
-  setenv subtests "$gtm_test_st_list:as/,/ /"
-  echo "Selecting test '$tst', subtest '$subtest' for 'runtest' to invoke. Results will go into \$r"
+	setenv tst `cat $test_list | grep "\-t .*" | tail -1 | cut "-d " -f2`   # extract the last test specified in arguments
+	setenv subtest `echo $gtm_test_st_list | grep -o '[^,]*$'`   # extract last subtest from comma-separated list
+	setenv subtests "$gtm_test_st_list:as/,/ /"
+	echo "Selecting test '$tst', subtest '$subtest' for 'runtest' to invoke. Results will go into \$r"
 endif
 setenv testname "${tst}_0"
 
@@ -169,8 +164,8 @@ set path = ($original_path $gtm_tst/$tst/inref $gtm_tst/$tst/u_inref $gtm_tst/co
 # Have to capture check_setup_dependencies.csh output because it outputs '0' on stdout, even on success
 set setup_status = `source $gtm_test_com_individual/check_setup_dependencies.csh $gtm_test_com_individual`
 if ( "$setup_status" != "0" ) then
-  echo "TEST-E-SETUP. Some setup dependency is missing. The check failed with $setup_status"
-  goto fail
+	echo "TEST-E-SETUP. Some setup dependency is missing. The check failed with $setup_status"
+	goto fail
 endif
 goto success
 
