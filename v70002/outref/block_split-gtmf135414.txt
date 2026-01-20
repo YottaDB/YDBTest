@@ -22,14 +22,13 @@ mumps.dat
 
 # GT.M V7.0-002 and later splits blocks and when it detects significant restarts
 # So we need to induce restarts for block to be split
-# This test sets PROBLKSPLIT to 3 different value which are 0,1 and 2
+# The below subtest sets PROBLKSPLIT to 3 different value which are 0,1 and 2
 # 0 is for disable block splitting function : Expected data block to not be split at all which is 1
 # 1 means adjust the lower limit for the number of records to 1 : Expected to be the most number of data blocks
 # 2 means adjust the lower limit for the number of records to 2
 # Expect that higher PROBLKSPLIT value will have lower number of data blocks
 
 # Test Proactive block splitting function
-
 Type           Blocks    PROBLKSPLIT
 Data                1    0
 Data                4    1

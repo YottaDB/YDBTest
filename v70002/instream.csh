@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,13 +40,27 @@ echo "v70002 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"backup_order-gtmf135842 load_binary-gtmde201381 zchar_length-gtmde201378 backup_env-gtmde201305"
-setenv subtest_list_non_replic	"$subtest_list_non_replic sock_devparam-gtmde201380 sighup_error-gtmde222430"
-setenv subtest_list_non_replic	"$subtest_list_non_replic block_split-gtmf135414 sigintdiv-gtmde201386 ctrap_acsii-gtmde201390"
-setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386 fnum_just-gtmde201386 zsyslog_fao-gtmde201386"
-setenv subtest_list_non_replic	"$subtest_list_non_replic ygblstat-gtmf132372 indirection-gtmde201393 zjobexam_2ndargs-gtmf135292"
-setenv subtest_list_non_replic	"$subtest_list_non_replic malloc_limit-gtmf135393 stp_gcol_src_assert-gtmf135393"
-setenv subtest_list_non_replic	"$subtest_list_non_replic rctl_integ-gtmf135435 strlit_numoflow-gtmde201388 patternMatchGuard-gtmde201389"
+setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic backup_order-gtmf135842"
+setenv subtest_list_non_replic	"$subtest_list_non_replic load_binary-gtmde201381"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zchar_length-gtmde201378"
+setenv subtest_list_non_replic	"$subtest_list_non_replic backup_env-gtmde201305"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sock_devparam-gtmde201380"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sighup_error-gtmde222430"
+setenv subtest_list_non_replic	"$subtest_list_non_replic block_split-gtmf135414"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sigintdiv-gtmde201386"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ctrap_acsii-gtmde201390"
+setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fnum_just-gtmde201386"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zsyslog_fao-gtmde201386"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ygblstat-gtmf132372"
+setenv subtest_list_non_replic	"$subtest_list_non_replic indirection-gtmde201393"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zjobexam_2ndargs-gtmf135292"
+setenv subtest_list_non_replic	"$subtest_list_non_replic malloc_limit-gtmf135393"
+setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_src_assert-gtmf135393"
+setenv subtest_list_non_replic	"$subtest_list_non_replic rctl_integ-gtmf135435"
+setenv subtest_list_non_replic	"$subtest_list_non_replic strlit_numoflow-gtmde201388"
+setenv subtest_list_non_replic	"$subtest_list_non_replic patternMatchGuard-gtmde201389"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -56,6 +70,10 @@ else
 endif
 
 setenv subtest_exclude_list ""
+# This test occasionally but frequently fails due to variations in the numbers of blocks reported from MUPIP INTEG
+# for the PROBLKSPLIT feature. However, this feature was disabled by default as of GT.M V7.1-001. So this test is disabled.
+# For more details, see: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2548#note_3021292834
+setenv subtest_exclude_list "$subtest_exclude_list block_split-gtmf135414"
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
@@ -72,7 +90,8 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
 	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
 	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
-	setenv subtest_exclude_list "$subtest_exclude_list malloc_limit-gtmf135393 stp_gcol_src_assert-gtmf135393"
+	setenv subtest_exclude_list "$subtest_exclude_list malloc_limit-gtmf135393"
+	setenv subtest_exclude_list "$subtest_exclude_list stp_gcol_src_assert-gtmf135393"
 endif
 
 # Submit the list of subtests
