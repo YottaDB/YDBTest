@@ -25,6 +25,9 @@ eval 'set testareas = ($gtm_tstdir_'${HOST}')'
 set bak = "`echo $testareas | cut -f 2 -d ' '`/$USER/$gtm_tst_out/$testname"
 echo "# Create a backup directory on another disk partition [mkdir $bak]"
 mkdir -p $bak
+if ("ENCRYPT" == $test_encryption) then
+	$gtm_tst/com/merge_gtmcrypt_config.csh "$bak/mumps.dat"
+endif
 echo '# Run [$gtm_dist/mupip backup -replace -database -online "DEFAULT" TARGETDIR/mumps.dat] in the background'
 ($gtm_dist/mupip backup -replace -database -online "DEFAULT" $bak/mumps.dat & ; echo $! >&! mupip-backup.pid ) >&! mupip-backup.out
 echo "# Run updates in the foreground while the backup is running in the background:"
