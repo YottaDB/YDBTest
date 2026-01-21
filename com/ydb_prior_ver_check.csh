@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -79,18 +79,28 @@ if ($?ydb_environment_init) then
 	#    easily, we decided to disable TLS in the test in such cases.
 	# b) We noticed libconfig.so.9 missing in Ubuntu 25.04. For similar reasons as (a), it was not possible to rebuild
 	#    the older version with the available libconfig.so.11 and so we decided to disable TLS in the test in such cases.
-	if ("$2" == "") then
-		# Remote host name has not been specified. Do TLS check on local host.
-		set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
-		set hoststr = ""
-	else
-		# Remote host name has been specified. Do TLS check on remote host.
-		set notfound = `$ssh $2 "ldd $gtm_root/$1/pro/plugin/libgtmtls.so" |& grep "not found"`
-		set hoststr = "on host = [$2] "
-	endif
+	#
+	# Note that most callers will specify no remote host. In which case we need to only do TLS check on local host.
+	# But if the caller does specify a remote host, we need to do TLS check on local host AND remote host. This is because
+	# "com/random_ver.csh" in that case would have returned a prior version after checking that it is available on
+	# both local and remote hosts. It is possible that TLS can be enabled with the remote host prior version build but not
+	# with the local host same prior version build in which case we need to run the test with TLS disabled on both hosts
+	# as that is the lowest common denominator.
+	#
+	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
+	set hoststr = ""
 	if ("" != "$notfound") then
 		set disabletls = 1
 		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [$notfound]" >>&! settings.csh
+	endif
+	if ("$2" != "") then
+		# Remote host name has been specified. Additionally, do TLS check on remote host.
+		set notfound = `$ssh $2 "ldd $gtm_root/$1/pro/plugin/libgtmtls.so" |& grep "not found"`
+		set hoststr = "on host = [$2] "
+		if ("" != "$notfound") then
+			set disabletls = 1
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [$notfound]" >>&! settings.csh
+		endif
 	endif
 	if ($disabletls) then
 		echo "setenv gtm_test_tls FALSE" >>&! settings.csh

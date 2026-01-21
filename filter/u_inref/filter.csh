@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -70,10 +70,10 @@ if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
 endif
-# Since we chose the random prior version on $tst_remote_host, do prior version check on the same host
-# by passing in "$tst_remote_host" to the below call. Or else the check will happen on the local host
-# which might not do the right thing (e.g. TLS needs to be disabled if check done on remote host but
-# might not be disabled if check is incorrectly done on local host resulting in TLSDLLNOOPEN errors).
+# Since we chose a random prior version that exists on both the local host ($tst_org_host) and $tst_remote_host,
+# do prior version check on both hosts by passing in "$tst_remote_host" to the below call. Or else the check will
+# happen only on the local host which might not do the right thing (e.g. TLS needs to be disabled if check done on
+# remote host but might not be disabled if check is incorrectly done only on local host resulting in TLSDLLNOOPEN errors).
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver $tst_remote_host
 
 echo "The prior version picked is GTM_TEST_DEBUGINFO: $prior_ver"
