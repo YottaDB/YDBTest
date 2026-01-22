@@ -14,9 +14,6 @@
 #								#
 #################################################################
 
-# Unset some env vars that may otherwise cause confusion
-source gtmtest_setup.csh
-
 # Enable core dumping if unaligned access is detected on Tru64
 set chkhost=`uname -s`
 if ("OSF1" == $chkhost) then
@@ -42,6 +39,9 @@ if !($?gtm_test_com_individual) then
 	endif
 	setenv gtm_test_com_individual_set
 endif
+
+# Unset some env vars that may otherwise cause confusion
+source $gtm_test_com_individual/gtmtest_setup.csh
 
 # IF LC_ALL is set in user's environment, unset it here. setting LC_COLLATE by set_specific.csh will be of no use if LC_ALL is set.
 # Check <failures_due_to_sort_order>

@@ -34,7 +34,7 @@ unsetenv ydb_procstuckexec	gtm_procstuckexec
 unsetenv ydb_tmp		# Note: gtm_tmp is set below
 
 # Ensure gtm_tmp is unique for every different YDB version and machine architecture
-setenv gtm_tmp /tmp/yottadb/$verno_`uname -m`
+setenv gtm_tmp /tmp/yottadb/${verno}_`uname -m`
 mkdir -p $gtm_tmp
 
 # LD_LIBRARY_PATH could be set by "ydb_env_set" and could affect the test system so unset this too at the start of the test.

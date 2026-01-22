@@ -15,7 +15,7 @@
 # Documentation for this script is in ../README.md under "Modular Testing"
 
 # Unset some env vars that may otherwise cause confusion
-source gtmtest_setup.csh
+source $gtm_test_com_individual/gtmtest_setup.csh
 
 set __save_ver=`alias ver`   # save/restore `ver` alias because gtm_env.csh overwrites it
 
