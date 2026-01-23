@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -206,7 +206,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 	int		shutdown = 0;
 	char		errbuf[2048];
 	int		remainingOdds = 80 - (100 * settings->nestRate);
-	ydb_buffer_t	zstatusBuf;
+	ydb_buffer_t	zstatusBuf, jsonValue;
 	YDB_MALLOC_BUFFER(&zstatusBuf, 2048);
 
 	//get a global
@@ -658,13 +658,14 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 		char *jsonStr = "{\"\": 15, \"key\": \"value\", \"anotherKey\": \"anotherValue\", "
 				"\"array\": [\"one\", 2, null, 2.5, false, -3e2, true, \"\", \"null\"]}";
 
+		YDB_STRING_TO_BUFFER(jsonStr, &jsonValue);
 		if (type)
 			memcpy(t.arr[0], "^JsonDataT", BASE_LEN);
 		else
 			memcpy(t.arr[0], "JsonDataTX", BASE_LEN);
 		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
 		YDB_ASSERT(status);
-		status = ydb_decode_st(tptoken, &zstatusBuf, &basevar, t.length - 1, subs, "JSON", jsonStr);
+		status = ydb_decode_st(tptoken, &zstatusBuf, &basevar, t.length - 1, subs, "JSON", &jsonValue);
 		if (YDB_ERR_CALLINAFTERXIT == status)
 			shutdown = 1;
 		else if (status != YDB_OK) {

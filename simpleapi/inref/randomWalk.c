@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -202,9 +202,10 @@ strArr genGlobalName(){
  * on exit it spawns more threads until maxDepth is hit
  */
 int runProc(testSettings* settings, int curDepth){
-	int status, lockStatus;
-	char errbuf[2048];
-	int remainingOdds = 80 - (100 * settings->nestedTpRate);
+	int		status, lockStatus;
+	char		errbuf[2048];
+	int		remainingOdds = 80 - (100 * settings->nestedTpRate);
+	ydb_buffer_t	jsonValue;
 
 	//get a global
 	strArr t = genGlobalName();
@@ -690,6 +691,7 @@ int runProc(testSettings* settings, int curDepth){
 		char *jsonStr = "{\"\": 15, \"key\": \"value\", \"anotherKey\": \"anotherValue\", "
 				"\"array\": [\"one\", 2, null, 2.5, false, -3e2, true, \"\", \"null\"]}";
 
+		YDB_STRING_TO_BUFFER(jsonStr, &jsonValue);
 		if (type)
 			memcpy(t.arr[0], "^JsonDataS", BASE_LEN);
 		else
@@ -697,7 +699,7 @@ int runProc(testSettings* settings, int curDepth){
 		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
 		YDB_ASSERT(status);
 		logprint("decode ", &t, "");
-		status = ydb_decode_s(&basevar, t.length - 1, subs, "JSON", jsonStr);
+		status = ydb_decode_s(&basevar, t.length - 1, subs, "JSON", &jsonValue);
 		if (status != YDB_OK && status != YDB_TP_RESTART) {
 			ydb_zstatus(errbuf, sizeof(errbuf));
 			printf("Unexpected return code (%d) issued from ydb_decode_s()! %s\n", status, errbuf);

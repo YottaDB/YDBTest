@@ -15,16 +15,16 @@
 int main(void)
 {
 	int		i, status, done;
-	ydb_buffer_t	variable, subscripts[YDB_MAX_SUBS], data;
+	ydb_buffer_t	variable, subscripts[YDB_MAX_SUBS], data, json_value;
 	char		errbuf[YDB_MAX_ERRORMSG], *json_large_buffer, *json_long_key_buffer, *json_long_value_buffer, *buf_addr;
-	const char	*json_object = "{\"\": \"root\", \"key\": \"value\", \"anotherKey\": \"anotherValue\"}";
-	const char	*json_array = "[\"Score\", 1.7, 42, 3.1, 7.4, 0.5, 8.8, 6, 5.4]";
-	const char	*json_object_max_depth = "{\"one\": {\"2\": {\"three\": {\"4\": {\"five\": {\"6\": {\"seven\": {\"8\": {\"nine\": {\"10\": {\"eleven\": {\"12\": {\"thirteen\": {\"14\": {\"fifteen\": {\"16\": {\"seventeen\": {\"18\": {\"nineteen\": {\"20\": {\"twentyone\": {\"22\": {\"twentythree\": {\"24\": {\"twentyfive\": {\"26\": {\"twentyseven\": {\"28\": {\"twentynine\": {\"30\": {\"thirtyone\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
-	const char	*json_object_array_max_depth = "{\"1\": {\"2\": {\"3\": {\"4\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"10\": {\"11\": {\"12\": {\"13\": {\"14\": {\"15\": {\"16\": {\"17\": {\"18\": {\"19\": {\"20\": {\"21\": {\"22\": {\"23\": {\"24\": {\"25\": {\"26\": {\"27\": {\"28\": {\"29\": {\"30\": {\"array\": [1, 2, 3]}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
-	const char	*json_true_false_null = "{\"ThisIsTrue\": true, \"ThisIsNull\": null, \"ThisIsFalse\": false, \"trueString\": \"true\", \"nullString\": \"null\", \"falseString\": \"false\"}";
-	const char	*json_too_many_subscripts = "{\"one\": {\"two\": {\"three\": {\"four\": {\"five\": {\"six\": {\"seven\": {\"eight\": {\"nine\": {\"ten\": {\"eleven\": {\"twelve\": {\"thirteen\": {\"fourteen\": {\"fifteen\": {\"sixteen\": {\"seventeen\": {\"eighteen\": {\"nineteen\": {\"twenty\": {\"twentyone\": {\"twentytwo\": {\"twentythree\": {\"twentyfour\": {\"twentyfive\": {\"twentysix\": {\"twentyseven\": {\"twentyeight\": {\"twentynine\": {\"thirty\": {\"thirtyone\": {\"thirtytwo\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
-	const char	*json_data_and_children = "{\"Population\": {\"Belgium\": 13670000, \"Thailand\": 84140000, \"USA\": {\"\": 325737000, \"17900802\": 3929326, \"18000804\": 5308483, \"20100401\": 308745538}}, \"Capital\": {\"Belgium\": \"Brussels\", \"Thailand\": \"Bangkok\", \"USA\": \"Washington,DC\"}}";
-	const char	*json_invalid = "\"Life, the universe, and everything\"";
+	char		*json_object = "{\"\": \"root\", \"key\": \"value\", \"anotherKey\": \"anotherValue\"}";
+	char		*json_array = "[\"Score\", 1.7, 42, 3.1, 7.4, 0.5, 8.8, 6, 5.4]";
+	char		*json_object_max_depth = "{\"one\": {\"2\": {\"three\": {\"4\": {\"five\": {\"6\": {\"seven\": {\"8\": {\"nine\": {\"10\": {\"eleven\": {\"12\": {\"thirteen\": {\"14\": {\"fifteen\": {\"16\": {\"seventeen\": {\"18\": {\"nineteen\": {\"20\": {\"twentyone\": {\"22\": {\"twentythree\": {\"24\": {\"twentyfive\": {\"26\": {\"twentyseven\": {\"28\": {\"twentynine\": {\"30\": {\"thirtyone\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
+	char		*json_object_array_max_depth = "{\"1\": {\"2\": {\"3\": {\"4\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"10\": {\"11\": {\"12\": {\"13\": {\"14\": {\"15\": {\"16\": {\"17\": {\"18\": {\"19\": {\"20\": {\"21\": {\"22\": {\"23\": {\"24\": {\"25\": {\"26\": {\"27\": {\"28\": {\"29\": {\"30\": {\"array\": [1, 2, 3]}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
+	char		*json_true_false_null = "{\"ThisIsTrue\": true, \"ThisIsNull\": null, \"ThisIsFalse\": false, \"trueString\": \"true\", \"nullString\": \"null\", \"falseString\": \"false\"}";
+	char		*json_too_many_subscripts = "{\"one\": {\"two\": {\"three\": {\"four\": {\"five\": {\"six\": {\"seven\": {\"eight\": {\"nine\": {\"ten\": {\"eleven\": {\"twelve\": {\"thirteen\": {\"fourteen\": {\"fifteen\": {\"sixteen\": {\"seventeen\": {\"eighteen\": {\"nineteen\": {\"twenty\": {\"twentyone\": {\"twentytwo\": {\"twentythree\": {\"twentyfour\": {\"twentyfive\": {\"twentysix\": {\"twentyseven\": {\"twentyeight\": {\"twentynine\": {\"thirty\": {\"thirtyone\": {\"thirtytwo\": \"subscripts for this string.\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}";
+	char		*json_data_and_children = "{\"Population\": {\"Belgium\": 13670000, \"Thailand\": 84140000, \"USA\": {\"\": 325737000, \"17900802\": 3929326, \"18000804\": 5308483, \"20100401\": 308745538}}, \"Capital\": {\"Belgium\": \"Brussels\", \"Thailand\": \"Bangkok\", \"USA\": \"Washington,DC\"}}";
+	char		*json_invalid = "\"Life, the universe, and everything\"";
 	const char	*format = "JSON";
 
 	printf("### Test decodes of JSON data in to M local arrays in ydb_decode_s() ###\n");
@@ -57,7 +57,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonObject", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, -1, subscripts, format, json_object);
+	YDB_STRING_TO_BUFFER(json_object, &json_value);
+	status = ydb_decode_s(&variable, -1, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -67,7 +68,7 @@ int main(void)
 	}
 	printf("# Decode JSON object\n");
 	fflush(stdout);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_object);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -83,7 +84,8 @@ int main(void)
 	YDB_ASSERT(done);
 	YDB_COPY_LITERAL_TO_BUFFER("key", &subscripts[1], done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 2, subscripts, format, json_array);
+	YDB_STRING_TO_BUFFER(json_array, &json_value);
+	status = ydb_decode_s(&variable, 2, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -94,7 +96,8 @@ int main(void)
 	printf("# Decode JSON array with len_alloc < len_used for at least 1 subscript in subsarray\n");
 	fflush(stdout);
 	subscripts[0].len_alloc = subscripts[0].len_used - 1;
-	status = ydb_decode_s(&variable, 1, subscripts, format, json_object);
+	YDB_STRING_TO_BUFFER(json_object, &json_value);
+	status = ydb_decode_s(&variable, 1, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -107,7 +110,7 @@ int main(void)
 	fflush(stdout);
 	buf_addr = subscripts[1].buf_addr;
 	subscripts[1].buf_addr = NULL;
-	status = ydb_decode_s(&variable, 2, subscripts, format, json_object);
+	status = ydb_decode_s(&variable, 2, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -120,7 +123,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonObjectMaxDepth", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_object_max_depth);
+	YDB_STRING_TO_BUFFER(json_object_max_depth, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -132,7 +136,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonObjectArrayMaxDepth", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_object_array_max_depth);
+	YDB_STRING_TO_BUFFER(json_object_array_max_depth, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -152,7 +157,8 @@ int main(void)
 		YDB_COPY_STRING_TO_BUFFER(sub, &subscripts[i], done);
 		YDB_ASSERT(done);
 	}
-	status = ydb_decode_s(&variable, YDB_MAX_SUBS, subscripts, format, "{\"\": \"value\"}");
+	YDB_LITERAL_TO_BUFFER("{\"\": \"value\"}", &json_value);
+	status = ydb_decode_s(&variable, YDB_MAX_SUBS, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -164,7 +170,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonTrueFalseNull", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_true_false_null);
+	YDB_STRING_TO_BUFFER(json_true_false_null, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -176,7 +183,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonTooManySubscripts", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_too_many_subscripts);
+	YDB_STRING_TO_BUFFER(json_too_many_subscripts, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -188,7 +196,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonDataAndChildren", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_data_and_children);
+	YDB_STRING_TO_BUFFER(json_data_and_children, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -200,7 +209,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonInvalid", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_invalid);
+	YDB_STRING_TO_BUFFER(json_invalid, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -212,7 +222,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonLargeBuffer", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_large_buffer);
+	YDB_STRING_TO_BUFFER(json_large_buffer, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -224,7 +235,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonLongKeyBuffer", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_long_key_buffer);
+	YDB_STRING_TO_BUFFER(json_long_key_buffer, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
@@ -236,7 +248,8 @@ int main(void)
 	fflush(stdout);
 	YDB_COPY_LITERAL_TO_BUFFER("jsonLongValueBuffer", &variable, done);
 	YDB_ASSERT(done);
-	status = ydb_decode_s(&variable, 0, subscripts, format, json_long_value_buffer);
+	YDB_STRING_TO_BUFFER(json_long_value_buffer, &json_value);
+	status = ydb_decode_s(&variable, 0, subscripts, format, &json_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, YDB_MAX_ERRORMSG);
