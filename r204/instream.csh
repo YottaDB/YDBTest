@@ -31,7 +31,7 @@
 # valtoobig-ydb1130			[ben]		Test that allocation=7340026 autoswitchlimit=7340025 gives VALTOOBIG error
 # jobcmdslow_gtm9058-ydb1181		[nars]		Test JOB command is not slow and other JOB command tests
 # rtnlaboff-ydbMR1762			[jon]		Test RTNLABOFF error message replacement for JOBLABOFF
-# zgetjpi_cmdline-ydb876                [ben]           Test that $ZGETJPI(PID,keyword) with keyword CMDLINE gives the command line of the indicated process
+# zgetjpi_cmdline-ydb876		[ben]		Test that $ZGETJPI(PID,keyword) with keyword CMDLINE gives the command line of the indicated process
 # large_block_backup-ydb1169		[ben]		This is a test to ensure that you  can create a backup of a database with a large block size. The size 50176 is used.
 # empty_routine-ydb1184			[ben]		Test mumps -run with empty routine name produces the correct error
 # mutex_type-ydb1178			[nars]		Various tests of MUTEX_TYPE being YDB, PTHREAD or ADAPTIVE
@@ -42,7 +42,7 @@
 # duplicatenew_warning-ydb1111		[ben]		Test that mumps compiler correctly gives a DUPLICATENEW warning when attempting to new a variable twice on the same line.
 # nakedref_varsubs-ydb1177		[jon]		Test naked reference optimization if GVN subscripts are unsubscripted local variables'
 # mupipbackup_brokenfile-ydb1202	[jon]		Test MUPIP BACKUP -ONLINE does not produce broken backup file
-# c_clear_err_buff-ydb1180		[ben]		Test that $ECODE properly reset after ydb_ci[p]_t called in multithread environment.
+# c_clear_err_buff-ydb1180		[ben]		Test that $ECODE properly reset after ydb_ci[p]_t or (ydb|gtm)_ci[p] is called.
 # job_cmdline_dash-ydb933		[ben]		Test that JOB command can have a command line where an input starts with a dash without issue.
 # mupip_terminal_prompts-ydb917		[ben]		Test that various mupip commands will no longer say that they accept a file or region when invoked without arguments.
 # unblock_signals_during_init-ydb1205	[david]		Test that signal initialization unblocks signals in a parent process signal mask

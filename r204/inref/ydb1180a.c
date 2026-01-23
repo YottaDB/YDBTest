@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -15,9 +15,10 @@
  * error state. If the error buffer is properly cleared, than after running that, when my sleep triggers a
  * TPTIMEOUT error. However, if the buffer was not properly cleared than the code will think it is still in
  * an error state and no TPTIMEOUT error will occur.
-*/
+ */
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "libyottadb.h"
 
