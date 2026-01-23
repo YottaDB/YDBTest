@@ -202,6 +202,9 @@ if ( ("$tst_ver" != "${gtm_ver:t}") || ("$tst_image" != "${gtm_exe:t}") ) then
 	echo "Unable to switch version to $tst_ver $tst_image. Exiting now"
 	exit 10
 endif
+# Ensure gtm_tmp is unique for every different YDB version and machine architecture
+setenv gtm_tmp /tmp/yottadb/${verno}_`uname -m`
+mkdir -p $gtm_tmp
 ######
 #determine the list of tests to be submitted
 # commandline, request file (and exclude), minorbucket, bucket

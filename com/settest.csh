@@ -17,6 +17,10 @@
 # Unset some env vars that may otherwise cause confusion
 source $gtm_test_com_individual/gtmtest_setup.csh
 
+# Ensure gtm_tmp is unique for every different YDB version and machine architecture
+setenv gtm_tmp /tmp/yottadb/${verno}_`uname -m`
+mkdir -p $gtm_tmp
+
 set __save_ver=`alias ver`   # save/restore `ver` alias because gtm_env.csh overwrites it
 
 if ! ( -f $gtm_tools/gtm_env.csh ) echo "Can't find $gtm_tools/gtm_env.csh. Did you build it with YDBDevOps?" `false` || goto fail
