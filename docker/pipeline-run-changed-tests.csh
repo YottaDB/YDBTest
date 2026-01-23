@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -27,8 +27,18 @@ set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash i
 # Our AARCH64 runner is slow, so add sudo to the list of heavyweight tests
 if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
 
-# Print file list so we can find out which tests are running in the pipeline
-echo $filelist | sed 's/ /\n/g;'
+echo -n "## Checking for test changes outside of com directory: "
+if (0 == `echo -n $filelist | tr " " "\n" | grep -Ev '^com/|^docker/' | wc -l`) then
+	echo "not found"
+	setenv filelist "r136/u_inref/ydb839.csh"
+	echo "# Choosing existing (unchanged) test: $filelist"
+else
+	echo "found"
+	echo "# Show changed tests"
+	# Print file list so we can find out which tests are running in the pipeline
+	echo $filelist | sed 's/ /\n/g;'
+endif
+echo " "
 
 # For each file, check if it is instream.csh or is inside inref
 # If it is, add it so that we invoke the test system with "-t xxx -t yyy -t zzz"

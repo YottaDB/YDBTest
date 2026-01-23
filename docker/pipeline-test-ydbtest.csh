@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -92,14 +92,8 @@ else
 endif
 echo " "
 
-if ("$filelist" == "") then
-	echo "### No tests to run, exiting"
-	exit
-endif
-
 echo "### Show currently available versions"
 ver
 echo " "
 
-echo "### Show changed tests"
 exec /usr/library/gtm_test/T999/docker/pipeline-run-changed-tests.csh
