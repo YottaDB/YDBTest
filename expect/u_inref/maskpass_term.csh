@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +20,7 @@
 
 # AIX boxes seem to have issues with spawning processes from Expect scripts.
 if ("AIX" != "$HOSTOS") then
-	expect $gtm_tst/$tst/inref/maskpass_term.exp > expect.out
+	(expect -d $gtm_tst/$tst/inref/maskpass_term.exp > expect.out) >& expect.dbg
 	# If nothing has changed then this is a pass
 	diff tty_before.logx tty_after.logx
 	if (0 != $status) then
