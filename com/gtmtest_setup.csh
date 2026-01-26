@@ -31,7 +31,7 @@ unsetenv ydb_statsdir		gtm_statsdir	# this is defined to $tst_working_dir later 
 unsetenv ydb_noundef		gtm_noundef
 unsetenv ydb_repl_instance	gtm_repl_instance
 unsetenv ydb_procstuckexec	gtm_procstuckexec
-unsetenv ydb_tmp		# Note: gtm_tmp is set later in gtmtest once $verno is known
+unsetenv ydb_tmp		gtm_tmp
 
 # LD_LIBRARY_PATH could be set by "ydb_env_set" and could affect the test system so unset this too at the start of the test.
 # (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1536#note_1193117974 for background)

@@ -34,7 +34,7 @@ setenv tst_src T${build_id}   # may be set to "" to add no Txxx no subdirectory 
 setenv gtm_tst $gtm_test/$tst_src   # source of test scripts to test with
 
 # Setup icu_version required by this system
-source $gtm_tst/com/set_icu_version.csh || exit 1
+source $gtm_test_com_individual/set_icu_version.csh || exit 1
 
 # The following are apparently needed by the test system, according to YDBDevOps:devtools/ydb_cshrc.csh
 setenv gtm_test_do_eotf 0   # set whether to do eotf (encryption on the fly). gtmtest doesn't always set it
