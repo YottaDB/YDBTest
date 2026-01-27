@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -101,8 +101,8 @@ if ( "$rand_ver" == "RANDOMVER-E-CANNOTRUN") then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ("pro" == "$tst_image") then
-	source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 	if ($gtm_test_libyottadb_asan_enabled) then
 		# We see cores when ASAN is used with tests that send signals (ydb534 sends SIGABRT etc.)
 		# This happens whether YottaDB is compiled with gcc or clang.
@@ -117,6 +117,21 @@ else
 	# ydb534 subtest generates a SIGABRT signal which causes an assert in `generic_signal_handler.c` assert(SIGABRT != sig)`
 	# to fail hence this subtest needs to be skipped in dbg (i.e. run it only in pro).
 	setenv subtest_exclude_list "$subtest_exclude_list ydb534"
+endif
+
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	# libyottadb.so was built with CLANG and ASAN.
+	#
+	# In this case, we have seen an ASAN internal function waiting generating a SIGILL/SIG4 error
+	# and hung eternally waiting for some ASAN internal futex in turn causing the below subtest to
+	# fail with a WAITPROCALIVE-E-WAITTOOLONG error.
+	# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2561 for detailed stack trace.
+	#
+	# This has not been seen with libyottadb.so built with GCC and ASAN.
+	#
+	# This is suspected to be a CLANG + ASAN specific issue and so we disable this subtest in that case.
+	#
+	setenv subtest_exclude_list "$subtest_exclude_list ydb560"
 endif
 
 # Submit the list of subtests
