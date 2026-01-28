@@ -1,4 +1,19 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # Test:
 # This is to test activating and deactivating the source servers.
 # We need three instances.
@@ -88,5 +103,10 @@ echo "#  	--> This should succeed."
 echo "some updates on INST1:"
 $gtm_tst/com/simpleinstanceupdate.csh 10
 
+echo "# Wait for activated source server to send a history record across before attempting dbcheck.csh"
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log SRC_activated_'${time_stamp}'.log -message "New History Content"'
+
+echo "# Now that we are sure INST2 source server is replicating, we are guaranteed the passive to active transition"
+echo "# is complete and so we can safely run dbcheck.csh without risk of a RFSYNC-I-PASSIVEMODE error"
 $gtm_tst/com/dbcheck.csh -extract INST1 INST2 INST3
 #=====================================================================

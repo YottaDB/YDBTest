@@ -110,6 +110,10 @@ YDB>
 YDB>
 
 YDB>
+# Wait for activated source server to send a history record across before attempting dbcheck.csh
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_activated_##TIMESTAMP##.log -message "New History Content"'==
+# Now that we are sure INST2 source server is replicating, we are guaranteed the passive to active transition
+# is complete and so we can safely run dbcheck.csh without risk of a RFSYNC-I-PASSIVEMODE error
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
 ==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==

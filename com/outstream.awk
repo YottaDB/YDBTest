@@ -3,7 +3,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -216,6 +216,7 @@ BEGIN {
 	# some common filenames we might have (in case they pop up in reference files):
 	gsub(/START_[_0-9]*.out/, "##FILTERED##START_##TIMESTAMP##.out");
 	gsub(/SRC_[_0-9]*.log/, "##FILTERED##SRC_##TIMESTAMP##.log");
+	gsub(/SRC_activated_[_0-9]*.log/, "##FILTERED##SRC_activated_##TIMESTAMP##.log");
 	gsub(/RCVR_[_0-9]*.log/, "##FILTERED##RCVR_##TIMESTAMP##.log");
 	gsub(/RCVR_[_0-9]*.log.updproc/, "##FILTERED##RCVR_##TIMESTAMP##.log.updproc");
 	gsub(/SHUT_[_0-9]*.out/, "##FILTERED##SHUT_##TIMESTAMP##.out");
