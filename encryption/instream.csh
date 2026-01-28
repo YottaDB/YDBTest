@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -173,7 +173,16 @@ if ($?gtm_test_temporary_disable) then
 	setenv subtest_exclude_list "$subtest_exclude_list err_maskpass encr_env helper_scripts"
 endif
 
-setenv GNUPGHOME	"$tst_working_dir/.gnupg"
+# For the duration of the encryption test, set GNUPGHOME to a specific directory as we play around with gpg settings.
+# But we do not want the directory name to get too long as otherwise gpg-agent startup fails due to a socket name too long
+# error (when it gets close to 107 bytes). Hence create a subdirectory under $GNUPGHOME (which is already defined to a
+# short path /tmp/gnupgdir/$USER by the test framework) using "$gtm_tst_out" to ensure different/unique subdirectories
+# in case multiple such tests run at the same time (that way they don't interfere with each other).
+setenv GNUPGHOME	"$GNUPGHOME/$gtm_tst_out/.gnupg"
+if (! -e $GNUPGHOME) then
+	mkdir -p $GNUPGHOME
+endif
+
 setenv gtm_pubkey	"$tst_working_dir/pubkey.asc"
 setenv gtm_com_gnupg	"$gtm_com/gnupg"
 
