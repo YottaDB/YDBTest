@@ -205,7 +205,7 @@ int runProc(testSettings* settings, int curDepth){
 	int		status, lockStatus;
 	char		errbuf[2048];
 	int		remainingOdds = 80 - (100 * settings->nestedTpRate);
-	ydb_buffer_t	jsonValue;
+	ydb_string_t	jsonValue;
 
 	//get a global
 	strArr t = genGlobalName();
@@ -657,7 +657,7 @@ int runProc(testSettings* settings, int curDepth){
 		}
 
 	} else if (action < 20 + remainingOdds * (16 / 17.0f)) { //ydb_encode_s() case
-		ydb_buffer_t jsonout;
+		ydb_string_t jsonout = {0};
 		int type = rand() % 2;
 
 		if (type)
@@ -666,7 +666,6 @@ int runProc(testSettings* settings, int curDepth){
 			memcpy(t.arr[0], "JsonDataSX", BASE_LEN);
 		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
 		YDB_ASSERT(status);
-		YDB_MALLOC_BUFFER(&jsonout, 4096); //the M arrays created by ydb_decode_s() can grow, 4096 should be enough
 		logprint("encode ", &t, "");
 		status = ydb_encode_s(&basevar, t.length - 1, subs, "JSON", &jsonout);
 		if (status != YDB_OK) {
@@ -684,14 +683,15 @@ int runProc(testSettings* settings, int curDepth){
 					printf("Unexpected return code (%d) issued from ydb_encode_s()! %s\n", status, errbuf);
 			}
 		}
-		YDB_FREE_BUFFER(&jsonout);
+		free(jsonout.address);	/* ydb_encode_s() allocates jsonout.address on the heap */
 
 	} else if (action < 20 + remainingOdds * (17 / 17.0f)) { //ydb_decode_s() case
 		int type = rand() % 2;
 		char *jsonStr = "{\"\": 15, \"key\": \"value\", \"anotherKey\": \"anotherValue\", "
 				"\"array\": [\"one\", 2, null, 2.5, false, -3e2, true, \"\", \"null\"]}";
 
-		YDB_STRING_TO_BUFFER(jsonStr, &jsonValue);
+		jsonValue.address = jsonStr;
+		jsonValue.length = strlen(jsonValue.address);
 		if (type)
 			memcpy(t.arr[0], "^JsonDataS", BASE_LEN);
 		else

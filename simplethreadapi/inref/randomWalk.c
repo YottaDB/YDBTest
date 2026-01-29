@@ -206,7 +206,8 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 	int		shutdown = 0;
 	char		errbuf[2048];
 	int		remainingOdds = 80 - (100 * settings->nestRate);
-	ydb_buffer_t	zstatusBuf, jsonValue;
+	ydb_buffer_t	zstatusBuf;
+	ydb_string_t	jsonValue;
 	YDB_MALLOC_BUFFER(&zstatusBuf, 2048);
 
 	//get a global
@@ -623,7 +624,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 		}
 
 	} else if (action < 20 + remainingOdds * (16 / 17.0f)) { //ydb_encode_st() case
-		ydb_buffer_t jsonout;
+		ydb_string_t jsonout = {0};
 		int type = rand() % 2;
 
 		if (type)
@@ -632,7 +633,6 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 			memcpy(t.arr[0], "JsonDataTX", BASE_LEN);
 		YDB_COPY_STRING_TO_BUFFER(t.arr[0], &basevar, status);
 		YDB_ASSERT(status);
-		YDB_MALLOC_BUFFER(&jsonout, 4096); //the M arrays created by ydb_decode_st() can grow, 4096 should be enough
 		status = ydb_encode_st(tptoken, &zstatusBuf, &basevar, t.length - 1, subs, "JSON", &jsonout);
 		if (status != YDB_OK) {
 			switch (status) {
@@ -651,14 +651,15 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 						status, zstatusBuf.buf_addr);
 			}
 		}
-		YDB_FREE_BUFFER(&jsonout);
+		free(jsonout.address);	/* ydb_encode_st() allocates jsonout.address on the heap */
 
 	} else if (action < 20 + remainingOdds * (17 / 17.0f)) { //ydb_decode_st() case
 		int type = rand() % 2;
 		char *jsonStr = "{\"\": 15, \"key\": \"value\", \"anotherKey\": \"anotherValue\", "
 				"\"array\": [\"one\", 2, null, 2.5, false, -3e2, true, \"\", \"null\"]}";
 
-		YDB_STRING_TO_BUFFER(jsonStr, &jsonValue);
+		jsonValue.address = jsonStr;
+		jsonValue.length = strlen(jsonValue.address);
 		if (type)
 			memcpy(t.arr[0], "^JsonDataT", BASE_LEN);
 		else

@@ -657,19 +657,18 @@ PASS: ZYDECODE output mirrors input data
 # Use ZYENCODE to encode the nodes
 # Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 
-### Test 9: Confirm no JANSSONINVSTRLEN error for subscripts or values less than the maximum string length (4294967295)
-### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740
+### Test 9: Confirm no errors for subscripts or values less than the string length of 4294967295
 ## Test 9a: Using global variables
 # Set a random length subscript, up to the maximum (64)
 # Set a random length value, up to the maximum (16384)
 # Set 10000 global variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error
+# Use ZYENCODE to encode the nodes, expect no errors
 # Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 ## Test 9b: Using local variables
 # Set a random length subscript, up to the maximum length (64)
 # Set a random length value, up to the maximum (16384)
 # Set 10000 local variable nodes to the random value
-# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error
+# Use ZYENCODE to encode the nodes, expect no errors
 # Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error
 
 ### Test 10: ZYENCODE behavior with null subscripts
@@ -771,6 +770,42 @@ ZSTATUS=T19+5^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE;
 Added SET trigger on ^dst2 named dst2#1
 # Test sr_port/op_zydecode_arg.c:120ZSTATUS=T19b+3^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
 ZSTATUS=T19+8^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
+
+### Test 20: ZYDECODE and ZYENCODE work with JSON arrays with more than 31 elements without issue
+# Run [T20^ydb1152] routine
+## Test 20a: Decoding a JSON array with more than 31 elements works without issue
+# Run [set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
+# Run [set f(2)="null, ""string"": ""null""}"]
+# Run [zydecode g=f]
+# Expect no error messsages to occur
+## Test 20b: Encoding the M array created by 2i correctly creates a JSON array without issue
+# Run [zyencode f=g("array")]
+# Expect no error messages to occur, and a proper JSON array to be encoded
+[1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+### Test 21: ZYENCODE encodes into JSON arrays when all the conditions are met, otherwise it encodes into JSON objects
+# Run [T21^ydb1152] routine
+## Test 21a: Encoding an M array that does not match the condition for a JSON array, it starts with a subscript other than 0
+# Run [set marray(0)="zero",marray(1)="one",marray(2)="two",marray(3)="three",marray(4)="four",marray(5)="five",marray(6)="six"]
+# Run [set marray(7)="seven",marray(8)="eight",marray(9)="nine",marray(10)="ten",marray(11)="eleven",marray(12)="twelve"]
+# Run [set marray(-1)="negative one"]
+# Run [zyencode json=marray]
+{"-1": "negative one", "0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten", "11": "eleven", "12": "twelve"}
+# Run [kill marray(-1)]
+## Test 21b: Encoding an M array that does not match the condition for a JSON array, it doesn't strictly increment by an integer for each element
+# Run [kill marray(5)]
+# Run [zyencode json=marray]
+{"0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten", "11": "eleven", "12": "twelve"}
+# Run [set marray(5)="five"]
+## Test 21c: Encoding an M array that does not match the condition for a JSON array, it has a subscript at the same level which is not an integer
+# Run [set marray("key")="value"]
+# Run [zyencode json=marray]
+{"0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten", "11": "eleven", "12": "twelve", "key": "value"}
+# Run [kill marray("key")]
+## Test 21d: Encoding an M array that does not match the condition for a JSON array, its parent node contains data
+# Run [set marray="numbers"]
+# Run [zyencode json=marray]
+{"": "numbers", "0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten", "11": "eleven", "12": "twelve"}
 
 # Check all ZYENCODE JSON output files for valid JSON
 PASS: T3a.json contains valid JSON

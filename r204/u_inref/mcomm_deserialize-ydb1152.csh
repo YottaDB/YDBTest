@@ -170,6 +170,16 @@ echo "# Run [$test_num^ydb1152] routine"
 $ydb_dist/yottadb -run ${test_num}^ydb1152
 echo
 
+echo "### Test 20: ZYDECODE and ZYENCODE work with JSON arrays with more than 31 elements without issue"
+set test_num = T20
+echo "# Run [$test_num^ydb1152] routine"
+$ydb_dist/yottadb -run ${test_num}^ydb1152
+
+echo "### Test 21: ZYENCODE encodes into JSON arrays when all the conditions are met, otherwise it encodes into JSON objects"
+set test_num = T21
+echo "# Run [$test_num^ydb1152] routine"
+$ydb_dist/yottadb -run ${test_num}^ydb1152
+
 which jq >& /dev/null
 if ($status == 1) then
 	echo "ERROR: 'jq' utility not installed. Please install 'jq' before running this test."

@@ -665,8 +665,7 @@ T8 ;
 	quit
 
 T9 ;
-	write "### Test 9: Confirm no JANSSONINVSTRLEN error for subscripts or values less than the maximum string length (4294967295)",!
-	write "### For details, see discussion at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2844227740",!
+	write "### Test 9: Confirm no errors for subscripts or values less than the string length of 4294967295",!
 	write "## Test 9a: Using global variables",!
 	set maxsubslen=64,maxvallen=2**14
 	write "# Set a random length subscript, up to the maximum ("_maxsubslen_")",!
@@ -677,7 +676,7 @@ T9 ;
 	set maxi=10000
 	write "# Set "_maxi_" global variable nodes to the random value",!
 	for i=1:1:maxi set ^x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error",!
+	write "# Use ZYENCODE to encode the nodes, expect no errors",!
 	zyencode ^y=^x
 	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode ^z=^y
@@ -692,7 +691,7 @@ T9 ;
 	set maxi=10000
 	write "# Set "_maxi_" local variable nodes to the random value",!
 	for i=1:1:maxi set x(subs,i)=val
-	write "# Use ZYENCODE to encode the nodes, expect no JANSSONINVSTRLEN error",!
+	write "# Use ZYENCODE to encode the nodes, expect no errors",!
 	zyencode y=x
 	write "# Use ZYDECODE to decode the nodes, expect no ZYDECODEWRONGCNT error",!
 	zydecode z=y
@@ -927,6 +926,68 @@ T19b ;
 	write "# Test sr_port/op_zydecode_arg.c:120"
 	merge ^src=src
 	zydecode dst=^src
+	quit
+
+T20 ;
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
+	write "## Test 20a: Decoding a JSON array with more than 31 elements works without issue",!
+	kill f
+	write "# Run [set f=2,f(1)=""{""""array"""": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], """"key"""": """"value"""", """"null"""": """,!
+	set f=2,f(1)="{""array"": [1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ""key"": ""value"", ""null"": "
+	write "# Run [set f(2)=""null, """"string"""": """"null""""}""]",!
+	set f(2)="null, ""string"": ""null""}"
+	write "# Run [zydecode g=f]",!
+	write "# Expect no error messsages to occur",!
+	zydecode g=f
+	write "## Test 20b: Encoding the M array created by 2i correctly creates a JSON array without issue",!
+	kill f
+	write "# Run [zyencode f=g(""array"")]",!
+	write "# Expect no error messages to occur, and a proper JSON array to be encoded",!
+	zyencode f=g("array")
+	write f(1),!
+	write !
+
+	quit
+
+T21 ;
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
+	write "## Test 21a: Encoding an M array that does not match the condition for a JSON array, it starts with a subscript other than 0",!
+	kill marray
+	write "# Run [set marray(0)=""zero"",marray(1)=""one"",marray(2)=""two"",marray(3)=""three"",marray(4)=""four"",marray(5)=""five"",marray(6)=""six""]",!
+	set marray(0)="zero",marray(1)="one",marray(2)="two",marray(3)="three",marray(4)="four",marray(5)="five",marray(6)="six"
+	write "# Run [set marray(7)=""seven"",marray(8)=""eight"",marray(9)=""nine"",marray(10)=""ten"",marray(11)=""eleven"",marray(12)=""twelve""]",!
+	set marray(7)="seven",marray(8)="eight",marray(9)="nine",marray(10)="ten",marray(11)="eleven",marray(12)="twelve"
+	write "# Run [set marray(-1)=""negative one""]",!
+	set marray(-1)="negative one"
+	write "# Run [zyencode json=marray]",!
+	zyencode json=marray
+	write json(1),!
+	write "# Run [kill marray(-1)]",!
+	kill marray(-1)
+	write "## Test 21b: Encoding an M array that does not match the condition for a JSON array, it doesn't strictly increment by an integer for each element",!
+	write "# Run [kill marray(5)]",!
+	kill marray(5)
+	write "# Run [zyencode json=marray]",!
+	zyencode json=marray
+	write json(1),!
+	write "# Run [set marray(5)=""five""]",!
+	set marray(5)="five"
+	write "## Test 21c: Encoding an M array that does not match the condition for a JSON array, it has a subscript at the same level which is not an integer",!
+	write "# Run [set marray(""key"")=""value""]",!
+	set marray("key")="value"
+	write "# Run [zyencode json=marray]",!
+	zyencode json=marray
+	write json(1),!
+	write "# Run [kill marray(""key"")]",!
+	kill marray("key")
+	write "## Test 21d: Encoding an M array that does not match the condition for a JSON array, its parent node contains data",!
+	write "# Run [set marray=""numbers""]",!
+	set marray="numbers"
+	write "# Run [zyencode json=marray]",!
+	zyencode json=marray
+	write json(1),!
+	write !
+
 	quit
 
 initTest(testNum)
