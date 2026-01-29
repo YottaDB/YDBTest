@@ -72,7 +72,11 @@ echo
 cat << CAT_EOF
 ##############
 Test issue 2:
-Stats should not be shared after VIEW specifies selective sharing.
+Stats are shared after VIEW specifies selective sharing.
+This behavior is technically incorrect, but is nevertheless retained in both GT.M and YottaDB.
+For details see:
+1. https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2544#note_3021345237
+2. https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2544#note_3045797187
 
 Test by running the ydb254b^ydb254 label to:
 1. Selectively set 'nostatshare' on a region
@@ -84,8 +88,11 @@ Two cases are covered:
 1. Expect "0" when gtm_statshare=0
 2. Expect "1" when gtm_statshare=1
 
-In both cases, expect an empty diff between ydb254b-before.out and ydb254b-after.out,
+In the first case, expect an empty diff between ydb254b-before.out and ydb254b-after.out,
 signifying that no .gst file was created when accessing a variable between directory listings.
+
+In the second case, expect a one-line diff between ydb254b-before.out and ydb254b-after.out,
+containing a .gst file that was created when accessing a variable between directory listings.
 
 When encryption is randomly enabled for the test, expect also an additional directory
 listing for a pipe created during the encryption process.
@@ -113,7 +120,6 @@ echo '1. 0 when run after VIEW "NOSTATSHARE"'
 echo '2. 1 in all other cases.'
 echo "##############"
 echo "# Reset gtmgbldir"
-# setenv gtmgbldir $initgtmgbldir
 echo "# Run ydb254c^ydb254 label"
 $gtm_dist/mumps -run ydb254c^ydb254 >& ydb254c.out
 cat ydb254c.out
