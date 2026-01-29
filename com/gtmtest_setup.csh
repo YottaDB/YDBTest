@@ -32,6 +32,9 @@ unsetenv ydb_noundef		gtm_noundef
 unsetenv ydb_repl_instance	gtm_repl_instance
 unsetenv ydb_procstuckexec	gtm_procstuckexec
 unsetenv ydb_tmp		gtm_tmp
+unsetenv GNUPGHOME
+unsetenv ydb_crypt_config	gtmcrypt_config
+unsetenv ydb_passwd		gtm_passwd
 
 # LD_LIBRARY_PATH could be set by "ydb_env_set" and could affect the test system so unset this too at the start of the test.
 # (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1536#note_1193117974 for background)
