@@ -1,0 +1,54 @@
+# ********************************************************************************************
+# YDB1018 - Test fix of rare MUPIP UPGRADE issue that can cause V7 database files with integrity errors
+# ********************************************************************************************
+# 
+# Test fix that prevents assert failures like the following:
+# 
+# %YDB-F-ASSERT, Assert failed in /Distrib/YottaDB/V999_R203/sr_unix/mu_swap_root.c line 405 for expression ((0 == upg_mv_block) || (upg_mv_block <= free_blk_id))
+# 
+# The below test case is based on the discussion at https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_3048383000.
+# 
+# See the following threads for additional details:
+# 1. https://gitlab.com/YottaDB/DB/YDB/-/issues/1018#note_2961097079
+# 2. https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1813
+# 
+
+# The below tests force the use of V6 mode to create DBs. This requires turning off ydb_test_4g_db_blks since
+# V6 and V7 DBs are incompatible in that V6 cannot allocate unused space beyond the design-maximum total V6 block limit
+# in anticipation of a V7 upgrade.
+
+# Set version to: V6
+# Create V6 database files
+# Run [$gtm_dist/mumps -run ydb1018]
+# Set version to: V7
+# Upgrade the global directory T1.gld : GDE exit
+
+# Run [echo "yes" | $gtm_dist/mupip upgrade -reg DEFAULT]
+# Expect the upgrade to complete successfully. Previously, the upgrade would not complete with the following output:
+# 1. With DBG builds: '%YDB-F-ASSERT, Assert failed in ../sr_unix/mu_swap_root.c line 405 for expression ((0 == upg_mv_block) || (upg_mv_block <= free_blk_id))'
+# 2. With PRO builds: '%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions' and the database will have integrity errors.
+You must have a backup before you proceed!!
+An abnormal termination may damage the database files during the operation !!
+		Are you ready to continue the operation [y/n] ? 
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Disabling ASYNCIO for the duration of upgrade
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE started (##TEST_PATH##/T1.dat)
+##SUSPEND_OUTPUT JNL_OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/T1.mjl is renamed to ##TEST_PATH##/T1.mjl_##TIMESTAMP##
+##ALLOW_OUTPUT JNL_OFF
+Region DEFAULT : MUPIP UPGRADE -MASTERMAP started.
+Region DEFAULT : Continuing with master bitmap extension.
+Region DEFAULT : Master map required 0x1000 blocks; Size is now at 0x2D6 blocks after any extension.
+Region DEFAULT : MUPIP UPGRADE -MASTERMAP completed.
+Region DEFAULT : Relocated 2 root blocks and 1 other blocks.
+##TEST_AWKRegion DEFAULT : Removed 1 KILL'ed globals, freeing 2 blocks and [0-9]* bytes from directory tree.
+Region DEFAULT : Upgraded 2 directory tree blocks, splitting 0 blocks, adding 0 directory tree levels.
+##SUSPEND_OUTPUT JNL_OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/T1.mjl is renamed to ##TEST_PATH##/T1.mjl_##TIMESTAMP##
+##ALLOW_OUTPUT JNL_OFF
+##SUSPEND_OUTPUT NOASYNCIO
+Region DEFAULT : Restoring ASYNCIO setting for ##TEST_PATH##/T1.dat
+##ALLOW_OUTPUT NOASYNCIO
+Region DEFAULT : MUPIP MASTERMAP UPGRADE of ##TEST_PATH##/T1.dat completed
+# Run dbcheck.csh to ensure the database has no integrity errors

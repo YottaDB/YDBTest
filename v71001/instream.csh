@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,7 @@
 # viewjnlpool_multiinst-gtmf135040		[jon]	Test $VIEW("JNLPOOL") with multiple instances
 # inplaceupgrade_concurrent-gtmf225097		[jon]	Test Second phase of in-place conversion from V6 to V7 database formats supports operation with concurrent activity
 # tptrans_problocksplit-gtmde532295		[jon]	Test GT.M disables proactive block splitting within TP transactions and by default
+# mupgrade_brokenV7db-ydb1018			[jon]	Test fix of rare MUPIP UPGRADE issue that can cause V7 database files with integrity errors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71001 test starts..."
@@ -47,6 +48,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_critinterrup
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeout_tpdefer-gtmde519525"
 setenv subtest_list_non_replic	"$subtest_list_non_replic inplaceupgrade_concurrent-gtmf225097"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tptrans_problocksplit-gtmde532295"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupgrade_brokenV7db-ydb1018"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic viewjnlpool_multiinst-gtmf135040"
 
