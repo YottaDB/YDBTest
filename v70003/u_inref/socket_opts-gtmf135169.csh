@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -189,13 +189,17 @@ foreach options ( \
 		set valid=`$gtm_dist/mumps -run isnotdupe^gtmf135169 $options $command`
 		if ("$valid" == "1") then
 			foreach readback ( "indv" "opts" )
-				(strace -o raw-$case-$readback.outx $gtm_dist/mumps -run wrtest^gtmf135169 $portno wrtest-$case server bg $options $command $readback >>& server.out &)
-				($gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-1 bg $options $command >>& client1-$case-$readback.out &)
+				(strace -o raw-$case-$readback.outx $gtm_dist/mumps -run wrtest^gtmf135169 $portno wrtest-$case server bg $options $command $readback >>& server.out & ; echo $! >&! ${readback}-server.pid) >&! ${readback}-server-bg.out
+				($gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-1 bg $options $command >>& client1-$case-$readback.out & ; echo $! >&! ${readback}-client.pid) >&! ${readback}-client-bg.out
 				$gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-2 fg $options $command >>& client2-$case-$readback.out
 				cat raw-$case-$readback.outx | grep -v "access.*hugepages.*EACCES" > trace-$case-$readback.out  # SUSE filter
 				$gtm_dist/mumps -run parse^gtmf135169 $portno wrtest-$case parse - $options trace-$case-$readback.out $readback >>& filtered-$case-$readback.out
 				$gtm_dist/mumps -run chkrst^gtmf135169 $portno
- 				cat filtered-$case-$readback.out >>& server.out
+				cat filtered-$case-$readback.out >>& server.out
+				# Wait for server and client processes backgrounded above to terminate before moving on to the next stage of the test
+				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-server.pid`
+				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-client.pid`
+
 			end
 			echo '#' >>& server.out
 			@ case += 1
