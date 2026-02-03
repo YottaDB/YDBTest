@@ -90,8 +90,17 @@ if ( ( "ENCRYPT" == "$test_encryption" ) ) then
 	# filter test randomly/explicitly chose -encrypt. Check if it can be passed on to switch_over test too.
 	# For that, one needs to check if the older version has encryption plugin support enabled.
 	if ( "TRUE" == "`$gtm_tst/com/is_encrypt_support.csh $prior_ver pro`" )  then
-		# The version supports encryption and the plugin is present. Run the test with -encrypt
-		setenv common_test_options "$common_test_options -encrypt"
+		# Encryption is supported on the local host. Additionally, do an encryption check on the remote host.
+		set supported = `$ssh $tst_remote_host "$gtm_tst/com/is_encrypt_support.csh $prior_ver pro"`
+		echo $supported >&! supported.out
+		if ( "TRUE" == "$supported" )  then
+			# The version supports encryption and the plugin is present. Run the test with -encrypt
+			setenv common_test_options "$common_test_options -encrypt"
+		else
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh : [-encrypt not supported on $tst_remote_host]" >>&! settings.csh
+			# The local version supports encryption, but the remote does not. Run the test with -noencrypt
+			setenv common_test_options "$common_test_options -noencrypt"
+		endif
 	else
 		# The version supports encryption but the plugin isn't present. Run the test with -noencrypt
 		setenv common_test_options "$common_test_options -noencrypt"

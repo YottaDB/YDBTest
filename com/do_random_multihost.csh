@@ -69,8 +69,6 @@ else if ( "$mh_rand_tests" =~ "* $tst *" ) then
 		setenv test_replic_mh_type 1
 	endif
 endif
-# TODO: Remove after testing
-setenv test_replic_mh_type 1
 
 if ($test_replic_mh_type && ("rhel" == $gtm_test_linux_distrib)) then
 	grep -q 'Red Hat Enterprise Linux 7' /etc/os-release
