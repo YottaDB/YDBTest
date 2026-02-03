@@ -44,6 +44,8 @@ EOF
 #
 echo "# Running tprestart"
 `pwd`/tprestart Y 0
+$gtm_tst/com/wait_for_proc_to_die.csh `cat stapi.pid`
+$gtm_tst/com/wait_for_proc_to_die.csh `cat mcode.pid`
 
 $gtm_tst/com/dbcheck.csh -extract >>& dbcheck.out || \
 	echo "# dbcheck failed. Output of dbcheck.out follows" && cat dbcheck.out

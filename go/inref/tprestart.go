@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.      //
+// Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.      //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -76,6 +76,9 @@ func tprestartviaSTAPI(errStrp *yottadb.BufferT, mainrtn string) {
 			if nil != err {
 				panic(err)
 			}
+			f, _ := os.Create("stapi.pid")
+			defer f.Close()
+			fmt.Fprintf(f, "%d\n", cmd.Process.Pid)
 		}
 		err = callFunc(tptoken, errStrp)
 		//err = write(tptoken)
@@ -111,6 +114,9 @@ func tprestartviaMCode(errStrp *yottadb.BufferT, mainrtn string) {
 				fmt.Println("error from launch:", err)
 				panic(err)
 			}
+			f, _ := os.Create("mcode.pid")
+			defer f.Close()
+			fmt.Fprintf(f, "%d\n", cmd.Process.Pid)
 		}
 		err = callFunc(tptoken, errStrp)
 		if err != nil {
