@@ -50,6 +50,7 @@
 # zmaxtptime_start-ydb950		[ben]		Test that ztrap does not cause assert failure.
 # zyjobparent-ydb918			[ben]		Test the new intrinsic special variable $ZYJOBPARENT.
 # aarch64_run8Kvarnames-ydb1203		[jon]		Test that M programs on AARCH64 with more than 8Ki distinct local variable names run.
+# zroutines_wildcard-ydb974		[ben]		Test that $ZROUTINES allows wild-cards in filenames.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -100,6 +101,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic generated_from_msg-ydb8
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_start-ydb950"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyjobparent-ydb918"
 setenv subtest_list_non_replic	"$subtest_list_non_replic aarch64_run8Kvarnames-ydb1203"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_wildcard-ydb974"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
