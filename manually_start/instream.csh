@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,12 +21,13 @@
 # a major release.                                                   #
 ######################################################################
 #
-# gds_max_blk	[s7kr] Testing GDS max number of blocks for V6 mode blocks (992M blocks) and V7 mode blocks (~16GB blocks)
-# ossmake	[shaha] Test the makefile builds regularly so that we know when they break
-# maxtrignames	[shaha] Test that adds 999,999 triggers with auto generated names
-# gtm8416	[partridger] Verify 1 second HANG between global SETs ensures that each journal record falls in a different second
+# gds_max_blk			[s7kr] Testing GDS max number of blocks for V6 mode blocks (992M blocks) and V7 mode blocks (~16GB blocks)
+# ossmake			[shaha] Test the makefile builds regularly so that we know when they break
+# maxtrignames			[shaha] Test that adds 999,999 triggers with auto generated names
+# gtm8416			[partridger] Verify 1 second HANG between global SETs ensures that each journal record falls in a different second
 #				The above test is manually started because takes a long time, but it's not computationally intensive
-# sem_counter	[base]  Launch over 32K processes and ensure they can connect to the database if -qdbrundown is on
+# sem_counter			[base]  Launch over 32K processes and ensure they can connect to the database if -qdbrundown is on
+# mcomm_serialize_array-ydb1155	[david]	Test M command to serialize local or global variable subtrees larger than 4 GiBs
 #
 setenv subtest_list_common ""
 setenv subtest_list_common "$subtest_list_common 4g_journal"
@@ -40,6 +41,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic maxtrignames"
 setenv subtest_list_non_replic "$subtest_list_non_replic ossmake"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8416"
 setenv subtest_list_non_replic "$subtest_list_non_replic sem_counter"
+setenv subtest_list_non_replic "$subtest_list_non_replic mcomm_serialize_array-ydb1155"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then

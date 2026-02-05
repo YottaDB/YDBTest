@@ -1,0 +1,44 @@
+# ------------------------------------------------------------------------------------------------
+# Test M command to serialize and deserialize local or global variable subtrees larger than 4 GiBs
+# ------------------------------------------------------------------------------------------------
+
+# Test ZYENCODE and ZYDECODE on local and global variable that encodes to a JSON string larger than 4 GiBs
+
+## Call local^ydb1155 to test the ZYENCODE and ZYDECODE commands on large M arrays
+
+## Test ZYENCODE and ZYDECODE on a very large M local array [>4 GiBs]
+### Run [set subslen=2**20]
+### Run [set vallen=2**20]
+### Run [set subs=$$^%RANDSTR(subslen)]
+### Run [set val=$$^%RANDSTR(vallen)]
+### Run [for i=0:1:140 set array(i,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs)=val
+### Run [zyencode json=array]
+### Expect no errors from ZYENCODE
+
+## Log encoded JSON to file [local.json]
+
+### Run [kill array]
+### Run [zydecode array=json]
+### Expect no errors from ZYDECODE
+
+## Call global^ydb1155 to test the ZYENCODE and ZYDECODE commands on large M arrays
+
+## Test ZYENCODE and ZYDECODE on a very large M global array [>4 GiBs]
+### Run [set subslen=512\35]
+### Run [set vallen=2**20]
+### Run [set subs=$$^%RANDSTR(subslen)]
+### Run [set val=$$^%RANDSTR(vallen)]
+### Run [for i=0:1:4200 set ^array(i,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs,subs)=val
+### Run [zyencode ^json=^array]
+### Expect no errors from ZYENCODE
+
+## Log encoded JSON to file [global.json]
+
+### Run [kill ^array]
+### Run [zydecode ^array=^json]
+### Expect no errors from ZYDECODE
+
+# Check all ZYENCODE JSON output files for valid JSON
+PASS: global.json contains valid JSON
+PASS: local.json contains valid JSON
+
