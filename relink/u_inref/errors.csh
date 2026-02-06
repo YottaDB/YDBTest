@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,15 +29,11 @@ setenv gtmroutines ".* $gtmroutines"
 # Create a simple routine for testing.
 cat > a.m <<eof
 a
- quit
+	quit
 eof
 
 # Remember the environment variable for library preload.
-if ("AIX" == $HOSTOS) then
-	set lib_preload_var = LDR_PRELOAD64
-else
-	set lib_preload_var = LD_PRELOAD
-endif
+set lib_preload_var = LD_PRELOAD
 
 # Note: The "grep -v mumps" bit in this and subsequent cases is to filter out the messages about the completion of the
 # backgrounded mumps process that certain tcsh versions may spew.

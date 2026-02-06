@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,6 @@ setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work wi
 				# Test expects YDB-I-MUTRUNCNOSPACE, but due to global distribution, it doesn't happen
 #
 setenv test_reorg NON_REORG
-setenv gtm_test_mupip_set_version "V5"
 setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG -TRUNCATE output
 $gtm_tst/com/dbcreate.csh mumps 3 -block_size=1024	# The truncate tests below are sensitive to block layout
 $GDE << EOF
@@ -71,7 +70,7 @@ echo "# A plain reorg -truncate should work"
 $MUPIP reorg -truncate >&! trunc_1.out
 if ($status) then
 	cat trunc_1.out
-        echo "TEST failed in MUPIP reorg -truncate"
+	echo "TEST failed in MUPIP reorg -truncate"
 	exit 1
 else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
@@ -87,7 +86,7 @@ echo "# No local bitmaps eligible for truncate yet"
 $MUPIP reorg -truncate >&! trunc_2.outx
 if ($status) then
 	cat trunc_2.outx
-        echo "TEST failed in MUPIP reorg -truncate"
+	echo "TEST failed in MUPIP reorg -truncate"
 	exit 1
 else
 	$grep "TRUNC" trunc_2.outx
@@ -103,7 +102,7 @@ EOF
 $MUPIP reorg -truncate >&! trunc_3.outx
 if ($status) then
 	cat trunc_3.outx
-        echo "TEST failed in MUPIP reorg -truncate"
+	echo "TEST failed in MUPIP reorg -truncate"
 	exit 1
 else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
@@ -122,7 +121,7 @@ $MUPIP extend -b="$rand_ext" AREG >&! mupip_extend.out
 $MUPIP reorg -truncate >&! trunc_4.outx
 if ($status) then
 	cat trunc_4.outx
-        echo "TEST failed in MUPIP reorg -truncate"
+	echo "TEST failed in MUPIP reorg -truncate"
 	exit 1
 else
 	if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then

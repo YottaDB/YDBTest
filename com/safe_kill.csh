@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -93,14 +93,6 @@ exit $scriptstat
 # Solaris
 # (http://docs.oracle.com/cd/E19957-01/806-4015/chapter2-107/index.html) can go
 # upto 999999 six digits long.
-#
-# AIX, I know PIDs go up to eight digits long, but I can't seem to find
-# anything in their documentation via searches. This command
-# 	lsattr -E -l sys0 | grep -i maxuproc
-# gives me the max processes per user. This link,
-# http://www.unix.com/aix/84085-pid-number-creation-rules-aix.html (which
-# references another supporting link), says the the max pid is 2^26, 67108864
-# which is 8 digits long.
 #
 # HPUX (man process_id_max) PIDs are usually set to 30000, but can go up to a
 # ridiculous ten digit length 1,073,741,823. Wow! And here I thought I was

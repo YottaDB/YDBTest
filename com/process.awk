@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -61,10 +61,8 @@ else if (option == "JNL_BEFORE")		{var="gtm_test_jnl_nobefore"		}
 else if (option == "JNL_NOBEFORE")		{var="gtm_test_jnl_nobefore"		}
 else if (option == "64BIT_GTM")			{var="gtm_platform_size"		}
 else if (option == "32BIT_GTM")			{var="gtm_platform_size"		}
-else if (option == "PLATFORM_NO_V4GTM")		{var="gtm_platform_no_V4"		}
 else if (option == "PLATFORM_NO_PRIORGTM")	{var="gtm_test_nopriorgtmver"		}
 else if (option == "PLATFORM_NO_COMPRESS_VER")	{var="gtm_platform_no_compress_ver"	}
-else if (option == "PLATFORM_NO_DSVER")		{var="gtm_platform_no_ds_ver"		}
 else if (option == "PLATFORM_NO_GGTOOLSDIR")	{var="gtm_test_noggtoolsdir"		}
 else if (option == "PLATFORM_NO_GGUSERS")	{var="gtm_test_noggusers"		}
 else if (option == "PLATFORM_NO_GGBUILDDIR")	{var="gtm_test_noggbuilddir"		}

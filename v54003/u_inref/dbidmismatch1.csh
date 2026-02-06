@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,7 @@ alias END "source $gtm_tst/com/END.csh"
 
 #TEST BEGINS#
 BEGIN "Choose randomly between -reg OR -file qualifier"
-        @ choice = `$gtm_exe/mumps -run rand 2`
+	@ choice = `$gtm_exe/mumps -run rand 2`
 END
 
 BEGIN "Create backup.dat and mumps.dat"
@@ -43,9 +43,9 @@ BEGIN "Access mumps.dat and crash it"
 # at this point, gtmgbldir points to mumps.gld
 $GTM << GTM_EOF
 	write "set ^x=1"
-        set ^x=1
-	zsy "dse all -buff"
-        zsy "$kill9 "_\$j
+	set ^x=1
+	zsy "$gtm_dist/dse all -buff"
+	zsy "$kill9 "_\$j
 GTM_EOF
 END
 
@@ -58,22 +58,22 @@ cp mumps.dat backup.dat
 mv backup.dat mumps.dat
 $GTM << GTM_EOF
 	write "set ^y=1"
-        set ^y=1
+	set ^y=1
 GTM_EOF
 END
 
 BEGIN "Do MUPIP RUNDOWN and acccess database. This database access should be clean"
 if ( $choice == 0 ) then
-        echo 'mupip rundown -reg "*"'
-        $MUPIP rundown -reg "*"
+	echo 'mupip rundown -reg "*"'
+	$MUPIP rundown -reg "*"
 else
-        echo 'mupip rundown -file mumps.dat'
-        $MUPIP rundown -file mumps.dat
+	echo 'mupip rundown -file mumps.dat'
+	$MUPIP rundown -file mumps.dat
 endif
 
 $GTM << GTM_EOF
 	write "set ^y=1"
-        set ^y=1
+	set ^y=1
 	write "clean database access"
 GTM_EOF
 END

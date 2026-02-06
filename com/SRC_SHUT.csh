@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,12 +18,6 @@
 #	Shut down the source server and turn replication off if explicitly asked
 #
 set exit_stat = 0
-if ( ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) || ("V50000" == `echo $gtm_exe:h:t|cut -c1-6`) ) then
-	# this means the current GT.M version is a pre-multisite_replic version and so we need to call
-	# V4 counterpart of SRC_SHUT.csh as this script will complain for new qualifiers with older GT.M version.
-	$gtm_tst/com/v4_SRC_SHUT.csh $argv
-	exit
-endif
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
 endif

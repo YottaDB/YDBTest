@@ -3,7 +3,7 @@
 ; Copyright (c) 2002-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -16,14 +16,14 @@ checkdb;
 	;	Checks the database, if database has correct data
 	;	Check if nothing is lost or, nothing is duplicate
 	;   This program for database fills using primitive root of a field.
-        ;   Say, w is the primitive root and we have 5 jobs
-        ;   Job 1 : Sets index w^0, w^5, w^10 etc.
-        ;   Job 2 : Sets index w^1, w^6, w^11 etc.
-        ;   Job 3 : Sets index w^2, w^7, w^12 etc.
-        ;   Job 4 : Sets index w^3, w^8, w^13 etc.
-        ;   Job 5 : Sets index w^4, w^9, w^14 etc.
-        ;   In above example nroot = w^5
-        ;   In above example root =  w
+	;   Say, w is the primitive root and we have 5 jobs
+	;   Job 1 : Sets index w^0, w^5, w^10 etc.
+	;   Job 2 : Sets index w^1, w^6, w^11 etc.
+	;   Job 3 : Sets index w^2, w^7, w^12 etc.
+	;   Job 4 : Sets index w^3, w^8, w^13 etc.
+	;   Job 5 : Sets index w^4, w^9, w^14 etc.
+	;   In above example nroot = w^5
+	;   In above example root =  w
 	;
 	;   WARNING: Versions prior to V60001 did not support $ZWRITE().
 	;   Currently no test uses checkdb with a prior version. If the need
@@ -55,9 +55,9 @@ checkdb;
 	set fl=0
 	set maxerr=10
 	set fltconst=3.14
-        set nroot=1
+	set nroot=1
 	set cntloop=0
-        for J=1:1:jobcnt do
+	for J=1:1:jobcnt do
 	.	set nroot=(nroot*root)#prime
 	.	set cntloop=cntloop+$GET(^lasti(fid,J))
 	if callcrash=0 do nocrash^checkdb
@@ -84,11 +84,11 @@ crash;
 	. . else  do
 	. . . set subs=$$^ugenstr(I)			; I to subs  has one-to-one mapping
 	. . . set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
-	. . set recpad=recsize-($$^dzlenproxy(val)-$length(val))
+	. . set recpad=recsize-($zlength(val)-$length(val))
 	. . set recpad=$select((istp=2)&(recpad>800):800,1:recpad)
 	. . set valMAX=$j(val,recpad)
 	. . set valALT=$select(span>1:valMAX,1:val)
-	. . set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))
+	. . set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))
 	. . set subsMAX=$j(subs,keypad)
 	. . ; divide up valMAX into a "|" delimited string with the delimiter placed at every 7th space char
 	. . ; incomplete runs may complete Stage 7 (valPIECE) but not Stage 10
@@ -193,7 +193,7 @@ crash;
 	. . . set fl=fl+1 quit
 	. . if (fl>maxerr) write "Too many errors for job:",jobno,!
 	. . set I=(I*nroot)#prime
-        . set ival=(ival*root)#prime
+	. set ival=(ival*root)#prime
 	quit
 	; dump out all related ^[abe]span globals and locals to aide in debugging
 spanerr
@@ -230,7 +230,7 @@ crashztp;
 	. . if datacnt'=9  set crashcnt=crashcnt+1
 	. . else  do compiter^checkdb(fid,I,loop)
 	. . set I=(I*nroot)#prime
-        . set ival=(ival*root)#prime
+	. set ival=(ival*root)#prime
 	quit
 	;
 nocrash;
@@ -241,7 +241,7 @@ nocrash;
 	. . do compiter^checkdb(fid,I,loop)
 	. . if (fl>maxerr) write "Too many errors for job:",jobno,!
 	. . set I=(I*nroot)#prime
-        . set ival=(ival*root)#prime
+	. set ival=(ival*root)#prime
 	q
 	;
 compiter(fid,I,loop)
@@ -252,11 +252,11 @@ compiter(fid,I,loop)
 	else  do
 	. set subs=$$^ugenstr(I)			; I to subs  has one-to-one mapping
 	. set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
-	set recpad=recsize-($$^dzlenproxy(val)-$length(val))
+	set recpad=recsize-($zlength(val)-$length(val))
 	set recpad=$select((istp=2)&(recpad>800):800,1:recpad)
 	set valMAX=$j(val,recpad)
 	set valALT=$select(span>1:valMAX,1:val)
-	set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))
+	set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))
 	set subsMAX=$j(subs,keypad)
 	; divide up valMAX into a "|" delimited string with the delimiter placed at every 7th space char
 	set piecesize=7

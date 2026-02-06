@@ -3,7 +3,7 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -69,7 +69,7 @@ gtm8296
 	write $$^%PEEKBYNAME("gd_region.jnl_state",0),!
 	if $zver'["HP-UX" do
 	.	write "# Pass gtmsrc_lcl.secondary_instname with a base address. Expect error.",!
-	.	write $$^%PEEKBYNAME("gtmsrc_lcl.secondary_instname",$select($zver["AIX":"0x10000000",1:"0x1")),!
+	.	write $$^%PEEKBYNAME("gtmsrc_lcl.secondary_instname","0x1"),!
 	write "# Pass without a first argument",!
 	write $$^%PEEKBYNAME("","DEFAULT"),!
 	write "# Verify LISTALL^%PEEKBYNAME and LIST^%PEEKBYNAME",!

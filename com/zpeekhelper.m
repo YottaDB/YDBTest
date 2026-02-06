@@ -6,6 +6,9 @@
 ; Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -58,7 +61,6 @@ init
 	;
 	Do
 	. New env,gtmver,gtmos,gtmarch
-	. Set env("AIX","RS6000")="1|1"
 	. Set env("CYGWIN","x86")="0|0"
 	. Set env("HP-UX","HP-PA")="1|0"
 	. Set env("HP-UX","IA64")="1|1"

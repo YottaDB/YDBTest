@@ -3,7 +3,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,8 +46,6 @@ if ("Linux" == "$HOSTOS") then
 else
 	set binaryopt = ""
 endif
-set utflocale = `locale -a | $grep $binaryopt -iE 'en_us\.utf.?8$' | $head -n 1`
-setenv LC_COLLATE "$utflocale" # because with LC_COLLATE C the below command fails in AIX
 setenv gtmgbldir ｍｕｍｐｓ.ｇｌｄ
 $GDE << EOF
 @ｇｄｅ.gdecmd
@@ -445,15 +443,15 @@ $echoline
 echo "#- mupip freeze one of the databases."
 echo "#	--> This should succeed, verify the freeze is effective by attempting to change a global in a frozen region."
 cat << \EOF >& frozen.m
- write "PID: ",$JOB,!
- set h1=$H
- write "GTM_TEST_DEBUGINFO h1:",h1,!
- set ^xxx="is it frozen?"
- set h2=$H
- set diff=$$^difftime(h2,h1)
- if (diff<9) write "TEST-E-FROZEN",!
- else  write "PASS",!
- write "GTM_TEST_DEBUGINFO h2:",h2,!
+	write "PID: ",$JOB,!
+	set h1=$H
+	write "GTM_TEST_DEBUGINFO h1:",h1,!
+	set ^xxx="is it frozen?"
+	set h2=$H
+	set diff=$$^difftime(h2,h1)
+	if (diff<9) write "TEST-E-FROZEN",!
+	else  write "PASS",!
+	write "GTM_TEST_DEBUGINFO h2:",h2,!
 \EOF
 
 $MUPIP freeze -on DEFAULT >& freeze_on_DEFAULT.out
@@ -528,9 +526,9 @@ more lke_*.out >& filenames_lke.log
 $gtm_tst/com/check_reference_file.csh $gtm_tst/$tst/outref/filenames_lke.txt filenames_lke.log
 set stat = $status
 if ($stat) then
-    echo "-------------------------------------------------------------"
-    echo "TEST-E-FILENAMES FAIL - See diff in filenames_lke.diff"
-    echo "-------------------------------------------------------------"
+	echo "-------------------------------------------------------------"
+	echo "TEST-E-FILENAMES FAIL - See diff in filenames_lke.diff"
+	echo "-------------------------------------------------------------"
 endif
 
 echo "#release the job"

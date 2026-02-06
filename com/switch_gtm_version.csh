@@ -3,7 +3,7 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -73,7 +73,7 @@ endif
 
 # There is no bta build for prior versions
 if ("bta" == ${ver_image:al}) then
-    set ver_image = "pro"
+	set ver_image = "pro"
 endif
 
 source $gtm_tst/com/set_active_version.csh $ver_to_switch $ver_image
@@ -105,11 +105,7 @@ if ( ( "ENCRYPT" == "$test_encryption" ) ) then
 		# encrypted content created by the prior version.
 		# Note: From V6.3-001 onwards, BLOWFISHCFB is not supported.
 		if ($ver_to_switch =~ "V9*" || `expr $ver_to_switch ">" "V60000"`) then
-			if ("AIX" == $HOSTOS) then
-				set encryption_lib = "openssl"
-			else
-				set encryption_lib = "gcrypt"
-			endif
+			set encryption_lib = "gcrypt"
 			set encryption_algorithm = "AES256CFB"
 			setenv gtm_crypt_plugin libgtmcrypt_${encryption_lib}_${encryption_algorithm}${gt_ld_shl_suffix}
 		endif
@@ -133,8 +129,8 @@ if ( ("TRUE" == "$gtm_test_tls") && (`expr $ver_to_switch ">=" "V61000"`) ) then
 endif
 
 if ($?gtm_chset) then
-	if ( ("UTF-8" == $gtm_chset) && (52 <= `echo $1|cut -c2-3`) ) then
-		# NOTE: Beginning V52 release  because of M vs UTF-8 compiled modules restrictions we need to set gtmroutines accordingly.
+	if ("UTF-8" == $gtm_chset) then
+		# Set gtmroutines according to M vs UTF-8 compiled module restrictions
 		source $gtm_tst/com/set_locale.csh
 		source $gtm_tst/com/set_gtmroutines.csh "UTF8"
 	endif
@@ -154,5 +150,3 @@ if ($?gtm_custom_errors) then
 		setenv gtm_custom_errors "$gtm_root/$ver_to_switch/tools/custom_errors_sample.txt"
 	endif
 endif
-# this workaround is to avoid issues when switching between some V4 versions
-setenv gtm_tools "$gtm_root/$gtm_curpro/tools"

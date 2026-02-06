@@ -49,10 +49,6 @@ set starttime = "$nowtime"
 
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
-	# reset gtm_test_instsecondary back to null if we see the current GT.M version used is pre multisite_replic
-	# keep the single-double quote below.pri_getenv needs to be expanded here whereas gtm_exe should only be on the remote
-	setenv ver_chk `$pri_shell "$pri_getenv;"'echo $gtm_exe:h:t'|$tail -n 1`
-	if ( ("V4" == `echo $ver_chk|cut -c1-2`) || ("V50000" == `echo $ver_chk|cut -c1-6`) ) setenv gtm_test_instsecondary
 endif
 
 # first check if the source server is in active mode and transactions are getting replicated

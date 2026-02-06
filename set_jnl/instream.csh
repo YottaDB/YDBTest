@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,10 +36,8 @@ if (0 != $?test_replic) then
 	endif
 	setenv subtest_list "repl_stand_alone"
 	setenv subtest_list "$subtest_list autoswitch1 autoswitch2 autoswitchbigtp autoswitchtp autoswitchrules"
-	if ($HOSTOS != "AIX") then
-		if ( "TRUE" == $gtm_test_unicode_support ) then
-			setenv subtest_list "$subtest_list unicode_dir_autoswitch_replic"
-		endif
+	if ( "TRUE" == $gtm_test_unicode_support ) then
+		setenv subtest_list "$subtest_list unicode_dir_autoswitch_replic"
 	endif
 else
 	# NON REPLIC
@@ -52,10 +50,8 @@ else
 		setenv subtest_list "$subtest_list qualifiers_with_arg mu_backup_sa_access"
 		setenv subtest_list "$subtest_list jnl_stand_alone autoswitch1"
 		setenv subtest_list "$subtest_list autoswitch2 autoswitchbigtp autoswitchtp autoswitchrules autoswitch_chng_auto"
-		if ($HOSTOS != "AIX") then
-			if ( "TRUE" == $gtm_test_unicode_support ) then
-				setenv subtest_list "$subtest_list unicode_mupip_backup"
-			endif
+		if ( "TRUE" == $gtm_test_unicode_support ) then
+			setenv subtest_list "$subtest_list unicode_mupip_backup"
 		endif
 	endif
 endif

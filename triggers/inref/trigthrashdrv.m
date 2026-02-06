@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                              ;
+;      Copyright 2014 Fidelity Information Services, Inc       ;
+;                                                              ;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries. ;
+; All rights reserved.                                         ;
+;                                                              ;
+;      This source code contains the intellectual property     ;
+;      of its copyright holder(s), and is made available       ;
+;      under a license.  If you do not know the terms of       ;
+;      the license, please stop and do not read further.       ;
+;                                                              ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; This is a common driver for various trigthrash* tests. See the descriptions of those routines
 ; to know what they are testing. In general, the test runs for a specific period of time while
@@ -18,10 +31,9 @@ Driver(DriveRtn,TestDuration,InterfereCnt,GenerateMemDmp,Debug)
 	Set $ETrap="Set $ETrap="""" Write ""FAIL - main unknown"",! ZShow ""*"" Set ^quit=1 Halt"
 	Set entrylvl=$ZLevel
 	;
-	; If discover what we think is a leak, we'll want to run gtmpcat against the process if possible. 
+	; If discover what we think is a leak, we'll want to run gtmpcat against the process if possible.
 	; Determine if that is possible or not now.
 	;
-	Set gtmpcatok("AIX RS6000")=1
 	Set gtmpcatok("HP-UX IA64")=1
 	Set gtmpcatok("HP-UX HP-PA")=1
 	Set gtmpcatok("Linux IA64")=1
@@ -51,7 +63,7 @@ Driver(DriveRtn,TestDuration,InterfereCnt,GenerateMemDmp,Debug)
 	Do InitRun^@DriveRtn			; test specific initializations
 	Set $ZTWormhole=""
 	;
-	; Cause some routines we use to get linked in with $Text() so we don't load $Text later 
+	; Cause some routines we use to get linked in with $Text() so we don't load $Text later
 	; causing issues with our storage leak detection.
 	;
 	Set x=$Text(+1^job)
@@ -84,7 +96,7 @@ RunGtmpcat
 	Quit
 
 ;
-; Routine to pre-read the $TEXT for all defined triggers. These triggers are read via indirects which each line in each trigger 
+; Routine to pre-read the $TEXT for all defined triggers. These triggers are read via indirects which each line in each trigger
 ; creates a separate indirect. Pre-read them all so all indirects are created and don't contribute to artificial failures
 ; with false memory leak detections.
 ;

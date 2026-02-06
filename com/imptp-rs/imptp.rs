@@ -3,7 +3,7 @@
 
 /****************************************************************
 *                                                               *
-* Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  *
+* Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.  *
 * All rights reserved.                                          *
 *                                                               *
 *       This source code contains the intellectual property     *
@@ -58,7 +58,7 @@ fn setup() -> YDBResult<(Context, String, String, String)> {
     let ctx = Context::new();
     let mut rng = rand::thread_rng();
 
-    // setup from `v4imptp.csh`
+    // setup from `imptp.csh`
     // MCode: set jobcnt=$$jobcnt
     let jobcnt = if let Ok(var) = env::var("gtm_test_jobcnt") {
         var.parse().unwrap_or(0)

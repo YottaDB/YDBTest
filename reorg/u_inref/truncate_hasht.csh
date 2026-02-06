@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,6 @@ if (0 != $ydb_test_4g_db_blks) then
 endif
 
 setenv test_reorg NON_REORG
-setenv gtm_test_mupip_set_version "V5"
 $gtm_tst/com/dbcreate.csh mumps 3 -block_size=1024	# The truncate tests below are sensitive to block layout
 $gtm_dist/mumps -run truncatehasht
 

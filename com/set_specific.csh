@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -58,14 +58,6 @@ setenv tst_ld_yottadb "-lyottadb"
 setenv convert_to_gtm_chset :
 setenv strings "strings"
 switch ($HOSTOS)
-case "AIX":
-	setenv truss "/usr/bin/truss -d"
-	setenv ps "eval ps -ef |& cat"
-	setenv psuser "eval ps -fu $USER |& cat"
-	setenv rsh_to_vms "rsh"
-	setenv rcp_to_vms "rcp"
-	setenv ci_ldpath "-L "
-	breaksw
 case "HP-UX":
 	setenv truss "/usr/local/bin/tusc -T %x:%X"
 	setenv atrm "at -r"

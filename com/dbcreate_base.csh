@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -85,7 +85,8 @@ if (!($?gtm_exe)) setenv gtm_exe $gtm_dist
 # $gtm_exe's existence is sure at this point
 if (!($?GDE)) setenv GDE "$gtm_exe/mumps -run GDE"
 if (!($?MUPIP)) setenv MUPIP "$gtm_exe/mupip"
-if (!($?GDE_SAFE)) setenv GDE_SAFE "$gtm_tst/com/pre_V54002_safe_gde.csh"
+# Set for use by dbcreate_multi.awk
+if (!($?GDE_SAFE)) setenv GDE_SAFE "$gtm_tst/com/safe_gde.csh"
 
 if ( $#argv == 0 ) then
 	echo ""
@@ -342,7 +343,7 @@ if ($?gtm_custom_errors) then
 	setenv restore_gtm_custom_errors $gtm_custom_errors
 	unsetenv gtm_custom_errors
 endif
-source $gtm_tst/com/mupip_set_version.csh	# randomly decide on V4 or V5 database format
+source $gtm_tst/com/mupip_set_version.csh	# randomly decide on database format
 source $gtm_tst/com/mupip_set_encryptable.csh	# randomly do mupip set -encryptable
 source $gtm_tst/com/change_current_tn.csh	# randomly decide on transaction number to start off with
 if ( (! $?test_replic) && ("GT.M" == "$test_gtm_gtcm") ) then

@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -16,7 +19,7 @@ c002916client(answer,port)
 	. set rand=$random(4)
 	. if rand=0 set host="localhost"
 	. if rand=1 do
-	. . if $ZV'["AIX",$ZV'["HP-UX" set host="localhost6"
+	. . if $ZV'["HP-UX" set host="localhost6"
 	. if rand=2 set host="[::1]"
 	. if rand=3 set host="127.0.0.1"
 	write "starts to connect to ",host,!

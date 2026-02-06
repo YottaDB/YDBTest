@@ -33,7 +33,6 @@ setenv subtest_list_common ""
 setenv subtest_list_common "$subtest_list_common 4g_journal"
 setenv subtest_list_common "$subtest_list_common align_string"
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic 4g_dbcertify"
 setenv subtest_list_non_replic "$subtest_list_non_replic alsmemleak"
 setenv subtest_list_non_replic "$subtest_list_non_replic largelibtest"
 setenv subtest_list_non_replic "$subtest_list_non_replic gds_max_blk"
@@ -99,11 +98,6 @@ else if ("dbg" == "$tst_image") then
 	# takes significantly longer (2x or even more compared to a PRO/Release build) causing this already long running
 	# subtest to take many hours to finish on slow systems. Therefore disable this subtest for Debug builds.
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
-endif
-
-## Disable 4g_dbcertify on platforms without a V4 version
-if ($?gtm_platform_no_V4) then
-	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
 endif
 
 # Disable heavyweight subtests on ARM platform as it takes a long time to run.

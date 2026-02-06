@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -79,11 +79,11 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm6301 gtm8450 gtm8455 gtm8137"
 endif
 
-# gtm8394 requires "limit vmemoryuse" to work which does not currently on AIX and HPUX so disable this test there.
+# gtm8394 requires "limit vmemoryuse" to work which does not currently on HPUX so disable this test there.
 # Newer glibc implementations suffer from the below. Exclude hosts which have an affected libc6 version
 # 	Erroneous "libgcc_s.so.1 must be installed for pthread_cancel to work" message
 # 	https://sourceware.org/bugzilla/show_bug.cgi?id=13119
-if (("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname") || ($HOST:ar =~ {thunder,bolt,scylla,charybdis,bahirs} ) ) then
+if (("hp-ux" == "$gtm_test_osname") || ($HOST:ar =~ {thunder,bolt,scylla,charybdis,bahirs} ) ) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8394"
 endif
 
@@ -97,12 +97,12 @@ endif
 
 # some tests don't work on x86 (32-bit) platforms due to requiring that mumps support the -list and -machine options
 if ("HOST_LINUX_IX86" == "$gtm_test_os_machtype") then
-        setenv subtest_exclude_list "$subtest_exclude_list gtm7762 gtm8404"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7762 gtm8404"
 endif
 
 # gtm8417 relies on auto-relink, disable it on unsupported platform
 if (("hp-ux" == "$gtm_test_osname") || ("HOST_LINUX_IX86" == "$gtm_test_os_machtype")) then
-        setenv subtest_exclude_list "$subtest_exclude_list gtm8417"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8417"
 endif
 
 # Exclude tests which require encryption

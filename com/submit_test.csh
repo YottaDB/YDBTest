@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,7 +63,7 @@ setenv MUPIP "$gtm_exe/mupip"
 setenv LKE "$gtm_exe/lke"
 setenv DSE "$gtm_exe/dse"
 setenv GDE "$gtm_exe/mumps -run GDE"
-setenv GDE_SAFE "$gtm_tst/com/pre_V54002_safe_gde.csh"
+setenv GDE_SAFE "$gtm_tst/com/safe_gde.csh"
 setenv tst_tslog_filter
 if ($?gtm_test_tslog) then
 	setenv tst_tslog_filter '|& $tst_awk '"'"'{print $0 ; print strftime(),$0 >> "'"'"'$tst_tslog_file'"'"'"}'"'"

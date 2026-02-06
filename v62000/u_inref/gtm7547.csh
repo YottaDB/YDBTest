@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,17 +28,15 @@ EOF
 
 # Options to record Load Path in executables. Similar options needed for OS390 platform
 if (( $HOSTOS == "OSF1") || ($HOSTOS == "Linux") || ($HOSTOS =~ "CYGWIN*")) then
-    setenv ci_ldpath "-Wl,-rpath,"
+	setenv ci_ldpath "-Wl,-rpath,"
 else if ( $HOSTOS == "HP-UX" ) then
-    setenv ci_ldpath "+b "
-else if ( $HOSTOS == "AIX" ) then
-    setenv ci_ldpath "-L "
+	setenv ci_ldpath "+b "
 else if ( $HOSTOS == "SunOS" ) then
-    setenv ci_ldpath "-R "
+	setenv ci_ldpath "-R "
 else if ( $HOSTOS == "OS/390" ) then
-    # Hijacking ci_ldpath to add -L$gtm_obj for -lascii (nee -lgtmzos)
-    # -blibpath does not work, leaving it in for now
-    setenv ci_ldpath "-L$gtm_obj -blibpath"
+	# Hijacking ci_ldpath to add -L$gtm_obj for -lascii (nee -lgtmzos)
+	# -blibpath does not work, leaving it in for now
+	setenv ci_ldpath "-L$gtm_obj -blibpath"
 endif
 $gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/callinerr.c -I$gtm_dist
 $gt_ld_linker $gt_ld_option_output callinerr $gt_ld_options_common callinerr.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map

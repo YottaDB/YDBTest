@@ -4,7 +4,7 @@
 # Copyright (c) 2004, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,7 +31,6 @@
 # isv  		 [zhouc]   Test case 12 Intrinsic special variables
 # mbadlabels     [nars]    Test bad label names (moved from "manual_tests". originally written by Layek)
 # mbadvarname    [nars]    Test bad variable names (moved from "manual_tests". originally written by Layek)
-# mupip_load_V4  [Hemani]  Test load of longname globals  V4 database. Should load with truncated values.
 # gtm7208u	 [base]    Very long lock subscripts cause an error in UTF-8 mode.
 # gtm7208m	 [base]    Very long lock subscripts cause an error in M mode.
 #####################################################
@@ -40,28 +39,36 @@ echo "LONGNAME test starts ..."
 setenv maxlen 31
 
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "xtrnsc passparameter tstart objtest litpool_stress rout_label mupip lock dse variable isv"
-setenv subtest_list_non_replic "$subtest_list_non_replic mbadlabels mbadvarname mupip_load_V4 gtm7208m"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic xtrnsc"
+setenv subtest_list_non_replic "$subtest_list_non_replic passparameter"
+setenv subtest_list_non_replic "$subtest_list_non_replic tstart"
+setenv subtest_list_non_replic "$subtest_list_non_replic litpool_stress"
+setenv subtest_list_non_replic "$subtest_list_non_replic rout_label"
+setenv subtest_list_non_replic "$subtest_list_non_replic mupip"
+setenv subtest_list_non_replic "$subtest_list_non_replic lock"
+setenv subtest_list_non_replic "$subtest_list_non_replic dse"
+setenv subtest_list_non_replic "$subtest_list_non_replic variable"
+setenv subtest_list_non_replic "$subtest_list_non_replic isv"
+setenv subtest_list_non_replic "$subtest_list_non_replic mbadlabels"
+setenv subtest_list_non_replic "$subtest_list_non_replic mbadvarname"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7208m"
 setenv subtest_list_replic     ""
 if ( "TRUE" == "$gtm_test_unicode_support" ) then
-    setenv unicode_testlist "gtm7208u"
-    setenv subtest_list_non_replic "$subtest_list_non_replic gtm7208u"
+	setenv unicode_testlist "gtm7208u"
+	setenv subtest_list_non_replic "$subtest_list_non_replic gtm7208u"
 endif
 #####################################################
 if ($?test_replic == 1) then
-       setenv subtest_list "$subtest_list_common $subtest_list_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
-       setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 #####################################################
 setenv subtest_exclude_list ""
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list objtest mupip_load_V4"
-endif
-#On platforms that don't have a V4 version, disable the subtests that rely on V4 versions
-if ($?gtm_platform_no_V4) then
-	setenv subtest_exclude_list "$subtest_exclude_list mupip_load_V4"
+	setenv subtest_exclude_list "$subtest_exclude_list objtest"
 endif
 $gtm_tst/com/submit_subtest.csh
 echo "LONGNAME test done."

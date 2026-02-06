@@ -3,7 +3,7 @@
  * Copyright (c) 2012-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -39,28 +39,22 @@
 
 /* On certain platforms the st_Xtime field of the stat structure got replaced by a timespec st_Xtim field, which in turn has tv_sec
  * and tv_nsec fields. For compatibility reasons, those platforms define an st_Xtime macro which points to st_Xtim.tv_sec. Whenever
- * we detect such a situation, we define a nanosecond flavor of that macro to point to st_Xtim.tv_nsec. On HPUX Itanium and older
- * AIX boxes the stat structure simply has additional fields with the nanoseconds value, yet the names of those field are different
+ * we detect such a situation, we define a nanosecond flavor of that macro to point to st_Xtim.tv_nsec. On HPUX Itanium
+ * boxes the stat structure simply has additional fields with the nanoseconds value, yet the names of those field are different
  * on those two architectures, so we choose our mapping accordingly.
  */
 #if defined st_atime
 #  define st_natime	st_atim.tv_nsec
-#elif defined(_AIX)
-#  define st_natime	st_atime_n
 #elif defined(__hpux) && defined(__ia64)
 #  define st_natime	st_natime
 #endif
 #if defined st_ctime
 #  define st_nctime	st_ctim.tv_nsec
-#elif defined(_AIX)
-#  define st_nctime	st_ctime_n
 #elif defined(__hpux) && defined(__ia64)
 #  define st_nctime	st_nctime
 #endif
 #if defined st_mtime
 #  define st_nmtime	st_mtim.tv_nsec
-#elif defined(_AIX)
-#  define st_nmtime	st_mtime_n
 #elif defined(__hpux) && defined(__ia64)
 #  define st_nmtime	st_nmtime
 #endif
@@ -356,9 +350,8 @@ gtm_status_t gtm8087_mkdtemp(int argc, gtm_char_t *template, gtm_int_t *err_num)
 {
 	if (2 != argc)
 		return (gtm_status_t)-argc;
-#	if defined __SunOS || defined __hpux || defined _AIX
-	/* Return -1 with template unchanged since neither HP-UX nor Solaris support mkdtemp() and AIX only
-	 * supports it effective version 7.x.
+#	if defined __SunOS || defined __hpux
+	/* Return -1 with template unchanged since neither HP-UX nor Solaris support mkdtemp()
 	 */
 	*err_num = (gtm_int_t)-1;
 #	else

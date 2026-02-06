@@ -81,7 +81,7 @@ Region DEFAULT : MUPIP REORG ENCRYPT finished
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
 
-##SUSPEND_OUTPUT HOST_AIX_RS6000 PRO DBG
+##SUSPEND_OUTPUT PRO DBG
 # Case 13. Attempt to downgrade a partially (re)encrypted database.
 # Randomly choose any version with null IVs.
 
@@ -97,7 +97,7 @@ An abnormal termination will damage the database during the operation !!
 %YDB-E-TEXT, Database is being (re)encrypted
 %YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
-##ALLOW_OUTPUT HOST_AIX_RS6000 PRO DBG
+##ALLOW_OUTPUT PRO DBG
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

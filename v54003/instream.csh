@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -120,10 +120,10 @@ if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list	"$subtest_exclude_list C9L04003407"
 endif
 
-# AIX and SunOS limit lsof's path/filename display to few enough chars, they usually are not useful so exclude the
+# SunOS limits lsof's path/filename display to few enough chars, but is usually not useful so exclude the
 # test(s) that require this.
 # HPPA has a problem with multiple invocations of lsof so don't run
-if (("HOST_AIX_RS6000" == "$gtm_test_os_machtype") || ("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype") ||  ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype")) then
+if (("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype") ||  ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype")) then
 	setenv subtest_exclude_list	"$subtest_exclude_list D9I12002716"
 endif
 

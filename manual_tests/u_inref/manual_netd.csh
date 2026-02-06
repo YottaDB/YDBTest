@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,7 +31,7 @@ set TARGET_USER="root"
 set SPAWN_QUIET="-noecho"
 set distver=$1
 if ($distver == "") then
-    set distver=V990
+	set distver=V990
 endif
 if ( "${0:h:h:h:t}" =~ T[6-9]* ) then
 	setenv testver ${0:h:h:h:t}
@@ -63,24 +66,6 @@ ${EXPECT} <<END_EXPECT
 		    send -- "stty intr '^c'\r"
 		    expect -- "YOUR_COMMANDS_SIR"
 		    send -- "stty -a\r"
-		}
-		# stty shows AIX mapping ^H to erase, fix it
-		"AIX" {
-		    send -- "uname -vr\r"
-		    sleep 1
-		    expect {
-			    "1 7" {
-				    send -- "stty erase '^?'\r"
-			    }
-			    "1 6" {
-				    send -- "stty erase '^?'\r"
-			    }
-			    "3 5" {
-				    send -- "export TERM=screen\n"
-				    expect -- "YOUR_COMMANDS_SIR"
-				    send -- "stty erase '^?'\r"
-			    }
-		    }
 		}
 		"SunOS" {
 		    send -- "export TERMINFO=/usr/local/lib/terminfo\r"

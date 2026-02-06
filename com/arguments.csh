@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,7 @@
 #this might be arguments like gtm nomail
 #
 # or  environment variables set at command line
-# like v V40001G
+# like v V70005_R202
 #
 # or a file to be read can be specified (another rc file that is not .testrc)
 # this file can have setenv's or test configurations

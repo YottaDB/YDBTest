@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,7 +13,6 @@
 #								#
 #################################################################
 # Test the generated snapshot file difference between online fast integrity check and online normal integrity check
-setenv gtm_test_mupip_set_version "V5"
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 26
 setenv gtm_white_box_test_case_count 1

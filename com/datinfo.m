@@ -3,7 +3,7 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -28,7 +28,7 @@ get(gvn)
 	set blockspan=+$ztrnlnm("gtm_test_spannode")
 	set version=$$^verno()
 	if version<60000 set blockspan=0  ; versions less than V6.0-000 cannot do spanning nodes
-	set chset=$$^zchset()
+	set chset=$zchset
 	set ugenstrmax=$select(chset="M":70,1:120)
 	do dseget(.datinfo)
 	; Large record sizes have a tendency to fill disks. don't use them unless the test is spanning nodes
@@ -82,13 +82,8 @@ dseget(datinfo)
 	open file:readonly
 	use file
 	for line=1:1  quit:$zeof  read line(line) do
-	. if $length($text(^%MPIECE))>0 do  ; We don't have MPIECE implementation in the older versions so use flexpiece instead
-	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",4))
-	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
-	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
-	. else  do
-	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",4)
-	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
-	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
+	.	if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",4))
+	.	if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
+	.	if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
 	close file
 	quit

@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,15 +19,6 @@
 
 # Save the index for log-naming purposes
 set index = $1
-
-if ( ("ENCRYPT" == "$test_encryption") && ("aix" == "$gtm_test_osname") ) then
-	# From random_ver: On AIX, the AES256 cipher in versions [V53004; V60000] and Blowfish cipher in versions [V53004; V54000A]
-	# were either unsupported or caused hangs in tests, and thus are not usable.
-	unsetenv gtm_crypt_plugin
-	setenv gtm_test_exclude_encralgo AES256CFB
-	echo "# Encryption algorithm re-randomized by the test"	>>&! settings.csh
-	source $gtm_tst/com/set_encryption_lib_and_algo.csh	>>&! settings.csh
-endif
 
 # Pick a random version whose default and minimum journal buffer sizes are below the
 # current default and minimum. (Actually, the current default is one above the minimum.)

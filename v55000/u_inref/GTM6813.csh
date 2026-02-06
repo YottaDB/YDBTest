@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -102,7 +102,7 @@ echo 'Testing argument passing while issuing interrupts...'
 echo ''
 
 # define env var that contains SIGUSR1 value on all platforms
-if (($HOSTOS == "OSF1") || ($HOSTOS == "AIX")) then
+if ($HOSTOS == "OSF1") then
 	setenv sigusrval 30
 else if (($HOSTOS == "SunOS") || ($HOSTOS == "HP-UX") || ($HOSTOS == "OS/390")) then
 	setenv sigusrval 16

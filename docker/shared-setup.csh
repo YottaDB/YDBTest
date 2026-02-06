@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -30,6 +30,12 @@ end
 
 # Add an extra hostname for remote tests
 echo "127.0.0.1 ydbtest" >> /etc/hosts
+# Add additional hosts referenced by some tests to prevent test failures in env_xlate/env_xlate
+# when running in the CI/CD pipeline or environments other than in-house machines.
+# For more details: see discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/787#note_3147884651.
+echo "127.0.1.1 sphere" >> /etc/hosts
+echo "127.0.1.2 strato" >> /etc/hosts
+echo "127.0.1.3 jackal" >> /etc/hosts
 
 # Trust localhost
 su - gtmtest -c "ssh-keyscan -t rsa localhost >>& ~/.ssh/known_hosts"
@@ -87,3 +93,4 @@ endif
 # All environment variables not in the docker/cshrc file need to be added here
 setenv ydb_test_inside_docker 1
 setenv pass_env "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker -w gtm_curpro"
+cat /etc/hosts

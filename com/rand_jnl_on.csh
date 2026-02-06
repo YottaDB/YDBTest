@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,20 +15,13 @@
 #################################################################
 #################################################
 
-$gtm_tst/com/is_v4gde_format.csh
-if ($status == 1) then
-	# it is pre-V5 gde format. use the corresponding script that understand this old gde format.
-	$gtm_tst/com/v4gde_rand_jnl_on.csh "$1" "$2"
-	exit
-endif
-
 # do not create journal files at /*.mjl if $1 is null, use . then
 set jnldir = "$1"
 if ("$jnldir" == "") set jnldir = "."
 
 if (("$2" != "-replic=on")&&("$2" != "")) then
- echo "Arguments not understood $2"
- exit
+	echo "Arguments not understood $2"
+	exit
 endif
 
 setenv GDE "$gtm_exe/mumps -run GDE"

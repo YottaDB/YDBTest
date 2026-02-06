@@ -3,6 +3,9 @@
 ; Copyright (c) 2002-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -29,7 +32,7 @@ JNLBASF0	; (pass,start,commit,^STOP) : JNL test - with KILL and SET with conditi
 	Write !,ITEM,start," fences on transactions, ",pass," passes "
 	For i=1:1:pass  do
 	.  if i=pass  do
-	.  . zsy "dse buff"	; to write an epoch record
+	.  . zsy "$gtm_dist/dse buff"	; to write an epoch record
 	.  . h 1
 	.  . do ^sincetm("time1.txt")
 	.  . h 1

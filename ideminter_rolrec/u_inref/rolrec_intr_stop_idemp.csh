@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -81,12 +81,9 @@ else
 		echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"		>> settings.csh
 	endif
 	if ("ROLLBACK" == "$test_rol_or_rec") then
-		set usedblockver = `$gtm_tst/com/check_for_V4_blocks.csh`
-		if (("STOP" == "$crash_stop_idemp") || ("V4" == "$usedblockver")) then
+		if ("STOP" == "$crash_stop_idemp") then
 			# - Online Rollback cannot be MUPIP STOPped after it starts. Skip the STOP test as it
 			#   expects to succeed in stopping MUPIP in the middle of a ROLLBACK
-			# - interrupted_rollback calls this script twice, if the prior round used V4 blocks,
-			#   avoid using Online Rollback
 			setenv gtm_test_onlinerollback "FALSE"
 		else
 			setenv gtm_test_onlinerollback "`$gtm_exe/mumps -run chooseamong TRUE FALSE`"

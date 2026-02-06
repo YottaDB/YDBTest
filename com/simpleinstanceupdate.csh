@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2005-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 # Usage: simpleinstanceupdate.csh count [LARGE]
 #
 # The updates will be of the form SET ^GBL("INSTANCEx",i)=i, where x is the
@@ -16,12 +30,7 @@
 # we are set'ing), so that we do not increment the seqno inadvertently (and we
 # do not send settings about this instance to the other instances).
 #
-if ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) then
-	set mrout="simple"
-	cp $gtm_tst/com/simpleinstanceupdate.m simple.m
-else
-	set mrout="simpleinstanceupdate"
-endif
+set mrout="simpleinstanceupdate"
 set largeorsmall = 0
 if ("LARGE" == "$2") set largeorsmall = 1
 $GTM << EOF |& cat

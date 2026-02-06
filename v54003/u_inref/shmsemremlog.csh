@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ set syslog_before = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/dbcreate.csh mumps 1
 $GTM << GTM_EOF
 	set ^x=1
-	zsy "dse all -buff"
+	zsy "$gtm_dist/dse all -buff"
 	zsy "$kill9 "_\$j
 GTM_EOF
 
@@ -32,7 +32,7 @@ $MUPIP rundown -region "*" >&! rundown.txt
 #Check if the removal of semaphore is logged in the operator log.
 $gtm_tst/com/getoper.csh "$syslog_before" "" "semid.txt" "" "Semaphore id $semid removed from the system"
 if (  $status == 0 ) then
-        echo "Semaphore id $semid removed successfully"
+	echo "Semaphore id $semid removed successfully"
 endif
 
 $grep -E "YDB-I-SEMREMOVED, Semaphore id $semid removed from the system"
@@ -43,11 +43,11 @@ endif
 #Check if the removal of shared memory is logged in the operator log.
 $grep -E "SHMREMOVED.* id $shmid " rundown.txt
 if ($status != 0) then
-        echo "No SHMREMOVED message found for shmid = $shmid"
+	echo "No SHMREMOVED message found for shmid = $shmid"
 endif
 $gtm_tst/com/ipcs -m | $tst_awk '{print $2}' | $grep -w $shmid
 if (  $status == 0 ) then
-        echo "ipcs -a output still shows shmid = $shmid existing"
+	echo "ipcs -a output still shows shmid = $shmid existing"
 endif
 
 $gtm_tst/com/dbcheck.csh

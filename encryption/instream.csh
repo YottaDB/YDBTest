@@ -139,14 +139,6 @@ if ($shorthost =~ {scylla,charybdis,bolt}) then
 	setenv subtest_exclude_list "$subtest_exclude_list extract_load"
 endif
 
-# from version 1.0.1h, OpenSSL added a check on the length for the Blowfish cipher.
-# The current key size (256 bits) is longer than the keysize Blowfish and RC5 algorithms use (128 bits)
-# The subtests that sets encryption algorithms randomly handle this > 1.0.1h scenario by not chosing bf-cfb in that case
-# iv_ops subtest does a version switch which forces BLOWFISH on AIX servers. Hence disable the subtest on sphere that has OpenSSL 1.0.2d
-if ($shorthost =~ {sphere}) then
-	setenv subtest_exclude_list "$subtest_exclude_list iv_ops"
-endif
-
 # The below is a test for gen_keypair.sh. It is okay to run just for one image. Also it takes a long time on solaris (no need to test there)
 if (("dbg" == "$tst_image") || ("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype")) then
 	setenv subtest_exclude_list "$subtest_exclude_list helper_scripts"

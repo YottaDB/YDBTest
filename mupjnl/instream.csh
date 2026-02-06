@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -111,9 +111,7 @@ if ("E" == $LFE) then
 	setenv subtest_list_non_replic "$subtest_list_non_replic ztp_tp_multi_reg ztp_broken_sing_reg recov_post_jnl_switch"
 	setenv subtest_list_non_replic "$subtest_list_non_replic recov_standalone jnlcycle ztp_tp_ntp_multi_process"
 	setenv subtest_list_non_replic "$subtest_list_non_replic autoswitch_in_mupjnl gtm5007"
-	if ($HOSTOS != "AIX") then
-		if ( "TRUE" == $gtm_test_unicode_support ) setenv subtest_list_non_replic "$subtest_list_non_replic $unicode_testlist"
-	endif
+	if ( "TRUE" == $gtm_test_unicode_support ) setenv subtest_list_non_replic "$subtest_list_non_replic $unicode_testlist"
 endif
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

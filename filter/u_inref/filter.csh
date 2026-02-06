@@ -41,12 +41,8 @@ unsetenv test_num_runs
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 
-# Do not exceed more than 128 (16 on AIX) MB align size as it otherwise may exhaust the memory (see <central_mem_exhausted_align>).
-if ("AIX" == $HOSTOS) then
-	@ align_limit = 32768
-else
-	@ align_limit = 262144
-endif
+# Do not exceed more than 128 MB align size as it otherwise may exhaust the memory (see <central_mem_exhausted_align>).
+@ align_limit = 262144
 if ($test_align > $align_limit) then
 	setenv test_align $align_limit
 	setenv tst_jnl_str `echo $tst_jnl_str | sed 's/align=[1-9][0-9]*/align='$test_align'/'`

@@ -369,13 +369,13 @@ orlbkres; Online Rollback handling needs this to stay here
 	. . set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
 	. . do:dztrig ^imptpdztrig(1,istp<2)
 	. . set ztwormstr="set $ztwormhole=subs"
-	. set recpad=recsize-($$^dzlenproxy(val)-$length(val))				; padded record size minus UTF-8 bytes
+	. set recpad=recsize-($zlength(val)-$length(val))				; padded record size minus UTF-8 bytes
 	. set recpad=$select((istp=2)&(recpad>800):800,1:recpad)			; ZTP uses the lower of the orig 800 or recpad
 	. set valMAX=$j(val,recpad)
 	. set valALT=$select(span>1:valMAX,1:val)
-	. set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
+	. set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
 	. set subsMAX=$j(subs,keypad)
-	. if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
+	. if $zlength(subsMAX)>keysize write $zlength(subsMAX),?4 zwr subs,I,loop
 	. ; Stage 1
 	. if istp=1 tstart *:(serial:transaction=tptype) do:orlbkintp=2 ifneeded^orlbkresume(istp)
 	. if istp=2 ztstart
@@ -639,4 +639,3 @@ imptpflavor	;
 	for  set rand=$random(7) quit:'$data(disable(rand))
 	write rand,!
 	quit
-

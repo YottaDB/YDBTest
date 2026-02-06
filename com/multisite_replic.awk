@@ -2,7 +2,7 @@
 #								#
 # Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -101,22 +101,17 @@ function coin_flip()
 {	# Coin Flip : randomly return 0 or 1
 	return (0 + int(rand() * 2))
 }
-function ver_no_supp(ver)
-{
-	# return 1 if ver is less then v5.5-000 (the version that provided supplementary instances)
-	return (ver < "V55000")
-}
 function rp_pp(arg, envstr, version)
 {	# Set envstr for either rootprimary or propagateprimary, depending on arg.  The qualifier used is randomly chosen.
 	# Return 0 if arg's value is not supported.
 	if ( "PP" == arg )
 	{
-		if (coin_flip() || ver_no_supp(version)) print "setenv " envstr " '-propagateprimary'"
+		if (coin_flip()) print "setenv " envstr " '-propagateprimary'"
 		else print "setenv " envstr " '-updnotok'"
 	}
 	else if ("RP" == arg )
 	{
-		if (coin_flip() || ver_no_supp(version)) print "setenv " envstr " '-rootprimary'"
+		if (coin_flip()) print "setenv " envstr " '-rootprimary'"
 		else print "setenv " envstr " '-updok'"
 	}
 	else return 0

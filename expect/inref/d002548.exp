@@ -90,24 +90,6 @@ expect {
 		expect -- "D9F05002548>"
 		send -- "stty -a\r"
 	}
-	# stty shows AIX mapping ^H to erase, fix it
-	"AIX" {
-		send -- "uname -vr\r"
-		sleep 1
-		expect {
-			"1 7" {
-                		send -- "stty erase '^?'\r"
-			}
-			"1 6" {
-                		send -- "stty erase '^?'\r"
-			}
-			"3 5" {
-				send -- "setenv TERM screen\n"
-				expect -- "D9F05002548>"
-        	        	send -- "stty erase '^?'\r"
-			}
-		}
-	}
 	"SunOS" {
 		send -- "setenv TERMINFO /usr/local/lib/terminfo\r"
 		expect -- "D9F05002548>"

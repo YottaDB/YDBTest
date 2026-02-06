@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,10 +49,9 @@ else
 endif
 setenv subtest_exclude_list ""
 # filter out a specific subtest for some servers:
-if (("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname") || ("os390" == "$gtm_test_osname")) then
-	# In AIX, the subtest fails with "YDB-F-KRNLKILL, Process was terminated by SIGDANGER signal"
+if (("hp-ux" == "$gtm_test_osname") || ("os390" == "$gtm_test_osname")) then
 	# HP-UX IA64 becomes non-responsive for long periods of time when the subtest runs
-	# So temporarily disable the subtest in AIX and HP-UX until
+	# So temporarily disable the subtest in HP-UX until
 	# a) A solution is found to limit vmemory (like the limit command) or
 	# b) All such resource intensive subtests are moved to manually_start test.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"

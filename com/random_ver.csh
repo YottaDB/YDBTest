@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,6 @@
 # the script picks a random version to test from a list of available set of versions.
 # The script is called with one or more arguments that will say which list of versions to be picked up.
 # The -type qualifier, if specified, can be followed by one of the following choices
-#	"V4"         - pickup a random V4 version
 #	"ms"         - pick up any of the available prior multisite versions that are supported with the current version
 #	"any"        - pick up any of all available prior versions
 # If -ck (checkonly) is specified, exit with 0 status even if version is not available
@@ -29,10 +28,10 @@
 if ( 0 == $#argv ) then
 	echo "Usage: \$gtm_tst/com/random_ver.csh [-gt|-gte] <version> ||  [-lt|-lte] <version> || -type <version> [ -ck true] "
 	echo "Sample usage:"
-	echo "\$gtm_tst/com/random_ver.csh -type V4"
-	echo "\$gtm_tst/com/random_ver.csh -gte V44002 -lt V51000"
-	echo "\$gtm_tst/com/random_ver.csh -gte V53003"
-	echo "\$gtm_tst/com/random_ver.csh -gte V44002 -lt V51000 -ck true"
+	echo "\$gtm_tst/com/random_ver.csh -type V6"
+	echo "\$gtm_tst/com/random_ver.csh -gte V62000 -lt V63014"
+	echo "\$gtm_tst/com/random_ver.csh -gte V63014"
+	echo "\$gtm_tst/com/random_ver.csh -gte V62000 -lt V63014 -ck true"
 	exit 1
 endif
 
@@ -51,6 +50,9 @@ endif
 set opt_array      = ("\-gt"  "\-lt"  "\-gte"  "\-lte"  "\-type"  "\-rh" "\-ck")
 set opt_name_array = ("vergt" "verlt" "vergte" "verlte" "vertype" "remotehosts" "checkonly")
 source $gtm_tst/com/getargs.csh $argv
+if !($?checkonly) then
+	set checkonly = 0
+endif
 
 # First list out all versions available in the server. Skip V3 and V9 versions
 # A production version is identified as having a GT.M version # followed by an optional YottaDB release #
@@ -98,7 +100,7 @@ while ($cnt <= $numvers)
 end
 @ numvers = $#actualverlist
 if (0 == $numvers) then
-	if ("" != $checkonly) then
+	if (0 != $checkonly) then
 		echo "RANDOMVER-E-CANNOTRUN"
 	else
 		echo "RANDOMVER-E-CANNOTRUN : Could not determine previous versions. Check random_ver_err.txt"
@@ -128,64 +130,36 @@ if ($?verlte) then
 endif
 
 if ($?vertype) then
-	#This is added specifically for IA64 and s390(zOS) as we dont have V44004 there
-	if ($?gtm_platform_no_V4) then
-		if ("HOST_OS390_S390" == $gtm_test_os_machtype) then
-			setenv oldver V53004A
-		else
-			setenv oldver V53000
-		endif
-	else
-		setenv oldver V44004
-	endif
+	# The oldest version we have in a YottaDB environment is V62000. Use this as default minimum old version.
+	set oldver = "V62000"  # V62000 is the earliest version to test against
 	switch ($vertype)
-	case "V4":
-		set minimum = "V44002" # V44002 is the min supported version after triggers
-		set isgt    = ">="
-		set maximum = "V50000" # V50000 is the first V5 version. So anything before that
-		set islt    = "<"
-	breaksw
-	case "V5":
-		set minimum = "V50000"
-		set isgt    = ">="
-		set maximum = "V60000"
-		set islt    = "<"
-	breaksw
 	case "V6":
-		set minimum = "V60000"
+		set minimum = $oldver
 		set isgt    = ">="
 		set maximum = "V70000"
 		set islt    = "<"
 	breaksw
-	case "ms":
-		set minimum = "V60000"	# Starting r1.24, GT.M V6.0-000 is the earliest supported version for replication
+	case "V7":
+		set minimum = "V70000"
 		set isgt    = ">="
-		set maximum = "$tst_ver" # A version before the current version
+		set maximum = "V80000"  # A version above the most recently merged upstream GT.M version
+		if (`expr $tst_ver "<" $maximum`) then
+			set maximum = $tst_ver  # A version before the current version
+		endif
 		set islt    = "<"
 	breaksw
+	case "ms":
 	case "any":
-		set minimum = "V44002" # V44002 is the min supported version after triggers
+		set minimum = $oldver # V62000 is the earliest multisite version to test against
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
 		set islt    = "<"
 	breaksw
 	case "shlib_mismatch":
 		# First 64 bit supported versions on these platforms which will work with the current versions
-		if ("HOST_LINUX_X86_64" == $gtm_test_os_machtype || "HOST_AIX_RS6000" == $gtm_test_os_machtype) then
-			if (! $?ydb_environment_init) then
-				set minimum = "V53001"
-			else
-				# The oldest version we have in a YottaDB environment is V54001. But V54001 and V54002B pro
-				# fail with SIG-11 only on Ubuntu 17.04 when running a shared library created from M routines
-				# (suspect is a regression in the Ubuntu 17.04 patch but not sure). Therefore set V62000
-				# (the next available version) as the minimum 64-bit build as that works fine across all flavors.
-				set minimum = "V62000"
-			endif
-		else if ("HOST_SUNOS_SPARC" == $gtm_test_os_machtype) then
-			set minimum = "V53002"
-		else if ("HOST_OS390_S390" == $gtm_test_os_machtype) then
-			set minimum = "V54002"
-		else
+		if ("HOST_LINUX_X86_64" == $gtm_test_os_machtype) then
+			# The oldest version we have in a YottaDB environment is V62000. Therefore set V62000 (i.e. $oldver)
+			# as the minimum 64-bit build as that works fine across all flavors.
 			set minimum = "$oldver"
 		endif
 		set isgt    = ">="
@@ -205,8 +179,7 @@ if ($?vertype) then
 		set islt    = "<="
 	breaksw
 	case "dbminver_mismatch":
-		# DB minor versions tracked only since V50000
-		set minimum = "V50000"
+		set minimum = "$oldver"
 		set isgt    = ">="
 		source $gtm_tst/com/get_max_ver_dynamically.csh "dbminver_mismatch"
 		set islt    = "<="
@@ -232,59 +205,9 @@ if !($?islt) then
 endif
 
 if !($?isgt) then
-	# The minimum version is not specified. Hence take the oldest supported version as the minimum (taken from type -any)
-	set minimum = "V44002" # V44002 is the min supported version after triggers
+	# The minimum version is not specified. Hence take the oldest tested version as the minimum (taken from type -any)
+	set minimum = "V62000" # V62000 is the min tested version
 	set isgt    = ">="
-endif
-
-# If access_method is MM, the minimum version supported is V53002
-if ( ( "MM" == "$acc_meth") && (`expr $minimum "<" "V53002"`) ) then
-	# Set the minimum without even checking the maximum which might result in no versions for say -type V4.
-	# In that case the script will exit with "RANDOMVER-E-CANNOTRUN". The test calling random_ver.csh has to take care of it
-	set minimum = "V53002"
-endif
-
-# Check if current chset is UTF-8. If so, we need to filter OUT prior versions that are < V53002 as they expect
-# the ICU libraries (e.g. libicuio.so) to be soft linked to the 3.6 version (libicuio36.0.so) and that
-# it was built with version specific symbol renaming. V53002 to < V53004, the builds work in UTF8 mode as long
-# as libicuio36.0.so is available even though libicuio.so does not point to it. From V53004 onwards, libicuio.so
-# is examined and whatever ICU version version it points to is used unconditionally. Also it expects the ICU
-# to have been built WITHOUT symbol renaming. Therefore GT.M versions < V53002 which also support unicode
-# (i.e. >= V52000) will NOT work in a UTF8 environment where V53004 and above work. Also, ICU 4.4 and later use a
-# different symbol renaming scheme, with support for it introduced in V54002 (older versions don't support ICU 4.4
-# and later built with symbol renaming).
-#
-# CHSET  Versions                  Symbol Renamed  ICU Version     Symlink Required        gtm_icu_version
-# M      all                       Don't need Unicode, use all versions
-# UTF-8            $VER <  V52000  Don't support Unicode
-#        V52000 <= $VER <  V53002  YES             3.6             to 3.6                  NO              requires custom 3.6 ICU as default
-#        V53002 <= $VER <  V53004  YES             3.6             NO                      NO
-#        V53004 <= $VER <  V54002  ANY             3.6 - 4.2       Any version             YES             limited by icu_new_naming_scheme
-#                                                                                                          Using AIX 7's default ICU is limited
-#                                                                                                          to V54001+ due to thread lib conflict
-#        V54002 <= $VER            ANY             3.6 - 4.4+      Any version             YES
-
-set isutf8 = 0
-set icu_new_naming_scheme = 0
-set libicu36 = 0
-if ($?gtm_chset) then
-	if ("UTF-8" == $gtm_chset) then
-		# UTF-8 mode
-		set isutf8 = 1
-
-		# using new naming scheme?
-		$gtm_tst/com/is_icu_new_naming_scheme.csh
-		if (0 == $status) set icu_new_naming_scheme = 1
-
-		# test for ICU 3.6
-		ls {/usr,,}{/local,,}/lib{32,64,,}/libicuio*36* >& /dev/null
-		if ( 0 == $status) set libicu36 = 1
-
-		# NOTE: ICU 3.6 must be installed with symbols renamed. This is the test
-		# ( set setactive_parms=(V53003 p); setenv gtm_ver_noecho 1 ; \
-		#   source $gtm_tools/setactive.csh ; printf 'write $zversion\nhalt\n' \
-		#   | env LC_CTYPE=en_US.utf8 LC_ALL= gtm_chset=UTF-8 $gtm_dist/mumps -direct )
-	endif
 endif
 
 # filter out versions based on the minimum and maximum
@@ -301,7 +224,7 @@ unsetenv gtmcompile
 
 set filteredcount = $#filteredlist
 if ("" == "$filteredlist") then
-	if ("" != $checkonly) then
+	if (0 != $checkonly) then
 		echo "RANDOMVER-E-CANNOTRUN"
 	else
 		echo "RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria - ${argv}. Exiting..."
@@ -313,7 +236,6 @@ set randno = `$gtm_exe/mumps -run rand $filteredcount`
 @ randno = $randno + 1
 set prior_ver = $filteredlist[$randno]
 
-# To be compatible with the current usage, setenv v4ver and dsver is done
 if ($?vertype) then
 	# This script is called to pickup an old version and follow it up with switching it to it and execute some portion of test
 	# priorver.txt mechanism ensures those randomly picked versions in the reference file gets filtered.

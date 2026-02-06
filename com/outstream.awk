@@ -15,7 +15,7 @@
 BEGIN {
 	#instream.csh is called in a sub-shell, so cannot handle priorver, so define an impossible one
 	if (0 == priorver) priorver="IMPOSSIBLEVERNAME"
-	if ("" != priorver) priorver = priorver"\\y"	# Include the boundary condition. If V53001 is priorver, V53001A should not
+	if ("" != priorver) priorver = priorver"\\y"	# Include the boundary condition. If V62000 is priorver, V62000A should not
 							# be filtered
 	# variables to filter nodename/hostname
 	nodename = ENVIRON["HOST:r:r:r"]

@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,8 +47,8 @@ while (1)
 	if ("HOST_OS390_S390" != $gtm_test_os_machtype) then
 		set try_nice = "nice +$gtm_test_nice_level_reorg"
 	endif
-	# Execute MUPIP REORG -TRUNCATE. Ignore MUTRUNCNOV4 and MUTRUNCNOTBG errors, since we make no effort to restrict -TRUNCATE
-	# testing to BG or V5 databases. For V4/V5 in particular, this ensures -TRUNCATE works correctly with changing versions.
+	# Execute MUPIP REORG -TRUNCATE.
+	# Ignore MUTRUNCNOV4 and MUTRUNCNOTBG errors, since we make no effort to restrict -TRUNCATE testing to BG
 	# Limit number of -TRUNCATE iterations. Otherwise journal files can grow quite large because -TRUNCATE never stops
 	# moving root blocks around and writing pblks.
 	# Every 5th iteration, do mupip size to give it some concurrency testing considering the fact that multiple online_reorgs

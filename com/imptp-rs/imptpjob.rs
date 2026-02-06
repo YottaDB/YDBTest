@@ -3,7 +3,7 @@
 
 /****************************************************************
 *                                                               *
-* Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.  *
+* Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.  *
 * All rights reserved.                                          *
 *                                                               *
 *       This source code contains the intellectual property     *
@@ -447,13 +447,13 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
         // MCode: do pauseifneeded^pauseimptp
         // MCode: set subs=$$^ugenstr(I)		; I to subs  has one-to-one mapping
         // MCode: set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
-        // MCode: set recpad=recsize-($$^dzlenproxy(val)-$length(val))				; padded record size minus UTF-8 bytes
+        // MCode: set recpad=recsize-($zlength(val)-$length(val))				; padded record size minus UTF-8 bytes
         // MCode: set recpad=$select((istp=2)&(recpad>800):800,1:recpad)			; ZTP uses the lower of the orig 800 or recpad
         // MCode: set valMAX=$j(val,recpad)
         // MCode: set valALT=$select(span>1:valMAX,1:val)
-        // MCode: set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
+        // MCode: set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
         // MCode: set subsMAX=$j(subs,keypad)
-        // MCode: if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
+        // MCode: if $zlength(subsMAX)>keysize write $zlength(subsMAX),?4 zwr subs,I,loop
         // GoCode: _, err = shr.callhelper1.CallMDescT(tptoken, nil, 0)
         call(ctx, b"helper1\0")?;
 

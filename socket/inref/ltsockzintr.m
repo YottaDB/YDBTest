@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -29,7 +32,7 @@
 	Set ^rancnt=1000
 
 	Set notifyinterval=^rancnt\20
-        Set unix=$ZVersion'["VMS"
+	Set unix=$ZVersion'["VMS"
 	Set ranmax=(50*1024)-(1*1024)
 	For i=1:1:^rancnt Set $Piece(rands,"|",i)=$Random(ranmax)+(10*1024)
 
@@ -41,22 +44,22 @@
 	Set ^zintpeercnt=0
 	Set ^zintsent=0
 	Set $Zint="Set ^zintmaincnt=^zintmaincnt+1"
-        Set $Ztrap="Set $Ztrap="""" Set ^done=1 Set ^done(""ltsockzintr"")=$Zpos Use $P Zshow ""*"" Halt"
+	Set $Ztrap="Set $Ztrap="""" Set ^done=1 Set ^done(""ltsockzintr"")=$Zpos Use $P Zshow ""*"" Halt"
 
 	; Fork off peer
-        Write "Spawning peer job",!
-        If unix Job @("commpeer^ltsockzintr():(output=""commpeer.mjo"":error=""commpeer.mje"")")
-        Else    Job @("commpeer^ltsockzintr():(nodetached:startup=""startup.com"":output=""commpeer.mjo"":error=""commpeer.mje"")")
+	Write "Spawning peer job",!
+	If unix Job @("commpeer^ltsockzintr():(output=""commpeer.mjo"":error=""commpeer.mje"")")
+	Else    Job @("commpeer^ltsockzintr():(nodetached:startup=""startup.com"":output=""commpeer.mjo"":error=""commpeer.mje"")")
 	Write "." ; Make sure at least one dot
-        For i=1:1 Quit:^peeractive=1  Write "."  Hang 1
+	For i=1:1 Quit:^peeractive=1  Write "."  Hang 1
 	Write !,"Peer job active",!
 
-        ; We have an external job to be our processus interruptus
-        Write "Spawning interrupter job",!
-        If unix Job @("intrdrv^ltsockzintr():(output=""intrdrv.mjo"":error=""intrdrv.mje"")")
-        Else    Job @("intrdrv^ltsockzintr():(nodetached:startup=""startup.com"":output=""intrdrv.mjo"":error=""intrdrv.mje"")")
+	; We have an external job to be our processus interruptus
+	Write "Spawning interrupter job",!
+	If unix Job @("intrdrv^ltsockzintr():(output=""intrdrv.mjo"":error=""intrdrv.mje"")")
+	Else    Job @("intrdrv^ltsockzintr():(nodetached:startup=""startup.com"":output=""intrdrv.mjo"":error=""intrdrv.mje"")")
 	Write "."
-        For i=1:1 Quit:^drvactive=1  Write "."  Hang 1
+	For i=1:1 Quit:^drvactive=1  Write "."  Hang 1
 	L ^drvactive		     ; When we get this lock, interrupter is starting to interrupt
 	L
 
@@ -68,17 +71,17 @@
 
 	; Setup main driver -- connect to peer.
 	Write "Connecting to peer",!
-        Set path=^config("path"),delim=^config("delim")
-        Set tcpdev="client$"_$j,timeout=120
-        Set openarg="(connect="""_path_":LOCAL"""_":attach=""client"")"
-        Open tcpdev:@openarg:timeout:"SOCKET"
-        Else  Do
+	Set path=^config("path"),delim=^config("delim")
+	Set tcpdev="client$"_$j,timeout=120
+	Set openarg="(connect="""_path_":LOCAL"""_":attach=""client"")"
+	Open tcpdev:@openarg:timeout:"SOCKET"
+	Else  Do
 	. Set ^error($H,"client")="SOCBA2SIC-E-FAILED to open socket connection at "_$Zpos
 	. Write "open failed : $zstatus=",$Zstatus,!
 	. ZShow "*"
 	. Set ^done=1,^done("Open failed")=$Zpos
 	. Halt
-        Write !,"Connection to peer established",!
+	Write !,"Connection to peer established",!
 	Use tcpdev:(delimiter=delim:width=1048576)
 
 	; Send peer the list of generated random numbers.
@@ -90,8 +93,8 @@
 	; Now run list of strings and send them all as fast as we can
 	For i=1:1:^rancnt Do
 	. If ^done Use $P Write "Halting on ^done setting",! Halt
-        . Set sendlen=$Piece(rands,"|",i)
- 	. Set sendtxt=$$stroflen(sendlen)
+	. Set sendlen=$Piece(rands,"|",i)
+	. Set sendtxt=$$stroflen(sendlen)
 	. Write sendtxt,!
 	. If i#notifyinterval=0 Use $P Write "Write #",i," complete",! Use tcpdev
 
@@ -101,12 +104,12 @@
 	; 60 seconds, raise an error as it shouldn't get *that* far behind since all
 	; on same system doing approx same processing getting the same beating from the
 	; interrupt job.
-        L ^peeractive:60
+	L ^peeractive:60
 	If ^peeractive Do
-        . Set ^error($H,"client")="SOCBA2SIC-E-FAILED Peer did not finish in allotted time"
-        . Write "Peer did not finish in allotted time",!
-        . Set ^done=1,^done("Peer did not finish in allotted time")=$Zpos
-        . Halt
+	. Set ^error($H,"client")="SOCBA2SIC-E-FAILED Peer did not finish in allotted time"
+	. Write "Peer did not finish in allotted time",!
+	. Set ^done=1,^done("Peer did not finish in allotted time")=$Zpos
+	. Halt
 
 	Set ^done=1	;; shutdown the interrupter job
 	Hang 1		;; Give it a millibleem to shutdown
@@ -119,8 +122,8 @@
 
 commpeer  ;;;	    The peer process
 	Write "Peer startup",!
-        Set $Ztrap="Set $Ztrap="""" Set ^peeractive=0 Set ^done=1 Set ^done(""commpeer"")=$Zpos Use $P Zshow ""*"" Halt"
-        Set $Zint="Set ^zintpeercnt=^zintpeercnt+1"
+	Set $Ztrap="Set $Ztrap="""" Set ^peeractive=0 Set ^done=1 Set ^done(""commpeer"")=$Zpos Use $P Zshow ""*"" Halt"
+	Set $Zint="Set ^zintpeercnt=^zintpeercnt+1"
 	Set notifyinterval=^rancnt\20
 	Do peersetup	; Setup listening socket
 	Use $P
@@ -150,30 +153,30 @@ commpeer  ;;;	    The peer process
 	. Set readstart=$H
 	. Read rcvstr:60
 	. If '$T Do
-        . . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" timed out - Read start: "_readstart_"  Read end: "_$H
-        . . Use $P Write "Error: Read ",i," timed out - Read start: ",readstart,"  Read end: ",$H,!
+	. . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" timed out - Read start: "_readstart_"  Read end: "_$H
+	. . Use $P Write "Error: Read ",i," timed out - Read start: ",readstart,"  Read end: ",$H,!
 	. . If $Data(rcvstr) Write "rcvlen is ",$Length(rcvstr),!
-        . . Set ^done=1,^peeractive=0,^done("Read Timeout")=$Zpos
+	. . Set ^done=1,^peeractive=0,^done("Read Timeout")=$Zpos
 	. . Zshow "*"
-        . . Halt
+	. . Halt
 	. ; Check expected length of string
 	. Set expectlen=$Piece(rands,"|",i)
 	. Set recvlen=$Length(rcvstr)
 	. If expectlen'=recvlen Do
-        . . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" is not the expected length - expected "_expectlen_" received "_recvlen
-        . . Use $P Write "Error: Read ",i," is not the expected length - expected ",expectlen," received ",recvlen,!
-        . . Set ^done=1,^peeractive=0,^done("Read not the expected length")=$Zpos
+	. . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" is not the expected length - expected "_expectlen_" received "_recvlen
+	. . Use $P Write "Error: Read ",i," is not the expected length - expected ",expectlen," received ",recvlen,!
+	. . Set ^done=1,^peeractive=0,^done("Read not the expected length")=$Zpos
 	. . Zshow "*"
-        . . Halt
+	. . Halt
 	. ; Build expected string and make sure we got what we expected
 	. Set expectstr=$$stroflen(expectlen)
 	. If expectstr'=rcvstr Do
-        . . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" expected and received text do not match"
-        . . Use $P Write "Error: Read ",i," expected and received text do not match",!
-        . . Set ^done=1,^peeractive=0,^done("Expected and received text do not match")=$Zpos
+	. . Set ^error($H,"server")="LTSOCKZINTR-E-FAILED Read "_i_" expected and received text do not match"
+	. . Use $P Write "Error: Read ",i," expected and received text do not match",!
+	. . Set ^done=1,^peeractive=0,^done("Expected and received text do not match")=$Zpos
 	. . Zshow "*"
-        . . Halt
-        . If i#notifyinterval=0 Use $P Write "Read #",i," complete",! Use tcpdev
+	. . Halt
+	. If i#notifyinterval=0 Use $P Write "Read #",i," complete",! Use tcpdev
 
 	; When the loop is complete, close down and notify main we are done.
 	Close tcpdev
@@ -185,54 +188,50 @@ commpeer  ;;;	    The peer process
 	; Setup listen socket we will communicate with..
 peersetup	;;;
 	Set path=^config("path"),delim=^config("delim")
-        Set tcpdev="server$"_$j,timeout=120
-        Set openarg="(ZLISTEN="""_path_":LOCAL"""_":attach=""server"")"
-        Open tcpdev:@openarg:timeout:"SOCKET"
-        Else  Set ^error($H,"server")="LTSOCKZINTR-E-FAILED to open socket at "_$Zpos  Use $P Write "open failed : $zstatus=",$Zstatus,! Set ^done=1,^done("Peer open failed")=$Zpos Halt
-        Use tcpdev
-        Write /listen(1)
+	Set tcpdev="server$"_$j,timeout=120
+	Set openarg="(ZLISTEN="""_path_":LOCAL"""_":attach=""server"")"
+	Open tcpdev:@openarg:timeout:"SOCKET"
+	Else  Set ^error($H,"server")="LTSOCKZINTR-E-FAILED to open socket at "_$Zpos  Use $P Write "open failed : $zstatus=",$Zstatus,! Set ^done=1,^done("Peer open failed")=$Zpos Halt
+	Use tcpdev
+	Write /listen(1)
 	Set ^peerpid=$j
 	Set ^peeractive=1		; signal main we are running
-        Write /wait(timeout)
+	Write /wait(timeout)
 	If ""=$Key do
 	. Set ^error($H,"server")="LTSOCKZINTR-E-FAILED to establish connection at "_$Zpos
 	. Use $P Write "open failed : $zstatus=",$Zstatus,!
 	. Set ^done=1,^done("Peer failed to connect")=$Zpos
 	. Halt
-        Set key=$Key,childsocket=$Piece(key,"|",2),ip=$p(key,"|",3)
-        Use $P
-        Write "$key="  zwr key
-        Write !,"Server/peer connected : ",!
+	Set key=$Key,childsocket=$Piece(key,"|",2),ip=$p(key,"|",3)
+	Use $P
+	Write "$key="  zwr key
+	Write !,"Server/peer connected : ",!
 	Use tcpdev:(delimiter=delim:width=1048576)
-        Quit
+	Quit
 
 intrdrv
-        ;
-        ; Drive the interrupts to the two processes (main and peer). Use $ZSIGPROC so we can exactly control
+	;
+	; Drive the interrupts to the two processes (main and peer). Use $ZSIGPROC so we can exactly control
 	; the amount of time between each interrupt (currently randomized). Note that different systems can have
 	; different numbers for the SIGUSR1 interrupt used here.
 	;
 
-        Set unix=$ZVersion'["VMS"
-        Set $Ztrap="Set $Ztrap="""" Set ^drvactive=0 Set ^done=1 Set ^done(""intrdrv"")=$Zpos Zshow ""*"" Halt"
+	Set unix=$ZVersion'["VMS"
+	Set $Ztrap="Set $Ztrap="""" Set ^drvactive=0 Set ^done=1 Set ^done(""intrdrv"")=$Zpos Zshow ""*"" Halt"
 	L +^drvactive
-        Set ^drvactive=1
-        Hang 2 ; Chill while parent realizes we are running.. It will hang on this lock then we begin..
+	Set ^drvactive=1
+	Hang 2 ; Chill while parent realizes we are running.. It will hang on this lock then we begin..
 	L
-        Write "Interrupt job beginning for processes ",^mainpid," and ",^peerpid,!
+	Write "Interrupt job beginning for processes ",^mainpid," and ",^peerpid,!
 
-        ; Interrupt until we are requested to shutdown or we reach an outer limit of 100,000 interrupts
-        ; which probably means we were orphaned and are just chewing up cpu time.
+	; Interrupt until we are requested to shutdown or we reach an outer limit of 100,000 interrupts
+	; which probably means we were orphaned and are just chewing up cpu time.
 
-	; Signal for SIGUSR1: Linux-x86:10 AIX:30, Tru64:30, all others (HPUX, Solaris, VMS) are 16.
+	; Signal for SIGUSR1: Linux-x86:10, Tru64:30, all others (HPUX, Solaris, VMS) are 16.
 	If $ZVersion["x86" Do
 	. Set signum=10
 	. Set minsnooze=1
 	. Set maxsnooze=500
-	Else  If $ZVersion["AIX" Do
-	. Set signum=30
-	. Set minsnooze=200
-	. Set maxsnooze=800
 	Else  If $ZVersion["OSF1" Do
 	. ; Rate set low due to OSF1 connect() call foibles (backgrounds connect giving addr in use error when we restart open)
 	. Set signum=30
@@ -240,29 +239,29 @@ intrdrv
 	. Set maxsnooze=8000
 	Else  If $ZVersion["Solaris" Do
 	. Set signum=16
-        . Set minsnooze=400
-        . Set maxsnooze=1000
+	. Set minsnooze=400
+	. Set maxsnooze=1000
 	Else  If $ZVersion["HP-PA" Do
-        . Set signum=16
-        . Set minsnooze=200
-        . Set maxsnooze=800
+	. Set signum=16
+	. Set minsnooze=200
+	. Set maxsnooze=800
 	Else  Do ; Includes VMS
-        . Set signum=16
+	. Set signum=16
 	. ; Issue with VMS is fault in job interrupt implementation that causes process crash (it basically just
 	. ; disappears with no log) if interrupts come in too rapidly. Low priority TR exists.
-        . Set minsnooze=5000
-        . Set maxsnooze=9000
-        Write "Interrupt rate chosen - Minimum: ",minsnooze/10000,"  Maximum: ",maxsnooze/10000,"  Signum: ",signum,!
+	. Set minsnooze=5000
+	. Set maxsnooze=9000
+	Write "Interrupt rate chosen - Minimum: ",minsnooze/10000,"  Maximum: ",maxsnooze/10000,"  Signum: ",signum,!
 
 	Set stopnow=0,sigtomain=1,sigincr=2
-        For x=1:1:100000 Quit:(('^peeractive)!stopnow)  Do
-        . If sigtomain If $ZSigproc(^mainpid,signum) Set sigtomain=0,sigincr=1
-        . If $ZSigproc(^peerpid,signum) Set ^done=1,stopnow=1 Quit
-        . Set ^zintsent=^zintsent+sigincr
+	For x=1:1:100000 Quit:(('^peeractive)!stopnow)  Do
+	. If sigtomain If $ZSigproc(^mainpid,signum) Set sigtomain=0,sigincr=1
+	. If $ZSigproc(^peerpid,signum) Set ^done=1,stopnow=1 Quit
+	. Set ^zintsent=^zintsent+sigincr
 	. Hang ($Random(maxsnooze-minsnooze)+minsnooze)/10000
-        Set ^drvactive=0
-        Write "Interrupt job for processes ",^mainpid," and ",^peerpid," complete after sending ",^zintsent," interrupts",!
-        Quit
+	Set ^drvactive=0
+	Write "Interrupt job for processes ",^mainpid," and ",^peerpid," complete after sending ",^zintsent," interrupts",!
+	Quit
 
 	; Construct string from repeated copies of the length of the string. Since the length will probably not
 	; be an exact match, add the last few chars on the end if necessary.

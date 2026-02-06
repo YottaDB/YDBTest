@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,12 +21,6 @@
 #	buffer_flush	 - to determine if a dse buffer_flush should be done after the rcvr shutdown and before the passive server shutdown
 #==========================
 set exit_stat = 0
-if ( ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) || ("V50000" == `echo $gtm_exe:h:t|cut -c1-6`) ) then
-	# this means the current GT.M version is a pre-multisite_replic version and so we need to call
-	# V4 counterpart of RCVR_SHUT.csh as this script will complain for new qualifiers with older GT.M version.
-	$gtm_tst/com/v4_RCVR_SHUT.csh $argv
-	exit
-endif
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_pri_name"
 endif
@@ -58,9 +52,9 @@ set exit_stat = 0
 $MUPIP replic -receiv $arg -shutdown -timeout=0
 set mupipstat = $status
 if ($mupipstat) then
-        echo "Receiver server shutdown on receiver side failed. Status : $mupipstat"
+	echo "Receiver server shutdown on receiver side failed. Status : $mupipstat"
 	echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
-        echo "Receiver server shutdown on receiver side failed!"	>>&! $debuginfo_file
+	 echo "Receiver server shutdown on receiver side failed!"	>>&! $debuginfo_file
 	$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh			>>&! $debuginfo_file
 	set exit_stat = $mupipstat
 endif

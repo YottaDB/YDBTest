@@ -3,6 +3,9 @@
 ; Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -17,7 +20,6 @@ signals()
 	. if $ZVersion["CYGWIN" set platform="x86cygwin"
 	. else  if $ZVersion["64" set platform="x8664"
 	. else  set platform="x86"
-	else  if $ZVersion["AIX" set platform="aix"
 	else  if $ZVersion["OSF1" set platform="osf"
 	else  if $ZVersion["Solaris" set platform="solaris"
 	else  if $ZVersion["HP-PA" set platform="hppa"
@@ -42,9 +44,6 @@ x8664	;x86_64
 	;signum #10
 
 x86cygwin	;x86 which is CYGWIN
-	;signum #30
-
-aix	;an AIX
 	;signum #30
 
 osf	;OSF1

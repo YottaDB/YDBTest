@@ -1,9 +1,6 @@
 mumps.gld: THIS IS MUMPS
 a.gld: 
 ##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-##TEST_AWK%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/foo.bad,%YDB-I-TEXT,.* file or directory.*
-##SUSPEND_OUTPUT HOST_AIX_RS6000
 ##ALLOW_OUTPUT HOST_HP-UX_PA_RISC
 ##TEST_AWK%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/foo.bad,%YDB-I-TEXT, Can't .* shared library: ##TEST_PATH##/foo.bad
 ##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -22,19 +22,19 @@
 ;   - Receiver echos the received data in 3-5 byte chunks.
 ;   - Record ending elapsed time.
 ;   - Check that elapsed is less than previous elapsed (runs should be getting better or at least no worse).
-;     [Update: Since some platforms (notably AIX and Tru64) seem to get the same dismal numbers for several of the
+;     [Update: Since some platforms (notably Tru64) seem to get the same dismal numbers for several of the
 ;      mrt settings, the rule is now that subsequent runs must not increase by more than 15%]
 ;   - Close down receiver process
 
-        Set iterations=1		; Iterations of sending string for each MOREREADTIME loop.
+	Set iterations=1		; Iterations of sending string for each MOREREADTIME loop.
 	Set morereadtimedefault=10	; As of now (4/2007) default is 10ms
 	Set startshutdowntimeout=300	; For loops starting up or shutting down, do a max 5 minute wait
 
-        Set $Ztrap="Set $Ztrap="""" Set ^done=1 Use $P ZShow ""*"" Halt"
-        Set unix=$ZVersion'["VMS"
+	Set $Ztrap="Set $Ztrap="""" Set ^done=1 Use $P ZShow ""*"" Halt"
+	Set unix=$ZVersion'["VMS"
 
-        Set ^recvractive=0
-        Set ^done=0
+	Set ^recvractive=0
+	Set ^done=0
 	Set ^maxdatalen=1000
 	Set ^mrt(1)=-2
 	Set ^mrt(2)=200
@@ -51,29 +51,29 @@
 	Set $Piece(sdata,strblk,(^maxdatalen\$Length(strblk))+2)=""
 	Set sdata=$Extract(sdata,1,^maxdatalen)
 
-        ; Fork off receiver
-        Write "Spawning receiver process",!
-        If unix Job @("receiver^tsockmrt():(output=""receiver.mjo"":error=""receiver.mje"")")
-        Else    Job @("receiver^tsockmrt():(nodetached:startup=""startup.com"":output=""receiver.mjo"":error=""receiver.mje"")")
-        ; Make sure at least one dot
-        For i=1:1:startshutdowntimeout Write "." Quit:^recvractive=1  Hang 1
-        If i>startshutdowntimeout Do
-        . Write !,"FAIL TEST - Receiver did not STARTUP in the allotted time",!
-        . ZSHOW "*"
+	; Fork off receiver
+	Write "Spawning receiver process",!
+	If unix Job @("receiver^tsockmrt():(output=""receiver.mjo"":error=""receiver.mje"")")
+	Else    Job @("receiver^tsockmrt():(nodetached:startup=""startup.com"":output=""receiver.mjo"":error=""receiver.mje"")")
+	; Make sure at least one dot
+	For i=1:1:startshutdowntimeout Write "." Quit:^recvractive=1  Hang 1
+	If i>startshutdowntimeout Do
+	. Write !,"FAIL TEST - Receiver did not STARTUP in the allotted time",!
+	. ZSHOW "*"
 	. Halt
 	Else  Write !,"Receiver process active",!
 
-        ; Connecting to the receiver
+	; Connecting to the receiver
 	Write "Connecting to the receiver",!
-        Set portno=^config("portno"),hostname=^config("hostname")
-        Set tcpdev="client$"_$j,timeout=20	; 20 second timeout for heavy load conditions
-        Set openarg="(connect="""_hostname_":"_portno_":TCP"""_":attach=""client"")"
-        Open tcpdev:@openarg:timeout:"SOCKET"
+	Set portno=^config("portno"),hostname=^config("hostname")
+	Set tcpdev="client$"_$j,timeout=20	; 20 second timeout for heavy load conditions
+	Set openarg="(connect="""_hostname_":"_portno_":TCP"""_":attach=""client"")"
+	Open tcpdev:@openarg:timeout:"SOCKET"
 	If '$test Do
 	. Write !,"FAIL TEST - Could not connect to receiver in the allotted time",!
 	. ZSHOW "*"
 	. Halt
-        Else  Write !,"Connection to receiver established",!
+	Else  Write !,"Connection to receiver established",!
 
 	Set lastelapsed=9999999
 	; Loop through each morereadtime setting recording how long it takes to run with each one.
@@ -100,12 +100,12 @@
 	. . ; Now receive the echo
 	. . Read dpacket#slen:timeout
 	. . Else  Do
-        . . . Use $P
-        . . . Write "Read timeout after reading ",charcnt," chars in the mrt=",mrt," iteration",!
-        . . . ZShow "*"
-        . . . Close tcpdev
-        . . . Set ^done=1
-        . . . Do HaltWhenRecvrStopped
+	. . . Use $P
+	. . . Write "Read timeout after reading ",charcnt," chars in the mrt=",mrt," iteration",!
+	. . . ZShow "*"
+	. . . Close tcpdev
+	. . . Set ^done=1
+	. . . Do HaltWhenRecvrStopped
 	. . If $Length(dpacket)'=slen Do
 	. . . Use $P
 	. . . Write "Expected ",slen," characters, Got ",$Length(dpacket),!
@@ -142,7 +142,7 @@
 	; We expect the first elapsed time to be no more than 2 sec greater than the final elapsed time
 	; The following lines were commented out due to inconsistent times on some slower platforms
 	;If finalelapsed<(firstelapsed-2) Do
-       ;. Write !,"FAIL TEST - first elapsed time not within 2 sec of final elapsed time",!
+	;. Write !,"FAIL TEST - first elapsed time not within 2 sec of final elapsed time",!
 	;. Set ^done=1
 	;. ZShow "*"
 	;. Do HaltWhenRecvrStopped
@@ -161,26 +161,26 @@
 	;
 	; Receiver routine..
 receiver
-        Set $Ztrap="Set $Ztrap="""" Use $P ZShow ""*"" Set ^recvractive=0 Set ^done=1 Halt"
+	Set $Ztrap="Set $Ztrap="""" Use $P ZShow ""*"" Set ^recvractive=0 Set ^done=1 Halt"
 	; Set up a listener and wait for connection
-        Set portno=^config("portno")
-        Set tcpdev="server$"_$j,timeout=30
-        Set openarg="(ZLISTEN="""_portno_":TCP"""_":attach=""server"")"
-        Open tcpdev:@openarg:timeout:"SOCKET"
-        Set timeout=20  ; 20 second timeout is sufficient for small packets under heavy load
-        Use tcpdev
-        Write /listen(1)
-        Set ^recvractive=1               ; signal main we are running (listening)
-        Write /wait(timeout)
-        Else  Do
+	Set portno=^config("portno")
+	Set tcpdev="server$"_$j,timeout=30
+	Set openarg="(ZLISTEN="""_portno_":TCP"""_":attach=""server"")"
+	Open tcpdev:@openarg:timeout:"SOCKET"
+	Set timeout=20  ; 20 second timeout is sufficient for small packets under heavy load
+	Use tcpdev
+	Write /listen(1)
+	Set ^recvractive=1               ; signal main we are running (listening)
+	Write /wait(timeout)
+	Else  Do
 	. Use $P
 	. Write "Open to main failed during wait for connection: $zstatus=",$Zstatus,!
 	. Set ^done=1
 	. Halt
-        Set key=$Key,childsocket=$Piece(key,"|",2),ip=$p(key,"|",3)
-        Use $P
-        Zwrite key
-        Write !,"Receiver now connected to main process",!
+	Set key=$Key,childsocket=$Piece(key,"|",2),ip=$p(key,"|",3)
+	Use $P
+	Zwrite key
+	Write !,"Receiver now connected to main process",!
 
 	Set mrtindx=1
 	; do no set morereadtime for first iteration
@@ -210,22 +210,22 @@ receiver
 	. If packet="" Do
 	. . Use $P
 	. . Write "Null read received",!
-        . . ZShow "*"
+	. . ZShow "*"
 	. . Close tcpdev
-        . . Set ^recvractive=0
+	. . Set ^recvractive=0
 	. . Set ^done=1
-        . . Halt
+	. . Halt
 	. ;
 	. ; Keep track of how many chars we have received
 	. Set charcnt=charcnt+$Length(packet)
 	. ;
 	. ; Next job is to send the received packet back out
-        . Set datatosend=packet
-        . For  Do  Quit:^done!(datatosend="")
-        . . Set slen=3+$R(3)
-        . . If slen>$Length(datatosend) Set slen=$Length(datatosend)
-        . . Write $Extract(datatosend,1,slen)
-        . . Set datatosend=$Extract(datatosend,slen+1,^maxdatalen)
+	. Set datatosend=packet
+	. For  Do  Quit:^done!(datatosend="")
+	. . Set slen=3+$R(3)
+	. . If slen>$Length(datatosend) Set slen=$Length(datatosend)
+	. . Write $Extract(datatosend,1,slen)
+	. . Set datatosend=$Extract(datatosend,slen+1,^maxdatalen)
 	. ;
 	. ; When we reach a boundary, switch to the next mrt or exit if done
 	. If charcnt=^maxdatalen Do
@@ -233,9 +233,9 @@ receiver
 	. . If mrtindx>^mrtmaxindx Do
 	. . . Use $P
 	. . . Write "Echo process is complete -- waiting for ^done flag before exiting",!
-        . . . ; Make sure at least one dot
-        . . . For i=1:1 Write "." Quit:^done  Hang 1
-        . . . Write !,"Main routine signals completion - shutting down now",!
+	. . . ; Make sure at least one dot
+	. . . For i=1:1 Write "." Quit:^done  Hang 1
+	. . . Write !,"Main routine signals completion - shutting down now",!
 	. . . Close tcpdev
 	. . . Set ^recvractive=0
 	. . . Halt
@@ -244,30 +244,30 @@ receiver
 	. . . Write "Charcnt (",charcnt,") unexpectedly exceeds maxdatalen (",^maxdatalen,")",!
 	. . . ZShow "*"
 	. . . Close tcpdev
-        . . . Set ^recvractive=0
-        . . . Set ^done=1
-        . . . Halt
+	. . . Set ^recvractive=0
+	. . . Set ^done=1
+	. . . Halt
 	. . Set charcnt=0
 	. . Use tcpdev:MOREREADTIME=^mrt(mrtindx)
 
 	; If we we didn't leave the loop quite like we wanted to. Receiver is dying so no need to
 	; wait on its account..
 	If ^done Do
-        . Use $P
-        . Write "Terminating due to setting of ^done",!
-        . ZShow "*"
+	. Use $P
+	. Write "Terminating due to setting of ^done",!
+	. ZShow "*"
 
 	; Normal close
 	Close tcpdev
-        Set ^recvractive=0
-        Halt
+	Set ^recvractive=0
+	Halt
 
 ; Routine to wait until the receiver process shuts down
 HaltWhenRecvrStopped
-        ; Make sure at least one dot
-        For i=1:1:startshutdowntimeout Write "." Quit:^recvractive=0  Hang 1
+	; Make sure at least one dot
+	For i=1:1:startshutdowntimeout Write "." Quit:^recvractive=0  Hang 1
 	If i>startshutdowntimeout Do
 	. Write !,"FAIL TEST - Receiver did not SHUTDOWN in the allotted time",!
 	. ZShow "*"
-        Else  Write !,"Receiver process has shutdown",!
+	Else  Write !,"Receiver process has shutdown",!
 	Halt

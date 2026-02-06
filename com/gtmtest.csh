@@ -278,12 +278,6 @@ if ("dbg" == "$tst_image") then
 	echo "-x speed" >>! $test_list
 endif
 
-# Speed Test disabled on ia64 if ver less V5.3
-set gtm_ver_comparison = `echo $tst_ver | $tst_awk '{v = "V53000"; if ($1 < v) print "prev53"}'`
-if (("prev53" == "$gtm_ver_comparison") && ("ia64" == "$gtm_test_machtype")) then
-	echo "-x speed" >>! $test_list
-endif
-
 # Indicate whether autorelink is supported on the current platform.
 setenv gtm_test_autorelink_support 1
 

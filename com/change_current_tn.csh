@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2005, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,16 +33,8 @@ endif
 if ($?gtm_test_disable_randomdbtn) exit
 
 if (! $?gtm_test_dbcreate_initial_tn) then
-	if (! $?gtm_test_db_format) then
-		#then gtm_test_db_format must have been disabled, i.e. it will be V6
-		set max = 64
-	else
-		if ("V4" == $gtm_test_db_format) then
-			set max = 32
-		else
-			set max = 64
-		endif
-	endif
+	# DB format will be at least V6
+	set max = 64
 
 	# pick randomly [0,max-1]
 	\rm -f rand.o	# In case prior version is being used and rand.o already existed

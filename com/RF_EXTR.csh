@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,11 +34,6 @@ if ($?gtm_test_replic_timestamp) then
 	setenv extract_time $gtm_test_replic_timestamp
 else
 	setenv extract_time `date +%H_%M_%S`
-endif
-set gtm_ver_comparison = "postmultisite"
-if ( -e "priorver.txt" ) then
-	set premsver = `$tail -n +1 priorver.txt`
-	set gtm_ver_comparison = `echo $premsver | $tst_awk '{v = "V52000"; if ($1 < v) print "premultisite"}'`
 endif
 
 if ( "MULTISITE" != $test_replic ) then
@@ -129,26 +127,13 @@ if ( "MULTISITE" != $test_replic ) then
 			echo "TEST-E-FAILED : DATABASE EXTRACT FAILED"
 			exit 1
 		endif
-		# The diff can be because of the representational differences of some chars
-		# e.g double quote between the pre V52000 and post V52000 versions
-		if ( "premultisite" == $gtm_ver_comparison ) then
-			source $gtm_tst/com/RF_EXTR_premltisite.csh $origfile $cmpfile $passtmp
-			if ($status) then
-				echo "TEST-E-FAILED: DATABASE EXTRACTs on PRIMARY and SECONDARY are DIFFERENT"
-				echo "Following is the number of lines in the extracts"
-				wc -l $origfile $cmpfile
-			else
-				echo "DATABASE EXTRACT PASSED"
-			endif
+		# The primary and secondary might have different spanning regions configuration
+		# In that case use the below helper script to verify the extract files
+		source $gtm_tst/com/RF_EXTR_spanreg.csh $priextr $secextr
+		if ($status) then
+			echo "TEST-E-FAILED: DATABASE EXTRACTs on PRIMARY and SECONDARY are DIFFERENT. Check $rfextr_debuglog for details"
 		else
-			# The primary and secondary might have different spanning regions configuration
-			# In that case use the below helper script to verify the extract files
-			source $gtm_tst/com/RF_EXTR_spanreg.csh $priextr $secextr
-			if ($status) then
-				echo "TEST-E-FAILED: DATABASE EXTRACTs on PRIMARY and SECONDARY are DIFFERENT. Check $rfextr_debuglog for details"
-			else
-				echo "DATABASE EXTRACT PASSED"
-			endif
+			echo "DATABASE EXTRACT PASSED"
 		endif
 	else
 		echo "DATABASE EXTRACT PASSED"
@@ -258,14 +243,8 @@ else
 		endif
 		if ($diffstat) then
 			$MSR RUN SRC=INST1 RCV=$y 'set msr_dont_trace; $gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_DIR__/'$extry' __SRC_DIR__/'
-			if ( "premultisite" == $gtm_ver_comparison ) then
-				$MSR RUN SRC=INST1 RCV=$y 'set msr_dont_trace; $gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_DIR__/tmp.com __SRC_DIR__/compare_extract_at_source/'$rcv'_tmp.com'
-				source $gtm_tst/com/RF_EXTR_premultisite.csh $extrx $extry ${rcv}_tmp.com
-				if ($status) set diff_inst = ($extrx $extry)
-			else
-				$gtm_tst/com/RF_EXTR_supplinst.csh $extrx $extry
-				if ($status) set diff_inst = ($extrx $extry)
-			endif
+			$gtm_tst/com/RF_EXTR_supplinst.csh $extrx $extry
+			if ($status) set diff_inst = ($extrx $extry)
 			if ($?diff_inst) then
 				# The primary and secondary might have different spanning regions configuration
 				# In that case use the below helper script to verify the extract files

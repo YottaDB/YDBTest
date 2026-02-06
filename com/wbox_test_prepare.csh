@@ -1,4 +1,18 @@
-# Framework script that is invoked by all tests which want to do white box tests 
+#################################################################
+#								#
+# Copyright (c) 2005-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# Framework script that is invoked by all tests which want to do white box tests
 #
 # $1 = type of test needed (e.g. "CACHE_RECOVER" etc.)
 # $2 = range of frequency of errors to be induced
@@ -11,19 +25,9 @@
 @ error_frequency = `$gtm_exe/mumps -run rand $2`
 @ error_frequency = $error_frequency + $3
 
-# On AIX, keep the error frequency to at least 1000. A low error frequency causes updates to do cache recovery quite often thereby
-# flooding the syslog with WCBLOCKED, DBCRERR and other cache recovery related messages. On AIX, calls to syslog are essentially
-# forked off and AIX sometimes does not clean up things quickly causing the processes to become defunct. More details on this issue
-# can be found in <GTM_6937_syslog_flooding_causes_defunct_procs_AIX>.
-if ($?HOSTOS && ($HOSTOS == "AIX")) then
-	if ($error_frequency < 1000) then
-		@ error_frequency = 1000
-	endif
-endif
-
 echo "# error_frequency = $error_frequency" >>&! $4
 
-setenv gtm_white_box_test_case_enable 1		
+setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_count  $error_frequency
 
 switch($1)

@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,11 +52,11 @@ endif
 setenv subtest_exclude_list ""
 if ("pro" == "$tst_image") then
 	# filter out white box tests that cannot run in pro
-        setenv subtest_exclude_list "$subtest_exclude_list C9B11001824"
+	setenv subtest_exclude_list "$subtest_exclude_list C9B11001824"
 else
 	# filter out white box tests that cannot run in dbg
 	# C9IO9003004 makes assertions about the number of global accesses, which breaks because GVNAMENAKED does a cross-check.
-        setenv subtest_exclude_list "$subtest_exclude_list C9I09003044"
+	setenv subtest_exclude_list "$subtest_exclude_list C9I09003044"
 endif
 
 # Disable D9I10002706 test on HPUX-HPPA as that has been observed to cause eternal hangs in add_inter (see D9I10-002706 folder)
@@ -68,6 +68,13 @@ endif
 if ("MM" == $acc_meth) then
 	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
 endif
+
+# Filter out subtests that require versions prior to V63014_R136
+set rand_ver=`$gtm_tst/com/random_ver.csh -lt V63014_R136 -ck true`
+if ( "$rand_ver" == "RANDOMVER-E-CANNOTRUN") then
+	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
+endif
+
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)

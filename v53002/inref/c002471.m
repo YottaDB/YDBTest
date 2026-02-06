@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -31,7 +31,7 @@ setup;
 	quit
 
 test1;
-	do:($zversion'["AIX")&($zversion'["HP-UX") setup
+	do:($zversion'["HP-UX") setup
 	write "Starting test1",!
 	do makevars	; allocate some local vars to make the YDB_FATAL_ERROR file somewhat interesting
 	do bigtp	; do allocations inside TP until we explode
@@ -39,7 +39,7 @@ test1;
 
 	; Create large number of global anchors in storage by referencing undefined globals
 test2;
-	do:($zversion'["AIX")&($zversion'["HP-UX") setup
+	do:($zversion'["HP-UX") setup
 	write "Starting test2",!
 	do makevars	; allocate some local vars to make the YDB_FATAL_ERROR file somewhat interesting
 	do makegblrefs	; make global references till we explode

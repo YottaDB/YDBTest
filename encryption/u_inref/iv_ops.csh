@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -107,56 +107,53 @@ echo
 # version but would otherwise happen with the randomly chosen version in the env var `gtm_test_v6_dbcreate_rand_ver`.
 setenv gtm_test_use_V6_DBs 0
 
-# Encryption plug-ins within the prior version range enforced below are unstable on AIX boxes and cannot be used.
-if ("AIX" != "$HOSTOS") then
-	############################################################################################################
-	# TEST 2. Encrypted database created with the current version cannot be downgraded.                        #
-	############################################################################################################
+############################################################################################################
+# TEST 2. Encrypted database created with the current version cannot be downgraded.                        #
+############################################################################################################
 
-	echo "TEST 2"
+echo "TEST 2"
 
-	# Choose a random prior version that supports encryption.
-	echo "# Randomly choose a prior V5 version to create the database first"
-	set prior_ver = `$gtm_tst/com/random_ver.csh -gte V53004 -lt V60000`
-	if ("$prior_ver" =~ "*-E-*") then
-		echo "No prior versions available: $prior_ver"
-		exit -1
-	endif
-	source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
-	echo "$prior_ver" > priorver.out
-	source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
-	source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
-	echo
-
-	# Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file.
-	setenv gtm_test_mupip_set_version "disable"
-	$gtm_tst/com/dbcreate.csh mumps 1 64 512 >&! dbcreate_V5.out
-
-	echo "# Switch to current version"
-	source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
-	source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
-	$GDE exit >&! gde.out
-	if (-f $gtm_dbkeys) then
-		$gtm_dist/mumps -run CONVDBKEYS $gtm_dbkeys gtmcrypt.cfg
-	endif
-	echo
-
-	# Ensure that nothing except encryption prevents the downgrade.
-	echo "# Update limits and database file header"
-	$gtm_dist/mumps -run %XCMD 'set ^a=1 kill ^a'
-	$MUPIP integ -reg "*" -noonline >&! integ.out
-	echo
-
-	# Attempt downgrade. It should fail due to encryption.
-	echo "# Try updating the database"
-	echo "yes" | $gtm_dist/mupip downgrade mumps.dat -version=V5
-	echo
-
-	echo "# Do the integrity check:"
-	$gtm_tst/com/dbcheck.csh
-	$gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.gld *.out *.cfg" mv
-	echo
+# Choose a random prior version that supports encryption.
+echo "# Randomly choose a prior V5 version to create the database first"
+set prior_ver = `$gtm_tst/com/random_ver.csh -gte V53004 -lt V60000`
+if ("$prior_ver" =~ "*-E-*") then
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
+source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
+echo "$prior_ver" > priorver.out
+source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
+source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
+echo
+
+# Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file.
+setenv gtm_test_mupip_set_version "disable"
+$gtm_tst/com/dbcreate.csh mumps 1 64 512 >&! dbcreate_V5.out
+
+echo "# Switch to current version"
+source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+source $gtm_tst/$tst/u_inref/set_encr_algorithm.csh
+$GDE exit >&! gde.out
+if (-f $gtm_dbkeys) then
+	$gtm_dist/mumps -run CONVDBKEYS $gtm_dbkeys gtmcrypt.cfg
+endif
+echo
+
+# Ensure that nothing except encryption prevents the downgrade.
+echo "# Update limits and database file header"
+$gtm_dist/mumps -run %XCMD 'set ^a=1 kill ^a'
+$MUPIP integ -reg "*" -noonline >&! integ.out
+echo
+
+# Attempt downgrade. It should fail due to encryption.
+echo "# Try updating the database"
+echo "yes" | $gtm_dist/mupip downgrade mumps.dat -version=V5
+echo
+
+echo "# Do the integrity check:"
+$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.gld *.out *.cfg" mv
+echo
 
 ############################################################################################################
 # TEST 3. New extract (version 9) uses non-null IVs and cannot be processed using an older version.        #
@@ -195,8 +192,8 @@ echo
 echo "# Randomly choose any version prior to V62003"
 set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002 -gte V53004`
 if ("$prior_ver" =~ "*-E-*") then
-        echo "No prior versions available: $prior_ver"
-        exit -1
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
@@ -290,8 +287,8 @@ echo "TEST 5"
 echo "# Randomly choose any version prior to V62003"
 set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002 -gte V53004`
 if ("$prior_ver" =~ "*-E-*") then
-        echo "No prior versions available: $prior_ver"
-        exit -1
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
@@ -370,10 +367,10 @@ echo
 
 # Choose a random prior version that supports encryption.
 echo "# Randomly choose any version prior to V62003"
-set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002 -gte V53004`
+set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002`
 if ("$prior_ver" =~ "*-E-*") then
-        echo "No prior versions available: $prior_ver"
-        exit -1
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out
@@ -431,10 +428,10 @@ echo
 
 # Choose a random prior version that supports encryption.
 echo "# Randomly choose any version prior to V62003"
-set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002 -gte V53004`
+set prior_ver = `$gtm_tst/com/random_ver.csh -lte V62002`
 if ("$prior_ver" =~ "*-E-*") then
-        echo "No prior versions available: $prior_ver"
-        exit -1
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.out

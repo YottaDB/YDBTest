@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -1090,13 +1090,13 @@ int	impjob(int childnum)
 		 * do pauseifneeded^pauseimptp
 		 * set subs=$$^ugenstr(I)		; I to subs  has one-to-one mapping
 		 * set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
-		 * set recpad=recsize-($$^dzlenproxy(val)-$length(val))				; padded record size minus UTF-8 bytes
+		 * set recpad=recsize-($zlength(val)-$length(val))				; padded record size minus UTF-8 bytes
 		 * set recpad=$select((istp=2)&(recpad>800):800,1:recpad)			; ZTP uses the lower of the orig 800 or recpad
 		 * set valMAX=$j(val,recpad)
 		 * set valALT=$select(span>1:valMAX,1:val)
-		 * set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
+		 * set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))	; padded key size minus UTF-8 bytes. ZTP uses no padding
 		 * set subsMAX=$j(subs,keypad)
-		 * if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
+		 * if $zlength(subsMAX)>keysize write $zlength(subsMAX),?4 zwr subs,I,loop
 		 */
 		status = ydb_cip(&helper1_cid);	/* Use call-in to implement the block of M code commented above */
 		YDB_ASSERT(YDB_OK == status);

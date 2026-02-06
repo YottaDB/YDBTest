@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,12 +41,41 @@
 # repl_log			[Layek]
 # unicode_tptype		[Layek]
 # ugc2mpatcmap			[Bill] D9I05-002686
-# gtm7886			[shaha] Failure to load ICU libraries on AIX should report the true error
 # gtm6858			[shaha] Use AIX's system ICU libraries and test GTM-7375 which allows more version numbers
 # gtm8352                       [SEstes] Test UTF8 scan-cache logic for $FIND() and $EXTRACT() on strings in UTF8 mode
 #
 #all subtests will be run under UTF-8 (or can override explicitly)
 echo "unicode test starts ..."
+setenv subtest_list_common ""
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic badchar"
+setenv subtest_list_non_replic "$subtest_list_non_replic chset"
+setenv subtest_list_non_replic "$subtest_list_non_replic errors"
+setenv subtest_list_non_replic "$subtest_list_non_replic filenames"
+setenv subtest_list_non_replic "$subtest_list_non_replic gde"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtmroutines"
+setenv subtest_list_non_replic "$subtest_list_non_replic limits"
+setenv subtest_list_non_replic "$subtest_list_non_replic recompile"
+setenv subtest_list_non_replic "$subtest_list_non_replic functions"
+setenv subtest_list_non_replic "$subtest_list_non_replic dse"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_comments_literals"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_job"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_prompt"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_simple_updates"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_do"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_misc"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_dir"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicode_piece"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicodePatternTest"
+setenv subtest_list_non_replic "$subtest_list_non_replic unicodeZwritePattern"
+setenv subtest_list_non_replic "$subtest_list_non_replic d002577"
+setenv subtest_list_non_replic "$subtest_list_non_replic c001953"
+setenv subtest_list_non_replic "$subtest_list_non_replic ugc2mpatcmap"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6858"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8352"
+setenv subtest_list_replic " "
+setenv subtest_list_replic "$subtest_list_replic repl_log"
+setenv subtest_list_replic "$subtest_list_replic unicode_tptype"
 #
 unsetenv gtm_locale             # This interferes with several subtests so remove it for this test
 set shorthost = $HOST:r:r:r
@@ -51,16 +83,9 @@ if ( "TRUE" == "$gtm_test_unicode_support" ) then
 	setenv gtm_test_unicode "TRUE"
 	$switch_chset "UTF-8" >&! switch_utf8.log
 	if (0 == $?test_replic) then
-		setenv subtest_list "badchar chset errors filenames gde gtmroutines limits recompile functions dse "
-		setenv subtest_list "$subtest_list unicode_comments_literals unicode_job unicode_prompt unicode_simple_updates"
-		setenv subtest_list "$subtest_list unicode_do unicode_misc unicode_dir unicode_piece unicodePatternTest"
-		setenv subtest_list "$subtest_list unicodeZwritePattern d002577 c001953 ugc2mpatcmap gtm6858 gtm8352"
-		# Test this only on AIX
-		if ("HOST_AIX_RS6000" == "$gtm_test_os_machtype") then
-			setenv subtest_list "$subtest_list gtm7886"
-		endif
+		setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 	else
-		setenv subtest_list "repl_log unicode_tptype"
+		setenv subtest_list "$subtest_list_common $subtest_list_replic"
 	endif
 else
 	setenv subtest_list "no_ICU"
@@ -71,16 +96,6 @@ setenv subtest_list "$subtest_list"
 setenv subtest_exclude_list ""
 if ("1" == "$gtm_platform_no_4byte_utf8") then
 	setenv subtest_exclude_list "$subtest_exclude_list dse functions"
-endif
-
-# libconfig and CONVDBKEYS do not like file names in UTF-8.
-if (("AIX" == $HOSTOS) && ("ENCRYPT" == "$test_encryption")) then
-	setenv subtest_exclude_list "$subtest_exclude_list filenames repl_log"
-endif
-
-# tcsh (6.18.01) issue with unicode characters on AIX
-if ("AIX" == $HOSTOS) then
-	setenv subtest_exclude_list "$subtest_exclude_list filenames"
 endif
 
 # Disable repl_log on shrug <shrug_unicodedir_CRYPTKEYFETCHFAILED>

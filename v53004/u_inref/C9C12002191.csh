@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -72,8 +72,6 @@ endif
 set sockfile_name_len = `$tst_awk '/#define *GTMSECSHR_SOCK_PREFIX/ {print length($NF) - 2 + 10 + 1}' $gtm_inc/gtmsecshr.h`
 if ( "hp-ux"  == "$gtm_test_osname" ) then
 	@ maxvalue = 92 - $sockfile_name_len
-else if ("aix" == "$gtm_test_osname") then
-	@ maxvalue = 104 - $sockfile_name_len
 else
 	@ maxvalue = 108 - $sockfile_name_len
 endif
@@ -168,7 +166,7 @@ echo "# Check the permissions of ipcs. Expect the below"
 echo '# 269287425  666        $tst_user   $tst_group        $tst_user   $tst_group       '
 if ("$gtm_test_osname" == "linux") then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out "666:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
-else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("sunos" == "$gtm_test_osname") || \
+else if (("$gtm_test_osname" == "hp-ux") || ("sunos" == "$gtm_test_osname") || \
 		("osf1" == "$gtm_test_osname") || ("os390" == $gtm_test_osname)) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out \
 		"--ra-ra-ra-:${tst_user}:${tst_group}:${tst_user}:${tst_group}" \
@@ -248,7 +246,7 @@ echo "# Check the permissions of ipcs. Expect the below"
 echo '# 269615105  666        $tst_user   $tst_group        $tst_user   $tst_group       '
 if ("$gtm_test_osname" == linux) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out "666:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
-else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("sunos" == "$gtm_test_osname") || \
+else if (("$gtm_test_osname" == "hp-ux") || ("sunos" == "$gtm_test_osname") || \
 		("osf1" == "$gtm_test_osname") || ("os390" == $gtm_test_osname)) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out \
 		"--ra-ra-ra-:${tst_user}:${tst_group}:${tst_user}:${tst_group}" \
@@ -307,7 +305,7 @@ echo "# Check the permissions of ipcs. Expect the below"
 echo '# 269713409  666        $tst_user   $tst_group        $tst_user   $tst_group       '
 if ("$gtm_test_osname" == linux) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out "666:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
-else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("sunos" == "$gtm_test_osname") || \
+else if (("$gtm_test_osname" == "hp-ux") || ("sunos" == "$gtm_test_osname") || \
 		("osf1" == "$gtm_test_osname") || ("os390" == $gtm_test_osname)) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out \
 		"--ra-ra-ra-:${tst_user}:${tst_group}:${tst_user}:${tst_group}" \
@@ -368,7 +366,7 @@ echo "# Check the permissions of ipcs. Expect the below"
 echo '# 269811713  666        $tst_user   $tst_group        $tst_user   $tst_group3 '
 if ("$gtm_test_osname" == linux) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out "666:${tst_user}:${tst_group}:${tst_user}:${tst_group3}"
-else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("sunos" == "$gtm_test_osname") || \
+else if (("$gtm_test_osname" == "hp-ux") || ("sunos" == "$gtm_test_osname") || \
 		("osf1" == "$gtm_test_osname") || ("os390" == $gtm_test_osname)) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out \
 		"--ra-ra-ra-:${tst_user}:${tst_group3}:${tst_user}:${tst_group}" \
@@ -431,7 +429,7 @@ echo "# Check the permissions of ipcs. Expect the below"
 echo '#269910017  666        $tst_user   $tst_group        $tst_user   $tst_group3 '
 if ("$gtm_test_osname" == linux) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out "666:${tst_user}:${tst_group}:${tst_user}:${tst_group}"
-else if (("$gtm_test_osname" == "hp-ux") || ("aix" == "$gtm_test_osname") || ("sunos" == "$gtm_test_osname") || \
+else if (("$gtm_test_osname" == "hp-ux") || ("sunos" == "$gtm_test_osname") || \
 		("osf1" == "$gtm_test_osname") || ("os390" == $gtm_test_osname)) then
 	$gtm_tst/$tst/u_inref/check_ipcsperm.csh ipcs_full_${tstno}.out \
 		"--ra-ra-ra-:${tst_user}:${tst_group}:${tst_user}:${tst_group}" \

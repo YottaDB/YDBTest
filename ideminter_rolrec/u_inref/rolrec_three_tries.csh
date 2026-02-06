@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -152,7 +155,6 @@ if (0 == $rand) then
 		set seqno = `echo $max_seqno $rand | $tst_awk '{x=$1*$2/100; if (x < 25) x=25; printf "%d",x;}'`
 		echo "seqno: $seqno ($rand %)"
 		echo $seqno >! seqno{$logno}.txt
-		source $gtm_tst/$tst/u_inref/online_rollback_v4_aversion.csh
 		$gtm_tst/$tst/u_inref/try_rolrec.csh $rol_or_rec $intr_stop_idemp $ztptp $logs.logx $rollbackmethod -resync=$seqno -lost=$logs.lost
 		set stat = $status
 		echo Status of try_rolrec is: $stat
@@ -218,7 +220,6 @@ if (0 == $rand) then
 			set seqno = `echo $max_seqno $rand | $tst_awk '{x=$1*$2/100; if (x < 25) x=25; printf "%d",x;}'`
 			echo "seqno: $seqno ($rand %)"
 			echo $seqno >! seqno{$logno}.txt
-			source $gtm_tst/$tst/u_inref/online_rollback_v4_aversion.csh
 			$gtm_tst/$tst/u_inref/try_rolrec.csh $rol_or_rec $intr_stop_idemp $ztptp $logs.logx $rollbackmethod -resync=$seqno -lost=$logs.lost
 			set stat = $status
 			echo Status of try_rolrec is: $stat

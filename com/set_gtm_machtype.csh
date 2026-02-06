@@ -73,23 +73,9 @@ else
 	setenv gtm_platform_size 64
 endif
 
-# Some machines do not have V4 versions
-set nonomatch = 1 ;set test_found_v4_vers = ($gtm_root/V4*) ; unset nonomatch
-if ("$gtm_root/V4*" == "$test_found_v4_vers") then
-	setenv gtm_platform_no_V4 1		# This variable is used by cheking its existence ($?gtm_platform_no_V4)
-endif
-
-# Some machines do not have dual_site versions
-set nonomatch = 1 ; set test_found_ds_ver = ($gtm_root/V5[01]*) ; unset nonomatch
-if (($?gtm_platform_no_V4) && ("$gtm_root/V5[01]*" == "$test_found_ds_ver")) then
-	setenv gtm_platform_no_ds_ver 1
-else
-	setenv gtm_platform_no_ds_ver 0
-endif
-
 # New platforms have no prior versions (or the current version is the only prior version)
-set nonomatch = 1 ; set test_found_priorvers = ($gtm_root/V[4567]*) ; unset nonomatch
-if ("$gtm_root/V[4567]*" == "$test_found_priorvers" || "$test_found_priorvers" == "$gtm_ver") then
+set nonomatch = 1 ; set test_found_priorvers = ($gtm_root/V[67]*) ; unset nonomatch
+if ("$gtm_root/V[67]*" == "$test_found_priorvers" || "$test_found_priorvers" == "$gtm_ver") then
 	setenv gtm_test_nopriorgtmver 1		# New platform with no prior versions
 	# Set gtm_platform_no_compress_ver to 1 for platforms that don't have versions without compression support.
 	# Note : The variable name doesn't quite match its usage.

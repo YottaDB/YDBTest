@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,12 +38,11 @@ if ( (! $?dbx) || (! $?tst_awk) ) then
 endif
 # Print stack trace of all the threads if applicable.
 # Linux/HP-UX : the same command prints trace of just the one process if multi-threads are not available.
-# AIX : thread command would print info about just one thread if multi-threads are not available.
 # SunOS : prints no infomation if multi-threads are not available. So do "where" at the beginning too.
-# Note: The tool uses two dbx commands on AIX and SunOS, one to get a list of threads and another to get trace of each. The two outputs need not be consistent relative to each other.
+# Note: The tool uses two dbx commands on SunOS, one to get a list of threads and another to get trace of each. The two outputs need not be consistent relative to each other.
 # i.e threads could have come in or gone away by the time the second command is executed
 
-# The commands for corefile and pid are duplicated for AIX and SunOS because of subtle differences which couldn't be taken care of easily
+# The commands for corefile and pid are duplicated for SunOS because of subtle differences which couldn't be taken care of easily
 
 if (-e $pid_core) then
 	# A file exists, so $1 is a core
@@ -65,19 +64,6 @@ if ( ("Linux" == "$HOSTOS") || ("HP-UX" == "$HOSTOS") ) then
 	endif
 	echo "" | $tst_awk '{printf "set width 0\ninfo threads\nset backtrace limit 100\nthread apply all bt\ndetach\nquit\n"}'	>& $cmdfile
 	$dbx $image $args --command=$cmdfile
-else if ("AIX" == "$HOSTOS") then
-	if ($?corefile) then
-		set args = "$image $corefile"
-		echo "" | $tst_awk '{printf "thread\nquit\n"}'		>& $threadcmd
-		$dbx $image $corefile < $threadcmd			>& $threadout
-		$tst_awk 'BEGIN {print "thread"} /^.\$t/ {gsub(/^.\$t/,"") ; printf "thread %d\nthread current %d\nwhere\n",$1,$1,$1} END{print "quit"}' $threadout >& $cmdfile
-		$dbx $image $corefile < $cmdfile
-	else
-		echo "" | $tst_awk '{printf "thread\ndetach\nquit\n"}'	>& $threadcmd
-		$dbx -a $pid -c $threadcmd				>& $threadout
-		$tst_awk 'BEGIN {print "thread"} /^.\$t/ {gsub(/^.\$t/,"") ; printf "thread %d\nthread current %d\nwhere\n",$1,$1,$1} END{print "detach\nquit"}' $threadout >& $cmdfile
-		$dbx -a $pid -c $cmdfile
-	endif
 else if ("SunOS" == "$HOSTOS") then
 	if ($?corefile) then
 		echo "" | $tst_awk '{printf "threads\nquit\n"}'		>& $threadcmd

@@ -2,7 +2,7 @@
 *								*
 * Copyright 2013 Fidelity Information Services, Inc		*
 *								*
-* Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	*
+* Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	*
 * All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
@@ -63,7 +63,7 @@
 #define FAILURE			1
 #define VERSION			3
 
-#define HAVE_NEW_ICONV defined(__linux__) || defined(__hpux) || defined(__MVS__) || defined(_AIX) ||				\
+#define HAVE_NEW_ICONV defined(__linux__) || defined(__hpux) || defined(__MVS__) ||				\
 			(defined(__sun) && !defined(__SunOS_5_9) && !defined(__SunOS_5_10))
 
 extern int errno;
@@ -257,6 +257,6 @@ int gtm_ac_version ()
 
 int gtm_ac_verify (unsigned char type, unsigned char ver)
 {
-    	return !(ver == VERSION);
+	return !(ver == VERSION);
 }
 

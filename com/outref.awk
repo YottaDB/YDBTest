@@ -12,33 +12,35 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-##some of the allowed SUSPEND_OUTPUT/ALLOW_OUTPUT options:
-#HOST_ALL
-#V6 and V7 for database version
-# server name, such as: dingo (or DINGO, case insensitive)
-# platform, recognized platforms are (see defaults_csh)
-#HOST_AIX_RS6000
-#HOST_HP-UX_PA_RISC
-#HOST_LINUX_IX86
-#HOST_LINUX_S390X
-#HOST_OS390_S390
-#HOST_OSF1_ALPHA
-#HOST_SUNOS_SPARC
-#HOST_LINUX_IA64
-#HOST_HP-UX_IA64
-#HOST_CYGWIN_IX86
-#HOST_LINUX_X86_64
-#HOST_LINUX_ARMVXL	# ARMVXL is for ARMV6L, ARMV7L etc.
-#HOST_LINUX_AARCH64
-# and machine type. For example:
-#IA64 (for Itanium machines)
-# and OS name. For example: AIX
+### Allowed SUSPEND_OUTPUT/ALLOW_OUTPUT options for V6 and V7 for database versions
+# Options are composed of:
+#	server name, e.g: dingo (or DINGO, case insensitive)
+#	platform, e.g.: linux
+#	machine type, e.g. x86_64
+# For example:
+#	LINUX for Linux platform
+#	X86_64 for x86_64 machine type
 #
-# note that if you want to allow output for one server only (and disallow others),
+## Recognized options are (see defaults_csh)
+#    HOST_ALL
+#    HOST_HP-UX_PA_RISC
+#    HOST_LINUX_IX86
+#    HOST_LINUX_S390X
+#    HOST_OS390_S390
+#    HOST_OSF1_ALPHA
+#    HOST_SUNOS_SPARC
+#    HOST_LINUX_IA64
+#    HOST_HP-UX_IA64
+#    HOST_CYGWIN_IX86
+#    HOST_LINUX_X86_64
+#    HOST_LINUX_ARMVXL	# ARMVXL is for ARMV6L, ARMV7L etc.
+#    HOST_LINUX_AARCH64
+#
+# Note that if you want to allow output for one server only (and disallow others),
 # you should use SUSPEND_OUTPUT HOST_ALL to disallow others
 #
-# also note that unite will not be able to handle any of the above, the reference files will need to be
-# modified manually.
+# Also note that unite will not be able to handle any of the above,
+# the reference files will need to be modified manually.
 
 BEGIN {
 	nr_outref = 0
@@ -161,10 +163,6 @@ BEGIN {
         else
                 envir[no_options] = "32BIT_GTM"
         #
-	option_names[++no_options] = "gtm_platform_no_V4"
-        if ("" != ENVIRON["gtm_platform_no_V4"])
-                envir[no_options] = "PLATFORM_NO_V4GTM"
-        #
 	option_names[++no_options] = "gtm_test_nopriorgtmver"
         if ("1" == ENVIRON["gtm_test_nopriorgtmver"])
                 envir[no_options] = "PLATFORM_NO_PRIORGTM"
@@ -172,10 +170,6 @@ BEGIN {
 	option_names[++no_options] = "gtm_platform_no_compress_ver"
         if ("1" == ENVIRON["gtm_platform_no_compress_ver"])
                 envir[no_options] = "PLATFORM_NO_COMPRESS_VER"
-        #
-	option_names[++no_options] = "gtm_platform_no_ds_ver"
-        if ("1" == ENVIRON["gtm_platform_no_ds_ver"])
-                envir[no_options] = "PLATFORM_NO_DSVER"
         #
 	option_names[++no_options] = "gtm_test_noggtoolsdir"
         if ("1" == ENVIRON["gtm_test_noggtoolsdir"])
@@ -540,19 +534,6 @@ BEGIN {
 	envir[no_options] = "UPGRADE_DOWNGRADE_UNSUPPORTED"
 	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
-	if ("AIX" == tst_osname)
-	{
-		if (6 > ENVIRON[ "gtm_test_osver" ])
-		{
-			option_names[++no_options] = "aix_5"
-			envir[no_options] = "AIX_5"
-		}
-		else
-		{
-			option_names[++no_options] = "aix_new"
-			envir[no_options] = "AIX_NEW"
-		}
-	}
 	#
         for (elem in envir)
 	{

@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,7 +39,6 @@
 # dbioerr			[karthikk]	Ensure that GT.M handles disk I/O errors while writing to database file by
 #						reporting appropriate errors. Also checks the exit status to be non zero
 # gtm6502			[cronem]	Test Max key size up to 1019
-# mu_downgrade			[bahirs]	Test mupip downgrade
 # wc_blocked			[sopini]	Various wc_blocked-related scenarios
 # gtm6779			[base]		Verify zshow "L" does not reset level to 0 after reaching 511 and issues an error
 # gtm7402			[nars]		GBLOFLOW error during a KILL causes kill_in_prog/abandoned_kills counter to be
@@ -58,8 +57,6 @@
 #						part of the facility for operator log messages
 # gtm7294			[kishoreh] 	space/permission issues with jounal rollback
 # gtm7413			[zouc] 		Test the memory allocation when socket openning fails
-# mu_upgrade 			[bahirs] 	Test the mupip upgrade to V6 from pre V53003 version handles the master-map change
-#						correctly.
 # gtm7439 			[karthikk] 	Test to ensure journal extensions don't end up in a unbounded recursive stack
 # anticipatory_freeze_utilities	[karthikk]	Verify that instance freeze is honored by various MUPIP utilities
 # gtm7398			[cronem] 	<Verify correct jnl_seqno for NULL record insertion after crash and rollback on secondary>
@@ -67,15 +64,46 @@
 # gtm7383 			[kishoreh] 	No need to write dirty global buffers to database file at epochs when nobefore journaling is in use
 #-------------------------------------------------------------------------------------
 
-echo "v60000 test starts..."
-# List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "gtm4525b gtm7219a"
-setenv subtest_list_non_replic "gtm7227 gtm7283 gtm6686 gtm7277 gtm7332 gtm358 gtm7308 C9B12001861 gtm6692 dbioerr gtm4525c "
-setenv subtest_list_non_replic "${subtest_list_non_replic} gtm7327 gtm7231 gtm4525a gtm6571 gtm6502 gtm6779"
-setenv subtest_list_non_replic "${subtest_list_non_replic} gtm7402 gtm7353 devopen gtm7389 cut_prev_link recterm gtm7413"
-setenv subtest_list_non_replic "${subtest_list_non_replic} mu_downgrade mu_upgrade gtm7439 gtm7383"
-setenv subtest_list_non_replic "${subtest_list_non_replic} gtm7312 gtm7294 inst_freeze_enospc"
-setenv subtest_list_replic     "less_log wc_blocked gtm7219b anticipatory_freeze_utilities gtm7398"
+echo "v60000 test starts..." # List the subtests separated by spaces under the appropriate environment variable name
+setenv subtest_list_common     ""
+setenv subtest_list_common     "$subtest_list_common gtm4525b"
+setenv subtest_list_common     "$subtest_list_common gtm7219a"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7227"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7283"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6686"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7277"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7332"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm358"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7308"
+setenv subtest_list_non_replic "$subtest_list_non_replic C9B12001861"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6692"
+setenv subtest_list_non_replic "$subtest_list_non_replic dbioerr"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4525c"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7327"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7231"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4525a"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6571"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6502"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6779"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7402"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7353"
+setenv subtest_list_non_replic "$subtest_list_non_replic devopen"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7389"
+setenv subtest_list_non_replic "$subtest_list_non_replic cut_prev_link"
+setenv subtest_list_non_replic "$subtest_list_non_replic recterm"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7413"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7439"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7383"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7312"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7294"
+setenv subtest_list_non_replic "$subtest_list_non_replic inst_freeze_enospc"
+setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic less_log"
+setenv subtest_list_replic     "$subtest_list_replic wc_blocked"
+setenv subtest_list_replic     "$subtest_list_replic gtm7219b"
+setenv subtest_list_replic     "$subtest_list_replic anticipatory_freeze_utilities"
+setenv subtest_list_replic     "$subtest_list_replic gtm7398"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -87,7 +115,7 @@ endif
 setenv subtest_exclude_list	""
 # Filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
-        setenv subtest_exclude_list "$subtest_exclude_list C9B12001861 gtm4525c gtm6692 dbioerr wc_blocked gtm7219a gtm7219b"
+	setenv subtest_exclude_list "$subtest_exclude_list C9B12001861 gtm4525c gtm6692 dbioerr wc_blocked gtm7219a gtm7219b"
 endif
 
 # Filter out tests that will assert fail in dbg
@@ -106,28 +134,6 @@ endif
 # Temporary file system can be created only on linux boxes
 if ("linux" != "$gtm_test_osname") then
 	setenv subtest_exclude_list "$subtest_exclude_list inst_freeze_enospc"
-endif
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-set disabledowngrade = 0
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade mu_upgrade"
-	set disabledowngrade = 1
-else if ("dbg" == "$tst_image") then
-       # We do not have dbg builds in the range [V50000, V53003] needed by the mu_upgrade subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
-       # We do not have dbg V5* builds needed by the mu_downgrade subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
-       set disabledowngrade = 1
-else if ($?ydb_environment_init) then
-	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
-	# by the below subtest. Therefore disable it.
-	setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
-endif
-# If we haven't already disabled mu_downgrade, check if we need to once again in case no V5 versions are available.
-if (!($disabledowngrade) && ($?ydb_test_exclude_V5_tests)) then
-	if ($ydb_test_exclude_V5_tests) then
-		setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
-	endif
 endif
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then

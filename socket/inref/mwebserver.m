@@ -3,7 +3,7 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -73,9 +73,6 @@ mwebserver(portno,hostname)
 	. set cafile=$piece(cfline,"""",2)
 	. set p="pipe"
 	. set command="curl -s -S --cacert "_cafile_" https://"_hostname_":"_portno_"/ping"
-	. if $ZVERSION["AIX" do
-	. . ; /opt/freeware/bin/curl needs to use /opt/freeware/lib/libcrypto
-	. . set command="(unsetenv LIBPATH LD_LIBRARY_PATH ; "_command_" )"
 	. open p:(command=command:readonly)::"PIPE" use p
 	. do pingresults("curl")
 	. close p

@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,7 +66,7 @@ foreach sync_io ("" ",nosync_io" ",sync_io")
 	# the command is hard-coded in two lines, one for echoing and one for executing.
 	# this is done instead of "set echo" and "unset echo" surrounding the command execution line.
 	# this is because it seems like the order in which the commands get echoed is not guaranteed when pipelines are involved.
-	# we had a test failure in lespaul (AIX) where "sort -f" got echoed ahead of the MUPIP BACKUP
+	# we had a test failure on AIX where "sort -f" got echoed ahead of the MUPIP BACKUP
 	# hence the decision to explicitly echo what we want even if it means duplicating the command line.
 	echo "$MUPIP backup -newjnlfiles=prevlink$sync_io * backupdir |& sort -f"
 	$MUPIP backup -newjnlfiles=prevlink$sync_io "*" backupdir >&! jnl_on_5_${sync_io}.log

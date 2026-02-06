@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -16,29 +16,25 @@ fsyncoff(srcfile,outfile,endofdata)
 	; Reads a journal extract file and finds latest of the last EPOCH or PBLK records.
 	; offset will be reset as endofdata (parsed from journal file header output) if it is higher value.
 	; Callers will force corruption only after 'offset' this routine finds.
-        ;
+	;
 	; The format of journal extract is : 0x00000800 [0x00d0]
 	; Change the program if detail extract format is different.
-	; This program will work even for non-V5.0-000 if detail extract has the format as "hexOffset [hexLength]"
-	; However, long variable name is used and so may fail for old GT.M versions
-	;if rec'="YDBJDX04" close srcfile  write "TEST-E-",srcfile," is not a valid V5 Detailed EXTRACT file",!  zshow "*" halt
 	;
-	;
-        set $ZT="s $ZT="""" g ERROR"
+	set $ZT="s $ZT="""" g ERROR"
 	write "fsyncoff started",!
-        ;
-        open srcfile:(READONLY:REC=32000)
+	;
+	open srcfile:(READONLY:REC=32000)
 	use srcfile
 	read rec
-        ;
+	;
 	set epochEndOffset=0
 	set pblkEndOffset=0
-        for  use srcfile quit:$ZEOF  read rec D
-        .       ;
-        .	if $find(rec,"EPOCH")'=0 set epochRecord=rec
-        .	if $find(rec,"PBLK")'=0 set pblkRecord=rec
+	for  use srcfile quit:$ZEOF  read rec D
+	.       ;
+	.	if $find(rec,"EPOCH")'=0 set epochRecord=rec
+	.	if $find(rec,"PBLK")'=0 set pblkRecord=rec
 	.	;
-        close srcfile
+	close srcfile
 	;
 	if $data(epochRecord) set epochEndOffset=$$getEndofRecOffset(epochRecord)
 	if $data(pblkRecord) set pblkEndOffset=$$getEndofRecOffset(pblkRecord)
@@ -57,8 +53,8 @@ fsyncoff(srcfile,outfile,endofdata)
 	write "epochEndOffset = ",epochEndOffset," [0x",$$FUNC^%DH(epochEndOffset),"]",!
 	write "pblkEndOffset  = ",pblkEndOffset," [0x",$$FUNC^%DH(pblkEndOffset),"]",!
 	write "offset         = ",offset," [0x",$$FUNC^%DH(offset),"]",!
-        quit
-        ;
+	quit
+	;
 	; The format of journal extract is : 0x00000800 [0x00d0]
 getEndofRecOffset(rec)
 	new tmpoff1,rhexoff,recOffset,recLenStr,recLenStrLen,recLen
@@ -71,12 +67,12 @@ getEndofRecOffset(rec)
 	set recOffset=recOffset+recLen
 	quit recOffset
 	;
-        ;----------------------------------------------------------------------
+	;----------------------------------------------------------------------
 ERROR   ;Log M error
-        ;----------------------------------------------------------------------
-        ;
+	;----------------------------------------------------------------------
+	;
 	use $p
-        ZSHOW "*"
-        ZM +$ZS
-        quit
+	ZSHOW "*"
+	ZM +$ZS
+	quit
 	;

@@ -1,17 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+;	Copyright 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 genbadchars ;
-	; this could be done directly as well, but $CHAR() behavior will
-	; change, so I do not want to trust that function until we have tested it.
-	; So, until we test and verify that the new version of GT.M behaves
-	; correctly, let's use this routine with V51000 and generate an M routine
-	; that has the bad characters in it explicitly (rather than $CHAR(x)).
-	;
-	; Since the output routine will have illformed unicode characters, it is not possible to edit in vi.
-	;
-	; Once we are confident with V990:
-	; - We can change this routine to write "$ZCHAR(x)" instead of the actual bytes, and insert the generated lbadchar.m in the test system.
-	; - Then we can scrap this routine.
-	; Until then, use this routine in the test system.
-
+	; This M program uses $ZCHAR() to generate an M routine lbadchar.m that has bad characters in it.
 	set file="lbadchar.m"
 	open file:(NEWVERSION:OCHSET="M")
 	use file

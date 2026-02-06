@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2012-2015 Fidelity National Information 	;
+; Services, Inc. and/or its subsidiaries. All rights reserved.	;
+;								;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 unicodesampledata	;
 	; Sample data to test UNICODE strings, includes single-byte and multi-byte strings.
@@ -73,13 +87,13 @@ set 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	set cnti=cnti+1,str(cnti)=$CHAR(20,21,22,23,24,25,26,27,28,29),ucp(cnti)="20,21,22,23,24,25,26,27,28,29",utf8(cnti)=ucp(cnti),comments(cnti)="control characters $CHAR(20-29)",width(cnti)=-1
 	set cnti=cnti+1,str(cnti)=$CHAR(30,31,127),ucp(cnti)="30,31,127",utf8(cnti)=ucp(cnti),comments(cnti)="control characters $CHAR(30-31,127)",width(cnti)=-1
 	set cnti=cnti+1,str(cnti)="a a",ucp(cnti)="97,32,97",utf8(cnti)="97,32,97",comments(cnti)="SPACE"
-        set cnti=cnti+1,str(cnti)=$ZCHAR(0),ucp(cnti)="0",width(cnti)=-1,utf8(cnti)="0",comments(cnti)="2.1.1  1 byte  (U-00000000)"
+	set cnti=cnti+1,str(cnti)=$ZCHAR(0),ucp(cnti)="0",width(cnti)=-1,utf8(cnti)="0",comments(cnti)="2.1.1  1 byte  (U-00000000)"
 	set cnti=cnti+1,str(cnti)="",ucp(cnti)="127",width(cnti)=-1,utf8(cnti)="127",comments(cnti)="2.2.1  1 byte  (U-0000007F) UTF8: 7F        UTF8(dec): 127"
 	;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	; Latin-1 supplement (U+0080-U+00FF)
 	; Latin-1 supplement printable characters
-	set cntstrmbytes=cnti+1	; multibyte characters start 
+	set cntstrmbytes=cnti+1	; multibyte characters start
 	set cnti=cnti+1,str(cnti)="Ş",ucp(cnti)="350",utf8(cnti)="197,158",comments(cnti)="a single 2-byte character"
 	set cnti=cnti+1,str(cnti)="aÂb",ucp(cnti)="97,194,98",utf8(cnti)="97,195,130,98",comments(cnti)="a single 2-byte character single byte characters"
 	set cnti=cnti+1,str(cnti)=" ¡¢£¤¥¦§¨©ª«¬­®¯",ucp(cnti)="160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175",comments(cnti)="$CHAR(160-175)"
@@ -780,7 +794,7 @@ derived	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;
 	;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	set u="do kill^unicodesampledata do ^unicodesampledata"
 	set p="do print^unicodesampledata(1)"
 	set ps="do print^unicodesampledata(0)"
@@ -789,12 +803,12 @@ derived	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	set k="do kill^unicodesampledata"
 	set putf8="do putf8^unicodesampledata"
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;
 	;
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	quit
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lbadchar ; also have a section of characters that would trigger the BADCHAR error if view "BADCHAR" is enabled.
@@ -806,9 +820,7 @@ lbadchar ; also have a section of characters that would trigger the BADCHAR erro
 	; malformed byte sequences
 	set cntstrbadchars=cnti+1	; start
 	;
- 	;tmp tmp tmp remove this call once $CHAR is tested and proven so we can use lbadchar without generating it
 	do ^genbadchars
- 	;tmp tmp tmp end
 	do ^lbadchar ; use lbadchar.m generated from genbadchars.m(using V51000)
 	;
 	; the following can remain here, since they are well formed utf-8, but disallowed characters.
@@ -847,9 +859,9 @@ lbadchar ; also have a section of characters that would trigger the BADCHAR erro
 	;
 	set cntstrbadchare=cnti		; end
 	;
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	quit
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lnumeric
 	if (0=$DATA(cnti)) set cnti=0 ;initialization is necessary if lnumeric^unicodesampledata is called explicitly
 	set cntstrnumberss=cnti+1
@@ -1169,13 +1181,13 @@ global	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	. ; if there are subscripted variables, define the matching globals:
 	. if 9<$DATA(@vari) set xi="" for  set xi=$order(@vari@(xi)) quit:xi=""  set @varig@(xi)=@vari@(xi)
 	;. write vari,!
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 	quit
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	quit
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ;tmp tmp tmp remove after this point on
- 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;tmp tmp tmp remove after this point on
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 print(xx)	;
 	;for cnti=1:1:cntstr w "-----------",! zwrite str(cnti),ucp(cnti),utf8(cnti) ;; ZWRITE cannot handle multi-byte chars yet
 	if 'xx do

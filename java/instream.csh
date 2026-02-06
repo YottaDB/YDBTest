@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,29 +47,20 @@ if ($?alt_gtmji_dir) then
 	setenv gtmji_dir $alt_gtmji_dir
 endif
 
-# Set environment variables required to run Java call-ins and call-outs.
-if ("AIX" == $HOSTOS) then
-	if (! ($?LIBPATH) ) setenv LIBPATH ""
-	if (! ($?LDR_PRELOAD64) ) setenv LDR_PRELOAD64 ""
-	setenv LIBPATH ${LIBPATH}:${JAVA_SO_HOME}:${JVM_SO_HOME}:${gtmji_dir}
-	setenv lib_preload_init ${LDR_PRELOAD64}
-	setenv lib_preload ${LDR_PRELOAD64}:${JAVA_SO_HOME}/libjsig.so
-else
-	if (! ($?LD_LIBRARY_PATH) ) setenv LD_LIBRARY_PATH ""
-	if (! ($?LD_PRELOAD) ) setenv LD_PRELOAD ""
-	setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${JAVA_SO_HOME}:${JVM_SO_HOME}:${gtmji_dir}
-	setenv lib_preload_init ${LD_PRELOAD}
-	setenv lib_preload ${LD_PRELOAD}:${JAVA_SO_HOME}/libjsig.so
-	if (1 == $gtm_test_use_V6_DBs) then
-		# We are going to create dbs with a random older V6 build.
-		if ("ENCRYPT" == $test_encryption) then
-			echo "# gtm_test_use_V6_DBs changed from 1 to 0 by java/instream.csh"	>>&! settings.csh
-			echo "# because LD_LIBRARY_PATH set by java/instream.csh would "	>>&! settings.csh
-			echo '# include $gtm_dist/plugin and would have a version mismatch'	>>&! settings.csh
-			echo '# with the V6 build $gtm_dist/plugin and cause CRYPTINIT errors'	>>&! settings.csh
-			echo "setenv gtm_test_use_V6_DBs 0"					>>&! settings.csh
-			setenv gtm_test_use_V6_DBs 0
-		endif
+if (! ($?LD_LIBRARY_PATH) ) setenv LD_LIBRARY_PATH ""
+if (! ($?LD_PRELOAD) ) setenv LD_PRELOAD ""
+setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${JAVA_SO_HOME}:${JVM_SO_HOME}:${gtmji_dir}
+setenv lib_preload_init ${LD_PRELOAD}
+setenv lib_preload ${LD_PRELOAD}:${JAVA_SO_HOME}/libjsig.so
+if (1 == $gtm_test_use_V6_DBs) then
+	# We are going to create dbs with a random older V6 build.
+	if ("ENCRYPT" == $test_encryption) then
+		echo "# gtm_test_use_V6_DBs changed from 1 to 0 by java/instream.csh"	>>&! settings.csh
+		echo "# because LD_LIBRARY_PATH set by java/instream.csh would "	>>&! settings.csh
+		echo '# include $gtm_dist/plugin and would have a version mismatch'	>>&! settings.csh
+		echo '# with the V6 build $gtm_dist/plugin and cause CRYPTINIT errors'	>>&! settings.csh
+		echo "setenv gtm_test_use_V6_DBs 0"					>>&! settings.csh
+		setenv gtm_test_use_V6_DBs 0
 	endif
 endif
 
@@ -81,8 +72,6 @@ setenv bin_subdir ""
 if ("SunOS" == $HOSTOS) then
 	setenv jvm_flags "$jvm_flags -d64"
 	setenv bin_subdir "sparcv9/"
-else if ("AIX" == $HOSTOS) then
-	setenv jvm_flags "$jvm_flags -Xmso4M"
 else if ("Linux" == $HOSTOS) then
 	# JVMs do not support huge pages, so disable (just unsetting the GT.M
 	# test environment variable for huge pages does not work).
@@ -91,7 +80,7 @@ else if ("Linux" == $HOSTOS) then
 endif
 
 # Define envvar for SIGUSR1 value on all platforms (for certain tests).
-if (("OSF1" == $HOSTOS) || ("AIX" == $HOSTOS)) then
+if ("OSF1" == $HOSTOS) then
 	setenv sigusrval 30
 else if (("SunOS" == $HOSTOS) || ("HP-UX" == $HOSTOS) || ("OS/390" == $HOSTOS)) then
 	setenv sigusrval 16

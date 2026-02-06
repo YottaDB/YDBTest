@@ -3,7 +3,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,11 +22,8 @@ endif
 if ($?gtm_test_db_format) then
 	set dbformat = $gtm_test_db_format
 else
-	set dbformat = `$DSE dump all -f |& $tst_awk '/Desired DB Format/ {if ($NF == "V4") dbformat="V4"} END {print dbformat}'`
-endif
-
-if ("V4" == "$dbformat") then
-	exit 0
+	# Use the format expected by the database
+	set dbformat = `$gtm_dist/dse dump -f -all | & awk '/Desired DB Format/ {print $NF}'`
 endif
 
 if (-e settings.csh) then
@@ -36,7 +33,7 @@ if (-e settings.csh) then
 	\rm tmp.csh
 endif
 
-# Randomly set gtm_test_set_encryptable if not already set and if gtm_test_db_format is not V4
+# Randomly set gtm_test_set_encryptable if not already set
 if (! $?gtm_test_set_encryptable) then
 	set rand = `$gtm_exe/mumps -run rand 2`
 	if ($rand) then

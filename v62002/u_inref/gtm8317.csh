@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,66 +46,56 @@ $gtm_dist/mumps -run gtm8317util
 $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog1.txt	# now that mumps returned, get all syslog messages until this point
 $grep INVTMPDIR test_syslog1.txt | $grep -wc `cat runningMpid.txt`
 
-#
-# Bypass this gtmsecshr check on AIX. On AIX the gtmsecshr wrapper currently removes most envvars before driving
-# gtmsecshr. This includes the TZ envvar which defines which timezone the process runs in. After initialization is
-# complete, gtmsecshr re-establishes its default timezone but errors raised before that is done have a GMT/UTC
-# time so syslog messages thusly recorded are not fetched by getoper.csh over the range of this test. This will
-# likely be fixed when GTM-7778 is fixed which will fix the gtmsecshr wrapper's timestamped messages and leave TZ
-# set properly for gtmsecshr.
-#
-if ("HOST_AIX_RS6000" != "$gtm_test_os_machtype") then
-    echo
-    $echoline
-    sleep 1
-    set syslog_start = `date +"%b %e %H:%M:%S"`
-    echo
-    echo "gtm_tmp is bogus - expect INVTMPDIR from gtmsecshr (1)"
-    $gtm_dist/gtmsecshr
-    # Since gtmsecshr runs in the background, it could send the INVTMPDIR a little later than when getoper.csh searches
-    # the syslog so we need to pass "INVTMPDIR" specifically to getoper.csh that way it waits for this message to show up.
-    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog2.txt "INVTMPDIR"
-    $grep INVTMPDIR test_syslog2.txt | $grep -c "SECSHR"
-endif
+echo
+$echoline
+sleep 1
+set syslog_start = `date +"%b %e %H:%M:%S"`
+echo
+echo "gtm_tmp is bogus - expect INVTMPDIR from gtmsecshr (1)"
+$gtm_dist/gtmsecshr
+# Since gtmsecshr runs in the background, it could send the INVTMPDIR a little later than when getoper.csh searches
+# the syslog so we need to pass "INVTMPDIR" specifically to getoper.csh that way it waits for this message to show up.
+$gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog2.txt "" "INVTMPDIR"
+$grep INVTMPDIR test_syslog2.txt | $grep -c "SECSHR"
 
 #
 # Bypass $gtm_linktmpdir validations on non-autorelink platforms
 #
 if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_test_os_machtype")) then
-    echo
-    $echoline
-    sleep 1
-    set syslog_start = `date +"%b %e %H:%M:%S"`
-    echo
-    echo "gtm_tmp and gtm_linktmpdir are bogus - expect INVTMPDIR and INVLINKTMPDIR from mumps (2)"
-    setenv gtm_linktmpdir "bogus"
-    $gtm_dist/mumps -run gtm8317util
-    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog3.txt
-    grep -E "INVTMPDIR|INVLINKTMPDIR" test_syslog3.txt | $grep -wc `cat runningMpid.txt`
+	echo
+	$echoline
+	sleep 1
+	set syslog_start = `date +"%b %e %H:%M:%S"`
+	echo
+	echo "gtm_tmp and gtm_linktmpdir are bogus - expect INVTMPDIR and INVLINKTMPDIR from mumps (2)"
+	setenv gtm_linktmpdir "bogus"
+	$gtm_dist/mumps -run gtm8317util
+	$gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog3.txt
+	grep -E "INVTMPDIR|INVLINKTMPDIR" test_syslog3.txt | $grep -wc `cat runningMpid.txt`
 
-    echo
-    $echoline
-    sleep 1
-    set syslog_start = `date +"%b %e %H:%M:%S"`
-    echo
-    echo "gtm_linktmpdir is bogus - expect INVLINKTMPDIR from mumps (1)"
-    source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
-    $gtm_dist/mumps -run gtm8317util
-    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog4.txt
-    $grep INVLINKTMPDIR test_syslog4.txt | $grep -wc `cat runningMpid.txt`
+	echo
+	$echoline
+	sleep 1
+	set syslog_start = `date +"%b %e %H:%M:%S"`
+	echo
+	echo "gtm_linktmpdir is bogus - expect INVLINKTMPDIR from mumps (1)"
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
+	$gtm_dist/mumps -run gtm8317util
+	$gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog4.txt
+	$grep INVLINKTMPDIR test_syslog4.txt | $grep -wc `cat runningMpid.txt`
 
-    echo
-    $echoline
-    sleep 1
-    set syslog_start = `date +"%b %e %H:%M:%S"`
-    echo
-    echo "gtm_linktmpdir is bogus - expect gtmsecshr to not care (0)"
-    $gtm_dist/gtmsecshr
-    # Since we are not expecting any messages, let us wait for 1 second to ensure any delayed messages from gtmsecshr
-    # are caught (and a failure is signaled) by the test. Hence the sleep 1 below.
-    sleep 1
-    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog5.txt
-    $grep INVLINKTMPDIR test_syslog5.txt | $grep -c "SECSHR"
+	echo
+	$echoline
+	sleep 1
+	set syslog_start = `date +"%b %e %H:%M:%S"`
+	echo
+	echo "gtm_linktmpdir is bogus - expect gtmsecshr to not care (0)"
+	$gtm_dist/gtmsecshr
+	# Since we are not expecting any messages, let us wait for 1 second to ensure any delayed messages from gtmsecshr
+	# are caught (and a failure is signaled) by the test. Hence the sleep 1 below.
+	sleep 1
+	$gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog5.txt
+	$grep INVLINKTMPDIR test_syslog5.txt | $grep -c "SECSHR"
 endif
 
 exit 0

@@ -130,7 +130,7 @@ setenv MUPIP "$gtm_exe/mupip"
 setenv LKE "$gtm_exe/lke"
 setenv DSE "$gtm_exe/dse"
 setenv GDE "$gtm_exe/mumps -run GDE"
-setenv GDE_SAFE "$gtm_tst/com/pre_V54002_safe_gde.csh"
+setenv GDE_SAFE "$gtm_tst/com/safe_gde.csh"
 setenv tst_tslog_filter
 source $gtm_tst/com/set_gtmroutines.csh "M" || goto fail
 setenv echoline 'echo ###################################################################'  # output generator

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,12 +29,6 @@ $gtm_tst/com/capture_ps_ipcs_ss_lsof.csh		>>&! $debuginfo_file;\\
 exit 1;\\
 '
 
-if ( ("V4" == `echo $gtm_exe:h:t|cut -c1-2`) || ("V50000" == `echo $gtm_exe:h:t|cut -c1-6`) ) then
-	# this means the current GT.M version is a pre-multisite_replic version and so we need to call
-	# V4 counterpart of SRC.csh as this script will complain for new qualifiers with older GT.M version.
-	$gtm_tst/com/v4_SRC.csh $argv
-	exit
-endif
 setenv filter_arg ""
 if ($2 == "") then
 	echo "Needs port number to start source server!"

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,6 @@
 set JNL_EXT_MAX=1073741823
 set JNL_EXT_MAX_PLUS_ONE=1073741824
 
-setenv gtm_test_mupip_set_version "V5"
 setenv gtm_test_jnl NON_SETJNL
 
 ###########################################################################
@@ -41,19 +40,19 @@ cd upgradegld
 
 set prior_ver = `$gtm_tst/com/random_ver.csh -type "gld_mismatch"`
 if ("$prior_ver" =~ "*-E-*") then
-        echo "No prior versions available: $prior_ver"
-        exit -1
+	echo "No prior versions available: $prior_ver"
+	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo "$prior_ver" > priorver.txt
 \rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 
-echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
+echo "Randomly chosen prior version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo "----------------------------------------------------------------------"
 echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 
-echo "# Create database using prior V5 version"
+echo "# Create database using prior version"
 
 setenv gtm_test_jnl "SETJNL"
 setenv tst_jnl_str "-journal=enable,$b4nob4image,alloc=2048,ext=2048"

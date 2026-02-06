@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,15 @@ set pidFileNames =	( "termpid"	"syslogpid" )
 set setWhiteBoxTests =	( 0		1 )
 @ num_of_cases = $#facilities
 
+# Enable memory lock capability for DSE when in the pipeline,
+# to prevent `%SYSTEM-E-ENO1, Operation not permitted` errors,
+# which occur due to capabilities being dropped when switching
+# from the root user id to the gtmtest user id via `su -l gtmtest`
+# in `pipeline-test-ydbtest.csh`. For more information see the discussion at:
+# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2196#note_2373397992
+if ($?ydb_test_inside_docker) then
+	sudo setcap 'cap_ipc_lock+ep' $gtm_dist/yottadb
+endif
 @ i = 1
 while ($i <= $num_of_cases)
 	$echoline
@@ -96,6 +105,10 @@ while ($i <= $num_of_cases)
 		# Extract arguments out of each generated message and save them in a file.
 		$gtm_dist/mumps -run gtm7919 ${msgFileName} ${logFileName}.outx ${argsFileName}.log
 	endif
+	# Filter out %SYSTEM-E-ENO13 error messages from the syslog, since these are irrelevant to this test and are otherwise acceptable
+	# See the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/787#note_3147635007 for more details.
+	mv ${argsFileName}.log ${argsFileName}.log.orig
+	awk 'BEGIN {RS="\n\n"; ORS="\n\n"} $0 !~ "SYSTEM-E-ENO13"' ${argsFileName}.log.orig >&! ${argsFileName}.log
 
 	# Diff the extracted arguments with those actually used.
 	diff ${argsFileName}.cmp ${argsFileName}.log >&! ${argsFileName}.diff
@@ -119,3 +132,7 @@ while ($i <= $num_of_cases)
 
 	@ i = $i + 1
 end
+# Reset capabilities on YottaDB, undoing `cap_ipc_lock+ep` above
+if ($?ydb_test_inside_docker) then
+	sudo --preserve-env setcap '-r' $gtm_dist/yottadb
+endif

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,15 +51,6 @@ if ($do_overflow) then
 	# Start the secondary
 	setenv start_time `date +%H_%M_%S`
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR.csh "." $portno $start_time < /dev/null "">>&! "" $SEC_SIDE/START_${start_time}.out"
-endif
-#
-if ("HOST_AIX_RS6000" == $gtm_test_os_machtype) then
-	$gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log -message "Update Process started" -duration 300
-	cd $SEC_SIDE
-	$sec_getenv
-	set pidupd = `$MUPIP replicate -receiv -checkhealth |& $tst_awk '/PID.*Update/{printf(" %s", $2);}'`
-	cd $PRI_SIDE
-	($gtm_tst/$tst/u_inref/introspect_secondary_jobs.csh $pidupd &) >&! introspection.out
 endif
 # Now force retries
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/$tst/u_inref/fix_tp_rest.csh >>& fix_tp_rest.out"

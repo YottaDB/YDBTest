@@ -3,7 +3,7 @@
 ; Copyright (c) 2012, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -45,7 +45,7 @@ getipcperm
 	;
 	set p3="ipcs2"
 	set semipcscmd="$gtm_tst/com/ipcs -sc"
-	set semselcmd="$tst_awk '$2 == """_semid_""" {print $4 "","" $6}'"					; HP-UX, AIX, OSF1, Solaris
+	set semselcmd="$tst_awk '$2 == """_semid_""" {print $4 "","" $6}'"					; HP-UX, OSF1, Solaris
 	if $zversion["Linux" set semselcmd="$tst_awk '$1 == """_semid_""" {print $2 "","" $6}'"
 	open p3:(shell="/bin/sh":command=semipcscmd_" | "_semselcmd:readonly)::"PIPE"
 	use p3
@@ -108,7 +108,7 @@ shmperm(shmid)
 	new pd,shmipcscmd,shmselcmd,shmperm
 	set pd="ipcs1"
 	set shmipcscmd="$gtm_tst/com/ipcs -mc"
-	set shmselcmd="$tst_awk '$2 == """_shmid_""" {print $4 "","" $6}'"					; HP-UX, AIX, OSF1, Solaris
+	set shmselcmd="$tst_awk '$2 == """_shmid_""" {print $4 "","" $6}'"					; HP-UX, OSF1, Solaris
 	if $zversion["Linux" set shmselcmd="$tst_awk '$1 == """_shmid_""" {print $2 "","" $6}'"
 	open pd:(shell="/bin/sh":command=shmipcscmd_" | "_shmselcmd:readonly)::"PIPE"
 	use pd

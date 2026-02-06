@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,6 @@ if (0 != $ydb_test_4g_db_blks) then
 endif
 
 setenv test_reorg NON_REORG
-setenv gtm_test_mupip_set_version "V5"
 setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG -TRUNCATE output
 setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work (reorg -truncate) with spanningregions
 #Go with dbg image since we are using a whitebox test

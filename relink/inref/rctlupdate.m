@@ -3,7 +3,7 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -207,7 +207,6 @@ setExpectations(arg,setup,cycles,expect)
 	.	.	if ('$data(setup(realDir,"dir3"))) set expect("error",2)="SYSTEM-E-ENO2, No such file or directory"
 	.	.	else  do
 	.	.	.	if ($zversion["Solaris") set expect("error",2)="SYSTEM-E-ENO90, Number of symbolic links encountered during path name traversal exceeds MAXSYMLINKS"
-	.	.	.	else  if ($zversion["AIX") set expect("error",2)="SYSTEM-E-ENO85, Too many levels of symbolic links"
 	.	.	.	else  set expect("error",2)="SYSTEM-E-ENO40, Too many levels of symbolic links"
 	.	.	set stop=TRUE
 	.	do log(" - @ point 4")

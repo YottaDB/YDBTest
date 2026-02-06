@@ -3,6 +3,9 @@
  * Copyright (c) 2013-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
 *								*
+* Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	*
+* All rights reserved.						*
+*								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
 *	under a license.  If you do not know the terms of	*
@@ -19,8 +22,6 @@
 
 #if defined st_mtime
 #  define st_nmtime		st_mtim.tv_nsec
-#elif defined(_AIX)
-#  define st_nmtime		st_mtime_n
 #elif defined(__hpux) && defined(__ia64)
 #  define st_nmtime		st_nmtime
 #endif
@@ -60,13 +61,13 @@ int main(int argc, const char* argv[])
 		utimes(argv[2], ftimes);
 		utimes(argv[3], ftimes);
 	} else
-        {	/* Print the time at which the last modification to each specified file was made. */
-                for (i = 2; i < argc; i++)
-                {
-                        stat(argv[i], &buf);
-                        fprintf(stderr, "@ %d.%d %s was modified\n", (int)buf.st_mtime, (int)buf.st_nmtime, argv[i]);
-                }
-        }
+	{	/* Print the time at which the last modification to each specified file was made. */
+		for (i = 2; i < argc; i++)
+		{
+			stat(argv[i], &buf);
+			fprintf(stderr, "@ %d.%d %s was modified\n", (int)buf.st_mtime, (int)buf.st_nmtime, argv[i]);
+		}
+	}
 
 	return 0;
 }

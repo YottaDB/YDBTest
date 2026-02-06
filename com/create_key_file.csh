@@ -22,26 +22,15 @@ set verbose
 set hostn = $HOST:r:r:r
 set tst_org_host=${tst_org_host:r:r:r:r}
 
-# Encryption is NOT supported on versions < V5.3-004 and anything that is NOT V9xx.
-if ((`expr "V900" \> "$tst_ver"`) && (`expr "V53004" \> "$tst_ver"`)) exit
-if ((`expr "V900" \> "$gtm_verno"`) && (`expr "V53004" \> "$gtm_verno"`)) exit
-
 # Encryption is NOT supported with MM access method either.
 if ("BG" != "$acc_meth") exit 0
 
 set timestamp = `date +%H%M%S`
 
-# If the current version is less than V55000, use $gtm_tst/com/pre_V54002_safe_gde.csh.
-if (`expr $gtm_verno "<" "V54002"`) then
-	setenv GDE_SAFE "$gtm_tst/com/pre_V54002_safe_gde.csh"
-else
-	setenv GDE_SAFE "$GDE"
-endif
-
 # Set up encryption on all the regions (the assumption is that all regions NEED encryption AND GLD is already created).
-$GDE_SAFE show -map >& encr_create_key_gde_${timestamp}.map
+$GDE show -map >& encr_create_key_gde_${timestamp}.map
 $tst_awk '/SEG/{seg[$3]++} END{for(i in seg) print "change -seg "i" -encr"}' encr_create_key_gde_${timestamp}.map > encr_enable_in_reg_${timestamp}.gde
-$GDE_SAFE @encr_enable_in_reg_${timestamp}.gde
+$GDE @encr_enable_in_reg_${timestamp}.gde
 
 # Get the list of all databases that are present in the GLD OR explicitly passed to this script (as the case may be).
 if ($# != 0) then

@@ -1,3 +1,17 @@
+#################################################################
+#								#
+# Copyright (c) 2002-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 ########################################
 ### C9D03-002246 - $ZTEXIT ISV tests ###
 ########################################
@@ -5,12 +19,12 @@
 echo '$ZTEXIT tests START....'
 setenv zte_subtest_list "errorint manyints multintr nesttp nointrpt refniosv smpltp snglintp tpwint"
 # define env var that contains SIGUSR1 value on all platforms
-if (($HOSTOS == "OSF1") || ($HOSTOS == "AIX")) then
-    setenv sigusrval 30
+if ($HOSTOS == "OSF1") then
+	setenv sigusrval 30
 else if (($HOSTOS == "SunOS") || ($HOSTOS == "HP-UX")) then
-    setenv sigusrval 16
+	setenv sigusrval 16
 else if ($HOSTOS == "Linux") then
-    setenv sigusrval 10
+	setenv sigusrval 10
 endif
 #
 #
@@ -75,7 +89,7 @@ foreach zte_subtest ($zte_subtest_list)
 	    echo FAIL from $zte_subtest. Please check $zte_subtest.diff
 	else
 	    echo PASS from $zte_subtest.
-       endif
+	endif
 end
 #
 echo '$ZTEXIT tests DONE....'

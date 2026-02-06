@@ -2,7 +2,7 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -318,7 +318,6 @@ decimal(x,y)
 is64Bit()
 	if ($zversion["x86") quit:($zversion["64") 1 quit 0
 	quit:($zversion["aarch64") 1
-	quit:($zversion["AIX") 1
 	quit:($zversion["OSF1") 0
 	quit:($zversion["Solaris") 1
 	quit:($zversion["IA64") 1

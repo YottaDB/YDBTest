@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,16 +37,6 @@ echo "$prior_ver3" > priorver3.txt
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver2
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver3
 
-# If either random version is prior to V60002 disable IPv6
-if ( `expr "$prior_ver2" \<= "V60002"` || `expr "$prior_ver3" \<= "V60002"` ) then
-	setenv test_no_ipv6_ver 1
-	echo "setenv test_no_ipv6_ver $test_no_ipv6_ver" >> settings.csh
-endif
-
-
-# kill/restart of update process will hang for ever if prior version is < V55000 and the replication is cross-endian
-# In order to keep the reference file consistent, the "kill update process" message is printed even if it is not killed for the above reason
-
 # Tweak configuration file to have prior_ver as the version in INST2 and INST3
 set ins_file = $tst_working_dir/msr_instance_config.txt
 cp $ins_file ${ins_file}_bak
@@ -60,13 +50,6 @@ if ($?test_no_ipv6_ver) then
 endif
 $MULTISITE_REPLIC_ENV
 
-# For versions prior to V55000 killing update process of a cross-endian receiver will result in a hang.
-if ((2 == $test_replic_mh_type) && (`expr $prior_ver2 \< "V55000"` )) then
-	set dont_kill_updproc2 = 1
-endif
-if ((2 == $test_replic_mh_type) && (`expr $prior_ver3 \< "V55000"` )) then
-	set dont_kill_updproc3 = 1
-endif
 $gtm_tst/com/dbcreate.csh mumps 1 >&! dbcreate_output.out
 # On some platforms specifying multiple substitution strings in the same command does not work so use two separate sed commands
 sed 's|/'$prior_ver2'/|/##FILTERED##PRIORVER##/|' dbcreate_output.out | sed 's|/'$prior_ver3'/|/##FILTERED##PRIORVER##/|'

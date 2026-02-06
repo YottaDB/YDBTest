@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,8 +15,8 @@
 #################################################################
 # This applies to replication only
 setenv tst_buffsize 1048576
-set unidir="αβγδε.能吞.ＡＢＣＤＥＦＧ.能吞下玻璃而傷"
-set dbbase="ＡＢＣＤＥＦＧ能吞下玻璃而傷"
+set unidir="αβγδε.能吞.ＡＢＣ.能吞下玻璃而"
+set dbbase="ＡＢＣ能吞下玻璃而"
 \mkdir $unidir
 cd $unidir
 setenv gtmgbldir $dbbase.gld

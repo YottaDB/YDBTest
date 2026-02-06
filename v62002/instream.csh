@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,6 @@
 # gtm8245          [nars]       TPFAIL uuuu in MERGE ^GBL1=^GBL2 where GBL2 contains spanning nodes
 # gtm8282          [base]       Verify that the time passed in the interrupt handler counts towards the lock timeout
 # rtnxfertst       [estess]     Test various control transfer methods exercising glue code routines.
-# gtm8277          [shaha]      Ensure that TRIGGER -TRIG and TRIGGER -UPGRADE produce the same hash values
 # gtm7949          [base]       Verify $ZHOROLOG and $ZUT display the correct time
 # gtm6638          [maimoneb]   Test for dirty buffer tapering to epoch
 # zwritesvn        [shaha]      Should be able to zwrite all ISVs
@@ -49,11 +48,35 @@
 echo "v62002 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "gtm8214 gtm8269"
-setenv subtest_list_non_replic "gtm8197 gtm3912 gtm8187 gtm8167 gtm4911 gtm8241 gtm8228 gtm8087 gtm8261 gtm5894 gtm8245 gtm8282"
-setenv subtest_list_non_replic " $subtest_list_non_replic rtnxfertst gtm8277 gtm7949 gtm6638 zwritesvn gtm8317 gtm8290 gtm8240"
-setenv subtest_list_non_replic " $subtest_list_non_replic gtm8332 waitpid_no_timer gtm8370 gtm8371"
-setenv subtest_list_replic     "gtm8183"
+setenv subtest_list_common     ""
+setenv subtest_list_common     "$subtest_list_common gtm8214"
+setenv subtest_list_common     "$subtest_list_common gtm8269"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8197"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm3912"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8187"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8167"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4911"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8241"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8228"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8087"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8261"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm5894"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8245"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8282"
+setenv subtest_list_non_replic "$subtest_list_non_replic rtnxfertst"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm7949"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6638"
+setenv subtest_list_non_replic "$subtest_list_non_replic zwritesvn"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8317"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8290"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8240"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8332"
+setenv subtest_list_non_replic "$subtest_list_non_replic waitpid_no_timer"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8370"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8371"
+setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic gtm8183"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -80,7 +103,7 @@ else if ("xfs" == "$tst_dir_fstype") then
 endif
 # Remove rtnxfertst, gtm8290 and gtm8240 subtests from Linux-32bit and HPUX-IA64 as they involve auto-relink or recursive-relink
 if ((HOST_LINUX_IX86 == "$gtm_test_os_machtype") || (HOST_HP-UX_IA64 == "$gtm_test_os_machtype")) then
-        setenv subtest_exclude_list "$subtest_exclude_list rtnxfertst gtm8290 gtm8240"
+	setenv subtest_exclude_list "$subtest_exclude_list rtnxfertst gtm8290 gtm8240"
 endif
 
 # Filter out white box tests that cannot run in pro
@@ -90,11 +113,7 @@ endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8277 gtm7949"
-else if ($?ydb_environment_init) then
-	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
-	# by the below subtest. Therefore disable it.
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8277"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7949"
 endif
 # If the platform/host does not have GG structured build directory, disable tests that require them
 if ($?gtm_test_noggbuilddir) then
@@ -102,7 +121,7 @@ if ($?gtm_test_noggbuilddir) then
 endif
 
 if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm8240"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8240"
 endif
 
 # Disable certain heavyweight tests on single-cpu systems

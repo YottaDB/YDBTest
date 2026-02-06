@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,9 +20,6 @@ if ("" != "$1") set logbase = "$1_$logbase"
 
 
 set vernow = "$gtm_exe:h:t"
-if (`expr $vernow \< "V51000"`) then
-	setenv gtm_test_instsecondary
-endif
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
 endif

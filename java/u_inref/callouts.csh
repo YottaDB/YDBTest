@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,12 +71,7 @@ echo 'setenv javac_exe "'$javac_exe'"'					>> set_java_env.csh
 echo 'setenv GTMXC_classpath ${tst_working_dir}:$gtmji_dir/gtmji.jar'	>> set_java_env.csh
 
 set fake_enospc = $gtm_test_fake_enospc
-
-if ("AIX" == $HOSTOS) then
-	set lib_preload_var = LDR_PRELOAD64
-else
-	set lib_preload_var = LD_PRELOAD
-endif
+set lib_preload_var = LD_PRELOAD
 
 # And finally do all other tests.
 foreach m_test ( test?.m test??.m )

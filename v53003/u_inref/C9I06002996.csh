@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,15 +14,13 @@
 #								#
 #################################################################
 
+
 # Disable randomtn as otherwise it could set curr_tn to a value that is too high for V4 db format
 setenv gtm_test_disable_randomdbtn
 
 # Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_use_V6_DBs 0  # Disable V6 mode DBs as this test already switches versions for its second dbcreate invocation
-
-$gtm_tst/com/is_icu_new_naming_scheme.csh
-if (0 == $status) $switch_chset M >&! disable_utf8.txt
 
 $gtm_tst/com/dbcreate.csh mumps
 
@@ -102,10 +100,7 @@ echo "# We know that any version < V63014_R136 has a minor db-ver different from
 echo "# So create database using that older version and try to endiancvt it using the current version"
 echo "# Randomly choose a prior version to create the database first."
 set prior_ver = `$gtm_tst/com/random_ver.csh -lt V63014_R136`
-if ("$prior_ver" =~ "*-E-*") then
-	echo "No prior versions available: $prior_ver"
-	exit -1
-endif
+# No need to check if version is available, since instream.csh will prevent this test from running if not
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
 # Since this test uses prior versions before r1.20, they issue error messages with GTM prefix (not YDB prefix).
@@ -114,11 +109,11 @@ setenv ydb_msgprefix "GTM"
 
 source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver_nofilter.txt
-echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
+echo "Randomly chosen prior V6 version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo ""
 echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
-echo "Creating database using prior V5 version"
+echo "Creating database using prior V6 version"
 \rm -f *.o >& rm1.out	# remove .o files created by current version (in case the format is different)
 if (-e mumps.mjl) then
 	mv -f mumps.mjl mumps.mjl_newver # needed to avoid FILEEXISTS message from the older version if .mjl format is different

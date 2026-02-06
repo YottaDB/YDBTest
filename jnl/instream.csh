@@ -1,5 +1,18 @@
 #!/usr/local/bin/tcsh -f
-#
+#################################################################
+#								#
+# Copyright (c) 2002-2016 Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 ###################################
 ### instream.csh for jnl test ###
 ###################################
@@ -7,7 +20,7 @@
 # Talked with Layek, and he suggested to remove subtest jnl_multi_reg since it iw covered by other tests - zhouc - 05/14/2003
 # Encryprion cannot support access method MM, so explicitly running the test with NON_ENCRYPT when acc_meth is MM
 if ("MM" == $acc_meth) then
-        setenv test_encryption NON_ENCRYPT
+	setenv test_encryption NON_ENCRYPT
 endif
 setenv gtm_test_jnl "NON_SETJNL"
 echo "JNL test starts..."
@@ -37,10 +50,8 @@ if ($LFE == "E") then
 			setenv subtest_list "$subtest_list zt_multi"
 		endif
 		setenv subtest_list "$subtest_list jnl_set c9606-000088 recover jnl_logical"
-		if ($HOSTOS != "AIX") then
-			setenv unicode_testlist "redirect_unicode"
-			if ( "TRUE" == $gtm_test_unicode_support ) setenv subtest_list "$subtest_list $unicode_testlist"
-		endif
+		setenv unicode_testlist "redirect_unicode"
+		if ( "TRUE" == $gtm_test_unicode_support ) setenv subtest_list "$subtest_list $unicode_testlist"
 	endif
 endif
 # filter out subtests that cannot pass with MM

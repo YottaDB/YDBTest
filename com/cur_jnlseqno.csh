@@ -17,13 +17,6 @@
 # If no  parameter is passed, "REGION" and "0" are used
 #
 
-$gtm_tst/com/is_v4gde_format.csh
-if ($status == 1) then
-	# it is pre-V5 gde format. use the corresponding script that understand this old gde format.
-	$gtm_tst/com/v4gde_cur_jnlseqno.csh "$1" "$2"
-	exit
-endif
-
 setenv gtm_test_parm_to_gtm $2
 if ("" == "$gtm_test_parm_to_gtm") setenv gtm_test_parm_to_gtm 0
 #

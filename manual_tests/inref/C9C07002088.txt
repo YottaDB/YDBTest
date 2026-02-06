@@ -7,7 +7,7 @@
    a2. mupip create ; database mumps.dat
    b. mupip set -journal=enable,on,before,auto=5000 -file mumps.dat ;in VMS /<- & enclose list in parentheses to start before image journaling
    c0  start debugger for mumps
-   c1  for AIX, Solaris & Tru64 - dbx $gtm_dist/mumps
+   c1  for Solaris & Tru64 - dbx $gtm_dist/mumps
        for Linux, HP-UX - gdb $gtm_dist/mumps
        for VMS - run/debug gtm$dist:??
    d. set break point in main - gdb: break main; dbx: stop in main

@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -77,7 +77,7 @@
 ;    GTMXC_relink		- Path to relink's external calls table (<test dir>/tmp/relink.xc).
 ;    gtmroutines		- References to object and source directories ("<test dir>/obj(. $gtm_tst/$tst/inref) $gtm_dist").
 ;    gtmgbldir			- Path to the global directory (<test dir>/db/mumps.gld).
-;    sigusrval			- Integer value of SIGUSR1 (10 on Linux, 30 on AIX, and 16 on SunOS).
+;    sigusrval			- Integer value of SIGUSR1 (10 on Linux and 16 on SunOS).
 ;    barrage_num_of_rtns	- Number of routines to use in the test (optional).
 ;    barrage_num_of_src_dirs	- Number of source directories to employ in the test (optional).
 ;    barrage_num_of_obj_dirs	- Number of object directories to employ in the test (optional).

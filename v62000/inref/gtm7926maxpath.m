@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -18,9 +21,9 @@
 ; directory name is no longer than the platform NAME_MAX. Both values are
 ; pulled using the platform's getconf utility via test/com_u/getconf.m.
 ;
-; For whatever reason, AIX and HPUX needed an extra byte stripped off.
+; For whatever reason, HPUX needed an extra byte stripped off.
 gtm7926maxpath
-	set maxpath=$$^getconf("PATH_MAX")-49-($zversion["AIX")-($zversion["HP")
+	set maxpath=$$^getconf("PATH_MAX")-49-($zversion["HP")
 	set maxname=$$^getconf("NAME_MAX")
 	set $ETRAP="zwrite $zstatus,plen,maxpath halt"
 	set dirperms=493 ; Octal 755

@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -28,7 +31,7 @@ server
 	else   set err="server_"_$job_".err"  open err  use err  write "TEST-E-timeout, server read timed out",!  zshow "*"  halt
 	set f="answer.out"
 	open f  use f  write line  close f  use $p
-        zshow "D"
+	zshow "D"
 	do
 	. use $P:DETACH=handle
 	. ; Test I/O against socket $P with no sockets - should work like null device
@@ -227,7 +230,7 @@ checkfdscom(s,clijob,optpfx)
 	. . . job @(clijob_":(OUTPUT=""fdclient_"_opts_".out"":ERROR=""fdclient_"_opts_".err"")")
 	. . . set clientjob=$zjob
 	. . . use s
-	. . . write /wait(timeout*2)	; Lookups of "::1" can be slow on AIX, so allow extra time.
+	. . . write /wait(timeout)
 	. . . else  do
 	. . . . use $p
 	. . . . write "TEST-E-timeout, checkfdscom wait timed out, see checkfds_lsof.err",!

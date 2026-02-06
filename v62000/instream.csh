@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -102,7 +102,7 @@ setenv subtest_exclude_list	""
 
 # Filter out white-box tests that cannot run in pro.
 if ("pro" == "$tst_image") then
-        setenv subtest_exclude_list "$subtest_exclude_list gtm7919 gtm7824 gtm8128 gtm6348"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7919 gtm7824 gtm8128 gtm6348"
 endif
 
 # Filter out certain subtests for some servers.
@@ -115,7 +115,7 @@ if (("carmen" == "$hostn") || ("titan" == "$hostn") || ("pfloyd" == "$hostn") ||
 endif
 
 # gtm7897 required IGS ROBINDMOUNT (Linux >= 2.6.26) or IGS SNAPSHOT/SSMOUNT (AIX)
-if (("$gtm_test_os_machtype" !~ HOST_{LINUX_{IX86,X86_64},AIX_RS6000,SUNOS_SPARC}) || ("$hostn" =~ {jackal,charybdis})) then
+if (("$gtm_test_os_machtype" !~ HOST_{LINUX_{IX86,X86_64},SUNOS_SPARC}) || ("$hostn" =~ {jackal,charybdis})) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7897"
 endif
 
@@ -146,7 +146,7 @@ else if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
 endif
 if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7926isgtmdist"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7926isgtmdist"
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,8 +26,6 @@ $gtm_tst/com/dbcreate.csh mumps 1 255 1000 >&! dbcreate.out
 echo "Change the permission for mumps.dat"
 chmod 444 mumps.dat
 
-# For AIX the sizeof(sun_path) is 1024 which matches GTM_PATH_MAX so creation of LOGTOOLONG is
-# not possible on AIX. Just go with the same value everyone else uses and deal with it below.
 set maxvalue = 108
 
 # If the $gtm_tmp is less then the maximum length, make $gtm_tmp value to exceed max value
@@ -57,11 +55,7 @@ here
 
 $gtm_tst/com/check_error_exist.csh gtm_gtmsecshr.log "YDB-E-LOGTOOLONG" >>& test.logx
 if ($status) then
-	if ("aix" == "$gtm_test_osname") then
-	    echo "TEST-I-PASSED.. YDB-E-LOGTOOLONG found in gtm_gtmsecshr.log" # White lie so reference file matches
-	else
-	    echo "TEST-E-FAILED.. YDB-E-LOGTOOLONG not found in gtm_gtmsecshr.log"
-	endif
+	echo "TEST-E-FAILED.. YDB-E-LOGTOOLONG not found in gtm_gtmsecshr.log"
 else
 	echo "TEST-I-PASSED.. YDB-E-LOGTOOLONG found in gtm_gtmsecshr.log"
 endif
@@ -83,9 +77,5 @@ unsetenv gtm_tmp
 chmod 666 mumps.dat
 $MUPIP rundown -region '*'
 $gtm_tst/com/dbcheck.csh
-
-if ("HOST_AIX_RS6000" == "$gtm_test_os_machtype") then
-    $gtm_com/IGS $gtm_dist/gtmsecshr "STOP"  # Make sure secshr with bogus gtm_tmp dies now so doesn't affect other tests
-endif
 
 echo "SUBTEST END"

@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,9 +18,6 @@
 # Returns the source server backlog of the given secondary (if not passed, picks $gtm_test_cur_sec_name)
 
 set vernow = "$gtm_exe:h:t"
-if (`expr $vernow \< "V51000"`) then
-	setenv gtm_test_instsecondary
-endif
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
 endif

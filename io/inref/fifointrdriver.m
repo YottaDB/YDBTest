@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -21,7 +21,6 @@ fifointrdriver
 	. if $ZVersion["CYGWIN" do initplatform("x86cygwin")
 	. else  if $ZVersion["64" do initplatform("x8664")
 	. else  do initplatform("x86")
-	else  if $ZVersion["AIX" do initplatform("aix")
 	else  if $ZVersion["OSF1" do initplatform("osf")
 	else  if $ZVersion["Solaris" do initplatform("solaris")
 	else  if $ZVersion["HP-PA" do initplatform("hppa")
@@ -61,11 +60,6 @@ x8664	;x86_64
 	;reduce #1
 
 x86cygwin	;x86 which is CYGWIN
-	;minsnooze #200
-	;maxsnooze #800
-	;reduce #1
-
-aix	;an AIX
 	;minsnooze #200
 	;maxsnooze #800
 	;reduce #1

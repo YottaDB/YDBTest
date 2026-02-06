@@ -4,7 +4,7 @@
 # Copyright (c) 2004, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,27 +25,26 @@ setenv gtm_test_disable_randomdbtn
 
 setenv subtest_list_common ""
 #
-setenv subtest_list_non_replic "call_zwr_go gde_com_nullsub merge_glob_loc multipledb_binload stdnullcoll checkfunc_alex"
-setenv subtest_list_non_replic "$subtest_list_non_replic jnl_extract mu_bin_xtract_load multipledb_binxtract lclvarquery"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic call_zwr_go"
+setenv subtest_list_non_replic "$subtest_list_non_replic gde_com_nullsub"
+setenv subtest_list_non_replic "$subtest_list_non_replic merge_glob_loc"
+setenv subtest_list_non_replic "$subtest_list_non_replic multipledb_binload"
+setenv subtest_list_non_replic "$subtest_list_non_replic stdnullcoll"
+setenv subtest_list_non_replic "$subtest_list_non_replic checkfunc_alex"
+setenv subtest_list_non_replic "$subtest_list_non_replic jnl_extract"
+setenv subtest_list_non_replic "$subtest_list_non_replic multipledb_binxtract"
+setenv subtest_list_non_replic "$subtest_list_non_replic lclvarquery"
 setenv subtest_list_replic     ""
 
 #####################################################
 if ($?test_replic == 1) then
-       setenv subtest_list "$subtest_list_common $subtest_list_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
-       setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 setenv subtest_exclude_list ""
 #####################################################
-# filter out subtests that cannot pass with encryption, needs a V4 version, or MM
-# mu_bin_xtract_load	needs V4 database
-if (("ENCRYPT" == "$test_encryption" ) || ($?gtm_platform_no_V4) || ("MM" == $acc_meth)) then
-	setenv subtest_exclude_list "$subtest_exclude_list mu_bin_xtract_load"
-endif
 
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list mu_bin_xtract_load"
-endif
 $gtm_tst/com/submit_subtest.csh
 echo "Null Subscripts test done."

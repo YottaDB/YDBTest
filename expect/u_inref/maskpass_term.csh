@@ -18,15 +18,12 @@
 # that it honors most conventional signals (such as SIGTERM, SIGSEGV, and so on) while ignoring
 # most others.
 
-# AIX boxes seem to have issues with spawning processes from Expect scripts.
-if ("AIX" != "$HOSTOS") then
-	(expect -d $gtm_tst/$tst/inref/maskpass_term.exp > expect.out) >& expect.dbg
-	# If nothing has changed then this is a pass
-	diff tty_before.logx tty_after.logx
-	if (0 != $status) then
-		echo "TEST-E-FAIL, Terminal characteristics changed; see diff above."
-		exit 1
-	endif
+(expect -d $gtm_tst/$tst/inref/maskpass_term.exp > expect.out) >& expect.dbg
+# If nothing has changed then this is a pass
+diff tty_before.logx tty_after.logx
+if (0 != $status) then
+	echo "TEST-E-FAIL, Terminal characteristics changed; see diff above."
+	exit 1
 endif
 
 $gtm_dist/mumps -run maskpassterm

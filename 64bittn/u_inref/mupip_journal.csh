@@ -3,7 +3,7 @@
 #								#
 # Copyright 2005, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,7 @@
 #################################################################
 # TEST to check MUPIP JOURNAL
 setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to differences in MUPIP INTEG outputs
+source $gtm_tst/com/gtm_test_setbgaccess.csh  # MM mode is not supported for BEFORE image journaling, which is done in this test
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National Information 		#
@@ -73,11 +73,6 @@ expect {
                 send -- "stty erase '^?'\r"
                 expect -- "GTM7675>"
                 send -- "stty intr '^c'\r"
-	}
-	"AIX" {
-                send -- "setenv TERM vt320\r"
-                expect -- "GTM7675>"
-               	send -- "stty erase '^?'\r"
 	}
         "SunOS" {
                 send -- "setenv TERMINFO /usr/local/lib/terminfo\r"

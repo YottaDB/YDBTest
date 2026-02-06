@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,7 +26,6 @@ set SH = "/bin/sh"
 if ("$HOSTOS" == "SunOS") set SH = "/usr/xpg4/bin/sh"
 
 # On certain platforms, ``openssl'' is found in /usr/local/ssl/bin. So, add that to the path as well.
-# The version of OpenSSL in /usr/local/ssl is no longer used on AIX or Solaris systems
 if ("$HOSTOS" == "Linux") setenv PATH /usr/local/ssl/bin:${PATH}
 
 # On certain platforms, 'dir' configuration variable in OpenSSL's configuration file is set to a directory that is not writable
@@ -487,16 +486,7 @@ EOF
 echo
 echo "TEST CASE 10: Test WRITE /TLS RENEGOTIATION."
 echo
-if ("$HOSTOS" == "AIX") then
-# Need to disable RFC4507bis tickets with AIX OpenSSL 1.0.1e 11 Feb 2013
-# to avoid SSL3_READ_BYTES:ccs received early in cases a, c, and f
-# Apparently if session-id specified there is no problem.
-# OpenSSL CVE-2014-0224 is apparently related.
-$tst_awk ' /noticketssloption/ {$0 = $2 " " $3 " " $4 " "  $5 " " $6} {print}' $gtmcrypt_config.starting >! $gtmcrypt_config
-cp -p $gtmcrypt_config $gtmcrypt_config.noticket
-else
 cp -p $gtmcrypt_config.starting $gtmcrypt_config
-endif
 cp -p $gtmcrypt_config $gtmcrypt_config.case10
 $GTM << EOF
 set ^reneg="success"

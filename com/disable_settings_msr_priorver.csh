@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,12 +47,6 @@ if ( "$*" !~ "*qdbrundown*" ) then
 	setenv gtm_test_qdbrundown 0
 	setenv gtm_test_qdbrundown_parms ""
 	setenv gtm_db_counter_sem_incr 1
-endif
-
-# Disable unicode if ICU >= 4.4 is detected, since support for it started with V54002 and this test require an older version.
-if ( "$*" !~ "*unicode*" ) then
-	$gtm_tst/com/is_icu_new_naming_scheme.csh
-	if (0 == $status) $switch_chset M >&! disable_utf8.txt
 endif
 
 # This subtest might use an older version, with no support for gtm_poollimit. Hence it should not be set.

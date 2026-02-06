@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #################################################################
 #                                                               #
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #   This source code contains the intellectual property         #
@@ -432,14 +432,14 @@ if __name__ == "__main__":
         # MCode: do pauseifneeded^pauseimptp
         # MCode: set subs=$$^ugenstr(I)		; I to subs  has one-to-one mapping
         # MCode: set val=$$^ugenstr(loop)		; loop to val has one-to-one mapping
-        # MCode: set recpad=recsize-($$^dzlenproxy(val)-$length(val))				; padded record size minus UTF-8 bytes
+        # MCode: set recpad=recsize-($zlength(val)-$length(val))				; padded record size minus UTF-8 bytes
         # MCode: set recpad=$select((istp=2)&(recpad>800):800,1:recpad)			; ZTP uses the lower of the orig 800 or recpad
         # MCode: set valMAX=$j(val,recpad)
         # MCode: set valALT=$select(span>1:valMAX,1:val)
         # MCode: ; padded key size minus UTF-8 bytes. ZTP uses no padding
-        # MCode: set keypad=$select(istp=2:1,1:keysize-($$^dzlenproxy(subs)-$length(subs)))
+        # MCode: set keypad=$select(istp=2:1,1:keysize-($zlength(subs)-$length(subs)))
         # MCode: set subsMAX=$j(subs,keypad)
-        # MCode: if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
+        # MCode: if $zlength(subsMAX)>keysize write $zlength(subsMAX),?4 zwr subs,I,loop
         yottadb.cip("helper1")  # Use call-in to implement the block of M code commented above
 
         # Copy variable names to parameter tuple

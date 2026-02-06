@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,7 +67,7 @@ echo 'setenv gtmroutines "'"$gtmroutines"'"'				>> $debug_file
 echo 'setenv gtmcompile "'"$gtmcompile"'"'				>> $debug_file
 
 # Define envvar for SIGUSR1 value on all platforms (for replay mode).
-if (("OSF1" == $HOSTOS) || ("AIX" == $HOSTOS)) then
+if ("OSF1" == $HOSTOS) then
 	setenv sigusrval 30
 else if (("SunOS" == $HOSTOS) || ("HP-UX" == $HOSTOS) || ("OS/390" == $HOSTOS)) then
 	setenv sigusrval 16
