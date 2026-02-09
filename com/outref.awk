@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -337,10 +337,6 @@ BEGIN {
 	option_names[++no_options] = "ydb_test_exclude_diskfollow_timeout"
 	if (1 == ENVIRON["ydb_test_exclude_diskfollow_timeout"])
 		envir[no_options] = "EXCLUDE_DISKFOLLOW_TIMEOUT"
-	#
-	option_names[++no_options] = "ydb_test_exclude_sem_counter"
-	if (1 == ENVIRON["ydb_test_exclude_sem_counter"])
-		envir[no_options] = "EXCLUDE_SEM_COUNTER"
 	#
 	option_names[++no_options] = "ydb_test_exclude_ydb362b"
 	if (1 == ENVIRON["ydb_test_exclude_ydb362b"])

@@ -43,7 +43,6 @@ setenv gtm_test_noggsetup 1   # GG stands for GT.M Groups.
 # But can't test its existence with $? so use env | grep as follows:
 env | grep -q gtm_tstdir_$HOST= || setenv gtm_tstdir_$HOST "$gtm_test $gtm_test  "
 setenv ydb_test_exclude_V5_tests 1   # switch off old tests because they didn't work on Ubuntu 20.04
-setenv ydb_test_exclude_sem_counter 1   # most people are not set up to run the manually_start/sem_counter subtest
 #limit descriptors 4096   # required to run on Debian 10 and Ubuntu 18.10
 if ( $shlvl == 2 ) limit stacksize 32768 kbytes   # Required for clang builds; do only @shlvl 2 or v63000/gtm8394 will fail
 

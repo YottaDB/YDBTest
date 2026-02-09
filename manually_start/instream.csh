@@ -120,11 +120,12 @@ if ($gtm_test_singlecpu) then
 	endif
 endif
 
-if ($?ydb_test_exclude_sem_counter) then
-	if ($ydb_test_exclude_sem_counter) then
-		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
-		setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
-	endif
+set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
+if ($ramsize < 64) then
+	# The system we are currently running this test on has less than 64GiB of memory.
+	# In that case, this subtest (which starts more than 32Ki processes) cannot run as it will run out of memory.
+	# Therefore exclude this subtest.
+	setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 endif
 
 if ("aarch64" == "$gtm_test_machtype") then
