@@ -127,6 +127,17 @@ if ($?ydb_test_exclude_sem_counter) then
 	endif
 endif
 
+if ("aarch64" == "$gtm_test_machtype") then
+	# On AARCH64 systems, we have seen the below subtest trigger the oom-killer (out-of-memory killer)
+	# and cause a failure with a "Killed" message. Even AARCH64 systems that have 16Gb of RAM fail this
+	# subtest whereas x86_64 systems with 16Gb of RAM do not. That said, AARCH64 systems that have 32Gb
+	# of RAM do not fail this subtest. So disable this on AARCH64 if RAM is less than 32Gb.
+	set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
+	if ($ramsize < 32) then
+		setenv subtest_exclude_list "$subtest_exclude_list mcomm_serialize_array-ydb1155"
+	endif
+endif
+
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with address sanitizer
 	# The below subtest spawns 34,000 processes which causes memory issues on the system (64Gb of RAM and
