@@ -1,0 +1,23 @@
+## Copy the C and M programs that need to be tested
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+## Test that signal initialization unblocks signals in a parent process signal mask
+
+---> Running ydb1205 with YottaDB version V70005_R202 <---
+Add SIGUSR1 to the signal mask
+YottaDB version YottaDB r2.02 Linux x86_64
+SIGUSR1 Blocked: 1
+---> Finished ydb1205 with YottaDB version V70005_R202 <---
+
+---> Running ydb1205 with YottaDB version V999_R999 <---
+Add SIGUSR1 to the signal mask
+##TEST_AWKYottaDB version YottaDB .* Linux x86_64
+SIGUSR1 Blocked: 0
+##TEST_AWK---> Finished ydb1205 with YottaDB version .* <---
+
+# Check database
