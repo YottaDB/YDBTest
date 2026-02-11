@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,11 +59,6 @@ $tst_gunzip -d < $gtm_test/big_files/largelibtest/WorldVistAEHRv10FT01_routines.
 # untar does not occur on all platforms.
 chmod ug+w r # ensure directory r is writable so that we can delete it when test is done
 
-echo "# Make copies of the files"
-cp $gtm_tst/$tst/inref/makecopies.m .
-cp $gtm_tst/$tst/inref/loadcode.m .
-$MUMPS -run makecopies $dup $libsize $debug >&! makecopies.out
-
 echo "# Set up the database"
 $GDE <<EOF
 ch -s DEFAULT -bl=4096 -al=50000 -ex=10000 -fi=$PWD/g/mumps.dat
@@ -75,6 +70,11 @@ if ("ENCRYPT" == "$test_encryption" ) then
 	$gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
 endif
 $MUPIP create
+
+echo "# Make copies of the files"
+cp $gtm_tst/$tst/inref/makecopies.m .
+cp $gtm_tst/$tst/inref/loadcode.m .
+$MUMPS -run makecopies $dup $libsize $debug >&! makecopies.out
 
 $tst_gunzip -d < $gtm_test/big_files/largelibtest/WorldVistAEHRv10FT01.zwr.gz > WorldVistAEHRv10FT01.zwr
 $gtm_exe/mupip load WorldVistAEHRv10FT01.zwr -onerror=stop

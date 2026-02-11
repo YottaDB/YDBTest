@@ -2,7 +2,7 @@
 ; This module is derived from FIS GT.M.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,11 +20,8 @@ makecopies	; Create a script to make copies of the source code
 	S debug=+$P($ZCM," ",3)
 	W:debug copies," copies of each routine and new library every ",rtnperlib," routines",!
 	V "NOLVNULLSUBS"
-	F i=1:1 S row=$T(ldopttab+i) Q:""=row  I $ZVER[$P(row,";",2) D  Q
-	.S ldcmd=$P(row,";",3),libext=$P(row,";",4),libinc=$P(row,";",5),libincsuf=$P(row,";",6)
-	E  W !,"No table entry for current GT.M version",! Q
 	; compile all original routines
-	ZSY "cd o;find ../r -name \*.m -exec $gtm_dist/mumps {} \; >&/dev/null;cd ..;du -sk o >osize.txt"
+	ZSY "cd o;find ../r -name \*.m | xargs -P 0 -n 64 -I % $gtm_dist/mumps % >&/dev/null;cd ..;du -sk o >osize.txt"
 	O "osize.txt":READONLY U "osize.txt" R osz C "osize.txt"
 	; Get list of routines and finalize number of original routines per library
 	F rtncnt=0:1 S rno=$P($ZSEARCH("r/*.m"),".",1) Q:""=rno  S rtnarray($P(rno,"/",$L(rno,"/")))=""
@@ -32,7 +29,7 @@ makecopies	; Create a script to make copies of the source code
 	S origperlib=rtncnt/numlibs\1
 	;
 	; Build shell script to make copies of files and list of files for ld
-	S cpfile="makecopies.sh" O cpfile:(newversion:OWNER="RWX") U cpfile W "#!/usr/local/bin/tcsh",!
+	S cpfile="makecopies"_$I(libcp)_".sh" O cpfile:(newversion:OWNER="RWX") U cpfile W "#!/usr/local/bin/tcsh",!
 	S rnc="",rtncnt=0,rno="",ldfile="ldcmds"_$I(libsuf)
 	O ldfile:newversion
 	F rtnsuf=0:1:copies-1 D
@@ -43,30 +40,46 @@ makecopies	; Create a script to make copies of the source code
 	..W "cp -f r/",rnc,".m o/",mrtn,!,"cd o",!,"$gtm_dist/mumps ",mrtn," >&/dev/null",!,"rm -f ",mrtn,!,"cd ..",!
 	..U ldfile W "o/",rnc,"QWQ",rtnsuf,".o",!
 	D cpld(2) ; on the last call to cpld ask for twice as many original routines to ensure we get them all
-	C ldfile:delete
+	C cpfile:delete,ldfile:delete
+	;
+	do getnproc(.nproc)		; nproc contains the # of CPUs in the system
+	if $increment(libsuf,-1)	; fix libsuf to remove last incomplete one
+	set ^jobvar("libsuf")=libsuf
+	set ^jobvar("nproc")=nproc
+	do ^job("childcompile^makecopies",nproc,"""""")
+	do ^job("childlink^makecopies",nproc,"""""")
 	Q
+
 cpld(i,cmd) ; Make copies of files, compile them
 	U ldfile
 	F rtncnt=rtncnt:1:rtncnt+(origperlib*i) S rno=$O(rtnarray(rno)) Q:""=rno  W "o/",rno,".o",!
 	C cpfile,ldfile
 	I debug U $P W "Copying and compiling routines with ",!
-	ZSY "./"_cpfile
-	O cpfile:(newversion:OWNER="RWX") U cpfile W "#!/usr/local/bin/tcsh",!
-	; Build shared libraries
-	; The ld options should be pulled from a table based upon the platform
-	S cmd=ldcmd_" largelib"_libsuf_libext_libinc_ldfile_libincsuf_" >&/dev/null"
-	I debug U $P W "Load command is ",cmd,!
-	ZSY cmd;,"rm -f o/*.o"
+	S cpfile="makecopies"_$I(libcp)_".sh" O cpfile:(newversion:OWNER="RWX") U cpfile W "#!/usr/local/bin/tcsh",!
 	S ldfile="ldcmds"_$I(libsuf)
-	O ldfile:newversion I debug U $P W "New load file is ",ldfile,!
+	O ldfile:newversion
 	Q
-ldopttab;system,load command, options, file input cmd note: may need trailing space or not
-	;AIX;$gt_ld_m_shl_linker -brtl -G -bexpfull -bnoentry -b64 -o;.so; -f ; ;
-	;Linux IA64;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
-	;HP-UX IA64;$gt_ld_m_shl_linker -b -o;.so; -c ; ;
-	;Linux armv6l;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
-	;Linux armv7l;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
-	;Linux aarch64;$gt_ld_m_shl_linker -fPIC -shared -z noexecstack -o;.so; @; ;
-	;Linux x86_64;$gt_ld_m_shl_linker -fPIC -shared -z noexecstack -o;.so; @; ;
-	;Solaris SPARC;$gt_ld_m_shl_linker -G -64 -o;.so; `cat ; ` ;
-	;Linux S390X;$gt_ld_m_shl_linker -fPIC -shared -o;.so; @; ;
+
+getnproc(nproc);
+	new dev
+	set dev="nproc"
+	open dev:(command="nproc":readonly)::"PIPE"
+	use dev
+	read nproc
+	close dev
+	quit
+
+childcompile	;
+	set nproc=^jobvar("nproc")
+	set libsuf=^jobvar("libsuf")
+	for i=jobindex:nproc:libsuf zsystem "./makecopies"_i_".sh"
+	quit
+
+childlink	;
+	set nproc=^jobvar("nproc")
+	set libsuf=^jobvar("libsuf")
+	for i=jobindex:nproc:libsuf do
+	. set cmd="$gt_ld_m_shl_linker -fPIC -shared -z noexecstack -o largelib"_i_".so @ldcmds"_i
+	. zsystem cmd
+	quit
+
