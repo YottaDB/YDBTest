@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -17,6 +17,9 @@ startbg	;
 	set ^stop=0
 	set jmaxwait=0
 	do ^job("updates^ydb1178",1,"""""")
+	; Wait for statsdb to be opened for regions AREG, BREG, and DEFAULT before DSE -DUMP is run by the calling script
+	; See https://gitlab.com/YottaDB/DB/YDBTest/-/issues/893#note_3070059015 for more details.
+	for i=1:1  quit:$data(^c(1))'=0  hang 0.01
 	quit
 
 stopbg	;
