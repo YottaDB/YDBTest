@@ -94,6 +94,11 @@ else if ($gtm_test_libyottadb_asan_enabled) then
 	# there is gigabytes of memory involved in the shared library and ASAN is going to do memory checks on all of that.
 	# It is not considered worth testing this subtest with ASAN given the huge runtime it entails.
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
+else if ("dbg" == "$tst_image") then
+	# The below subtest invokes the compiler hundreds of thousands of times. With Debug builds, the compiler invocation
+	# takes significantly longer (2x or even more compared to a PRO/Release build) causing this already long running
+	# subtest to take many hours to finish on slow systems. Therefore disable this subtest for Debug builds.
+	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
 ## Disable 4g_dbcertify on platforms without a V4 version
