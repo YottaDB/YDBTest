@@ -23,7 +23,28 @@ setenv PKG_CONFIG_PATH $ydb_dist
 # set a GOPATH outside current directory to avoid it being subsequently zipped. This prevents permission
 # errors when zipping test results since GOPATH contains subdirectories with read-only permissions.
 # This particular path makes it common to all subtests run this instance of gtmtest: avoids multiple downloads per gtmtest run.
-setenv GOPATH $tst_dir/$gtm_tst_out/gopath
+if (-e $tst_dir/$gtm_tst_out) then
+	# The above directory exists. That means this is a single host test run. Use that directory for GOPATH
+	setenv GOPATH $tst_dir/$gtm_tst_out/gopath
+else
+	# The above directory does not exist. Possible in case this is a multi host test run where the current directory
+	# is on a remote host ("$tst_dir" only exists on the originating host, not the current/remote host).
+	# In that case, go up the parent levels until we find the file "primary_dir". That is the top level remote
+	# host directory. Use that for GOPATH.
+	# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2480#note_3024710451 for more details.
+	set curdir = $PWD
+	while (1)
+		if (-e primary_dir) then
+			break
+		endif
+		cd ..
+		if ("/" == $PWD) then
+			echo "[SETUPGOENV-E-GOPATH : $curdir does not have primary_dir in parent levels" && exit 1
+		endif
+	end
+	setenv GOPATH $PWD/gopath
+	cd $curdir
+endif
 # Ensure go toolchains are not downloaded by the test as this creates huge artifacts
 # in GOPATH (up to gigabytes) every time imptp.csh is run.
 # Ensure the machine has a Go version at least as recent as required in go.mod and by YDBGo's go.mod files.
