@@ -41,8 +41,8 @@
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -51,8 +51,8 @@
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -61,8 +61,8 @@
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -74,8 +74,8 @@
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -84,8 +84,8 @@
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -94,8 +94,8 @@
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -108,8 +108,8 @@ DSE: pinning failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -118,8 +118,8 @@ DSE: pinning failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -128,8 +128,8 @@ DSE: pinning failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	not found
+# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
+PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -142,8 +142,8 @@ DSE: using huge pages failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found
+# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
+PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -152,8 +152,8 @@ DSE: using huge pages failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found
+# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
+PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -163,8 +163,8 @@ DSE: using huge pages failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found, permission denied
+# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM
+PASS: HUGETLB disabled, shmget returned EPERM
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -179,8 +179,8 @@ DSE: using huge pages failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found
+# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
+PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -189,8 +189,8 @@ DSE: using huge pages failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found
+# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
+PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
@@ -200,8 +200,8 @@ DSE: using huge pages failed
 # create database
 # check for pin behavior
 	pin: PASS
-# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)
-	found, permission denied
+# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM
+PASS: HUGETLB disabled, shmget returned EPERM
 # check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db

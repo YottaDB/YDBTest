@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -134,6 +134,10 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			else
 				sudo cp disable_group_id.txt /proc/sys/vm/hugetlb_shm_group
 			endif
+			# Another process may modify /proc/sys/vm/hugetlb_shm_group after it was set in the preceding block.
+			# This could cause unexpected by erroneous failures depending on the new value set by the competing process.
+			# So, save the modification time of that file for a later check to confirm that it was not subsequently modified.
+			set hugetlb_shm_group_init_mod_time = `stat /proc/sys/vm/hugetlb_shm_group | grep Modify | sed 's/^.*: \([0-9\-]*\) \([0-9:.]*\) -.*$/\1\2/g' | tr -d '\-:.'`
 
 			set pr_setbuf = '"'${setbuf}'"'
 
@@ -217,7 +221,7 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			# 2. If pin is requested and not found
 			# 	a. huge pages are not requested, then we fail
 			# 	b. huge pages are requested and succeed without error, we pass (PIN is suppressed in this case)
-			# 	c. else huge pages are requested and failed, so PIN shoudl show up: FAIL
+			# 	c. else huge pages are requested and failed, so PIN should show up: FAIL
 			# 3. If pin is not requested, and found, we fail
 			if ( ( ($pin == "") || ($pin == 0) ) && !($pin_found) ) then
 				echo "\tpin: PASS"
@@ -241,15 +245,46 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 				echo "\tpin: FAIL"
 			endif
 
-			echo "# check for using huge pages (strace found shmctl...HUGETLB...EPERM?)"
-			if ($huge_found) then
-				if ($huge_eperm_found) then
-					echo "\tfound, permission denied"
+			# Conditionally issue expected output messages, depending on the configuration used for the current test case
+			if ($huge == 1) then
+				if ("$enabled" == "enable") then
+					echo "# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully"
+					set pass_msg = "PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB"
 				else
-					echo "\tfound"
+					echo "# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM"
+					set pass_msg = "PASS: HUGETLB disabled, shmget returned EPERM"
 				endif
 			else
-				echo "\tnot found"
+				echo "# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all"
+				set pass_msg = "PASS: gtm_pinshm=$pr_pinshm, shmget NOT called with SHM_HUGETLB"
+			endif
+			# Get the current modification time /proc/sys/vm/hugetlb_shm_group to determine whether it was changed since this test case modified it above
+			set hugetlb_shm_group_last_mod_time = `stat /proc/sys/vm/hugetlb_shm_group | grep Modify | sed 's/^.*: \([0-9\-]*\) \([0-9:.]*\) -.*$/\1\2/g' | tr -d '\-:.'`
+			if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
+				# /proc/sys/vm/hugetlb_shm_group was modified by another process. So, pass this test case since
+				# it is not possible to confirm the expected behavior for the value of that file set above.
+				ps -ef --forest >&! ${test_id}-ps.out
+				echo "FAIL: /proc/sys/vm/hugetlb_shm_group was unexpectedly modified. See ${test_id}-ps.out for more information."
+			else
+				if ($huge == 1) then
+					if ($huge_found) then
+						if (($huge_eperm_found) && ("$enabled" == "enable")) then
+							echo "FAIL: HUGETLB enabled, but shmget returned EPERM"
+						else if (!($huge_eperm_found) && ("$enabled" == "disable")) then
+							echo "FAIL: HUGETLB disabled, but shm successfully allocated with SHM_HUGETLB"
+						else
+							echo $pass_msg
+						endif
+					else
+						echo "FAIL: gtm_pinshm set, but shmget NOT called with SHM_HUGETLB"
+					endif
+				else
+					if !($huge_found) then
+						echo $pass_msg
+					else
+						echo "FAIL: gtm_pinshm=$pr_pinshm, but shmget called with SHM_HUGETLB"
+					endif
+				endif
 			endif
 
 			echo "# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)"
