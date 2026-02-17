@@ -47,6 +47,7 @@
 # mupip_terminal_prompts-ydb917		[ben]		Test that various mupip commands will no longer say that they accept a file or region when invoked without arguments.
 # unblock_signals_during_init-ydb1205	[david]		Test that signal initialization unblocks signals in a parent process signal mask
 # generated_from_msg-ydb858		[ben]		Test that send_msg_va now includes the <entrypoint>+<offset> format or the symbolic name of the calling function in error msg.
+# zmaxtptime_start-ydb950		[ben]		Test that ztrap does not cause assert failure.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -94,6 +95,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic job_cmdline_dash-ydb933
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_terminal_prompts-ydb917"
 setenv subtest_list_non_replic	"$subtest_list_non_replic unblock_signals_during_init-ydb1205"
 setenv subtest_list_non_replic	"$subtest_list_non_replic generated_from_msg-ydb858"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_start-ydb950"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"

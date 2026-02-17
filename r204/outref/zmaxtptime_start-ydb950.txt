@@ -1,0 +1,11 @@
+---------------------------------------------------------------------
+# The code for this test is from
+# https://gitlab.com/YottaDB/DB/YDB/-/issues/950#description
+# Before GT.M V7.0-001, this used to assert fail
+# Now this tests to ensure that that assert failure
+# that would happen with ztrap is no longer a problem.
+---------------------------------------------------------------------
+
+# Run [mumps -run ydb950]
+# We expect output that says error trap is reached
+Error trap reached
