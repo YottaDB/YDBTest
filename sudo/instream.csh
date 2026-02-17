@@ -131,10 +131,18 @@ if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype)			\
 endif
 
 # Disable Huge page test on ARM machines due to lack of memory
-if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 shmhugetlb_syslog-gtmf221672"
 endif
 
+if ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) then
+	# On AARCH64 systems, the below tests exhibit the behaviors described at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2587#note_3091354379.
+	# So, disable those tests when the system has less than 32GiB to prevent such behaviors.
+	set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
+	if ($ramsize < 32) then
+		setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 shmhugetlb_syslog-gtmf221672"
+	endif
+endif
 # Disable Huge page test on Docker, as it requires changing /proc/sys which is not normally writable
 # Disable erofs-ydb1103 on Docker, as it requires mounting permissions from host
 if ($?ydb_test_inside_docker) then
