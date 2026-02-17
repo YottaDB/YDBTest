@@ -104,6 +104,11 @@ else if ("ubuntu" == $gtm_test_linux_distrib) then
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 		# Disable "configure_rmfile-gtmde201825" subtest since no r1.38 binaries/tarballs for Ubuntu 24.04 on AARCH64
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
+	else if ("25.10" == $gtm_test_linux_version) then
+		# Disable "olderversion" subtest on Ubuntu 25.10 since this test uses ydbinstall which, in YottaDB r1.38, r2.00 and r2.02,
+		# uses `configure` that in turn relies on `ld.gold` which is not available in Ubuntu 25.10 because
+		# `gold` is no longer maintained by the developers.
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
 else if (("debian" == $gtm_test_linux_distrib) && ("13" == $gtm_test_linux_version)) then
 	# Disable "olderversion" subtest on Debian 13 since no YottaDB r1.38, r2.00 and r2.02 ydbinstall
