@@ -62,6 +62,7 @@ while (0 < $cnt)
 	# Process each run separately so this M program can read which signal was used above and use to restrict
 	# what KILLBYSIG messages we suppress (don't want to suppress cores we weren't expecting).
 	$ydb_dist/yottadb -run ydbgo34 < ydbgo34a.outxcur >& ydbgo34a.outxtxt
+	$gtm_tst/com/wait_for_proc_to_die.csh `cat ydbgo34a.pid`
 	$ydb_dist/mupip rundown -reg DEFAULT >& ydbgo34a_mupip_rundown_run${runnum}.log
 	$ydb_dist/mupip integ -reg DEFAULT >& ydbgo34a_mupip_integ_run${runnum}.log
 	# Check our output file against ydbgo34a.txt reference file. If pass, go on without adding anything to

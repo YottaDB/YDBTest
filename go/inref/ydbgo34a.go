@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -177,6 +177,13 @@ func main() {
 
 	defer yottadb.Exit() // Drive yottadb.Exit() when the main unwinds
 	defer errStr.Free()
+
+	// Save process PID so that the calling script can wait for it to die
+	// before continuing with the test
+	f, _ := os.Create("ydbgo34a.pid")
+	defer f.Close()
+	fmt.Fprintf(f, "%d\n", os.Getpid)
+
 	errStr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	// Create channels we use for notification/acknowledgement for our two handlers (expected and unexpected)
 	correctSigNotify := make(chan bool, 2)
