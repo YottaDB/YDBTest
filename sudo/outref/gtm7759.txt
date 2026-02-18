@@ -20,17 +20,17 @@ mumps.dat
 ##TEST_AWK(The ydbtest3 userid has been created|The ydbtest3 userid already exists)
 
 ## Testing user ydbtest3 with test ZGBLDIRACC
-##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue. -- generated from 0x[0-9A-F]*.
+##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue. -- generated from 0x[0-9A-F]*. \(0x[0-9A-F]{16}\+0x[0-9A-F]{16}\)\.
 
 ##TEST_AWK## Testing user .* with test ZGBLDIRACC
 
 ## Testing user ydbtest3 with test DBPRIVERR
-##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat -- generated from 0x[0-9A-F]*.
+##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat -- generated from 0x[0-9A-F]*. \(0x[0-9A-F]{16}\+0x[0-9A-F]{16}\)\.
 
 ##TEST_AWK## Testing user .* with test DBPRIVERR
 
 ## Testing user ydbtest3 with test SETZDIR
-##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-SETZDIR, Cannot change working directory to /blat -- generated from 0x[0-9A-F]*.
+##TEST_AWK.*##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-SETZDIR, Cannot change working directory to /blat -- generated from 0x[0-9A-F]*. \(0x[0-9A-F]{16}\+0x[0-9A-F]{16}\)\.
 
 ##TEST_AWK## Testing user .* with test SETZDIR
 

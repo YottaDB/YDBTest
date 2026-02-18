@@ -27,6 +27,9 @@ set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash i
 # Our AARCH64 runner is slow, so add sudo to the list of heavyweight tests
 if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
 
+# List of tests that require manual intervention so cannot run here.
+set manual_tests = " manual_tests "
+
 echo -n "## Checking for test changes outside of com directory: "
 if (0 == `echo -n $filelist | tr " " "\n" | grep -Ev '^com/|^docker/' | wc -l`) then
 	echo "not found"
@@ -57,6 +60,10 @@ foreach file ($filelist)
 		# Space delimiters ensure we don't accidentally exclude a test due to partial matching; it needs to be a whole word
 		if ( "$heavyweights" =~ "* $test *" ) then
 			echo "Skipping test [$test] on pipeline as it is a heavyweight test"
+			continue
+		endif
+		if ( "$manual_tests" =~ "* $test *" ) then
+			echo "Skipping test [$test] on pipeline as it is a manual test"
 			continue
 		endif
 
@@ -167,6 +174,10 @@ foreach file ($filelist)
 		set test = `echo $file | cut -d / -f 1`
 		if ( "$heavyweights" =~ "* $test *" ) then
 			echo "Skipping test [$test] on pipeline as it is a heavyweight test"
+			continue
+		endif
+		if ( "$manual_tests" =~ "* $test *" ) then
+			echo "Skipping test [$test] on pipeline as it is a manual test"
 			continue
 		endif
 
