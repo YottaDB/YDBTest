@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -88,11 +88,11 @@ else
 endif
 
 # New platforms have no prior versions (or the current version is the only prior version)
-set nonomatch = 1 ; set test_found_priorvers = ($gtm_root/V[456]*) ; unset nonomatch
-if ("$gtm_root/V[456]*" == "$test_found_priorvers" || "$test_found_priorvers" == "$gtm_ver") then
+set nonomatch = 1 ; set test_found_priorvers = ($gtm_root/V[4567]*) ; unset nonomatch
+if ("$gtm_root/V[4567]*" == "$test_found_priorvers" || "$test_found_priorvers" == "$gtm_ver") then
 	setenv gtm_test_nopriorgtmver 1		# New platform with no prior versions
-	# Set gtm_platform_no_compress_ver to 1  for platforms that don't have versions without compression support.
-	# Note : The variable name doesnt quite match its usage.
+	# Set gtm_platform_no_compress_ver to 1 for platforms that don't have versions without compression support.
+	# Note : The variable name doesn't quite match its usage.
 	setenv gtm_platform_no_compress_ver 1
 else
 	setenv gtm_platform_no_compress_ver 0

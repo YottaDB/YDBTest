@@ -335,7 +335,6 @@ endif
 if ($?gtm_test_nopriorgtmver) then
 	echo "-x dbcompatibility"					>>&! $test_list
 	echo "-x 64bittn"						>>&! $test_list
-	echo "-x filter"						>>&! $test_list
 endif
 
 # If the platform/host does not have GG structured build directory, disable tests that require them
