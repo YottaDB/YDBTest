@@ -178,7 +178,8 @@ endif
 # error (when it gets close to 107 bytes). Hence create a subdirectory under $GNUPGHOME (which is already defined to a
 # short path /tmp/gnupgdir/$USER by the test framework) using "$gtm_tst_out" to ensure different/unique subdirectories
 # in case multiple such tests run at the same time (that way they don't interfere with each other).
-setenv GNUPGHOME	"$GNUPGHOME/$gtm_tst_out/.gnupg"
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2595 for more details on why $testname is also needed.
+setenv GNUPGHOME	"$GNUPGHOME/$gtm_tst_out/$testname/.gnupg"
 if (! -e $GNUPGHOME) then
 	mkdir -p $GNUPGHOME
 endif

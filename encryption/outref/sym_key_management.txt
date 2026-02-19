@@ -1,13 +1,47 @@
-Case 1
+###################################################################################################################################
+# Test case 1.	Keyring with whose public key the symmetric key was encrypted is missing before a certain encryption-enabled
+# 		operation relying on that symmetric key is attempted.
+###################################################################################################################################
+# Choose a particular operation to try.
+# Prepare the environment based on the selected operation.
+# Remove the keyring (by fingerprint) with which the symmetric key was encrypted.
+# Either try creating a database, or set a global, or try writing to a file.
 ----------
 Error YDB-E-CRYPTKEYFETCHFAILED seen in test1.out as expected:
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file .*. Error while accessing key file ##TEST_PATH##/mumps_dat_key: No secret key
 ----------
-Case 2
-Case 3
-Case 4
+
+###################################################################################################################################
+# Test case 2.	Keyring with whose public key the symmetric key was encrypted goes missing after a GT.M process is started but
+# 		before a certain encryption-enabled operation relying on that symmetric key is attempted.
+###################################################################################################################################
+# Choose a particular operation to try.
+# Prepare the environment.
+# Prepare a script to remove the keyring (by fingerprint) with which the symmetric key was encrypted.
+# Try setting a global or writing to a file.
+
+###################################################################################################################################
+# Test case 3.	Symmetric cipher key is of arbitrary length.
+###################################################################################################################################
+# Choose a particular operation to try.
+# Prepare the environment based on the selected operation.
+# Produce a symmetric cipher key of arbitrary length within [1;128].
+# Either try creating a database, or set a global, or try writing to a file.
+
+###################################################################################################################################
+# Test case 4.	Symmetric cipher key cannot be resolved due to a circular symlink reference.
+###################################################################################################################################
+# Choose a particular operation to try.
+# Prepare the environment based on the selected operation.
+# Either try creating a database, or set a global, or try writing to a file.
 ----------
 Error YDB-E-CRYPTKEYFETCHFAILED seen in test4.out as expected:
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file .*. In config file ##TEST_PATH##/gtmcrypt-orig.cfg, could not obtain the real path of 'database.keys' entry #1's key. Too many levels of symbolic links
 ----------
-Case 5
+
+###################################################################################################################################
+# Test case 5.	Symmetric cipher key is accessed through a regular symlink.
+###################################################################################################################################
+# Choose a particular operation to try.
+# Prepare the environment based on the selected operation.
+# Either try creating a database, or set a global, or try writing to a file.

@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,12 +22,10 @@
 set iv = `$gtm_dist/mumps -run %XCMD 'write $$^%RANDSTR(16,,"AN")'`
 echo $iv > iv.txt
 
-###################################################################################################################################
-# Test case 1.	Keyring with whose public key the symmetric key was encrypted is missing before a certain encryption-enabled
-# 		operation relying on that symmetric key is attempted.
-###################################################################################################################################
-
-echo "Case 1"
+echo "###################################################################################################################################"
+echo "# Test case 1.	Keyring with whose public key the symmetric key was encrypted is missing before a certain encryption-enabled"
+echo "# 		operation relying on that symmetric key is attempted."
+echo "###################################################################################################################################"
 
 $gtm_tst/com/reset_gpg_agent.csh
 setenv GNUPGHOME_OLD $GNUPGHOME
@@ -48,11 +46,11 @@ files : {
 };
 EOF
 
-# Choose a particular operation to try.
+echo "# Choose a particular operation to try."
 set operation = `$gtm_dist/mumps -run pickOperation1^symkeymanagement`
 echo $operation > operation1.txt
 
-# Prepare the environment based on the selected operation.
+echo "# Prepare the environment based on the selected operation."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde1.out
 	setenv gtm_encrypt_notty "--no-permission-warning"
@@ -68,11 +66,11 @@ endif
 
 setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 
-# Remove the keyring (by fingerprint) with which the symmetric key was encrypted.
+echo "# Remove the keyring (by fingerprint) with which the symmetric key was encrypted."
 set fingerprint = `$gpg --homedir=$GNUPGHOME --list-keys gtm@fnis.com | $head -n 2 | $tail -1`
 $gpg --homedir=$GNUPGHOME --batch --yes --delete-secret-and-public-key "$fingerprint"
 
-# Either try creating a database, or set a global, or try writing to a file.
+echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test1.out
 	$gtm_tst/com/check_error_exist.csh test1.out YDB-F-DBNOCRE >&! dbnocre1.outx
@@ -95,29 +93,28 @@ $gtm_tst/com/check_error_exist.csh test1.out YDB-E-CRYPTKEYFETCHFAILED
 $gtm_tst/com/reset_gpg_agent.csh
 setenv GNUPGHOME $GNUPGHOME_OLD
 mv mumps_dat_key mumps_dat_key_1
+echo
 
-###################################################################################################################################
-# Test case 2.	Keyring with whose public key the symmetric key was encrypted goes missing after a GT.M process is started but
-# 		before a certain encryption-enabled operation relying on that symmetric key is attempted.
-###################################################################################################################################
-
-echo "Case 2"
+echo "###################################################################################################################################"
+echo "# Test case 2.	Keyring with whose public key the symmetric key was encrypted goes missing after a GT.M process is started but"
+echo "# 		before a certain encryption-enabled operation relying on that symmetric key is attempted."
+echo "###################################################################################################################################"
 
 setenv GNUPGHOME_OLD $GNUPGHOME
 setenv GNUPGHOME ${GNUPGHOME_OLD}2
 cp -r $GNUPGHOME_OLD $GNUPGHOME
 
-# Choose a particular operation to try.
+echo "# Choose a particular operation to try."
 set operation = `$gtm_dist/mumps -run pickOperation2^symkeymanagement`
 echo $operation > operation2.txt
 
-# Prepare the environment.
+echo "# Prepare the environment."
 $gtm_tst/com/dbcreate.csh mumps 1 >&! dbcreate2.out
 $gtm_tst/com/reset_gpg_agent.csh
 rm $gtm_dbkeys
 setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 
-# Prepare a script to remove the keyring (by fingerprint) with which the symmetric key was encrypted.
+echo "# Prepare a script to remove the keyring (by fingerprint) with which the symmetric key was encrypted."
 cat > delete-key.csh << EOF
 setenv GNUPGHOME $GNUPGHOME
 set fingerprint = \`$gpg --homedir=$GNUPGHOME --list-keys gtm@fnis.com | $head -n 2 | $tail -1\`
@@ -126,7 +123,7 @@ $gtm_tst/com/reset_gpg_agent.csh
 EOF
 chmod 755 delete-key.csh
 
-# Try setting a global or writing to a file.
+echo "# Try setting a global or writing to a file."
 if ("db" == $operation) then
 	$gtm_dist/mumps -run %XCMD 'set ^a(2)=1 zsystem "source delete-key.csh" set ^a(2)=$horolog' >&! test2.out
 else
@@ -138,18 +135,17 @@ setenv GNUPGHOME $GNUPGHOME_OLD
 mv mumps_dat_key mumps_dat_key_2
 mv mumps.dat mumps.dat.2
 mv mumps.gld mumps.gld.2
+echo
 
-###################################################################################################################################
-# Test case 3.	Symmetric cipher key is of arbitrary length.
-###################################################################################################################################
+echo "###################################################################################################################################"
+echo "# Test case 3.	Symmetric cipher key is of arbitrary length."
+echo "###################################################################################################################################"
 
-echo "Case 3"
-
-# Choose a particular operation to try.
+echo "# Choose a particular operation to try."
 set operation = `$gtm_dist/mumps -run pickOperation3^symkeymanagement`
 echo $operation > operation3.txt
 
-# Prepare the environment based on the selected operation.
+echo "# Prepare the environment based on the selected operation."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde3.out
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
@@ -162,12 +158,12 @@ endif
 
 setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 
-# Produce a symmetric cipher key of arbitrary length within [1;128].
+echo "# Produce a symmetric cipher key of arbitrary length within [1;128]."
 @ sym_key_len = `$gtm_dist/mumps -run rand 128 1 1`
 echo $sym_key_len > sym_key_len3.txt
 $gpg --homedir=$GNUPGHOME --gen-random 0 $sym_key_len | $gpg --homedir=$GNUPGHOME --armor --encrypt --default-recipient gtm@fnis.com --comment "gtm" --output mumps_dat_key
 
-# Either try creating a database, or set a global, or try writing to a file.
+echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test3.out
 else if ("db" == $operation) then
@@ -184,18 +180,17 @@ endif
 mv mumps_dat_key mumps_dat_key_3_2
 mv mumps.dat mumps.dat.3
 mv mumps.gld mumps.gld.3
+echo
 
-###################################################################################################################################
-# Test case 4.	Symmetric cipher key cannot be resolved due to a circular symlink reference.
-###################################################################################################################################
+echo "###################################################################################################################################"
+echo "# Test case 4.	Symmetric cipher key cannot be resolved due to a circular symlink reference."
+echo "###################################################################################################################################"
 
-echo "Case 4"
-
-# Choose a particular operation to try.
+echo "# Choose a particular operation to try."
 set operation = `$gtm_dist/mumps -run pickOperation4^symkeymanagement`
 echo $operation > operation4.txt
 
-# Prepare the environment based on the selected operation.
+echo "# Prepare the environment based on the selected operation."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde4.out
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
@@ -213,7 +208,7 @@ setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 ln -s mumps_dat_key_link mumps_dat_key
 ln -s mumps_dat_key mumps_dat_key_link
 
-# Either try creating a database, or set a global, or try writing to a file.
+echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test4.out
 	$gtm_tst/com/check_error_exist.csh test4.out YDB-F-DBNOCRE >&! dbnocre4.outx
@@ -235,18 +230,17 @@ $gtm_tst/com/check_error_exist.csh test4.out YDB-E-CRYPTKEYFETCHFAILED
 
 rm mumps_dat_key
 rm mumps_dat_key_link
+echo
 
-###################################################################################################################################
-# Test case 5.	Symmetric cipher key is accessed through a regular symlink.
-###################################################################################################################################
+echo "###################################################################################################################################"
+echo "# Test case 5.	Symmetric cipher key is accessed through a regular symlink."
+echo "###################################################################################################################################"
 
-echo "Case 5"
-
-# Choose a particular operation to try.
+echo "# Choose a particular operation to try."
 set operation = `$gtm_dist/mumps -run pickOperation4^symkeymanagement`
 echo $operation > operation5.txt
 
-# Prepare the environment based on the selected operation.
+echo "# Prepare the environment based on the selected operation."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde5.out
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
@@ -263,7 +257,7 @@ mv mumps_dat_key mumps_dat_key_file
 ln -s mumps_dat_key_file mumps_dat_key
 setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 
-# Either try creating a database, or set a global, or try writing to a file.
+echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test5.out
 else if ("db" == $operation) then
