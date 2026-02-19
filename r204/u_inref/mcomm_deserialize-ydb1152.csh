@@ -27,7 +27,10 @@ if ($?gtm_test_libyottadb_asan_enabled) then
 endif
 # Set ydb_readline to prevent byte sequences in expect output below that occur when ydb_readline is unset
 setenv ydb_readline 1
-$gtm_tst/com/dbcreate.csh mumps -key_size=256 -record_size=1048576 -null_subscripts=TRUE >& dbcreate.out
+
+echo "# Create database with key_size of 256, record_size of 15 and null_subscripts TRUE"
+$gtm_tst/com/dbcreate.csh mumps -key_size=256 -record_size=15 -null_subscripts=TRUE >& dbcreate.out
+echo
 
 echo "### Test 0: Test ZYENCODE and ZYDECODE compilation errors "
 echo "## T0a: Compile [ydb1152.m] routine"
@@ -37,24 +40,22 @@ echo
 $ydb_dist/yottadb -r T0b^ydb1152
 echo
 
-# Tests 1-11
-$ydb_dist/yottadb -run ydb1152
+echo "### Test 1: Test canonical numbers encoded as strings in JSON"
+set test_num = T1
+echo "# Run [$test_num^ydb1152] routine"
+echo
+$ydb_dist/yottadb -run ${test_num}^ydb1152
 
-echo "### Test 12: CTRL-C during long-running ZYENCODE does not cause GTMASSERT2 failure on subsequent command"
-set test_num = T12
-(expect -d $gtm_tst/$tst/u_inref/mcomm_deserialize-ydb1152-${test_num}.exp $ydb_dist > ${test_num}expect.out) >& ${test_num}expect.dbg
-if ($status) then
-	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
-else
-	echo "PASS: Long-running ZYENCODE completed without GTMASSERT2 failure"
-endif
-mv ${test_num}expect.out ${test_num}expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
-perl $gtm_tst/com/expectsanitize.pl ${test_num}expect.outx >& ${test_num}expect_sanitized.outx
+echo "# Increase record_size from 15 to 1048576"
+$MUPIP set -record_size=1048576 -region DEFAULT >& dbset.out
 echo
 
-echo "### Test 13: Test that running ZYENCODE and ZYDECODE with 31 1MiB subscripts in a local variable does not cause a heap-buffer-overflow, or ZYDECODEINCOMPL or PARAMINVALID errors"
+# Tests 2-18
+$ydb_dist/yottadb -run ydb1152
+
+echo "### Test 19: Test that running ZYENCODE and ZYDECODE with 31 1MiB subscripts in a local variable does not cause a heap-buffer-overflow, or ZYDECODEINCOMPL or PARAMINVALID errors"
 echo "### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2843975764."
-set tnum = T13
+set tnum = T19
 echo "# Run [${tnum}a^ydb1152] routine to pass 31 1MiB subscripts to ZYENCODE and ZYDECODE"
 $ydb_dist/yottadb -run ${tnum}a^ydb1152 | $ydb_dist/yottadb -direct >& ${tnum}a.out
 echo "# Confirm no PARAMINVALID and ZYDECODEINCOMPL errors were generated"
@@ -70,11 +71,11 @@ echo "# Confirm PARAMINVALID and ZYDECODEINCOMPL errors were generated"
 $gtm_tst/com/check_error_exist.csh ${tnum}b.out PARAMINVALID ZYDECODEINCOMPL
 echo
 
-echo "### Test 14: Test that sending MUPIP INTRPT to ZYENCODE and ZYDECODE does not produce any of the following errors: ZYENCODEINCOMPL, ZYDECODEINCOMPL, TEST-E-FAIL"
+echo "### Test 20: Test that sending MUPIP INTRPT to ZYENCODE and ZYDECODE does not produce any of the following errors: ZYENCODEINCOMPL, ZYDECODEINCOMPL, TEST-E-FAIL"
 echo "### See also:"
 echo "###   1. https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2850600795"
 echo "###   2. https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2851162582"
-set test_num = T14
+set test_num = T20
 echo "# Run [$test_num^ydb1152] routine in the background"
 ($ydb_dist/yottadb -run ${test_num}a^ydb1152 & ; echo $! >! ${test_num}a.pid ) >& ${test_num}a.out
 ($ydb_dist/yottadb -run ${test_num}b^ydb1152 & ; echo $! >! ${test_num}b.pid ) >& ${test_num}b.out
@@ -91,11 +92,11 @@ else
 endif
 echo
 
-echo "### Test 15: No REC2BIG error is issued when values at default database record size"
+echo "### Test 21: No REC2BIG error is issued when values at default database record size"
 echo "### are encoded and decoded when the database is created with default values."
 echo "### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2850600795."
 echo "# Create a new database with default settings"
-set test_num = T15
+set test_num = T21
 set initgld = $gtmgbldir
 setenv gtmgbldir $test_num.gld
 $gtm_dist/mumps -r GDE << GDE_EOF >& ${test_num}gde.out
@@ -114,10 +115,10 @@ else
 endif
 echo
 
-echo "### Test 16: No assert failure indirection is used to encode value at the default database record size"
+echo "### Test 22: No assert failure indirection is used to encode value at the default database record size"
 echo "### For details: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2851331998"
 echo "# Create a new database with default settings"
-set test_num = T16
+set test_num = T22
 set initgld = $gtmgbldir
 setenv gtmgbldir $test_num.gld
 $gtm_dist/mumps -r GDE << GDE_EOF >& ${test_num}gde.out
@@ -137,9 +138,9 @@ endif
 $gtm_tst/com/check_error_exist.csh ${test_num}.out ZYENCODESRCUNDEF
 echo
 
-echo "### Test 17: Test ZYENCODE within TSTART/TCOMMIT with restarts does not produce ZYDECODEINCOMPL or ZYENCODEINCOMPL errors"
+echo "### Test 23: Test ZYENCODE within TSTART/TCOMMIT with restarts does not produce ZYDECODEINCOMPL or ZYENCODEINCOMPL errors"
 echo "### See also: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2853870076"
-set test_num = T17
+set test_num = T23
 setenv gtmgbldir mumps.gld
 echo "# Run [$test_num^ydb1152] routine"
 $ydb_dist/yottadb -run ${test_num}a^ydb1152 >& ${test_num}a.out
@@ -152,8 +153,20 @@ else
 endif
 echo
 
-echo "### Test 18: GVUNDEF for KILL during ZYENCODE loop shows global variable name"
-set test_num = T18
+echo "### Test E1: CTRL-C during long-running ZYENCODE does not cause GTMASSERT2 failure on subsequent command"
+set test_num = TE1
+(expect -d $gtm_tst/$tst/u_inref/mcomm_deserialize-ydb1152-${test_num}.exp $ydb_dist > ${test_num}expect.out) >& ${test_num}expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+else
+	echo "PASS: Long-running ZYENCODE completed without GTMASSERT2 failure"
+endif
+mv ${test_num}expect.out ${test_num}expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
+perl $gtm_tst/com/expectsanitize.pl ${test_num}expect.outx >& ${test_num}expect_sanitized.outx
+echo
+
+echo "### Test E2: GVUNDEF for KILL during ZYENCODE loop shows global variable name"
+set test_num = TE2
 (expect -d $gtm_tst/$tst/u_inref/mcomm_deserialize-ydb1152-${test_num}.exp $ydb_dist > ${test_num}expect.out) >& ${test_num}expect.dbg
 if ($status) then
 	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
@@ -163,22 +176,6 @@ endif
 mv ${test_num}expect.out ${test_num}expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
 perl $gtm_tst/com/expectsanitize.pl ${test_num}expect.outx >& ${test_num}expect_sanitized.outx
 echo
-
-echo "### Test 19: ZYDECODE works with triggers (see test cases at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973)"
-set test_num = T19
-echo "# Run [$test_num^ydb1152] routine"
-$ydb_dist/yottadb -run ${test_num}^ydb1152
-echo
-
-echo "### Test 20: ZYDECODE and ZYENCODE work with JSON arrays with more than 31 elements without issue"
-set test_num = T20
-echo "# Run [$test_num^ydb1152] routine"
-$ydb_dist/yottadb -run ${test_num}^ydb1152
-
-echo "### Test 21: ZYENCODE encodes into JSON arrays when all the conditions are met, otherwise it encodes into JSON objects"
-set test_num = T21
-echo "# Run [$test_num^ydb1152] routine"
-$ydb_dist/yottadb -run ${test_num}^ydb1152
 
 which jq >& /dev/null
 if ($status == 1) then
