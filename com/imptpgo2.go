@@ -584,7 +584,7 @@ func child(jobNo int) {
 	log.Printf("keysize=%d\n", keySize)
 	log.Printf("recsize=%d\n", recordSize)
 	log.Printf("trigger=%d\n", trigger)
-	log.Printf("PID: %d (0x%x)\n", os.Getpid(), os.Getpid())
+	log.Printf("PID: %d\nIn hex: %x\n", os.Getpid(), os.Getpid())
 
 	// Tell parent we've started
 	// This could be done atomically with simply started.Incr() but we want to test the
