@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ setenv gtm_test_disable_randomdbtn		# Or else DSE DUMP would show different tran
 
 # Replace uninitialized 4th byte of record header with 0 to avoid false test failures
 set backslash_quote
-alias dsedump	'$DSE dump -block=2 |& sed \'s/13  0  0 .. 78/13  0  0  0 78/;s/.  .  .  .  x/.  .  .  .  x/\''
+alias dsedump	'$DSE dump -block=2 |& sed \'s/13  0  0 .. 78/13  0  0  0 78/;s/|  \.  \.  \.  .  x/|  .  .  .  .  x/\''
 unset backslash_quote
 
 echo "# Create database file"
