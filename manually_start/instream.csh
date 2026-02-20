@@ -133,12 +133,18 @@ if ($ramsize < 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 endif
 
-if ("aarch64" == "$gtm_test_machtype") then
+if ("x86_64" == "$gtm_test_machtype") then
+	# On x86_64 systems, we have seen the below subtest trigger the oom-killer (out-of-memory killer)
+	# and cause a failure with a "Killed" message. x86_64 systems that have 16Gb of RAM do not fail
+	# this subtest. So disable this on x86_64 if RAM is less than 16Gb.
+	if ($ramsize < 16) then
+		setenv subtest_exclude_list "$subtest_exclude_list mcomm_serialize_array-ydb1155"
+	endif
+else if ("aarch64" == "$gtm_test_machtype") then
 	# On AARCH64 systems, we have seen the below subtest trigger the oom-killer (out-of-memory killer)
 	# and cause a failure with a "Killed" message. Even AARCH64 systems that have 16Gb of RAM fail this
 	# subtest whereas x86_64 systems with 16Gb of RAM do not. That said, AARCH64 systems that have 32Gb
 	# of RAM do not fail this subtest. So disable this on AARCH64 if RAM is less than 32Gb.
-	set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
 	if ($ramsize < 32) then
 		setenv subtest_exclude_list "$subtest_exclude_list mcomm_serialize_array-ydb1155"
 	endif
