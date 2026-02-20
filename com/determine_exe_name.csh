@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,7 +15,7 @@
 
 ps -p $1 | tail -n 1 >! $2	# BYPASSOK ps/tail : used by tools scripts
 set pname = ""
-foreach exe_name ( mumps mupip dse gtcm_gnp_server gtcm_pkdisp gtcm_play gtcm_server gtcm_shmclean gtmsecshr libyottadb.so libgtmshr.so lke)
+foreach exe_name ( mumps yottadb mupip dse gtcm_gnp_server gtcm_pkdisp gtcm_play gtcm_server gtcm_shmclean gtmsecshr libyottadb.so libgtmshr.so lke)
 	grep $exe_name $2 >& /dev/null # BYPASSOK grep : used by tool scripts
 	if (! $status) then
 		set pname = "$gtm_exe/$exe_name"

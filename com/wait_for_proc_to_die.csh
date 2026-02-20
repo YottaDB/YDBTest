@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,7 +84,7 @@ while ($iters <= $sleepiters)
 			$gtm_tst/com/get_dbx_c_stack_trace.csh $pid $pname >>&! $logfile
 			$gtm_tst/com/check_PC_INVAL_err.csh $pid $logfile
 		else
-			echo "TEST-I-UNDETERMINED_EXE, Could not determine the executable for $pid, pname determined was: $pname, ps output was:" >>& $logfile #BYPASSOK
+			echo "TEST-E-UNDETERMINED_EXE, Could not determine the executable for $pid, pname determined was: $pname, ps output was:" >>& $logfile #BYPASSOK
 			cat $info_file >>& $logfile
 			echo "Waiting time elapsed: $iters" >>& $logfile
 		endif

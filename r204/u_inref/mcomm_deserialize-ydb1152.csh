@@ -80,8 +80,8 @@ echo "# Run [$test_num^ydb1152] routine in the background"
 ($ydb_dist/yottadb -run ${test_num}b^ydb1152 & ; echo $! >! ${test_num}b.pid ) >& ${test_num}b.out
 set mpida = `cat ${test_num}a.pid`
 set mpidb = `cat ${test_num}b.pid`
-$gtm_tst/com/wait_for_proc_to_die.csh $mpida
-$gtm_tst/com/wait_for_proc_to_die.csh $mpidb
+$gtm_tst/com/wait_for_proc_to_die.csh $mpida 300
+$gtm_tst/com/wait_for_proc_to_die.csh $mpidb 300
 echo "# Confirm no ZYENCODEINCOMPL, ZYDECODEINCOMPL, or TEST-E-FAIL errors were generated"
 grep -E "ZYENCODEINCOMPL|ZYDECODEINCOMPL|FAIL" ${test_num}a.out
 if (1 == $status) then

@@ -777,8 +777,8 @@ T13b ;
 	quit
 
 T14a ;
-	write "# Start test routine",!
-	write "# Choose random subscript and value lengths:",!
+	write "# ("_$zhorolog_") Start test routine",!
+	write "# ("_$zhorolog_") Choose random subscript and value lengths:",!
 	set maxsubslen=32,maxvallen=256
 	set subslen=$random(maxsubslen)+1
 	set vallen=$random(maxvallen)+1
@@ -792,28 +792,28 @@ T14a ;
 	kill ^x,^y,^z
 	set maxi=100000
 	set ^T14=$job
-	write "# Set "_maxi_" nodes to the random value",!
+	write "# ("_$zhorolog_") Set "_maxi_" nodes to the random value",!
 	for i=1:1:maxi set ^x(subs,i)=val
 
-	write "# Run ZYENCODE to encode the tree",!
+	write "# ("_$zhorolog_") Run ZYENCODE to encode the tree",!
 	set:break=0 ^ready=1
 	zyencode ^y=^x
-	write "# Run ZYDECODE to decode the newly encoded tree",!
+	write "# ("_$zhorolog_") Run ZYDECODE to decode the newly encoded tree",!
 	set:break=1 ^ready=1
 	zydecode ^z=^y
 
-	write "# ZKILL each node in the decoded tree",!
+	write "# ("_$zhorolog_") ZKILL each node in the decoded tree",!
 	set:break=2 ^ready=1
 	for i=1:1:maxi zkill:^z(subs,i)=val ^z(subs,i)
-	write "# Confirm all decoded nodes killed",!
+	write "# ("_$zhorolog_") Confirm all decoded nodes killed",!
 	if $data(^z) write "TEST-E-FAIL",!  zshow "s"  zwrite ^z  halt
 
 	quit
 
 T14b ;
-	write "# Wait for test routine to signal ready for termination",!
+	write "# ("_$zhorolog_") Wait for test routine to signal ready for termination",!
 	for i=1:1  quit:$get(^ready,0)  hang 0.001
-	write "# Issue MUPIP INTRPT to test routine",!
+	write "# ("_$zhorolog_") Issue MUPIP INTRPT to test routine",!
 	zsystem "$ydb_dist/mupip intrpt "_^T14
 
 	quit
