@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -27,6 +27,7 @@ typedef struct
 } ISV_name_value_pair;
 
 static ISV_name_value_pair ISVs_and_values[ISVPAIRS] = {
+	/* $ECODE gets reset at the start of any ydb_ci[p] call, so it will not display this value at that call. */
 	{"$ECODE", ",Z151027730,", sizeof("$ECODE") - 1, sizeof(",Z151027730,") - 1},
 	{"$ETRAP", "set $ecode=\"\"", sizeof("$ETRAP") - 1, sizeof("set $ecode=\"\"") - 1},
 	{"$ZMAXTPTIME", "55", sizeof("$ZMAXTPTIME") - 1, sizeof("55") - 1},
