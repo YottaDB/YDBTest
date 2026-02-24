@@ -53,7 +53,7 @@ setenv ydb_gbldir $tstpath/mumps.gld
 
 # For v1 test, set ydb_ci to the calltab for the Go routines, and ensure the ydb_routines
 #  path includes the folder housing the helper routines used by some go tests
-setenv ydb_ci "YDBGo/calltab.ci"
+setenv ydb_ci "$PWD/YDBGo/calltab.ci"
 if ($tst == "timing") then
 	# We run the timing tests in this version.
 	# So we do not set the YDB_GO_SKIP_TIMED_TESTS env var to "yes" like we do for the non-timing test case.
