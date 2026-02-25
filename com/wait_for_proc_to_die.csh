@@ -79,12 +79,20 @@ while ($iters <= $sleepiters)
 		echo "TEST-I-DBXINFO, let's do some dbx analysis" >>& $logfile
 		date >>& $logfile
 		ps -p $pid >>& $logfile #BYPASSOK
-		set pname = `$gtm_tst/com/determine_exe_name.csh $pid $info_file`
-		if ("" != "$pname") then
+		# Lookup the process name for the given PID.
+		ps -p $pid | tail -n 1 >! $info_file
+		set pname = `awk '{print $4}' $info_file`
+		# Check whether the process is a YottaDB or GT.M executable. If so, a stack trace is needed.
+		find -L $gtm_dist -maxdepth 1 -type f -executable -name $pname | grep -q .
+		if (! $status) then
+			# A YottaDB or GT.M executable is still running. In that case, get a C stack trace
+			# to see why it is stuck.
 			$gtm_tst/com/get_dbx_c_stack_trace.csh $pid $pname >>&! $logfile
 			$gtm_tst/com/check_PC_INVAL_err.csh $pid $logfile
 		else
-			echo "TEST-E-UNDETERMINED_EXE, Could not determine the executable for $pid, pname determined was: $pname, ps output was:" >>& $logfile #BYPASSOK
+			# The process is either already dead, or otherwise not a YottaDB or GT.M executable.
+			# In either case, no need for a stack trace, just log the relevant details and move on.
+			echo "TEST-I-UNDETERMINED_EXE, Could not determine the executable for $pid, pname determined was: $pname, ps output was:" >>& $logfile #BYPASSOK
 			cat $info_file >>& $logfile
 			echo "Waiting time elapsed: $iters" >>& $logfile
 		endif
