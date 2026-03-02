@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,9 @@
 # the test framework to flag that test as a failure (TEST-E-LSOF message).
 # Also see discussion around https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1224#note_1134814943 for more details.
 
-set filepat="%YDBPROCSTUCKEXEC*.out"
+# YDB/sr_unix/ydbprocstuckexec.mpt outputs the string "pid of DSE or its parent is" in files of the form %YDBPROCSTUCKEXEC*dse.out
+# So, use that pattern to lookup any files that contain DSE PIDs in the below loop.
+set filepat="%YDBPROCSTUCKEXEC*dse.out"
 set nonomatch
 set filereal=$filepat
 unset nonomatch
@@ -30,9 +32,12 @@ set kill_log = kill_$$.out
 # Files of the form %YDBPROCSTUCKEXEC*.out do exist
 foreach file ($filereal)
 	echo "# Processing file $file" >>& $kill_log
+	# Wait for full 'pid of DSE' line to appear, i.e. by waiting for the line following it to appear
+	# This is to prevent a rare timing-related failure, as described at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/905#note_3125115839
+	$gtm_tst/com/wait_for_log.csh -log $file -message "Database file headers for regions from global directory" >>& $kill_log
 	set pid = `grep "pid of DSE or its parent is " $file | awk '{print $NF}'`
 	if ("" == "$pid") then
-		echo "# Skipping file $file as DSE pid line not found" >>& $kill_log
+		echo "TEST-E-FAIL : pid expected but not found in $file" >>& $kill_log
 		continue
 	endif
 	# $pid points to the shell process id that in turn spawned off the dse process.
