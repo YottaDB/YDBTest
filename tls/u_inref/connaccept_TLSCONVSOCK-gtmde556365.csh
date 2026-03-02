@@ -60,5 +60,6 @@ $gtm_tst/com/check_error_exist.csh $SEC_SIDE/RCVR*.log "YDB-I-TEXT"
 
 $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 # TEST-E-MULTISITE is expected in this case, since we expect a TLSCONVSOCK error above, which
-# will cause the receiver server to shutdown, thus interfering with MULTISITE replication.
+# will cause the receiver server to shutdown, thus interfering with dbcheck.csh's attempt to also
+# shut down the receiver server replication.
 $gtm_tst/com/knownerror.csh dbcheck.out "TEST-E-MULTISITE"
