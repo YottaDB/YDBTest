@@ -1,0 +1,15 @@
+# Starting ydb918.m to test the new intrinsic special variable $ZYJOBPARENT
+# First write out $ZYJOBPARENT to test its value when JOBPARENT does not exist
+# By convention we expect the result 0
+0
+# Now output this parent's PID in a file
+# Next start a jobed process to check its value
+# We expect an empty error file.
+# And we expect the PID in the output file.
+# to be the same as the PID that the .csh captured.
+The PIDs were equal
+##TEST_AWK# program pid is [0-9]* and mumpsPID is [0-9]*
+# This test also runs $ZYJOBPARENT in a job created by another job
+# so now we inspect the results of the Nested JOB $ZYJOBPARENT.
+The PIDs were equal
+##TEST_AWK# program pid is [0-9]* and mumpsPID is [0-9]*
