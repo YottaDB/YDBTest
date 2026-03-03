@@ -69,14 +69,22 @@ if ($?test_replic) then
 endif
 
 # Unit test YDBGo v1
-echo "# Running : go test on YDBGo"
-go test -C YDBGo $goflags >& $tstpath/go_test.log || \
+echo "# Running : go test on YDBGo v1"
+go test -C YDBGo $goflags >& $tstpath/go_test.log
+if (0 != $status) then
 	echo "TEST-E-FAILED : [go test -C YDBGo $goflags] failed for v1:" && cat $tstpath/go_test.log
+else
+	echo "PASS"
+endif
 
 # Unit test YDBGo v2
 echo "# Running : go test on YDBGo v2"
-go test -C YDBGo/v2 $goflags -testdb=$ydb_gbldir >& $tstpath/go_test2.log || \
+go test -C YDBGo/v2 $goflags -testdb=$ydb_gbldir >& $tstpath/go_test2.log
+if (0 != $status) then
 	echo "TEST-E-FAILED : [go test -C YDBGo/v2 $goflags] failed for v2:" && cat $tstpath/go_test2.log
+else
+	echo "PASS"
+endif
 
 if ($?test_replic) then
 	unsetenv ydb_repl_instance
