@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,7 +32,7 @@ s ^configasalongvariablename78901("delim")=\$C(13)
 s ^configasalongvariablename78901("portno")=$portno
 h
 EOF
-($gtm_tst/$tst/u_inref/client2.csh >&! client2.out &) >&! client_background.log
+($gtm_tst/$tst/u_inref/client2.csh >&! client2.out & ; echo $! >&! client2.pid) >&! client_background.log
 $gtm_tst/$tst/u_inref/server2.csh >&! server2.out
 # give time for the client2 to read last message
 $GTM << EOF
@@ -46,6 +49,7 @@ $GTM << EOF
 d clientdone^waitforread(120)
 h
 EOF
+$gtm_tst/com/wait_for_proc_to_die.csh `cat client2.pid`
 $gtm_tst/com/dbcheck.csh -extract mumps
 cat client2.out
 cat server2.out
