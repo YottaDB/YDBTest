@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National Information 		#
@@ -382,10 +382,12 @@ expect {
 #expect "12345678901234567<ctrl-A>a<ctrl-E>b<4 lefts><del>b<ctrl-B><ins>c<ret>"
 expect -exact "***"
 send -- "12345678901234567\001a\005b\033OD\033OD\033OD\033ODb\002\033\[2~c\r"
+expect "PASS"
 
 # Repeat test with HOME/END instead of CTRL-A/CTRL-E
 expect -exact "***"
 send -- "12345678901234567\033OHa\033OFb\033OD\033OD\033OD\033ODb\002\033\[2~c\r"
+expect "PASS"
 
 # Testing for CTRAP/TERMINATOR
 expect "Input testing<ret> : "
