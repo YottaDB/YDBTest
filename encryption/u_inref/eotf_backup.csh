@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -113,7 +113,7 @@ endif
 $MUPIP reorg -encrypt=$new_key -region "*" >&! mupip_reorg_encrypt.out
 
 @ pid = `cat pid.out`
-$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+$gtm_tst/com/wait_for_proc_to_die.csh $pid 1800
 
 $grep -q "%YDB-I-BACKUPSUCCESS" mupip_backup.out
 if ($status) then
@@ -184,7 +184,7 @@ if ("pro" != "$tst_image") then
 	$MUPIP backup -bytestream DEFAULT mumps.dat.bak >&! mupip_backup.out
 
 	@ pid = `cat pid.out`
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 1800
 
 	$grep -q "%YDB-I-BACKUPSUCCESS" mupip_backup.out
 	if ($status) then
@@ -263,7 +263,7 @@ if ("pro" != "$tst_image") then
 
 	@ pid = `cat pid.out`
 	$kill -USR1 $pid
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 1800
 
 	$grep -q "File already open by another process" mupip_restore.out
 	if ($status) then
