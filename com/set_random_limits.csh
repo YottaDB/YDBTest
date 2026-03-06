@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,6 +18,11 @@
 source $gtm_tst/com/set_limits.csh
 
 set good_limits = 0
+
+if ($?gtm_test_replay) then
+	# Don't set new random limits if the test is being replayed, as they will be already have been sourced from the settings.csh of the previous test run
+	exit 0
+endif
 
 while (! $good_limits)
 	# Set the random number of regions in the range [1; 5]
@@ -64,4 +72,11 @@ while (! $good_limits)
 	endif
 
 	set good_limits = 1
+end
+
+# Store random limit settings in settings.csh for use in test replays
+foreach limit (RAND_REG_COUNT MIN_RAND_KEY_SIZE KEY_RANGE RAND_KEY_SIZE MIN_RAND_RECORD_SIZE RECORD_RANGE RAND_RECORD_SIZE MIN_RAND_BLOCK_SIZE BLOCK_RANGE RAND_BLOCK_SIZE MAX_RECORD_SPAN RAND_GLOBAL_BUFFER_COUNT)
+	echo "# $limit is set by set_random_limits.csh" >>! settings.csh
+	eval set temp = \$$limit
+	echo "setenv $limit $temp" >>! settings.csh
 end
