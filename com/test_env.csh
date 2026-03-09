@@ -37,7 +37,6 @@ setenv gtm_tst $gtm_test/$tst_src   # source of test scripts to test with
 source $gtm_test_com_individual/set_icu_version.csh || exit 1
 
 # The following are apparently needed by the test system, according to YDBDevOps:devtools/ydb_cshrc.csh
-setenv gtm_test_do_eotf 0   # set whether to do eotf (encryption on the fly). gtmtest doesn't always set it
 setenv gtm_test_noggsetup 1   # GG stands for GT.M Groups.
 # Next variable is preset by YDB servers in /etc/csh.cshrc ( which calls $gtm_test/tstdirs.csh).
 # But can't test its existence with $? so use env | grep as follows:
