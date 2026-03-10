@@ -1,0 +1,59 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test simpler conversion of a BC replicating instance to an SI replicating instance
+# For source of test case, see: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1140#note_3125328789
+# -------------------------------------------------------------------------------------------------------------
+
+# Create database with journaling enabled
+
+# Start primary and secondary servers and make some updates on source server
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# On primary, run a mumps process to continually perform updates until the test completes
+# On secondary, wait up to 300 seconds for the 10th update to the primary database to complete before continuing the test
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mumps -run ydb1140b^ydb1140 >&! ydb1140b.out'==
+
+# On secondary, stop receiver and passive source server.
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -receiv -shut -time=0 >>&! rcvr_shut.out'==
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -source -shut -time=0 >>&! rcvr_shut.out'==
+
+# On primary, take a backup of the replication instance file.
+==Executing MULTISITE_REPLIC 'RUN INST1 ##SOURCE_PATH##/mupip backup -replinstance=src_backup.repl >>&! mupip_backup.out'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 cp src_backup.repl __RCV_DIR__/src_backup.repl'==
+
+# On secondary, determine the current Journal Sequence Number, then change the Journal Sequence Number of the
+# backup replication instance file (copied over from INSTA) to match the determined BC replica Journal Sequence Number.
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -edit -show mumps.repl >&! rcvr_show.out'==
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -edit -change -offset=0x0090 -size=0x0008 -value=0x[0-9A-F]* src_backup.repl'==
+##TEST_AWKOffset 144 \[0x00000090\] : Old Value = [0-9* \[0x[0-9A-F]*\] : New Value = [0-9* \[0x[0-9A-F]*\] : Size = 8 \[0x[0-9A-F]*\]
+
+# On secondary, create a new supplementary replication instance file.
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replicate -instance_create -supplementary -name=INSTANCE2'==
+##FILTERED##%YDB-I-FILERENAME, File ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl is renamed to ##FILTERED##_REMOTE_TEST_PATH_INSTANCE_/mumps.repl_##TIMESTAMP##
+
+# On secondary, switch the journal files and cut the back links as one can no longer rollback the database to its pre-supplementary (i.e. pre-SI replication) state.
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip set -replication=on -reg "*" $tst_jnl_str -noprevjnlfile'==
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance2/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with [NO]*BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for database file ##REMOTE_TEST_PATH##/instance2/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+
+# On secondary, start the passive source server but with -updok to indicate updates are now allowed in this environment.
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -source -start -passive -log=rcvr_source_restart.log -instsecondary=INSTANCE1 -updok'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE1]
+
+# On secondary, start the receiver server with -updateresync and -initialize to indicate this is a supplementary receiver and is communicating with its BC source for the first time.
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN RCV=INST2 ##SOURCE_PATH##/mupip replic -receiver -start -listen=__RCV_PORTNO__ -log=rcvr_receiver_restart.log -updateresync=src_backup.repl -initialize.*'==
+
+# On primary, run [set ^y=1]
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_dist/mumps -run %XCMD "set ^y=1"'==
+# On secondary, run [zwrite ^y] and wait up to 300 seconds for the previous update to propagate from the primary. Expect [^y=1].
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_dist/mumps -run ydb1140c^ydb1140'==
+^y=1
+# On primary, confirm that the instance is NOT a supplementary instance
+==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -editinstance -show mumps.repl |& grep "Supplementary Instance"'==
+HDR Supplementary Instance                           FALSE
+# On secondary, confirm that the instance IS a supplementary instance
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -editinstance -show mumps.repl |& grep "Supplementary Instance"'==
+HDR Supplementary Instance                            TRUE

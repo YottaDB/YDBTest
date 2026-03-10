@@ -51,6 +51,7 @@
 # zyjobparent-ydb918			[ben]		Test the new intrinsic special variable $ZYJOBPARENT.
 # aarch64_run8Kvarnames-ydb1203		[jon]		Test that M programs on AARCH64 with more than 8Ki distinct local variable names run.
 # zroutines_wildcard-ydb974		[ben]		Test that $ZROUTINES allows wild-cards in filenames.
+# simpleconv_BC2SIrepl-ydb1140		[jon]		Test simpler conversion of a BC replicating instance to an SI replicating instance
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -105,6 +106,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_wildcard-ydb9
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
+setenv subtest_list_replic	"$subtest_list_replic simpleconv_BC2SIrepl-ydb1140"
 # setenv subtest_list_replic	"$subtest_list_replic mupipbackup_brokenfile-ydb1202"
 
 if ($?test_replic == 1) then
