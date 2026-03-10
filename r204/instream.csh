@@ -49,6 +49,7 @@
 # generated_from_msg-ydb858		[ben]		Test that send_msg_va now includes the <entrypoint>+<offset> format or the symbolic name of the calling function in error msg.
 # zmaxtptime_start-ydb950		[ben]		Test that ztrap does not cause assert failure.
 # zyjobparent-ydb918			[ben]		Test the new intrinsic special variable $ZYJOBPARENT.
+# aarch64_run8Kvarnames-ydb1203		[jon]		Test that M programs on AARCH64 with more than 8Ki distinct local variable names run.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -98,6 +99,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic unblock_signals_during_
 setenv subtest_list_non_replic	"$subtest_list_non_replic generated_from_msg-ydb858"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_start-ydb950"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyjobparent-ydb918"
+setenv subtest_list_non_replic	"$subtest_list_non_replic aarch64_run8Kvarnames-ydb1203"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"

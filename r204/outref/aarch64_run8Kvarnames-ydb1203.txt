@@ -1,0 +1,24 @@
+# -------------------------------------------------------------------------------------------------------------
+# Test of M programs on AARCH64 with more than 8Ki distinct local variable names run
+# -------------------------------------------------------------------------------------------------------------
+
+## Test 1: No LVUNDEF when setting 8193 distinct local variable names
+# Run [ydb1203.m] with an argument of 8192 to generate a test routine that sets over 8Ki distinct variable names.
+# Expect the LVN 'x8193' to equal the empty string, and no LVUNDEF error to be issued.
+# Previously, this would issue an LVUNDEF error and prevent the 'x8193' LVN from being set.
+# See the following discussion for source program:https://gitlab.com/YottaDB/DB/YDB/-/work_items/1203#test-case
+x8193=""
+
+## Test 2: No SIG-11 executing a NEW command after setting 8193 distinct local variable names
+# Run [ydb1203b.m] with an argument of 8192 to generate a test routine that sets over 8Ki distinct variable names, then runs a NEW command.
+# Expect the LVN 'x8193' to equal the empty string, and no SIG-11 to occur.
+# Previously, this would cause a SIG-11 and prevent the 'x8193' LVN from being set.
+# See the following discussion for source program: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1203#test-case
+x8193=""
+
+## Test 3: No SIG-4 (illegal opcode) when setting 16385 distinct local variable names
+# Run [ydb1203.m] with an argument of 16384 to generate a test routine that sets over 16Ki distinct variable names.
+# Expect the LVN 'x16385' to equal the empty string, and no SIG-4 caused by an illegal opcode to occur.
+# Previously, this would cause a SIG-4 due to an illegal opcode and prevent the 'x16385' LVN from being set.
+# See the following discussion for source program: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1203#note_3117472158
+x16385=""
