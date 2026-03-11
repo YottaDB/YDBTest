@@ -15,36 +15,57 @@ set timeout 60
 
 set ydb_dist [lrange $argv 0 0]
 
-puts "\n# Spawn the first YDB process (1)"
+puts "\n# Spawn the first YDB process (1)\n"
 spawn $ydb_dist/yottadb -dir
 set ydb_pid1 [exp_pid]
 set ydb_id1 $spawn_id
-puts "\n# Spawn the second YDB process (2)"
+puts "\n# Spawn the second YDB process (2)\n"
 spawn $ydb_dist/yottadb -dir
 set ydb_pid2 [exp_pid]
 set ydb_id2 $spawn_id
 
-expect -i ydb_id1 -exact "YDB>"
-puts "\n# (1) Repeatedly KILL and SET a GVN (^y) in a loop\n"
-send -i ydb_id1 "f j=1:1:2  kill ^y f i=1:1:1000 s ^y(i)=i\r"
-expect -i ydb_id1 -exact "YDB>"
-puts "\n# (2) Run ZYENCODE on the GVN (^y) in an infinite loop in a separate terminal\n"
-send -i ydb_id2 "f i=1:1 zyencode ^x=^y\r"
-puts "\n# (1) Run the KILL and SET loop on GVN (^y) again, while ZYENCODE loop is running in the other terminal\n"
-send -i ydb_id1 "f j=1:1:2  kill ^y f i=1:1:1000 s ^y(i)=i\r"
-expect -i ydb_id1 -exact "YDB>"
-puts "\n# (2) Expect ZYENCODE to terminate with GVUNDEF that specifies ^y as the undefined GVN\n"
-expect -i ydb_id2 -exact "YDB-E-GVUNDEF, Global variable undefined: ^y"
-expect -i ydb_id2 -exact "YDB>"
-send -i ydb_id1 "h\r"
+expect_before {
+    -i [list $ydb_id1 $ydb_id2]
+
+    timeout {
+        puts stderr "\nFAIL: Timeout waiting for expected output"
+        send -i $ydb_id1 "\003"
+        send -i $ydb_id2 "\003"
+        send -i $ydb_id1 "h\r"
+        send -i $ydb_id2 "h\r"
+        expect_before {}
+        wait -i $ydb_id1
+        wait -i $ydb_id2
+        exit 1
+    }
+
+    eof {
+        puts stderr "\nFAIL: Unexpected EOF"
+        exit 1
+    }
+}
+expect -i $ydb_id1 -exact "YDB>"
+puts "\n# (1) Repeatedly KILL and SET a GVN (^y(0)) in a loop\n"
+send -i $ydb_id1 "f j=1:1:10 kill ^y(0) f i=1:1:100 s ^y(0,i)=i\r"
+expect -i $ydb_id1 -exact "YDB>"
+puts "\n# (2) Run ZYENCODE on the GVN (^y(0)) in an infinite loop in a separate terminal\n"
+expect -i $ydb_id2 -exact "YDB>"
+send -i $ydb_id2 "f i=1:1 w:i=1 \$job,! zyencode ^x=^y\r"
+expect -i $ydb_id2 -regexp {\d+\r\n}
+puts "\n# (1) Run the KILL and SET loop on GVN (^y(0)) again, while ZYENCODE loop is running in the other terminal\n"
+send -i $ydb_id1 "f  kill ^y(0) f i=1:1:100 s ^y(0,i)=i\r"
+puts "\n# (2) Expect ZYENCODE to terminate with GVUNDEF that specifies ^y(0,<n>) as the undefined GVN\n"
+expect -i $ydb_id2 -regexp {YDB-E-GVUNDEF, Global variable undefined: \^y\(0,\d+\)}
+expect -i $ydb_id2 -exact "YDB>"
+send -i $ydb_id1 "\003"
+expect -i $ydb_id1 -exact "YDB>"
+send -i $ydb_id1 "h\r"
+send -i $ydb_id2 "h\r"
+
+expect_before {}
 puts "\n# Wait for first terminal to exit\n"
-expect -i ydb_id1 eof {
-	wait -i $ydb_id1
-}
+wait -i $ydb_id1
 puts "\n# Wait for second terminal to exit\n"
-expect -i ydb_id2 eof {
-	wait -i $ydb_id2
-}
+wait -i $ydb_id2
 
-exit
-
+exit 0

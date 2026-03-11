@@ -827,6 +827,7 @@ T13 ;
 	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
 	set x="test"
 	zyencode src=x
+	set ZT=$ztrigger("ITEM","-*")
 	set ZT=$ztrigger("ITEM","+^dst -commands=S -xecute=""do T13a^ydb1152""")
 	zydecode ^dst=src
 
@@ -851,6 +852,7 @@ T14 ;
 	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
 	set X(0)="test"
 	zyencode SRC=X
+	set ZT=$ztrigger("ITEM","-*")
 	set ZT=$ztrigger("ITEM","+^DST(*) -commands=S -xecute=""do T14a^ydb1152""")
 	zydecode ^DST=SRC
 

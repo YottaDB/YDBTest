@@ -38,7 +38,7 @@
 # rundown_file_not_found-ydb1154	[ben]		Test that mupip rundown runs successfully even if the file pointed to by gtm_repl_instance/ydb_repl_instance does not exist.
 # fallintoflst-ydb1142			[ben]		Test that that FALLINTOFLST compile time warning occurs and that compiler finishes compilation without issue.
 # socketspinloop-ydb1195		[jon]		Test that WRITE /WAIT on socket device with multiple listening sockets return even with a timeout
-# mcomm_deserialize-ydb1152		[jon]		Test M commands to serialize/deserialize local or global variable subtree
+# mcomm_deserialize-ydb1152		[jon,david]	Test M commands to serialize/deserialize local or global variable subtree
 # duplicatenew_warning-ydb1111		[ben]		Test that mumps compiler correctly gives a DUPLICATENEW warning when attempting to new a variable twice on the same line.
 # nakedref_varsubs-ydb1177		[jon]		Test naked reference optimization if GVN subscripts are unsubscripted local variables'
 # mupipbackup_brokenfile-ydb1202	[jon]		Test MUPIP BACKUP -ONLINE does not produce broken backup file
