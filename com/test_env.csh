@@ -74,7 +74,8 @@ alias difftest   'set _subtest="\!*:q"; if ( "$_subtest" == "" ) set _subtest="$
 alias debug      'source $gtm_test_com_individual/cshdebug.csh -k \!*'
 # Remove test results older than 1 day (-mtime +1), but keep at least the most recent 1 tests (head -1)
 # Don't define the following as a multi-line alias. It messes up postcmd like used in cshdebug.csh
-alias cleantests 'set _latest_test=`find $gtm_test/ -maxdepth 1 -name "tst_*" -type d -exec ls -dt1 "{}" + | head -1`; find $gtm_test/ -maxdepth 1 -path "$_latest_test" -prune -o -name "tst_*" -type d -mtime +1 -exec rm -rf "{}" + || echo "error running 'cleantest' alias"; unset _latest_test'
+# chmod below is to make sure files' directories have remove permissions since Go leaves some non-removable
+alias cleantests 'set _latest_test=`find $tst_dir/ -maxdepth 1 -name "tst_*" -type d -exec ls -dt1 "{}" + | head -1`; chmod --quiet -R +rwx $tst_dir/; find $tst_dir/ -maxdepth 1 -user $USER -path "$_latest_test" -prune -o -name "tst_*" -type d -mtime +1 -exec rm -rf "{}" + || echo "error running 'cleantest' alias"; unset _latest_test'
 
 # command-line completion for test specification via the -t switch
 complete gtmtest 'c|*|`$gtm_test_com_individual/tstmatch.csh`|'

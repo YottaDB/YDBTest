@@ -89,8 +89,11 @@ source $gtm_test_com_individual/test_env.csh
 # Other Convenience settings
 
 set cdpath = ( $work_dir )   # for convenient access to your repositories
+
+# Run cleantests alias to clean up all but the most recent day's test results.
+# But only do so, in this template example, if $HOST is your machine and it's the first login below the root bash login.
 if ( "$HOST" == "berwyn" && $shlvl == 2) then
-  cleantests   # example auto-run on your machine: clean all but most recent day's test results the first time tcsh runs
+  cleantests
 endif
 
 # Show git branch in prompt
