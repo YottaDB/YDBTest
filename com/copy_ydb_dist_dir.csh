@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,7 +12,7 @@
 #################################################################
 ################################################################################################################
 # Since the test framework cannot write files to the $ydb_dist script, this function creates a pseudo $ydb_dist
-# directory under the caller specified directory ($1) that contains all relevent files
+# directory under the caller specified directory ($1) that contains all relevant files
 ################################################################################################################
 
 mkdir $1

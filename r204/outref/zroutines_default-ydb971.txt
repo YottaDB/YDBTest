@@ -1,0 +1,79 @@
+# Test the default value of $ZROUTINES.
+# First we must copy ydb_dist so we can destroy files from it without causing problems
+First doing UTF-8 mode tests
+
+
+# UTF-8 mode: $ydb_dist/plugin/o/utf8 exists, $ydb_dist/utf8/libyottadbutil.so exists
+# Expected: $ydb_dist/plugin/o/utf8/*.so $ydb_dist/utf8/libyottadbutil.so
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/plugin/o/utf8/_ydbposix.so ##TEST_PATH##/ydb_temp_dist/utf8/libyottadbutil.so
+
+YDB>
+# UTF-8 mode with empty ydb_routines: same expectation
+# Expected: $ydb_dist/plugin/o/utf8/*.so $ydb_dist/utf8/libyottadbutil.so
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/plugin/o/utf8/_ydbposix.so ##TEST_PATH##/ydb_temp_dist/utf8/libyottadbutil.so
+
+YDB>
+# UTF-8 mode: $ydb_dist/plugin/o/utf8 exists, $ydb_dist/utf8/libyottadbutil.so does NOT exist
+# Expected: $ydb_dist/plugin/o/utf8/*.so $ydb_dist/utf8
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/plugin/o/utf8/_ydbposix.so ##TEST_PATH##/ydb_temp_dist/utf8/(##TEST_PATH##/ydb_temp_dist/utf8/)
+
+YDB>
+# UTF-8 mode: $ydb_dist/plugin/o/utf8 does NOT exist, $ydb_dist/utf8/libyottadbutil.so exists
+# Expected: $ydb_dist/utf8/libyottadbutil.so
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/utf8/libyottadbutil.so
+
+YDB>
+# UTF-8 mode: $ydb_dist/plugin/o/utf8 does NOT exist, $ydb_dist/utf8/libyottadbutil.so does NOT exist
+# Expected: $ydb_dist/utf8
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/utf8/(##TEST_PATH##/ydb_temp_dist/utf8/)
+
+YDB>
+# UTF-8 mode: testing the error where $ydb_dist/utf8 does NOT exist
+# Expect a UTF8NOTINSTALLED error
+
+YDB>
+%YDB-E-UTF8NOTINSTALLED, $ydb_dist does not have utf8 folder installed. Please use M mode or re-install YottaDB with UTF-8 support
+
+YDB>
+
+Now doing M mode tests
+
+
+# M mode: $ydb_dist/plugin/o exists, $ydb_dist/libyottadbutil.so exists
+# Expected: $ydb_dist/plugin/o/*.so $ydb_dist/libyottadbutil.so
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/plugin/o/_ydbposix.so ##TEST_PATH##/ydb_temp_dist/libyottadbutil.so
+
+YDB>
+# M mode: $ydb_dist/plugin/o exists, $ydb_dist/libyottadbutil.so does NOT exist
+# Expected: $ydb_dist/plugin/o/*.so $ydb_dist
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/plugin/o/_ydbposix.so ##TEST_PATH##/ydb_temp_dist(##TEST_PATH##/ydb_temp_dist)
+
+YDB>
+# M mode: $ydb_dist/plugin/o does NOT exist, $ydb_dist/libyottadbutil.so exists
+# Expected: $ydb_dist/libyottadbutil.so
+
+YDB>
+##TEST_PATH##/ydb_temp_dist/libyottadbutil.so
+
+YDB>
+# M mode: $ydb_dist/plugin/o does NOT exist, $ydb_dist/libyottadbutil.so does NOT exist
+# Expected: $ydb_dist
+
+YDB>
+##TEST_PATH##/ydb_temp_dist(##TEST_PATH##/ydb_temp_dist)
+
+YDB>

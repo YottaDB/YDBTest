@@ -52,6 +52,7 @@
 # aarch64_run8Kvarnames-ydb1203		[jon]		Test that M programs on AARCH64 with more than 8Ki distinct local variable names run.
 # zroutines_wildcard-ydb974		[ben]		Test that $ZROUTINES allows wild-cards in filenames.
 # simpleconv_BC2SIrepl-ydb1140		[jon]		Test simpler conversion of a BC replicating instance to an SI replicating instance
+# zroutines_default-ydb971		[ben]		Test new default $ZROUTINES includes plugin .so files
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -103,6 +104,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_start-ydb950
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyjobparent-ydb918"
 setenv subtest_list_non_replic	"$subtest_list_non_replic aarch64_run8Kvarnames-ydb1203"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_wildcard-ydb974"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_default-ydb971"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"

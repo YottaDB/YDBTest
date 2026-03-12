@@ -5,10 +5,10 @@ Test that ydb_dist is expanded in zroutines if ydb_routines and gtmroutines are 
  -> $zroutines output follows
 YDB>
 ##SUSPEND_OUTPUT UNICODE_MODE
-##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
+##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
 ##ALLOW_OUTPUT NONUNICODE_MODE
 YDB>
 ------------------------------------------------------------------------------------------------------
