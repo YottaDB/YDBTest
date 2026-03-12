@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,8 +15,6 @@
 #################################################################
 #
 # Rollback should make sure there is no hole in seqno after the rollback
-# For this test buffer size is 1 MB and always keep log files
-setenv tst_buffsize 1048576
 setenv gtm_test_spanreg 0	# The test assumes that updates go to each of the 9 regions sequentially in order
 				# Rest of the test's verification process depends on that assumption
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
@@ -24,8 +22,8 @@ source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
-setenv test_sleep_sec 60
-setenv test_sleep_sec_short 15
+setenv test_sleep_sec 15
+setenv test_sleep_sec_short 5
 #
 echo "GTM Process starts in background..."
 $gtm_tst/$tst/u_inref/seqno_fill.csh >>&! seqno_fill.out
