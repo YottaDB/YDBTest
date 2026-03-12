@@ -15,6 +15,10 @@
 # It can be sourced by your ~/.cshrc after section "User-specific locations"
 # If you need local-only changes to this file, add them as overrides in your .cshrc after sourcing this file
 
+# In case yottadb was compiled with ASAN, make it ignore leaks when running yottadb
+# because YDB is already known to have leaks and it will be addressed separately.
+setenv LSAN_OPTIONS "suppressions=$gtm_test_com_individual/yottadb.supp:print_suppressions=0"
+
 if ! ( -e /usr/local/bin/tcsh ) echo "Warning: to run gtmtest you must do: sudo ln -s /usr/bin/tcsh /usr/local/bin/tcsh"
 
 if ! ( $?gtm_test_com_individual ) setenv gtm_test_com_individual $work_dir/YDBTest/com   # user's version of gtmtest scripts

@@ -1,0 +1,16 @@
+###########################################################
+#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
+# All rights reserved.
+#
+#	This source code contains the intellectual property
+#	of its copyright holder(s), and is made available
+#	under a license.  If you do not know the terms of
+#	the license, please stop and do not read further.
+#
+###########################################################
+
+# In case yottadb was compiled with ASAN, make it ignore leaks when running yottadb
+# because YDB is already known to have leaks and it will be addressed separately.
+# This file must be referenced by environment variable LSAN_OPTIONS="suppressions=<file>:print_suppressions=0"
+leak:libyottadb.so
