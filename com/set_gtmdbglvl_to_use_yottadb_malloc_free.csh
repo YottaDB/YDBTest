@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,7 +13,7 @@
 
 # This script is the inverse of "$gtm_tst/com/set_gtmdbglvl_to_use_system_malloc_free.csh"
 
-# Set env var that will ensure we use system malloc/free (and not the YottaDB malloc/free).
+# Set env var that will ensure we use the YottaDB malloc/free (not system malloc/free).
 setenv gtmdbglvl 0x0
 
 # Note that if the caller had set gtmdbglvl to a non-zero value, this script does not currently

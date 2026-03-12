@@ -3,6 +3,7 @@ module gitlab.com/YottaDB/DB/YDBTest/com
 go 1.24.0
 
 require (
+	golang.org/x/text v0.27.0
 	lang.yottadb.com/go/yottadb v1.2.9
 	lang.yottadb.com/go/yottadb/v2 v2.0.4
 )
