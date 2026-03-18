@@ -29,6 +29,16 @@ An abnormal termination may damage the database files during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 
 Region DEFAULT : MUPIP REORG -UPGRADE of ##TEST_PATH##/T1.dat started (198 of 763)
+# [mupip reorg -upgrade] found index block that requires block split
+# Invoking [mupip reorg -select=abcdefgh -min_level=1 -index_fill_factor=76 -reg DEFAULT]
+Blocks processed    : 13 
+Blocks coalesced    : 0 
+Blocks split        : 0 
+Blocks swapped      : 0 
+Blocks freed        : 0 
+Blocks reused       : 0 
+Blocks extended     : 0 
+# Resuming [mupip reorg -upgrade]
 Region DEFAULT : Index block upgrade complete
 Region DEFAULT : Upgraded 22 index blocks for 1 global variable trees, splitting 11 blocks, adding 1 directory tree level
 Region DEFAULT : Identified 207 associated data blocks
