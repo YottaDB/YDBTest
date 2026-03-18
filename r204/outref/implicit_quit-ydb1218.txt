@@ -1,0 +1,31 @@
+# Test to ensure that implicit quits work and will exit the label.
+# Previously, a bug meant that implicit quits would cause a FALLINTOFLST error if used.
+# more discussion here https://gitlab.com/YottaDB/DB/YDB/-/work_items/1218#note_3174127739
+# First the test should compile with a warning that an implied quit was added.
+# This will also include a second such warning for TEST2.
+# Then the test should run, writing out 'in do', without causing a FALLINTOFLST error as
+# the added quit should return from the test before a FALLINTOFLST can happen.
+	SUM(x,y)
+	    ^-----
+		At column 5, line 16, source module ##IN_TEST_PATH##/inref/ydb1218.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
+	SUM2(x,y)
+	     ^-----
+		At column 6, line 22, source module ##IN_TEST_PATH##/inref/ydb1218.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
+in do
+# Now starting test2 as a comparison
+# This test has a set in the dotted line
+# as thus the implicit quit still worked.
+# If the implicit quit still works, we expect no output.
+# Next starting ydb1218Quit.m to test the quit at the end of a DO block
+# will no longer prevent the added QUIT from being mentioned at compile time.
+# We expect a compiler warning about an implicit QUIT being added.
+	CONTINUE(x)
+	         ^-----
+		At column 10, line 19, source module ##IN_TEST_PATH##/inref/ydb1218Quit.m
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+%YDB-I-TEXT, Adding implicit QUIT above
+Started ydb1218Quit.m
