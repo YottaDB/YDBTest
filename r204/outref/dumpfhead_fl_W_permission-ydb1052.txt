@@ -1,0 +1,60 @@
+# Test that mupip dumpfhead -flush produces the correct error when db file does not have write permission.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+# Test with two regions where AREG (a.dat) does not have OS write permissions
+# trying dumpfhead -flush on region AREG (no write permission)
+# We expect a DBRDONLY error
+%YDB-W-BUFFLUFAILED, Error flushing buffers from MUPIP DUMPFHEAD -FLUSH while checking for write permission. for database file ##TEST_PATH##/a.dat
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+Fileheader dump of region AREG
+Dumping fileheader of ##TEST_PATH##/a.dat
+# trying dumpfhead -flush on both regions, DEFAULT (writable) first then AREG (no write permission)
+# We expect a DBRDONLY error for AREG
+Fileheader dump of region DEFAULT
+Dumping fileheader of ##TEST_PATH##/mumps.dat
+%YDB-W-BUFFLUFAILED, Error flushing buffers from MUPIP DUMPFHEAD -FLUSH while checking for write permission. for database file ##TEST_PATH##/a.dat
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+Fileheader dump of region AREG
+Dumping fileheader of ##TEST_PATH##/a.dat
+# trying dumpfhead -flush on both regions, AREG first then DEFAULT
+# We expect a DBRDONLY error for AREG
+%YDB-W-BUFFLUFAILED, Error flushing buffers from MUPIP DUMPFHEAD -FLUSH while checking for write permission. for database file ##TEST_PATH##/a.dat
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+Fileheader dump of region AREG
+Dumping fileheader of ##TEST_PATH##/a.dat
+Fileheader dump of region DEFAULT
+Dumping fileheader of ##TEST_PATH##/mumps.dat
+# restore AREG permissions
+
+##SUSPEND_OUTPUT ENCRYPT
+# trying with read_only database
+# First set to read_only
+# This will include a few other settings
+# necessary to set a database to read_only
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+Database file ##TEST_PATH##/mumps.dat now has MM access method
+Database file ##TEST_PATH##/mumps.dat now has asyncio disabled
+Database file ##TEST_PATH##/mumps.dat is now read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+# Then try dumpfhead -flush
+# We expect a DBRDONLY error
+%YDB-W-BUFFLUFAILED, Error flushing buffers from MUPIP DUMPFHEAD -FLUSH while checking for write permission. for database file ##TEST_PATH##/mumps.dat
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+Fileheader dump of region DEFAULT
+Dumping fileheader of ##TEST_PATH##/mumps.dat
+# undo read_only
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+##ALLOW_OUTPUT ENCRYPT
+##SUSPEND_OUTPUT NON_ENCRYPT
+# This is an encrypted database so skip the read_only test
+# as encrypted databases cannot be read_only.
+##ALLOW_OUTPUT NON_ENCRYPT
+# Running dbcheck.csh.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

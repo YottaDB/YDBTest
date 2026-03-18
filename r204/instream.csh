@@ -54,6 +54,7 @@
 # simpleconv_BC2SIrepl-ydb1140		[jon]		Test simpler conversion of a BC replicating instance to an SI replicating instance
 # zroutines_default-ydb971		[ben]		Test new default $ZROUTINES includes plugin .so files
 # implicit_quit-ydb1218			[ben]		Test implicit quit before a FALLINTOFLST
+# dumpfhead_fl_W_permission-ydb1052	[ben]		Test mupip dumpfhead -flush without write permission and with read_only setting.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -107,6 +108,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic aarch64_run8Kvarnames-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_wildcard-ydb974"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_default-ydb971"
 setenv subtest_list_non_replic	"$subtest_list_non_replic implicit_quit-ydb1218"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dumpfhead_fl_W_permission-ydb1052"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
