@@ -56,6 +56,7 @@
 # implicit_quit-ydb1218			[ben]		Test implicit quit before a FALLINTOFLST
 # dumpfhead_fl_W_permission-ydb1052	[ben]		Test mupip dumpfhead -flush without write permission and with read_only setting.
 # blks_to_upgrade_0-YDB1002		[ben]		Test setting BLKS_TO_UPGRADE=0 sets FULLY_UPGRADED=TRUE.
+# mupipreorg_slowdown			[jon]		Test MUPIP REORG -UPGRADE runtime does not increase more than ~2x as number of database nodes increases by 2x
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -111,6 +112,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_default-ydb97
 setenv subtest_list_non_replic	"$subtest_list_non_replic implicit_quit-ydb1218"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dumpfhead_fl_W_permission-ydb1052"
 setenv subtest_list_non_replic	"$subtest_list_non_replic blks_to_upgrade_0-YDB1002"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupipreorg_slowdown"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
@@ -128,6 +130,14 @@ if ("$gtm_test_dynamic_literals" == "DYNAMIC_LITERALS") then
 	# Disable this test if dynamic literals are enabled, since the optimization under test will not be performed,
 	# causing spurious test failures.
 	setenv subtest_exclude_list "$subtest_exclude_list nakedref_varsubs-ydb1177"
+endif
+
+# Only run the below perf-related test if "perf" executable exists and is the YottaDB
+# build is not a DBG or ASAN build (both are slow).
+set perf_missing = `which perf >/dev/null; echo $status`
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
+if ($perf_missing || $gtm_test_libyottadb_asan_enabled || ("pro" != "$tst_image")) then
+	setenv subtest_exclude_list "$subtest_exclude_list mupipreorg_slowdown"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS

@@ -1,0 +1,45 @@
+#--------------------------------------------------------------------------------------------------------------
+# Test MUPIP REORG -UPGRADE runtime does not increase more than 50x as number of database nodes increases by 2x
+#
+# For original issue, see:            https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/803#note_2903069340
+# For source of below test case, see: https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/803#note_3151504040
+# See also:                           https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/803#note_3151620273
+#--------------------------------------------------------------------------------------------------------------
+
+# Choose a random V6 prior version
+
+## T10000: Test node count of 10000
+# Switch to prior version ##FILTERED##PRIORVER##
+# Create a database with -block_size=512
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:'10000' set ^gntp(0,$j(i,220))=$j(i,700)']
+##TEST_AWK# Switch to back to version .*
+# Run [$gtm_dist/mupip upgrade -reg DEFAULT < yes.txt]
+# Run [perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt]
+
+## T20000: Test node count of 20000
+# Switch to prior version ##FILTERED##PRIORVER##
+# Create a database with -block_size=512
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:'20000' set ^gntp(0,$j(i,220))=$j(i,700)']
+##TEST_AWK# Switch to back to version .*
+# Run [$gtm_dist/mupip upgrade -reg DEFAULT < yes.txt]
+# Run [perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt]
+
+## T40000: Test node count of 40000
+# Switch to prior version ##FILTERED##PRIORVER##
+# Create a database with -block_size=512
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:'40000' set ^gntp(0,$j(i,220))=$j(i,700)']
+##TEST_AWK# Switch to back to version .*
+# Run [$gtm_dist/mupip upgrade -reg DEFAULT < yes.txt]
+# Run [perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt]
+
+## T80000: Test node count of 80000
+# Switch to prior version ##FILTERED##PRIORVER##
+# Create a database with -block_size=512
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:'80000' set ^gntp(0,$j(i,220))=$j(i,700)']
+##TEST_AWK# Switch to back to version .*
+# Run [$gtm_dist/mupip upgrade -reg DEFAULT < yes.txt]
+# Run [perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt]
+
+# Confirm that the number of instructions does not increase more than 50x on average as the number of nodes processed doubles
+# YottaDB commits prior to a25c628b (i.e. commit 8d898f25 and earlier) show runtime increases ranging from 73x to 220x or more.
+PASS, MUPIP REORG -UPGRADE instructions increased less than 50x on average as the number of nodes processed doubled
