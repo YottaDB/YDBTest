@@ -22,8 +22,7 @@ touch result.txt
 
 # List of heavyweight tests we won't run on the pipeline
 # Leading and trailing spaces are necessary and relied upon by the =~ operator
-# TODO: REMOVE encryption TEST FROM LIST BEFORE MERGING
-set heavyweights = " encryption multisrv_crash unicode_socket rollback_B socket jnl_crash ideminter_rolrec rollback_A recov suppl_inst_B io resil_4 tp gtcm_gnp triggers resil v44003 burst_load manually_start "
+set heavyweights = " multisrv_crash unicode_socket rollback_B socket jnl_crash ideminter_rolrec rollback_A recov suppl_inst_B io resil_4 tp gtcm_gnp triggers resil v44003 burst_load manually_start "
 
 # Our AARCH64 runner is slow, so add sudo to the list of heavyweight tests
 if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
