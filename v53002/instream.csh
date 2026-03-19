@@ -68,6 +68,15 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
 	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
+else if ($gtm_test_coverage_enabled) then
+	# YottaDB was built with coverage enabled. The below subtest limits virtual memory and if the correct
+	# random limit is chosen, we have seen a CLANG build of YottaDB to loop indefinitely due to a SIG-11
+	# during exit handling while trying to write to the gtm.c.gcda file (and while holding a write lock on it).
+	# This in turn has been seen to cause every other "mumps" invocation to hang due to not being able to
+	# get a write lock on the .gcda file. It is not clear if similar issues could exist with a GCC build of
+	# YottaDB that has coverage enabled. But the suspicion is that it might. Therefore disable this subtest
+	# if coverage is enabled, irrespective of whether it is a CLANG or GCC build.
+	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
 endif
 
 if ("ENCRYPT" == "$test_encryption" ) then
