@@ -16,13 +16,14 @@ echo '# First we must copy ydb_dist so we can destroy files from it without caus
 source $gtm_tst/com/copy_ydb_dist_dir.csh ydb_temp_dist
 chmod -R +wX ydb_temp_dist
 
-unsetenv ydb_routines
-unsetenv gtmroutines
-
 echo 'First doing UTF-8 mode tests'
 echo
 echo
-setenv ydb_chset UTF-8
+
+$switch_chset "UTF-8"
+unsetenv ydb_routines
+unsetenv gtmroutines
+
 
 echo '# UTF-8 mode: $ydb_dist/plugin/o/utf8 exists, $ydb_dist/utf8/libyottadbutil.so exists'
 echo '# Expected: $ydb_dist/plugin/o/utf8/*.so $ydb_dist/utf8/libyottadbutil.so'
@@ -65,7 +66,11 @@ echo 'Now doing M mode tests'
 echo
 echo
 
-setenv ydb_chset M
+$switch_chset "M"
+unsetenv ydb_routines
+unsetenv gtmroutines
+
+
 
 echo '# M mode: $ydb_dist/plugin/o exists, $ydb_dist/libyottadbutil.so exists'
 echo '# Expected: $ydb_dist/plugin/o/*.so $ydb_dist/libyottadbutil.so'

@@ -3,6 +3,8 @@
 First doing UTF-8 mode tests
 
 
+setenv gtm_chset UTF-8
+unset echo
 # UTF-8 mode: $ydb_dist/plugin/o/utf8 exists, $ydb_dist/utf8/libyottadbutil.so exists
 # Expected: $ydb_dist/plugin/o/utf8/*.so $ydb_dist/utf8/libyottadbutil.so
 
@@ -49,6 +51,8 @@ YDB>
 Now doing M mode tests
 
 
+setenv gtm_chset M
+unset echo
 # M mode: $ydb_dist/plugin/o exists, $ydb_dist/libyottadbutil.so exists
 # Expected: $ydb_dist/plugin/o/*.so $ydb_dist/libyottadbutil.so
 
