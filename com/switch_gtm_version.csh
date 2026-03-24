@@ -76,6 +76,14 @@ if ("bta" == ${ver_image:al}) then
 	set ver_image = "pro"
 endif
 
+if ((!($ver_to_switch =~ "V*_R*")) || (`expr "V70000" \> "$ver_to_switch"`) || ("pro" == "$ver_image")) then
+	# The ydb_test_4g_db_blks environment variable is only respected by YDB V7 dbg builds.
+	# So, if the version is V6 or lower, or if it is a pro build, disable ydb_test_4g_db_blks.
+	# See the following discussion thread for additional details:
+	#   https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2630#note_3187593879
+	setenv ydb_test_4g_db_blks 0
+endif
+
 source $gtm_tst/com/set_active_version.csh $ver_to_switch $ver_image
 # setenv below is to ensure that utilities like GDE,MUPIP point to the desired gtm_exe
 setenv GTM "$gtm_exe/mumps -direct"
