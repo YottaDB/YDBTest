@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,12 +38,15 @@ if ("" == "$asanlib") then
 	# https://stackoverflow.com/a/47705420 suggests a grep for "asan".
 	# But that seems generic (and might give us false positives) so we search for a specific "__asan_init" symbol.
 	set asan_init_symbol = `nm -an $gtm_exe/libgtmshr.so | grep __asan_init`
-	if ("" == "$asan_init_symbol") then
+	# Note: early versions of gtm or yottadb without the -version option will generate a message on stderr
+	# which will be swallowed by grep and thus cause no problems. They will be detected as non-asan.
+	set asan_reported = `$gtm_exe/mumps -version |& grep -o "ASAN Enabled"`
+	if ("" == "$asan_init_symbol" && asan_reported != "ASAN Enabled") then
 		setenv gtm_test_libyottadb_asan_enabled 0
 		setenv gtm_test_asan_compiler ""
 	else
 		setenv gtm_test_libyottadb_asan_enabled 1
-		# ASAN was found through nm. So it must be linked with CLANG.
+		# ASAN was found even though no $asanlib so yottadb must have been linked by CLANG.
 		# Inform caller of this through the below env var.
 		setenv gtm_test_asan_compiler "clang"
 	endif
