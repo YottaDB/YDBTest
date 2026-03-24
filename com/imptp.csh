@@ -157,7 +157,6 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run imptpflavor^imptp $disable_imptp_flavor_list`
-			unset rand
 		endif
 		echo "imptpflavor: $imptpflavor"
 		echo "setenv ydb_imptp_flavor $imptpflavor" >> settings.csh

@@ -18,12 +18,28 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
+	"runtime"
 	"strconv"
+	"sync"
+	"syscall"
 	"time"
 )
 
 // Constant definition(s)
 const tptoken uint64 = yottadb.NOTTP
+
+// Cleanup all child jobs in proc array
+func cleanup(proc []*exec.Cmd, wg *sync.WaitGroup) {
+	for _, toTerminate := range proc[1:] {
+		err := toTerminate.Process.Signal(syscall.SIGTERM)
+		if err != nil {
+			fmt.Printf("TEST-E-imptpgo: failed to send SIGTERM to child job (pid %d): %v\n", toTerminate.Process.Pid, err)
+		}
+	}
+
+	wg.Wait() // Wait for all child jobs to terminate
+	return
+}
 
 // Golang implementation of imptp using multiple processes as workers (basically a translation of simplethreadapi_imptp.c). This file
 // contains the main routine that handles initialization and firing off of the workers after which time it exits leaving the workers
@@ -428,6 +444,8 @@ func main() {
 	//
 	// MCode: do ^job("impjob^imptp",jobcnt,"""""")	; Taken from com/imptp.m
 	// For golang, we create this proc array but index it starting at 1 so make the array one larger than it needs to be
+	var wg sync.WaitGroup // Later used to wait for all spawned processes to exit in case of error
+	var procDied = false  // Flag to track whether a process has died prematurely
 	proc := make([]*exec.Cmd, jobcnt+1, jobcnt+1)
 	for child := int32(1); child <= jobcnt; child++ {
 		childstr = fmt.Sprintf("%d", child)
@@ -436,17 +454,31 @@ func main() {
 		// We have the command we want to fork off but setup its stdout/stderr to go directly to output files
 		stdoutp, err = os.Create("./impjob_imptp" + jobidstr + ".mjo" + childstr) // should be gjo/gje but easier for testsystem this way
 		if CheckErrorReturn(err) {
+			return
 		}
 		proc[child].Stdout = stdoutp
 		defer stdoutp.Close()
 		stderrp, err = os.Create("./impjob_imptp" + jobidstr + ".mje" + childstr)
 		if CheckErrorReturn(err) {
+			return
 		}
 		proc[child].Stderr = stderrp
 		defer stderrp.Close()
 		err = proc[child].Start() // Start new process
 		if CheckErrorReturn(err) {
+			return
 		}
+		wg.Add(1)
+		go func(cmd *exec.Cmd, wg *sync.WaitGroup) {
+			defer wg.Done()
+			// Wait for process to die, ensuring graceful exit even in case of unexpected termination
+			_, err := cmd.Process.Wait()
+			procDied = true
+			if err != nil {
+				fmt.Println("TEST-E-imptogo: ", err)
+				return
+			}
+		}(proc[child], &wg)
 		// MCode: [for i=1:1:njobs]  set ^(i)=jobindex(i)	: com/job.m
 		pidstr = fmt.Sprintf("%d", proc[child].Process.Pid)
 		err = yottadb.SetValE(tptoken, &errstr, pidstr, "^%jobwait", []string{jobidstr, childstr})
@@ -495,6 +527,17 @@ func main() {
 	// MCode: . write "TEST-E-imptp.m time out for jobs to start and synch after ",timeout," seconds",!
 	// MCode: . zwrite ^%imptp
 	for secs = 0; 600 > secs; secs++ {
+		// Confirm all child processes are still alive. If not, do not wait for the timeout to exit,
+		// since the test will already have unexpectedly failed in that case and continuing this loop could
+		// cause the disk to fill up needless on fast systems.
+		// Child processes have been observed to terminate due to segmentation faults in some CLANG + ASAN builds.
+		// See https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/910 for additional information.
+		if procDied {
+			fmt.Println("TEST-E-imptpgo child job terminated prematurely")
+			// Terminate any child jobs that are still running before exiting
+			cleanup(proc, &wg)
+			return
+		}
 		valstr, err = yottadb.ValE(tptoken, &errstr, "^%imptp", []string{fillidstr, "jsyncnt"})
 		if CheckErrorReturn(err) {
 			return
@@ -516,6 +559,7 @@ func main() {
 	}
 	if valint < valint2 {
 		fmt.Println("TEST-E-imptp.m time out for jobs to start and synch after 600 seconds")
+		cleanup(proc, &wg)
 	}
 	// No need to run writeinfofileifneeded^imptp for online rollback which is disabled.
 	// This is because imptp.m transfers control to an M label orlbkres^imptp, etc. for online

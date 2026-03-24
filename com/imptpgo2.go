@@ -151,6 +151,8 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+	"sync"
+	"syscall"
 	"time"
 
 	"lang.yottadb.com/go/yottadb/v2"
@@ -197,6 +199,19 @@ var cleanups = []string{settingsRoot,
 	"^grandomvariableinimptpfill", "^hrandomvariableinimptpfilling", "^irandomvariableinimptpfillprgrm",
 	"^jrandomvariableinimptpfillprogr",
 	"^antp", "^bntp", "^cntp", "^dntp", "^entp", "^fntp", "^gntp", "^hntp", "^intp",
+}
+
+// Cleanup all child jobs in job index
+func cleanup(processes []*exec.Cmd, wg *sync.WaitGroup) {
+	for _, toTerminate := range processes[1:] {
+		err := toTerminate.Process.Signal(syscall.SIGTERM)
+		if err != nil {
+			fmt.Printf("TEST-E-imptpgo2: failed to send SIGTERM to child job (pid %d): %v\n", toTerminate.Process.Pid, err)
+		}
+	}
+
+	wg.Wait() // Wait for all child jobs to terminate
+	return
 }
 
 // main runs multiple jobs to fills the database randomly in the sequence documented above.
@@ -300,9 +315,23 @@ func parent() {
 		child(1)
 		return
 	}
+	var wg sync.WaitGroup // Later used to wait for all spawned processes to exit in case of error
+	var processDied = false  // Flag to track whether a process has died prematurely
+	processes := make([]*exec.Cmd, jobCount+1, jobCount+1)
 	for child := 1; child <= jobCount; child++ {
 		log.Printf("Spawning job %d\n", child)
-		p := spawn(jobID, child)
+		processes[child] := spawn(jobID, child)
+		wg.Add(1)
+		go func(cmd *exec.Cmd, wg *sync.WaitGroup) {
+			defer wg.Done()
+			// Wait for process to die, ensuring graceful exit even in case of unexpected termination
+			_, err := cmd.Process.Wait()
+			if err != nil {
+				fmt.Println("TEST-E-imptogo2: ", err)
+				return
+			}
+			processDied = true
+		}(processes[child], &wg)
 		jobWait.Index(child).Set(p.Process.Pid)
 		jobIndex.Index(child).Set(p.Process.Pid)
 		// avoid interleaved settings printouts from child jobs to terminal
@@ -333,8 +362,20 @@ func parent() {
 	log.Printf("Waiting for all %d jobs to have done an update", jobsNode.GetInt())
 	timeout = 600 * time.Second
 	for started.Get() != jobsNode.Get() {
+		// Confirm all child processes are still alive. If not, do not wait for the timeout to exit,
+		// since the test will already have unexpectedly failed in that case and continuing this loop could
+		// cause the disk to fill up needless on fast systems.
+		// Child processes have been observed to terminate due to segmentation faults in some CLANG + ASAN builds.
+		// See https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/910 for additional information.
+		if processDied {
+			fmt.Println("TEST-E-imptpgo2 child job terminated prematurely")
+			// Terminate any child jobs that are still running before exiting
+			cleanup(processes, &wg)
+			return
+		}
 		if time.Now().Sub(start) >= timeout {
 			fmt.Printf("TEST-E-imptpgo_v2 time out for jobs to start and sync after %.0f seconds\n", time.Now().Sub(start).Seconds())
+			cleanup(processes, &wg)
 			break
 		}
 		time.Sleep(1 * time.Second)
