@@ -22,6 +22,7 @@ gdbpipefreez;
 	open dev:(command="gdb $gtm_dist/mupip":exception="goto done")::"PIPE"
 	use dev
 	set gdbPrompt="(gdb) "
+	write "set prompt \r\n(gdb) ",!
 	do waitForPrompt(gdbPrompt)
 	new libydbLine,readLine,mOut,lineIndex
 	write "start freeze -on DEFAULT",!
