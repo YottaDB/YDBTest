@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -293,6 +293,15 @@ GDECH
 		endif
 		unsetenv gtm_repl_instance
 
+		# Before running "mupip reorg -upgrade", unsetenv "gtm_poollimit" as we have seen the MUPIP REORG -UPGRADE
+		# take a very long time if this variable is set to a small value (e.g. 9000 seconds vs 8 seconds)
+		if ($?gtm_poollimit) then
+			set poollimit_save = $gtm_poollimit
+		else
+			set poollimit_save = ""
+		endif
+		unsetenv gtm_poollimit
+
 		set logfile = dbcheck_base_mupip_reorg_upgrade_$$.out
 		yes | $MUPIP reorg -upgrade -reg "*" >& $logfile
 
@@ -339,6 +348,11 @@ GDECH
 		setenv gtmgbldir $oldgbldir
 		setenv gtmroutines "$oldroutines"
 		cd ..
+
+		# Restore "gtm_poollimit" in case it was unset above.
+		if ("$poollimit_save" != "") then
+			setenv gtm_poollimit $poollimit_save
+		endif
 
 		# Restore "gtm_repl_instance" in case it was unset above.
 		if ("$replinst_save" != "") then
