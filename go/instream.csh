@@ -63,6 +63,21 @@ if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("H
 	setenv subtest_exclude_list "$subtest_exclude_list ydbgo37"
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines variables that are checked below
+if ($gtm_test_libyottadb_asan_enabled && ($gtm_test_asan_compiler == "clang") && ($tst_image == "dbg")) then
+	# Disable fatal_signal test if YottaDB was built with ASAN + CLANG + DEBUG (since `-ftrivial-auto-var-init` is
+	# only ever enabled (randomly) for debug builds). This is because the multi-process versions of the 3n+1 program
+	# (threeenp1C2 or ydb3n1) are known to produce ASAN error `stack-use-after-scope` if YottaDB is built with Clang
+	# and ASAN and `-ftrivial-auto-var-init=pattern`, and when ASAN_OPTION `detect_stack_use_after_return=0`:
+	#   (the latter is presumably because detecting `stack-use-after-return` (which is known to be an expensive check)
+	#   changes the code path significantly obscuring `stack-use-after-scope` errors, per
+	#   thread at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2625#note_3175298968)
+	# We are not certain that this ignored ASAN failure is a false positive from the clang ASAN code, but it is possible
+	#   since it doesn't fail with GCC builds and we have not found places where YottaDB accesses pointers to variables
+	#   that went out of scope. See thread: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2625#note_3185302362
+	setenv subtest_exclude_list "$subtest_exclude_list fatal_signal"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
