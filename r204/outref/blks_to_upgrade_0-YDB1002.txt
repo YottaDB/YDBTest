@@ -1,0 +1,23 @@
+# Test that setting BLKS_TO_UPGRADE=0 sets FULLY_UPGRADED=FALSE
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# First, check when BLKS_TO_UPGRADE is not 0
+# Using [dse CHANGE -FILEHEADER -BLKS_TO_UPGRADE=25]
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# In this case, we expect fully upgraded to be FALSE.
+  Database is Fully Upgraded                : FALSE
+
+# Next, check when BLKS_TO_UPGRADE is 0.
+# Using [dse CHANGE -FILEHEADER -BLKS_TO_UPGRADE=0]
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# In this case, we expect fully upgraded to be TRUE.
+  Database is Fully Upgraded                :  TRUE

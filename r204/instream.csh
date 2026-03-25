@@ -55,6 +55,7 @@
 # zroutines_default-ydb971		[ben]		Test new default $ZROUTINES includes plugin .so files
 # implicit_quit-ydb1218			[ben]		Test implicit quit before a FALLINTOFLST
 # dumpfhead_fl_W_permission-ydb1052	[ben]		Test mupip dumpfhead -flush without write permission and with read_only setting.
+# blks_to_upgrade_0-YDB1002		[ben]		Test setting BLKS_TO_UPGRADE=0 sets FULLY_UPGRADED=TRUE.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
@@ -109,6 +110,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_wildcard-ydb9
 setenv subtest_list_non_replic	"$subtest_list_non_replic zroutines_default-ydb971"
 setenv subtest_list_non_replic	"$subtest_list_non_replic implicit_quit-ydb1218"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dumpfhead_fl_W_permission-ydb1052"
+setenv subtest_list_non_replic	"$subtest_list_non_replic blks_to_upgrade_0-YDB1002"
 
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic mutex_type-ydb1178"
