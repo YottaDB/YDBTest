@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,8 +49,8 @@ endif
 
 cat << CAT_EOF | sed 's/^/# /;'
 Now we try a backup and we expect to see it complete successfully in two different cases:"
-1. Kernel version >= 5.3: ydb_test_copy_file_range_avail is set to 0: Backups are done using the 'faster copy mechanism'"
-2. Kernel version < 5.3: ydb_test_copy_file_range_avail is set to 1: Backups are done using 'cp'"
+1. Kernel version >= 5.3: ydb_test_copy_file_range_avail is set to 1: Backups are done using the 'faster copy mechanism'"
+2. Kernel version < 5.3: ydb_test_copy_file_range_avail is set to 0: Backups are done using 'cp'"
 
 Prior to GT.M V7.1-000, the ydb_test_copy_file_range_avail=1 case would have issued an
 EXDEV error on unsupported filesystems. Now, no EXDEV is error is issued in this case.

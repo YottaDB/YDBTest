@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,18 +52,15 @@ endif
 
 setenv subtest_exclude_list ""
 
-# Skip the mupipbackup_fastercopy-gtmde408789 subtest when the test output directory and /tmp
-# have the same filesystem types, as this can cause test failures due to the following reasons:
-# 1. Per the reasoning at `v70001/u_inref/gtm9424.csh`, running the test when the test output
-# directory and /tmp have the same filesystem types would lead to an EXDEV error, specifically
-# in GT.M versions prior to V71000.
-# 2. According to the GT.M version V71000 release note, MUPIP BACKUP -ONLINE no longer retries
-# backups for "certain errors", i.e. EXDEV errors.
-# 3. Consequently, MUPIP BACKUP -ONLINE will not retry in the case where the test directory
-# and /tmp have the same filesystem type.
-# 4. Finally, it is not possible to control for the output differences in the outref file,
-# since SUSPEND_OUTPUT doesn't support filesystem comparisons.
-if ($tst_dir_fstype == $tmp_dir_fstype) then
+# Skip the mupipbackup_fastercopy-gtmde408789 subtest when either the `copy_file_range()` system
+# call is unavailable, or the test output directory and /tmp have the same filesystem types, as
+# this can cause test failures due to the following reasons:
+#   1. Per the reasoning at `v70001/u_inref/gtm9424.csh`, running the test when the `copy_file_range()`
+#      system call is available and the test output directory and /tmp have different filesystem
+#      types would lead to an EXDEV error, which is desirable as that is what this subtest is testing.
+#   2. When an EXDEV error happens because of reason 1, it is silently ignored causing the backup to
+#      instead issue a %GTM-I-BKUPRETRY message, and then go down the `cp/pax` backup path.
+if ((0 == $ydb_test_copy_file_range_avail) || ($tst_dir_fstype == $tmp_dir_fstype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list mupipbackup_fastercopy-gtmde408789"
 endif
 
