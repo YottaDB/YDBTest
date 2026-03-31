@@ -320,7 +320,7 @@ func parent() {
 	processes := make([]*exec.Cmd, jobCount+1, jobCount+1)
 	for child := 1; child <= jobCount; child++ {
 		log.Printf("Spawning job %d\n", child)
-		processes[child] := spawn(jobID, child)
+		processes[child] = spawn(jobID, child)
 		wg.Add(1)
 		go func(cmd *exec.Cmd, wg *sync.WaitGroup) {
 			defer wg.Done()
@@ -332,8 +332,8 @@ func parent() {
 			}
 			processDied = true
 		}(processes[child], &wg)
-		jobWait.Index(child).Set(p.Process.Pid)
-		jobIndex.Index(child).Set(p.Process.Pid)
+		jobWait.Index(child).Set(processes[child].Process.Pid)
+		jobIndex.Index(child).Set(processes[child].Process.Pid)
 		// avoid interleaved settings printouts from child jobs to terminal
 		if verbose {
 			time.Sleep(100 * time.Millisecond)
