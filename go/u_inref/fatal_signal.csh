@@ -57,13 +57,12 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2 ydb3n1)
 		foreach pid ($goPID)
 			$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 		end
-		if ($killsig == "TERM") then
-			# In case of signal TERM, a FORCEDHALT message is expected to show up.
-			# Filter that out so the error catching test framework does not see it.
-			foreach file ($prog-$run*.out)
-				$gtm_tst/com/check_error_exist.csh $file "%YDB-F-FORCEDHALT" >&! ${file:r}.check.outx
-			end
-		endif
+		# YDB-E-CALLINAFTERXIT error expected due signal handler  calling ydb_exit() while main is running.
+		# In case of signal TERM, FORCEDHALT messages are also expected.
+		# Filter these out so the error catching test framework does not see them.
+		foreach file ($prog-$run*.out)
+			$gtm_tst/com/check_error_exist.csh $file "%YDB-E-CALLINAFTERXIT|%YDB-F-FORCEDHALT" >&! ${file:r}.check.outx
+		end
 		set asan_failure_count=`find -name "asan.$prog-$run.log.*" | wc -l`
 		set asan_message="$asan_failure_count processes failed AddressSanitizer tests when running $prog iteration $run"
 		[ "$asan_failure_count" != "0" ] && echo "$asan_message"
