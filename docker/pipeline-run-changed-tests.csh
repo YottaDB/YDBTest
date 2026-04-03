@@ -30,6 +30,41 @@ if (`uname -m` == "aarch64") set heavyweights = "${heavyweights}sudo "
 # List of tests that require manual intervention so cannot run here.
 set manual_tests = " manual_tests "
 
+echo -n "## Checking for any changed imptp files in /com: "
+set imptp_filelist = `echo -n $filelist | tr " " "\n" | grep -E '^com/.*imptp.*'`
+if ($imptp_filelist == "") then
+	set imptp_count = 0
+else
+	set imptp_count = `echo $imptp_filelist | tr " " "\n" | wc -l`
+endif
+if (0 < $imptp_count) then
+	echo "found"
+	echo $imptp_filelist | tr " " "\n"
+	set flavor = 0
+	echo "# Checking for wrapper-specific imptp file changes: "
+	set flavors = " "
+	foreach pattern ("*imptp*.m*" "*simpleapi_imptp.c*" "*simplethreadapi_imptp.c*" "*imptp.py*" "*imptpgo.go*" "*imptp*.rs*" "*imptpgo2.go*")
+		if ("$imptp_filelist" =~ "$pattern") then
+			set flavors = "${flavors}${flavor} "
+			set instream_invokelist_regular = "$instream_invokelist_regular -t mupjnl -st gtm5007 -env ydb_imptp_flavor=$flavor "
+			@ imptp_count = $imptp_count - 1
+		endif
+		@ flavor = $flavor + 1
+	end
+	if ((0 < $imptp_count) && !("$instream_invokelist_regular" =~ "*ydb_imptp_flavor=0*")) then
+		# Run the M imptp test by default in case any non-wrapper-specific imptp files were changed, but don't run it twice
+		# if was already set to be run in the M case by the above loop.
+		set flavors = "0${flavors}"
+		set instream_invokelist_regular = "$instream_invokelist_regular -t mupjnl -st gtm5007 -env ydb_imptp_flavor=0 "
+	endif
+	if ("" != "$flavors") then
+		echo "# Choosing imptp flavors with which to run mupjnl/gtm5007 test: $flavors"
+	endif
+else
+	echo "not found"
+endif
+echo
+
 echo -n "## Checking for test changes outside of com directory: "
 if (0 == `echo -n $filelist | tr " " "\n" | grep -Ev '^com/|^docker/' | wc -l`) then
 	echo "not found"
