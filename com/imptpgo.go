@@ -18,7 +18,6 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
-	"runtime"
 	"strconv"
 	"sync"
 	"syscall"
