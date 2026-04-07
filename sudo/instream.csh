@@ -184,7 +184,11 @@ if ($gtm_test_coverage_enabled) then # Set by $gtm_tst/com/is_libyottadb_asan_en
 	setenv subtest_exclude_list "$subtest_exclude_list gtmsecshrsrvf-ydb_tmp-ydb1112 gtmsecshrsrvf-ydb_env_set-ydb1112"
 endif
 
-if ("ENCRYPT" == $test_encryption) then
+# The below subtest fails on Armbian systems, likely due to a broken update. So, disable the test in that case. If the test
+# passes on Armbian systems in the future, the test can then be re-enabled in that case.
+# See the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2655#note_3232793697 for more details.
+set armbian = `cat /etc/os-release | grep Armbian | wc -l`
+if ((0 < $armbian) ||  ("ENCRYPT" == $test_encryption)) then
 	# The below subtest uses sudo and su to run as a different userid and exercises the DBPRIVERR error.
 	# But in order to get this error, one needs to pass encryption env vars gtm_passwd/gtmcrypt_config etc.
 	# and that is not trivial. It is not worth trying to make it work with -encrypt so just disable it.
