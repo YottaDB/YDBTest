@@ -1,0 +1,133 @@
+# Test that $QLENGTH(), $QSUBSCRIPT, and $VIEW("YGVN2GDS") properly support ^#t global references
+
+# Create database
+
+###############################
+
+# Test $QLENGTH() with supported/unsupported ^# globals with various subscripts, with and without environments
+
+## Test that $QLENGTH(&t("#TNAME","trigger","#SEQNUM")) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("&t\(""#TNAME"",""trigger"",""#SEQNUM""\)"\)
+
+## Test that $QLENGTH(#t("#TNAME","trigger","#SEQNUM")) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("#t\(""#TNAME"",""trigger"",""#SEQNUM""\)"\)
+
+## Test that $QLENGTH(^#t("#TNAME","trigger","#SEQNUM")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("#TNAME","trigger","#TNCOUNT")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("#TNAME","trigger#1")) correctly returns 2
+2
+## Test that $QLENGTH(^#t("trigger",1,"BHASH")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger",1,"CHSET")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger",1,"CMD")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger",1,"LHASH")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger",1,"TRIGNAME")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger",1,"EXECUTE")) correctly returns 3
+3
+## Test that $QLENGTH(^#t("trigger","#COUNT")) correctly returns 2
+2
+## Test that $QLENGTH(^#t("trigger","#CYCLE")) correctly returns 2
+2
+## Test that $QLENGTH(^["mumps.gld"]#t("trigger","#LABEL")) correctly returns 2
+2
+## Test that $QLENGTH(^["trigger.gld"]#t("trigger","#TRHASH",1147172657,1)) correctly returns 4
+4
+## Test that $QLENGTH(^["trigger.gld"]#T("trigger","#TRHASH",1147172657,1)) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^\[""trigger.gld""\]#T\(""trigger"",""#TRHASH"",1147172657,1\)"\)
+
+## Test that $QLENGTH(^["trigger.gld"]&t("trigger","#TRHASH",1147172657,1)) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^\[""trigger.gld""\]&t\(""trigger"",""#TRHASH"",1147172657,1\)"\)
+
+##TEST_AWK## Test that \$QLENGTH\(\^.*#t.*\) correctly returns 27
+27
+
+##TEST_AWK## Test that \$QLENGTH\(\^.*#T.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#T.*"\)
+
+##TEST_AWK## Test that \$QLENGTH\(\^.*#tt.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#tt.*"\)
+
+##TEST_AWK## Test that \$QLENGTH\(\^.*#.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#.*"\)
+
+###############################
+
+# Test $QSUBSCRIPT() with supported/unsupported ^# globals with various subscripts, with and without environments
+
+## Test that $QSUBSCRIPT(&t("#TNAME","trigger","#SEQNUM"),0) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("&t\(""#TNAME"",""trigger"",""#SEQNUM""\)"\)
+
+## Test that $QSUBSCRIPT(#t("#TNAME","trigger","#SEQNUM"),0) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("#t\(""#TNAME"",""trigger"",""#SEQNUM""\)"\)
+
+## Test that $QSUBSCRIPT(^#t("#TNAME","trigger","#SEQNUM"),1) correctly returns #TNAME
+#TNAME
+## Test that $QSUBSCRIPT(^#t("#TNAME","trigger","#TNCOUNT"),2) correctly returns trigger
+trigger
+## Test that $QSUBSCRIPT(^#t("#TNAME","trigger#1"),1) correctly returns #TNAME
+#TNAME
+## Test that $QSUBSCRIPT(^#t("trigger",1,"BHASH"),3) correctly returns BHASH
+BHASH
+## Test that $QSUBSCRIPT(^#t("trigger",1,"CHSET"),2) correctly returns 1
+1
+## Test that $QSUBSCRIPT(^#t("trigger",1,"CMD"),1) correctly returns trigger
+trigger
+## Test that $QSUBSCRIPT(^#t("trigger",1,"LHASH"),2) correctly returns 1
+1
+## Test that $QSUBSCRIPT(^#t("trigger",1,"TRIGNAME"),3) correctly returns TRIGNAME
+TRIGNAME
+## Test that $QSUBSCRIPT(^#t("trigger",1,"EXECUTE"),1) correctly returns trigger
+trigger
+## Test that $QSUBSCRIPT(^#t("trigger","#COUNT"),2) correctly returns #COUNT
+#COUNT
+## Test that $QSUBSCRIPT(^#t("trigger","#CYCLE"),1) correctly returns trigger
+trigger
+## Test that $QSUBSCRIPT(^|"mumps.gld"|#t("trigger","#LABEL"),-1) correctly returns mumps.gld
+mumps.gld
+## Test that $QSUBSCRIPT(^|"mumps.gld"|#t("trigger","#LABEL"),0) correctly returns ^#t
+^#t
+## Test that $QSUBSCRIPT(^|"trigger.gld"|#t("trigger","#TRHASH",1147172657,1),3) correctly returns 1147172657
+1147172657
+## Test that $QSUBSCRIPT(^["trigger.gld"]#T("trigger","#TRHASH",1147172657,1),-1) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^\[""trigger.gld""\]#T\(""trigger"",""#TRHASH"",1147172657,1\)"\)
+
+## Test that $QSUBSCRIPT(^["trigger.gld"]&t("trigger","#TRHASH",1147172657,1),0) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^\[""trigger.gld""\]&t\(""trigger"",""#TRHASH"",1147172657,1\)"\)
+
+##TEST_AWK## Test that \$QSUBSCRIPT\(\^.*#t.*\) correctly returns without %YDB-E-NOCANONICNAME error
+##TEST_AWK_NOTZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-.*, .*
+
+##TEST_AWK## Test that \$QSUBSCRIPT\(\^.*#T.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#T.*"\)
+
+##TEST_AWK## Test that \$QSUBSCRIPT\(\^.*#tt.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#tt.*"\)
+
+##TEST_AWK## Test that \$QSUBSCRIPT\(\^.*#.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=qsubscript\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#.*"\)
+
+###############################
+
+# Test $VIEW("YGVN2GDS") with supported/unsupported ^# globals with various subscripts, with and without environments
+
+##TEST_AWK## Test that \$VIEW\("YGVN2GDS",\^.*#t.*\) correctly returns without %YDB-E-NOCANONICNAME error
+##TEST_AWK_NOTZSTATUS=view\+[0-9][0-9]*\^ydb982,%YDB-.*, .*
+
+##TEST_AWK## Test that \$VIEW\("YGVN2GDS",\^.*#T.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=view\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#T.*"\)
+
+##TEST_AWK## Test that \$VIEW\("YGVN2GDS",\^.*#tt.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=view\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#tt.*"\)
+
+##TEST_AWK## Test that \$VIEW\("YGVN2GDS",\^.*#.*\) returns %YDB-E-NOCANONICNAME error
+##TEST_AWKZSTATUS=view\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#.*"\)
+
+###############################
+
+# Check database integrity

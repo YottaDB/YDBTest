@@ -681,7 +681,16 @@ FILENAME ~/outref/ {
 			gsub(/##TEST_REMOTE_NODE_PATH_GTCM##/, at_prefix[at_prefix_array[hostno]] node_name ":" dir_gtcm_array[hostno])
 		}
 		#########
-		if ($0 ~ /##TEST_AWK/)
+		if ($0 ~ /##TEST_AWK_NOT/)
+		{
+			gsub(/##TEST_AWK_NOT/, "")
+			$0 = "^" $0 "$"
+			if (out_file[nr_outref] ~ $0)
+				print "##UNEXPECTED MATCH##" $0 "## VS ##"out_file[nr_outref] "##"
+			else
+				print out_file[nr_outref]
+		}
+		else if ($0 ~ /##TEST_AWK/)
 		{
 			gsub(/##TEST_AWK/, "")
 			$0 = "^" $0 "$"
