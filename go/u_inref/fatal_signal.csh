@@ -51,7 +51,7 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2 ydb3n1)
 		# Get pids of all processes we ran. Use [] to ensure grep doesn't find itself in the list of processes
 		set goPID = `ps -x | grep "${pathto}[/]$prog" | awk '{print $1}'`
 		echo "goPID  $goPID"
-		set killsig = `echo $'TERM\nINT' | shuf -n1`
+		set killsig = `printf 'TERM\nINT' | shuf -n1`
 		kill -s ${killsig} $goPID
 		# wait_for_proc_to_die.csh only works on one pid at a time
 		foreach pid ($goPID)
