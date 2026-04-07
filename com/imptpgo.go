@@ -15,6 +15,7 @@ package main
 import (
 	"fmt"
 	"lang.yottadb.com/go/yottadb"
+	"log"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -30,13 +31,15 @@ const tptoken uint64 = yottadb.NOTTP
 // Cleanup all child jobs in proc array
 func cleanup(proc []*exec.Cmd, wg *sync.WaitGroup) {
 	for _, toTerminate := range proc[1:] {
+		log.Println("Sending SIGTERM to PID ", toTerminate.Process.Pid)
 		err := toTerminate.Process.Signal(syscall.SIGTERM)
 		if err != nil {
-			fmt.Printf("TEST-E-imptpgo: failed to send SIGTERM to child job (pid %d): %v\n", toTerminate.Process.Pid, err)
+			log.Println("Failed to send SIGTERM to PID ", toTerminate.Process.Pid, ": ", err)
 		}
 	}
 
-	wg.Wait() // Wait for all child jobs to terminate
+	log.Println("Waiting for all child jobs to terminate")
+	wg.Wait()
 	return
 }
 
@@ -68,6 +71,10 @@ func main() {
 	defer yottadb.Exit() // Needed to assure proper cleanup
 	defer errstr.Free()
 
+	log.SetFlags(log.Lshortfile)
+	log.SetFlags(0)                  // turn off date prefix on log messages
+	log.SetOutput(os.Stdout)         // Could leave as Stderr but move to Stdout since M code prints messages to Stdout anyway
+
 	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	processID := os.Getpid()
 	// Initialize random number generator seed
@@ -87,7 +94,7 @@ func main() {
 		valint = 5
 	}
 	jobcnt := valint
-	fmt.Println("jobcnt =", jobcnt)
+	log.Println("jobcnt =", jobcnt)
 	jobcntstr := fmt.Sprintf("%d", jobcnt)
 	err = yottadb.SetValE(tptoken, &errstr, jobcntstr, "jobcnt", []string{})
 	if CheckErrorReturn(err) {
@@ -96,15 +103,15 @@ func main() {
 	// Implement M entryref : imptp^imptp
 	//
 	// MCode: write "Start Time of parent:",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("Start time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
+	log.Println("Start time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: write "$zro=",$zro,!
 	zro, err := yottadb.ValE(tptoken, &errstr, "$zroutines", []string{})
 	if CheckErrorReturn(err) {
 		return
 	}
-	fmt.Printf("$zro=%s\n", zro)
+	log.Printf("$zro=%s\n", zro)
 	// MCode: write "PID: ",$job,!,"In hex: ",$$FUNC^%DH($job),!
-	fmt.Printf("PID: %d\nIn hex: %x\n", processID, processID)
+	log.Printf("PID: %d\nIn hex: %x\n", processID, processID)
 
 	// Start processing test system parameters
 	//
@@ -137,16 +144,16 @@ func main() {
 	valstr = os.Getenv("gtm_test_tp")
 	if "NON_TP" == valstr {
 		istp = 0
-		fmt.Println("It is Non-TP")
+		log.Println("It is Non-TP")
 	} else {
 		valstr = os.Getenv("gtm_test_dbfill")
 		if ("" != valstr) && ("IMPZTP" == valstr) {
 			istp = 2
-			fmt.Println("It is ZTP")
+			log.Println("It is ZTP")
 			panic("Cannot simulate ZTP with SimpleAPI - should not be using this imptp flavor")
 		} else {
 			istp = 1
-			fmt.Println("It is TP")
+			log.Println("It is TP")
 		}
 	}
 	istpstr := fmt.Sprintf("%d", istp)
@@ -319,7 +326,7 @@ func main() {
 		CheckErrorReturn(err) // Only panic-able errors should hit here
 		valint = int32(valint64)
 		if valint != jobcnt {
-			fmt.Printf("IMPTP-E-MISMATCH: Job number mismatch : ^%%imptp(fillid,totaljob) = %d : jobcnt = %d\n",
+			log.Printf("IMPTP-E-MISMATCH: Job number mismatch : ^%%imptp(fillid,totaljob) = %d : jobcnt = %d\n",
 				valint, jobcnt)
 			os.Exit(-1)
 		}
@@ -471,10 +478,12 @@ func main() {
 		go func(cmd *exec.Cmd, wg *sync.WaitGroup) {
 			defer wg.Done()
 			// Wait for process to die, ensuring graceful exit even in case of unexpected termination
-			_, err := cmd.Process.Wait()
-			procDied = true
+			result, err := cmd.Process.Wait()
 			if err != nil {
-				fmt.Println("TEST-E-imptogo: ", err)
+				if result.ExitCode() != 0 {
+					procDied = true
+				}
+				log.Println("TEST-E-imptpgo: ", err)
 				return
 			}
 		}(proc[child], &wg)
@@ -517,7 +526,7 @@ func main() {
 		time.Sleep(1 * time.Second)
 	}
 	if 300 == secs {
-		fmt.Println("TEST-W-FIRSTUPD None of the jobs completed its first update across all the regions after 5 minutes!")
+		log.Println("TEST-W-FIRSTUPD None of the jobs completed its first update across all the regions after 5 minutes!")
 	}
 	// MCode: ; Wait for all M child processes to start and reach a point when it is safe to simulate crash
 	// MCode: set timeout=600	; 10 minutes to start and reach the sync point for kill
@@ -532,7 +541,7 @@ func main() {
 		// Child processes have been observed to terminate due to segmentation faults in some CLANG + ASAN builds.
 		// See https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/910 for additional information.
 		if procDied {
-			fmt.Println("TEST-E-imptpgo child job terminated prematurely")
+			log.Println("TEST-E-imptpgo child job terminated prematurely")
 			// Terminate any child jobs that are still running before exiting
 			cleanup(proc, &wg)
 			return
@@ -557,7 +566,7 @@ func main() {
 		time.Sleep(1 * time.Second)
 	}
 	if valint < valint2 {
-		fmt.Println("TEST-E-imptp.m time out for jobs to start and synch after 600 seconds")
+		log.Println("TEST-E-imptp.m time out for jobs to start and synch after 600 seconds")
 		cleanup(proc, &wg)
 	}
 	// No need to run writeinfofileifneeded^imptp for online rollback which is disabled.
@@ -568,7 +577,7 @@ func main() {
 		panic("TEST-F-NOONLINEROLLBACK Online rollback cannot be supported with the Simple[Thread]API")
 	}
 	// MCode: write "End   Time of parent:",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("End   Time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
+	log.Println("End   Time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: quit
 	return
 }

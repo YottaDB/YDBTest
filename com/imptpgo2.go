@@ -26,21 +26,21 @@ This version enhances other imptp versions in the following ways that make it ea
 	* runs with just 'go run imptpgo2.go'
 	* cleans its database variables to start with a clean database if --clean is specified
 	* defaults gtm_badchar to "no" so that jobs don't die
-	* add --verbose, --clean, --iterations, and --parentischild command line options for debugging (see below)
+	* add --ttylog, --clean, --iterations, and --parentischild command line options for debugging (see below)
 	* accepts on the commandline <number_of_jobs> to be started.
 	* documents environment variable inputs and provides a glossary for variable names (see below)
 
-Usage: imptpgo_v2 [--help|-h] [--worker=<n>] [--verbose|-v] [--clean] [--iterations=<n>] [<number_of_jobs>]
+Usage: imptpgo_v2 [--help|-h] [--worker=<n>] [--ttylog|-l] [--clean] [--iterations=<n>] [<number_of_jobs>]
 	* --worker=<n> determines that the new instance will be a child job and specifies the index number of the job (1 - <number_of_jobs>).
 		It is used automatically by the main (parent) process to run child jobs.
-	* --verbose|-v Also output child logs to /dev/tty. Can be most helpful for debugging if only 1 job is specified.
+	* --ttylog|-l Also output child logs to /dev/tty. Can be most helpful for debugging if only 1 job is specified.
 	* --clean cleans all variables used by the program before running; otherwise it tries to recover and continue the previous run.
 	* --iterations=<n> (default to ^%imptp(fillid,"top") or prime/<number_of_jobs> -- takes a couple hours) number of full-loop iterations performed in each job.
 	* --parentischild runs the child job (forced to 1 job) in the parent process. Useful for debugging.
 	* <number_of_jobs> (default env gtm_test_jobcnt or 5 if unset). It is ignored when --worker is specified (each worker is only one job).
 	* The test system calls imptp.csh to run this Go program. The caller sets environment variables below as appropriate.
 	* For a quick run of the program for debug purposes:
-		go run imptpgo2.go --verbose --clean --iterations=10000 && pgrep imptpgo2 -a
+		go run imptpgo2.go --ttylog --clean --iterations=10000 && pgrep imptpgo2 -a
 		checkdb.csh # To check that it filled the database with what it should have
 	* This will run for maybe 5 or 10 seconds, except it occasionally randomly selects to pause for 10s in contentious TP restarts.
 
@@ -163,15 +163,15 @@ import (
 // This is to be distinguished from jobid which is the same for the whole group of processes started by the parent and including the parent.
 var workerNo int
 var iterations int     // number of iterations of main fill loop
-var verbose bool       // leave child logs on stdout
+var ttylog bool       // leave child logs on stdout
 var clean bool         // start from a clean database
 var parentischild bool // run single child job in the parent process
 
 func init() {
 	flag.IntVar(&workerNo, "worker", -1, "specify child worker job number when starting the program as a worker child instead of running as parent")
 	flag.IntVar(&iterations, "iterations", -1, "number of iterations of main database fill loop (default 50000017/jobs)")
-	flag.BoolVar(&verbose, "verbose", false, "tell program to print all child logs to stdout for debugging")
-	flag.BoolVar(&verbose, "v", false, "tell program to print all child logs to stdout for debugging")
+	flag.BoolVar(&ttylog, "ttylog", false, "tell program to print all child logs to stdout for debugging")
+	flag.BoolVar(&ttylog, "l", false, "tell program to print all child logs to stdout for debugging")
 	flag.BoolVar(&clean, "clean", false, "tell program to clean the database from the previous run first")
 	flag.BoolVar(&parentischild, "parentischild", false, "runs the child job (forced to 1 job) in the parent process for debugging")
 	flag.Parse()
@@ -204,13 +204,15 @@ var cleanups = []string{settingsRoot,
 // Cleanup all child jobs in job index
 func cleanup(processes []*exec.Cmd, wg *sync.WaitGroup) {
 	for _, toTerminate := range processes[1:] {
+		log.Println("Sending SIGTERM to PID ", toTerminate.Process.Pid)
 		err := toTerminate.Process.Signal(syscall.SIGTERM)
 		if err != nil {
-			fmt.Printf("TEST-E-imptpgo2: failed to send SIGTERM to child job (pid %d): %v\n", toTerminate.Process.Pid, err)
+			log.Println("Failed to send SIGTERM to PID ", toTerminate.Process.Pid, ": ", err)
 		}
 	}
 
-	wg.Wait() // Wait for all child jobs to terminate
+	log.Println("Waiting for all child jobs to terminate")
+	wg.Wait()
 	return
 }
 
@@ -233,16 +235,16 @@ func main() {
 		return
 	}
 
-	// Verbose log option (prepends job number to each line which may disrupt tester scripts, so use only for debugging
-	if verbose {
+	// Also output child logs to /dev/tty
+	if ttylog {
 		terminal, err := os.Create("/dev/tty")
 		if err != nil {
 			panic(err)
 		}
 		multi := io.MultiWriter(os.Stdout, terminal) // send child's output to stderr to separate it from parent's stdout
-		log.SetPrefix(fmt.Sprintf("[job%d] ", workerNo))
 		log.SetOutput(multi)
 	}
+	log.SetPrefix(fmt.Sprintf("[job%d]", workerNo))
 	child(workerNo)
 }
 
@@ -302,9 +304,7 @@ func parent() {
 	jobWait.Index("jmjoname").Set("impjob_imptp") // job name
 	jobWait.Index("jnoerrchk").Set(false)         // no error check
 
-	if verbose {
-		log.Printf("Settings:\n%#v", conn.Node(settingsRoot))
-	}
+	log.Printf("Settings:\n%#v", conn.Node(settingsRoot))
 
 	// Start jobs
 	if parentischild {
@@ -325,19 +325,19 @@ func parent() {
 		go func(cmd *exec.Cmd, wg *sync.WaitGroup) {
 			defer wg.Done()
 			// Wait for process to die, ensuring graceful exit even in case of unexpected termination
-			_, err := cmd.Process.Wait()
+			result, err := cmd.Process.Wait()
 			if err != nil {
-				fmt.Println("TEST-E-imptogo2: ", err)
+				if result.ExitCode() != 0 {
+					processDied = true
+				}
+				fmt.Println("TEST-E-imptpgo2: ", err)
 				return
 			}
-			processDied = true
 		}(processes[child], &wg)
 		jobWait.Index(child).Set(processes[child].Process.Pid)
 		jobIndex.Index(child).Set(processes[child].Process.Pid)
-		// avoid interleaved settings printouts from child jobs to terminal
-		if verbose {
-			time.Sleep(100 * time.Millisecond)
-		}
+		// Avoid interleaved settings printouts from child jobs to terminal
+		time.Sleep(100 * time.Millisecond)
 	}
 
 	M.Call("writecrashfileifneeded")
@@ -511,6 +511,9 @@ func atoi(s string) int {
 
 // child runs a single worker process using jobNo specified by --worker option.
 func child(jobNo int) {
+	log.Println("Started at ", time.Now().Format("02-Jan-2006 03:04:05.000"))
+
+	log.Println("Opening database connection")
 	conn := yottadb.NewConn()
 	M = conn.MustImport(callin_table)
 
@@ -541,12 +544,10 @@ func child(jobNo int) {
 
 	// 5% of the time complete this imptp worker process by doing a callin to M code; otherwise do it (primarily) in Go.
 	if rand.Intn(20) == 0 {
-		log.Println("impjob; Elected to do M call-in to impjob^imptp for this process")
+		log.Println("Elected to do M call-in to impjob^imptp for this process")
 		M.Call("impjob")
 		return
 	}
-
-	log.Println("Start Time:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	log.Printf("$zroutines = %s\n", conn.Node("$zroutines").Get())
 
 	// Set M local "jobno" because it is used later by triggers.
@@ -642,6 +643,7 @@ func child(jobNo int) {
 	lastFence := (isTP || crash) && !gtcm
 	conn.Node("lfence").Set(lastFence)
 
+	log.Printf("lfence=%v\n", lastFence)
 	if tpNoIso {
 		M.Call("tpnoiso")
 	}
@@ -749,12 +751,15 @@ func child(jobNo int) {
 			switch {
 			case random == 1 && trestart > 2:
 				// Thrash memory while randomly holding crit for a randomly long time
+				log.Println("stage1: Thrash memory while randomly holding crit for a randomly long time")
 				M.Call("noop")
 			case random == 2 && trestart > 2:
 				// Hold crit for a randomly long time
+				log.Println("stage1: Hold crit for a randomly long time")
 				time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
 			case trestart > 0:
 				// In case of restart cause different TP transaction flow
+				log.Println("stage1: In case of restart cause different TP transaction flow")
 				conn.Node("^zdummy", trestart).Set(jobNo)
 			}
 		}
@@ -878,6 +883,7 @@ func child(jobNo int) {
 		M.Call("helper1")
 
 		// Stage 1
+		log.Println("start: loop " + fmt.Sprint(loop) + " stage1 (tp: " + fmt.Sprint(isTP) + ")")
 		if isTP {
 			conn.Transaction(tpType, []string{"*"}, stage1)
 		} else {
@@ -885,9 +891,11 @@ func child(jobNo int) {
 		}
 
 		// Stage 2
+		log.Println("start: loop " + fmt.Sprint(loop) + " stage2")
 		stage2()
 
 		// Stage 3
+		log.Println("start: loop " + fmt.Sprint(loop) + " stage3 (tp: " + fmt.Sprint(isTP) + ")")
 		if isTP {
 			conn.Transaction(tpType, nil, stage3)
 		} else {
@@ -895,11 +903,12 @@ func child(jobNo int) {
 		}
 
 		// Stages 4-11
+		log.Println("start: loop " + fmt.Sprint(loop) + " stages 4-11 (helper3)")
 		M.Call("helper3")
 		// See comments on the following calculation in the initialization section above
 		I = int(int64(I) * int64(nroot) % int64(prime))
 	}
-	log.Printf("Job %d finished", jobNo)
+	log.Println("Completed at ", time.Now().Format("02-Jan-2006 03:04:05.000"))
 }
 
 // envInt returns the contents of environment variable env as an integer or panics on error.
