@@ -282,6 +282,8 @@ BEGIN {
 			option_names[++no_options] = "OS_ARCH_VER"
 			if (1 == ENVIRON["gtm_test_rhel9_plus"])
 				envir[no_options] = "RHEL_9_PLUS"
+			if (1 == ENVIRON["gtm_test_rhel10_plus"])
+				envir[no_options] = "RHEL_10_PLUS"
 		} else if ("suse" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "SUSE_LINUX_X86_64"
 			option_names[++no_options] = "OS_ARCH_SUBTYPE"
@@ -417,6 +419,11 @@ BEGIN {
 	{
 		option_names[++no_options] = "ubuntu_22.04"
 		envir[no_options] = "UBUNTU_22.04"
+	}
+	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("24.04" == ENVIRON["gtm_test_linux_version"]))
+	{
+		option_names[++no_options] = "ubuntu_24.04"
+		envir[no_options] = "UBUNTU_24.04"
 	}
 	#
 	option_names[++no_options] = "is_tst_dir_cmp_fs"

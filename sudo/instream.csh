@@ -89,9 +89,8 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 		# RHEL 9 does not have a r1.38 tarball (which the below subtest relies on) so skip in that case
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
 	endif
-	if (10 == $gtm_test_linux_version:r) then
-		# Disable "olderversion" subtest since no r2.02 binaries/tarballs for RHEL 10
-		# Once r2.04 is released, the below line can be removed.
+	if (8 == $gtm_test_linux_version:r) then
+		# Disable "olderversion" subtest since no r2.04 binaries/tarballs for RHEL 8
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
 else if ("ubuntu" == $gtm_test_linux_distrib) then
@@ -99,9 +98,6 @@ else if ("ubuntu" == $gtm_test_linux_distrib) then
 		# disable below subtests since no binaries/tarballs for Ubuntu 20.04 (not all versions supported)
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 	else if (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version)) then
-		# Disable "olderversion" subtest since no r2.04 binaries/tarballs for Ubuntu 24.04 on AARCH64
-		# Once r2.04 is released, the below line can be removed.
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 		# Disable "configure_rmfile-gtmde201825" subtest since no r1.38 binaries/tarballs for Ubuntu 24.04 on AARCH64
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
 	else if ("25.10" == $gtm_test_linux_version) then

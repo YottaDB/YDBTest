@@ -101,6 +101,7 @@ setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_EN
 # gtm_test_linux_distrib will be set to one of ubuntu, rhel, debian, centos, fedora, suse, arch or alpine on a linux server.
 # It will be set to "" on other servers
 setenv gtm_test_rhel9_plus 0
+setenv gtm_test_rhel10_plus 0
 setenv gtm_test_linux_suse_distro ""
 if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
@@ -123,6 +124,9 @@ if (-f /etc/os-release) then
 		set majorver = `echo $gtm_test_linux_version | sed 's/\..*//;'`
 		if (9 <= $majorver) then
 			setenv gtm_test_rhel9_plus 1
+			if (10 <= $majorver) then
+				setenv gtm_test_rhel10_plus 1
+			endif
 		endif
 	endif
 else
