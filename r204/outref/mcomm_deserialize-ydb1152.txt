@@ -759,11 +759,11 @@ ZSTATUS=T12b+15^ydb1152,%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECO
 Added SET trigger on ^dst named dst#1
 # Test sr_port/op_zydecode_arg.c:82
 ZSTATUS=T13a+2^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
-ZSTATUS=T13+7^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
+ZSTATUS=T13+10^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
 Added SET trigger on ^dst2 named dst2#1
 # Test sr_port/op_zydecode_arg.c:120
 ZSTATUS=T13b+3^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-BADZYENZYDENEST, Unsupported nesting of ZYENCODE or ZYDECODE command
-ZSTATUS=T13+10^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
+ZSTATUS=T13+13^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-TRIGTLVLCHNG, Detected a net transaction level ($TLEVEL) change during trigger . Transaction level must be the same at exit as when the trigger started
 
 ### Test 14: ZYDECODE works with triggers using an array (see test cases at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973)
 ##TEST_AWKAll existing triggers \(count = .*\) deleted

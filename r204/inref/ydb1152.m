@@ -825,6 +825,9 @@ T12d ;
 T13 ;
 	write "### Test 13: ZYDECODE works with triggers using an object (see test cases at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2956960973)",!
 	set $etrap="set $ecode="""" do incrtrap^incrtrap"	; Needed to transfer control to next M line after error (instead of stopping execution)
+	kill x	; Remove any prior random subscripted nodes in x (e.g. x("",1)) as they can cause ^dst to not be updated
+		; in rare cases (and the ^dst trigger to not be fired) in the "zydecode ^dst=src" command below.
+		; See https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/911#note_3238240567 for more details.
 	set x="test"
 	zyencode src=x
 	set ZT=$ztrigger("ITEM","-*")
