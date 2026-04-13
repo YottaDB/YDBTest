@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -76,15 +76,42 @@ echo '\nTesing larger than $ZCONVERT supported value conversion using %HD'
 echo "Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 $ydb_dist/yottadb -r ^%XCMD 'write "Output: ",$$FUNC^%HD("7FFFFFFFFFFFFFFFFFFFFFFFFFFFF")'
 
+# The performance checks are disabled on AARCH64, ARMV6L and ARMV7L to avoid occasional failures
+# due to the slowness of these machines. They previously passed consistently with 15 second
+# intervals but can occasionally fail at 8 seconds.
 if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $gtm_test_os_machtype)) then
-	# The performance checks are disabled on AARCH64, ARMV6L and ARMV7L to avoid occasional failures
-	# due to the slowness of these machines. They previously passed consistently with 15 second
-	# intervals but can occasionally fail at 8 seconds.
-	echo '\nTesting performance of current %DH vs previous %DH'
-	$ydb_dist/yottadb -r compdectohex^zconvert
+	echo
+	set perf_missing = `which perf >/dev/null; echo $status`
+	source $gtm_tst/com/is_libyottadb_asan_enabled.csh      # detect asan build into $gtm_test_libyottadb_asan_enabled
+	if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_image") && ("GCC" == $gtm_test_yottadb_compiler)) then
+		foreach num_digits (16 20)
+			foreach version ("c" "p")
+				$gtm_tst/com/perfstat.csh $ydb_dist/yottadb -r compdectohex^zconvert $version $num_digits >& perf-DH-${num_digits}-${version}.out
+			end
+			echo "# Test performance for %DH with ${num_digits}-digit values"
+			set cur_instructions = `tail -1 perf-DH-${num_digits}-c.out | awk '{print $1}'`
+			set prv_instructions = `tail -1 perf-DH-${num_digits}-p.out | awk '{print $1}'`
+			if ($cur_instructions < $prv_instructions) then
+				echo "PASS: Current %DH implementation executed in fewer instructions than the previous implementation when called with ${num_digits}-digit inputs"
+			else
+				echo "FAIL: Current %DH implementation executed in more instructions than the previous implementation when called with ${num_digits}-digit inputs ($cur_instructions > $prv_instructions)"
+			endif
+		end
 
-	echo '\nTesting Performance of current %HD vs previous %HD'
-	$ydb_dist/yottadb -r comphextodec^zconvert
+		foreach num_digits (14 16)
+			foreach version ("c" "p")
+				$gtm_tst/com/perfstat.csh $ydb_dist/yottadb -r comphextodec^zconvert $version $num_digits >& perf-HD-${num_digits}-${version}.out
+			end
+			echo "# Test performance for %HD with ${num_digits}-digit values"
+			set cur_instructions = `tail -1 perf-HD-${num_digits}-c.out | awk '{print $1}'`
+			set prv_instructions = `tail -1 perf-HD-${num_digits}-p.out | awk '{print $1}'`
+			if ($cur_instructions < $prv_instructions) then
+				echo "PASS: Current %HD implementation executed in fewer instructions than the previous implementation when called with ${num_digits}-digit inputs"
+			else
+				echo "FAIL: Current %HD implementation executed in more instructions than the previous implementation when called with ${num_digits}-digit inputs ($cur_instructions > $prv_instructions)"
+			endif
+		end
+	endif
 endif
 
 echo '\nTesting correctness of current %DH vs previous %DH'
