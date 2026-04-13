@@ -140,6 +140,12 @@ if ($perf_missing || $gtm_test_libyottadb_asan_enabled || ("pro" != "$tst_image"
 	setenv subtest_exclude_list "$subtest_exclude_list mupipreorg_slowdown"
 endif
 
+# The test below requires V70005_R202 to test against. So, if it is unavailable, disable the test.
+# See also the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2630#note_3242240149
+if (! -e $gtm_root/V70005_R202/$tst_image) then
+	setenv subtest_exclude_list "$subtest_exclude_list unblock_signals_during_init-ydb1205"
+endif
+
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
