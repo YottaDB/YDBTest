@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2009, 2014 Fidelity Information Services, Inc	#
 #								#
+#	Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+#	All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,13 +28,16 @@ if ($1 == "mu_bkup_stop") then
 	set bkup_stop = 1
 else if($1 == "mu_bkup_change_permission") then
 	set change_permission = 1
-     endif
+	endif
 else
 	echo "TEST-E-ERROR Only mu_bkup_stop or mu_bkup_change_permission accepted as a paramter"
 	exit
 endif
-@ round_no=1
-while ($round_no < 4)
+if ($bkup_stop) then
+	set prev_iterations = `grep "set numgbls" largeupdates.m | cut -f 2 -d '='`
+endif
+@ round_no = 1
+while ($round_no < 7)
 	setenv save_io 1
 	if ($bkup_stop) then
 		source $gtm_tst/$tst/u_inref/try_stop.csh >>& try_{$1}_{$round_no}.logx
@@ -51,7 +57,7 @@ while ($round_no < 4)
 			source $gtm_tst/$tst/u_inref/final_run.csh
 		endif
 		exit
-	else if ($round_no != 3) then
+	else if ($round_no != 6) then
 		if ($change_permission) then
 			stopfindfile
 		endif
@@ -61,6 +67,12 @@ while ($round_no < 4)
 		mv *online1 $back_dir round{$round_no}		# backup_dbjnl.csh only works on regular files
 		@ init_time = $init_time * 2
 		setenv upd_time $init_time
+		if ($bkup_stop) then
+			# Increase number of test iterations
+			@ iterations = $prev_iterations * 2
+			sed -i "s/$prev_iterations/$iterations/g" largeupdates.m
+			set prev_iterations = $iterations
+		endif
 	else #Final try over
 		if ($bkup_stop) then
 			echo "TEST-E-NOT_STOPPED All three tries to stop the backup failed. See try_stop* for details"

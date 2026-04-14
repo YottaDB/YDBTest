@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -31,6 +31,11 @@ echo "TRY THREE TIMES TO CATCH AND STOP THE BACKUP PROCESS"
 # purpose of this test (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1982#note_1905363725).
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
-#
+# Copy the test routine to the test directory so that it can be successively modified in place
+# to increase the number of loop iterations as the number of test retries increase
+# in order to decrease the chances of the process exiting before MUPIP STOP is received
+# while minimizing test runtime.
+# See discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2663#note_3276708597 for details.
+cp $gtm_tst/$tst/inref/largeupdates.m .
 alias stopsubtest '$gtm_exe/mumps -run stop^largeupdates ; $gtm_exe/mumps -run wait^largeupdates ; unsetenv GTM_BAKTMPDIR ; setenv skip_permission_check 0; setenv save_io 0'
 source $gtm_tst/$tst/u_inref/retry_driver.csh "mu_bkup_stop"
