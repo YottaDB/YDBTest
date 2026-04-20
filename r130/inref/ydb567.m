@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -25,7 +25,7 @@ child   ;
 	; and for dbg on ARM as it has failed in the past due to slowness.
 	set ^ready=1
 	set perfdisabled=$ztrnlnm("gtm_test_singlecpu")
-	set:(("dbg"=$ztrnlnm("tst_image"))&("HOST_LINUX_ARMVXL"=$ztrnlnm("gtm_test_os_machtype"))) perfdisabled=1
+	set:("dbg"=$ztrnlnm("tst_image")) perfdisabled=1
 	set $zinterrupt="if $increment(intrptcnt)"
 	set:(0=perfdisabled) starttime=$zut
 	for i=1:1:10000  set hangtime(i)=$select(i#2:0.0001,1:0.001) hang hangtime(i)
@@ -42,4 +42,3 @@ child   ;
 	.	else  write "Hang test finished successfully",!
 	else  write "Hang test finished successfully",!
 	quit
-
