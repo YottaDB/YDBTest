@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -48,4 +48,16 @@ echo "# Run litlab^ydb1673 routine to:"
 echo "# 1. Create 1000 copies of test.m"
 echo "# 2. ZLINK them one by one in the same process"
 echo "# 3. Record the time elapsed for each 100 linkages."
-$gtm_dist/mumps -run litlab^ydb1673
+# Run the test up to 3 times in case it fails due to timing issues caused by factors
+# outside the test, e.g. system load. If it fails all 3 times, fail the test.
+# See discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2668#note_3291245899
+set try = 0
+while ($try < 3)
+	@ try = $try + 1
+	$gtm_dist/mumps -run litlab^ydb1673 >&! try${try}.out
+	grep -q PASS try${try}.out
+	if ($status == 0) then
+		break
+	endif
+end
+cat try${try}.out
