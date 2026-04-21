@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # qlength_qsubscript_support_hasht_gbl-ydb982	[david]	Test $qlength()/$qsubscript() support of ^#t internal trigger global
+# illegal_nakedglobalref-ydb1223		[jon]	Test fix for illegal naked global reference in release r2.04
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r206 test starts..."
@@ -23,6 +24,7 @@ echo "r206 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic qlength_qsubscript_support_hasht_gbl-ydb982"
+setenv subtest_list_non_replic	"$subtest_list_non_replic illegal_nakedglobalref-ydb1223"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

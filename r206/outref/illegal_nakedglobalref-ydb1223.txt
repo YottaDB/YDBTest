@@ -1,0 +1,40 @@
+#-------------------------------------------------------------------------#
+# [YDB#1223] Test fix for illegal naked global reference in release r2.04
+#-------------------------------------------------------------------------#
+
+## Test 1: Run [ydb1223a.m] with `quit system` line enabled
+## For test case source, see: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1223#note_3266885297
+# Expect [SystemVersion=24.1.12] twice. Previously, with r2.04, this routine:
+# 1. Left the second value of [SystemVersion] empty.
+# 2. Issued a GVNAKED error with PRO builds and GVDBGNAKEDUNSET with DBG builds
+SystemVersion=24.1.12
+SystemVersion=24.1.12
+
+## Test 2: Run [ydb1223a.m] with `quit system` line disabled
+## For test case source, see: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1223#note_3271149622
+# Expect [SystemVersion=24.1.12] twice. Previously, with r2.04, this routine:
+# 1. Left the second value of [SystemVersion] empty.
+# 2. Issued a GVNAKED error with PRO builds and GVDBGNAKEDUNSET with DBG builds
+SystemVersion=24.1.12
+SystemVersion=24.1.12
+
+## Test 3: Run [ydb1223b.m] using SET on GVN with 1 subscript
+## For test case source, see: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1223#note_3272316062
+# Expect a YDB-E-GVUNDEF error for [^x]. Previously, with r2.04, this routine:
+# 1. With PRO builds: silently updated the wrong global, i.e. [^x(1)] instead of [^y(1)], and issued no errors.
+# 2. With DBG builds: issued a GVDBGNAKEDMISMATCH error.
+%YDB-E-GVUNDEF, Global variable undefined: ^x
+		At M source location ydb1223b+3^ydb1223b
+
+YDB>
+
+## Test 4: Run [ydb1223b.m] using SET on GVN with 2 subscripts
+## For test case source, see: https://gitlab.com/YottaDB/DB/YDB/-/work_items/1223#note_3272316062
+# Expect a YDB-E-GVUNDEF error for [^x]. Previously, with r2.04, this routine:
+# 1. With PRO builds: silently updated the wrong global, i.e. [^x(1)] instead of [^y(1,2)], and issued no errors.
+# 2. With DBG builds: issued a GVDBGNAKEDMISMATCH error.
+%YDB-E-GVUNDEF, Global variable undefined: ^x
+		At M source location ydb1223b+3^ydb1223b2
+
+YDB>
+
