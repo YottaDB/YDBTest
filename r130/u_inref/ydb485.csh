@@ -68,19 +68,19 @@ $ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("-9223372036854775809","DEC","HEX")
 echo '\nTesting $ZCONVERT, %DH and %HD for signed input value'
 $ydb_dist/yottadb -r signedvalinp^zconvert
 
-echo '\nTesing larger than MAX $ZCONVERT supported value(>20 digits) conversion using %DH'
+echo '\nTesting larger than MAX $ZCONVERT supported value(>20 digits) conversion using %DH'
 echo "Input: 184467440737095516155"
 $ydb_dist/yottadb -r ^%XCMD 'write "Output: ",$$FUNC^%DH("184467440737095516155",10)'
 
-echo '\nTesing larger than $ZCONVERT supported value conversion using %HD'
+echo '\nTesting larger than $ZCONVERT supported value conversion using %HD'
 echo "Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 $ydb_dist/yottadb -r ^%XCMD 'write "Output: ",$$FUNC^%HD("7FFFFFFFFFFFFFFFFFFFFFFFFFFFF")'
+echo
 
 # The performance checks are disabled on AARCH64, ARMV6L and ARMV7L to avoid occasional failures
 # due to the slowness of these machines. They previously passed consistently with 15 second
 # intervals but can occasionally fail at 8 seconds.
 if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $gtm_test_os_machtype)) then
-	echo
 	set perf_missing = `which perf >/dev/null; echo $status`
 	source $gtm_tst/com/is_libyottadb_asan_enabled.csh      # detect asan build into $gtm_test_libyottadb_asan_enabled
 	if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_image") && ("GCC" == $gtm_test_yottadb_compiler)) then
