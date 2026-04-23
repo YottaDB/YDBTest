@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,7 @@ source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 echo "# Waiting 2000 updates to happen."
 $gtm_exe/mumps -run %XCMD 'for  quit:2000<=$get(^cntloop(0),0)  hang 0.5'
 
-set pidmumps=`sed -n 's/PID:\([0-9]*\)/\1/p' impjob_imptp1.mjo*`
+set pidmumps=`sed -n 's/.*PID:\([0-9]*\)/\1/p' impjob_imptp1.mjo*`
 set pidsrc=`$MUPIP replicate -source -checkhealth |& $tst_awk '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }'`
 
 echo "# MUPIP STOP the source server"
@@ -64,7 +64,7 @@ $gtm_tst/com/check_error_exist.csh rundown_0.logx "MUNOTALLSEC"
 
 echo "# MUPIP STOP all the mumps processes"
 foreach pid ( $pidmumps )
-    $MUPIP stop $pid >>& mupip_stop_mumps.log
+	$MUPIP stop $pid >>& mupip_stop_mumps.log
 end
 
 # Intentionally not waiting for MUMPSes to completely quit because we want to make sure that their rundown conflict with MUPIP
@@ -77,30 +77,30 @@ echo "# Now journal pool is orphaned but source server also terminated abnormall
 while ($cnt < 100)
 	# Below backward rollback invocation CAN fail. Therefore pass "-backward" explicitly to mupip_rollback.csh
 	# (and avoid implicit "-forward" rollback invocation that would otherwise happen by default).
-        $gtm_tst/com/mupip_rollback.csh -backward -lost=simpleinstanceupdate.los "*" >& rollback_${cnt}.logx
-        if ($status) then
+	$gtm_tst/com/mupip_rollback.csh -backward -lost=simpleinstanceupdate.los "*" >& rollback_${cnt}.logx
+	if ($status) then
 		# The following error is an indication of premature ipcs reset on the file header
-                $grep -q "REPLINSTDBMATCH" rollback_${cnt}.logx
-                if (0 == $status) then
-                        echo "------------------------------------------"
-                        echo "---> Got REPLINSTDBMATCH error : See rollback_${cnt}.log for details"
-                        echo "------------------------------------------"
-                        break
-                endif
-        endif
-        $MUPIP rundown >& rundown_${cnt}.logx
-        @ cnt = $cnt + 1
+		$grep -q "REPLINSTDBMATCH" rollback_${cnt}.logx
+		if (0 == $status) then
+			echo "------------------------------------------"
+			echo "---> Got REPLINSTDBMATCH error : See rollback_${cnt}.log for details"
+			echo "------------------------------------------"
+			break
+		endif
+	endif
+	$MUPIP rundown >& rundown_${cnt}.logx
+	@ cnt = $cnt + 1
 end
 
 foreach pid ( $pidmumps )
-    $gtm_tst/com/wait_for_proc_to_die.csh $pid 120
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 120
 end
 
 $MSR STOPRCV INST1 INST2
 $MUPIP rundown >& rundown_final.logx
 foreach file ($srclogfile12 impjob_imptp1.mje*)
-    sed 's/YDB-F-FORCEDHALT/FORCEDHALT/' $file > ${file}.tmp
-    mv ${file}.tmp $file
+	sed 's/YDB-F-FORCEDHALT/FORCEDHALT/' $file > ${file}.tmp
+	mv ${file}.tmp $file
 end
 
 $gtm_tst/com/dbcheck_filter.csh -noshut
