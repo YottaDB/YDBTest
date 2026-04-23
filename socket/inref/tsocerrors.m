@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -22,7 +22,7 @@ tsocerrors
 	; ------------------------
 	; Initialize some variables
 	; ------------------------
-        s portno=^config("portno")
+	s portno=^config("portno")
 	s hostname=^config("hostname")
 	s tcpdev="server$"_$j
 	if $get(^localsocket,"")="" Do
@@ -78,23 +78,23 @@ servererrors(case)
 	set $etrap="do serverror"
 	; ^expected("badopt","zstatus")="150383618,servererrors+9^tsocerrors,%YDB-E-TLSPARAM, TLS parameter BADOPT not a valid option"
 	do
-	. set (case,^case)="badopt" u tcpdev write /tls("badopt")
+	. set case="badopt" u tcpdev write /tls("badopt")
 	. do error("servererrors",case)
 	do checkerror(case,"not a valid")
 	; ^expected("noopt","zstatus")="150372778,servererrors+14^tsocerrors,%YDB-E-EXPR,Expression expected but not found"
 	do
-	. set (case,^case)="noopt" u tcpdev write /tls(,)
+	. set case="noopt" u tcpdev write /tls(,)
 	. do error("servererrors",case)
 	do checkerror(case,"E-EXPR")
 	; ^expected("renegotiate","zstatus")="150383618,servererrors+19^tsocerrors,%YDB-E-TLSPARAM, TLS parameter RENEGOTIATE but TLS not enabled"
 	do	; needs tls enabled socket
-	. set (case,^case)="renegotiate" u tcpdev write /tls("renegotiate")
+	. set case="renegotiate" u tcpdev write /tls("renegotiate")
 	. do error("servererrors",case)
 	do checkerror(case,"TLS not enabled")
 	; ^expected("listener","zstatus")="150383618,servererrors+27^tsocerrors,%YDB-E-TLSPARAM, TLS parameter /TLS but socket not connected"
 	set $zstatus=""			; clear it
 	do	; listening socket not able to enable tls
-	. set (case,^case)="listener"
+	. set case="listener"
 	. u tcpdev:(socket="listener":delimiter=$c(10))	; avoid accept
 	. write /tls("server",60,"server")
 	. do error("servererrors",case)
@@ -102,8 +102,8 @@ servererrors(case)
 	do checkerror(case,"not connected")
 	use 0
 	if $d(^error("servererrors")) w "  FAILED: " zwr ^error("servererrors",*)
-	else  w "  PASSED: servererrors",!
 	zshow "D":^zshowd("servererrors","serverafter")
+	do finish
 	quit
 serverror	set ecode=$ecode,$ecode=""
 	set ^expected(case,"device")=$device
@@ -338,13 +338,19 @@ tsocclnt(wanttls,gettls,clntid)	;client
 	e  w "  PASSED",!
 	q
 error(side,content)
-	new previo,dev set previo=$IO,dev=$device
-	s ^error(^case,$increment(^count),side,"testmsg")=content
-	s ^error(^case,^count,side,"zstatus")=$zstatus
-	s ^error(^case,^count,side,"device")=$device
-	zshow "DV":^error(^case,^count,side,"zshowd")
-	u $p
-	zwr ^error(^case,*)
+	new previo,dev,case set previo=$IO,dev=$device
+
+	; When called from the servererrors label, `content` contains the case name. In that case,
+	; set the case name from `content` instead of `^case` to avoid the need to switch the value of `^case`
+	; multiple times during the execution of the servererrors label's child job. This prevents failures due
+	; to timing issues in case `^case` is modified while the servererrors child job is between instructions that
+	; read/write the `^case` variable. For more details, see: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2672.
+	set case=$select("servererrors"=side:content,1:^case)
+	set ^error(case,$increment(^count),side,"testmsg")=content
+	set ^error(case,^count,side,"zstatus")=$zstatus
+	set ^error(case,^count,side,"device")=$device
+	zshow "DV":^error(case,^count,side,"zshowd")
+	use $p
+	zwr ^error(case,*)
 	use previo
-	q
-	;
+	quit

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,38 +42,49 @@
 # mwebserver	[smw]	GTM-8302 TLS access to M Web Server
 #------------------------------------------------------------------------------------
 echo "SOCKET test Starts..."
-setenv subtest_list "socbasic dic clntsrvr C9H04002843 socmemleak chkbroksock soczshowdleak lsocbasic lsocmemleak"
-setenv subtest_list_non_replic "unixdomain gtcm_ipv6 dollarp waittimeout ltsockzintr lsocparms lsoczshow waitmultiple lsocpass"
-setenv subtest_list_non_replic "$subtest_list_non_replic lsocpassmulti zsocket splitp"
-if ("TRUE" == "$gtm_test_tls") then
-	# The below subtests need TLS setup
-	setenv subtest_list_non_replic "$subtest_list_non_replic tsocerrors mwebserver"
-endif
-if ($LFE == "E") then
-   setenv subtest_list "$subtest_list socdevice"
-endif
+setenv subtest_list_common ""
+setenv subtest_list_common "$subtest_list_common socbasic"
+setenv subtest_list_common "$subtest_list_common dic"
+setenv subtest_list_common "$subtest_list_common clntsrvr"
+setenv subtest_list_common "$subtest_list_common C9H04002843"
+setenv subtest_list_common "$subtest_list_common socmemleak"
+setenv subtest_list_common "$subtest_list_common chkbroksock"
+setenv subtest_list_common "$subtest_list_common soczshowdleak"
+setenv subtest_list_common "$subtest_list_common lsocbasic"
+setenv subtest_list_common "$subtest_list_common lsocmemleak"
+setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic unixdomain"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtcm_ipv6"
+setenv subtest_list_non_replic "$subtest_list_non_replic dollarp"
+setenv subtest_list_non_replic "$subtest_list_non_replic waittimeout"
+setenv subtest_list_non_replic "$subtest_list_non_replic ltsockzintr"
+setenv subtest_list_non_replic "$subtest_list_non_replic lsocparms"
+setenv subtest_list_non_replic "$subtest_list_non_replic lsoczshow"
+setenv subtest_list_non_replic "$subtest_list_non_replic waitmultiple "
+setenv subtest_list_non_replic "$subtest_list_non_replic lsocpass"
+setenv subtest_list_non_replic "$subtest_list_non_replic lsocpassmulti"
+setenv subtest_list_non_replic "$subtest_list_non_replic zsocket"
+setenv subtest_list_non_replic "$subtest_list_non_replic splitp"
+setenv subtest_list_non_replic "$subtest_list_non_replic tsocerrors"
+setenv subtest_list_non_replic "$subtest_list_non_replic mwebserver"
+setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
-	setenv subtest_list "$subtest_list $subtest_list_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
-	setenv subtest_list "$subtest_list $subtest_list_non_replic"
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+endif
+
+if ($LFE == "E") then
+	setenv subtest_list "$subtest_list socdevice"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list ""
 
-if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
-	setenv subtest_exclude_list "$subtest_exclude_list unixdomain gtcm_ipv6"
-endif
-
-# For solaris 9,  a numeric host address string can only be a dotted-decimal IPv4 address
-# or or an IPv6 hex address.
-if("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype") then
-       setenv subtest_exclude_list "$subtest_exclude_list gtcm_ipv6"
-endif
-# No IPv6 or nanoinetd support on Tru64
-if ("HOST_OSF1_ALPHA" == "$gtm_test_os_machtype") then
-	setenv subtest_exclude_list "$subtest_exclude_list gtcm_ipv6 dollarp"
+if ("TRUE" != "$gtm_test_tls") then
+	# The below subtests need TLS setup
+	setenv subtest_exclude_list "$subtest_exclude_list tsocerrors mwebserver"
 endif
 
 # Filter out tests requiring specific gg-user setup, if the setup is not available
