@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,7 +38,12 @@ echo '# This will open $gtm_dist/gtmhelp.dat and then kill -9 itself leaving the
 $rsh $tst_org_host -l $gtmtest1 $tst_tcsh `pwd`/$script
 
 # Kill gtmsecshr process in case it is already running as we want to start a new one with a specific ydb_tmp/gtm_tmp value
-set secshrpid = `pgrep -f $gtm_dist/gtmsecshr`
+# Note that we need to do "realpath" to take care of the case "$gtm_dist" is a soft link to another directory. Or else, the
+# "pgrep -f" might not identify a running gtmsecshr (and in turn not kill that gtmsecshr process causing this subtest to fail)
+# as that would be invoked with the real path whereas "$gtm_dist" would be pointing to the soft link path and the two would
+# be different path names (e.g. /usr/library/R206 vs /usr/library/V71002_R206).
+set gtmsecshr_realpath = `realpath $gtm_dist/gtmsecshr`
+set secshrpid = `pgrep -f $gtmsecshr_realpath`
 if ("$secshrpid" != "") then
 	sudo kill $secshrpid
 endif
@@ -84,7 +89,7 @@ echo "# 5) Check that a DBRNDWN message is NOT seen in syslog"
 $grep -E "$pattern" syslog1.txt | sed 's/.* YDB-/YDB-/;s/\[.*\]/[##PID##]/;s/8 - [0-9]* :/8 - ##PID##/;s,version .* from /,version ##ZYRELEASE## from /,;s/ -- generated from.*//;s/ydb_secshr......../ydb_secshrXXXXXXXX/;s,'$ydb_tmp',##YDB_TMP##,;s,called from module .*/sr_,called from module sr_,;'
 
 # Kill gtmsecshr process started above before leaving subtest
-set secshrpid = `pgrep -f $gtm_dist/gtmsecshr`
+set secshrpid = `pgrep -f $gtmsecshr_realpath`
 if ("$secshrpid" != "") then
 	sudo kill $secshrpid
 endif
