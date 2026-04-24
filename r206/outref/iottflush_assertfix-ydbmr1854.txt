@@ -1,0 +1,17 @@
+#--------------------------------------------#
+# Test iott_flush() assert fixes in YDB!1854 #
+#--------------------------------------------#
+
+## Test 1: readline_read_mval() caller
+# Set ydb_readline and run [$ydb_dist/yottadb -direct]
+# Expect a blank prompt and no assert failure. Prior to the YDB!1854 (commit d7485682) changes,
+# this would cause an assert failure.
+
+YDB>
+
+## Test 2: iott_rdone() caller
+# Run [$ydb_dist/yottadb -run %XCMD 'read *x' > x.out]
+# Expect the output "X" and no assert failure. Prior to the YDB!1854 (commit d7485682) changes,
+# this would cause an assert failure.
+X
+
