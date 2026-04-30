@@ -14,6 +14,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# iottresetterm_skipnopricio-ydb1227	[jon]	Test skip issuing NOPRINCIO error in iott_resetterm.c if exiting (fixes SIG-11)
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -21,6 +22,7 @@ echo "r208 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic iottresetterm_skipnopricio-ydb1227"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
