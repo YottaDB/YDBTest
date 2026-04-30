@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,12 +27,12 @@ setenv gtm_test_use_V6_DBs 0		# Disable V6 DB mode using random V6 version to cr
 # dbcreate and the following tests. Instead use gtm_obfuscation_key to have it
 # the same across all DISTs.
 if ("ENCRYPT" == "$test_encryption") then
-        echo "randomstring" >&! gtm_obfuscation_key.txt
-        setenv gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
-        setenv encrypt_env_rerun
-        source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
-        if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
-        unsetenv encrypt_env_rerun
+	echo "randomstring" >&! gtm_obfuscation_key.txt
+	setenv gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
+	setenv encrypt_env_rerun
+	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+	if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
+	unsetenv encrypt_env_rerun
 endif
 
 set prior_ver = `$gtm_tst/com/random_ver.csh -gte V61000`
@@ -60,8 +60,8 @@ $gtm_tst/com/dbcreate.csh mumps >& prior_ver_dbcreate.out
 # Make sure the correct version was used during database configuration
 $grep -q "^Using: .*$prior_ver.*/mumps" prior_ver_dbcreate.out
 if (0 != $status) then
-    echo "The database is not created with $prior_ver. Please check prior_ver_dbcreate.out."
-    exit -1
+	echo "The database is not created with $prior_ver. Please check prior_ver_dbcreate.out."
+	exit -1
 endif
 
 $MSR START INST1 INST2
@@ -82,7 +82,10 @@ chmod 444 mumps.repl
 
 echo "# MUPIP RUNDOWN will generate two errors: A version mismatch error followed by a file permission error (when trying to write to mumps.repl)"
 echo "# This should not crash with SIGSEGV"
-$MUPIP rundown >&! user_rundown.outx
+($MUPIP rundown >&! user_rundown.outx & ; echo $! >&! rundown.pid) >&! rundown-bg.outx
+# Wait for the MUPIP RUNDOWN process to exit, in case the shell process it spawns via the `syslog()` call is defunct,
+# which can cause the test to fail due to leftover semaphores accessed by the MUPIP RUNDOWN process.
+$gtm_tst/com/wait_for_proc_to_die.csh `cat rundown.pid`
 
 echo "# The test is over. Give the write permissions back"
 chmod 644 mumps.repl
@@ -93,7 +96,7 @@ source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 $MSR STOPRCV INST1 INST2
 
 echo "# Do a MUPIP RUNDOWN to cleanup the shared resources created by crashed source server"
-$MUPIP rundown >& mupip_clean_shared.outx
+$MUPIP rundown -reg '*' >& mupip_clean_shared.outx
 
 #dbcheck is not needed as we know the database is in a broken state at this moment
 $pri_shell "$pri_getenv ; cd $PRI_SIDE; source $gtm_tst/com/portno_release.csh"
