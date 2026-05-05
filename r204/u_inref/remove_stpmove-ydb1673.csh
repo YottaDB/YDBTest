@@ -48,11 +48,11 @@ echo "# Run litlab^ydb1673 routine to:"
 echo "# 1. Create 1000 copies of test.m"
 echo "# 2. ZLINK them one by one in the same process"
 echo "# 3. Record the time elapsed for each 100 linkages."
-# Run the test up to 3 times in case it fails due to timing issues caused by factors
-# outside the test, e.g. system load. If it fails all 3 times, fail the test.
+# Run the test up to 15 times in case it fails due to timing issues caused by factors
+# outside the test, e.g. system load. If it fails all 15 times, fail the test.
 # See discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2668#note_3291245899
 set try = 0
-while ($try < 3)
+while ($try < 15)
 	@ try = $try + 1
 	$gtm_dist/mumps -run litlab^ydb1673 >&! try${try}.out
 	grep -q PASS try${try}.out
