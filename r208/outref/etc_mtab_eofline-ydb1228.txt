@@ -1,0 +1,16 @@
+#-----------------------------------------------------------------------------------------------#
+# [#947] $ZEOF works correctly for files which are soft links to files in the /proc file system #
+#-----------------------------------------------------------------------------------------------#
+
+## Run [wc -l /etc/mtab]
+##TEST_AWK[0-9]* /etc/mtab
+## Run [ydb1228.m] routine
+# Read from /etc/mtab until $ZEOF is hit
+##TEST_AWK# Expect \$ZEOF to be set after line [0-9]*:
+##TEST_AWKPASS: \$ZEOF set on line [0-9]*
+# Run [zshow "d"]
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+# Read from /etc/mtab until all lines read
+##TEST_AWK# Expect [0-9]* lines to be read:
+##TEST_AWKPASS: Read expected [0-9]* lines

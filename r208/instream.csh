@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # iottresetterm_skipnopricio-ydb1227	[jon]	Test skip issuing NOPRINCIO error in iott_resetterm.c if exiting (fixes SIG-11)
+# etc_mtab_eofline-ydb1228		[jon]	Test $ZEOF works correctly for files which are soft links to files in the /proc file system
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -23,6 +24,7 @@ echo "r208 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic iottresetterm_skipnopricio-ydb1227"
+setenv subtest_list_non_replic	"$subtest_list_non_replic etc_mtab_eofline-ydb1228"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
