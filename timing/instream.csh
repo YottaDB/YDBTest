@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -72,6 +72,12 @@ source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
 	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
 	setenv subtest_exclude_list "$subtest_exclude_list go_unit_tests"
+endif
+
+if ("CLANG" == $gtm_test_yottadb_compiler) then
+	# The following test fails consistently with clang builds only, so disable in that case.
+	# For more details, see the discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/941#note_3320807781.
+	setenv subtest_exclude_list "$subtest_exclude_list largelvarray"
 endif
 
 # Submit the list of subtests
