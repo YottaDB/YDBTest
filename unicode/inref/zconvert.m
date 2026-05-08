@@ -3,7 +3,7 @@
 ; Copyright (c) 2006-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -49,7 +49,12 @@ zconvert ;
 		. set comments(cnti)="turkish single code point"
 		. set cnti=cnti+1,testarorg(cnti)="Türkçe -- with combining marks",testarl(cnti)="türkçe -- with combining marks",testaru(cnti)="TÜRKÇE -- WITH COMBINING MARKS",testart(cnti)="Türkçe -- With Combining Marks"
 		. set comments(cnti)="turkish with combining marks"
-		. set cnti=cnti+1,testarorg(cnti)="Tu¨rkc¸e -- huh, non-combining marks",testarl(cnti)="tu¨rkc¸e -- huh, non-combining marks",testaru(cnti)="TU¨RKC¸E -- HUH, NON-COMBINING MARKS",testart(cnti)="Tu¨Rkc¸E -- Huh, Non-Combining Marks"
+		. ; ICU 78.2 onwards (Ubuntu 26.04) we started noticing that title case conversion works slightly differently
+		. ; And "e" stays the same in "Tu¨rkc¸e" after title case conversion. Whereas in previous ICU versions it used
+		. ; to be converted to "E". The new behavior seems to be the right behavior and so we allow for both depending
+		. ; on the current ICU version being used so older ICUs too pass the test like they previously used to.
+		. set newchar=$select($piece($ztrnlnm("gtm_icu_version"),".")<78:"E",1:"e")
+		. set cnti=cnti+1,testarorg(cnti)="Tu¨rkc¸e -- huh, non-combining marks",testarl(cnti)="tu¨rkc¸e -- huh, non-combining marks",testaru(cnti)="TU¨RKC¸E -- HUH, NON-COMBINING MARKS",testart(cnti)="Tu¨Rkc¸"_newchar_" -- Huh, Non-Combining Marks"
 		. set comments(cnti)="turkish without combining marks"
 		. set cnti=cnti+1,testarorg(cnti)="And now the famous Turkish dotless i: ı (L), or I (U), or I (T)",testarl(cnti)="and now the famous turkish dotless i: ı (l), or i (u), or i (t)",testaru(cnti)="AND NOW THE FAMOUS TURKISH DOTLESS I: I (L), OR I (U), OR I (T)",testart(cnti)="And Now The Famous Turkish Dotless I: I (L), Or I (U), Or I (T)"
 		. set comments(cnti)="turkish dotless I"
@@ -146,7 +151,7 @@ threeargs ;
 		quit
 check ;
 		for x=1:1:cnti do
-  		. do ^examine($ZCONVERT(testarorg(x),"l"),testarl(x),"Lowercase (l) conversion of testarorg("_x_"): "_testarorg(x)_" "_comments(x))
+		. do ^examine($ZCONVERT(testarorg(x),"l"),testarl(x),"Lowercase (l) conversion of testarorg("_x_"): "_testarorg(x)_" "_comments(x))
 		. do ^examine($ZCONVERT(testarorg(x),"L"),testarl(x),"Lowercase (L) conversion of testarorg("_x_"): "_testarorg(x)_" "_comments(x))
 		. do ^examine($ZCONVERT(testarorg(x),"u"),testaru(x),"Uppercase (u) conversion of testarorg("_x_"): "_testarorg(x)_" "_comments(x))
 		. do ^examine($ZCONVERT(testarorg(x),"U"),testaru(x),"Uppercase (U) conversion of testarorg("_x_"): "_testarorg(x)_" "_comments(x))
