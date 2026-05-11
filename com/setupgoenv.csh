@@ -139,6 +139,8 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# To avoid such errors, we set the compiler for the go build to be "clang" instead of the default "gcc".
 	if ("clang" == $gtm_test_asan_compiler) then
 		setenv CC "clang"
+	else
+		setenv CC "gcc"
 	endif
 endif
 
