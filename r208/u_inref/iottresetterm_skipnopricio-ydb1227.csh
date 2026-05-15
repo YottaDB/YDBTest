@@ -13,7 +13,7 @@
 
 echo "#---------------------------------------------------------------------------------------------------------------------#"
 echo '# [#938] Test skip issuing NOPRINCIO error in iott_resetterm.c if exiting (fixes SIG-11)                              #'
-echo '# See the MR description for YDB\1859 for additional details: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1859 #'
+echo '# See the MR description for YDB\!1859 for additional details: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1859 #'
 echo "#---------------------------------------------------------------------------------------------------------------------#"
 echo
 
