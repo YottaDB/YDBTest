@@ -3,7 +3,7 @@
  * Copyright (c) 2013, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -476,8 +476,8 @@ public class TestXC {
 		boolean matchFound = matcher.find();
 		// Check for the javaVersion format and parse it accordingly
 		if(matchFound) {
-			// It is an "early access" release, of the format: `[0-9]+-ea`
-			intver = Integer.parseInt(javaVersion.split("-")[0]);
+			// It is an "early access" release, of the format: `major_version.minor_version.patch_version-ea`
+			intver = Integer.parseInt(javaVersion.split("-")[0].split("\\.")[0]);
 		} else {
 			// It is a standard release, of the format: major_version.minor_version
 			intver = Integer.parseInt(javaVersion.split("\\.")[0]);
