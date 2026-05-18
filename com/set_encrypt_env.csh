@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,15 +17,15 @@
 # new GnuPG home directory
 # Usage :
 # $1  -  Output directory where encrypt_env_settings.{csh,txt} should be created
-# $2  -  Value of $gtm_dist. Since this script is invoked via ssh in case of multi-host tests, $gtm_dist
-#	 need not be defined always
-# $3  -  Value of test version used
+# $2  -  Value of $tst_ver (or $remote_ver in case this is remote side of a multi-host test).
+# $3  -  Value of $tst_image (or $remote_image in case this is remote side of a multi-host test).
+# $4  -  Value of test version used
 
 set shorthost = ${HOST:ar}
 
 set out_dir="$1"
-setenv gtm_dist 		"$2"
-setenv gtm_tst 			$gtm_test/$3
+setenv gtm_dist 		"$gtm_root/$2/$3"
+setenv gtm_tst 			$gtm_test/$4
 setenv gtm_tools 		${gtm_dist:h}/tools
 
 set outfile="$out_dir/encrypt_env_settings.txt"

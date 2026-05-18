@@ -30,7 +30,7 @@ if ("ENCRYPT" == "$test_encryption") then
 	echo "randomstring" >&! gtm_obfuscation_key.txt
 	setenv gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
 	setenv encrypt_env_rerun
-	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
 	if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
 	unsetenv encrypt_env_rerun
 endif

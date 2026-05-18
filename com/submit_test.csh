@@ -450,7 +450,7 @@ endif
 # If encryption is turned on, setup its environment now
 if ($?test_encryption) then
 	if ("ENCRYPT" == "$test_encryption") then
-		source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+		source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
 		$gtm_tst/com/multihost_encrypt_settings.csh
 		# If there is an encryption setup issue, encryption will be automatically disabled by set_encrypt_env.csh by setting
 		# test_encryption to "NON_ENCRYPT".  In that case, report it once.

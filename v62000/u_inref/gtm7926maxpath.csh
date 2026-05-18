@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,12 +47,12 @@ endif
 # dbcreate and the following tests. Instead use gtm_obfuscation_key to have it
 # the same across all DISTs.
 if ("ENCRYPT" == "$test_encryption") then
-        echo "randomstring" >&! gtm_obfuscation_key.txt
-        setenv gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
-        setenv encrypt_env_rerun
-        source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
-        if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
-        unsetenv encrypt_env_rerun
+	echo "randomstring" >&! gtm_obfuscation_key.txt
+	setenv gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
+	setenv encrypt_env_rerun
+	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
+	if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
+	unsetenv encrypt_env_rerun
 endif
 
 $gtm_tst/com/dbcreate.csh mumps  1

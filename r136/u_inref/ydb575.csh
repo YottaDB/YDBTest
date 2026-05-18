@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,7 @@ echo "# Test that CRYPTINIT error while opening an encrypted database does not l
 
 # Turn on Encryption
 setenv test_encryption ENCRYPT
-source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
 setenv acc_meth BG		# MM and encryption is not supported
 
 echo "# Create encrypted database"

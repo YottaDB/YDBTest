@@ -82,7 +82,7 @@ setenv gtm_test_use_V6_DBs 0
 
 # If encryption environment is not already set, do it now
 if !(-e $tst_general_dir/encrypt_env_settings.csh) then
-	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
 	# If there is an encryption setup issue, set_encrypt_env.csh will set $test_encryption to "NON_ENCRYPT".
 	# In that case exit immediately. No point continuing.
 	if ("NON_ENCRYPT" == "$test_encryption") then

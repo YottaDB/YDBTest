@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ if ( ($concurr_randdbg) && ("ENCRYPT" == "$test_encryption") ) then
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key $PWD/gtm_obfuscation_key.txt
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_crypt_plugin gtm_crypt_plugin libgtmcrypt_${encryption_lib}_${encryption_algorithm}${gt_ld_shl_suffix}
 	setenv encrypt_env_rerun
-	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $gtm_dist $tst_src >>! $tst_general_dir/set_encrypt_env.log
+	source $gtm_tst/com/set_encrypt_env.csh $tst_general_dir $tst_ver $tst_image $tst_src >>! $tst_general_dir/set_encrypt_env.log
 	if ("TRUE" == "$gtm_test_tls" ) source $gtm_tst/com/set_tls_env.csh
 	unsetenv encrypt_env_rerun
 endif
