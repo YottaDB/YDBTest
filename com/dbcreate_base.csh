@@ -37,6 +37,7 @@ set v6switch_done = 0
 echo >> v6debug.txt # Spacing between potentially multiple calls to dbcreate.csh.
 echo "gtm_dist: $gtm_dist" >> v6debug.txt
 echo "tst_ver:  $tst_ver" >> v6debug.txt
+unsetenv ydb_app_ensures_isolation # in case it is set on test replay (else ZGBLDIRACC errors on non-existent gld file are possible in "mumps -run ^%XCMD" invocations below)
 if ($?gtm_test_use_V6_DBs) then
 	echo "gtm_test_use_V6_DBs: $gtm_test_use_V6_DBs" >> v6debug.txt
 	if (1 == $gtm_test_use_V6_DBs) then
@@ -229,7 +230,6 @@ if ($?test_specific_gde) then
 endif
 
 #source the output of AWK
-unsetenv ydb_app_ensures_isolation # in case it is set on test replay (else ZGBLDIRACC errors on non-existent gld file are possible)
 source tmp.com >>&! dbcreate.out
 if ($status) echo "TEST-E-DBCREATE ERROR from tmp.com Check dbcreate.out for details"
 
