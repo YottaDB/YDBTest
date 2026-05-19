@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,13 +69,13 @@ if ( "$chset" !~ {M,UTF8} ) then
 	exit -1
 endif
 
-set gtm_routines_var = ".${star1}("
+set gtm_routines_var = ".${star1}(. "
 
 if (-e $gtm_tst/$tst/inref) then
 	set gtm_routines_var = "${gtm_routines_var}${gtm_tst}/$tst/inref"
 endif
 
-set gtm_routines_var = "$gtm_routines_var $gtm_tst/com ."
+set gtm_routines_var = "$gtm_routines_var $gtm_tst/com"
 
 if (-e $gtm_com/gtmji) then
 	set gtm_routines_var = "$gtm_routines_var $gtm_com/gtmji"

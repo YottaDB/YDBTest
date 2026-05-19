@@ -289,39 +289,39 @@ YDB>
 # Try ydb860boolexprextref.m using [yottadb -run]
 		lock +[($get(^a(3))!$get(^|"mumps.gld"|a(3)))
 		                                             ^-----
-		At column 47, line 17, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 47, line 17, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
 		lock ^[(($Test&($ZAHandle(@iTRUE)]$ZAHandle(@iTRUE@(1)))!$Test)&^TRUE&($$RetNot(((((@iFALSE@($$Always1)[(1'>$Order(^TRUE(1),-1)))[$$RetNot($$Always0))>$$Always0)'>1))'[(0']]$$Always1))
 		                                                                                                                                                                                        ^-----
-		At column 186, line 18, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 186, line 18, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		lock +[($Test!(1'=($Test'=^TRUE))!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
 		                                                                         ^-----
-		At column 75, line 19, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 75, line 19, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
 		lock +[(^TRUE!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
 		                                                     ^-----
-		At column 55, line 20, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 55, line 20, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
 		lock +[(^TRUE!$$RetNot($Order(@^iTRUE@(2))))]
 		                                             ^-----
-		At column 47, line 21, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 47, line 21, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
 		lock +[(^TRUE!$$x($Order(^iTRUE(2))))]
 		                                      ^-----
-		At column 40, line 22, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 40, line 22, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
 		lock ^[(+aZYISSQLNULL(second)!^y(+c),+^z(d)
 		                                    ^-----
-		At column 38, line 23, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 38, line 23, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		lock +[(^x!$Order(^y(1)))]
 		                          ^-----
-		At column 28, line 24, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 28, line 24, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
 		set ^[(0!^x(1)]
 		               ^-----
-		At column 17, line 25, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+		At column 17, line 25, source module ##TEST_PATH##/ydb860boolexprextref.m
 %YDB-E-RHMISSING, Right-hand side of expression expected
 ZSTATUS=+16^ydb860boolexprextref,%YDB-E-GVUNDEF, Global variable undefined: ^a
 ZSTATUS=+17^ydb860boolexprextref,%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
@@ -560,23 +560,23 @@ YDB>
 # Try ydb860zbrkcntnegative.m using [yottadb -run]
 		zbreak -x::-1	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-1) is specified
 		         ^-----
-		At column 11, line 25, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+		At column 11, line 25, source module ##TEST_PATH##/ydb860zbrkcntnegative.m
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		zbreak -x::-2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-2) is specified
 		         ^-----
-		At column 11, line 26, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+		At column 11, line 26, source module ##TEST_PATH##/ydb860zbrkcntnegative.m
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		zbreak -x::-3	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-3) is specified
 		         ^-----
-		At column 11, line 27, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+		At column 11, line 27, source module ##TEST_PATH##/ydb860zbrkcntnegative.m
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		zbreak -x::0	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a zero count () is specified
 		         ^-----
-		At column 11, line 28, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+		At column 11, line 28, source module ##TEST_PATH##/ydb860zbrkcntnegative.m
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		zbreak -x::2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a positive count (1) is specified
 		         ^-----
-		At column 11, line 29, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+		At column 11, line 29, source module ##TEST_PATH##/ydb860zbrkcntnegative.m
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 ZSTATUS=+18^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-10], of transits through a ZBREAK breakpoint before activating it, cannot be negative
 ZSTATUS=+19^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-1], of transits through a ZBREAK breakpoint before activating it, cannot be negative
@@ -647,19 +647,19 @@ YDB>
 # Try ydb860numoflow.m using [yottadb -run]
 	 write (0!((-(+(-("1E47"))))))
 	                              ^-----
-		At column 31, line 17, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+		At column 31, line 17, source module ##TEST_PATH##/ydb860numoflow.m
 %YDB-E-NUMOFLOW, Numeric overflow
 	 write (0!((-(+(-("1E47"))))))&(0!((-(+(-("1E47"))))))
 	                                                      ^-----
-		At column 55, line 18, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+		At column 55, line 18, source module ##TEST_PATH##/ydb860numoflow.m
 %YDB-E-NUMOFLOW, Numeric overflow
 	 write (0!((-(+(-("1E47"))))))!(0!((-(+(-("1E47"))))))
 	                                                      ^-----
-		At column 55, line 19, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+		At column 55, line 19, source module ##TEST_PATH##/ydb860numoflow.m
 %YDB-E-NUMOFLOW, Numeric overflow
 	 write (0!((-(+(-("1E47"))))))!'(0!((-(+(-("1E47"))))))
 	                                                       ^-----
-		At column 56, line 20, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+		At column 56, line 20, source module ##TEST_PATH##/ydb860numoflow.m
 %YDB-E-NUMOFLOW, Numeric overflow
 ZSTATUS=+17^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
 ZSTATUS=+18^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
