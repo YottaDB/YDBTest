@@ -117,7 +117,7 @@ Test both the SimpleAPI and SimpleThreadAPI versions of encode and decode
 ##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_decode_st\(\) : 151028178,\(SimpleThreadAPI\),%YDB-E-JANSSONINVALIDJSON, Invalid JSON: '\[' or '{' expected - in ydb_decode_st\(\) call
 # Decode large JSON from a file
 # Decode long key JSON from a string
-##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_decode_st\(\) : 150372986,\(SimpleThreadAPI\),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: \^jsonLongKeyBuffer\("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"\)
+##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_decode_st\(\) : 150372986,\(SimpleThreadAPI\),%YDB-E-GVSUBOFLOW, The combined length of subscripts \(278\) is greater than maximum \(256\) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: \^jsonLongKeyBuffer\("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"\)
 # Decode long value JSON from a string
 ##TEST_AWKError: ydb474_st.c:[0-9]*: ydb_decode_st\(\) : 150373602,\(SimpleThreadAPI\),%YDB-E-REC2BIG, Record size \(257\) is greater than maximum \(256\) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: \^jsonLongValueBuffer\("x"\)
 

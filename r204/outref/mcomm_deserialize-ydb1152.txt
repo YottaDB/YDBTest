@@ -440,12 +440,12 @@ ZSTATUS=T3+147^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE
 # Run [zyencode y=x]
 # Run [zyencode ^z=y]
 # Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
-ZSTATUS=T3+158^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                                                                                                                                                                                                               1")
+ZSTATUS=T3+158^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, The combined length of subscripts (0) is greater than maximum (0) for region: ,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                                                                                                                                                                                                               1")
 # Run [set x($justify(1,64),$justify(1,64),$justify(1,64),$justify(1,64))=1]
 # Run [zyencode y=x]
 # Run [zyencode ^z=y]
 # Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
-ZSTATUS=T3+166^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                               1","                                                               1","                                                               1","                                                               1")
+ZSTATUS=T3+166^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, The combined length of subscripts (0) is greater than maximum (0) for region: ,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                               1","                                                               1","                                                               1","                                                               1")
 # Run [set x($justify(1,257))=1]
 # Run [zyencode y=x]
 # Run [zyencode ^z=y]
@@ -455,7 +455,7 @@ ZSTATUS=T3+174^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE
 # Run [zyencode y=x]
 # Run [zyencode ^z=y]
 # Expect '%YDB-W-ZYDECODEINCOMPL' to be emitted with $ZSTATUS=%YDB-E-GVSUBOFLOW
-ZSTATUS=T3+182^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                1","                                                               1","                                                               1","                                                               1")
+ZSTATUS=T3+182^ydb1152,%YDB-W-ZYDECODEINCOMPL, Error encountered during ZYDECODE; operation may be incomplete,%YDB-E-GVSUBOFLOW, The combined length of subscripts (0) is greater than maximum (0) for region: ,%YDB-I-GVIS, 		Global variable: 		Global variable: ^z("                                                                1","                                                               1","                                                               1","                                                               1")
 
 ### Test 4: ZYENCODE properly handles input trees containing ~1MiB of data (YDB max string length)
 ### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278

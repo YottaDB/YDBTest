@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -38,7 +38,7 @@ c003412	;
 ztr	;
 	; $ZSTATUS will be a long line composed of the string concatenation of the below 3 lines
 	;	150372986,c003412+18^c003412,
-	;	%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,
+	;	%YDB-E-GVSUBOFLOW, The combined length of subscripts (1020) is greater than maximum (392) for region: DEFAULT
 	;	%YDB-I-GVIS, 		Global variable: ^ZGBL(1,$C(0,2)_"."_$C(0,0,0,0,0,0,0,2))
 	; Out of this, we are only interested in the gvn starting with ^ZGBL as that is what will change with different keysizes
 	; So print just that below.

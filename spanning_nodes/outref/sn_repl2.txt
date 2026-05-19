@@ -70,7 +70,7 @@ No errors detected by integ.
 ==Executing MULTISITE_REPLIC 'RUN INST2 set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log GVSUBOFLOW; $gtm_tst/com/backup_dbjnl.csh key2 "$update_log *dat *.mjl* *.gld" mv'==
 ----------
 Error GVSUBOFLOW seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+##TEST_AWK%YDB-E-GVSUBOFLOW, The combined length of subscripts \(264\) is greater than maximum \(255\) for region: [A-Z0-9]*
 ----------
 
 ###################################################################
