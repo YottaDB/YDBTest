@@ -391,7 +391,7 @@ x="A"_$C(0)_$ZCH(191)_$C(19)_"5Wy"_$ZCH(145)_$C(19)_"5Wy"_$C(0,0)
 y="^A(1.23456789012345678)"
 # Test a few invalid or non-canonical numeric subscripts
 STAT=viewygn2gds+26^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
-STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-DBBADNSUB, ^A(1.234567890123456789) Bad numeric subscript
 STAT=viewygn2gds+28^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
 STAT=viewygn2gds+29^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
 # Test that numeric subscripts inside double-quotes are treated as string subscripts
@@ -426,7 +426,7 @@ x="A"_$C(0)_"¿"_$C(19)_"5Wy"_$C(145,19)_"5Wy"_$C(0,0)
 y="^A(1.23456789012345678)"
 # Test a few invalid or non-canonical numeric subscripts
 STAT=viewygn2gds+26^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
-STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-DBBADNSUB, ^A(1.234567890123456789) Bad numeric subscript
 STAT=viewygn2gds+28^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
 STAT=viewygn2gds+29^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
 # Test that numeric subscripts inside double-quotes are treated as string subscripts
