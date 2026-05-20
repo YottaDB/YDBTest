@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2004, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -37,6 +40,20 @@ mv lnkrtn.x lnkrtn.m
 mv lnkrtn0.x lnkrtn0.m
 mv lnkrtn1.x lnkrtn1.m
 mv lnkrtn2.x lnkrtn2.m
+
+# Embed source in object file as "copy^relinks" (in "longname/inref/relinks.m") does $text(relinks+i^relinks)
+# after creating a new/empty "relinks.m". Since "gtmroutines" env var for "." object directory contains "."
+# ahead of "$tst/inref" in the parenthesized M source list (due to commit 009a2fdf), the M source for $TEXT()
+# would try to look at "relinks.m" in the current directory which would be an empty file and so would generate
+# an empty line in an indefinite loop while waiting for "END" label to show up and result in a test hang.
+# Avoid this by embedding the M source in the object file that way even if the .m file is newly created, $TEXT()
+# will find the M source in the already linked object file.
+if ($?gtmcompile) then
+	setenv gtmcompile "$gtmcompile -embed_source"
+else
+	setenv gtmcompile "-embed_source"
+endif
+
 $GTM << end_relinks
 do ^relinks
 end_relinks
