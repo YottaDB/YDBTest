@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -12,8 +12,8 @@
 #################################################################
 #
 if (! $test_replic) then
-    echo '*** This test must be run with -replic - exiting'
-    exit 1
+	echo '*** This test must be run with -replic - exiting'
+	exit 1
 endif
 #
 echo '# GTM-9285 - Test multiple changes to how -CONNECTPARAMS affects starting of source server'
@@ -151,6 +151,13 @@ echo '#'
 echo '# Note - Test#1 created a log file that we can use for this so show all of the "hard connection attempt" messages.'
 echo '# Expect 5 hard connection attempts:'
 $grep 'hard connection attempt' src1.log | cut -c 28-
+
+# It is possible %YDBPROCSTUCKEXEC was invoked by any of the source server shutdown (SRC_SHUT.csh calls) commands above.
+# We have seen this happen mostly when the test is run with -encrypt and when gtm_custom_errors env var is turned on.
+# In that case, wait for the backgrounded dse processes (from %YDBPROCSTUCKEXEC) to finish before moving on as otherwise
+# they can cause test failures (%YDB-W-MUNOTALLSEC, CHECK-W-SEM and CHECK-W-SHM message symptoms) due to the test framework
+# finding the database still accessed by a process when "leftover_ipc_cleanup_if_needed.csh" is invoked. Hence the below call.
+$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
 
 echo
 $echoline
