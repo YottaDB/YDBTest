@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                               ;
+; Copyright (c) 2003-2016 Fidelity National Information         ;
+; Services, Inc. and/or its subsidiaries. All rights reserved.	;
+;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;                                                               ;
+;       This source code contains the intellectual property     ;
+;       of its copyright holder(s), and is made available       ;
+;       under a license.  If you do not know the terms of       ;
+;       the license, please stop and do not read further.       ;
+;                                                               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 start(cert) ; data base volume test with KILL
 	; test stops when $d(^STOP)'=0
 
@@ -9,7 +23,7 @@ start(cert) ; data base volume test with KILL
 	; ^light was set in drive based on LFE
 	If $Data(^light)  s pass=5
 	Else  s pass=500
-	s mark=$j*pass,maxnod=500,maxlen=120,lenidx=0,FAIL=0,ermax=3
+	s mark=$j*pass,maxnod=500,maxlen=120,lenidx=0,FAIL=0,ermax=1
 	W !!,"VOLKILL volume test"
 
 	s ITEM="VOLKILL volume test - no wait "
@@ -44,7 +58,7 @@ error	Write ! ZSHOW "*" Write !
 	q
 
 proc0	k ^b5($j)
-	i $d(^b5($j))'=0			d TRACE(0,$d(^b5($j)),0) q 
+	i $d(^b5($j))'=0			d TRACE(0,$d(^b5($j)),0) q
 	s x=$o(^b5($j-1)) i x'="",x<($j+1)	d TRACE(1,$o(^b5($j-1)),"")  q
 	s (top,^b5($j))=mark,mark=mark+1
 	s (left,^($j,1))=mark,mark=mark+1
@@ -61,7 +75,7 @@ proc0	k ^b5($j)
 
 proc1	k ^b5($j)
 	h $r(2)*0.17
-	i $d(^b5($j))'=0				d TRACE(0,$d(^b5($j)),0) q 
+	i $d(^b5($j))'=0				d TRACE(0,$d(^b5($j)),0) q
 	h $r(3)*0.17
 	s x=$o(^b5($j-1)) i x'="",x<($j+1)	d TRACE(1,$o(^b5($j-1)),"")  q
 	h $r(2)*0.17
@@ -87,14 +101,14 @@ proc1	k ^b5($j)
 chktop(pos)
 	i $d(^b5($j))'=11		d TRACE(pos_4,$d(^b5($j)),11)  q
 	s x=$o(^b5($j-1)) i x'=$j	d TRACE(pos_5,x,$j) q
-	i $d(^($j))'=11 		d TRACE(pos_6,$d(^($j)),11)  q
-	i ^($j)'=top 			d TRACE(pos_7,^($j),top)  q
-	i $d(^($j,1))'=1 		d TRACE(pos_8,$d(^($j,1)),1)  q
-	i ^(1)'=left 			d TRACE(pos_9,^(1),left)  q
-	i $d(^(3))'=1 			d TRACE(pos_10,$d(^(3)),1)  q
-	i ^(3)'=right 			d TRACE(pos_11,^(3),right)  q
-	i $o(^(3))'="" 			d TRACE(pos_12,$o(^(3)),"")  q
-	i $o(^(""))'=1 			d TRACE(pos_13,$o(^("")),1)  q
+	i $d(^b5($j))'=11               d TRACE(pos_6,$d(^b5($j)),11)  q
+	i ^b5($j)'=top                  d TRACE(pos_7,^b5($j),top)  q
+	i $d(^b5($j,1))'=1              d TRACE(pos_8,$d(^b5($j,1)),1)  q
+	i ^b5($j,1)'=left                       d TRACE(pos_9,^b5($j,1),left)  q
+	i $d(^b5($j,3))'=1                      d TRACE(pos_10,$d(^b5($j,3)),1)  q
+	i ^b5($j,3)'=right                      d TRACE(pos_11,^b5($j,3),right)  q
+	i $o(^b5($j,3))'=""                     d TRACE(pos_12,$o(^b5($j,3)),"")  q
+	i $o(^b5($j,""))'=1                     d TRACE(pos_13,$o(^b5($j,"")),1)  q
 	q
 
 proc2	s ^a6(k1)=$j(i,i#8)
@@ -102,7 +116,7 @@ proc2	s ^a6(k1)=$j(i,i#8)
 	q
 
 EXAMIN(cnt)	s q=$H
-	W !,"   PASS ",cnt," at ",$ZD(q,"24:60:SS") W:$Y>55 #  
+	W !,"   PASS ",cnt," at ",$ZD(q,"24:60:SS") W:$Y>55 #
 	If $DATA(^STOP) Halt
 	q
 

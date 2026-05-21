@@ -41,6 +41,11 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
+# Check for journal output files for failures. Up to 3 failures are accepted for a given test case
+# per 'ermax' variable in 'inref/volkill.m. So, only flag a failure on the third failure in any given routine.
+# Expect no files to be listed and a PASS message to be issued below.
+PASS: No failed routines
+# Check for completed routines, expect 9:
 ##SUSPEND_OUTPUT TP
 volkill0.mjo0
 volkill1.mjo1
