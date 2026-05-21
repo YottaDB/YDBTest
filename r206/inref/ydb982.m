@@ -96,6 +96,9 @@ qlength ; # Test $QLENGTH() with supported/unsupported ^# globals with various s
 	write "## Test that $QLENGTH("_tnode_") returns %YDB-E-NOCANONICNAME error",!
 	write $qlength(tnode),!!
 	;
+	write "## Test that $QLENGTH(""^#"") returns %YDB-E-NOCANONICNAME error",!
+	write $qlength("^#")
+	;
 	quit
 	;
 qsubscript ; # Test $QSUBSCRIPT() with supported/unsupported ^# globals with various subscripts, with and without environments

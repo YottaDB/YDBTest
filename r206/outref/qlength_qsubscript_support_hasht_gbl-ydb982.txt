@@ -56,6 +56,9 @@
 ##TEST_AWK## Test that \$QLENGTH\(\^.*#.*\) returns %YDB-E-NOCANONICNAME error
 ##TEST_AWKZSTATUS=qlength\+[0-9][0-9]*\^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name \("\^.*#.*"\)
 
+## Test that $QLENGTH("^#") returns %YDB-E-NOCANONICNAME error
+ZSTATUS=qlength+87^ydb982,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^#")
+
 ###############################
 
 # Test $QSUBSCRIPT() with supported/unsupported ^# globals with various subscripts, with and without environments
