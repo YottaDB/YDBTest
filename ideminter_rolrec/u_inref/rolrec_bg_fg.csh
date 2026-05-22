@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,15 +48,15 @@ if ("BG" == $bg_or_fg) then
 	set parent_pid = $!
 	echo "parent_pid is: $parent_pid"
 	echo "Determine the pid of the mupip process..."
-	set c = 60
+	set c = 600
 	while ($c > 0)
 		@ c = $c - 1
 		set psout = ps.out_`date +%H_%M_%S`		#BYPASSOK("ps")
 		echo "The ps output is in: $psout"
-		$ps | $grep $parent_pid > $psout
+		$ps | $grep $parent_pid >> $psout
 		$grep mupip $psout | $grep -vE "grep|runit.csh" | $tst_awk '{if ($3 == "'$parent_pid'") print $2; if ($5 == "'$parent_pid'") print $4}' >! mupip.pid
 		if !(-z mupip.pid) break
-		sleep 1
+		sleep 0.1	# Sleep only 0.1 seconds instead of 1 second in case the above MUPIP BACKUP process completes in less than 1 second
 		echo "Check one more time ($c left)..."
 	end
 	echo "The mupip pid is: "`cat mupip.pid`
