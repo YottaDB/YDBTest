@@ -9,8 +9,14 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# Allow more than enough time for wait_for_log.csh call below
+set timeout 120
 spawn /usr/local/bin/tcsh -f
 set p1 $spawn_id
+# Set the prompt to 'SHELL'. Note that expectinit.exp does `set` commands to set the prompt to SHELL and,
+# as a result, the change only applies to the currently active spawn_id, i.e. $p1 in this case.
+# So, added additional source calls are needed after p2 is spawned below so that the prompt change applies in
+# those spawned shells as well.
 source $::env(gtm_tst)/com/expectinit.exp
 set tnum [lindex $argv 0]
 
@@ -20,7 +26,9 @@ if {$tnum == "T1"} {
 	# Wait for prompt to load, since we cannot expect 'YDB>' due to above redirect to file
 	spawn /usr/local/bin/tcsh -f
 	set p2 $spawn_id
-	send -i $p2 "\$gtm_tst/com/wait_for_log.csh -log '$tnum.out' -message 'YDB>' -duration 120 -waitcreation'"
+	# Set prompt to 'SHELL' for expect command below
+	source $::env(gtm_tst)/com/expectinit.exp
+	send -i $p2 "\$gtm_tst/com/wait_for_log.csh -log '$tnum.out' -message 'YDB>' -duration 60 -waitcreation\r"
 	expect -i $p2 -exact "SHELL"
 
 	# Gracefully terminate yottadb process
@@ -33,7 +41,9 @@ if {$tnum == "T1"} {
 	# Wait for yottadb to load, since we do not expect any output due to the above redirect
 	spawn /usr/local/bin/tcsh -f
 	set p2 $spawn_id
-	send -i $p2 "\$gtm_tst/com/wait_for_log.csh -log '$tnum.out' -message 'X' -duration 120 -waitcreation'"
+	# Set prompt to 'SHELL' for expect command below
+	source $::env(gtm_tst)/com/expectinit.exp
+	send -i $p2 "\$gtm_tst/com/wait_for_log.csh -log '$tnum.out' -message 'X' -duration 60 -waitcreation\r"
 	expect -i $p2 -exact "SHELL"
 }
 

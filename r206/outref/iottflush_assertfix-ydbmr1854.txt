@@ -7,7 +7,7 @@
 # Expect a blank prompt and no assert failure. Prior to the YDB!1854 (commit d7485682) changes,
 # this would cause an assert failure.
 
-YDB>
+YDB>halt
 
 ## Test 2: iott_rdone() caller
 # Run [$ydb_dist/yottadb -run %XCMD 'read *x' > x.out]
