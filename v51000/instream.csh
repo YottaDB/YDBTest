@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -62,6 +62,12 @@ if ("ENCRYPT" == "$test_encryption" ) then
 	# Since these 2 subtests test an obscure error scenario, they are not that important to run with -encrypt
 	# and so we disable them with -encrypt.
 	setenv subtest_exclude_list "$subtest_exclude_list mu_bkup_change_permission mu_bkup_stop"
+endif
+
+if ("dbg" == "$tst_image" ) then
+	# The below subtest occasionally fails with dbg builds with TEST-E-NOT_STOPPED for yet undetermined reasons, so
+	# disable per discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2691#note_3389795958.
+	setenv subtest_exclude_list "$subtest_exclude_list mu_bkup_stop"
 endif
 
 $gtm_tst/com/submit_subtest.csh
