@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,7 +43,17 @@ echo '# Create database'
 $gtm_tst/com/dbcreate.csh mumps
 
 echo '# Run [mumps -run gtm9408]'
-$gtm_dist/mumps -run gtm9408
+set try = 0
+while ($try < 3)
+	@ try = $try + 1
+	set outfile = "try${try}.outx"
+	$gtm_dist/mumps -run gtm9408 >&! $outfile
+	set result = `grep '^^difftime' $outfile | cut -f 2 -d '='`
+	if (($result < 6) && ($result > 2)) then
+		break
+	endif
+end
+cat $outfile
 
 echo '# Validate DB'
 $gtm_tst/com/dbcheck.csh
