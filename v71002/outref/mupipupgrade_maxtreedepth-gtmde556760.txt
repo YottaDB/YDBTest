@@ -42,14 +42,18 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> 
-Key not found, would be in block  4ADE.
+##TEST_AWKKey not found, would be in block  [0-9A-F]+\.
     Directory path
     Path--blk:off
-	1:10,	4ADD:10,
+##TEST_AWK	1:10,	[0-9A-F]+:10,
     Global tree path
     Path--blk:off
-	5ADC:10,	3650:10,	2BD1:10,	31C0:10,	30C5:10,	3067:10,	3037:10,	45FC:10,	5980:10,	57D8:10,	4ADE:10,
+##TEST_AWK	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,	[0-9A-F]+:10,
 DSE> 
-##TEST_AWKBlock 5ADC   Size 398   Level 10   TN [0-9A-F]* V7m
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+##TEST_AWKBlock [0-9A-F]+   Size [0-9]+   Level 10   TN [0-9A-F]+ V7m
 
 DSE> 

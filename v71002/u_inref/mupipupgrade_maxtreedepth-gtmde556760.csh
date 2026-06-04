@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,8 +74,21 @@ echo "# Previously, this was only 7. The above part of the test (thanks to the [
 echo "# a MAX_BT_DEPTH height global. So all we need to do now is to verify there are blocks from Level 10 to Level 0."
 echo "# Run [dse find -key] to verify that the Global tree path includes blocks from Level 10 to Level 0"
 echo "# Also run [dse dump -block] of each of those 11 blocks to confirm the levels go from 10 to 0"
-cat > dse.cmd << CAT_EOF
+
+# Run dse find -key first to get the current block layout, then extract the level 10 root block
+# number from the Global tree path. We do this dynamically because the block numbers change
+# depending on how mupip reorg packs the database, which can vary across GT.M versions and platforms.
+$gtm_dist/dse << DSE_EOF >& dse_find.out
 find -key="^a"
-dump -block=5ADC -header
-CAT_EOF
-$gtm_dist/dse < dse.cmd
+DSE_EOF
+cat dse_find.out
+
+# Extract the first block number from the Global tree path line, which is the level 10 root block.
+# The Global tree path line looks like:
+#	59DB:10,	35A4:10,	...
+set root_blk = `$tst_awk '/Global tree path/{found=1; next} found && /:[0-9]/{print $1; exit}' dse_find.out | cut -d: -f1`
+
+# Dump the level 10 root block to confirm it is at level 10
+$gtm_dist/dse << DSE_EOF
+dump -block=$root_blk -header
+DSE_EOF
