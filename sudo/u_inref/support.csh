@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,6 +47,11 @@ set options = ("-h|--help" "-o|--outdir" "-p|--pid" "-n|--no-logs" "-l|--logs-si
 if ($?ydb_test_inside_docker) then
 	if (1 == $ydb_test_inside_docker) set options = ("-h|--help" "-o|--outdir" "-p|--pid" "-n|--no-logs")
 endif
+
+# For ydb_support.sh invocation, change $ydb_dist to be the install directory
+# It needs $ydb_dist, as it checks that before $gtm_dist.
+setenv old_ydb_dist $ydb_dist
+setenv ydb_dist $PWD/install
 
 set cnt = 0
 foreach option ($options)
@@ -119,7 +124,6 @@ foreach option ($options)
 		breaksw
 	endsw
 
-	# Need to pass the full YottaDB environment to ydb_support.sh for it to do its thing
 	if ($?since) then
 		echo "Running ydb_support.sh with $name "$since_arg" option"
 		$sudo install/plugin/ydb_support.sh $name "$since_arg" >>& ydb_support-$cnt.log
@@ -217,6 +221,9 @@ endif
 
 # Clean up the install directory since the files are owned by root
 sudo rm -rf install
+
+# Restore env variable for the dbcheck.csh call
+setenv ydb_dist $old_ydb_dist
 
 echo "# Checking database"
 $gtm_tst/com/dbcheck.csh
