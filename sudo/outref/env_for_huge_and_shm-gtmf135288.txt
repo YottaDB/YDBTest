@@ -32,177 +32,177 @@
 # > HUGETLB_VERBOSE, etc. [Linux] (GTM-F135288)
 
 # ---- prepare ----
-# check if version supports hugetlb_shm feature
+# Check if version supports hugetlb_shm feature
 
 # ---- test_id="pinu_hugeu_enable_set" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="enable" setbuf="set" ----
-# create database
+# Create database
 ##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
 # Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
-# check for pin behavior
-	pin: PASS
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=(unset): shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pinu_hugeu_enable_not" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="enable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=(unset): shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pinu_hugeu_disable_not" - gtm_pinshm=(unset) gtm_hugetlb_shm=(unset) enabled="disable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm=(unset), shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=(unset): shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin0_huge0_enable_set" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="enable" setbuf="set" ----
-# create database
+# Create database
 ##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
 # Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
-# check for pin behavior
-	pin: PASS
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="0": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin0_huge0_enable_not" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="enable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="0": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin0_huge0_disable_not" - gtm_pinshm="0" gtm_hugetlb_shm="0" enabled="disable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="0", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="0": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin1_huge0_enable_set" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="enable" setbuf="set" ----
-# create database
+# Create database
 ##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
 # Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
 DSE: pinning failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
-# check for pin behavior
-	pin: PASS
+# Check for pin behavior
+	PASS: PIN found: gtm_pinshm set and gtm_hugetlb_shm unset
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="1": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin1_huge0_enable_not" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="enable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN found: gtm_pinshm set and gtm_hugetlb_shm unset
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="1": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin1_huge0_disable_not" - gtm_pinshm="1" gtm_hugetlb_shm="0" enabled="disable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
+# Create database
+# Check for pin behavior
+	PASS: PIN found: gtm_pinshm set and gtm_hugetlb_shm unset
 # Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all
-PASS: gtm_pinshm="1", shmget NOT called with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm="1": shmget NOT called with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin0_huge1_enable_set" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="enable" setbuf="set" ----
-# create database
+# Create database
 ##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
 # Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
 DSE: using huge pages failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
-PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB enabled, expect shmget to return successfully
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shm successfully allocated with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin0_huge1_enable_not" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="enable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
-PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB enabled, expect shmget to return successfully
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shm successfully allocated with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 ##SUSPEND_OUTPUT UBUNTU_22.04
 
 # ---- test_id="pin0_huge1_disable_not" - gtm_pinshm="0" gtm_hugetlb_shm="1" enabled="disable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM
-PASS: HUGETLB disabled, shmget returned EPERM
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm not set
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB disabled, expect shmget fail and set EPERM
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB disabled: shmget returned EPERM
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 ##ALLOW_OUTPUT UBUNTU_22.04
 
 # ---- test_id="pin1_huge1_enable_set" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="enable" setbuf="set" ----
-# create database
+# Create database
 ##SUSPEND_OUTPUT JNLPOOL64GB_ALLOW
 # Set a large global buffer to simulate SHMHUGETLB or SHMLOCK warning message to the system log
 DSE: pinning failed
 DSE: using huge pages failed
 ##ALLOW_OUTPUT JNLPOOL64GB_ALLOW
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
-PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm set, gtm_hugetlb_shm set, no EPERM or ENOMEM
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB enabled, expect shmget to return successfully
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shm successfully allocated with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 
 # ---- test_id="pin1_huge1_enable_not" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="enable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully
-PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Create database
+# Check for pin behavior
+	PASS: PIN not found: gtm_pinshm set, gtm_hugetlb_shm set, no EPERM or ENOMEM
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB enabled, expect shmget to return successfully
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shm successfully allocated with SHM_HUGETLB
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 ##SUSPEND_OUTPUT UBUNTU_22.04
 
 # ---- test_id="pin1_huge1_disable_not" - gtm_pinshm="1" gtm_hugetlb_shm="1" enabled="disable" setbuf="not" ----
-# create database
-# check for pin behavior
-	pin: PASS
-# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM
-PASS: HUGETLB disabled, shmget returned EPERM
-# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
+# Create database
+# Check for pin behavior
+	PASS: PIN found: gtm_pinshm set, gtm_hugetlb_shm set, and SHM_HUGETLB failed
+# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB disabled, expect shmget fail and set EPERM
+PASS: gtm_hugetlb_shm set, SHM_HUGETLB disabled: shmget returned EPERM
+# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)
 	not found
 # validate db
 ##ALLOW_OUTPUT UBUNTU_22.04

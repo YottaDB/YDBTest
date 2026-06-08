@@ -50,7 +50,7 @@ echo
 echo "# ---- prepare ----"
 set uid = `id -u`
 
-echo "# check if version supports hugetlb_shm feature"
+echo "# Check if version supports hugetlb_shm feature"
 foreach libf ( "$gtm_dist/libyottadb.so" "$gtm_dist/libgtmshr.so")
 	if ( -f  "$libf" ) then
 		set found = `strings "$libf" | grep hugetlb_shm_enabled | wc -l`
@@ -153,7 +153,7 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			echo "# ----" $header "----"
 			logger "$header"
 
-			echo "# create database"
+			echo "# Create database"
 			strace \
 				--string-limit=160 \
 				--follow-forks \
@@ -207,7 +207,7 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 				endif
 			endif
 
-			echo "# check for pin behavior"
+			echo "# Check for pin behavior"
 			set pin_found=`cat strace_${test_id}.outx | grep 'shmctl.*SHM_LOCK' | wc -l`
 			set huge_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB' | wc -l`
 			set huge_eperm_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB.*EPERM' | wc -l`
@@ -224,44 +224,63 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			# 	c. else huge pages are requested and failed, so PIN should show up: FAIL
 			# 3. If pin is not requested, and found, we fail
 			if ( ( ($pin == "") || ($pin == 0) ) && !($pin_found) ) then
-				echo "\tpin: PASS"
+				echo "\tPASS: PIN not found: gtm_pinshm not set"
 			else if ($pin && $pin_found) then
 				if ($huge == "" || $huge == 0) then
-					echo "\tpin: PASS"
+					echo "\tPASS: PIN found: gtm_pinshm set and gtm_hugetlb_shm unset"
 				else if ($huge && !( $huge_eperm_found || $huge_enomem_found )) then
-					echo "\tpin: FAIL"
+					echo "\tFAIL: PIN found: gtm_pinshm set, gtm_hugetlb_shm set, and no EPERM or ENOMEM errors"
 				else
-					echo "\tpin: PASS"
+					echo "\tPASS: PIN found: gtm_pinshm set, gtm_hugetlb_shm set, and SHM_HUGETLB failed"
 				endif
 			else if ($pin && !($pin_found)) then
 				if ($huge == "" || $huge == 0) then
-					echo "\tpin: FAIL"
+					echo "\tFAIL: PIN not found: gtm_pinshm set and gtm_hugetlb_shm unset"
 				else if ($huge && !( $huge_eperm_found || $huge_enomem_found )) then
-					echo "\tpin: PASS"
+					echo "\tPASS: PIN not found: gtm_pinshm set, gtm_hugetlb_shm set, no EPERM or ENOMEM"
 				else
-					echo "\tpin: FAIL"
+					echo "\tFAIL: PIN not found: gtm_pinshm set, gtm_hugetlb_shm set, and SHM_HUGETLB failed"
 				endif
 			else
-				echo "\tpin: FAIL"
+				echo "\tFAIL: PIN found: PIN not requested"
 			endif
 
 			# Conditionally issue expected output messages, depending on the configuration used for the current test case
 			if ($huge == 1) then
 				if ("$enabled" == "enable") then
-					echo "# Check: when gtm_hugetlb_shm is set and HUGETLB enabled, expect shmget to return successfully"
-					set pass_msg = "PASS: HUGETLB enabled, shm successfully allocated with SHM_HUGETLB"
+					echo "# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB enabled, expect shmget to return successfully"
+					set pass_msg = "PASS: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shm successfully allocated with SHM_HUGETLB"
 				else
-					echo "# Check: when gtm_hugetlb_shm is set and HUGETLB disabled, expect shmget fail and set EPERM"
-					set pass_msg = "PASS: HUGETLB disabled, shmget returned EPERM"
+					echo "# Check: when gtm_hugetlb_shm is set and SHM_HUGETLB disabled, expect shmget fail and set EPERM"
+					set pass_msg = "PASS: gtm_hugetlb_shm set, SHM_HUGETLB disabled: shmget returned EPERM"
 				endif
 			else
 				echo "# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all"
-				set pass_msg = "PASS: gtm_pinshm=$pr_pinshm, shmget NOT called with SHM_HUGETLB"
+				set pass_msg = "PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=${pr_pinshm}: shmget NOT called with SHM_HUGETLB"
 			endif
 			# Get the current modification time /proc/sys/vm/hugetlb_shm_group to determine whether it was changed since this test case modified it above
 			set hugetlb_shm_group_last_mod_time = `stat /proc/sys/vm/hugetlb_shm_group | grep Modify | sed 's/^.*: \([0-9\-]*\) \([0-9:.]*\) -.*$/\1\2/g' | tr -d '\-:.'`
-			if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
-				# /proc/sys/vm/hugetlb_shm_group was modified by another process. So, pass this test case since
+
+			# Check whether /proc/sys/vm/hugetlb_shm_group was unexpectedly modified.
+			# Note that it is possible for this file to have been unexpected modified but for $hugetlb_shm_group_last_mod_time and $hugetlb_shm_group_init_mod_time to
+			# nevertheless be the same, in case the modification occurred after copying enable_group_id.txt or disable_group_id.txt to /proc/sys/vm/hugetlb_shm_group,
+			# but before setting $hugetlb_shm_group_init_mod_time. So, also check that the content of /proc/sys/vm/hugetlb_shm_group matches what is expected.
+			set unexpected = 0
+			if ("enable" == $enabled) then
+				diff enable_group_id.txt /proc/sys/vm/hugetlb_shm_group >& /dev/null
+				if (0 != $status) then
+					set unexpected = 1
+				endif
+			else if ("enable" != $enabled) then
+				diff disable_group_id.txt /proc/sys/vm/hugetlb_shm_group >& /dev/null
+				if (0 != $status) then
+					set unexpected = 1
+				endif
+			else if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
+				set unexpected = 1
+			endif
+			if (1 == $unexpected) then
+				# /proc/sys/vm/hugetlb_shm_group was modified by another process. So, fail this test case since
 				# it is not possible to confirm the expected behavior for the value of that file set above.
 				ps -ef --forest >&! ${test_id}-ps.out
 				echo "FAIL: /proc/sys/vm/hugetlb_shm_group was unexpectedly modified. See ${test_id}-ps.out for more information."
@@ -269,25 +288,25 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 				if ($huge == 1) then
 					if ($huge_found) then
 						if (($huge_eperm_found) && ("$enabled" == "enable")) then
-							echo "FAIL: HUGETLB enabled, but shmget returned EPERM"
+							echo "FAIL: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shmget returned EPERM"
 						else if (!($huge_eperm_found) && ("$enabled" == "disable")) then
-							echo "FAIL: HUGETLB disabled, but shm successfully allocated with SHM_HUGETLB"
+							echo "FAIL: gtm_hugetlb_shm set, SHM_HUGETLB disabled: shm successfully allocated with SHM_HUGETLB"
 						else
 							echo $pass_msg
 						endif
 					else
-						echo "FAIL: gtm_pinshm set, but shmget NOT called with SHM_HUGETLB"
+						echo "FAIL: gtm_hugetlb_shm set, SHM_HUGETLB enabled: shmget NOT called with SHM_HUGETLB"
 					endif
 				else
 					if !($huge_found) then
 						echo $pass_msg
 					else
-						echo "FAIL: gtm_pinshm=$pr_pinshm, but shmget called with SHM_HUGETLB"
+						echo "FAIL: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=${pr_pinshm}: shmget called with SHM_HUGETLB"
 					endif
 				endif
 			endif
 
-			echo "# check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)"
+			echo "# Check for pin in MUPIP INTEG -ONLINE snapshot file (strace not should find SHM_LOCK)"
 			strace \
 				--string-limit=160 \
 				--follow-forks \
