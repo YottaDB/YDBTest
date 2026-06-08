@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,8 +71,6 @@ BEGIN {
 	gsub(/FTOK Counter Halted                               TRUE/, "FTOK Counter Halted                  ##TRUE_OR_FALSE##");
 	gsub(/FTOK Counter Halted                              FALSE/, "FTOK Counter Halted                  ##TRUE_OR_FALSE##");
 	gsub(/Custom Errors Loaded                             ( TRUE|FALSE)/, "Custom Errors Loaded                 ##TRUE_OR_FALSE##");
-	gsub(/CTL Phase2 Commit Index1 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]");
-	gsub(/CTL Phase2 Commit Index2 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]");
 	# Most below can sometime be non-zero (depending on system load when running test) so convert a non-zero value into 0 for a deterministic reference file.
 	gsub(/CTL JnlPoolWrite Sleep       Cntr  *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL JnlPoolWrite Sleep       Cntr                        0 [0x00000000]");
 	gsub(/CTL JnlPoolWrite Sleep       Seqno *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL JnlPoolWrite Sleep       Seqno                       0 [0x00000000]");
@@ -129,5 +127,25 @@ BEGIN {
 		gsub(/Trigger updates replicated \(-trigupdate\)    TRUE/,"Trigger updates replicated (-trigupdate)  ##TorF");
 	else
 		gsub(/Trigger updates replicated \(-trigupdate\)   FALSE/,"Trigger updates replicated (-trigupdate)  ##TorF");
+	# If source server is started with -jnlfileonly (controlled by "gtm_test_jnlfileonly" env var in test system frameowrk),
+	# starting with V7.1-003, there are a few fields in the journal pool that are no longer maintained. The ones that matters
+	# to this test are the following.
+	#	a) jpl->lastwrite_len
+	#	b) jpl->phase2_commit_index1
+	#	c) jpl->phase2_commit_index2
+	# All the above will be 0 if "gtm_test_jnlfileonly" is 0. And will have non-zero values otherwise.
+	# Therefore, construct awk expressions that will transform the expected actual outputs into the same reference file output
+	# as that will later be used by the test script to do an actual diff.
+	if (ENVIRON["gtm_test_jnlfileonly"] == 0)
+	{
+		gsub(/CTL Last Write Length \(in bytes\)                        88 \[0x00000058\]/,"CTL Last Write Length (in bytes)          ##LASTWRITELEN## [0x........]");
+		gsub(/CTL Phase2 Commit Index1 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]");
+		gsub(/CTL Phase2 Commit Index2 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]");
+	} else
+	{
+		gsub(/CTL Last Write Length \(in bytes\)                         0 \[0x00000000\]/,"CTL Last Write Length (in bytes)          ##LASTWRITELEN## [0x........]");
+		gsub(/CTL Phase2 Commit Index1 *0 .0x00*./, "CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]");
+		gsub(/CTL Phase2 Commit Index2 *0 .0x00*./, "CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]");
+	}
 	print;
 }
