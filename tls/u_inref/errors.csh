@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -177,6 +177,13 @@ $MSR STARTRCV INST1 INST2
 get_msrtime
 set time_rcvr = "$time_msr"
 
+# In this case of a verify-depth too small to validate the certificate chain, the source server will see a TLSHANDSHAKE
+# error in case of pre-TLS1.3 and TLSIOERROR in most cases in TLS 1.3. But depending on timing, the source server could
+# instead have a REPLNOTLS message. This is because the receiver server (which is an independently running process) had
+# seen the invalid source server certificate and disconnected BEFORE the source server got a chance to send the first
+# application data. And so the source server re-connected with the receiver which had by now fallen back to plaintext
+# communication causing the YDB-W-REPLNOTLS warning in the source server log. Note that the receiver server only stays
+# up after such an error as of GTM-DE567906; previously it terminated.
 source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr
 
 $MSR STOP INST1 INST2
@@ -226,6 +233,8 @@ $MSR STARTRCV INST1 INST2
 get_msrtime
 set time_rcvr = "$time_msr"
 
+# Same possible REPLNOTLS race as in TEST CASE 1 above, this time because neither CAfile nor CApath was specified, so
+# the certificate cannot be validated.
 source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr
 
 $MSR STOP INST1 INST2
@@ -289,8 +298,8 @@ set time_rcvr = "$time_msr"
 # This is because the receiver server (which is an independently running process) had seen the expired source server certificate
 # and disconnected BEFORE the source server got a chance to send the first application data. And so the source server
 # re-connected with the receiver which had by now fallen back to plaintext communication causing the YDB-W-REPLNOTLS warning
-# in the source server log. Let callee script know to allow the possible REPLNOTLS message by passing "ALLOW_REPLNOTLS".
-source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr "ALLOW_REPLNOTLS"
+# in the source server log.
+source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr
 
 $MSR STOP INST1 INST2
 
@@ -361,6 +370,7 @@ $MSR STARTRCV INST1 INST2
 get_msrtime
 set time_rcvr = "$time_msr"
 
+# Same possible REPLNOTLS race as in TEST CASE 1 above, this time with the receiver server rejecting the revoked certificate.
 source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr
 
 $MSR STOP INST1 INST2
