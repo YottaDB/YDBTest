@@ -25,7 +25,21 @@ setenv start_time `cat start_time`
 if !($?gtm_test_replay) then
 	set helper_rand = `$gtm_exe/mumps -run rand 2`
 	set do_overflow = `$gtm_exe/mumps -run rand 2`
-	echo "# Helper and overflow choise chosen by subtest"	>>&! settings.csh
+	# Starting with V7.1-003 (GTM-F228991), when the source server is in jnlfileonly mode, mumps processes
+	# skip writing to the journal pool when there is no active consumer of journal pool data
+	# (INST_NEEDS_JPLWRITES is never set for a jnlfileonly source server). This means the journal pool write
+	# address never advances when the receiver is shut down, so journal pool overflow cannot happen and
+	# waitforjpofl would time out.
+	#
+	# Prior to V7.1-003, mumps processes always wrote to the journal pool regardless of jnlfileonly mode, so
+	# overflow was possible. However, since a jnlfileonly source server already reads from journal files by
+	# definition, the overflow path (which exists to force a switch from pool reading to file reading) tests
+	# nothing additional when jnlfileonly is set. This combination has been tested for years prior to
+	# V7.1-003, so it is acceptable to skip it going forward.
+	if ($gtm_test_jnlfileonly) then
+		set do_overflow = 0
+	endif
+	echo "# Helper and overflow choice chosen by subtest"	>>&! settings.csh
 	echo "setenv helper_rand $helper_rand"			>>&! settings.csh
 	echo "setenv do_overflow $do_overflow"			>>&! settings.csh
 endif
