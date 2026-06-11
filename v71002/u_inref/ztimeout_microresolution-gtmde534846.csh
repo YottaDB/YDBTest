@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,6 +22,10 @@ Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-002_R
 CAT_EOF
 echo
 
+# Create a database for the `do ^incretrap` call in $ETRAP in the test routine,
+# which may execute if a YDB-W-ZTIMEOUT occurs.
+$gtm_tst/com/dbcreate.csh mumps >&! dbcreate.out
+
 echo '# Test $ZTIMEOUT shows time remaining to microsecond resolution'
 echo '# Also test YDB#1151 : $ZTIMEOUT returns correct millisecond/microsecond value'
 echo '# Run [gtmde534846.m] to:'
@@ -33,3 +37,5 @@ echo '# Test case derived from discussion threads at:'
 echo '# 1. https://gitlab.com/YottaDB/DB/YDBTest/-/issues/682#note_2515828547'
 echo '# 2. https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2345#note_2551769584'
 $gtm_dist/mumps -r gtmde534846
+
+$gtm_tst/com/dbcheck.csh >&! dbcheck.out
