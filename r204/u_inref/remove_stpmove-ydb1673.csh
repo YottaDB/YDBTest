@@ -52,9 +52,13 @@ echo "# 3. Record the time elapsed for each 100 linkages."
 # outside the test, e.g. system load. If it fails all 15 times, fail the test.
 # See discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2668#note_3291245899
 set try = 0
-while ($try < 15)
+while ($try < 3)
 	@ try = $try + 1
 	$gtm_dist/mumps -run litlab^ydb1673 >&! try${try}.out
+	grep -q  "Elapsed time = [1-9]" try${try}.out
+	if ($status == 0) then
+		continue
+	endif
 	grep -q PASS try${try}.out
 	if ($status == 0) then
 		break

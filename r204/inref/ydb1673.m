@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -16,7 +16,7 @@ litlab
 	set prev=$zut
 	; Set shortest to 10 to ensure this variable gets set in the below loop,
 	; since we do not expect a runtime in excess of 10 seconds for any set of iterations.
-	set longest=0,shortest=10
+	set total=0
 	for cnt=1:1:max do
 	. open fn:(NewVersion)
 	. use fn
@@ -28,15 +28,24 @@ litlab
 	. set x=$$^test
 	. if '(x#100) do
 	. . set curr=$zut
-	. . set elapsed=(curr-prev)/(10**6)
-	. . set:elapsed<shortest shortest=elapsed
-	. . set:elapsed>longest longest=elapsed
-	. . write "Iteration = ",$justify(cnt,4)," : Elapsed time = ",$fnumber(elapsed,"",2),!
+	. . set elapsed(cnt)=(curr-prev)/(10**6)
+	. . set total=total+elapsed(cnt)
+	. . write "Iteration = ",$justify(cnt,4)," : Elapsed time = ",$fnumber(elapsed(cnt),"",2),!
 	. . set prev=curr
-	write "# Check that the longest running iteration takes no more than twice as long as the shortest running iteration to complete.",!
+
+	; Compute standard deviation
+	set n=(max\100)
+	set elapsedMean=total/n
+	set iter="",sum=0 for  set iter=$order(elapsed(iter)) quit:""=iter  do
+	. set sum=sum+((elapsed(iter)-elapsedMean)**2)
+	set mean=(sum/n)
+	set stdev=(mean**0.5)	; Square root
+
+	set maxStdev=0.3	; A value slightly higher than the highest observed (0.25) with the YDB#1673 fixes, but an order of magnitude lower than what observed before the fixes
+	write "# Check the standard deviation of each 100 iterations is less than a maximum allowed value ("_maxStdev_").",!
 	write "# This will ensure that all iterations complete within a sufficiently similar time period.",!
-	if longest>(shortest*2) do
-	. write "FAIL: Longest iteration time ["_longest_" seconds] was greater than two times the shortest iteration time ["_shortest_" seconds]",!
+	if stdev>maxStdev do
+	. write "FAIL: Standard deviation for each 100 iterations ["_stdev_" seconds] was greater than the max standard deviation allowed ["_maxStdev_" seconds]",!
 	else  do
 	. write "PASS: All iterations completed within an acceptable time period.",!
 	quit

@@ -39,6 +39,6 @@
 ##TEST_AWKIteration =  800 : Elapsed time = 0.[0-9]*
 ##TEST_AWKIteration =  900 : Elapsed time = 0.[0-9]*
 ##TEST_AWKIteration = 1000 : Elapsed time = 0.[0-9]*
-# Check that the longest running iteration takes no more than twice as long as the shortest running iteration to complete.
+# Check the standard deviation of each 100 iterations is less than a maximum allowed value (.3).
 # This will ensure that all iterations complete within a sufficiently similar time period.
 PASS: All iterations completed within an acceptable time period.
