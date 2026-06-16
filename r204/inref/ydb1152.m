@@ -556,9 +556,9 @@ T5 ;
 	write "### Test 5: ZYENCODE properly handles input trees containing random data sizes and arbitrary data types",!
 	write "### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278",!
 	write "## Test 5a: ZYENCODE properly handles input trees containing random data sizes, up to 3MiB",!
-	do runZyencodeTest^ydb1152("T5a",$RANDOM(1048576*3))
+	do runZyencodeTest^ydb1152("T5a",$$minRand(1048576*3))
 	write "## Test 5b: ZYENCODE properly handles input trees containing random data sizes, < 1MiB",!
-	do runZyencodeTest^ydb1152("T5b",$RANDOM(1048576))
+	do runZyencodeTest^ydb1152("T5b",$$minRand(1048576))
 	write "## Test 5c: ZYENCODE properly handles input nodes containing arbitrary data types",!
 	kill ^x,^y,^z,z
 	write "# Run [set ^x=$C(0)_""null""]",!
@@ -620,9 +620,9 @@ T7 ;
 	write "### Test 7: ZYDECODE properly handles input trees containing arbitrary types and random data sizes",!
 	write "### See also the discussion at: https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1767#note_2854162278",!
 	write "## Test 7a: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, up to 3MiB",!
-	do runZydecodeTest^ydb1152("T7a",$RANDOM(1048576*3))
+	do runZydecodeTest^ydb1152("T7a",$$minRand(1048576*3))
 	write "## Test 7b: ZYDECODE properly handles input trees containing arbitrary (random) data sizes, < 1MiB",!
-	do runZydecodeTest^ydb1152("T7b",$RANDOM(1048576))
+	do runZydecodeTest^ydb1152("T7b",$$minRand(1048576))
 	write !
 	write "## Test 7c: ZYDECODE properly handles input trees containing arbitrary data types",!
 	kill f,g
@@ -640,7 +640,7 @@ T8 ;
 	write "### Test 8: Data encoded with ZYENCODE can be decoded with ZYDECODE and re-encoded with ZYENCODE to produce the same result as the initial ZYENCODE call",!
 	; Initialize test variables
 	set testNum="T8"
-	set dataSize=$RANDOM(1048576*3)
+	set dataSize=$$minRand(1048576*3)
 	do initTest^ydb1152(testNum)
 	; Store subscripted GVN values in abbreviated LVNs for readability
 	set in=^testConfig(testNum,"in")
@@ -1199,6 +1199,32 @@ T23c ;
 
 	quit
 
+T24 ;
+	write "### Test 24: ZYDECODE null subscript behavior",!
+	kill x,y,z
+	write "# Set various nodes using null subscripts",!
+	set x("","","a")=1
+	set x("","a","")=2
+	set x("a","","")=3
+	set x("a","","b")=4
+	set x("a","b","")=5
+	set x("","a","c")=6
+
+	write "# Run [zwrite x]",!
+	zwrite x
+
+	write "# Run [zyencode y=x]",!
+	zyencode y=x
+	write "# Run [zwrite y]",!
+	zwrite y
+
+	write "# Run [zydecode z=y]",!
+	zydecode z=y
+	write "# Run [zwrite z]. Expect only three nodes, i.e. `z(""a"")=3`, `z(""a"",""b"")=5`, and `z(""a"",""c"")=6`.",!
+	zwrite z
+
+	quit
+
 initTest(testNum)
 	; Randomly choose whether to use a global variable for input
 	set inVar=$select($RANDOM(2):"^",1:"")_testNum_"I"
@@ -1474,3 +1500,9 @@ runZydecodeTest(testNum,dataSize)
 	do validateDecodedOutput^ydb1152(testNum)
 
 	quit
+
+; Generate a random number that is greater than or equal to 200, to prevent
+; erroneous test failures when generating input data, since data sizes less than
+; 200 are not supported by the populateTree label.
+minRand(x) ;
+	quit $RANDOM(x-200)+200

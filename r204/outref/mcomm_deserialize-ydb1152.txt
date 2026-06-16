@@ -944,6 +944,25 @@ PASS: Long-running ZYENCODE completed without GTMASSERT2 failure
 ### Test E2: GVUNDEF for KILL during ZYENCODE loop shows global variable name
 PASS: GVUNDEF for KILL during ZYENCODE loop shows global variable name
 
+### Test 24: ZYDECODE null subscript behavior
+# Set various nodes using null subscripts
+# Run [zwrite x]
+x("","","a")=1
+x("","a","")=2
+x("","a","c")=6
+x("a","","")=3
+x("a","","b")=4
+x("a","b","")=5
+# Run [zyencode y=x]
+# Run [zwrite y]
+y=1
+y(1)="{"""": {"""": {""a"": 1}, ""a"": {"""": 2, ""c"": 6}}, ""a"": {"""": {"""": 3, ""b"": 4}, ""b"": {"""": 5}}}"
+# Run [zydecode z=y]
+# Run [zwrite z]. Expect only three nodes, i.e. `z("a")=3`, `z("a","b")=5`, and `z("a","c")=6`.
+z("a")=3
+z("a","b")=5
+z("a","c")=6
+
 # Check all ZYENCODE JSON output files for valid JSON
 PASS: T4a.json contains valid JSON
 PASS: T4b.json contains valid JSON

@@ -177,6 +177,10 @@ mv ${test_num}expect.out ${test_num}expect.outx	# move .out to .outx to avoid -E
 perl $gtm_tst/com/expectsanitize.pl ${test_num}expect.outx >& ${test_num}expect_sanitized.outx
 echo
 
+# Run test 24
+$ydb_dist/yottadb -run T24^ydb1152
+echo
+
 which jq >& /dev/null
 if ($status == 1) then
 	echo "ERROR: 'jq' utility not installed. Please install 'jq' before running this test."
