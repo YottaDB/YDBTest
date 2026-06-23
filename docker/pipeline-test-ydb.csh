@@ -1,14 +1,14 @@
 #!/bin/tcsh
 #################################################################
-#                                                               #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 source /usr/library/gtm_test/T999/docker/shared-setup.csh
 
@@ -27,6 +27,15 @@ if ( $?CI_COMMIT_BRANCH ) then
 		echo " "
 		echo "# Build branch if not master"
 		ln -s `pwd` /Distrib/YottaDB/V999_R999
+		# Check for a matching YDBEncrypt MR and check it out before building
+		echo "### Checking for matching YDBEncrypt MR for branch: $ydb_branch"
+		curl -s -k "https://gitlab.com/api/v4/projects/15234426/merge_requests?scope=all&state=opened&source_branch=${ydb_branch}" > /tmp/ydbencrypt_mr.json
+		set encrypt_mr_id = `jq -r '.[].iid' /tmp/ydbencrypt_mr.json`
+		rm /tmp/ydbencrypt_mr.json
+		if ( "$encrypt_mr_id" != "" ) then
+			git -C /Distrib/YDBEncrypt fetch origin merge-requests/${encrypt_mr_id}/head:mr-${encrypt_mr_id}
+			git -C /Distrib/YDBEncrypt checkout mr-${encrypt_mr_id}
+		endif
 		if ( $?CI_PROJECT_DIR ) then
 			# If running in the pipeline, make sure the build output is in a location that can be included in the artifacts
 			/usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh V999_R999 master dbg >& $CI_PROJECT_DIR/pipeline-test-ydb-build.out
