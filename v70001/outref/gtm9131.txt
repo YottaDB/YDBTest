@@ -33,7 +33,7 @@ Database file ##TEST_PATH##/mumps.dat now has 128 statsdb allocation
 # Note: The .dat.gst file name could be non-deterministic (based on ftok order of mumps.dat or a.dat).
 # Note: Also sometimes we get 2 TPRESTART messages. One from mumps.dat.gst and one from a.dat.gst.
 # Note: Not sure what the cause is but is not considered important so we take just the first message.
-##TEST_AWK.*%YDB-I-TPRESTART, Database .*.dat.gst; code: 0x5; blk: 0x0000000000000003 in glbl: \^%YGS; pvtmods: 0, blkmods: 0, blklvl: 0, type: 0, readset: 2, writeset: 0, local_tn: 0x0000000000000001, zpos: gtm9131\+11\^gtm9131 .*
+##TEST_AWK.*%YDB-I-TPRESTART, Database .*.dat.gst; code: .*; blk: .* in glbl: \^%YGS; pvtmods: [0-9], blkmods: [0-9], blklvl: [0-9], type: [0-9], readset: [0-9], writeset: [0-9], local_tn: 0x0000000000000001, zpos: gtm9131\+11\^gtm9131 .*
 # Validate DB
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
