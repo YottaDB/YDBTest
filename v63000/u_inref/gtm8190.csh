@@ -81,7 +81,7 @@ $gtm_tst/com/getoper.csh "$syslog_start" "" "$tmpfile" "" "$regexp" 3
 
 # getoper.csh waits until the regexp shows in the syslog and copies
 # all of the syslog output from the start time until the regexp is matched
-# into $outfile. If any concurrently running tests also generate NONTPRESTART,
+# into the output file. If any concurrently running tests also generate NONTPRESTART,
 # check_error_exist.csh will also detect and output NONTPRESTART messages from
 # those unrelated tests and cause this test to fail. So, filter out any such
 # messages by reapplying the regexp to the syslog messages retrieved by getoper.csh
