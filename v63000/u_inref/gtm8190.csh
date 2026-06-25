@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,9 +22,9 @@ set linum = 1024
 echo 'setglobals' >> $setglob
 echo '	set i=0'  >> $setglob
 while ($i <= $linum)
-    echo '	set ^a(1)=$justify($increment(i)_$job,200) set ^b(2)=^a(1)+1 set ^c(3)=^b(2)+^a(1)' >> $setglob
-    echo '	halt:^end' >> $setglob
-    @ i++
+	echo '	set ^a(1)=$justify($increment(i)_$job,200) set ^b(2)=^a(1)+1 set ^c(3)=^b(2)+^a(1)' >> $setglob
+	echo '	halt:^end' >> $setglob
+	@ i++
 end
 echo '	quit' >> $setglob
 
@@ -73,16 +73,25 @@ $gtm_tst/com/wait_for_log.csh -log pids.txt -message NONTPRESTART
 
 echo "# Show the messages"
 set regexp=`cat pids.txt`
+set outfile = syslog2.txt
+set tmpfile = ${outfile}.tmp
 
 # There are 3 processes each of which can issue at most 1 message
-$gtm_tst/com/getoper.csh "$syslog_start" "" "syslog2.txt" "" "$regexp" 3
+$gtm_tst/com/getoper.csh "$syslog_start" "" "$tmpfile" "" "$regexp" 3
 
-$gtm_tst/com/check_error_exist.csh syslog2.txt NONTPRESTART
+# getoper.csh waits until the regexp shows in the syslog and copies
+# all of the syslog output from the start time until the regexp is matched
+# into $outfile. If any concurrently running tests also generate NONTPRESTART,
+# check_error_exist.csh will also detect and output NONTPRESTART messages from
+# those unrelated tests and cause this test to fail. So, filter out any such
+# messages by reapplying the regexp to the syslog messages retrieved by getoper.csh
+grep -E "$regexp" $tmpfile >&! $outfile
+$gtm_tst/com/check_error_exist.csh $outfile NONTPRESTART
 
 # The following grep should not find code L and 0 block number at the same time
-$grep -q 'code: [^L]*L[^;]*; blk: 0x0000000000000000' syslog2.txtx
+$grep -q 'code: [^L]*L[^;]*; blk: 0x0000000000000000' ${outfile}x
 if (0 == $status) then
-    echo "TEST-E-FAIL The block number can not be 0 if the error code is L. See syslog2.txtx"
+	echo "TEST-E-FAIL The block number can not be 0 if the error code is L. See syslog2.txtx"
 endif
 
 $gtm_exe/mumps -run %XCMD "set ^end=1"
