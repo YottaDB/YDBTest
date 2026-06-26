@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -31,7 +31,7 @@ endif
 # We want epoch tapering so don't use the random setting
 setenv gtm_test_epoch_taper 1
 
-$gtm_tst/com/dbcreate.csh mumps 1 900 -allocation=2048 -extension_count=2048
+$gtm_tst/com/dbcreate.csh mumps 1 900 -allocation=2048 -extension_count=2048 -lock_space=128
 
 echo "Verify epoch tapering is on by default"
 $DSE change -fileheader -sleep_spin_count=128
