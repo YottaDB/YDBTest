@@ -13,11 +13,11 @@
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 ------------------------------------------------------------------------
 # Set REORG_SLEEP_NSEC to the max value, 999999999
-Database file ##TEST_PATH##/mumps.dat now has reorg sleep nanoseconds 999999999
+##TEST_AWKDatabase file ##TEST_PATH##/T[1-3].dat now has reorg sleep nanoseconds 999999999
 
 # Generate random value < 10**9
 # Set REORG_SLEEP_NSEC to the random value
-Database file ##TEST_PATH##/mumps.dat now has reorg sleep nanoseconds ##VALIDNANOSECSLEEP##
+##TEST_AWKDatabase file ##TEST_PATH##/T[1-3].dat now has reorg sleep nanoseconds ##VALIDNANOSECSLEEP##
 ------------------------------------------------------------------------
 # Check that PEEKBYNAME shows the correct value of reorg_sleep_mode
 ------>PEEKBYNAME successfully shows the correct value.

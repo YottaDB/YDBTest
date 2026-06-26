@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -31,8 +31,8 @@ percent	;
 	else  set percenterror=0	; for nanosleep seconds < 500,000 (i.e. 0.5 millisecond) we have seen
 					; actual strace times go as high as 5x the expected. We suspect this is due
 					; to strace time rounding issues so consider the test as a pass in this situation.
-	if percenterror>10  Write "------>The sleep time for mupip reorg gives a percent error of ",percenterror,"%, which is above the 10% threshold, which is not acceptable."
+	if percenterror>10  Write "FAIL: The sleep time for mupip reorg gives a percent error of ",percenterror,"%, which is above the 10% threshold, which is not acceptable."
 	else  Do
-	.	if percenterror<-10  Write "------>The sleep time for mupip reorg gives a percent error of ",percenterror,"%, which means MUPIP REORG slept for less time than assigned."
+	.	if percenterror<-10  Write "FAIL: The sleep time for mupip reorg gives a percent error of ",percenterror,"%, which means MUPIP REORG slept for less time than assigned."
 	.	else  Write "------>The sleep time for mupip reorg gives a percent error within the +/- 10% threshold, which is acceptable."
 	quit
