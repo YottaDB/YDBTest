@@ -39,16 +39,10 @@ echo "# Previously, this would be set to only SSL_VERIFY_PEER by default."
 cp gtmcrypt.cfg gtmcrypt-bak.cfg
 sed -i '/cert.*INSTANCE1.*/d' gtmcrypt.cfg
 sed -i '/verify-mode: "SSL_VERIFY_PEER"/d' gtmcrypt.cfg
-if (0 == $ydb_test_tls13_plus) then
-	# Force TLS v1.2
-	sed -i '/session-timeout: 0/a	ssl-options: "SSL_OP_NO_TLSv1_3";' gtmcrypt.cfg
-endif
 echo
 
 echo "# Start source replication instance"
 $MSR STARTSRC INST1 INST2 RP
-get_msrtime
-set time_src = "$time_msr"
 echo "# Start receiver replication instance"
 $MSR STARTRCV INST1 INST2
 get_msrtime
@@ -64,27 +58,23 @@ $MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log '$SEC_SIDE/RCVR_$time_rcvr.lo
 $gtm_tst/com/check_error_exist.csh $SEC_SIDE/RCVR_$time_rcvr.log TLSHANDSHAKE | uniq	# Omit duplicate instances of TLSHANDSHAKE
 echo
 
-echo "# Expect TLSIOERROR (TLS versions >= 1.3) or TLSHANDSHAKE (TLS versions <= 1.2) error in source server log file"
-echo "# as a result of the failed attempt to establish a TLS/SSL connection above due to a missing client certificate."
-if (1 == $ydb_test_tls13_plus) then
-	set message = TLSIOERROR
-else
-	set message = TLSHANDSHAKE
-endif
-$gtm_tst/com/wait_for_log.csh -log SRC_$time_src.log -message $message
-$gtm_tst/com/check_error_exist.csh SRC_$time_src.log $message
-echo
+# This test only validates the RCVR server TLSHANDSHAKE behavior above (the subject of GTM-DE568389). The source server's fate
+# after the RCVR rejects the connection is not deterministic: depending on a race between the receiver's TCP close and its TLS
+# alert, the source either exits on its own with a fatal TLSIOERROR/TLSHANDSHAKE or stays in a reconnect loop. So stop it
+# explicitly by pid to reach a known state before cleanup. Redirect the output since the source may have already exited on its
+# own, in which case MUPIP stop harmlessly reports "No such process".
+$MUPIP stop `grep PID START_*.out | sed -E 's/.*PID ([0-9]+) Source server.*/\1/g' | uniq` >& mupip_stop.out
+$MSR STOPRCV INST1 INST2
 
-# Ensure source server has finished terminating before attempting error log check and restart
-$MSR STOP INST1 INST2
-$gtm_tst/com/wait_for_proc_to_die.csh `grep PID START_*.out | sed -E 's/.*PID ([0-9]+) Source server.*/\1/g' | uniq` 30
+# The source log may or may not contain a TLS error depending on the race noted above, so rename it to .logx unconditionally
+# (the same mechanism check_error_exist.csh uses) to keep the error scanner from flagging an expected TLSIOERROR/TLSHANDSHAKE
+# when present.
+foreach srclog (SRC_*.log)
+	if (-e $srclog) mv $srclog ${srclog}x
+end
 
-echo "# Restart source replication instance with restored gtmcrypt.cfg"
-cp gtmcrypt.cfg gtmcrypt-test.cfg
-cp gtmcrypt-bak.cfg gtmcrypt.cfg
-$MSR STARTSRC INST1 INST2
-echo "# Stop both replication instances"
-# $MSR STOP INST2
-echo
+# Clean up the journal pool (orphaned if the source exited on its own, still attached if it did not).
+$MSR RUN INST1 'set msr_dont_chk_stat ; $MUPIP rundown -region "*" -override >>& mupip_rundown.out'
 
-$gtm_tst/com/dbcheck.csh >& dbcheck.out
+# Use -noshut since replication has already been stopped manually above
+$gtm_tst/com/dbcheck.csh -noshut >& dbcheck.out

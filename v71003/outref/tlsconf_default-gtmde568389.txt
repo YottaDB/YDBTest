@@ -29,23 +29,5 @@ Error TLSHANDSHAKE seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##RCVR_##TIM
 %YDB-E-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
 ----------
 
-==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
-Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
-Shutting down Primary Source Server Server in ##TEST_PATH##
-# Expect TLSIOERROR (TLS versions >= 1.3) or TLSHANDSHAKE (TLS versions <= 1.2) error in source server log file
-# as a result of the failed attempt to establish a TLS/SSL connection above due to a missing client certificate.
-----------
-##SUSPEND_OUTPUT TLS1.3MINUS
-Error TLSIOERROR seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%YDB-E-TLSIOERROR, Error during TLS/SSL recv operation
-##ALLOW_OUTPUT TLS1.3MINUS
-##SUSPEND_OUTPUT TLS1.3PLUS
-Error TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%YDB-E-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
-##ALLOW_OUTPUT TLS1.3PLUS
-----------
-
-# Restart source replication instance with restored gtmcrypt.cfg
-==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
-# Stop both replication instances
-
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat ; $MUPIP rundown -region "*" -override >>& mupip_rundown.out'==

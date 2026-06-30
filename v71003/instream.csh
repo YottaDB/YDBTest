@@ -50,14 +50,6 @@ else
 endif
 
 setenv subtest_exclude_list ""
-set sslver = `openssl version | cut -f 2 -d ' ' | cut -f 1 -d '.'`
-if (3 > $sslver) then
-	# OpenSSL is less than version 3, but tlsconf_default-gtmde568389 tests the internal usage of the
-	# SSL_VERIFY_FAIL_IF_NO_PEER_CERT flag, which is only in OpenSSL version 3+. So, skip the test
-	# when OpenSSL is less than version 3. For more details see the discussion at:
-	# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2404#note_2670041807
-	setenv subtest_exclude_list "$subtest_exclude_list tlsconf_default-gtmde568389"
-endif
 
 if ("TRUE" != $gtm_test_tls) then
 	# The below test requires TLS to be enabled, so exclude the test if TLS is disabled
