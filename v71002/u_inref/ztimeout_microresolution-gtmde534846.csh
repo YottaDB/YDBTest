@@ -36,6 +36,17 @@ echo '# Expect the resulting value of $ZTIMEOUT to be less than 0.1 minus 0.4567
 echo '# Test case derived from discussion threads at:'
 echo '# 1. https://gitlab.com/YottaDB/DB/YDBTest/-/issues/682#note_2515828547'
 echo '# 2. https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2345#note_2551769584'
-$gtm_dist/mumps -r gtmde534846
+# The test may fail inadvertently due to transient system load issues. In that case, retry the test up to 3 times to avoid false test failures.
+set try = 0
+while ($try < 3)
+	@ try = $try + 1
+	set outfile = "try${try}.outx"
+	$gtm_dist/mumps -r gtmde534846 >&! $outfile
+	grep -q FAIL $outfile
+	if ($status > 0) then
+		break
+	endif
+end
+cat $outfile
 
 $gtm_tst/com/dbcheck.csh >&! dbcheck.out

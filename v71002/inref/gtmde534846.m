@@ -15,7 +15,8 @@ gtmde534846 ;
 	; In that case, there is no legitimate failure since 0 cannot be greater than
 	; the difference between the duration of a HANG. So, just continue with the
 	; test in that case by calling DO ^incretrap.
-	set $etrap="do ^incretrap"
+	set $ztrap="goto incrtrap^incrtrap"
+	set incrtrapNODISP=1
 	set initial(0)=0.1,hangtime(0)=0.045
 	set initial(1)=.012345,hangtime(1)=0.005
 	set initial(2)=.002345,hangtime(2)=0.001
@@ -28,7 +29,7 @@ gtmde534846 ;
 
 	; Output the value of $ZTIMEOUT for each scenario
 	for i=0:1:2  do
-	. if (out(i)=(initial(i)-hangtime(i)))  do
+	. if ((0>=out(i))!(out(i)>=(initial(i)-hangtime(i))))  do
 	. . write "FAIL: $ztimeout="_out(i)_", but expected < "_(initial(i)-hangtime(i)),!
 	. else  do
 	. . write "$ZTIMEOUT="""_out(i)_"""",!
