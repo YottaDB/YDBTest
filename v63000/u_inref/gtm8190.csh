@@ -74,7 +74,7 @@ $gtm_tst/com/wait_for_log.csh -log pids.txt -message NONTPRESTART
 echo "# Show the messages"
 set regexp=`cat pids.txt`
 set outfile = syslog2.txt
-set tmpfile = "${outfile}.tmp"
+set tmpfile = ${outfile}.tmp
 
 # There are 3 processes each of which can issue at most 1 message
 $gtm_tst/com/getoper.csh "$syslog_start" "" "$tmpfile" "" "$regexp" 3
