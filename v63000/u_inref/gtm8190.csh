@@ -74,7 +74,7 @@ $gtm_tst/com/wait_for_log.csh -log pids.txt -message NONTPRESTART
 echo "# Show the messages"
 set regexp=`cat pids.txt`
 set outfile = syslog2.txt
-set tmpfile = ${outfile}.tmp
+set tmpfile = "${outfile}.tmp"
 
 # There are 3 processes each of which can issue at most 1 message
 $gtm_tst/com/getoper.csh "$syslog_start" "" "$tmpfile" "" "$regexp" 3
@@ -85,7 +85,7 @@ $gtm_tst/com/getoper.csh "$syslog_start" "" "$tmpfile" "" "$regexp" 3
 # check_error_exist.csh will also detect and output NONTPRESTART messages from
 # those unrelated tests and cause this test to fail. So, filter out any such
 # messages by reapplying the regexp to the syslog messages retrieved by getoper.csh
-grep -E "$regexp" $tmpfile >&! $outfile
+grep -wE "$regexp" $tmpfile >&! $outfile
 $gtm_tst/com/check_error_exist.csh $outfile NONTPRESTART
 
 # The following grep should not find code L and 0 block number at the same time
