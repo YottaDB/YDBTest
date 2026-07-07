@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,13 @@ while ($iteration < 1000)
 	# Use .outx extension (not .out) as it can contain %SYSTEM-E-ENO2 errors and we don't want test framework to see it.
 	$GDE "change -segment DEFAULT -file=mumps.dat" < /dev/null >& bg_${index}_$iteration.outx
 	if ($status) then
-		touch bg.stop	# Signal other background [gtm9410_helper.csh] processes to also stop
+		$grep -qcE "%SYSTEM-E-ENO2|%YDB-F-IONOTOPEN" bg_${index}_$iteration.outx
+		if (0 == $status) then
+			# Signal other background [gtm9410_helper.csh] processes to also stop,
+			# but only if the above GDE command failed due to the expected errors
+			# and not due to an unrelated error.
+			touch bg.stop
+		endif
 	endif
 	@ iteration = $iteration + 1
 end
