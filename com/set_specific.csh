@@ -18,7 +18,7 @@ if ( $?HOSTOS == "0" )          setenv HOSTOS `uname -s`        # operating syst
 unalias ps cp rm ls diff rsh ssh rcp scp awk
 setenv grep \grep
 setenv df "df -kP"
-setenv netstat "/bin/netstat -an"
+setenv netstat "ss -an"
 setenv ssh "ssh -x"
 setenv rsh "$ssh"
 setenv rcp "scp -q"
