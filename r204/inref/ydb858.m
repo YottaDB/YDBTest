@@ -99,16 +99,7 @@ waitForPrompt(prompt);
 	; Reads and discards all input until it gets to the prompt.
 	new readSoFar
 	set readSoFar=""
-	for  read cmdop:0.01 do  quit:readSoFar=prompt
-	.	; If $TEST is 1, it means the read did not time out. That means we read a full newline terminated line.
-	.	; So keep reading in that case after noting down what was read (in case we need to display it later).
-	.	; If $TEST is 0, it means the read timed out. In that case, accumulate whatever was read so far with
-	.	; whatever was read this iteration and note it in the "readSoFar" variable and move on to the next iteration.
-	.	if '$test set readSoFar=readSoFar_cmdop quit
-	.	set readSoFar=""
-	.	; set readData($incr(readData))=cmdop
-	; set readData($incr(readData))=readSoFar
-	; use $principal zwrite readData use dev
+	for  read cmdop:0.01 quit:cmdop=prompt
 	quit
 waitForPromptRet(prompt,readData);
 	; Like waitForPrompt but the lines are saved in a list
@@ -121,9 +112,9 @@ waitForPromptRet(prompt,readData);
 	for  read cmdop:0.01 do  quit:readSoFar=prompt
 	.	; If $TEST is 1, it means the read did not time out. That means we read a full newline terminated line.
 	.	; So keep reading in that case after noting down what was read (in case we need to display it later).
-	.	; If $TEST is 0, it means the read timed out. In that case, accumulate whatever was read so far with
-	.	; whatever was read this iteration and note it in the "readSoFar" variable and move on to the next iteration.
-	.	if '$test set readSoFar=readSoFar_cmdop quit
+	.	; If $TEST is 0, it means the read timed out. In that case, store whatever was read this iteration in the
+	.	; "readSoFar" variable and move on to the next iteration.
+	.	if '$test set readSoFar=cmdop quit
 	.	set readSoFar=""
 	.	set readData($incr(readData))=cmdop
 	set readData($incr(readData))=readSoFar
