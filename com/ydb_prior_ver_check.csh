@@ -87,16 +87,27 @@ if ($?ydb_environment_init) then
 	# with the local host same prior version build in which case we need to run the test with TLS disabled on both hosts
 	# as that is the lowest common denominator.
 	#
-	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
 	set hoststr = ""
+	if (! -e $gtm_root/$1/pro/plugin/libgtmtls.so) then
+		set disabletls = 1
+		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [libgtmtls.so not found]" >>&! settings.csh
+	endif
+	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep "not found"`
 	if ("" != "$notfound") then
 		set disabletls = 1
 		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [$notfound]" >>&! settings.csh
 	endif
 	if ("$2" != "") then
+		set hoststr = "on host = [$2] "
+		set notfound = `$ssh $2 "ls -l $gtm_root/$1/pro/plugin/libgtmtls.so" |& grep "No such file or directory"`
+		if ("" != "$notfound") then
+			set disabletls = 1
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [libgtmtls.so not found]" >>&! settings.csh
+		endif
+		set disabletls = 1
+		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh ($gtm_root/$1/pro/plugin/libgtmtls.so not found)" >>&! settings.csh
 		# Remote host name has been specified. Additionally, do TLS check on remote host.
 		set notfound = `$ssh $2 "ldd $gtm_root/$1/pro/plugin/libgtmtls.so" |& grep "not found"`
-		set hoststr = "on host = [$2] "
 		if ("" != "$notfound") then
 			set disabletls = 1
 			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh $hoststr(prior_ver = $1) : [$notfound]" >>&! settings.csh
