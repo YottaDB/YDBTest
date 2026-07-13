@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,8 @@ $gtm_dist/lke clnup
 $gtm_dist/lke show
 
 echo '\n# settings 3 locks and kill9ing their processes'
-($gtm_dist/mumps -run %XCMD 'set ^noclean=1 hang 9999' &; echo $! >&! mumpsA.pid) >&! /dev/null # leave a process open so shared memory wont get cleared
+($gtm_dist/mumps -run %XCMD 'set ^noclean(1)=1 hang 9999' &; echo $! >&! mumpsA.pid) >&! mumpsA.outx # leave a process open so shared memory wont get cleared
+$gtm_dist/mumps -run %XCMD 'for  quit:$data(^noclean(1))  hang 0.01'
 $gtm_dist/mumps -run %XCMD 'lock ^a write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^b write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^c write $zsigproc($job,9) hang 9999'
@@ -45,7 +46,8 @@ set ydbPID = `cat mumpsA.pid`
 $gtm_dist/mupip stop $ydbPID # stop YDB M process in a long HANG command
 
 echo '\n# settings 3 locks and kill9ing their processes'
-($gtm_dist/mumps -run %XCMD 'set ^noclean=1 hang 9999' &; echo $! >&! mumpsB.pid) >&! /dev/null # leave a process open so shared memory wont get cleared
+($gtm_dist/mumps -run %XCMD 'set ^noclean(2)=1 hang 9999' &; echo $! >&! mumpsB.pid) >&! mumpsB.outx # leave a process open so shared memory wont get cleared
+$gtm_dist/mumps -run %XCMD 'for  quit:$data(^noclean(2))  hang 0.01'
 $gtm_dist/mumps -run %XCMD 'lock ^a write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^b write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^c write $zsigproc($job,9) hang 9999'
@@ -60,8 +62,8 @@ $gtm_dist/mumps -run %XCMD 'lock ^a write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^b write $zsigproc($job,9) hang 9999'
 # set a process that gets two locks (one owned, one orphaned) then hang for the lke clnup
 # also sets a global variable so that we know when then locks are set to avoid race conditions on slower systems
-($gtm_dist/mumps -run %XCMD 'lock ^c lock +^a set ^done(1)=1 hang 9999' &; echo $! >&! mumpsC.pid) >&! mumpsA.outx
-$gtm_dist/mumps -run %XCMD 'for  quit:$get(^done(1))=1  hang 0.1'
+($gtm_dist/mumps -run %XCMD 'lock ^c lock +^a set ^done(1)=1 hang 9999' &; echo $! >&! mumpsC.pid) >&! mumpsC.outx
+$gtm_dist/mumps -run %XCMD 'for  quit:$get(^done(1))=1  hang 0.01'
 echo '# cleanup there should be a lock on ^c, and ^a'
 $gtm_dist/lke clnup
 $gtm_dist/lke show
@@ -70,14 +72,14 @@ $gtm_dist/mupip stop $ydbPID # stop YDB M process in a long HANG command
 
 echo '\n# testing -periodic switch'
 ($gtm_dist/lke clnup -periodic=5 &; echo $! >&! lkeA.pid) >&! lkeA.outx
-($gtm_dist/mumps -run %XCMD 'set ^done(2)=1 hang 9999' &; echo $! >&! mumpsD.pid) >&! /dev/null # leave a process open so shared memory wont get cleared
-$gtm_dist/mumps -run %XCMD 'for  lock:$get(^done(2))=1 ^waitForThis write:$get(^done(2))=1 $zsigproc($job,9) hang 0.1'
+($gtm_dist/mumps -run %XCMD 'set ^done(2)=1 hang 9999' &; echo $! >&! mumpsD.pid) >&! mumpsD.outx # leave a process open so shared memory wont get cleared
+$gtm_dist/mumps -run %XCMD 'for  lock:$get(^done(2))=1 ^waitForThis write:$get(^done(2))=1 $zsigproc($job,9) hang 0.01'
 # Busy wait here for a clnup trigger this will sync the two processes
 # Output should appear since an orphaned lock was set above
 set foundStr = 1
 while (0 != $foundStr)
 	$gtm_dist/lke show >&! lkeshow.outx
-	grep "^%YDB-I-NOLOCKMATCH.*DEFAULT" lkeshow.outx >& /dev/null
+	grep "^%YDB-I-NOLOCKMATCH.*DEFAULT" lkeshow.outx >& lkeD.outx
 	set foundStr = $status
 	sleep 0.5
 end
@@ -120,8 +122,8 @@ $gtm_dist/lke clnup -integ
 $gtm_dist/lke show
 
 echo '\n# setting 3 orphaned locks set by 3 processes, while one ydb process is left open'
-($gtm_dist/mumps -run %XCMD 'set ^done(3)=1 hang 9999' &; echo $! >&! mumpsE.pid) >&! /dev/null
-$gtm_dist/mumps -run %XCMD 'for  quit:$get(^done(3))=1  hang 0.1'
+($gtm_dist/mumps -run %XCMD 'set ^done(3)=1 hang 9999' &; echo $! >&! mumpsE.pid) >&! mumpsE.outx
+$gtm_dist/mumps -run %XCMD 'for  quit:$get(^done(3))=1  hang 0.01'
 $gtm_dist/mumps -run %XCMD 'lock ^a write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^b write $zsigproc($job,9) hang 9999'
 $gtm_dist/mumps -run %XCMD 'lock ^c write $zsigproc($job,9) hang 9999'
