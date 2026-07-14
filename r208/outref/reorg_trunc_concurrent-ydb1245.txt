@@ -1,0 +1,23 @@
+#-------------------------------------------------------------------------------------------#
+# [#1245] MUPIP REORG -TRUNCATE frees up space even in the presence of concurrent updates #
+#-------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [inita^ydb1245] : create ^a1 and ^a2 and kill ^a1 leaving lots of free space in the database file
+# Start [mupip reorg -truncate -reg DEFAULT] in the background
+# Run [initb^ydb1245] : create ^b1 and ^b2 concurrently with the reorg -truncate
+# Wait for the background reorg -truncate to complete
+# Run a standalone [mupip reorg -truncate -reg DEFAULT] for comparison
+
+# Verify the concurrent reorg -truncate truncated the database file
+# A YDB build without the YDB#1245 fixes used to produce the following output here instead
+#	%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible
+# whereas we now expect the [Truncated region: DEFAULT] line below
+Truncated region: DEFAULT. Reduced total blocks from [21242] to [12800]. Reduced free blocks from [8508] to [83].
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
