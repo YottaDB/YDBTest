@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -179,7 +179,24 @@ foreach server ("SOURCE" "RECEIVER")
 		set log = "${tnum}-${server}start.logx"
 	endif
 	foreach buffer ("SNDBUF" "RCVBUF")
-		grep $buffer $log
+		# If the system default is less than the minimum required by the database, then then minimum will be used
+		# and cause this test case to fail, though the behavior is correct. So, account for possible variations
+		# in system settings by excluding setsockopt() calls from the below grep check if they set the buffer
+		# limits to the database-specificied minimum(s), since this is expected in this case.
+		if ("$server" == "RECEIVER") then
+			if ("$buffer" == "SNDBUF") then
+				set min = $receiver_min_SNDBUF
+			else
+				set min = $receiver_min_RCVBUF
+			endif
+		else
+			if ("$buffer" == "SNDBUF") then
+				set min = $source_min_SNDBUF
+			else
+				set min = $source_min_RCVBUF
+			endif
+		endif
+		grep $buffer $log | grep -v $min
 		if ($status == 1) then
 			echo "PASS: No change to $buffer on $server server"
 		else
@@ -193,6 +210,13 @@ echo
 
 echo "### Test 4: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE between the system default SO_SNDBUF and SO_RCVBUF values and 1 MiB"
 set tnum = T4
+if ($default_SNDBUF < $source_min_SNDBUF) then
+	# If the system default is less than the minimum required by the database, then then minimum will be used
+	# and cause the below test case to fail, though the behavior is correct. So, account for possible variations
+	# in system settings by temporarily treating the system default as the higher of the two values.
+	set orig_default_SNDBUF = $default_SNDBUF
+	set default_SNDBUF = $source_min_SNDBUF
+endif
 echo "## Source server"
 echo "#  1. -SENDBUFFSIZE between the system default ($default_SNDBUF) and 1 MiB ($MiB), expect the specified value"
 echo "#  2. -RECVBUFFSIZE between the system default ($default_RCVBUF) and 1 MiB ($MiB), expect the specified value"
@@ -214,6 +238,10 @@ echo "## Check output for correct SO_SNDBUF and SO_RCVBUF values"
 echo "# Stop the source and receiver servers"
 $MSR STOP INST1 INST2
 echo
+if ($?orig_default_SNDBUF) then
+	# Restore the actual system default SNDBUF value
+	set default_SNDBUF = $orig_default_SNDBUF
+endif
 
 echo "### Test 5: MUPIP REPLICATE with -SENDBUFFSIZE and -RECVBUFFSIZE at exactly their internal default values"
 set tnum = T5
