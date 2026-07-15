@@ -48,19 +48,24 @@ echo "# Verify the concurrent reorg -truncate truncated the database file"
 echo "# A YDB build without the YDB#1245 fixes used to produce the following output here instead"
 echo "#	%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible"
 echo "# whereas we now expect the [Truncated region: DEFAULT] line below"
-# The grep'ed line below (with its exact block counts) is part of the reference file. The data loaded by
-# inita^ydb1245 and the concurrent updates done by initb^ydb1245 are deterministic, so a fully effective
-# REORG -TRUNCATE (with the YDB#1245 fixes, including the tail sweep of blocks created/displaced by the
-# concurrent updates) always compacts the file to the same size, matching what a standalone (no concurrent
-# updates) REORG -TRUNCATE of the same data achieves. Any deviation (a MUTRUNCALREADY message, or different
-# block counts from a partially effective truncate) shows up as a reference file difference.
-grep "Truncated region: DEFAULT" truncate_concurrent.out
+# The [Truncated region] line's block counts are normalized below before becoming part of the reference file.
+# The pre-truncate free blocks count depends on the exact interleaving of the concurrent updates with the reorg
+# phase (e.g. how much block coalescing happened before a given block got its final content) so it is replaced
+# with [ARBITRARY]. The post-truncate counts can also vary a little in the rare case the background reorg's
+# truncate phase runs before the tail end of the concurrent updates, so they are checked against bounds derived
+# from what a standalone REORG -TRUNCATE of the same data achieves (total blocks at most 12800, free blocks less
+# than 200) instead of exact values. A MUTRUNCALREADY message or a partially effective truncate (e.g. a total
+# blocks count of 17408, seen with only some of the YDB#1245 fixes in place) shows up as a reference file
+# difference either way.
+grep -q "Truncated region: DEFAULT" truncate_concurrent.out
 if (0 != $status) then
 	echo "FAIL: concurrent reorg -truncate did not truncate region DEFAULT"
 	echo "# ----- truncate_concurrent.out -----"
 	cat truncate_concurrent.out
 	echo "# ----- truncate_standalone.out -----"
 	cat truncate_standalone.out
+else
+	grep "Truncated region: DEFAULT" truncate_concurrent.out | awk '{split($0, a, "[][]"); tto = ((a[4] + 0) <= 12800) ? "12800 OR LESS" : a[4]; fto = ((a[8] + 0) < 200) ? "LESS THAN 200" : a[8]; printf "Truncated region: DEFAULT. Reduced total blocks from [%s] to [%s]. Reduced free blocks from [ARBITRARY] to [%s].\n", a[2], tto, fto;}'
 endif
 
 $gtm_tst/com/dbcheck.csh
