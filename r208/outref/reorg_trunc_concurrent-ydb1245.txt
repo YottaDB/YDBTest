@@ -18,6 +18,66 @@ mumps.dat
 #	%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible
 # whereas we now expect the [Truncated region: DEFAULT] line below
 Truncated region: DEFAULT. Reduced total blocks from [21242] to [12800 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 200].
+
+# Verify the truncate tail sweep does only the work that helps the truncate
+#
+# The sweep reruns [mu_reorg] for each global whose blocks it finds past the truncate point. A block swap is
+# the only reorg operation that moves a block towards the front of the file, so the sweep asks for swaps only
+# (no splits/coalesces) and only for blocks that lie past the truncate point. Without those restrictions the
+# sweep rewrites a global's ENTIRE tree to relocate the handful of blocks that are actually in the way; in a
+# user database, where a single global routinely occupies a gigabyte, that is a great deal of needless work
+# (every swap/split/coalesce is a transaction, with journal records and before-images) and the reorg takes
+# correspondingly longer. Rather than time the reorg (wall clock timings are far too noisy on a loaded test
+# system to assert on), verify the work itself, using the per-global block counters that [mu_reorg] prints.
+# The counters below cover only the sweep's [Truncate tail sweep of Global:] sections, not the reorg phase
+# that precedes them (that phase still does full reorgs, splits and coalesces included). Note the swaps
+# themselves are NOT checked here, only the splits/coalesces: the concurrent updates decide how many of a
+# global's blocks end up past the truncate point, and it is entirely correct for the sweep to swap ALL of
+# them if that is where they all are, so no bound on the swaps separates the intended behavior from a build
+# that swaps every block regardless. The [-select] reorg further below, which no updates race, is where
+# the swaps get checked.
+Sweep ran                    : YES
+Sweep blocks coalesced       : 0 (must be 0: a coalesce does not move a block towards the front)
+Sweep blocks split           : 0 (must be 0: a split does not move a block towards the front)
+
+# Smoke test the database file writes the reorg actually did
+#
+# The block counters above are what [mu_reorg] believes it did. Corroborate them, loosely, against the
+# pwrite() calls the reorg process really issued against the database file, counted from an strace of it.
+# Loosely because the count covers the whole reorg and its reorg phase dominates: in a measured run that
+# phase swapped 10569 blocks to the sweep's 1. So this cannot see the sweep's savings (the block counters
+# above are what verify those); it only catches the reorg's writes growing by an order of magnitude, i.e.
+# the saved work coming back as real I/O somewhere else. Only writes are checked: the sweep still WALKS
+# whole global variable trees (that is how it locates the blocks past the truncate point transactionally)
+# so its reads are expected to stay, whereas what the YDB#1245 work removes is write work (block swaps,
+# splits and coalesces) and the reads incidental to it. Nothing is printed below if the check passes, or
+# if it is skipped because asyncio is on (which routes the block writes through io_submit() instead of
+# pwrite(), making them uncountable this way).
+
+# Measure the tail sweep's savings with the reorg phase taken out of the picture
+#
+# The database write count above is dominated by the reorg phase, which the YDB#1245 work does not change,
+# so it cannot see the sweep's savings. Set up a database where the sweep is the only thing doing any
+# appreciable work and the count becomes a direct measure of them: ^a2 compacted at the front of the file,
+# a few of its blocks stranded at the very end, and a large free region in between (see [initc^ydb1245]);
+# then reorg with -SELECT=a1,filler, which reorgs only killed globals and so costs nothing. The sweep walks
+# ^a2 (~10000 blocks) but should swap only the few blocks that are actually past the truncate point. A
+# build without the YDB#1245 work swaps every one of the blocks it walks instead, which is two orders of
+# magnitude more database writes.
+# Run [killb^ydb1245] : kill ^b1 and ^b2 to free up the space they occupy
+# Run [mupip reorg -truncate -reg DEFAULT] : compact ^a2 to the front of the database file
+# Run [initc^ydb1245] : strand a few ^a2 blocks at the end of the file with free space below them
+# Run [mupip reorg -truncate -select=a1,filler -reg DEFAULT] : only the tail sweep does any real work
+Sweep ran                    : YES
+Sweep blocks coalesced       : 0 (must be 0: a coalesce does not move a block towards the front)
+Sweep blocks split           : 0 (must be 0: a split does not move a block towards the front)
+Sweep blocks swapped, as a % of blocks walked : UNDER 25%
+Truncated the file after the sweep : YES
+
+# Verify [mupip reorg -noswap -truncate] skips the tail sweep altogether
+# A block swap is the only thing the sweep does, so with -NOSWAP it could not move anything and would be all
+# cost (the bitmap scan) and no benefit. Expect no [Truncate tail sweep of Global:] output at all below.
+Tail sweep sections in a -NOSWAP reorg -truncate : 0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
