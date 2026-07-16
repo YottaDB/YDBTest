@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.       ;
+; Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.  ;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;	This source code contains the intellectual property	;
@@ -425,11 +425,11 @@ recvconns ; receive connections
 	;
 	new index
 	for index=1:1:2 do
-        .use "socket"
-        .write /wait(1,"read")
-        .set conns(index)=$piece($key,"|",2)
-        .use $principal
-        .write " server received incoming connection, index=",index,!
+	.use "socket"
+	.write /wait(1,"read")
+	.set conns(index)=$piece($key,"|",2)
+	.use $principal
+	.write " server received incoming connection, index=",index,!
 	quit
 
 checkpoint(id,comment) ; checkpoint mechanism for processes to wait for each other
@@ -454,10 +454,24 @@ checkpoint(id,comment) ; checkpoint mechanism for processes to wait for each oth
 	set ^checkpoint(port,"q")=$get(^checkpoint(port,"q"),0)
 	lock -(^checkpoint(port))
 	;
-	for  quit:$get(^checkpoint(port,id),0)=procnum  do
+	; Do not wait forever below: the ^checkpoint(port,"q") abort flag is only set by the $ztrap
+	; handler (see `error` and `chkabrt`), so if another participant dies WITHOUT running it
+	; (e.g. killed by a signal, or a fatal error which $ztrap does not trap), the count below
+	; never reaches procnum. Give up after ~300 seconds: report the checkpoint state, set the
+	; abort flag so the other survivors halt promptly too, and halt. The subtest then fails
+	; quickly with output identifying the stuck checkpoint instead of hanging for hours until
+	; the test framework's hung-subtest alarm, by which time the dead process's evidence is
+	; long gone.
+	new iter,maxiter set maxiter=3000
+	for iter=1:1 quit:$get(^checkpoint(port,id),0)=procnum  do
 	.if $get(^checkpoint(port,"q"),0) do  halt
 	..do sig
 	..write "error reported in other process, halting",!
+	.if iter>maxiter do  halt
+	..do sig
+	..write "timed out waiting at checkpoint ",id," (",$get(^checkpoint(port,id),0)," of ",procnum," processes arrived), halting",!
+	..zwrite ^checkpoint(port,*)
+	..do chkabrt
 	.hang 0.1
 	;
 	if debug do
