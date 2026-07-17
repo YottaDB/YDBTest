@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -55,24 +55,24 @@ CAT_EOF
 # The actual block numbers change based on HUGEDB is set or not. Hence the if/else below.
 if (0 != $ydb_test_4g_db_blks) then
 	cat >> dse.cmd << CAT_EOF
-dump -block=100004499 -header
-dump -block=100003A0B -header
-dump -block=10000404C -header
-dump -block=1000055CF -header
-dump -block=1000055D6 -header
-dump -block=100005467 -header
-dump -block=1000055B4 -header
+dump -block=10000445D -header
+dump -block=1000039F2 -header
+dump -block=1000057F1 -header
+dump -block=100005608 -header
+dump -block=100005920 -header
+dump -block=10000548E -header
+dump -block=10000544D -header
 CAT_EOF
 
 else
 	cat >> dse.cmd << CAT_EOF
-dump -block=4699 -header
-dump -block=3C0B -header
-dump -block=424C -header
-dump -block=57CF -header
-dump -block=57D6 -header
-dump -block=5667 -header
-dump -block=57B4 -header
+dump -block=465D -header
+dump -block=3BF2 -header
+dump -block=59F1 -header
+dump -block=5808 -header
+dump -block=5B20 -header
+dump -block=568E -header
+dump -block=564D -header
 CAT_EOF
 endif
 
