@@ -316,7 +316,7 @@ $MUPIP create >&! create_gtypeslock.out
 $ydb_dist/yottadb -run %XCMD 'set ^gtypes=1'
 $MUPIP reorg >&! reorg_lockonly.out
 set g1stat = $status
-echo -n "Plain reorg walked a lock-only region (line 113) and completed cleanly : "
+echo -n "Plain reorg opened a lock-only region with gv_init_reg and completed cleanly : "
 if (0 == $g1stat) then
 	echo YES
 else
@@ -326,8 +326,11 @@ else
 endif
 
 echo "# G2 : a dba_cm (remote GT.CM) region, mapped only for LOCKs so gv_select never touches it"
-echo "#      -> mu_reorg_hidden_gbl_select must skip it at the non-BG/MM check WITHOUT trying to reach the"
-echo "#         remote host (there is no such host); the reorg completing cleanly proves the skip"
+echo "#      -> mu_reorg_hidden_gbl_select must detect it as a remote region (reg_cmcheck) and skip it"
+echo "#         WITHOUT trying to reach the remote host (there is no such host). Note a remote region loaded"
+echo "#         from a gld still has acc_meth BG until reg_cmcheck runs, so the plain BG/MM check alone would"
+echo "#         miss it and gv_init_reg would then fail with UNIMPLOP; the reorg completing cleanly proves"
+echo "#         the remote region was detected and skipped instead."
 setenv gtmgbldir gtypescm.gld
 rm -f gtypescm.gld gtypescm.dat
 cat > gtypescm.gde << gde_eof
@@ -345,7 +348,7 @@ $MUPIP reorg >&! reorg_cm.out
 set g2stat = $status
 grep -qiE "GTCM|CMI|REMOTE|connect|hhh" reorg_cm.out
 set g2remote = $status	# 0 => a remote-access indicator was found (bad); non-0 => none (good)
-echo -n "Plain reorg skipped a dba_cm region (line 109) without remote access and completed cleanly : "
+echo -n "Plain reorg skipped a remote GT.CM (dba_cm) region without remote access and completed cleanly : "
 if ((0 == $g2stat) && (0 != $g2remote)) then
 	echo YES
 else
@@ -372,7 +375,7 @@ $ydb_dist/yottadb -run %XCMD 'set ^gtypes=1'
 rm -f autoonly.dat	# ensure the AUTODB file does not exist going into the reorg
 $MUPIP reorg >&! reorg_auto.out
 set g3stat = $status
-echo -n "Plain reorg skipped an unopened AUTODB region (line 111) without creating its file : "
+echo -n "Plain reorg skipped an unopened AUTODB region without creating its file : "
 if ((0 == $g3stat) && (! -e autoonly.dat)) then
 	echo YES
 else

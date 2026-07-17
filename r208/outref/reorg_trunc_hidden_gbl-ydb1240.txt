@@ -131,15 +131,18 @@ Verified contents of ^c : OK
 # G1 : a region mapped ONLY for LOCKs, plus statistics enabled on DEFAULT
 #      -> gv_select's global-name walk never opens the lock-only region, so mu_reorg_hidden_gbl_select
 #         opens it with gv_init_reg; DEFAULT's statsDB region (if instantiated) is walked and skipped
-Plain reorg walked a lock-only region (line 113) and completed cleanly : YES
+Plain reorg opened a lock-only region with gv_init_reg and completed cleanly : YES
 # G2 : a dba_cm (remote GT.CM) region, mapped only for LOCKs so gv_select never touches it
-#      -> mu_reorg_hidden_gbl_select must skip it at the non-BG/MM check WITHOUT trying to reach the
-#         remote host (there is no such host); the reorg completing cleanly proves the skip
-Plain reorg skipped a dba_cm region (line 109) without remote access and completed cleanly : YES
+#      -> mu_reorg_hidden_gbl_select must detect it as a remote region (reg_cmcheck) and skip it
+#         WITHOUT trying to reach the remote host (there is no such host). Note a remote region loaded
+#         from a gld still has acc_meth BG until reg_cmcheck runs, so the plain BG/MM check alone would
+#         miss it and gv_init_reg would then fail with UNIMPLOP; the reorg completing cleanly proves
+#         the remote region was detected and skipped instead.
+Plain reorg skipped a remote GT.CM (dba_cm) region without remote access and completed cleanly : YES
 # G3 : a never-opened AUTODB region, mapped only for LOCKs so gv_select never touches it
 #      -> mu_reorg_hidden_gbl_select must skip it at the AUTODB check WITHOUT auto-creating its
 #         database file; the file staying absent proves the skip
-Plain reorg skipped an unopened AUTODB region (line 111) without creating its file : YES
+Plain reorg skipped an unopened AUTODB region without creating its file : YES
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
