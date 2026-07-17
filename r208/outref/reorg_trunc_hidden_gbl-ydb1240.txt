@@ -1,0 +1,74 @@
+#------------------------------------------------------------------------------------------------#
+# [#1240] MUPIP REORG -TRUNCATE should process globals in .dat files that are hidden by the .gld #
+#------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [inita^ydb1240] : grow ^x, create ^a at the very end of the file, then kill both
+# Create 2reg.gld : a copy of the original gld plus the names a, b and c mapped to a new region AREG.
+# Region DEFAULT's database file still holds those globals' blocks (right now the killed ^a's leftover
+# root block, at the very end of the file) but 2reg.gld no longer maps the names to DEFAULT: they are
+# hidden globals (see YDB#1240)
+
+# Stage A : the YDB#1240 issue scenario (a killed global hidden by the gld)
+#
+# First run [mupip reorg -truncate -select=x -reg DEFAULT] : with an explicit -SELECT the reorg
+# deliberately does NOT process hidden globals (the user decides the exact set of globals to work on).
+# ^a's leftover root block therefore stays at the end of the file and pins it, since a single busy
+# block in the last local bitmap rules out any meaningful truncation (usually a MUTRUNCALREADY message).
+# The truncate tail sweep cannot help here either: a killed global's root block is empty, so the
+# sweep's scan has no key to determine a global name from (only the directory tree still knows the
+# name, and with -SELECT the reorg deliberately does not consult it beyond the selected names).
+Hidden global ^a processed by the -select reorg : 0
+Hidden ^a still pins the file after the -select reorg : YES
+
+# Now run [mupip reorg -truncate -reg DEFAULT] : without -SELECT the reorg processes every global in
+# region DEFAULT's directory tree, hidden ones included (the YDB#1240 fix), so ^a's root block moves
+# to the front and the truncate works. A build without the fix reports this instead:
+#	%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible
+Hidden global ^a processed by the no-select reorg : 1
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 1024] to [1024 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+
+# Stage B : a hidden global WITH data
+#
+# Run [initb^ydb1240] (through the original gld) : regrow ^x, create ^b at the end of the file, then
+# kill only ^x. With 2reg.gld the name [b] maps to AREG, so ^b (data and all) is a hidden global in
+# region DEFAULT
+# Run [mupip reorg -truncate -reg DEFAULT] : the hidden ^b's blocks must move down for the truncate
+Hidden global ^b processed by the no-select reorg : 1
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 1024] to [1024 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+# Run [verifyb^ydb1240] (through the original gld) : ^b's contents must have survived the block moves
+Verified contents of ^b : OK
+
+# Stage C : hidden-global blocks that only the truncate tail sweep can move
+#
+# Run [initc^ydb1240] (through the original gld) : regrow ^x, create ^c at the end of the file, then
+# kill only ^x (same shape as stage B, with ^c hidden by 2reg.gld)
+# Run [mupip reorg -truncate -select=x -reg DEFAULT] : the explicit -SELECT keeps the reorg phase off
+# the hidden ^c, but ^c's blocks hold live data (unlike stage A's killed ^a) and sit past the truncate
+# point, so the tail sweep's scan finds them and determines the name [c] from their keys. Since that
+# name is in region DEFAULT's own directory tree the sweep moves the blocks, no matter that the gld
+# maps the name to AREG (the tail sweep part of the YDB#1240 fix; it used to skip such names)
+Hidden global ^c processed by the reorg phase : 0
+Tail sweep moved the hidden ^c : YES
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 1024] to [1024 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+# Run [verifyc^ydb1240] (through the original gld) : ^c's contents must have survived the sweep's moves
+Verified contents of ^c : OK
+
+# Stage D : a region ALL of whose globals are hidden
+#
+# Create 3reg.gld : a copy of 2reg.gld plus the name x also mapped to AREG; every name in region
+# DEFAULT's directory tree (a, b, c and x) is now hidden
+# Run [initx^ydb1240] (through the original gld) : regrow and kill ^x so a truncate has work to do
+# Run [mupip reorg -truncate -reg DEFAULT] : a build without the YDB#1240 fix selects nothing here
+# (every name is hidden) and errors out with a NOSELECT message; expect all four hidden globals
+# processed and the file truncated instead
+NOSELECT errors : 0
+Hidden globals processed : 4
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 1024] to [1024 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
