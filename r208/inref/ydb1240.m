@@ -40,6 +40,12 @@ initx	; Regrow and kill ^x, so the database file again has lots of free space fo
 	kill ^x
 	quit
 	;
+initbareg	; Create ^b in region AREG (run this through a gld that maps [b] there). This gives the name [b] a
+	; gld-visible existence so a following -EXCLUDE=b builds a non-empty exclude list (see stage E of the
+	; .csh). Note this ^b is a different global from the hidden ^b that [initb] created in region DEFAULT.
+	set ^b(0)="in AREG"
+	quit
+	;
 growx	; Grow ^x big enough that the database file spans several local bitmaps (512 blocks each): 25000
 	; records of ~200 bytes come to ~1400 4096-byte blocks, i.e. 3 local bitmaps. Whatever a caller creates
 	; right after this lands at the very end of the grown file, which is what makes the globals the callers

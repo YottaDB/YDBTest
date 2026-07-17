@@ -69,6 +69,28 @@ Verified contents of ^c : OK
 NOSELECT errors : 0
 Hidden globals processed : 4
 Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 1024] to [1024 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+
+# Stage E : -EXCLUDE and hidden globals
+#
+# The -EXCLUDE list is built through the gld too ([gv_select]): a name that does not exist anywhere
+# per the gld produces an EMPTY exclude list (a NOEXCLUDE message), so excluding a hidden global by
+# name only works if the name also exists somewhere per the gld. Once the exclude list is non-empty,
+# the exclusion check itself is name-based and applies to hidden globals like any other. Both
+# behaviors are pre-existing -EXCLUDE semantics; this stage pins them down for hidden globals.
+
+# Run [mupip reorg -truncate -exclude=b -reg DEFAULT] : the gld (3reg.gld) maps [b] to region AREG
+# where no ^b exists, so expect a NOEXCLUDE message and the hidden ^b processed anyway
+NOEXCLUDE messages : 1
+Hidden global ^b processed despite -exclude=b : 1
+EXCLUDEREORG messages : 0
+
+# Run [initbareg^ydb1240] (through 3reg.gld) : create ^b in region AREG, so the name [b] now exists
+# per the gld and -EXCLUDE=b builds a non-empty exclude list
+# Rerun [mupip reorg -truncate -exclude=b -reg DEFAULT] : the exclusion check is name-based, so the
+# hidden ^b in region DEFAULT is now excluded (an EXCLUDEREORG message) and the reorg ends with a
+# REORGINC warning, the standard outcome whenever a selected global is excluded
+EXCLUDEREORG messages for the hidden ^b : 1
+REORGINC warnings : 1
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

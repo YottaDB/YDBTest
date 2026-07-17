@@ -217,5 +217,36 @@ else
 	$tst_awk -f $gtm_tst/r208/inref/trunc_bounds-ydb1240.awk truncate_all_hidden.out
 endif
 
+echo
+echo "# Stage E : -EXCLUDE and hidden globals"
+echo "#"
+echo "# The -EXCLUDE list is built through the gld too ([gv_select]): a name that does not exist anywhere"
+echo "# per the gld produces an EMPTY exclude list (a NOEXCLUDE message), so excluding a hidden global by"
+echo "# name only works if the name also exists somewhere per the gld. Once the exclude list is non-empty,"
+echo "# the exclusion check itself is name-based and applies to hidden globals like any other. Both"
+echo "# behaviors are pre-existing -EXCLUDE semantics; this stage pins them down for hidden globals."
+echo
+echo "# Run [mupip reorg -truncate -exclude=b -reg DEFAULT] : the gld (3reg.gld) maps [b] to region AREG"
+echo "# where no ^b exists, so expect a NOEXCLUDE message and the hidden ^b processed anyway"
+$MUPIP reorg -truncate -exclude=b -reg DEFAULT >&! truncate_exclude_hidden.out
+echo -n "NOEXCLUDE messages : "
+grep -c "NOEXCLUDE" truncate_exclude_hidden.out
+echo -n "Hidden global ^b processed despite -exclude=b : "
+grep -c "^Global: b (region DEFAULT)" truncate_exclude_hidden.out
+echo -n "EXCLUDEREORG messages : "
+grep -c "EXCLUDEREORG" truncate_exclude_hidden.out
+echo
+echo "# Run [initbareg^ydb1240] (through 3reg.gld) : create ^b in region AREG, so the name [b] now exists"
+echo "# per the gld and -EXCLUDE=b builds a non-empty exclude list"
+$ydb_dist/yottadb -run initbareg^ydb1240
+echo "# Rerun [mupip reorg -truncate -exclude=b -reg DEFAULT] : the exclusion check is name-based, so the"
+echo "# hidden ^b in region DEFAULT is now excluded (an EXCLUDEREORG message) and the reorg ends with a"
+echo "# REORGINC warning, the standard outcome whenever a selected global is excluded"
+$MUPIP reorg -truncate -exclude=b -reg DEFAULT >&! truncate_exclude_visible.out
+echo -n "EXCLUDEREORG messages for the hidden ^b : "
+grep -c "EXCLUDEREORG" truncate_exclude_visible.out
+echo -n "REORGINC warnings : "
+grep -c "REORGINC" truncate_exclude_visible.out
+
 setenv gtmgbldir "$orig_gbldir"
 $gtm_tst/com/dbcheck.csh
