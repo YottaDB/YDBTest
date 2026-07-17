@@ -50,10 +50,12 @@ END {
 	printf "Sweep blocks split           : %d (must be 0: a split does not move a block towards the front)\n", nsplit
 	# Of the blocks the sweep walks, only those past the truncate point should get swapped. Bucket rather than
 	# check an exact count: the caller arranges for only a few blocks to be past it, but exactly how few is not
-	# worth pinning. A build that swaps every block it walks lands at ~100%, far above this bucket.
+	# worth pinning. Measured runs sit at ~1% (53 blocks swapped of the 5338 walked, and 52 or 53 every time
+	# since no concurrent updates race this reorg), so the 5% below is five times what it takes while still
+	# being twenty times below the ~100% a build that swaps every block it walks reports.
 	if (1 == sweep_guaranteed)
 	{
 		pct = (0 < processed) ? int((100 * swapped) / processed) : 0
-		printf "Sweep blocks swapped, as a %% of blocks walked : %s\n", (25 > pct) ? "UNDER 25%" : (pct "%")
+		printf "Sweep blocks swapped, as a %% of blocks walked : %s\n", (5 > pct) ? "UNDER 5%" : (pct "%")
 	}
 }
