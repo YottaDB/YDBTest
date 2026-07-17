@@ -11,13 +11,12 @@ mumps.dat
 # Start [mupip reorg -truncate -reg DEFAULT] in the background
 # Run [initb^ydb1245] : create ^b1 and ^b2 concurrently with the reorg -truncate
 # Wait for the background reorg -truncate to complete
-# Run a standalone [mupip reorg -truncate -reg DEFAULT] for comparison
 
 # Verify the concurrent reorg -truncate truncated the database file
 # A YDB build without the YDB#1245 fixes used to produce the following output here instead
 #	%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible
 # whereas we now expect the [Truncated region: DEFAULT] line below
-Truncated region: DEFAULT. Reduced total blocks from [21242] to [12800 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
+Truncated region: DEFAULT. Reduced total blocks from [10621] to [7680 OR LESS]. Reduced free blocks from [ARBITRARY] to [LESS THAN 1024].
 
 # Verify the truncate tail sweep does only the work that helps the truncate
 #
@@ -46,15 +45,15 @@ Sweep blocks split           : 0 (must be 0: a split does not move a block towar
 #
 # The block counters above are what [mu_reorg] believes it did. Corroborate them, loosely, against the
 # pwrite() calls the reorg process really issued against the database file, counted from an strace of it.
-# Loosely because the count covers the whole reorg and its reorg phase dominates: in a measured run that
-# phase swapped 10569 blocks to the sweep's 1. So this cannot see the sweep's savings (the block counters
-# above are what verify those); it only catches the reorg's writes growing by an order of magnitude, i.e.
-# the saved work coming back as real I/O somewhere else. Only writes are checked: the sweep still WALKS
-# whole global variable trees (that is how it locates the blocks past the truncate point transactionally)
-# so its reads are expected to stay, whereas what the YDB#1245 work removes is write work (block swaps,
-# splits and coalesces) and the reads incidental to it. Nothing is printed below if the check passes, or
-# if it is skipped because asyncio is on (which routes the block writes through io_submit() instead of
-# pwrite(), making them uncountable this way).
+# Loosely because the count covers the whole reorg and its reorg phase dominates: in a run measured on a
+# larger version of this data that phase swapped 10569 blocks to the sweep's 1. So this cannot see the
+# sweep's savings (the block counters above verify those); it only catches the reorg's writes growing by
+# an order of magnitude, i.e. the saved work coming back as real I/O somewhere else. Only writes are
+# checked: the sweep still WALKS whole global variable trees (that is how it locates the blocks past the
+# truncate point transactionally) so its reads are expected to stay, whereas what YDB#1245 removes is
+# write work (block swaps, splits and coalesces) and the reads incidental to it. Nothing is printed below
+# if the check passes, or if it is skipped because asyncio is on (which routes the block writes through
+# io_submit() instead of pwrite(), making them uncountable this way).
 
 # Measure the tail sweep's savings with the reorg phase taken out of the picture
 #
@@ -63,7 +62,7 @@ Sweep blocks split           : 0 (must be 0: a split does not move a block towar
 # appreciable work and the count becomes a direct measure of them: ^a2 compacted at the front of the file,
 # a few of its blocks stranded at the very end, and a large free region in between (see [initc^ydb1245]);
 # then reorg with -SELECT=a1,filler, which reorgs only killed globals and so costs nothing. The sweep walks
-# ^a2 (~10000 blocks) but should swap only the few blocks that are actually past the truncate point. A
+# ^a2 (~5000 blocks) but should swap only the few blocks that are actually past the truncate point. A
 # build without the YDB#1245 work swaps every one of the blocks it walks instead, which is two orders of
 # magnitude more database writes.
 # Run [killb^ydb1245] : kill ^b1 and ^b2 to free up the space they occupy

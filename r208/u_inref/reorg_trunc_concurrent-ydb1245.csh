@@ -66,8 +66,11 @@ echo "# Run [initb^ydb1245] : create ^b1 and ^b2 concurrently with the reorg -tr
 $ydb_dist/yottadb -run initb^ydb1245
 echo "# Wait for the background reorg -truncate to complete"
 $gtm_tst/com/wait_for_proc_to_die.csh $reorg_pid 600
-echo "# Run a standalone [mupip reorg -truncate -reg DEFAULT] for comparison"
-$MUPIP reorg -truncate -reg DEFAULT >&! truncate_standalone.out
+# Note there is deliberately no standalone [mupip reorg -truncate] run here for comparison. It cost a full reorg
+# of ^a2 (i.e. a large chunk of this subtest's runtime) while nothing checked its output, and in practice it had
+# nothing left to do anyway: the concurrent reorg above truncates the file about as far as it goes, so the
+# standalone one that used to follow it reported MUTRUNCALREADY. The bound the concurrent reorg's output is
+# checked against below is documented rather than re-derived at runtime.
 
 echo
 echo "# Verify the concurrent reorg -truncate truncated the database file"
@@ -82,9 +85,10 @@ echo "# whereas we now expect the [Truncated region: DEFAULT] line below"
 # of exact values. A MUTRUNCALREADY message or a partially effective truncate (e.g. a total blocks count of
 # 17408, seen with only some of the YDB#1245 fixes in place) shows up as a reference file difference either way.
 #
-# The total blocks bound is what really matters here and comes from what a standalone REORG -TRUNCATE of the same
-# data achieves: at most 12800. The concurrent one can do BETTER than that (a measured run truncated to 11776),
-# since a truncate that happens before the concurrent updates finish sees fewer busy blocks.
+# The total blocks bound is what really matters here. It is what a REORG -TRUNCATE of this data achieves once the
+# concurrent updates are all in: ^a2, ^b1 and ^b2 compacted to the front and the file cut at the local bitmap
+# boundary above them. The concurrent reorg can do BETTER than that, since a truncate that happens before the
+# concurrent updates finish sees fewer busy blocks and cuts deeper.
 #
 # The free blocks left behind are bounded much more loosely, because they are essentially just the gap between
 # the highest busy block and the local bitmap boundary above it: "mu_truncate" frees space a local bitmap at a
@@ -99,10 +103,8 @@ if (0 != $status) then
 	echo "FAIL: concurrent reorg -truncate did not truncate region DEFAULT"
 	echo "# ----- truncate_concurrent.out -----"
 	cat truncate_concurrent.out
-	echo "# ----- truncate_standalone.out -----"
-	cat truncate_standalone.out
 else
-	grep "Truncated region: DEFAULT" truncate_concurrent.out | awk '{split($0, a, "[][]"); tto = ((a[4] + 0) <= 12800) ? "12800 OR LESS" : a[4]; fto = ((a[8] + 0) < 1024) ? "LESS THAN 1024" : a[8]; printf "Truncated region: DEFAULT. Reduced total blocks from [%s] to [%s]. Reduced free blocks from [ARBITRARY] to [%s].\n", a[2], tto, fto;}'
+	grep "Truncated region: DEFAULT" truncate_concurrent.out | awk '{split($0, a, "[][]"); tto = ((a[4] + 0) <= 7680) ? "7680 OR LESS" : a[4]; fto = ((a[8] + 0) < 1024) ? "LESS THAN 1024" : a[8]; printf "Truncated region: DEFAULT. Reduced total blocks from [%s] to [%s]. Reduced free blocks from [ARBITRARY] to [%s].\n", a[2], tto, fto;}'
 endif
 
 echo
@@ -133,15 +135,15 @@ echo "# Smoke test the database file writes the reorg actually did"
 echo "#"
 echo "# The block counters above are what [mu_reorg] believes it did. Corroborate them, loosely, against the"
 echo "# pwrite() calls the reorg process really issued against the database file, counted from an strace of it."
-echo "# Loosely because the count covers the whole reorg and its reorg phase dominates: in a measured run that"
-echo "# phase swapped 10569 blocks to the sweep's 1. So this cannot see the sweep's savings (the block counters"
-echo "# above are what verify those); it only catches the reorg's writes growing by an order of magnitude, i.e."
-echo "# the saved work coming back as real I/O somewhere else. Only writes are checked: the sweep still WALKS"
-echo "# whole global variable trees (that is how it locates the blocks past the truncate point transactionally)"
-echo "# so its reads are expected to stay, whereas what the YDB#1245 work removes is write work (block swaps,"
-echo "# splits and coalesces) and the reads incidental to it. Nothing is printed below if the check passes, or"
-echo "# if it is skipped because asyncio is on (which routes the block writes through io_submit() instead of"
-echo "# pwrite(), making them uncountable this way)."
+echo "# Loosely because the count covers the whole reorg and its reorg phase dominates: in a run measured on a"
+echo "# larger version of this data that phase swapped 10569 blocks to the sweep's 1. So this cannot see the"
+echo "# sweep's savings (the block counters above verify those); it only catches the reorg's writes growing by"
+echo "# an order of magnitude, i.e. the saved work coming back as real I/O somewhere else. Only writes are"
+echo "# checked: the sweep still WALKS whole global variable trees (that is how it locates the blocks past the"
+echo "# truncate point transactionally) so its reads are expected to stay, whereas what YDB#1245 removes is"
+echo "# write work (block swaps, splits and coalesces) and the reads incidental to it. Nothing is printed below"
+echo "# if the check passes, or if it is skipped because asyncio is on (which routes the block writes through"
+echo "# io_submit() instead of pwrite(), making them uncountable this way)."
 if (1 == $count_db_io) then
 	# [dbcreate.csh mumps] above created the region DEFAULT database as mumps.dat in the subtest directory.
 	# Journal file I/O uses pread/pwrite too, hence the select on the database file name that [strace -y] prints.
@@ -172,7 +174,7 @@ echo "# so it cannot see the sweep's savings. Set up a database where the sweep 
 echo "# appreciable work and the count becomes a direct measure of them: ^a2 compacted at the front of the file,"
 echo "# a few of its blocks stranded at the very end, and a large free region in between (see [initc^ydb1245]);"
 echo "# then reorg with -SELECT=a1,filler, which reorgs only killed globals and so costs nothing. The sweep walks"
-echo "# ^a2 (~10000 blocks) but should swap only the few blocks that are actually past the truncate point. A"
+echo "# ^a2 (~5000 blocks) but should swap only the few blocks that are actually past the truncate point. A"
 echo "# build without the YDB#1245 work swaps every one of the blocks it walks instead, which is two orders of"
 echo "# magnitude more database writes."
 echo "# Run [killb^ydb1245] : kill ^b1 and ^b2 to free up the space they occupy"
@@ -187,8 +189,9 @@ $ydb_dist/yottadb -run initc^ydb1245
 # in them there is no global name to look up, see mu_trunc_tail_sweep.c) and "mu_swap_root" only walks selected
 # globals. One busy block in the last local bitmap is enough to pin the whole file, since "mu_truncate" frees
 # space a local bitmap at a time (new_total = highest bitmap with a busy block + BLKS_PER_LMAP), so leaving it
-# there costs the sweep's work its entire payoff: measured at MUTRUNCALREADY with -select=a1, versus a truncate
-# from 15963 blocks down to 10752 with -select=a1,filler. Reorging ^filler costs one block swap.
+# there costs the sweep's work its entire payoff: measured (on a larger version of this data) at MUTRUNCALREADY
+# with -select=a1, versus a truncate from 15963 blocks down to 10752 with -select=a1,filler. Reorging ^filler is
+# cheap: it is killed, so it costs one block swap.
 echo "# Run [mupip reorg -truncate -select=a1,filler -reg DEFAULT] : only the tail sweep does any real work"
 if (1 == $count_db_io) then
 	strace -qq -y -e trace=pwrite64 -o select_syscalls.outx $MUPIP reorg -truncate -select="a1,filler" -reg DEFAULT >&! truncate_select.out
@@ -196,7 +199,7 @@ else
 	$MUPIP reorg -truncate -select="a1,filler" -reg DEFAULT >&! truncate_select.out
 endif
 # This reorg has no concurrent updates racing it, so unlike the one above its sweep counters are deterministic:
-# [initc^ydb1245] put a known handful of ^a2's ~10000 blocks past the truncate point, so the sweep is guaranteed
+# [initc^ydb1245] put a known handful of ^a2's ~5000 blocks past the truncate point, so the sweep is guaranteed
 # to run and the swaps are worth checking here (a build that swaps every block it walks reports ~100% instead).
 # These checks work whether or not the strace based one below runs, since they read the reorg's own output
 # rather than counting system calls.
@@ -230,7 +233,10 @@ echo
 echo "# Verify [mupip reorg -noswap -truncate] skips the tail sweep altogether"
 echo "# A block swap is the only thing the sweep does, so with -NOSWAP it could not move anything and would be all"
 echo "# cost (the bitmap scan) and no benefit. Expect no [Truncate tail sweep of Global:] output at all below."
-$MUPIP reorg -noswap -truncate -reg DEFAULT >&! truncate_noswap.out
+# -select=a1 keeps this cheap. The sweep is skipped because of -NOSWAP, whatever is selected (see the NOSWAP
+# check at the top of "mu_trunc_tail_sweep"), and ^a1 is killed so reorging it costs nothing. Without the
+# -select this reorg walked all of ^a2 for no reason other than to produce no sweep output.
+$MUPIP reorg -noswap -truncate -select=a1 -reg DEFAULT >&! truncate_noswap.out
 echo -n "Tail sweep sections in a -NOSWAP reorg -truncate : "
 grep -c "Truncate tail sweep of Global:" truncate_noswap.out
 
