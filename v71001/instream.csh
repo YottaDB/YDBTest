@@ -69,6 +69,11 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
+set rand_ver=`$gtm_tst/com/random_ver.csh -gte V70002 -lt V71000 -ck true`
+if ( "$rand_ver" == "RANDOMVER-E-CANNOTRUN") then
+	setenv subtest_exclude_list "$subtest_exclude_list tptrans_problocksplit-gtmde532295"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
