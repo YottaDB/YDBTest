@@ -275,5 +275,113 @@ grep -c "^Global: b (region AREG)" plain_reorg_all.out
 echo -n "^b processed in region DEFAULT (hidden) : "
 grep -c "^Global: b (region DEFAULT)" plain_reorg_all.out
 
+echo
+echo "# Stage G : region types that mu_reorg_hidden_gbl_select must skip or handle specially"
+echo "#"
+echo "# mu_reorg_hidden_gbl_select walks EVERY region of the gld (when -REGION is not specified). Besides"
+echo "# ordinary BG regions it has to handle four special cases without mishap: a statsDB region (skip), a"
+echo "# non-BG/MM (dba_cm, i.e. remote GT.CM) region (skip -- it must NOT try to reach the remote node), a"
+echo "# never-opened AUTODB region (skip WITHOUT auto-creating its database file), and a region that"
+echo "# gv_select never opened -- e.g. one mapped only for LOCKs, which the global-name walk does not touch"
+echo "# -- which it opens itself with gv_init_reg. Each case below uses its own gld and a plain (no -REGION,"
+echo "# no -SELECT) MUPIP REORG, which is enough since mu_reorg_hidden_gbl_select runs for any REORG without"
+echo "# -SELECT. The special regions carry no globals (only DEFAULT holds ^gtypes so the reorg has work and"
+echo "# does not issue NOSELECT); the point is that the reorg walks the special region and comes through"
+echo "# cleanly. The reorg output is examined only on failure, so the reference stays stable."
+# Provide a statsdir (if the test framework has not already) so DEFAULT's statsDB region gets instantiated
+# and walked (exercising the statsDB skip). Best effort: whether a MUPIP process ends up with the statsDB
+# region in its region list is not asserted, since it does not change the reorg's visible output either way.
+# Restored before the closing dbcheck below so it does not perturb the integ of the original regions.
+set g_set_statsdir = 0
+if (! $?ydb_statsdir) then
+	setenv ydb_statsdir "$cwd"
+	set g_set_statsdir = 1
+endif
+
+echo "# G1 : a region mapped ONLY for LOCKs, plus statistics enabled on DEFAULT"
+echo "#      -> gv_select's global-name walk never opens the lock-only region, so mu_reorg_hidden_gbl_select"
+echo "#         opens it with gv_init_reg; DEFAULT's statsDB region (if instantiated) is walked and skipped"
+setenv gtmgbldir gtypeslock.gld
+rm -f gtypeslock.gld gtypes.dat lockonly.dat
+cat > gtypeslock.gde << gde_eof
+change -segment DEFAULT -access_method=BG -file=gtypes.dat
+change -region DEFAULT -stats
+add -segment LOCKONLY -access_method=BG -file=lockonly.dat
+add -region LOCKONLY -dynamic=LOCKONLY
+locks -region=LOCKONLY
+exit
+gde_eof
+$GDE_SAFE @gtypeslock.gde >&! gde_gtypeslock.out
+$MUPIP create >&! create_gtypeslock.out
+$ydb_dist/yottadb -run %XCMD 'set ^gtypes=1'
+$MUPIP reorg >&! reorg_lockonly.out
+set g1stat = $status
+echo -n "Plain reorg walked a lock-only region (line 113) and completed cleanly : "
+if (0 == $g1stat) then
+	echo YES
+else
+	echo NO
+	echo "# ----- reorg_lockonly.out -----"
+	cat reorg_lockonly.out
+endif
+
+echo "# G2 : a dba_cm (remote GT.CM) region, mapped only for LOCKs so gv_select never touches it"
+echo "#      -> mu_reorg_hidden_gbl_select must skip it at the non-BG/MM check WITHOUT trying to reach the"
+echo "#         remote host (there is no such host); the reorg completing cleanly proves the skip"
+setenv gtmgbldir gtypescm.gld
+rm -f gtypescm.gld gtypescm.dat
+cat > gtypescm.gde << gde_eof
+change -segment DEFAULT -access_method=BG -file=gtypescm.dat
+add -segment CMONLY -access_method=BG -file=cmonly.dat
+add -region CMONLY -dynamic=CMONLY
+change -segment CMONLY -file=hhh:cmonly.dat
+locks -region=CMONLY
+exit
+gde_eof
+$GDE_SAFE @gtypescm.gde >&! gde_gtypescm.out
+$MUPIP create -region DEFAULT >&! create_gtypescm.out
+$ydb_dist/yottadb -run %XCMD 'set ^gtypes=1'
+$MUPIP reorg >&! reorg_cm.out
+set g2stat = $status
+grep -qiE "GTCM|CMI|REMOTE|connect|hhh" reorg_cm.out
+set g2remote = $status	# 0 => a remote-access indicator was found (bad); non-0 => none (good)
+echo -n "Plain reorg skipped a dba_cm region (line 109) without remote access and completed cleanly : "
+if ((0 == $g2stat) && (0 != $g2remote)) then
+	echo YES
+else
+	echo NO
+	echo "# ----- reorg_cm.out -----"
+	cat reorg_cm.out
+endif
+
+echo "# G3 : a never-opened AUTODB region, mapped only for LOCKs so gv_select never touches it"
+echo "#      -> mu_reorg_hidden_gbl_select must skip it at the AUTODB check WITHOUT auto-creating its"
+echo "#         database file; the file staying absent proves the skip"
+setenv gtmgbldir gtypesauto.gld
+rm -f gtypesauto.gld gtypesauto.dat autoonly.dat
+cat > gtypesauto.gde << gde_eof
+change -segment DEFAULT -access_method=BG -file=gtypesauto.dat
+add -segment AUTOONLY -access_method=BG -file=autoonly.dat
+add -region AUTOONLY -dynamic=AUTOONLY -autodb
+locks -region=AUTOONLY
+exit
+gde_eof
+$GDE_SAFE @gtypesauto.gde >&! gde_gtypesauto.out
+$MUPIP create -region DEFAULT >&! create_gtypesauto.out
+$ydb_dist/yottadb -run %XCMD 'set ^gtypes=1'
+rm -f autoonly.dat	# ensure the AUTODB file does not exist going into the reorg
+$MUPIP reorg >&! reorg_auto.out
+set g3stat = $status
+echo -n "Plain reorg skipped an unopened AUTODB region (line 111) without creating its file : "
+if ((0 == $g3stat) && (! -e autoonly.dat)) then
+	echo YES
+else
+	echo NO
+	echo "# ----- reorg_auto.out -----"
+	cat reorg_auto.out
+	ls -l autoonly.dat
+endif
+
+if ($g_set_statsdir) unsetenv ydb_statsdir
 setenv gtmgbldir "$orig_gbldir"
 $gtm_tst/com/dbcheck.csh

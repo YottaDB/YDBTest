@@ -115,6 +115,31 @@ Verified contents of ^c : OK
 # each in its own region
 ^b processed in region AREG (gld-visible) : 1
 ^b processed in region DEFAULT (hidden) : 1
+
+# Stage G : region types that mu_reorg_hidden_gbl_select must skip or handle specially
+#
+# mu_reorg_hidden_gbl_select walks EVERY region of the gld (when -REGION is not specified). Besides
+# ordinary BG regions it has to handle four special cases without mishap: a statsDB region (skip), a
+# non-BG/MM (dba_cm, i.e. remote GT.CM) region (skip -- it must NOT try to reach the remote node), a
+# never-opened AUTODB region (skip WITHOUT auto-creating its database file), and a region that
+# gv_select never opened -- e.g. one mapped only for LOCKs, which the global-name walk does not touch
+# -- which it opens itself with gv_init_reg. Each case below uses its own gld and a plain (no -REGION,
+# no -SELECT) MUPIP REORG, which is enough since mu_reorg_hidden_gbl_select runs for any REORG without
+# -SELECT. The special regions carry no globals (only DEFAULT holds ^gtypes so the reorg has work and
+# does not issue NOSELECT); the point is that the reorg walks the special region and comes through
+# cleanly. The reorg output is examined only on failure, so the reference stays stable.
+# G1 : a region mapped ONLY for LOCKs, plus statistics enabled on DEFAULT
+#      -> gv_select's global-name walk never opens the lock-only region, so mu_reorg_hidden_gbl_select
+#         opens it with gv_init_reg; DEFAULT's statsDB region (if instantiated) is walked and skipped
+Plain reorg walked a lock-only region (line 113) and completed cleanly : YES
+# G2 : a dba_cm (remote GT.CM) region, mapped only for LOCKs so gv_select never touches it
+#      -> mu_reorg_hidden_gbl_select must skip it at the non-BG/MM check WITHOUT trying to reach the
+#         remote host (there is no such host); the reorg completing cleanly proves the skip
+Plain reorg skipped a dba_cm region (line 109) without remote access and completed cleanly : YES
+# G3 : a never-opened AUTODB region, mapped only for LOCKs so gv_select never touches it
+#      -> mu_reorg_hidden_gbl_select must skip it at the AUTODB check WITHOUT auto-creating its
+#         database file; the file staying absent proves the skip
+Plain reorg skipped an unopened AUTODB region (line 111) without creating its file : YES
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
