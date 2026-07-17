@@ -89,8 +89,14 @@ EXCLUDEREORG messages : 0
 # Rerun [mupip reorg -truncate -exclude=b -reg DEFAULT] : the exclusion check is name-based, so the
 # hidden ^b in region DEFAULT is now excluded (an EXCLUDEREORG message) and the reorg ends with a
 # REORGINC warning, the standard outcome whenever a selected global is excluded
-EXCLUDEREORG messages for the hidden ^b : 1
-REORGINC warnings : 1
+----------
+Error EXCLUDEREORG seen in truncate_exclude_visible.out as expected:
+%YDB-W-EXCLUDEREORG, Global: b is present in the EXCLUDE option.  REORG will skip the global.
+----------
+----------
+Error REORGINC seen in truncate_exclude_visible.out as expected:
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+----------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
