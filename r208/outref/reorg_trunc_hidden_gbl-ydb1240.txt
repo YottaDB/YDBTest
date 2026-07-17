@@ -97,6 +97,24 @@ Error EXCLUDEREORG seen in truncate_exclude_visible.out as expected:
 Error REORGINC seen in truncate_exclude_visible.out as expected:
 %YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ----------
+
+# Stage F : a plain reorg (no -TRUNCATE) processes hidden globals too
+#
+# Run [mupip reorg -reg DEFAULT] : all four names in region DEFAULT's directory tree are hidden by
+# 3reg.gld, so a build that invokes the hidden global selection only for -TRUNCATE selects nothing
+# here (a NOSELECT error); expect all four processed instead, exactly as with -TRUNCATE in stage D
+NOSELECT errors : 0
+Hidden globals processed : 4
+# Run [verifyb^ydb1240] and [verifyc^ydb1240] (through the original gld) : ^b and ^c must have
+# survived the plain reorg intact
+Verified contents of ^b : OK
+Verified contents of ^c : OK
+
+# Run [mupip reorg] (no -REGION at all, still through 3reg.gld) : the gld-visible ^b in region AREG
+# and the hidden ^b in region DEFAULT are different globals with the same name; expect BOTH processed,
+# each in its own region
+^b processed in region AREG (gld-visible) : 1
+^b processed in region DEFAULT (hidden) : 1
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

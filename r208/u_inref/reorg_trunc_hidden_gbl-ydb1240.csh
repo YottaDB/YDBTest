@@ -248,5 +248,32 @@ $MUPIP reorg -truncate -exclude=b -reg DEFAULT >&! truncate_exclude_visible.out
 # test framework's error scan (com/errors.csh) still catches any OTHER error/warning that shows up in it.
 $gtm_tst/com/check_error_exist.csh truncate_exclude_visible.out EXCLUDEREORG REORGINC
 
+echo
+echo "# Stage F : a plain reorg (no -TRUNCATE) processes hidden globals too"
+echo "#"
+echo "# Run [mupip reorg -reg DEFAULT] : all four names in region DEFAULT's directory tree are hidden by"
+echo "# 3reg.gld, so a build that invokes the hidden global selection only for -TRUNCATE selects nothing"
+echo "# here (a NOSELECT error); expect all four processed instead, exactly as with -TRUNCATE in stage D"
+$MUPIP reorg -reg DEFAULT >&! plain_reorg_hidden.out
+echo -n "NOSELECT errors : "
+grep -c "NOSELECT" plain_reorg_hidden.out
+echo -n "Hidden globals processed : "
+grep -c "^Global: . (region DEFAULT)" plain_reorg_hidden.out
+echo "# Run [verifyb^ydb1240] and [verifyc^ydb1240] (through the original gld) : ^b and ^c must have"
+echo "# survived the plain reorg intact"
+setenv gtmgbldir "$orig_gbldir"
+$ydb_dist/yottadb -run verifyb^ydb1240
+$ydb_dist/yottadb -run verifyc^ydb1240
+echo
+echo "# Run [mupip reorg] (no -REGION at all, still through 3reg.gld) : the gld-visible ^b in region AREG"
+echo "# and the hidden ^b in region DEFAULT are different globals with the same name; expect BOTH processed,"
+echo "# each in its own region"
+setenv gtmgbldir 3reg.gld
+$MUPIP reorg >&! plain_reorg_all.out
+echo -n "^b processed in region AREG (gld-visible) : "
+grep -c "^Global: b (region AREG)" plain_reorg_all.out
+echo -n "^b processed in region DEFAULT (hidden) : "
+grep -c "^Global: b (region DEFAULT)" plain_reorg_all.out
+
 setenv gtmgbldir "$orig_gbldir"
 $gtm_tst/com/dbcheck.csh
