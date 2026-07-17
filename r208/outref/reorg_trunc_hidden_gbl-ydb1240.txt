@@ -143,6 +143,37 @@ Plain reorg skipped a remote GT.CM (dba_cm) region without remote access and com
 #      -> mu_reorg_hidden_gbl_select must skip it at the AUTODB check WITHOUT auto-creating its
 #         database file; the file staying absent proves the skip
 Plain reorg skipped an unopened AUTODB region without creating its file : YES
+
+# Stage H : a LARGE hidden global is physically relocated from the tail to the front of the file
+#
+# Stages A-G used killed or tiny hidden globals (they only need to pin the end of the file). This stage
+# uses a hidden global with a LOT of data (^bigh, ~1330 blocks spanning several local bitmaps) sitting
+# at the tail of the file, with a large free region ahead of it (a killed ^x filler). A reorg -- with
+# AND without -TRUNCATE -- must move ^bigh's blocks from the tail to the front. Because ^bigh is at the
+# very end, a truncate is possible ONLY if those blocks were relocated first, so the truncate is what
+# proves the relocation happened; the data is read back afterwards to confirm it survived the moves.
+
+# Stage H1 : [mupip reorg -truncate] moves the hidden ^bigh to the front and truncates the freed tail
+Hidden ^bigh processed by the no-select reorg -truncate : 1
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 3072] to [512 TO 2560 (the relocated ^bigh, minus the freed ^x tail)]. Reduced free blocks from [ARBITRARY] to [ARBITRARY].
+# Read ^bigh back (through hbig.gld) : its 25000 records must have survived the relocation
+Verified contents of ^bigh : OK
+
+# Stage H2 : a plain [mupip reorg] (no -TRUNCATE) also moves the hidden ^bigh to the front
+#
+# A plain reorg does not truncate, so the file size cannot show the move directly. Instead use
+# [reorg -truncate -noswap] as a measuring stick: -NOSWAP forbids all block moves, so that command can
+# only reclaim free space already at the tail. Run it BEFORE the plain reorg (^bigh still at the tail)
+# to confirm it truncates nothing (a MUTRUNCALREADY), then run the plain reorg, then run it AGAIN: it
+# now truncates, which can only mean the plain reorg moved ^bigh's blocks off the tail to the front.
+# [reorg -truncate -noswap] with ^bigh still at the tail : nothing can be truncated
+MUTRUNCALREADY before the plain reorg (^bigh still at the tail, -NOSWAP cannot move it) : 1
+# [mupip reorg] (no -TRUNCATE) : must relocate the hidden ^bigh's blocks to the front
+Hidden ^bigh processed by the plain reorg : 1
+# [reorg -truncate -noswap] again : it truncates now, proving the plain reorg moved ^bigh to the front
+Truncated region: DEFAULT. Reduced total blocks from [MORE THAN 3072] to [512 TO 2560 (the relocated ^bigh, minus the freed ^x tail)]. Reduced free blocks from [ARBITRARY] to [ARBITRARY].
+# Read ^bigh back (through hbig.gld) : its 25000 records must have survived the relocation
+Verified contents of ^bigh : OK
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

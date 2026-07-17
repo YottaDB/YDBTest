@@ -386,5 +386,89 @@ else
 endif
 
 if ($g_set_statsdir) unsetenv ydb_statsdir
+
+echo
+echo "# Stage H : a LARGE hidden global is physically relocated from the tail to the front of the file"
+echo "#"
+echo "# Stages A-G used killed or tiny hidden globals (they only need to pin the end of the file). This stage"
+echo "# uses a hidden global with a LOT of data (^bigh, ~1330 blocks spanning several local bitmaps) sitting"
+echo "# at the tail of the file, with a large free region ahead of it (a killed ^x filler). A reorg -- with"
+echo "# AND without -TRUNCATE -- must move ^bigh's blocks from the tail to the front. Because ^bigh is at the"
+echo "# very end, a truncate is possible ONLY if those blocks were relocated first, so the truncate is what"
+echo "# proves the relocation happened; the data is read back afterwards to confirm it survived the moves."
+# Build a fresh database whose region DEFAULT (hbig.dat) will hold ^bigh, and two glds over it: hbig.gld maps
+# everything (including [bigh]) to DEFAULT so ^bigh can be created and read back; hbighid.gld maps [bigh] to a
+# separate region BAREG, making ^bigh a hidden global in DEFAULT (its blocks are physically in hbig.dat).
+setenv gtmgbldir hbig.gld
+rm -f hbig.gld hbig.dat hbighid.gld hbigareg.dat
+cat > hbig.gde << gde_eof
+change -segment DEFAULT -access_method=BG -block_size=4096 -allocation=500 -file=hbig.dat
+exit
+gde_eof
+$GDE_SAFE @hbig.gde >&! gde_hbig.out
+$MUPIP create -region DEFAULT >&! create_hbig.out
+cp hbig.gld hbighid.gld
+setenv gtmgbldir hbighid.gld
+cat > hbighid.gde << gde_eof
+add -name bigh -region=BAREG
+add -region BAREG -dynamic=BASEG
+add -segment BASEG -access_method=BG -file=hbigareg.dat
+exit
+gde_eof
+$GDE_SAFE @hbighid.gde >&! gde_hbighid.out
+$MUPIP create -region BAREG >&! create_hbigareg.out
+
+echo
+echo "# Stage H1 : [mupip reorg -truncate] moves the hidden ^bigh to the front and truncates the freed tail"
+setenv gtmgbldir hbig.gld
+$ydb_dist/yottadb -run initbig^ydb1240
+setenv gtmgbldir hbighid.gld
+$MUPIP reorg -truncate -reg DEFAULT >&! reorg_bigtrunc.out
+echo -n "Hidden ^bigh processed by the no-select reorg -truncate : "
+grep -c "^Global: bigh (region DEFAULT)" reorg_bigtrunc.out
+grep -q "Truncated region: DEFAULT" reorg_bigtrunc.out
+if (0 != $status) then
+	echo "FAIL: reorg -truncate did not truncate (was the hidden ^bigh moved from the tail?)"
+	echo "# ----- reorg_bigtrunc.out -----"
+	cat reorg_bigtrunc.out
+else
+	$tst_awk -f $gtm_tst/r208/inref/bigmove_bounds-ydb1240.awk reorg_bigtrunc.out
+endif
+echo "# Read ^bigh back (through hbig.gld) : its 25000 records must have survived the relocation"
+setenv gtmgbldir hbig.gld
+$ydb_dist/yottadb -run verifybig^ydb1240
+
+echo
+echo "# Stage H2 : a plain [mupip reorg] (no -TRUNCATE) also moves the hidden ^bigh to the front"
+echo "#"
+echo "# A plain reorg does not truncate, so the file size cannot show the move directly. Instead use"
+echo "# [reorg -truncate -noswap] as a measuring stick: -NOSWAP forbids all block moves, so that command can"
+echo "# only reclaim free space already at the tail. Run it BEFORE the plain reorg (^bigh still at the tail)"
+echo "# to confirm it truncates nothing (a MUTRUNCALREADY), then run the plain reorg, then run it AGAIN: it"
+echo "# now truncates, which can only mean the plain reorg moved ^bigh's blocks off the tail to the front."
+$ydb_dist/yottadb -run initbig^ydb1240
+setenv gtmgbldir hbighid.gld
+echo "# [reorg -truncate -noswap] with ^bigh still at the tail : nothing can be truncated"
+$MUPIP reorg -truncate -noswap -reg DEFAULT >&! reorg_bignoswap1.out
+echo -n "MUTRUNCALREADY before the plain reorg (^bigh still at the tail, -NOSWAP cannot move it) : "
+grep -c "MUTRUNCALREADY" reorg_bignoswap1.out
+echo "# [mupip reorg] (no -TRUNCATE) : must relocate the hidden ^bigh's blocks to the front"
+$MUPIP reorg -reg DEFAULT >&! reorg_bigplain.out
+echo -n "Hidden ^bigh processed by the plain reorg : "
+grep -c "^Global: bigh (region DEFAULT)" reorg_bigplain.out
+echo "# [reorg -truncate -noswap] again : it truncates now, proving the plain reorg moved ^bigh to the front"
+$MUPIP reorg -truncate -noswap -reg DEFAULT >&! reorg_bignoswap2.out
+grep -q "Truncated region: DEFAULT" reorg_bignoswap2.out
+if (0 != $status) then
+	echo "FAIL: the plain reorg did not move the hidden ^bigh to the front (-noswap truncate still blocked)"
+	echo "# ----- reorg_bignoswap2.out -----"
+	cat reorg_bignoswap2.out
+else
+	$tst_awk -f $gtm_tst/r208/inref/bigmove_bounds-ydb1240.awk reorg_bignoswap2.out
+endif
+echo "# Read ^bigh back (through hbig.gld) : its 25000 records must have survived the relocation"
+setenv gtmgbldir hbig.gld
+$ydb_dist/yottadb -run verifybig^ydb1240
+
 setenv gtmgbldir "$orig_gbldir"
 $gtm_tst/com/dbcheck.csh

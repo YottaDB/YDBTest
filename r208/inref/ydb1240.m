@@ -68,13 +68,36 @@ verifyc	; Verify (through a gld that maps [c] to region DEFAULT) that ^c survive
 	do verify("^c")
 	quit
 	;
-verify(gbl)	; Check that exactly the records [fill] created under @gbl are present and unchanged. The blocks
+verify(gbl)	; Check that exactly the 50 records [fill] created under @gbl are present and unchanged. The blocks
 	; of @gbl were relocated by a MUPIP REORG (block swaps and a root block move), so this is a data
 	; integrity check of those moves.
+	do verifyn(gbl,50)
+	quit
+	;
+verifyn(gbl,exp)	; Check that exactly "exp" records i=1:exp with value $justify(i,200) exist under @gbl and are
+	; unchanged (a data integrity check across the block relocation a MUPIP REORG did).
 	new bad,cnt,sub
 	set (bad,cnt)=0,sub=""
 	for  set sub=$order(@gbl@(sub)) quit:""=sub  do
 	. set cnt=cnt+1
 	. if $get(@gbl@(sub))'=$justify(sub,200) set bad=bad+1
-	write "Verified contents of ",gbl," : ",$select((0=bad)&(50=cnt):"OK",1:"FAIL ("_cnt_" records, "_bad_" bad)"),!
+	write "Verified contents of ",gbl," : ",$select((0=bad)&(exp=cnt):"OK",1:"FAIL ("_cnt_" records, "_bad_" bad)"),!
+	quit
+	;
+initbig	; Build the "big global at the tail, free space at the front" layout used by stage H: a big filler ^x
+	; at the front, a big ^bigh right after it (so ^bigh lands at the tail of the file), then kill ^x to
+	; free up the front. Run through a gld that maps [bigh] to the region holding the data. ^bigh comes to
+	; ~1330 4096-byte blocks (several local bitmaps), i.e. "a lot of data" that a reorg must physically
+	; relocate from the tail to the front. The kill of ^bigh/^x up front lets this be re-run to rebuild the
+	; layout on a database that a previous stage already truncated.
+	new i
+	kill ^bigh,^x
+	for i=1:1:50000 set ^x(i)=$justify(i,200)
+	for i=1:1:25000 set ^bigh(i)=$justify(i,200)
+	kill ^x
+	quit
+	;
+verifybig	; Verify (through a gld that maps [bigh] to the region holding the data) that ^bigh's 25000 records
+	; survived the tail-to-front block relocation intact.
+	do verifyn("^bigh",25000)
 	quit
