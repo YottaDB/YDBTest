@@ -30,13 +30,15 @@ Truncated region: DEFAULT. Reduced total blocks from [21242] to [12800 OR LESS].
 # correspondingly longer. Rather than time the reorg (wall clock timings are far too noisy on a loaded test
 # system to assert on), verify the work itself, using the per-global block counters that [mu_reorg] prints.
 # The counters below cover only the sweep's [Truncate tail sweep of Global:] sections, not the reorg phase
-# that precedes them (that phase still does full reorgs, splits and coalesces included). Note the swaps
-# themselves are NOT checked here, only the splits/coalesces: the concurrent updates decide how many of a
-# global's blocks end up past the truncate point, and it is entirely correct for the sweep to swap ALL of
-# them if that is where they all are, so no bound on the swaps separates the intended behavior from a build
-# that swaps every block regardless. The [-select] reorg further below, which no updates race, is where
-# the swaps get checked.
-Sweep ran                    : YES
+# that precedes them (that phase still does full reorgs, splits and coalesces included). Only the
+# splits/coalesces are checked here. Neither whether the sweep ran at all, nor how many blocks it swapped,
+# is deterministic for this reorg: ^b1/^b2 are swept only if [initb^ydb1245] creates them after the reorg's
+# [gv_select] has built its list of globals, and if it loses that race the reorg phase handles them itself
+# and the sweep has nothing left to do (a 28 stream run had that in 5 streams, with the truncate landing on
+# the same block counts either way). And where the updates decide how many blocks end up past the truncate
+# point, it is entirely correct for the sweep to swap ALL of a global's blocks if that is where they all
+# are, so no bound on the swaps separates the intended behavior from a build that swaps every block
+# regardless. The [-select] reorg further below, which no updates race, is where both get checked.
 Sweep blocks coalesced       : 0 (must be 0: a coalesce does not move a block towards the front)
 Sweep blocks split           : 0 (must be 0: a split does not move a block towards the front)
 

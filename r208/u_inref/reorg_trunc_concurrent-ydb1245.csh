@@ -106,13 +106,16 @@ echo "# (every swap/split/coalesce is a transaction, with journal records and be
 echo "# correspondingly longer. Rather than time the reorg (wall clock timings are far too noisy on a loaded test"
 echo "# system to assert on), verify the work itself, using the per-global block counters that [mu_reorg] prints."
 echo "# The counters below cover only the sweep's [Truncate tail sweep of Global:] sections, not the reorg phase"
-echo "# that precedes them (that phase still does full reorgs, splits and coalesces included). Note the swaps"
-echo "# themselves are NOT checked here, only the splits/coalesces: the concurrent updates decide how many of a"
-echo "# global's blocks end up past the truncate point, and it is entirely correct for the sweep to swap ALL of"
-echo "# them if that is where they all are, so no bound on the swaps separates the intended behavior from a build"
-echo "# that swaps every block regardless. The [-select] reorg further below, which no updates race, is where"
-echo "# the swaps get checked."
-$tst_awk -v show_swap_pct=0 -f $gtm_tst/r208/inref/sweep_stats-ydb1245.awk truncate_concurrent.out
+echo "# that precedes them (that phase still does full reorgs, splits and coalesces included). Only the"
+echo "# splits/coalesces are checked here. Neither whether the sweep ran at all, nor how many blocks it swapped,"
+echo "# is deterministic for this reorg: ^b1/^b2 are swept only if [initb^ydb1245] creates them after the reorg's"
+echo "# [gv_select] has built its list of globals, and if it loses that race the reorg phase handles them itself"
+echo "# and the sweep has nothing left to do (a 28 stream run had that in 5 streams, with the truncate landing on"
+echo "# the same block counts either way). And where the updates decide how many blocks end up past the truncate"
+echo "# point, it is entirely correct for the sweep to swap ALL of a global's blocks if that is where they all"
+echo "# are, so no bound on the swaps separates the intended behavior from a build that swaps every block"
+echo "# regardless. The [-select] reorg further below, which no updates race, is where both get checked."
+$tst_awk -v sweep_guaranteed=0 -f $gtm_tst/r208/inref/sweep_stats-ydb1245.awk truncate_concurrent.out
 
 echo
 echo "# Smoke test the database file writes the reorg actually did"
@@ -182,10 +185,11 @@ else
 	$MUPIP reorg -truncate -select="a1,filler" -reg DEFAULT >&! truncate_select.out
 endif
 # This reorg has no concurrent updates racing it, so unlike the one above its sweep counters are deterministic:
-# [initc^ydb1245] put a known handful of ^a2's ~10000 blocks past the truncate point, hence the swaps are worth
-# checking here (a build that swaps every block it walks reports ~100% instead). This check works whether or not
-# the strace based one below runs, since it reads the reorg's own output rather than counting system calls.
-$tst_awk -v show_swap_pct=1 -f $gtm_tst/r208/inref/sweep_stats-ydb1245.awk truncate_select.out
+# [initc^ydb1245] put a known handful of ^a2's ~10000 blocks past the truncate point, so the sweep is guaranteed
+# to run and the swaps are worth checking here (a build that swaps every block it walks reports ~100% instead).
+# These checks work whether or not the strace based one below runs, since they read the reorg's own output
+# rather than counting system calls.
+$tst_awk -v sweep_guaranteed=1 -f $gtm_tst/r208/inref/sweep_stats-ydb1245.awk truncate_select.out
 # And check the sweep's work actually bought a truncate. Without this it is possible for the sweep to do exactly
 # the right thing and the file to still not shrink by a single block, because one busy block left in the last
 # local bitmap pins the whole file (see the -select comment above).
