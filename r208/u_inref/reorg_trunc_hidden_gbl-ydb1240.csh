@@ -242,11 +242,13 @@ $ydb_dist/yottadb -run initbareg^ydb1240
 echo "# Rerun [mupip reorg -truncate -exclude=b -reg DEFAULT] : the exclusion check is name-based, so the"
 echo "# hidden ^b in region DEFAULT is now excluded (an EXCLUDEREORG message) and the reorg ends with a"
 echo "# REORGINC warning, the standard outcome whenever a selected global is excluded"
-$MUPIP reorg -truncate -exclude=b -reg DEFAULT >&! truncate_exclude_visible.out
+# The .outx suffix (not .out) keeps this file out of the test framework's error scan (see com/errors.csh),
+# which would otherwise report the EXCLUDEREORG/REORGINC warnings this reorg is EXPECTED to produce
+$MUPIP reorg -truncate -exclude=b -reg DEFAULT >&! truncate_exclude_visible.outx
 echo -n "EXCLUDEREORG messages for the hidden ^b : "
-grep -c "EXCLUDEREORG" truncate_exclude_visible.out
+grep -c "EXCLUDEREORG" truncate_exclude_visible.outx
 echo -n "REORGINC warnings : "
-grep -c "REORGINC" truncate_exclude_visible.out
+grep -c "REORGINC" truncate_exclude_visible.outx
 
 setenv gtmgbldir "$orig_gbldir"
 $gtm_tst/com/dbcheck.csh
