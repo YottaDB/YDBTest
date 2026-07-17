@@ -78,11 +78,22 @@ echo "# whereas we now expect the [Truncated region: DEFAULT] line below"
 # The pre-truncate free blocks count depends on the exact interleaving of the concurrent updates with the reorg
 # phase (e.g. how much block coalescing happened before a given block got its final content) so it is replaced
 # with [ARBITRARY]. The post-truncate counts can also vary a little in the rare case the background reorg's
-# truncate phase runs before the tail end of the concurrent updates, so they are checked against bounds derived
-# from what a standalone REORG -TRUNCATE of the same data achieves (total blocks at most 12800, free blocks less
-# than 200) instead of exact values. A MUTRUNCALREADY message or a partially effective truncate (e.g. a total
-# blocks count of 17408, seen with only some of the YDB#1245 fixes in place) shows up as a reference file
-# difference either way.
+# truncate phase runs before the tail end of the concurrent updates, so they are checked against bounds instead
+# of exact values. A MUTRUNCALREADY message or a partially effective truncate (e.g. a total blocks count of
+# 17408, seen with only some of the YDB#1245 fixes in place) shows up as a reference file difference either way.
+#
+# The total blocks bound is what really matters here and comes from what a standalone REORG -TRUNCATE of the same
+# data achieves: at most 12800. The concurrent one can do BETTER than that (a measured run truncated to 11776),
+# since a truncate that happens before the concurrent updates finish sees fewer busy blocks.
+#
+# The free blocks left behind are bounded much more loosely, because they are essentially just the gap between
+# the highest busy block and the local bitmap boundary above it: "mu_truncate" frees space a local bitmap at a
+# time, so it leaves everything from the highest busy block up to the next multiple of BLKS_PER_LMAP. That gap is
+# 0 to 511 by construction and is set by wherever the concurrent updates happened to leave the last busy block.
+# Measured runs: 83 free after truncating to 12800 (= 25 * 512), and 426 after truncating to 11776 (= 23 * 512).
+# Hence the 1024 below: two bitmaps' worth, i.e. the structural 511 plus room for free blocks the concurrent
+# updates leave scattered below. It is not a compaction check (the total blocks bound above is), just a guard
+# against the truncate leaving an absurd amount of free space behind.
 grep -q "Truncated region: DEFAULT" truncate_concurrent.out
 if (0 != $status) then
 	echo "FAIL: concurrent reorg -truncate did not truncate region DEFAULT"
@@ -91,7 +102,7 @@ if (0 != $status) then
 	echo "# ----- truncate_standalone.out -----"
 	cat truncate_standalone.out
 else
-	grep "Truncated region: DEFAULT" truncate_concurrent.out | awk '{split($0, a, "[][]"); tto = ((a[4] + 0) <= 12800) ? "12800 OR LESS" : a[4]; fto = ((a[8] + 0) < 200) ? "LESS THAN 200" : a[8]; printf "Truncated region: DEFAULT. Reduced total blocks from [%s] to [%s]. Reduced free blocks from [ARBITRARY] to [%s].\n", a[2], tto, fto;}'
+	grep "Truncated region: DEFAULT" truncate_concurrent.out | awk '{split($0, a, "[][]"); tto = ((a[4] + 0) <= 12800) ? "12800 OR LESS" : a[4]; fto = ((a[8] + 0) < 1024) ? "LESS THAN 1024" : a[8]; printf "Truncated region: DEFAULT. Reduced total blocks from [%s] to [%s]. Reduced free blocks from [ARBITRARY] to [%s].\n", a[2], tto, fto;}'
 endif
 
 echo
