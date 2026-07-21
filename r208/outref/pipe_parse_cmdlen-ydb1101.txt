@@ -1,0 +1,14 @@
+#-------------------------------------------------------------------------------------------------#
+# [#1101] PIPE OPEN with PARSE bounds the copy of an over-long unresolvable command word           #
+#-------------------------------------------------------------------------------------------------#
+
+## Run [ydb1101pipe] routine
+# OPEN a PIPE device with PARSE and an unresolvable COMMAND= word of increasing length
+# The command word is copied into a GTM_MAX_DIR_LEN (2*PATH_MAX) buffer; COMMAND= may be 1MiB
+# cmdlen=100 DEVOPENFAIL=1 errtokenlen=101
+# cmdlen=4096 DEVOPENFAIL=1 errtokenlen=1040
+# cmdlen=8191 DEVOPENFAIL=1 errtokenlen=1040
+# cmdlen=8192 DEVOPENFAIL=1 errtokenlen=1040
+# cmdlen=8193 DEVOPENFAIL=1 errtokenlen=1040
+# cmdlen=1000000 DEVOPENFAIL=1 errtokenlen=1040
+# PASS: every OPEN failed cleanly with a bounded error token and no buffer overrun

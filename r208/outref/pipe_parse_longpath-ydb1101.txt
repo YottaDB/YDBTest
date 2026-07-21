@@ -1,0 +1,9 @@
+#-------------------------------------------------------------------------------------------------#
+# [#1101] PIPE OPEN with PARSE does not read past the end of its $PATH buffer when $PATH is long   #
+#-------------------------------------------------------------------------------------------------#
+
+## Run [ydb1101path] routine with an over-long $PATH
+# OPEN a PIPE device with PARSE while $PATH is longer than YDB_PATH_MAX (PATH_MAX+1)
+# $PATH is longer than PATH_MAX (4096): 1
+# DEVOPENFAIL=1 after searching every $PATH directory
+# PASS: parse_pipe walked the truncated $PATH without reading past the end of the buffer

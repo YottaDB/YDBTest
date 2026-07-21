@@ -1,0 +1,20 @@
+#-------------------------------------------------------------------------------------------------#
+# [#1101] ZWRITE of an orphaned alias container does not overflow its subscript work array         #
+#-------------------------------------------------------------------------------------------------#
+
+## Run [ydb1101zwr] with 30 subscripts
+# ZWRITE an orphaned alias container whose target is 30 subscripts deep
+$ZWRTAC=""
+*ct(1)=$ZWRTAC1
+$ZWRTAC1(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)=42
+$ZWRTAC=""
+# PASS: ZWRITE completed without overflowing the subscript work array
+
+## Run [ydb1101zwr] with 31 subscripts
+# ZWRITE an orphaned alias container whose target is 31 subscripts deep
+$ZWRTAC=""
+*ct(1)=$ZWRTAC1
+$ZWRTAC1(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)=42
+$ZWRTAC=""
+# PASS: ZWRITE completed without overflowing the subscript work array
+
