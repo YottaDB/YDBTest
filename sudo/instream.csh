@@ -42,6 +42,7 @@
 # shmhugetlb_syslog-gtmf221672		[jon]		Test that additional context is included in SHMHUGETLB syslog messages
 # tmpyottadbperms-ydb1125		[jon]		Test that /tmp/yottadb and /tmp/yottadb/<rel> have correct permissions
 # gtmsecshr_racecondition-gtmde506361	[jon]		Test GTMSECSHR appropriately handles a rare condition when two processes attempt to start a GTMSECSHR process simultaneously
+# ydb1242-gtm-version			[sam]		Test that ydbinstall --gtm installs GT.M from every SourceForge folder FIS uses, and finds the true latest version
 
 setenv subtest_list_common ""
 setenv subtest_list_common "$subtest_list_common sourceInstall"
@@ -69,6 +70,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshrsrvf-ydb_tmp-y
 setenv subtest_list_non_replic "$subtest_list_non_replic shmhugetlb_syslog-gtmf221672"
 setenv subtest_list_non_replic "$subtest_list_non_replic tmpyottadbperms-ydb1125"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtmsecshr_racecondition-gtmde506361"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb1242-gtm-version"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
@@ -120,6 +122,12 @@ else if ("suse" == $gtm_test_linux_distrib) then
 		# `gold` is no longer maintained by the developers.
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
+endif
+
+# FIS only releases GT.M as x86_64 Linux binaries and ydbinstall knows of no SourceForge folder for any other
+# platform, so the below subtest, which installs GT.M, can only run there.
+if ("HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb1242-gtm-version"
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then

@@ -1,0 +1,26 @@
+# Test that ydbinstall --gtm installs GT.M from every SourceForge folder FIS uses (YDB#1242)
+#
+# FIS published GT.M V7.2-000 under a new SourceForge folder (GT.M-x8664-Linux) while V7.1-011 and
+# older releases stayed in the original folder (GT.M-amd64-Linux). ydbinstall only ever looked in
+# the latter, so 'ydbinstall --gtm V7.2-000' failed with 'Unable to download GT.M distribution'.
+# FIS also stopped maintaining the 'latest' file that ydbinstall read to resolve a bare '--gtm', so
+# that kept resolving to the stale V7.1-011 no matter what FIS released.
+
+# Copy ydbinstall to this directory (don't want it thinking it is installing the working version)
+
+# Install V7.2-000, which lives in the new SourceForge folder. This is the case YDB#1242 reported.
+GT.M version V7.2-000 installed successfully at ##TEST_PATH##/V7.2-000
+
+# Install V7.1-011, from the original SourceForge folder, to check that fallback still works
+GT.M version V7.1-011 installed successfully at ##TEST_PATH##/V7.1-011
+
+# Install the latest GT.M version, i.e. no version on the command line
+##TEST_AWKGT.M version V[0-9]+\.[0-9]+-[0-9]+[A-Z]* installed successfully at ##TEST_PATH##/latest
+# Is the latest GT.M version ydbinstall found at least V7.2-000 : YES
+
+# The 'installed successfully' messages above only echo back the version that was asked for, so ask
+# each install what it actually is. This is what catches fetching the wrong tarball, as opposed to
+# fetching no tarball at all.
+$ZVERSION="GT.M V7.2-000 Linux x86_64"
+$ZVERSION="GT.M V7.1-011 Linux x86_64"
+##TEST_AWK\$ZVERSION="GT\.M V[0-9]+\.[0-9]+-[0-9]+[A-Z]* Linux x86_64"
