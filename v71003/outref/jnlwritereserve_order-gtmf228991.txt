@@ -1,0 +1,25 @@
+# ********************************************************************************************
+# GTM-F228991 - Test the following part of the release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F228991)
+# 
+# GT.M performs less work while holding an instance-wide lock during replication. This instance-wide lock controls any increment of the sequence number and prevents any replicated update instance-wide when held. In particular, GT.M processes now calculate the size of any journaling activity and perform the first phase of a database update in BG or the entire update in MM without needing to hold the instance lock. Previously, these operations were done only while holding that lock. (GTM-F228991)
+# 
+# This is a white box test that needs a debug build (it is excluded in the "pro" image). It does a
+# simple non-TP update under gdb and checks that "jnl_write_reserve()" is called inside "t_end()"
+# BEFORE "grab_lock()", which is what takes the instance-wide lock. Before GTM-F228991,
+# "jnl_write_reserve()" was called AFTER "grab_lock()".
+# 
+
+# Start an ACTIVE source server with -NOJNLFILEONLY, and the receiver server
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Run one non-TP update under gdb with breakpoints in t_end(), jnl_write_reserve() and grab_lock()
+# Below is the order in which the breakpoints were reached (the full gdb log is in gdb.out)
+PASS : jnl_write_reserve() is called inside t_end() BEFORE grab_lock()
+# Shut down the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##

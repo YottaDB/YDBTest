@@ -25,6 +25,11 @@ update	; Do a few replicated updates.
 	for i=1:1:10 set ^gtmf228991(i)=i
 	quit
 
+oneupdate ; Do exactly one simple non-TP update. Used by the "jnlwritereserve_order-gtmf228991"
+	; subtest, which runs this under gdb and only cares about one trip through "t_end()".
+	set ^gtmf228991("oneupdate")=1
+	quit
+
 checkpool ; Print the journal pool fields that GTM-F228991 affects.
 	; "write_addr" is the virtual address of the next journal record to be written into the journal
 	; pool. Starting V7.1-003, when there is no consumer of the updates in the journal pool (i.e.
