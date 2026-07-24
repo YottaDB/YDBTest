@@ -1,0 +1,25 @@
+# ********************************************************************************************
+# GTM-F228991 - Test the following part of the release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-F228991)
+# 
+# Further, in certain situations where there is no consumer of the updates in the replication journal pool, such as when there are only passive or -JNLFILEONLY source servers, mumps processes do not write each commit into the replication journal pool (they continue to update instance-wide metadata like the sequence number). Previously, processes wrote every commit into the replication journal pool even if there was no consumer for that data. (GTM-F228991)
+# 
+# This subtest covers the "-JNLFILEONLY source server" case. The "passive source server" case is
+# covered by the "noconsumer_passivesrc-gtmf228991" subtest.
+# 
+
+# Start an ACTIVE source server with -JNLFILEONLY, and the receiver server
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Do a few updates and dump the journal pool. Expect write_addr to be 0 and jnl_seqno to have advanced
+jnlpool_ctl_struct.write_addr = 0
+jnlpool_ctl_struct.jnl_seqno is greater than 1 : TRUE
+# Wait for INST2 to catch up. The updates reach it from the journal files, not the journal pool
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Shut down the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##

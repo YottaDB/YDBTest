@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,8 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# noconsumer_passivesrc-gtmf228991	[nars]	Test no journal pool writes happen if the only source server is passive
+# noconsumer_jnlfileonly-gtmf228991	[nars]	Test no journal pool writes happen if the only source server is -JNLFILEONLY
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -21,7 +23,9 @@ echo "v71003 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic noconsumer_passivesrc-gtmf228991"
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
