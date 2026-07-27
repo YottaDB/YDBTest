@@ -18,7 +18,12 @@
 #   mumps processes to hang indefinitely. In turn, this will prevent the below `foreach` loop from exiting
 #   causing the test to hang indefinitely and thus to fail with a test execution timeout.
 # Run the first version of the test routine in the background and capture the PID in gtmf135385-v0.pid
-# Wait up to 300 seconds for backgrounded mumps process to start
+# Wait up to 300 seconds for the backgrounded mumps process to link gtmf135385 and register it in
+#   the relinkctl file. Checking only that the PID is alive is not enough: the process exists from
+#   the instant the shell forks it, long before it has done the (auto)relink that creates the record
+#   dumped below. Proceeding early loses the first rec#1 line, and if the foreach loop rewrites
+#   src/gtmf135385.m first, the backgrounded process links that short-lived version and exits,
+#   which deletes the relinkctl file for the rest of the test.
 # Run MUPIP RCTLDUMP to get the initial `superseded` value
 
 # Generate and run new versions of the test routine, and run MUPIP RCTLDUMP after each routine exits

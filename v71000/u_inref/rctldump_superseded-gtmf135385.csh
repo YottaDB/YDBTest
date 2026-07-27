@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,14 +46,26 @@ cd ..
 echo '# Run the first version of the test routine in the background and capture the PID in gtmf135385-v0.pid'
 ($gtm_exe/mumps -run runTest^gtmf135385 & ; echo $! >&! gtmf135385-v0.pid) >&! gtmf135385-v0.out
 set v0PID = `cat gtmf135385-v0.pid`
-echo '# Wait up to 300 seconds for backgrounded mumps process to start'
+echo '# Wait up to 300 seconds for the backgrounded mumps process to link gtmf135385 and register it in'
+echo '#   the relinkctl file. Checking only that the PID is alive is not enough: the process exists from'
+echo '#   the instant the shell forks it, long before it has done the (auto)relink that creates the record'
+echo '#   dumped below. Proceeding early loses the first rec#1 line, and if the foreach loop rewrites'
+echo '#   src/gtmf135385.m first, the backgrounded process links that short-lived version and exits,'
+echo '#   which deletes the relinkctl file for the rest of the test.'
 set max_wait = 3000
-$gtm_tst/com/is_proc_alive.csh $v0PID
-while ((1 == $status) && ($max_wait > 0))
-	sleep 0.1
-	@ max_wait = $max_wait - 1
+while ($max_wait > 0)
+	$gtm_exe/mupip rctldump >&! rctldump_wait.out
+	grep 'rtnname: gtmf135385' rctldump_wait.out >& /dev/null
+	if (0 == $status) break
 	$gtm_tst/com/is_proc_alive.csh $v0PID
+	if (0 != $status) then
+		echo "TEST-E-RCTLDUMP : process $v0PID died before linking gtmf135385"
+		break
+	endif
+	@ max_wait = $max_wait - 1
+	sleep 0.1
 end
+if (0 == $max_wait) echo "TEST-E-RCTLDUMP : timed out waiting for gtmf135385 to appear in MUPIP RCTLDUMP output"
 echo '# Run MUPIP RCTLDUMP to get the initial `superseded` value'
 $gtm_exe/mupip rctldump >& rctldump.out
 echo ''
