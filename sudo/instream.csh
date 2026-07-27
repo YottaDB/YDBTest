@@ -128,6 +128,10 @@ endif
 # platform, so the below subtest, which installs GT.M, can only run there.
 if ("HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb1242-gtm-version"
+else if (("rhel" == $gtm_test_linux_distrib) && (8 == $gtm_test_linux_version:r)) then
+	# None of the GT.M versions this subtest installs (V7.2-000, V7.1-011 and whatever the latest is)
+	# work on RHEL 8, so exclude it there.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb1242-gtm-version"
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
