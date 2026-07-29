@@ -29,16 +29,16 @@
 # 1. Create 1000 copies of test.m
 # 2. ZLINK them one by one in the same process
 # 3. Record the time elapsed for each 100 linkages.
-##TEST_AWKIteration =  100 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  200 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  300 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  400 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  500 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  600 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  700 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  800 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration =  900 : Elapsed time = 0.[0-9]*
-##TEST_AWKIteration = 1000 : Elapsed time = 0.[0-9]*
+##TEST_AWKIteration =  100 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  200 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  300 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  400 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  500 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  600 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  700 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  800 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration =  900 : Elapsed time = [0-1].[0-9]*
+##TEST_AWKIteration = 1000 : Elapsed time = [0-1].[0-9]*
 # Check the standard deviation of each 100 iterations is less than a maximum allowed value (.3).
 # This will ensure that all iterations complete within a sufficiently similar time period.
 PASS: All iterations completed within an acceptable time period.

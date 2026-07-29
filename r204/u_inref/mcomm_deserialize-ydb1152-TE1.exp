@@ -52,6 +52,11 @@ expect -i $ydb_id -exact "%YDB-I-CTRLC, CTRL_C encountered"
 expect -i $ydb_id -exact "YDB>"
 puts "\n# Run the loop again, expect clean completion without GTMASSERT2\n"
 send -i $ydb_id "for i=1:1:100 zyencode x=^x zydecode ^x=x  if i#10=0 write \"i=\",i,\": \$zrealstor = \",\$zrealstor,!\r"
+# Wait for each checkpoint individually, so the timeout resets every 10 iterations instead
+# of applying to the whole loop at once (a slow but still-progressing loop shouldn't time out)
+for {set n 10} {$n <= 100} {incr n 10} {
+    expect -i $ydb_id -exact "i=$n: \$zrealstor"
+}
 expect -i $ydb_id -exact "YDB>"
 send -i $ydb_id "h\r"
 

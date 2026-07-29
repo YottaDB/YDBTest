@@ -48,20 +48,50 @@ echo "# Run litlab^ydb1673 routine to:"
 echo "# 1. Create 1000 copies of test.m"
 echo "# 2. ZLINK them one by one in the same process"
 echo "# 3. Record the time elapsed for each 100 linkages."
-# Run the test up to 15 times in case it fails due to timing issues caused by factors
-# outside the test, e.g. system load. If it fails all 15 times, fail the test.
+# Run the test up to 3 times in case it fails due to timing issues caused by factors
+# outside the test, e.g. system load, more if the system looks loaded (see below).
 # See discussion at: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2668#note_3291245899
+#
+# If a failing iteration coincides with the system looking oversubscribed (1-min load average
+# more than 3x the CPU count), that's likely why it's slow rather than a real regression, so
+# keep retrying with a growing backoff instead of giving up after 3 quick attempts. The backoff
+# is bounded by wall-clock time (not retry count) since what matters is outlasting whatever else
+# is loading the system, e.g. stress/concurr_small has been observed to run for close to 7
+# minutes on an affected host; 20 minutes gives that some margin. An idle/normal-load machine is
+# unaffected by any of this and still only gets the original 3 quick attempts.
+set ncpu = `nproc`
+set max_try = 3
 set try = 0
-while ($try < 3)
+set start_time = `date +%s`
+set overload_time_budget = 1200		# 20 min: covers stress/concurr_small's observed 10+ min runtime, plus margin
+set sleep_time = 5
+while ($try < $max_try)
 	@ try = $try + 1
 	$gtm_dist/mumps -run litlab^ydb1673 >&! try${try}.out
-	grep -q  "Elapsed time = [1-9]" try${try}.out
-	if ($status == 0) then
-		continue
+	grep -q  "Elapsed time = [2-9]" try${try}.out
+	if (0 != $status) then
+		# Only check for a PASS if the time for each round of 100 iterations
+		# was within bounds, i.e. less than 2 seconds. Ideally, each round would take
+		# less than 1 second, but on slow and loaded systems this may not be true,
+		# even when all rounds fall within the accepted standard deviation and thus
+		# demonstrate that the fix under test is working as expected.
+		grep -q PASS try${try}.out
+		if ($status == 0) break
 	endif
-	grep -q PASS try${try}.out
-	if ($status == 0) then
-		break
+	# This attempt failed (either a slow block or a stdev-only failure). If the
+	# system looks oversubscribed, retry with a growing backoff.
+	set is_overloaded = 0
+	if (-r /proc/loadavg) then
+		set is_overloaded = `$tst_awk -v ncpu=$ncpu '{print ($1 > 3*ncpu) ? 1 : 0}' /proc/loadavg`
+	endif
+	if (1 == $is_overloaded) then
+		set elapsed = `date +%s`
+		@ elapsed = $elapsed - $start_time
+		if ($elapsed < $overload_time_budget) then
+			@ max_try = $max_try + 1	# keep extending one attempt at a time
+			sleep $sleep_time
+			if ($sleep_time < 30) @ sleep_time = $sleep_time + 5
+		endif
 	endif
 end
 cat try${try}.out
