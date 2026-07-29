@@ -3,7 +3,16 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-##TEST_AWK  DFS  : # of Database FSyncs                    0x000000000000000.
+# Run test routine [gtm8539.m]
+# Get total DFS
+## Compute acceptable number of FSYNCs based on elapsed time to account for additional FSYNCs
+# [YDBTest#988] Database fsyncs here scale with how long the test takes to run, not just with the fixed amount of work it
+# does (5,000,000 iterations), because YDB's periodic write cache flush activity is time-driven. Under system
+# load this loop can take much longer than normal, producing more fsyncs without indicating any actual defect.
+# So, allow additional fsyncs proportional to any runtime beyond a generous ceiling, instead of limiting fsyncs
+# to a single fixed bound.
+# Check total DFS against max allowed DFS
+##TEST_AWKPASS: # of Database FSyncs was [0-9][0-9]*, within the expected bound of [0-9][0-9]* for a [0-9][0-9]* second run
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
