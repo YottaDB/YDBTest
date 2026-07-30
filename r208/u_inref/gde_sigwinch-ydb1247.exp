@@ -1,0 +1,70 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+# Fix the pty at 80 columns so the ~96-column wide GDE SHOW -SEGMENT output wraps, and pin TERM to
+# a terminal type with automatic right margins, since YottaDB only wraps terminal output (inserting
+# the line breaks this test looks for) when the terminfo entry has the am capability
+send -- "stty rows 24 cols 80; setenv TERM xterm\r"
+expect -exact "SHELL"
+# Note down the pty device name (recorded in term_env.txt by expectinit.exp); running stty against it
+# resizes the terminal window, which makes the OS deliver a SIGWINCH to the process using the pty
+set fp [open "term_env.txt" r]
+set ttyname [string trim [read $fp]]
+close $fp
+
+# (1) In standalone GDE, SHOW -SEGMENT wraps at the 80 column startup width, and after widening the
+# window to 132 columns the same command no longer wraps (GDE sets a SIGWINCH handler so the resize
+# refreshes the terminal device WIDTH)
+send -- "\$gtm_dist/yottadb -run GDE\r"
+expect -exact "GDE>"
+send -- "show -segment\r"
+expect -exact "GDE>"
+exec /bin/stty -F $ttyname rows 40 cols 132
+send -- "show -segment\r"
+expect -exact "GDE>"
+send -- "quit\r"
+expect -exact "SHELL"
+
+# (2) GDE invoked from a mumps process removes its SIGWINCH handler when it returns to the caller
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+send -- "do ^GDE\r"
+expect -exact "GDE>"
+send -- "quit\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
+expect -exact "MISSING"
+expect -exact "YDB>"
+
+# (3) GDE leaves a SIGWINCH handler that the caller already set up alone: the caller's handler fires
+# inside GDE (proving it was not replaced) and is still in place, and still working, after GDE exits
+send -- "use \$principal:sigwinch=\"write \"\"CALLER-WINCH\"\",!\"\r"
+expect -exact "YDB>"
+send -- "do ^GDE\r"
+expect -exact "GDE>"
+exec /bin/stty -F $ttyname rows 24 cols 80
+expect -exact "CALLER-WINCH"
+send -- "quit\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
+expect -exact "FOUND"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname rows 40 cols 132
+expect -exact "CALLER-WINCH"
+send -- "halt\r"
+expect -exact "SHELL"
+send -- "exit\r"
+expect eof
+
+exit

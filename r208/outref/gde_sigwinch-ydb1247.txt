@@ -1,0 +1,87 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [#1247] Test that GDE uses the SIGWINCH deviceparameter to keep up with terminal window resizes                     #
+# An expect script resizes the pty of a GDE session and verifies that:                                                #
+#   1. SHOW -SEGMENT output that wraps at the 80 column startup width does not wrap after widening to 132 columns     #
+#   2. GDE invoked from a mumps process removes its SIGWINCH handler when it returns to the caller                    #
+#   3. GDE leaves a SIGWINCH handler that the caller already set up alone, and it works during and after GDE          #
+#---------------------------------------------------------------------------------------------------------------------#
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELLstty rows 24 cols 80; setenv TERM xterm
+SHELL$gtm_dist/yottadb -run GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	/tmp/gde1247.gld
+
+GDE> show -segment
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Ex
+ten                                                                             
+        Options
+ -------------------------------------------------------------------------------
+---------------
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   
+100                                                                             
+        GLOB=1024
+                                                                                
+        LOCK= 220
+                                                                                
+        RES =   0
+                                                                                
+        ENCR= OFF
+                                                                                
+        MSLT=1024
+                                                                                
+        DALL= YES
+                                                                                
+        AIO = OFF
+                                                                                
+        FBWR=   0
+GDE> show -segment
+
+                                *** SEGMENTS ***
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+                                                                                        FBWR=   0
+GDE> quit
+%GDE-I-NOACTION, Not updating Global Directory /tmp/gde1247.gld
+SHELL$gtm_dist/mumps -direct
+
+YDB>do ^GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	/tmp/gde1247.gld
+
+GDE> quit
+%GDE-I-NOACTION, Not updating Global Directory /tmp/gde1247.gld
+
+YDB>do zshowd^sigwinch1247("SIGWINCH=")
+MISSING [SIGWINCH=]
+
+YDB>use $principal:sigwinch="write ""CALLER-WINCH"",!"
+
+YDB>do ^GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	/tmp/gde1247.gld
+
+GDE> CALLER-WINCH
+quit
+%GDE-I-NOACTION, Not updating Global Directory /tmp/gde1247.gld
+
+YDB>do zshowd^sigwinch1247("SIGWINCH=")
+FOUND [SIGWINCH=]
+
+YDB>CALLER-WINCH
+halt
+SHELLexit
+exit
