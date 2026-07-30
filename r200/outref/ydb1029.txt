@@ -4,7 +4,7 @@
 #   (\!dollar_zininterrupt || ((int)ERR_ZINTRECURSEIO == SIGNAL) || ((int)ERR_STACKCRIT == SIGNAL))
 # This test requires direct mode to fail hence the use of the [expect] utility below
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

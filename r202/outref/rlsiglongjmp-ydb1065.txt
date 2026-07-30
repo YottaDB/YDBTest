@@ -10,7 +10,7 @@ mumps.dat
 spawn ##SOURCE_PATH##/mumps -direct
 YDB>set ^pid=$job
 YDB>spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

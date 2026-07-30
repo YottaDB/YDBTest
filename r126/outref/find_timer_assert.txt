@@ -8,7 +8,7 @@ mumps.dat
 #Running expect script
 # expect output:
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

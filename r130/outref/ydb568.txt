@@ -11,7 +11,7 @@ mumps.dat
 # With the YDB#568 bug fixed, we expect the "echo" command to also show up
 # Entire output of expect script pasted below
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

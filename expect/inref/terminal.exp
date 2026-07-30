@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National Information 		#
@@ -41,9 +41,10 @@ send -- "stty erase '^?'\r"
 expect "terminal>"
 send -- "stty intr '^c'\r"
 
-# Set the terminal columns
+# Set the terminal columns. Also pin ixon/ixoff, since ZSHOW "D" reports these as
+# TTSYNC/HOSTSYNC and both are otherwise inherited from the parent terminal.
 expect -exact "terminal>"
-send -- "stty cols 132\r"
+send -- "stty cols 132 ixon -ixoff\r"
 
 # Set the terminal rows (need it > ~20 to avoid false failures)
 expect -exact "terminal>"

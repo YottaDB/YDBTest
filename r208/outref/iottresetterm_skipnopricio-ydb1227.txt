@@ -6,7 +6,7 @@
 # Run [$ydb_dist/yottadb -run %XCMD 'read *x' > 'ydb1227'.out]
 # Expect no SIG-11. Prior to the YDB!1859 (commit YDB@de1fee28) changes, a SIG-11 would occur.
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

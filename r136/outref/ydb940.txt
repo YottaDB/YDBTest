@@ -7,7 +7,7 @@
 # to the terminal as well. The M program then does one final write (Part3) to the terminal. We expect the parts
 # to show up in that order. Without the YDB#940 code fixes, (Part2) used to show up before (Part1).
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,12 +27,15 @@
 
 # Have columns set to a high value of 132 as many callers have long lines
 #   and we do not want line wrapping to cause test failures.
-# Also note that the expect terminal width is inherited from the parent terminal
-#  from where the test is invoked and so setting this to 132 avoids false failures
-#  due to the parent terminal having an arbitrarily (small) terminal width.
+# Also force ixon on and ixoff off, since ZSHOW "D" reports these termios settings as
+#   TTSYNC/NOTTSYNC and HOSTSYNC/NOHOSTSYNC and reference outputs assume TTSYNC/NOHOSTSYNC.
+#   cols, ixon and ixoff are all inherited from the parent terminal from where the test is
+#   invoked, e.g. ixon can be off (or ixoff on) if launched from certain terminal
+#   emulators/RDP sessions. So, pin all three here to avoid false failures due to the parent
+#   terminal having different settings.
 expect -exact ">"
-send -- "stty cols 132\r"
-expect "stty cols 132\r"
+send -- "stty cols 132 ixon -ixoff\r"
+expect "stty cols 132 ixon -ixoff\r"
 expect -exact ">"
 
 

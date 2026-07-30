@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,9 @@ set timeout 300
 expect "Shell2M>"
 send "stty columns 110\r"
 expect "Shell2M>"
-send "stty rows 34\r"
+# Also pin ixon/ixoff, since ZSHOW "D" reports these as TTSYNC/HOSTSYNC and both are
+# otherwise inherited from the parent terminal.
+send "stty rows 34 ixon -ixoff\r"
 expect "Shell2M>"
 
 send "\$gtm_tst/\$tst/u_inref/zshowprin.csh\r"

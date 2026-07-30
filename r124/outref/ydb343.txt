@@ -2,7 +2,7 @@
 # Create global ^x with lots of nodes (10000) so a ZWRITE ^x takes a long time and is interruptible
 # Test that use of a local variable after a Ctrl-C'ed ZWRITE in direct mode does not issue assert failure
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt

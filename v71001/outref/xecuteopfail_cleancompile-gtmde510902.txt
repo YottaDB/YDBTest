@@ -29,7 +29,7 @@
 #   %GTM-F-ASSERT, Assert failed in /Distrib/YottaDB/V71000/sr_port/mdb_condition_handler.c line 488 for expression (!TREF(xecute_literal_parse))
 
 spawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
@@ -44,7 +44,7 @@ GTM>do ^noerror
 
 GTM>h
 SHELLspawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
@@ -59,7 +59,7 @@ GTM>do ^noerror
 
 GTM>h
 SHELLspawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
@@ -74,7 +74,7 @@ GTM>do ^noerror
 
 GTM>h
 SHELLspawn /usr/local/bin/tcsh -f
-> stty cols 132
+> stty cols 132 ixon -ixoff
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
