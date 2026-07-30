@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -39,9 +39,9 @@ var invSignalList = []syscall.Signal{
 	syscall.SIGTTOU,   // [9]
 	syscall.SIGUSR2,   // [10]
 	syscall.SIGVTALRM, // [11]
-	syscall.SIGWINCH,  // [12]
-	syscall.SIGXCPU,   // [13]
-	syscall.SIGXFSZ,   // [14]
+	// syscall.SIGWINCH - as of YDB#1247 the wrapper forwards SIGWINCH to YottaDB so it is now legal to register
+	syscall.SIGXCPU, // [12]
+	syscall.SIGXFSZ, // [13]
 }
 
 func testSignalRegister() {
