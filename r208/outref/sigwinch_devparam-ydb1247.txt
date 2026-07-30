@@ -1,0 +1,54 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [#1247] Test the SIGWINCH deviceparameter for terminal devices                                                      #
+# An expect script resizes the pty of a mumps -direct process (which delivers SIGWINCH) and verifies that:            #
+#   1. with no handler set, a resize is ignored and the device WIDTH/LENGTH are not refreshed                         #
+#   2. USE $principal:SIGWINCH=expr stores the handler and ZSHOW "D" displays it                                      #
+#   3. a resize XECUTEs the handler after refreshing the device WIDTH/LENGTH to the new window size                   #
+#   4. a resize in the middle of a READ runs the handler and the READ then resumes with its input intact              #
+#   5. an error in the handler is reported and leaves the process usable                                              #
+#   6. SIGWINCH="" removes the handler and resizes are ignored again                                                  #
+#   7. a handler is free to HALT, terminating the process                                                             #
+#---------------------------------------------------------------------------------------------------------------------#
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELLstty rows 24 cols 80
+SHELL$gtm_dist/mumps -direct
+
+YDB>do dims^sigwinch1247 write "TEST1-NO-HANDLER-DONE",!
+DIMS 80x24
+TEST1-NO-HANDLER-DONE
+
+YDB>use $principal:sigwinch="write ""WINCH-FIRED"",! do dims^sigwinch1247"
+
+YDB>do zshowd^sigwinch1247("SIGWINCH=")
+FOUND [SIGWINCH=]
+
+YDB>WINCH-FIRED
+DIMS 80x24
+do readtest^sigwinch1247
+READTEST-START
+abcWINCH-FIRED
+DIMS 100x30
+def
+READTEST-GOT [abcdef]
+
+YDB>use $principal:sigwinch="write 1/0"
+
+YDB>%YDB-E-DIVZERO, Attempt to divide by zero
+%YDB-E-ERRWSIGWINCH, Error while processing SIGWINCH deviceparameter handler
+use $principal:sigwinch=""
+
+YDB>do zshowd^sigwinch1247("SIGWINCH=")
+MISSING [SIGWINCH=]
+
+YDB>write "TEST6-CLEARED-DONE",!
+TEST6-CLEARED-DONE
+
+YDB>use $principal:sigwinch="halt"
+
+YDB>SHELLexit
+exit

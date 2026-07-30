@@ -1,0 +1,91 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+# Fix the pty at a known size before starting YottaDB so the WIDTH/LENGTH checks below are deterministic
+send -- "stty rows 24 cols 80\r"
+expect -exact "SHELL"
+# Note down the pty device name (recorded in term_env.txt by expectinit.exp). Running stty against that
+# device from outside is how this script "resizes the terminal window": the OS updates the pty window
+# size and delivers a SIGWINCH to the process group of the spawned shell/mumps process.
+set fp [open "term_env.txt" r]
+set ttyname [string trim [read $fp]]
+close $fp
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+
+# (1) With no SIGWINCH deviceparameter set, a resize does nothing (the default is to ignore SIGWINCH)
+# and the device dimensions remember the size at process startup (80x24), proving no implicit refresh.
+exec /bin/stty -F $ttyname rows 30 cols 100
+sleep 2
+send -- "do dims^sigwinch1247 write \"TEST1-NO-HANDLER-DONE\",!\r"
+expect -exact "TEST1-NO-HANDLER-DONE"
+expect -exact "YDB>"
+
+# (2) Set a handler and verify ZSHOW "D" displays it
+send -- "use \$principal:sigwinch=\"write \"\"WINCH-FIRED\"\",! do dims^sigwinch1247\"\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
+expect -exact "FOUND"
+expect -exact "YDB>"
+
+# (3) A resize now drives the handler, which reports the updated (post-refresh) dimensions.
+# Note: the handler interrupted the direct mode read, which then resumes without reprinting the
+# YDB> prompt, so the next command is sent without expecting a fresh prompt first.
+exec /bin/stty -F $ttyname rows 24 cols 80
+expect -exact "WINCH-FIRED"
+expect -exact "DIMS 80x24"
+
+# (4) A resize in the middle of a READ drives the handler and the READ then resumes,
+# keeping the "abc" typed before the resize and accepting the "def" typed after it
+send -- "do readtest^sigwinch1247\r"
+expect -exact "READTEST-START"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+send -- "abc"
+expect -exact "abc"
+exec /bin/stty -F $ttyname rows 30 cols 100
+expect -exact "WINCH-FIRED"
+expect -exact "DIMS 100x30"
+send -- "def\r"
+expect -exact "READTEST-GOT \[abcdef\]"
+expect -exact "YDB>"
+
+# (5) An error in the handler that the handler does not deal with is reported as the error itself
+# followed by an ERRWSIGWINCH, after which the direct mode read resumes (again with no fresh prompt)
+send -- "use \$principal:sigwinch=\"write 1/0\"\r"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname rows 24 cols 80
+expect -exact "DIVZERO"
+expect -exact "ERRWSIGWINCH"
+
+# (6) SIGWINCH="" removes the handler: ZSHOW "D" no longer shows it and a resize goes back to doing nothing
+send -- "use \$principal:sigwinch=\"\"\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
+expect -exact "MISSING"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname rows 30 cols 100
+sleep 2
+send -- "write \"TEST6-CLEARED-DONE\",!\r"
+expect -exact "TEST6-CLEARED-DONE"
+expect -exact "YDB>"
+
+# (7) A HALT in the handler takes effect on the next resize, exiting mumps back to the shell
+send -- "use \$principal:sigwinch=\"halt\"\r"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname rows 24 cols 80
+expect -exact "SHELL"
+send -- "exit\r"
+expect eof
+
+exit
