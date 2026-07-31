@@ -28,6 +28,14 @@ dims	; write the $PRINCIPAL WIDTH and LENGTH as reported by ZSHOW "D"
 	write "DIMS ",$piece($piece(line,"WIDTH=",2)," ",1),"x",$piece($piece(line,"LENG=",2)," ",1),!
 	quit
 
+stk	; write whether the frame the SIGWINCH handler code runs in shows up in ZSHOW "S" as a (SIGWINCH) frame
+	new i,ok,s
+	zshow "S":s
+	set ok=0,i=""
+	for  set i=$order(s("S",i)) quit:""=i  if s("S",i)["(SIGWINCH)" set ok=1
+	write "STACK ",$select(ok:"FOUND",1:"MISSING")," [(SIGWINCH)]",!
+	quit
+
 readtest	; a terminal READ interrupted by a SIGWINCH resumes with the already-entered input intact
 	new x
 	write "READTEST-START",!

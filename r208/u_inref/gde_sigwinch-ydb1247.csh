@@ -15,7 +15,7 @@ echo "#-------------------------------------------------------------------------
 echo '# [#1247] Test that GDE uses the SIGWINCH deviceparameter to keep up with terminal window resizes                     #'
 echo '# An expect script resizes the pty of a GDE session and verifies that:                                                #'
 echo '#   1. SHOW -SEGMENT output that wraps at the 80 column startup width does not wrap after widening to 132 columns     #'
-echo '#   2. GDE invoked from a mumps process removes its SIGWINCH handler when it returns to the caller                    #'
+echo '#   2. GDE invoked from a mumps process turns SIGWINCH back off when it returns to the caller                         #'
 echo '#   3. GDE leaves a SIGWINCH handler that the caller already set up alone, and it works during and after GDE          #'
 echo "#---------------------------------------------------------------------------------------------------------------------#"
 echo

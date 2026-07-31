@@ -1,13 +1,16 @@
 #---------------------------------------------------------------------------------------------------------------------#
 # [#1247] Test the SIGWINCH deviceparameter for terminal devices                                                      #
 # An expect script resizes the pty of a mumps -direct process (which delivers SIGWINCH) and verifies that:            #
-#   1. with no handler set, a resize is ignored and the device WIDTH/LENGTH are not refreshed                         #
-#   2. USE $principal:SIGWINCH=expr stores the handler and ZSHOW "D" displays it                                      #
-#   3. a resize XECUTEs the handler after refreshing the device WIDTH/LENGTH to the new window size                   #
-#   4. a resize in the middle of a READ runs the handler and the READ then resumes with its input intact              #
-#   5. an error in the handler is reported and leaves the process usable                                              #
-#   6. SIGWINCH="" removes the handler and resizes are ignored again                                                  #
-#   7. a handler is free to HALT, terminating the process                                                             #
+#    1. with SIGWINCH not specified, a resize is ignored and the device WIDTH/LENGTH are not refreshed                #
+#    2. USE $principal:SIGWINCH=expr stores the handler and ZSHOW "D" displays it                                     #
+#    3. a resize XECUTEs the handler after refreshing the device WIDTH/LENGTH to the new window size                  #
+#    4. a resize in the middle of a READ runs the handler and the READ then resumes with its input intact             #
+#    5. an error in the handler is reported and leaves the process usable                                             #
+#    6. the frame the handler runs in shows up in ZSHOW "S" as a (SIGWINCH) frame                                     #
+#    7. a valueless SIGWINCH (same as SIGWINCH="") refreshes WIDTH/LENGTH with no code to XECUTE                      #
+#    8. NOSIGWINCH turns SIGWINCH off, after which resizes no longer refresh WIDTH/LENGTH                             #
+#    9. a flood of resizes during a READ leaves the process and the device dimensions intact                          #
+#   10. a handler is free to HALT, terminating the process                                                            #
 #---------------------------------------------------------------------------------------------------------------------#
 
 spawn /usr/local/bin/tcsh -f
@@ -40,13 +43,40 @@ YDB>use $principal:sigwinch="write 1/0"
 
 YDB>%YDB-E-DIVZERO, Attempt to divide by zero
 %YDB-E-ERRWSIGWINCH, Error while processing SIGWINCH deviceparameter handler
-use $principal:sigwinch=""
+use $principal:sigwinch="do stk^sigwinch1247"
+
+YDB>STACK FOUND [(SIGWINCH)]
+use $principal:sigwinch
+
+YDB>do zshowd^sigwinch1247("SIGWINCH ")
+FOUND [SIGWINCH ]
 
 YDB>do zshowd^sigwinch1247("SIGWINCH=")
 MISSING [SIGWINCH=]
 
-YDB>write "TEST6-CLEARED-DONE",!
-TEST6-CLEARED-DONE
+YDB>do dims^sigwinch1247
+DIMS 100x30
+
+YDB>use $principal:sigwinch=""
+
+YDB>do zshowd^sigwinch1247("SIGWINCH ")
+FOUND [SIGWINCH ]
+
+YDB>use $principal:nosigwinch
+
+YDB>do zshowd^sigwinch1247("SIGWINCH")
+MISSING [SIGWINCH]
+
+YDB>do dims^sigwinch1247
+DIMS 100x30
+
+YDB>use $principal:sigwinch="set winch=$get(winch)+1"
+
+YDB>write "FLOOD ",$select($get(winch)>0:"RAN",1:"NONE"),!
+FLOOD RAN
+
+YDB>do dims^sigwinch1247
+DIMS 80x30
 
 YDB>use $principal:sigwinch="halt"
 

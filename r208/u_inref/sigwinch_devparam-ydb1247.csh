@@ -14,13 +14,16 @@
 echo "#---------------------------------------------------------------------------------------------------------------------#"
 echo '# [#1247] Test the SIGWINCH deviceparameter for terminal devices                                                      #'
 echo '# An expect script resizes the pty of a mumps -direct process (which delivers SIGWINCH) and verifies that:            #'
-echo '#   1. with no handler set, a resize is ignored and the device WIDTH/LENGTH are not refreshed                         #'
-echo '#   2. USE $principal:SIGWINCH=expr stores the handler and ZSHOW "D" displays it                                      #'
-echo '#   3. a resize XECUTEs the handler after refreshing the device WIDTH/LENGTH to the new window size                   #'
-echo '#   4. a resize in the middle of a READ runs the handler and the READ then resumes with its input intact              #'
-echo '#   5. an error in the handler is reported and leaves the process usable                                              #'
-echo '#   6. SIGWINCH="" removes the handler and resizes are ignored again                                                  #'
-echo '#   7. a handler is free to HALT, terminating the process                                                             #'
+echo '#    1. with SIGWINCH not specified, a resize is ignored and the device WIDTH/LENGTH are not refreshed                #'
+echo '#    2. USE $principal:SIGWINCH=expr stores the handler and ZSHOW "D" displays it                                     #'
+echo '#    3. a resize XECUTEs the handler after refreshing the device WIDTH/LENGTH to the new window size                  #'
+echo '#    4. a resize in the middle of a READ runs the handler and the READ then resumes with its input intact             #'
+echo '#    5. an error in the handler is reported and leaves the process usable                                             #'
+echo '#    6. the frame the handler runs in shows up in ZSHOW "S" as a (SIGWINCH) frame                                     #'
+echo '#    7. a valueless SIGWINCH (same as SIGWINCH="") refreshes WIDTH/LENGTH with no code to XECUTE                      #'
+echo '#    8. NOSIGWINCH turns SIGWINCH off, after which resizes no longer refresh WIDTH/LENGTH                             #'
+echo '#    9. a flood of resizes during a READ leaves the process and the device dimensions intact                          #'
+echo '#   10. a handler is free to HALT, terminating the process                                                            #'
 echo "#---------------------------------------------------------------------------------------------------------------------#"
 echo
 

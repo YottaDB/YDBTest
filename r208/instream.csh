@@ -21,7 +21,7 @@
 # zwrite_alias_orphan-ydb1101		[sam]	Test ZWRITE of an orphaned alias container does not overflow its subscript work array
 # pipe_parse_cmdlen-ydb1101		[sam]	Test PIPE OPEN with PARSE bounds the copy of an over-long unresolvable command word
 # pipe_parse_longpath-ydb1101		[sam]	Test PIPE OPEN with PARSE does not read past the end of its $PATH buffer
-# sigwinch_devparam-ydb1247		[nars]	Test the SIGWINCH deviceparameter XECUTEs its handler when the terminal window resizes
+# sigwinch_devparam-ydb1247		[nars]	Test the SIGWINCH deviceparameter refreshes WIDTH/LENGTH and XECUTEs its handler on a terminal window resize
 # gde_sigwinch-ydb1247			[nars]	Test GDE uses the SIGWINCH deviceparameter to keep up with terminal window resizes
 #----------------------------------------------------------------------------------------------------------------------------------
 

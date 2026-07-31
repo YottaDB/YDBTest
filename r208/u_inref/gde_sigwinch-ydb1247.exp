@@ -28,7 +28,7 @@ set ttyname [string trim [read $fp]]
 close $fp
 
 # (1) In standalone GDE, SHOW -SEGMENT wraps at the 80 column startup width, and after widening the
-# window to 132 columns the same command no longer wraps (GDE sets a SIGWINCH handler so the resize
+# window to 132 columns the same command no longer wraps (GDE turns SIGWINCH on so the resize
 # refreshes the terminal device WIDTH)
 send -- "\$gtm_dist/yottadb -run GDE\r"
 expect -exact "GDE>"
@@ -40,19 +40,22 @@ expect -exact "GDE>"
 send -- "quit\r"
 expect -exact "SHELL"
 
-# (2) GDE invoked from a mumps process removes its SIGWINCH handler when it returns to the caller
+# (2) GDE invoked from a mumps process turns SIGWINCH back off when it returns to the caller. Note the
+# ZSHOW "D" check below looks for SIGWINCH in any form (with or without a value) since GDE turns it on
+# with a valueless SIGWINCH i.e. with no code to XECUTE.
 send -- "\$gtm_dist/mumps -direct\r"
 expect -exact "YDB>"
 send -- "do ^GDE\r"
 expect -exact "GDE>"
 send -- "quit\r"
 expect -exact "YDB>"
-send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH\")\r"
 expect -exact "MISSING"
 expect -exact "YDB>"
 
 # (3) GDE leaves a SIGWINCH handler that the caller already set up alone: the caller's handler fires
-# inside GDE (proving it was not replaced) and is still in place, and still working, after GDE exits
+# inside GDE (proving it was neither replaced nor reduced to the valueless form GDE would have used)
+# and is still in place, and still working, after GDE exits
 send -- "use \$principal:sigwinch=\"write \"\"CALLER-WINCH\"\",!\"\r"
 expect -exact "YDB>"
 send -- "do ^GDE\r"

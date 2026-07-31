@@ -31,7 +31,7 @@ close $fp
 send -- "\$gtm_dist/mumps -direct\r"
 expect -exact "YDB>"
 
-# (1) With no SIGWINCH deviceparameter set, a resize does nothing (the default is to ignore SIGWINCH)
+# (1) With no SIGWINCH deviceparameter set, a resize does nothing (NOSIGWINCH is the default)
 # and the device dimensions remember the size at process startup (80x24), proving no implicit refresh.
 exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
 sleep 2
@@ -77,22 +77,69 @@ exec /bin/stty -F $ttyname rows 24		;# window is now 80x24
 expect -exact "DIVZERO"
 expect -exact "ERRWSIGWINCH"
 
-# (6) SIGWINCH="" removes the handler: ZSHOW "D" no longer shows it and a resize goes back to doing nothing
-send -- "use \$principal:sigwinch=\"\"\r"
+# (6) The frame the handler code runs in shows up in ZSHOW "S" as a (SIGWINCH) frame
+send -- "use \$principal:sigwinch=\"do stk^sigwinch1247\"\r"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
+expect -exact "STACK FOUND"
+
+# (7) A valueless SIGWINCH (and the equivalent SIGWINCH="") keeps refreshing the WIDTH/LENGTH but has
+# no code to XECUTE, so a resize is invisible to the M program other than through the new dimensions;
+# ZSHOW "D" shows it as SIGWINCH with no value
+send -- "use \$principal:sigwinch\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH \")\r"
+expect -exact "FOUND"
 expect -exact "YDB>"
 send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
 expect -exact "MISSING"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
+exec /bin/stty -F $ttyname rows 30		;# window is now 100x30
 sleep 2
-send -- "write \"TEST6-CLEARED-DONE\",!\r"
-expect -exact "TEST6-CLEARED-DONE"
+send -- "do dims^sigwinch1247\r"
+expect -exact "DIMS 100x30"
+expect -exact "YDB>"
+send -- "use \$principal:sigwinch=\"\"\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH \")\r"
+expect -exact "FOUND"
 expect -exact "YDB>"
 
-# (7) A HALT in the handler takes effect on the next resize, exiting mumps back to the shell
+# (8) NOSIGWINCH turns it back off: ZSHOW "D" no longer shows it and the dimensions stop tracking
+# the window (they stay at the 100x30 that the last refresh in (7) recorded)
+send -- "use \$principal:nosigwinch\r"
+expect -exact "YDB>"
+send -- "do zshowd^sigwinch1247(\"SIGWINCH\")\r"
+expect -exact "MISSING"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname cols 80		;# window is now 80x30
+sleep 2
+send -- "do dims^sigwinch1247\r"
+expect -exact "DIMS 100x30"
+expect -exact "YDB>"
+
+# (9) A flood of resizes while a READ (the direct mode prompt) is in progress: each SIGWINCH interrupts
+# the READ, runs the handler and resumes the READ, and any signal arriving while the handler is running
+# is coalesced into at most one more handler run. The handler counts its invocations instead of writing
+# (the count varies with how the signals interleave with the handler) so the transcript stays
+# deterministic; what the test checks is that the process comes through the flood with the handler having
+# run and with the dimensions matching the size the flood left the window at.
+send -- "use \$principal:sigwinch=\"set winch=\$get(winch)+1\"\r"
+expect -exact "YDB>"
+set floodcmd "for i in 1 2 3 4 5 6 7 8 9 10; do stty -F $ttyname rows 24; stty -F $ttyname rows 30; done"
+exec /bin/sh -c $floodcmd	;# 20 resizes back to back; window ends up at 80x30
+sleep 2
+send -- "write \"FLOOD \",\$select(\$get(winch)>0:\"RAN\",1:\"NONE\"),!\r"
+expect -exact "FLOOD RAN"
+expect -exact "YDB>"
+send -- "do dims^sigwinch1247\r"
+expect -exact "DIMS 80x30"
+expect -exact "YDB>"
+
+# (10) A HALT in the handler takes effect on the next resize, exiting mumps back to the shell
 send -- "use \$principal:sigwinch=\"halt\"\r"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname rows 30		;# window is now 100x30
+exec /bin/stty -F $ttyname cols 100		;# window is now 100x30
 expect -exact "SHELL"
 send -- "exit\r"
 expect eof

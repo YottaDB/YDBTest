@@ -2,7 +2,7 @@
 # [#1247] Test that GDE uses the SIGWINCH deviceparameter to keep up with terminal window resizes                     #
 # An expect script resizes the pty of a GDE session and verifies that:                                                #
 #   1. SHOW -SEGMENT output that wraps at the 80 column startup width does not wrap after widening to 132 columns     #
-#   2. GDE invoked from a mumps process removes its SIGWINCH handler when it returns to the caller                    #
+#   2. GDE invoked from a mumps process turns SIGWINCH back off when it returns to the caller                         #
 #   3. GDE leaves a SIGWINCH handler that the caller already set up alone, and it works during and after GDE          #
 #---------------------------------------------------------------------------------------------------------------------#
 
@@ -65,8 +65,8 @@ YDB>do ^GDE
 GDE> quit
 %GDE-I-NOACTION, Not updating Global Directory /tmp/gde1247.gld
 
-YDB>do zshowd^sigwinch1247("SIGWINCH=")
-MISSING [SIGWINCH=]
+YDB>do zshowd^sigwinch1247("SIGWINCH")
+MISSING [SIGWINCH]
 
 YDB>use $principal:sigwinch="write ""CALLER-WINCH"",!"
 
