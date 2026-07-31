@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -189,6 +192,10 @@ initDevices
 	.	set IV(i)=$$^%RANDSTR($random(17),,"AN")
 	for i=1:1:9 do
 	.	set WRITE(i)=$$^%RANDSTR($random(10),,"ANP")
+	; Pin one slot to a canonical number that overflows YottaDB's numeric range so a
+	; reintroduction of the YDBTest#995 numeric coercion in readFromDatabases fails
+	; deterministically instead of at %RANDSTR's very low natural rate.
+	set WRITE(4)="9E74"
 	quit
 
 openDevices(newversion)
@@ -243,14 +250,20 @@ writeToDatabases
 	quit
 
 readFromDatabases
-	if ^a
-	if ^b
-	if ^c
-	if ^d
-	if ^e
-	if ^f
-	if ^g
-	if ^h
-	if ^i
-	if ^j
+	; These IF commands exist only to read each global into the stringpool; nothing
+	; follows on the line, so the condition value is irrelevant. Compare against ""
+	; (a string comparison) rather than using ^x as a boolean: a boolean forces
+	; numeric conversion, and a WRITE(i) value produced by %RANDSTR(,,"ANP") can be
+	; scientific notation large enough to raise %YDB-E-NUMOFLOW (YDBTest#995).
+	; Do not "simplify" this back to `if ^a`.
+	if ^a'=""
+	if ^b'=""
+	if ^c'=""
+	if ^d'=""
+	if ^e'=""
+	if ^f'=""
+	if ^g'=""
+	if ^h'=""
+	if ^i'=""
+	if ^j'=""
 	quit
