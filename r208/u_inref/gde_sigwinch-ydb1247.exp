@@ -18,7 +18,11 @@ source $::env(gtm_tst)/com/expectinit.exp
 send -- "stty rows 24 cols 80; setenv TERM xterm\r"
 expect -exact "SHELL"
 # Note down the pty device name (recorded in term_env.txt by expectinit.exp); running stty against it
-# resizes the terminal window, which makes the OS deliver a SIGWINCH to the process using the pty
+# resizes the terminal window, which makes the OS deliver a SIGWINCH to the process using the pty.
+# Each resize below changes only the width (the only dimension this test cares about). That is deliberate:
+# stty implements "rows" and "cols" as separate TIOCSWINSZ ioctls, so "stty rows 40 cols 132" resizes the
+# window twice and the OS delivers TWO SIGWINCHes, which would make the caller handler in (3) below run
+# either once or twice depending on how the two signals happen to interleave with the handler.
 set fp [open "term_env.txt" r]
 set ttyname [string trim [read $fp]]
 close $fp
@@ -30,7 +34,7 @@ send -- "\$gtm_dist/yottadb -run GDE\r"
 expect -exact "GDE>"
 send -- "show -segment\r"
 expect -exact "GDE>"
-exec /bin/stty -F $ttyname rows 40 cols 132
+exec /bin/stty -F $ttyname cols 132
 send -- "show -segment\r"
 expect -exact "GDE>"
 send -- "quit\r"
@@ -53,14 +57,14 @@ send -- "use \$principal:sigwinch=\"write \"\"CALLER-WINCH\"\",!\"\r"
 expect -exact "YDB>"
 send -- "do ^GDE\r"
 expect -exact "GDE>"
-exec /bin/stty -F $ttyname rows 24 cols 80
+exec /bin/stty -F $ttyname cols 80
 expect -exact "CALLER-WINCH"
 send -- "quit\r"
 expect -exact "YDB>"
 send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
 expect -exact "FOUND"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname rows 40 cols 132
+exec /bin/stty -F $ttyname cols 132
 expect -exact "CALLER-WINCH"
 send -- "halt\r"
 expect -exact "SHELL"

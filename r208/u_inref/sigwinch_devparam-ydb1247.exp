@@ -18,6 +18,13 @@ expect -exact "SHELL"
 # Note down the pty device name (recorded in term_env.txt by expectinit.exp). Running stty against that
 # device from outside is how this script "resizes the terminal window": the OS updates the pty window
 # size and delivers a SIGWINCH to the process group of the spawned shell/mumps process.
+# Each resize below changes exactly ONE of rows/cols. That is deliberate: stty implements "rows" and
+# "cols" as separate TIOCSWINSZ ioctls, so "stty rows 30 cols 100" resizes the window twice and the OS
+# delivers TWO SIGWINCHes. Whether the second one arrives before the process has finished handling the
+# first (one handler run) or after (two handler runs) is a race, so the transcript would be
+# nondeterministic. One dimension per resize is one ioctl, hence exactly one SIGWINCH and one handler run.
+# Note that the window size must actually change for the OS to signal, so the value used always differs
+# from the value the previous step left in place.
 set fp [open "term_env.txt" r]
 set ttyname [string trim [read $fp]]
 close $fp
@@ -26,7 +33,7 @@ expect -exact "YDB>"
 
 # (1) With no SIGWINCH deviceparameter set, a resize does nothing (the default is to ignore SIGWINCH)
 # and the device dimensions remember the size at process startup (80x24), proving no implicit refresh.
-exec /bin/stty -F $ttyname rows 30 cols 100
+exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
 sleep 2
 send -- "do dims^sigwinch1247 write \"TEST1-NO-HANDLER-DONE\",!\r"
 expect -exact "TEST1-NO-HANDLER-DONE"
@@ -39,12 +46,14 @@ send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
 expect -exact "FOUND"
 expect -exact "YDB>"
 
-# (3) A resize now drives the handler, which reports the updated (post-refresh) dimensions.
+# (3) A resize now drives the handler, which reports the updated (post-refresh) dimensions. Both
+# dimensions are reported as refreshed even though this resize only changed the height, since the
+# refresh picks up the whole current window size, including the width changed back in (1).
 # Note: the handler interrupted the direct mode read, which then resumes without reprinting the
 # YDB> prompt, so the next command is sent without expecting a fresh prompt first.
-exec /bin/stty -F $ttyname rows 24 cols 80
+exec /bin/stty -F $ttyname rows 30		;# window is now 100x30
 expect -exact "WINCH-FIRED"
-expect -exact "DIMS 80x24"
+expect -exact "DIMS 100x30"
 
 # (4) A resize in the middle of a READ drives the handler and the READ then resumes,
 # keeping the "abc" typed before the resize and accepting the "def" typed after it
@@ -53,9 +62,9 @@ expect -exact "READTEST-START"
 system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "abc"
 expect -exact "abc"
-exec /bin/stty -F $ttyname rows 30 cols 100
+exec /bin/stty -F $ttyname cols 80		;# window is now 80x30
 expect -exact "WINCH-FIRED"
-expect -exact "DIMS 100x30"
+expect -exact "DIMS 80x30"
 send -- "def\r"
 expect -exact "READTEST-GOT \[abcdef\]"
 expect -exact "YDB>"
@@ -64,7 +73,7 @@ expect -exact "YDB>"
 # followed by an ERRWSIGWINCH, after which the direct mode read resumes (again with no fresh prompt)
 send -- "use \$principal:sigwinch=\"write 1/0\"\r"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname rows 24 cols 80
+exec /bin/stty -F $ttyname rows 24		;# window is now 80x24
 expect -exact "DIVZERO"
 expect -exact "ERRWSIGWINCH"
 
@@ -74,7 +83,7 @@ expect -exact "YDB>"
 send -- "do zshowd^sigwinch1247(\"SIGWINCH=\")\r"
 expect -exact "MISSING"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname rows 30 cols 100
+exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
 sleep 2
 send -- "write \"TEST6-CLEARED-DONE\",!\r"
 expect -exact "TEST6-CLEARED-DONE"
@@ -83,7 +92,7 @@ expect -exact "YDB>"
 # (7) A HALT in the handler takes effect on the next resize, exiting mumps back to the shell
 send -- "use \$principal:sigwinch=\"halt\"\r"
 expect -exact "YDB>"
-exec /bin/stty -F $ttyname rows 24 cols 80
+exec /bin/stty -F $ttyname rows 30		;# window is now 100x30
 expect -exact "SHELL"
 send -- "exit\r"
 expect eof
