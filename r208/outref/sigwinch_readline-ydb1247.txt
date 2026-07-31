@@ -1,0 +1,15 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [#1247] Test the SIGWINCH deviceparameter at a readline direct mode prompt                                          #
+# Direct mode reads through the readline library when ydb_readline is set, which handles a SIGWINCH differently from  #
+# the plain dm_read path that the sigwinch_devparam-ydb1247 subtest covers: the signal handler longjmps out of        #
+# readline, which saves the partially typed line, drives the handler and then restores the line (see readline.c).     #
+# An expect script resizes the pty of a mumps -direct process (which delivers SIGWINCH) and verifies that:            #
+#   1. a resize while a line is partially typed runs the handler and readline comes back with the line intact         #
+#   2. a valueless SIGWINCH refreshes the device WIDTH/LENGTH without interrupting the readline prompt                #
+#   3. NOSIGWINCH stops the refresh, leaving the dimensions at what the last refresh recorded                         #
+#---------------------------------------------------------------------------------------------------------------------#
+
+PASS: the SIGWINCH handler ran at a readline prompt with a partially typed line
+PASS: readline resumed the partially typed line once the handler was done
+PASS: a valueless SIGWINCH refreshed WIDTH and LENGTH at a readline prompt
+PASS: NOSIGWINCH stopped the refresh at a readline prompt

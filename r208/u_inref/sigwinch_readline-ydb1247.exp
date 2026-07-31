@@ -1,0 +1,79 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# Everything the session writes is matched by the "expect"s below but none of it is echoed to the
+# reference file: readline redraws the prompt and the input line with terminal dependent escape
+# sequences, so only the PASS lines this script writes make up the reference output.
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+# Fix the pty at a known size before starting YottaDB so the WIDTH/LENGTH checks below are deterministic
+send -- "stty rows 24 cols 80\r"
+expect -exact "SHELL"
+# Note down the pty device name (recorded in term_env.txt by expectinit.exp). Running stty against that
+# device from outside is how this script "resizes the terminal window": the OS updates the pty window
+# size and delivers a SIGWINCH to the process group of the spawned shell/mumps process. Each resize
+# changes exactly ONE of rows/cols, since stty implements "rows" and "cols" as separate TIOCSWINSZ
+# ioctls and two ioctls would mean two SIGWINCHes, hence a race over how many times the handler runs.
+# The value used always differs from the one the previous step left in place, as the OS does not
+# signal when TIOCSWINSZ does not actually change the size.
+set fp [open "term_env.txt" r]
+set ttyname [string trim [read $fp]]
+close $fp
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+
+# (1) With a handler set, a resize while a line is partially typed at the readline prompt runs the
+# handler and readline then comes back with the partially typed line intact. Note the text typed
+# below is deliberately not the text it writes, so that expecting the latter cannot match the echo
+# of the former (or its redraw after the handler runs).
+send -- "use \$principal:sigwinch=\"write \"\"WINCH-FIRED\"\",!\"\r"
+expect -exact "YDB>"
+send -- "write \"PART\",\"IAL\",!"
+expect -exact "write \"PART\",\"IAL\",!"	;# wait for the echo, so the resize cannot beat the input into readline
+exec /bin/stty -F $ttyname cols 100		;# window is now 100x24
+expect -exact "WINCH-FIRED"
+puts "PASS: the SIGWINCH handler ran at a readline prompt with a partially typed line"
+send -- "\r"
+expect -exact "PARTIAL"
+puts "PASS: readline resumed the partially typed line once the handler was done"
+expect -exact "YDB>"
+
+# (2) A valueless SIGWINCH has no code to XECUTE so it does not interrupt the readline prompt at all,
+# but it does refresh the device WIDTH and LENGTH, which the next command reports
+send -- "use \$principal:sigwinch\r"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname rows 30		;# window is now 100x30
+sleep 2
+send -- "do dims^sigwinch1247\r"
+expect -exact "DIMS 100x30"
+puts "PASS: a valueless SIGWINCH refreshed WIDTH and LENGTH at a readline prompt"
+expect -exact "YDB>"
+
+# (3) NOSIGWINCH turns SIGWINCH off, so the dimensions stay at what the last refresh in (2) recorded
+# even though the window keeps changing
+send -- "use \$principal:nosigwinch\r"
+expect -exact "YDB>"
+exec /bin/stty -F $ttyname cols 80		;# window is now 80x30
+sleep 2
+send -- "do dims^sigwinch1247\r"
+expect -exact "DIMS 100x30"
+puts "PASS: NOSIGWINCH stopped the refresh at a readline prompt"
+expect -exact "YDB>"
+
+send -- "halt\r"
+expect -exact "SHELL"
+send -- "exit\r"
+expect eof
+
+exit
