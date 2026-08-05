@@ -3,7 +3,7 @@
 ; Copyright (c) 2002-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -12,15 +12,18 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Every out^zshowgfilter() call below replaces each listed GVSTATS code with XX because its value varies across runs.
+; GLB aggregates buffer-cache housekeeping waits (WS_13-WS_27, some of which count every latch grab, contended or not),
+; so it depends on buffer flush timing in this and other processes, not on the GT.CM behavior under test.
 gtcm	; test GT.CM functionality
 	; ^A is local
 	zshow "G"
 tset	; Test SET
 	W "TESTING SET...",!
 	f i=1:1:5 s ^A(i)=$j(i,i)
-  	f i=1:1:5 s ^BLONGGLOBALVARIABLE(i)=$j(i,i)
+	f i=1:1:5 s ^BLONGGLOBALVARIABLE(i)=$j(i,i)
 	f i=1:1:5 s ^BWITHKEYLENGRTRTHANLOCAL("withaverylongsubscript",i)=$j(i,i)
-  	f i=1:1:5 s ^BLONGGLO(i)=$j("G",i)
+	f i=1:1:5 s ^BLONGGLO(i)=$j("G",i)
 	f i=1:1:5 s ^CGLOBALVARIABLE(i)=$j(i,i)
 	f i=1:1:5 s ^CGLOBALV(i)=$j("G",i)
 	f i=1:1:5 s ^D(i)=$j(i,i)
@@ -40,7 +43,7 @@ tset	; Test SET
 	ZWR ^A,^D
 	new val
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	quit
 tdata	; Test $DATA
@@ -66,7 +69,7 @@ tdata	; Test $DATA
 	s ab="AB"
 	new val
 	zshow "g":val	; use of lower-case 'g' is intentional to make sure that works as good as 'G'
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 tquery	; Test $QUERY and also that the globals are equal (in every item of the array)
@@ -102,7 +105,7 @@ tquerydir(dir)
 	. . . h
 	new val
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 tyqueryinit(y,gbl,dir)
@@ -134,7 +137,7 @@ tget	; Test $GET
 	. . . . h
 	new val
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	;
 	; Test for D9I10-002704 (test that repeated $get does NOT cause stringpool expansion)
@@ -161,7 +164,7 @@ torder	; Test $ORDER
 	do namelevelorder(1)	; forward name level $order
 	new val
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 
 trorder	; the other direction
@@ -177,7 +180,7 @@ trorder	; the other direction
 	s TESTSTR="REVERSE $ORDER" d CHEKORD
 	do namelevelorder(-1)	; backward name level $order
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 
@@ -193,7 +196,7 @@ tzprev	; test $ZPREVIOUS
 	w !
 	s TESTSTR="$ZPREVIOUS" d CHEKORD
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 
@@ -216,7 +219,7 @@ setpie	; set piece
 	S CMPSTR="1 2 3 4 5 6 7 8 9 j k l",TEST="SET $PIECE",ELEM="piece"
 	d CHECK
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 
 setpie1	; "of dif. lengths",!
@@ -239,7 +242,7 @@ setpie1	; "of dif. lengths",!
 	S CMPSTR="1 2 3 4",TEST="SET $PIECE",ELEM="piece"
 	D CHECK
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 
@@ -262,7 +265,7 @@ textr	; Test set $extract
 	D CHECK
 	zwr ^A("extract"),^D("extract")
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 
@@ -281,7 +284,7 @@ tkill	; Test KILL
 	s total=$D(^A)+$D(^BLONGGLOBALVARIABLE)+$D(^BWITHKEYLENGRTRTHANLOCAL("withaverylongsubscript"))+$D(^CGLOBALVARIABLE)+$D(^D)
 	if total'=0 W "ERROR, Not all were KILLed! Check ^A, ^BLONGGLOBALVARIABLE, ^CGLOBALVARIABLE, and ^D.",!
 	zshow "G":val
-	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	zwrite val
 	q
 
@@ -291,7 +294,7 @@ gvstats	;
 	; Test that cumulative statistics are ZERO or NON-ZERO depending on incoming <type>
 	for  quit:reg=""  do
 	.	set val("G",0)=$VIEW("GVSTATS",reg) ; need to use val("G",0) instead of just val to simulate ZSHOW "G" output format
-	.	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")	; filter out any that could contain varying output
+	.	do out^zshowgfilter(.val,"DRD,DWT,DFL,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,GLB")	; filter out any that could contain varying output
 	.	write "$VIEW(""GVSTATS"",",reg,")=",val("G",0),!
 	.	set reg=$VIEW("GVNEXT",reg)
 	quit
