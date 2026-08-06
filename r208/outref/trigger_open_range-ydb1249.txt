@@ -1,0 +1,143 @@
+#----------------------------------------------------------------------------------------------------#
+# [#1249] A trigger subscript specification with an open ended range is read back from ^#t correctly #
+#----------------------------------------------------------------------------------------------------#
+
+# A trigger subscript specification with an open ended range, for example [+^x(sub1=2:)], has an empty
+# specification for the open side. Reading the definition back from ^#t used to examine the first byte of
+# that empty specification, which is one byte past its end, and act on it when it happened to be a double
+# quote, which it is when a quoted field such as the trigger's -xecute text follows. The length then
+# underflowed and a valid definition was rejected with
+#	%YDB-E-TRIGSUBSCRANGE, Trigger definition for global ^x has one or more invalid subscript range(s)
+# or, on a dbg build, failed an assert in gvtr_process_range().
+
+# Create a database. AIM cross reference globals need null subscripts and have long keys.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [ydb1249] : define a trigger for each shape of an open ended range and fire it across a span of
+# subscripts, then cycle definitions to exercise the read path repeatedly. These definitions place no
+# quoted field after the open side, so they exercise the parse without depending on the byte that follows
+# it, and they pass on a build without the fix.
+
+# +^x(sub1=2:) fires for subscripts 2 and above
+Added SET trigger on ^x named x#1
+^y(2)="v2"
+^y(3)="v3"
+^y(4)="v4"
+All existing triggers (count = 1) deleted
+
+# +^x(sub1=:3) fires for subscripts 3 and below
+Added SET trigger on ^x named x#1
+^y(1)="v1"
+^y(2)="v2"
+^y(3)="v3"
+All existing triggers (count = 1) deleted
+
+# +^x(sub1=:) fires for every subscript
+Added SET trigger on ^x named x#1
+^y(1)="v1"
+^y(2)="v2"
+^y(3)="v3"
+^y(4)="v4"
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+All existing triggers (count = 2) deleted
+
+# 25 define, fire and KILL cycles: 0 error(s)
+
+# Build AIM, which does produce a definition that reproduces the failure
+#
+# AIM writes its own triggers, and the KILL trigger it writes for a cross reference whose subscript
+# specification is an open ended range is followed by its -xecute text, which is what supplies the double
+# quote. The plugin is cloned and built here, against the YottaDB under test, rather than installed with
+# ydbinstall: ydbinstall installs the distribution its own copy is bundled with, which is not the build
+# under test in every pipeline, and the subtest would then report on an unrelated YottaDB.
+
+# Run [ydb1249aim] : cross reference ^x with the open ended subscript range [2:] and KILL it, 200 times.
+# The KILL is what reads the trigger definition back. A build without the fix reports, at an iteration
+# that differs from run to run and on roughly one iteration in thirty
+#	# error at iteration 6 : %YDB-E-TRIGSUBSCRANGE, Trigger definition for global ^x has one or more invalid subscript range(s) : sub1=2:
+# so 200 iterations leave ample margin against a run that passes by chance. AIM halts the process on an
+# error rather than reporting it, hence the exit status below as well.
+# completed 200 iterations with no error
+# ydb1249aim exit status : 0
+
+# Invoking : dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
