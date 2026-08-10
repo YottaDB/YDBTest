@@ -45,7 +45,14 @@ echo "# Run one non-TP update under gdb with breakpoints in t_end(), jnl_write_r
 #	b) "set confirm off" avoids the "Quit anyway?" prompt at the end.
 #	c) Each breakpoint prints a marker and continues, so the update runs to completion and it is
 #	   the ORDER of the markers in gdb.out that carries the result.
-#	d) The heredoc delimiter is quoted so that tcsh does no substitution inside the command file.
+#	d) "jnl_write_reserve()" and "grab_lock()" have callers other than "t_end()", and a call from
+#	   one of those can land between entering "t_end()" and the calls this test is about. A
+#	   "grab_lock()" from the instance freeze machinery did exactly that and produced a FAIL
+#	   against code whose ordering was correct. So each marker is tagged with whether its
+#	   IMMEDIATE caller is "t_end()", and only those count towards the verdict. Calls from
+#	   anywhere else are still logged, as GTMF228991-OTHER, since they are what makes an
+#	   unexpected result readable.
+#	e) The heredoc delimiter is quoted so that tcsh does no substitution inside the command file.
 cat >! gdbcmds << 'CAT_EOF'
 set breakpoint pending on
 set confirm off
@@ -59,13 +66,21 @@ end
 break jnl_write_reserve
 commands
 silent
+if $_caller_is("t_end")
 printf "GTMF228991-ORDER: jnl_write_reserve\n"
+else
+printf "GTMF228991-OTHER: jnl_write_reserve\n"
+end
 continue
 end
 break grab_lock
 commands
 silent
+if $_caller_is("t_end")
 printf "GTMF228991-ORDER: grab_lock\n"
+else
+printf "GTMF228991-OTHER: grab_lock\n"
+end
 continue
 end
 run -run oneupdate^gtmf228991

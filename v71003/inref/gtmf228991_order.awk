@@ -13,11 +13,15 @@
 # Reads the gdb log produced by the "jnlwritereserve_order-gtmf228991" subtest and reports whether
 # "jnl_write_reserve()" is called BEFORE "grab_lock()" within one invocation of "t_end()".
 #
-# The gdb breakpoints print one "GTMF228991-ORDER: <function>" line per hit. A "t_end" marker ends
-# the previous invocation and starts a new one, so the counters are evaluated and then reset there
-# (and once more at end of input for the last invocation). Only the first invocation that called
-# both functions is reported, so any "grab_lock()" calls made before the update (for example while
-# attaching to the journal pool at process startup) are ignored.
+# The gdb breakpoints print one line per hit. A "t_end" marker ends the previous invocation and
+# starts a new one, so the counters are evaluated and then reset there (and once more at end of
+# input for the last invocation). Only the first invocation that called both functions is reported.
+#
+# Both functions have callers besides "t_end()", so the breakpoints tag each hit with whether its
+# immediate caller is "t_end()": GTMF228991-ORDER when it is, GTMF228991-OTHER when it is not. Only
+# the ORDER lines are read below, which is what keeps a "grab_lock()" taken from elsewhere during
+# the update - the instance freeze machinery does this - from being mistaken for the one "t_end()"
+# takes at t_end.c:1523. The OTHER lines are left in gdb.out to be read by a human.
 #
 function check()
 {
