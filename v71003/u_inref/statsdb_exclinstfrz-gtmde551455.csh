@@ -22,6 +22,13 @@ GT.M creates STATSDB regions with FREEZE_ON_ERROR disabled, preventing errors as
 CAT_EOF
 echo
 
+# This test peeks at the file header of a STATSDB region, so the base regions have to have one. The
+# huge db scheme makes db files terabyte sized with holes, and a STATSDB is MM, which does not go
+# with holes, so com/dbcreate_multi.awk answers that by putting -nostats on every region of a
+# REPLICATION test - which this is. Turn the scheme off rather than lose the statsdbs: with the base
+# db carrying NOSTATS, the $ZPEEK below has no STATSDB to open and the test fails.
+setenv ydb_test_4g_db_blks 0
+
 setenv gtm_repl_instance "mumps.repl"
 $MULTISITE_REPLIC_PREPARE 2
 
