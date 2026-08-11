@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -136,7 +136,7 @@ get_msrtime
 set rcvr_time_msr="$time_msr"
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$src_time_msr.log' -message "REPLAHEAD" -duration 120 -waitcreation'
 $MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$rcvr_time_msr.log' -message "REPLAHEAD" -duration 120 -waitcreation'
-$MSR RUN INST4 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST4 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh RCVR_'"$rcvr_time_msr"'.log'
 $MSR RUN RCV=INST4 SRC=INST3 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'
 $MSR REFRESHLINK INST3 INST4
 

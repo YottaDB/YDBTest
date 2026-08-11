@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,7 +75,7 @@ $MSR RUN INST4 '$gtm_tst/com/simpleinstanceupdate.csh 80'     #(seqnos 71-150)
 #	--> At some point INST3 will figure out something is wrong (when INST2 tries to replicate the new 71 to INST3)
 #	and error out ("%YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance").
 $MSR RUN INST3 'set msr_dont_trace ; set rcvrlog = `ls RCVR_*.log`; $gtm_tst/com/wait_for_log.csh -log $rcvrlog -message "REPLAHEAD" -duration 150; $grep "REPLAHEAD" $rcvrlog' |& sed "s/, Primary.*/ ##FILTERED##/g"
-$MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST3 'set msr_dont_trace ; set rcvrlog = `ls RCVR_*.log`; $gtm_tst/com/wait_until_rcvr_exit.csh $rcvrlog'
 # the receiver server on INST3 will have died, stop the passive source server as well
 # the passive source server to INST2 is still alive, let's shut that down
 $MSR RUN RCV=INST3 SRC=INST2 '$MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passive.log'

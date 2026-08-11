@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -145,7 +145,7 @@ $MSR STARTSRC INST1 INST3 RP
 # not prior startup logs.
 $MSR RUN RCV=INST3 SRC=INST1 "$MUPIP replic -receiv -start -listen=__RCV_PORTNO__ -log=receiver_restart.log -buf=$tst_buffsize"
 $MSR RUN RCV=INST3 SRC=INST1 '$gtm_tst/com/wait_for_log.csh -log receiver_restart.log -message "REPLAHEAD" -duration 120 -waitcreation'
-$MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh receiver_restart.log'
 
 $MSR STOPSRC INST3 INST4 RP
 $MSR RUN RCV=INST3 SRC=INST1 '$gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=lost1_INST1_1.glo "*"' >&! fetchresync_rb2.log
@@ -175,7 +175,7 @@ $MSR RUN RCV=INST3 SRC=INST2 "$MUPIP replic -receiv -start -listen=__RCV_PORTNO_
 $MSR RUN RCV=INST3 SRC=INST2 '$gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log ' >&! recv_restart_log1.outx
 $gtm_tst/com/check_error_exist.csh $msr_execute_last_out REPLAHEAD
 $gtm_tst/com/check_error_exist.csh recv_restart_log1.outx REPLAHEAD
-$MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh receiver_restart1.log'
 
 # Do few rollback to bring all the sources and receivers in sync. So that dbcheck at the end of test will pass.
 $MSR STOPSRC INST3 INST4 RP

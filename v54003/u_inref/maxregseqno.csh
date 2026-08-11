@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -88,7 +88,7 @@ END
 
 BEGIN "Look for REPLAHEAD message in receiver log"
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "REPLAHEAD" -duration 120 -waitcreation -grep'
-$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh RCVR_restart.log'
 END
 
 BEGIN "This step is added to test GTM-5418 by pulling the REPLAHEAD message and the next two lines into the reference file."

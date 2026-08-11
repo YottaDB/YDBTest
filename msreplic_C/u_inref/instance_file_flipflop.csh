@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -295,7 +295,14 @@ unsetenv gtm_test_repl_skiprcvrchkhlth
 echo "#  	--> The receiver server will issue the error: %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance"
 get_msrtime	# sets $time_msr
 $gtm_tst/com/wait_for_log.csh -log RCVR_$time_msr.log -message "REPLAHEAD" -duration 100 -grep	# wait upto 100 seconds
-$MSR RUN INST1 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+# Take the receiver server pid from its log rather than from a checkhealth. A checkhealth stops
+# reporting the server as alive the moment it begins shutting down, so the wait returns while the
+# process is still there. That matters here because this receiver uses an external filter and does not
+# exit until the filter process has stopped, which has been seen to take ten seconds. A receiver
+# server is attached to the journal pool, so the -timeout=0 shutdown below then finds it and declines
+# to run the pool down ("Not deleting jnlpool ipcs. 1 processes still attached to jnlpool"), failing
+# this step and every step after it.
+$MSR RUN INST1 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh RCVR_'"$time_msr"'.log'
 $MSR RUN RCV=INST1 SRC=INST4 '$MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passivesource.log' # shutdown the passive source server
 $MSR REFRESHLINK INST4 INST1
 $MSR RUN RCV=INST1 SRC=INST4 '$gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch14.glo "*" >& rollback14.log'

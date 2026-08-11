@@ -5,7 +5,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -271,7 +271,7 @@ $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 # The receiver server has issued a REPLINSTNOHIST error but it is possible it is still in the process of exiting at this point.
 # Before going to the next step where we expect the passive source server to be the only process accessing
 # the journal pool and database files, make sure the receiver server has terminated.
-$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh RCVR_'"$time_msr"'.log'
 
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
 # The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
@@ -301,8 +301,8 @@ $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message
 
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log REPLINSTNOHIST"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
-# See comment before previous call to wait_until_srvr_exit.csh for why the next line is necessary.
-$MSR RUN INST5 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+# See comment before previous call to wait_until_rcvr_exit.csh for why the next line is necessary.
+$MSR RUN INST5 'set msr_dont_trace ; $gtm_tst/com/wait_until_rcvr_exit.csh RCVR_'"$time_msr"'.log'
 
 $MSR RUN RCV=INST5 SRC=INST1 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST5.out'
 # The above is done because, the receiver will be shut down but the passive server will be alive still.
