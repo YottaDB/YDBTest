@@ -1,0 +1,35 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB!1891] ZPEEK at the STATSDB region of a database whose base regions carry NOSTATS            #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# ZPEEK at a file header field of the STATSDB region belonging to the NOSTATS base region, with
+# statistics sharing OFF. A STATSDB region is named for its base region in lower case, so
+# DEFAULT gives default. gvcst_init issues the error itself and the user gets it.
+----------
+Error DBFILERR seen in zpeek_nostatshare.out as expected:
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+----------
+----------
+Error STATSDBFNERR seen in zpeek_nostatshare.out as expected:
+%YDB-E-STATSDBFNERR, This database has no accessible statistics database due to the following error: The base database has NOSTATS set - should not be trying to open statistics database
+----------
+
+# The same ZPEEK with statistics sharing ON. gvcst_init returns with the region unopened and
+# op_fnzpeek reports that instead.
+----------
+Error BADZPEEKARG seen in zpeek_statshare.out as expected:
+%YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (region name could not be opened) parameter for $ZPEEK()
+----------
+
+# The base region is still usable afterwards
+^x=1
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# YDBMR1891 STATSDB ZPEEK NOSTATS TEST DONE

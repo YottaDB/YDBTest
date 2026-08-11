@@ -25,6 +25,7 @@
 # gde_sigwinch-ydb1247			[nars]	Test GDE uses the SIGWINCH deviceparameter to keep up with terminal window resizes
 # sigwinch_readline-ydb1247		[nars]	Test the SIGWINCH deviceparameter at a readline direct mode prompt
 # trigger_open_range-ydb1249		[nars]	Test a trigger subscript specification with an open ended range is read back from ^#t correctly
+# statsdb_zpeek_nostats-ydbmr1891	[nars]	Test ZPEEK at the STATSDB region of a database whose base regions carry NOSTATS
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -43,6 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic sigwinch_devparam-ydb12
 setenv subtest_list_non_replic	"$subtest_list_non_replic gde_sigwinch-ydb1247"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sigwinch_readline-ydb1247"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_open_range-ydb1249"
+setenv subtest_list_non_replic	"$subtest_list_non_replic statsdb_zpeek_nostats-ydbmr1891"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
