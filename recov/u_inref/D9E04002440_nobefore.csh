@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,11 @@ source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars
 # Cannot use triggers while turning journaling on and off
 setenv gtm_test_trigger 0
 \mkdir ./bak1
-$gtm_tst/com/dbcreate.csh mumps 8 125 1000 1024 2048 64 2048
+# The 7th argument is the global buffer count. It used to be 64, which put the TRANS2BIG limit in
+# "tp_cw_list.c" (cw_set_depth + 2 >= n_bts / 2 for BG) at about 30 blocks in one region in one TP
+# transaction, and the imptp workload below occasionally crossed it. 1024, as used by the sibling
+# subtests C9C01001899_repeat_switch and mupip_backup_0_1, puts it out of reach.
+$gtm_tst/com/dbcreate.csh mumps 8 125 1000 1024 2048 1024 2048
 echo "$MUPIP set -journal=enable,on,nobefore,auto=16384,epoch=40 -reg * |& sort -f"
 $MUPIP set -journal=enable,on,nobefore,auto=16384,epoch=40 -reg "*" |& sort -f
 echo "Multi-Process GTM Process starts in background..."
