@@ -102,6 +102,8 @@ GDE>
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
                                                                                         LOCK= 220
                                                                                         RES =   0
@@ -110,6 +112,8 @@ GDE>
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
 GDE> 
 
                                   *** MAP ***
@@ -241,6 +245,8 @@ GDE>
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
  BSEG                            locksmutexb.dat     MM  DYN  5120        100   100     DEFER
                                                                                         LOCK=12345
                                                                                         RES =4568
@@ -248,6 +254,8 @@ GDE>
                                                                                         MSLT=32768
                                                                                         DALL= YES
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
  DEFAULT                         locksmutexdefault.dat
                                                      BG  DYN  4096        100   100     GLOB=1024
                                                                                         LOCK= 220
@@ -257,6 +265,8 @@ GDE>
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -306,6 +316,8 @@ Region          DEFAULT
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
 
                                 *** TEMPLATES ***
                                                                           Std      Inst
@@ -324,11 +336,15 @@ Region          DEFAULT
                                                                         DALL = YES
                                                                         AIO  = OFF
                                                                         FBWR =   0
+                                                                        SIDX =AUTO
+                                                                        SISL =1024
  <default>                            MM  DYN  4096        100   100    DEFER
                                                                         LOCK = 220
                                                                         MSLT =1024
                                                                         DALL = YES
                                                                         FBWR =   0
+                                                                        SIDX =AUTO
+                                                                        SISL =1024
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
@@ -357,6 +373,8 @@ Region          DEFAULT
                                                                                         DALL= YES
                                                                                         AIO = OFF
                                                                                         FBWR=   0
+                                                                                        SIDX=AUTO
+                                                                                        SISL=1024
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 # Test case to check for + or - E with no number following it
 

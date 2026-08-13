@@ -1,0 +1,108 @@
+#--------------------------------------------------------------------------------------------------#
+# [#1143] The MM search index: a bounded set of slots that a block number picks from               #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# The database really is MM, so the slot path below is the one being exercised. DSE shows the
+# access method next to the global buffer count, which the test system randomizes, so take the
+# access method alone.
+Access method MM
+
+# MUPIP CREATE enables search indexes for MM too: a quarter of the 4096 byte block size, and
+# the default slot count.
+ Search Index Size 1024 Search Index Slots 1024
+
+# Turn them off to record the baseline, so the answers below come from a database that is
+# definitely not using a search index.
+# mupip set -nosearch_index -region DEFAULT
+Database file now has search index size 0
+Database file now has 0 search index slots
+ Search Index Size 0 Search Index Slots 0
+
+# Populate and record the answers with NO search index. Everything below has to match these.
+build width=11 nodes=200000
+fwd cnt=200000 bad=0 sum=140001300000 | rev cnt=200000 bad=0 | get cnt=19999 bad=0
+edges bad=0
+
+# A size on its own gets the default slot count rather than nothing, the same on MM as on BG,
+# since without slots there would be no array at all and the commonest form of the command would
+# silently allocate nothing.
+# mupip set -search_index_size=1024 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+ Search Index Size 1024 Search Index Slots 1024
+answers with the default slot count match answers without a search index
+
+# Naming the slot count explicitly gets exactly that count. The answers must still be identical.
+# mupip set -search_index_size=1024,4096 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 4096 search index slots
+ Search Index Size 1024 Search Index Slots 4096
+answers with the MM search index match answers without it
+
+# Rebuild the database WITH the slots in place, so the blocks are written by a process that has
+# search indexes, then check the answers again
+build width=11 nodes=200000
+answers after rebuilding with the MM search index match
+
+# A block number picks its slot with a mask, so a slot count that is not a power of two is
+# rounded up to one
+# mupip set -search_index_size=1024,1000 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+ Search Index Size 1024 Search Index Slots 1024
+# mupip set -search_index_size=1024,3 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 4 search index slots
+ Search Index Size 1024 Search Index Slots 4
+
+# but a slot count above the maximum is refused, and both fields are left as they were
+# mupip set -search_index_size=1024,1048577 -region DEFAULT >& toomany.out
+----------
+Error MUPIPSET2BIG seen in toomany.out as expected:
+%YDB-W-MUPIPSET2BIG, 1048577 too large, maximum SEARCH_INDEX_SIZE slot count allowed is 1048576
+----------
+----------
+Error WCWRNNOTCHG seen in toomany.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+ Search Index Size 1024 Search Index Slots 4
+
+# One slot for the whole database is legal, and is the worst case for the slot scheme: every
+# index block maps to slot 0, so each one displaces the last. A search whose slot holds another
+# block's index recognizes that from the block number in the stamp and walks the block the
+# ordinary way, so the answers must be identical here too.
+# mupip set -search_index_size=1024,1 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1 search index slots
+ Search Index Size 1024 Search Index Slots 1
+answers with a single slot match answers without any search index
+
+# Still on one slot: keys of mixed length in one global, so an index block holds both keys short
+# enough to be sampled and keys longer than the cap, which are not
+mix cnt=20000 bad=0
+
+# and long keys throughout, where few records fit in an index block, still with every block
+# competing for the same slot
+build width=200 nodes=200000
+fwd cnt=200000 bad=0 sum=140001300000 | rev cnt=200000 bad=0 | get cnt=19999 bad=0
+edges bad=0
+
+# 0 turns the search index off and takes the slot count with it, since slots with no index to
+# put in them would allocate shared memory for nothing
+# mupip set -nosearch_index -region DEFAULT
+Database file now has search index size 0
+Database file now has 0 search index slots
+ Search Index Size 0 Search Index Slots 0
+
+# With it off, the answers are still the same
+answers with the MM search index disabled again match
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# YDB1143 MM SEARCH INDEX TEST DONE

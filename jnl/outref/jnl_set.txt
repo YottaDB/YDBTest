@@ -77,6 +77,7 @@ Region          DEFAULT
 ##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
 ##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Search Index Size                            1024  Search Index Slots                1024
 
 YDB>
 %YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
@@ -154,6 +155,7 @@ Region          DEFAULT
 ##SUSPEND_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
   Reorg Sleep Nanoseconds                         0  Mutex Manager Type                 PTHREAD
 ##ALLOW_OUTPUT MUTEX_TYPE_ADAPTIVE MUTEX_TYPE_YDB MUTEX_TYPE_RANDOM MUTEX_TYPE_DEFAULT
+  Search Index Size                            1024  Search Index Slots                1024
 End jnl_set test.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

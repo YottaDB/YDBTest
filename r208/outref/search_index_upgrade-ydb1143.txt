@@ -1,0 +1,36 @@
+#--------------------------------------------------------------------------------------------------#
+# [#1143] A database created by an older release picks up search index characteristics on upgrade  #
+#--------------------------------------------------------------------------------------------------#
+
+# The two file header fields were taken from the end of secshr_ops_array_filler, which held the
+# live secshr_ops_array before those fields moved to node_local, and a file header is converted
+# in place. An older database can therefore carry ANY bytes at those two offsets, and a shared
+# memory segment must never be sized from them. What the current release has to show instead is
+# what MUPIP CREATE would have given a new database : a quarter of the block size, and the
+# default slot count. At the 4096 byte block size used below that is 1024 bytes and 1024 slots.
+
+## Stage 1 : a V7 database created by an older GT.M or YottaDB release
+# Auto upgrade supplies the defaults. It has to do so before the shared memory segment is
+# sized, which is why db_init settles the fields and db_auto_upgrade stores the same values.
+# Populate it with the older release, so the upgraded database has real data to search
+# mumps -run GDE, then exit : opening and exiting is what converts the global directory
+# The current release shows the MUPIP CREATE defaults, not what the older database left
+ Search Index Size 1024 Search Index Slots 1024
+# and every record the older release wrote is still found
+chk cnt=20000 bad=0
+
+## Stage 2 : a V6 database created by an older GT.M or YottaDB release
+# A V6 file header has no such fields at all, and both offsets fall inside a V6 filler, so the
+# current release has to show them off rather than size a segment from whatever is there.
+# MUPIP UPGRADE, which turns the header into a V7 header, is what supplies the defaults.
+# Populate it with the older release
+# mumps -run GDE, then exit : opening and exiting is what converts the global directory
+# Before MUPIP UPGRADE the header is still a V6 header, so both fields read as off
+ Search Index Size 0 Search Index Slots 0
+# mupip upgrade -reg DEFAULT
+# After MUPIP UPGRADE the header is a V7 header and carries the MUPIP CREATE defaults
+ Search Index Size 1024 Search Index Slots 1024
+# and every record the older release wrote is still found
+chk cnt=20000 bad=0
+
+# YDB1143 SEARCH INDEX UPGRADE TEST DONE

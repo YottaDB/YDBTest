@@ -1,0 +1,88 @@
+#--------------------------------------------------------------------------------------------------#
+# [#1143] Three claims the other subtests do not reach : standalone access, REORG, statsDB         #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+## 1. MUPIP SET of the size needs STANDALONE access
+# The size decides how large the shared memory segment is, so it cannot change under processes
+# already attached. With another process holding the database open, the command must be refused
+# and the file header must be left exactly as it was.
+# The size asked for is DIFFERENT from the one the database holds, checked just below as 1024,
+# and doubling it doubles the memory the segment needs. So a refusal here cannot be MUPIP
+# declining to do nothing : it is MUPIP declining a change it cannot make under an attached
+# process.
+DEFAULT : Search Index Size 1024 Search Index Slots 1024 : as expected
+# mupip set -search_index_size=2048 -region DEFAULT, against the 1024 shown above
+# mupip set -search_index_size=2048 -region DEFAULT >& standalone.out
+# MUPIP SET refused it, saying the file is open by another process : 1
+----------
+Error WCWRNNOTCHG seen in standalone.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+# and the field is unchanged
+DEFAULT : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+## 2. MUPIP REORG runs against a database with search indexes enabled
+# REORG does not use search indexes : it rewrites the very blocks it walks, so an index it built
+# would be invalidated by its own next update before the samples could be reused. What is checked
+# here is that REORG completes and leaves the data intact with the feature on.
+#
+# The stage first proves the feature really IS on for an ordinary process, by peeking this
+# process own sgmnt_addrs.search_idx_base, which is the field a search tests. Without that,
+# matching answers would prove nothing : a database with the feature off matches them too.
+#
+# REORG own exclusion is still NOT tested, and cannot be from outside : mupip_reorg clears
+# that field in REORG own address space, which is private, so no other process can read it.
+# mumps -run %XCMD, do peek^ydb1143 : expecting the feature present in this process
+search index in this process : present, as expected
+slot size 1024 slot mask 1023 : both set, as expected
+build width=11 nodes=200000
+# mupip reorg >& reorg.out
+reorg exit status 0
+0
+answers unchanged across MUPIP REORG
+DEFAULT : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+## 3. A statsDB gets NO search index
+# Not because its tree is small, it carries one record per live process, but because next to
+# nothing searches it : a process finds its own record once and holds on to it. An index there
+# would be shared memory spent for nothing, once per base region.
+# A STATSDB region is named for its base region in lower case, so DEFAULT gives default, and
+# statistics sharing has to be on for a process to reach it.
+# mumps -run %XCMD, reading sgmnt_data.search_idx_size and search_idx_slots
+# through PEEKBYNAME for region default
+statsdb size  = 0
+statsdb slots = 0
+
+statsDB carries no search index, as expected
+# against the base region, which has them
+# mumps -run %XCMD, reading sgmnt_data.search_idx_size and search_idx_slots
+# through PEEKBYNAME for region DEFAULT
+base    size  = 1024
+base    slots = 1024
+
+base region carries one, as expected
+
+## 4. Turning the feature on and off changes the FILE HEADER and not one database block
+# The release note says the blocks of a database with search indexes enabled are byte for byte
+# those of one without them. The file header does change - it carries the two settings - so the
+# comparison starts after it. The header occupies the first start_vbn minus one 512 byte blocks.
+# comparing from byte 4194304 onwards
+# mupip set -nosearch_index -region DEFAULT
+Database file now has search index size 0
+Database file now has 0 search index slots
+every database block is byte for byte identical with the feature off
+# mupip set -search_index_size=1024,1024 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+and identical again with it back on
+DEFAULT : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# YDB1143 SEARCH INDEX MISC TEST DONE

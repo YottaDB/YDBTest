@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,11 @@ ls -1 mumps.mjl
 
 echo "# Switch to current test version"
 source $gtm_test/$tst_src/com/switch_gtm_version.csh $tst_ver $tst_image
+
+# YDB#1143 : mumps.gld was written by the prior version, in the global directory format that version
+# used. A newer YottaDB does not read an older format directly - GDE converts it, which is the same
+# step a user takes after upgrading - so run GDE over it before anything else opens it.
+$GDE exit >& gde_gldfmt_convert.out
 
 echo "# Run [mupip set -journal] using current test version"
 $MUPIP set $tst_jnl_str -reg "*"

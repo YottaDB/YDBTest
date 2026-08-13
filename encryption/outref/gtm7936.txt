@@ -21,15 +21,16 @@ Region DEFAULT :  cache_queues_state = 0x000000000014E000
 Region DEFAULT :  cache_que_header   = 0x000000000014E030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
 Region DEFAULT :  cache_record       = 0x0000000000186650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
 Region DEFAULT :  global_buffer      = 0x00000000001BF000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x00000000005BF000
-Region DEFAULT :  bt_que_header      = 0x00000000009BF000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x00000000009CF1D0
-Region DEFAULT :  bt_record          = 0x00000000009CF200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  search_index       = 0x00000000005BF000 : Numelems = 0x00000400 : Elemsize = 0x00000400
+Region DEFAULT :  db_file_header     = 0x00000000006BF000
+Region DEFAULT :  bt_que_header      = 0x0000000000ABF000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x0000000000ACF1D0
+Region DEFAULT :  bt_record          = 0x0000000000ACF200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x00000000009E0000
+Region DEFAULT :  shared_memory_size = 0x0000000000AE0000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
-Region DEFAULT :  shared_memory_size = 0x0000000000A00000
+Region DEFAULT :  shared_memory_size = 0x0000000000C00000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
 ##ALLOW_OUTPUT PAGE_SIZE_16KB
 ##SUSPEND_OUTPUT PAGE_SIZE_4KB
@@ -40,12 +41,13 @@ Region DEFAULT :  cache_queues_state = 0x0000000000150000
 Region DEFAULT :  cache_que_header   = 0x0000000000150030 : Numelems = 0x00000407 : Elemsize = 0x000000E0
 Region DEFAULT :  cache_record       = 0x0000000000188650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
 Region DEFAULT :  global_buffer      = 0x00000000001C4000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x00000000005C4000
-Region DEFAULT :  bt_que_header      = 0x00000000009C4000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x00000000009D41D0
-Region DEFAULT :  bt_record          = 0x00000000009D4200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  search_index       = 0x00000000005C4000 : Numelems = 0x00000400 : Elemsize = 0x00000400
+Region DEFAULT :  db_file_header     = 0x00000000006C4000
+Region DEFAULT :  bt_que_header      = 0x0000000000AC4000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x0000000000AD41D0
+Region DEFAULT :  bt_record          = 0x0000000000AD4200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x00000000009E8000
+Region DEFAULT :  shared_memory_size = 0x0000000000AE8000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000002000000
@@ -69,10 +71,10 @@ Region DEFAULT :  critical           = 0x000000000001F000
 Region DEFAULT :  shmpool_buffer     = 0x000000000002E000
 Region DEFAULT :  lock_space         = 0x0000000000132000
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x000000000054E000
+Region DEFAULT :  shared_memory_size = 0x000000000064E000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
-Region DEFAULT :  shared_memory_size = 0x0000000000600000
+Region DEFAULT :  shared_memory_size = 0x0000000000800000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
 ##ALLOW_OUTPUT PAGE_SIZE_16KB
 ##SUSPEND_OUTPUT PAGE_SIZE_4KB
@@ -80,13 +82,14 @@ Region DEFAULT :  critical           = 0x0000000000020000
 Region DEFAULT :  shmpool_buffer     = 0x0000000000030000
 Region DEFAULT :  lock_space         = 0x0000000000134000
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x0000000000550000
+Region DEFAULT :  shared_memory_size = 0x0000000000650000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000002000000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
 ##ALLOW_OUTPUT PAGE_SIZE_4KB
 ##TEST_AWKRegion DEFAULT :  db_file_header     = 0x[0-9A-F]{16}
+##TEST_AWKRegion DEFAULT :  search_index       = 0x[0-9A-F]{16} : Numelems = 0x[0-9A-F]{8} : Elemsize = 0x[0-9A-F]{8}
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -115,15 +118,16 @@ Region DEFAULT :  cache_que_header   = 0x00000000002A1030 : Numelems = 0x0000040
 Region DEFAULT :  cache_record       = 0x00000000002D9650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
 Region DEFAULT :  global_buffer      = 0x0000000000312000 : Numelems = 0x00000400 : Elemsize = 0x00001000
 Region DEFAULT :  encrypted_globuff  = 0x0000000000712000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x0000000000B12000
-Region DEFAULT :  bt_que_header      = 0x0000000000F12000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x0000000000F221D0
-Region DEFAULT :  bt_record          = 0x0000000000F22200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  search_index       = 0x0000000000B12000 : Numelems = 0x00000400 : Elemsize = 0x00000400
+Region DEFAULT :  db_file_header     = 0x0000000000C12000
+Region DEFAULT :  bt_que_header      = 0x0000000001012000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x00000000010221D0
+Region DEFAULT :  bt_record          = 0x0000000001022200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x0000000000F33000
+Region DEFAULT :  shared_memory_size = 0x0000000001033000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
-Region DEFAULT :  shared_memory_size = 0x0000000001000000
+Region DEFAULT :  shared_memory_size = 0x0000000001200000
 ##ALLOW_OUTPUT HUGEPAGES_OFF
 ##ALLOW_OUTPUT PAGE_SIZE_16KB
 ##SUSPEND_OUTPUT PAGE_SIZE_4KB
@@ -137,12 +141,13 @@ Region DEFAULT :  cache_que_header   = 0x00000000002AC030 : Numelems = 0x0000040
 Region DEFAULT :  cache_record       = 0x00000000002E4650 : Numelems = 0x00000400 : Elemsize = 0x000000E0
 Region DEFAULT :  global_buffer      = 0x0000000000320000 : Numelems = 0x00000400 : Elemsize = 0x00001000
 Region DEFAULT :  encrypted_globuff  = 0x0000000000720000 : Numelems = 0x00000400 : Elemsize = 0x00001000
-Region DEFAULT :  db_file_header     = 0x0000000000B20000
-Region DEFAULT :  bt_que_header      = 0x0000000000F20000 : Numelems = 0x00000407 : Elemsize = 0x00000040
-Region DEFAULT :  th_base            = 0x0000000000F301D0
-Region DEFAULT :  bt_record          = 0x0000000000F30200 : Numelems = 0x00000400 : Elemsize = 0x00000040
+Region DEFAULT :  search_index       = 0x0000000000B20000 : Numelems = 0x00000400 : Elemsize = 0x00000400
+Region DEFAULT :  db_file_header     = 0x0000000000C20000
+Region DEFAULT :  bt_que_header      = 0x0000000001020000 : Numelems = 0x00000407 : Elemsize = 0x00000040
+Region DEFAULT :  th_base            = 0x00000000010301D0
+Region DEFAULT :  bt_record          = 0x0000000001030200 : Numelems = 0x00000400 : Elemsize = 0x00000040
 ##SUSPEND_OUTPUT HUGEPAGES_ON
-Region DEFAULT :  shared_memory_size = 0x0000000000F44000
+Region DEFAULT :  shared_memory_size = 0x0000000001044000
 ##ALLOW_OUTPUT HUGEPAGES_ON
 ##SUSPEND_OUTPUT HUGEPAGES_OFF
 Region DEFAULT :  shared_memory_size = 0x0000000002000000

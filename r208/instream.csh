@@ -26,6 +26,12 @@
 # sigwinch_readline-ydb1247		[nars]	Test the SIGWINCH deviceparameter at a readline direct mode prompt
 # trigger_open_range-ydb1249		[nars]	Test a trigger subscript specification with an open ended range is read back from ^#t correctly
 # statsdb_zpeek_nostats-ydbmr1891	[nars]	Test ZPEEK at the STATSDB region of a database whose base regions carry NOSTATS
+# search_index-ydb1143			[nars]	Test MUPIP SET -SEARCH_INDEX_SIZE and that searches using the index find the same records
+# search_index_mm-ydb1143		[nars]	Test the MM search index, where a block number picks one of a fixed number of slots
+# search_index_upgrade-ydb1143		[nars]	Test that a database created by an older release picks up search index characteristics on upgrade
+# search_index_slots-ydb1143		[nars]	Test MUPIP SET -SEARCH_INDEX_SIZE=bytes keeps the slot count the database already has
+# search_index_gde-ydb1143		[nars]	Test the SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS global directory characteristics and the format label change
+# search_index_misc-ydb1143		[nars]	Test MUPIP SET standalone access, MUPIP REORG with the feature on, and that a statsDB gets no search index
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -45,6 +51,12 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gde_sigwinch-ydb1247"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sigwinch_readline-ydb1247"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_open_range-ydb1249"
 setenv subtest_list_non_replic	"$subtest_list_non_replic statsdb_zpeek_nostats-ydbmr1891"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_mm-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_upgrade-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_slots-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_gde-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_misc-ydb1143"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

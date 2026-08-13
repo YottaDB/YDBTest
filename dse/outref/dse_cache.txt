@@ -130,6 +130,9 @@ Region AREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region AREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region AREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region AREG :  db_file_header     = ##HEX##
 Region AREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region AREG :  th_base            = ##HEX##
@@ -139,6 +142,9 @@ Region AREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region AREG :  shared_memory_size = ##HEX##
 Region AREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region AREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 DSE> 
 File  	##TEST_PATH##/c.dat
@@ -161,6 +167,9 @@ Region AREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region AREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region AREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region AREG :  db_file_header     = ##HEX##
 Region AREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region AREG :  th_base            = ##HEX##
@@ -170,6 +179,9 @@ Region AREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region AREG :  shared_memory_size = ##HEX##
 Region AREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region AREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region BREG : Shared_memory       = ##HEX##
 Region BREG :  node_local         = ##HEX##
@@ -188,6 +200,9 @@ Region BREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region BREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region BREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region BREG :  db_file_header     = ##HEX##
 Region BREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region BREG :  th_base            = ##HEX##
@@ -197,6 +212,9 @@ Region BREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region BREG :  shared_memory_size = ##HEX##
 Region BREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region BREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region CREG : Shared_memory       = ##HEX##
 Region CREG :  node_local         = ##HEX##
@@ -215,6 +233,9 @@ Region CREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region CREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region CREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region CREG :  db_file_header     = ##HEX##
 Region CREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region CREG :  th_base            = ##HEX##
@@ -224,6 +245,9 @@ Region CREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region CREG :  shared_memory_size = ##HEX##
 Region CREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region CREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region DEFAULT : Shared_memory       = ##HEX##
 Region DEFAULT :  node_local         = ##HEX##
@@ -242,6 +266,9 @@ Region DEFAULT :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize =
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region DEFAULT :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region DEFAULT :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region DEFAULT :  db_file_header     = ##HEX##
 Region DEFAULT :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region DEFAULT :  th_base            = ##HEX##
@@ -251,6 +278,9 @@ Region DEFAULT :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region DEFAULT :  shared_memory_size = ##HEX##
 Region DEFAULT :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region DEFAULT :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region DREG : Shared_memory       = ##HEX##
 Region DREG :  node_local         = ##HEX##
@@ -269,6 +299,9 @@ Region DREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region DREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region DREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region DREG :  db_file_header     = ##HEX##
 Region DREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region DREG :  th_base            = ##HEX##
@@ -278,6 +311,9 @@ Region DREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region DREG :  shared_memory_size = ##HEX##
 Region DREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region DREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region EREG : Shared_memory       = ##HEX##
 Region EREG :  node_local         = ##HEX##
@@ -296,6 +332,9 @@ Region EREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region EREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region EREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region EREG :  db_file_header     = ##HEX##
 Region EREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region EREG :  th_base            = ##HEX##
@@ -305,6 +344,9 @@ Region EREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region EREG :  shared_memory_size = ##HEX##
 Region EREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region EREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region FREG : Shared_memory       = ##HEX##
 Region FREG :  node_local         = ##HEX##
@@ -323,6 +365,9 @@ Region FREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region FREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region FREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region FREG :  db_file_header     = ##HEX##
 Region FREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region FREG :  th_base            = ##HEX##
@@ -332,6 +377,9 @@ Region FREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region FREG :  shared_memory_size = ##HEX##
 Region FREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region FREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 Region GREG : Shared_memory       = ##HEX##
 Region GREG :  node_local         = ##HEX##
@@ -350,6 +398,9 @@ Region GREG :  global_buffer      = ##HEX## : Numelems = ##HEX## : Elemsize = ##
 ##SUSPEND_OUTPUT NON_ENCRYPT
 Region GREG :  encrypted_globuff  = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 ##ALLOW_OUTPUT NON_ENCRYPT
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region GREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 Region GREG :  db_file_header     = ##HEX##
 Region GREG :  bt_que_header      = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
 Region GREG :  th_base            = ##HEX##
@@ -359,6 +410,9 @@ Region GREG :  shared_memory_size = ##HEX##
 ##SUSPEND_OUTPUT BG
 Region GREG :  shared_memory_size = ##HEX##
 Region GREG :  db_file_header     = ##HEX##
+##SUSPEND_OUTPUT V6_DB_FORMAT
+Region GREG :  search_index       = ##HEX## : Numelems = ##HEX## : Elemsize = ##HEX##
+##ALLOW_OUTPUT V6_DB_FORMAT
 ##ALLOW_OUTPUT BG
 DSE> 
 

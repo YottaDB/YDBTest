@@ -1,0 +1,125 @@
+#--------------------------------------------------------------------------------------------------#
+# [#1143] MUPIP SET -SEARCH_INDEX_SIZE=bytes keeps the slot count the database already has         #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# MUPIP CREATE gives every region the same defaults : a quarter of the 4096 byte block size,
+# and 1024 slots.
+DEFAULT : Search Index Size 1024 Search Index Slots 1024 : as expected
+AREG : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+# Give the two regions DIFFERENT non-default slot counts, naming both numbers.
+# mupip set -search_index_size=2048,8192 -region DEFAULT
+Database file now has search index size 2048
+Database file now has 8192 search index slots
+# mupip set -search_index_size=512,256 -region AREG
+Database file now has search index size 512
+Database file now has 256 search index slots
+DEFAULT : Search Index Size 2048 Search Index Slots 8192 : as expected
+AREG : Search Index Size 512 Search Index Slots 256 : as expected
+
+# THE POINT OF THIS SUBTEST. Change only the SIZE on DEFAULT, naming no slot count. The count
+# stays 8192. Before this was fixed it silently reverted to the 1024 default, so an administrator
+# who had chosen a count lost it by changing the size.
+# mupip set -search_index_size=1024 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 8192 search index slots
+DEFAULT : Search Index Size 1024 Search Index Slots 8192 : as expected
+AREG : Search Index Size 512 Search Index Slots 256 : as expected
+
+# The same thing across BOTH regions at once, still naming no count. Each region keeps its OWN
+# count - 8192 and 256 - rather than one region's count being carried into the other. One
+# command covering both regions is the case that matters here, because the count kept for one
+# region must not become the count of the next. The confirmation lines are sorted because the
+# order MUPIP works through the regions in is not the same from run to run.
+# mupip set -search_index_size=768 -region "*"
+Database file now has 256 search index slots
+Database file now has 8192 search index slots
+Database file now has search index size 768
+Database file now has search index size 768
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 768 Search Index Slots 256 : as expected
+
+# A count is only defaulted when the database has none. Turn AREG off, which zeroes both fields,
+# and then set a size alone : there is no count to keep, so it takes the 1024 default.
+# mupip set -nosearch_index -region AREG
+Database file now has search index size 0
+Database file now has 0 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 0 Search Index Slots 0 : as expected
+# mupip set -search_index_size=1024 -region AREG
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+# A count that is not a power of two is rounded up to one, since a block number picks its slot
+# with a mask.
+# mupip set -search_index_size=1024,5000 -region AREG
+Database file now has search index size 1024
+Database file now has 8192 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 1024 Search Index Slots 8192 : as expected
+
+# A count above the maximum is refused, and BOTH fields are left as they were. The maximum is
+# 1048576 slots, so 1048577 is the first count refused.
+# mupip set -search_index_size=1024,1048577 -region AREG >& toomanyslots.out
+----------
+Error MUPIPSET2BIG seen in toomanyslots.out as expected:
+%YDB-W-MUPIPSET2BIG, 1048577 too large, maximum SEARCH_INDEX_SIZE slot count allowed is 1048576
+----------
+----------
+Error WCWRNNOTCHG seen in toomanyslots.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 1024 Search Index Slots 8192 : as expected
+
+# -SEARCH_INDEX_SIZE=0 asks for the DEFAULT size, it does not disable. This is the one place
+# MUPIP used to differ from GDE, and it no longer does.
+# mupip set -search_index_size=0 -region AREG
+Database file now has search index size 1024
+Database file now has 8192 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 1024 Search Index Slots 8192 : as expected
+
+# -SEARCH_INDEX turns it back ON at the MUPIP level, the mirror of -NOSEARCH_INDEX and the same
+# spelling GDE uses. It restores the default size and count on a region that has none.
+# mupip set -nosearch_index -region AREG
+Database file now has search index size 0
+Database file now has 0 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 0 Search Index Slots 0 : as expected
+# mupip set -search_index -region AREG
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 1024 Search Index Slots 1024 : as expected
+
+# The same rule at the MUPIP prompt : -SEARCH_INDEX supplies defaults only for what the command
+# does not name. This one names 2048,256, so the region ends up with 2048 and 256 rather than
+# with the defaults the stage above restored.
+# mupip set -search_index -search_index_size=2048,256 -region AREG
+Database file now has search index size 2048
+Database file now has 256 search index slots
+DEFAULT : Search Index Size 768 Search Index Slots 8192 : as expected
+AREG : Search Index Size 2048 Search Index Slots 256 : as expected
+
+# -NOSEARCH_INDEX zeroes the count as well as the size, on both regions
+# mupip set -nosearch_index -region "*"
+Database file now has search index size 0
+Database file now has 0 search index slots
+Database file now has search index size 0
+Database file now has 0 search index slots
+DEFAULT : Search Index Size 0 Search Index Slots 0 : as expected
+AREG : Search Index Size 0 Search Index Slots 0 : as expected
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# YDB1143 SEARCH INDEX SLOT COUNT TEST DONE

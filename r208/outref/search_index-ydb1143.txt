@@ -1,0 +1,192 @@
+#--------------------------------------------------------------------------------------------------#
+# [#1143] MUPIP SET -SEARCH_INDEX_SIZE, and searches that use the index it enables                 #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# MUPIP CREATE enables search indexes: a quarter of the 4096 byte block size, and the default
+# slot count. Nothing below had to ask for them.
+ Search Index Size 1024 Search Index Slots 1024
+
+# Turn them off to record the baseline. Everything below has to match these answers, so they
+# have to come from a database that is definitely not using a search index.
+# mupip set -nosearch_index -region DEFAULT
+Database file now has search index size 0
+Database file now has 0 search index slots
+# mumps -run %XCMD, do peek^ydb1143 : the baseline must really have NO index, otherwise
+# every later comparison is against another indexed run and proves nothing
+search index in this process : absent, as expected
+ Search Index Size 0 Search Index Slots 0
+
+# Populate and record the answers with NO search index. Everything below has to match these.
+build width=11 nodes=200000
+fwd cnt=200000 bad=0 sum=140001300000 | rev cnt=200000 bad=0 | get cnt=19999 bad=0
+edges bad=0
+
+# Turn it back on. This needs standalone access, unlike the reserved-bytes qualifiers, because
+# the size decides how large the shared segment is and so cannot change under attached processes.
+# mupip set -search_index_size=1024 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1024 search index slots
+# mumps -run %XCMD, do peek^ydb1143 : and with it enabled the index really is present
+search index in this process : present, as expected
+slot size 1024 slot mask 1023 : both set, as expected
+ Search Index Size 1024 Search Index Slots 1024
+
+# Same database, same data, now searched using the index: the answers must be identical
+answers with the index match answers without it
+
+# Rebuild the database WITH the index enabled, so the blocks are written by a process that has
+# one, then check the answers again
+build width=11 nodes=200000
+answers after rebuilding with the index match
+
+# Keys of mixed length in one global. Keys longer than the cap are not sampled, so an index
+# block can hold a mixture of sampled and unsampled records; both must still be found.
+mix cnt=20000 bad=0
+
+# Long keys throughout, where few records fit in an index block
+build width=200 nodes=200000
+fwd cnt=200000 bad=0 sum=140001300000 | rev cnt=200000 bad=0 | get cnt=19999 bad=0
+edges bad=0
+
+# Values are rounded up to a multiple of 8
+# mupip set -search_index_size=1001 -region DEFAULT
+Database file now has search index size 1008
+Database file now has 1024 search index slots
+ Search Index Size 1008 Search Index Slots 1024
+
+# and anything below the minimum is raised to it
+# mupip set -search_index_size=8 -region DEFAULT
+Database file now has search index size 128
+Database file now has 1024 search index slots
+ Search Index Size 128 Search Index Slots 1024
+
+# but a value above the maximum is refused, and the field is left as it was. 8192 is the largest
+# search index any database may have, and the 4096 byte blocks here cap it lower still, so even
+# that absolute maximum is refused, with the ceiling this block size imposes, 4088, quoted. The
+# last stage of this subtest reaches 8192 on a database whose blocks are large enough for it.
+# mupip set -search_index_size=8192 -region DEFAULT >& toobig.out
+----------
+Error MUPIPSET2BIG seen in toobig.out as expected:
+%YDB-W-MUPIPSET2BIG, 8192 too large, maximum SEARCH_INDEX_SIZE allowed is 4088
+----------
+----------
+Error WCWRNNOTCHG seen in toobig.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+ Search Index Size 128 Search Index Slots 1024
+
+# The block size is a ceiling of its own. An index at least as large as the block it summarizes
+# only samples the keys of that block, so it cannot pay for itself and is refused too, with the
+# same 4088 quoted.
+# mupip set -search_index_size=4096 -region DEFAULT >& toobigforblk.out
+----------
+Error MUPIPSET2BIG seen in toobigforblk.out as expected:
+%YDB-W-MUPIPSET2BIG, 4096 too large, maximum SEARCH_INDEX_SIZE allowed is 4088
+----------
+----------
+Error WCWRNNOTCHG seen in toobigforblk.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+ Search Index Size 128 Search Index Slots 1024
+
+# A negative size, and a negative slot count, are refused before any database file is opened,
+# and neither field changes. The qualifier is a string rather than a number so that it can hold
+# the comma, which puts it outside the non-negative check the CLI applies to numeric qualifiers,
+# so MUPIP SET checks the sign of both numbers itself.
+# mupip set -search_index_size=-1 -region DEFAULT >& negsize.out
+----------
+Error SETQUALPROB seen in negsize.out as expected:
+%YDB-E-SETQUALPROB, Error getting SEARCH_INDEX_SIZE qualifier value
+----------
+----------
+Error WCERRNOTCHG seen in negsize.out as expected:
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+----------
+# mupip set -search_index_size=1024,-1 -region DEFAULT >& negslots.out
+----------
+Error SETQUALPROB seen in negslots.out as expected:
+%YDB-E-SETQUALPROB, Error getting SEARCH_INDEX_SIZE qualifier value
+----------
+----------
+Error WCERRNOTCHG seen in negslots.out as expected:
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+----------
+ Search Index Size 128 Search Index Slots 1024
+
+# 8 below the block size is the largest that is accepted. That size samples an index block far more
+# densely than 1024 does, so the answers have to hold there too.
+# mupip set -search_index_size=4088 -region DEFAULT
+Database file now has search index size 4088
+Database file now has 1024 search index slots
+ Search Index Size 4088 Search Index Slots 1024
+answers at the largest allowed size match
+
+# One slot for the whole database is legal, and is the worst case for the slot scheme: every
+# index block maps to slot 0, so each one displaces the last. A search whose slot holds another
+# block's index recognizes that from the block number in the stamp and walks the block the
+# ordinary way, so the answers must be identical here too. The MM subtest covers the same case
+# for MM, and this is its BG counterpart : the two access methods reach their slots by the same
+# mask, so a fault in that arithmetic would show on either, but only BG displaces a slot from
+# phase 2 of commit, outside crit, which MM never does.
+# mupip set -search_index_size=1024,1 -region DEFAULT
+Database file now has search index size 1024
+Database file now has 1 search index slots
+ Search Index Size 1024 Search Index Slots 1
+answers with a single slot match answers without any search index
+
+# Still on one slot: keys of mixed length in one global, so an index block holds both keys short
+# enough to be sampled and keys longer than the cap, which are not
+mix cnt=20000 bad=0
+
+# and long keys throughout, where few records fit in an index block, still with every block
+# competing for the same slot
+build width=200 nodes=200000
+fwd cnt=200000 bad=0 sum=140001300000 | rev cnt=200000 bad=0 | get cnt=19999 bad=0
+edges bad=0
+
+# -NOSEARCH_INDEX turns it off again and frees the space. Note that -SEARCH_INDEX_SIZE=0 does
+# NOT do this : 0 asks for the default size, the same as it does in a global directory.
+# mupip set -nosearch_index -region DEFAULT
+Database file now has search index size 0
+Database file now has 0 search index slots
+ Search Index Size 0 Search Index Slots 0
+
+# With it off, the answers are still the same
+answers with the index disabled again match
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# 8192 is the ceiling every database shares, and it only binds on a database whose blocks are
+# larger than that. The database above cannot reach it, so here is a second one with 16384 byte
+# blocks : 8 below its block size is 16376, so 8192 is what caps a search index there, and it is
+# accepted rather than refused.
+# MUPIP CREATE gives it a quarter of its 16384 byte block size, as it does at any block size
+ Search Index Size 4096 Search Index Slots 1024
+
+# 8192, the largest search index any database may have, is accepted here
+# mupip set -search_index_size=8192 -region DEFAULT
+Database file now has search index size 8192
+Database file now has 1024 search index slots
+ Search Index Size 8192 Search Index Slots 1024
+
+# and 8193, the first size above that ceiling, is refused with 8192 quoted rather than the
+# 16376 this block size would otherwise allow
+# mupip set -search_index_size=8193 -region DEFAULT >& bigtoobig.out
+----------
+Error MUPIPSET2BIG seen in bigtoobig.out as expected:
+%YDB-W-MUPIPSET2BIG, 8193 too large, maximum SEARCH_INDEX_SIZE allowed is 8192
+----------
+----------
+Error WCWRNNOTCHG seen in bigtoobig.out as expected:
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+----------
+ Search Index Size 8192 Search Index Slots 1024
+
+# YDB1143 SEARCH INDEX TEST DONE
