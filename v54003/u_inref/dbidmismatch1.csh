@@ -80,7 +80,14 @@ END
 
 BEGIN  "Remove leftover ftok semaphore"
 echo "ftok id="$ftok_id
-$gtm_tst/com/ipcrm -s $ftok_id
+# The "mv backup.dat mumps.dat" done in an earlier step unlinked the inode that this ftok key was
+# computed from ("gtm_ftok" hashes st_dev and st_ino), and the "kill -9" done before that left the
+# semaphore's counter at 0 (the counter increment is done with SEM_UNDO, so the kernel undid it).
+# A concurrently running test whose database file reuses that freed inode number therefore computes
+# the same ftok key, grabs this semaphore and removes it when it exits, in which case the ipcrm
+# below fails with an "invalid id" error. That is not a test failure so filter that message out
+# (any other ipcrm error is still let through).
+$gtm_tst/com/ipcrm -s $ftok_id | $grep -v "invalid id"
 END
 
 $gtm_tst/com/dbcheck.csh
