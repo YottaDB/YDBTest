@@ -27,7 +27,6 @@ $gtm_tst/com/ipcrm $dbipc_private
 $gtm_tst/com/rem_ftok_sem.csh # arguments $ftok_key
 # Collecting the IDs of relinkctl shared memory segments from the RCTLDUMP is prohibitive, so clean directly.
 $MUPIP rundown -relinkctl >&! mupip_rundown_rctl.logx
-#$gtm_tst/com/ipcrmall
 echo mupip journal -recover -back -since=\"0 00:00:00\" -look=\"time=0 00:00:00\" a.mjl,mumps.mjl
 $MUPIP journal -recover -back -since=\"0 00:00:00\" -look=\"time=0 00:00:00\" a.mjl,mumps.mjl >& recov.out
 $grep "successful" recov.out
