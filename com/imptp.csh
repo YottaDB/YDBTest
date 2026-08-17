@@ -99,6 +99,23 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to ASAN"
 				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
 			endif
+			if ($gtm_test_libyottadb_asan_enabled) then
+				# ASAN's own thread startup calls "pthread_getattr_np" to find the thread stack
+				# bounds, and that frees the buffer it used to read /proc/self/maps. In a Go
+				# binary that free crosses the boundary between the Go runtime allocator and
+				# ASAN's, so ASAN is handed a pointer it never issued and fails its own check:
+				#	AddressSanitizer: CHECK failed: sanitizer_allocator_secondary.h:297
+				#		"((IsAligned(p, page_size_))) != (0)" (0x0, 0x0)
+				#	... LargeMmapAllocator::Deallocate <- Quarantine::Recycle <- free
+				#	... pthread_getattr_np <- GetThreadStackTopAndBottom <- AsanThread::Init
+				# It depends on when the Go scheduler starts a thread, so it is occasional even
+				# with ASAN. This is a property of any "-asan" Go binary, not of a particular
+				# YDBGo version, and "com/setupgoenv.csh" adds "-asan" for both YDBGo flavors
+				# when the library has ASAN, so disable flavor 4 (YDBGo v1) as well as flavor 6
+				# (YDBGo v2) even though only the latter has been seen failing this way.
+				echo "# Disabling ydb_imptp_flavor=4 (YDBGo v1) and ydb_imptp_flavor=6 (YDBGo v2) due to ASAN"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4 6"
+			endif
 			if ($gtm_test_libyottadb_asan_enabled && ("ENCRYPT" == "$test_encryption")) then
 				# We have seen python imptp.py hang when run with ASAN + Encrypted databases
 				# The hang is in libgpgme + ASAN code. Not sure why but not considered worth investigating.

@@ -383,6 +383,27 @@ if ( ($?exclude_servers) && !($?gtm_test_nomultihost) ) then
 
 endif
 
+############
+# Exclude "go" tests if ASAN is enabled.
+# --------------------------------------
+# When the YottaDB build has ASAN, "com/setupgoenv.csh" builds the Go executables with "-asan" too.
+# ASAN's own thread startup then calls "pthread_getattr_np" to find the bounds of the new thread's
+# stack, and that frees the buffer it used to read /proc/self/maps. In a Go binary that free crosses
+# the boundary between the Go runtime allocator and ASAN's, so ASAN is handed a pointer it never
+# issued and fails its own check.
+#	AddressSanitizer: CHECK failed: sanitizer_allocator_secondary.h:297
+#		"((IsAligned(p, page_size_))) != (0)" (0x0, 0x0)
+#	... LargeMmapAllocator::Deallocate <- Quarantine::Recycle <- free
+#	... pthread_getattr_np <- GetThreadStackTopAndBottom <- AsanThread::Init
+# Whether it happens depends on when the Go scheduler starts a thread, so it is occasional even with
+# ASAN. See similar code in "com/imptp.csh" which disables the two YDBGo imptp flavors for the same
+# reason. Note this is a run time issue in any "-asan" Go binary and is unrelated to the ASAN + CLANG
+# link time failure that commit 10f8e0f5a fixed, hence no check of "gtm_test_asan_compiler" here.
+#
+if ($gtm_test_libyottadb_asan_enabled) then
+	echo "-x go" >>! $test_list
+endif
+
 #############################################
 #process request file and command line arguments, for requests and excludes
 
