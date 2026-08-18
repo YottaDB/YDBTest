@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -72,10 +72,32 @@ if ("SunOS" == $HOSTOS || "Linux" == $HOSTOS) then
 endif
 
 foreach file ( YDB_FATAL_ERROR* )
-	# Check the last line from each of the two generated YDB_FATAL_ERROR files.
-	# This verifies the files were complete and correctly generated.
-	# That last line may either be from the stack or external calls listing.
-	$tail -n1 $file | $grep -Ev "(26e87fc6a6b081a8a1bc641a1eddaff6|utils)"
+	# A process that has run out of memory can run out of it a second time inside $ZJOBEXAM() itself.
+	# ZSHOW reports $REFERENCE by calling "get_reference", that does a stringpool garbage collection,
+	# and the collection asks "gtm_malloc" for a block a process at its virtual memory limit cannot
+	# get. YottaDB then issues a JOBEXAMFAIL (to the syslog) and stops writing, leaving the dump
+	# ending wherever ZSHOW had reached, which for the above is the intrinsic special variable just
+	# ahead of $REFERENCE. That is an expected outcome of a test whose whole purpose is to run a
+	# process out of memory, so the completeness check below must not be applied to such a dump.
+	# ZSHOW writes the global statistics after the local and intrinsic special variables and before
+	# the stack and external calls listing, so whether those statistics are there tells a dump that
+	# stopped early apart from one that was written in full.
+	$grep -q "^GLD:.*,REG:" $file
+	if (0 == $status) then
+		# Check the last line from each of the two generated YDB_FATAL_ERROR files.
+		# This verifies the files were complete and correctly generated. ZSHOW writes the
+		# external calls listing last, one line per entry of each loaded package, formatted
+		# as <package>.<entry>. This subtest loads exactly one such package: the
+		# "cre_xcall_utils.csh" sourced above builds libutils and points GTMXC_utils at a
+		# utils.xc declaring a "setrlimit" entry, which is how the subtest sets the virtual
+		# memory limit it then exhausts. So a dump written in full ends in exactly
+		# "utils.setrlimit", and filtering that line out leaves nothing to report. Match the
+		# whole line rather than just the package name, so that a last line which is close but
+		# not what is expected still gets reported. Note the single quotes: tcsh reads the "$"
+		# of an anchored pattern inside double quotes as the start of a variable name and dies
+		# with "Illegal variable name".
+		$tail -n1 $file | $grep -v '^utils\.setrlimit$'
+	endif
 	# Move the YDB_FATAL_ERROR.* files, so that error catching mechanism do not show invalid failures
 	mv $file `echo $file | $tst_awk -F 'YDB_' '{print $2}'`
 end
