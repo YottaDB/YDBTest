@@ -94,6 +94,10 @@
 # Remove the [^C] character from the output as it can show up in an arbitrary position making the output non-deterministic.
 # Also filter out %YDB-I-FILERENAME and %YDB-I-JNLCREATE lines as the journal file switch may or may not happen depending
 # on where in the mupip backup process flow the Ctrl-C interrupts.
+# For the same reason, filter out the %YDB-I-TEXT lines reporting an interrupted copy phase (EINTR). MUPIP BACKUP
+# copies the database with a LOOP of copy_file_range() calls, one per data extent, so a Ctrl-C either lands inside
+# one of those calls, which then fails with EINTR and issues these two lines, or in the gaps between them, which
+# issues neither. Both are the same Ctrl-C as far as this stage is concerned.
 # Additionally, the %YDB-I-BACKUPCTRL could show up sometimes without being in a new line depending on when the
 # Ctrl-C happens. Therefore ensure it always starts at a new line using a [sed] command below.
 %YDB-I-BACKUPCTRL, Control Y or control C encountered during backup, aborting backup

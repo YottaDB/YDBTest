@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -120,19 +120,39 @@ echo "# ------------------------------"
 echo "# Fill the .dat file with enough updates to make sure the mupip backup command runs for a while so we can Ctrl-C it."
 $gtm_dist/mumps -run %XCMD 'for i=1:1:100000 set ^x(i)=$j(i,200)'
 mkdir bak1
-(expect -d $gtm_tst/$tst/u_inref/gtm9424.exp > expect.out) >& expect.dbg
-if ($status) then
+# The expect script sends the Ctrl-C as soon as [mupip backup] prints its first line, so whether the copy is still
+# running when the signal lands is a race. On a fast file system the copy of this .dat can finish first, in which case
+# the backup SUCCEEDS, no BACKUPCTRL is issued and [bak1] holds the backup file - a valid outcome of the race, but not
+# the one this stage is testing. Retry the stage a few times, quietly, until the Ctrl-C actually interrupts a copy.
+# Only the final attempt is echoed, so the output stays deterministic no matter how many attempts it took.
+@ attempt = 1
+while (1)
+	(expect -d $gtm_tst/$tst/u_inref/gtm9424.exp > expect.out) >& expect.dbg
+	set expectstatus = $status
+	mv expect.out expect.outx       # move .out to .outx to avoid -E- from being caught by test framework
+	perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+	$grep -q "BACKUPCTRL" expect_sanitized.outx
+	if (0 == $status) break         # the Ctrl-C interrupted the copy : this is the case being tested
+	if (5 <= $attempt) break        # give up retrying and let the comparison report whatever we got
+	echo "# Attempt $attempt of the Ctrl-C stage did not interrupt the copy. Retrying." >> ctrlc_retry.outx
+	rm -f bak1/*                    # a completed backup leaves the file behind; the next attempt needs an empty [bak1]
+	@ attempt = $attempt + 1
+end
+if ($expectstatus) then
 	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 endif
-mv expect.out expect.outx       # move .out to .outx to avoid -E- from being caught by test framework
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 echo "# Filter out lines containing %YDB from mupip backup output. Expect to see BACKUPCTRL and MUNOFINISH messages."
 echo "# Remove the [^C] character from the output as it can show up in an arbitrary position making the output non-deterministic."
 echo "# Also filter out %YDB-I-FILERENAME and %YDB-I-JNLCREATE lines as the journal file switch may or may not happen depending"
 echo "# on where in the mupip backup process flow the Ctrl-C interrupts."
+echo "# For the same reason, filter out the %YDB-I-TEXT lines reporting an interrupted copy phase (EINTR). MUPIP BACKUP"
+echo "# copies the database with a LOOP of copy_file_range() calls, one per data extent, so a Ctrl-C either lands inside"
+echo "# one of those calls, which then fails with EINTR and issues these two lines, or in the gaps between them, which"
+echo "# issues neither. Both are the same Ctrl-C as far as this stage is concerned."
 echo "# Additionally, the %YDB-I-BACKUPCTRL could show up sometimes without being in a new line depending on when the"
 echo "# Ctrl-C happens. Therefore ensure it always starts at a new line using a [sed] command below."
-sed 's/\^C//;s/%YDB-I-BACKUPCTRL/\n&/;' expect_sanitized.outx | $grep "^%YDB" | grep -vE "FILERENAME|JNLCREATE"
+sed 's/\^C//;s/%YDB-I-BACKUPCTRL/\n&/;' expect_sanitized.outx | $grep "^%YDB" \
+	| grep -vE "FILERENAME|JNLCREATE|Error occurred during the copy phase|Interrupted system call"
 echo
 echo "# Check that [bak1] directory has NO files in it (i.e. appropriate cleanup happened in [mupip backup] command)."
 echo "# Running [ls -l bak1]. Expecting no output."
