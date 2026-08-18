@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2003, 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -43,7 +46,7 @@ flat	;
 			; anyways the test framework is going to check for errors
 	set jmaxwait=0
 	set jnolock=1
- 	for jobstart=1:flatmaxjobsatonetime:flatmaxiter  do
+	for jobstart=1:flatmaxjobsatonetime:flatmaxiter  do
 	.	set jobid=jobstart
 	.	do ^job("flatjob^d002091",flatmaxjobsatonetime,"""""")
 	.	do wait^job
@@ -66,6 +69,10 @@ nested	;
 	.	write "FAIL D9C04002091 Nested",!
 	.	if 0=$data(^failjob) do
 	.	.	write "Test timed out. Was this machine under heavy workload? MREP <timeout_fail_D9C04002091_nested>",!
+	.	else  do
+	.	.	set failat=$order(^failjob(""))
+	.	.	write "Job chain broke at iteration ",failat," : ",^failjob(failat),!
+	.	.	write "Was this machine under heavy workload? MREP <failjob_D9C04002091_nested>",!
 	.	zsh "*"
 	.	set ^stop=1
 	.	set status=$$^waitchld(1,300)
@@ -74,11 +81,17 @@ nested	;
 	quit
 
 nestjob(nestedmaxiter,jobtim)	;
-	Set $ecode="",$etrap="zshow ""*"" halt"
+	; The JOB below raises an error rather than setting $TEST, so the "else" that used to
+	; follow it never ran and a broken link went unrecorded. Since the chain is serial, a
+	; link that dies (JOBFAIL, for example, when the job child is terminated by a signal on
+	; a heavily loaded machine) takes every later link with it, and with nothing recorded
+	; the caller in "nested" has nothing to see and waits out its full 30 minute timeout.
+	; Record it in the error trap, where the error actually arrives, so that the caller
+	; stops as soon as the chain is known to be dead and reports why.
+	Set $ecode="",$etrap="set ^failjob($get(jobcnt,0))=$zstatus zshow ""*"" halt"
 	set jobcnt=$incr(^jobcnt)
 	if ^stop=1  quit
 	if jobcnt=nestedmaxiter quit  ; In case it works
 	set jobargs="nestjob("_nestedmaxiter_","_jobtim_")::"_jobtim
-	job @jobargs
-	else  set ^failjob(jobcnt)="failed at iteration"_jobcnt ; this doesn't work in GTM
+	job @jobargs	; on failure the error trap above records ^failjob and halts
 	quit
