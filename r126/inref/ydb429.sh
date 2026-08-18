@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -305,6 +305,20 @@ testF() {
 
 			# cleanup
 			$ydbDistTmp/mupip rundown -relinkctl >> rundown.log 2>&1
+			# The bare [-relinkctl] form runs down every auto-relink directory in $ydb_routines, and
+			# ydb_env_set puts the shared YottaDB distribution in there. Any other YottaDB process on
+			# this host holds that directory's relinkctl open, so during a parallel test run it is
+			# normal for the rundown of it to fail with [open by N process(es)]. That is a race with
+			# the rest of the test run, not a defect. Filter out that ONE message, and only for the
+			# shared distribution directory: a RLNKCTLRNDWNFL for a directory this subtest owns, or
+			# for any other reason, stays in rundown.log and still fails the subtest.
+			# Guard the call with a grep so check_error_exist.csh runs only when the message is
+			# actually present, since it reports TEST-E-ERRORNOTSEEN when it is not, and send its own
+			# output to a .outx so that is not caught by the error framework either.
+			sharedRlnkctlErr="RLNKCTLRNDWNFL.*directory `realpath $ydbDistTmp` failed to rundown as it is open by [0-9][0-9]* process"
+			if grep -E "$sharedRlnkctlErr" rundown.log > /dev/null 2>&1 ; then
+				$gtm_tst/com/check_error_exist.csh rundown.log "$sharedRlnkctlErr" > check_shared_relinkctl.outx 2>&1
+			fi
 			. $ydbDistTmp/ydb_env_unset
 			export gtmroutines="$old_gtmroutines" # this is needed because when ydb_env_set fails gtmroutines is not reset properly
 			export gtm_chset="$old_gtm_chset"
