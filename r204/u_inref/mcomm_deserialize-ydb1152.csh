@@ -167,8 +167,23 @@ echo
 
 echo "### Test E2: GVUNDEF for KILL during ZYENCODE loop shows global variable name"
 set test_num = TE2
-(expect -d $gtm_tst/$tst/u_inref/mcomm_deserialize-ydb1152-${test_num}.exp $ydb_dist > ${test_num}expect.out) >& ${test_num}expect.dbg
-if ($status) then
+# This stage waits for a RACE to happen: one process runs ZYENCODE over ^y in a loop while another
+# repeatedly KILLs ^y(0), and the GVUNDEF only appears if a KILL lands while a ZYENCODE traversal is
+# in progress. When it does not, the expect script hits its timeout and the stage fails without
+# anything being wrong. Retry rather than wait longer - the timeout is already 300 seconds, having
+# been raised from 5 to 60 by 9238f294 and from 60 to 300 by da0a9f63 for this same failure, so more
+# waiting mostly makes a failing run slower. Only the last attempt is echoed, so the output stays
+# deterministic no matter how many attempts it took.
+@ attempt = 1
+while (1)
+	(expect -d $gtm_tst/$tst/u_inref/mcomm_deserialize-ydb1152-${test_num}.exp $ydb_dist > ${test_num}expect.out) >& ${test_num}expect.dbg
+	set expectstatus = $status
+	if (0 == $expectstatus) break	# the race happened and the GVUNDEF was seen
+	if (3 <= $attempt) break	# give up retrying and let the failure be reported
+	echo "Attempt $attempt of Test E2 did not hit the KILL-during-ZYENCODE race. Retrying." >> ${test_num}retry.outx
+	@ attempt = $attempt + 1
+end
+if ($expectstatus) then
 	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 else
 	echo "PASS: GVUNDEF for KILL during ZYENCODE loop shows global variable name"
