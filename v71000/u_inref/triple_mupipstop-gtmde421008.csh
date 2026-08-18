@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,4 +32,41 @@ setenv ydb_msgprefix "GTM"
 echo '# Run [dbcreate.csh] to create database'
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 $gtm_dist/mumps -run gtmde421008^gtmde421008
+
+# On an ASAN build, a process that MUPIP STOP terminates can core inside ASAN itself rather than in
+# YottaDB code. The signal lands while ASAN is inside its own "free" interceptor, which allocates
+# through DlSymAllocator, and ASAN responds by calling Die() and aborting:
+#
+#	#9  __sanitizer::Abort()
+#	#10 __sanitizer::Die()
+#	#11 __sanitizer::CombinedAllocator<...>::Allocate(...)
+#	#12 __sanitizer::InternalAlloc(...)
+#	#13 __sanitizer::DlSymAllocator<DlsymAlloc>::Allocate(...)
+#	#14 __interceptor_free()
+#
+# YottaDB frames DO appear in such a core, at #0 and #2, but only as the signal handler reacting to
+# the abort: every frame that led to it is ASAN's, and no YottaDB frame appears below them. So the
+# core says nothing about the MUPIP STOP behaviour this subtest verifies.
+#
+# The test for it is the DlSymAllocator frame, not merely the presence of __sanitizer:: frames. An
+# ASAN-DETECTED YottaDB bug - a heap buffer overflow, say - also unwinds through __sanitizer:: and
+# __asan:: frames on its way to Die(), and hiding those would hide a real defect. DlSymAllocator is
+# ASAN's own dlsym-time allocator, reached from its interceptors rather than from anything YottaDB
+# asked for. If some other ASAN-internal abort shows up later it will fail the subtest, which is the
+# right way round: a failure gets looked at, a hidden core does not.
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# sets gtm_test_libyottadb_asan_enabled
+if ($gtm_test_libyottadb_asan_enabled) then
+	foreach corefile (`find . -maxdepth 1 -name 'core*' -type f`)
+		set coreexe = `file $corefile | tr ',' '\n' | $grep execfn | awk '{print $2}' | sed "s/'//g"`
+		if (! -e "$coreexe") set coreexe = $gtm_dist/dse
+		$gtm_tst/com/get_dbx_c_stack_trace.csh $corefile $coreexe >& $corefile:t.stack.outx
+		$grep -q "DlSymAllocator" $corefile:t.stack.outx
+		if (0 == $status) then
+			mv $corefile hidden_expected_asan_core_$corefile:t
+			# Record it in a .outx file: this is nondeterministic, so it must not reach the compared output
+			echo "Hid an ASAN-internal core ($corefile:t): its stack has no YottaDB frame" >> asan_core_hidden.outx
+		endif
+	end
+endif
+
 $gtm_tst/com/dbcheck.csh >& dbcheck.log
