@@ -19,6 +19,20 @@ echo
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 setenv gtm_test_use_V6_DBs 0
 setenv test_reorg NON_REORG
+# Stage 4 compares the whole database file byte for byte, and ydb_test_4g_db_blks makes that
+# comparison unbounded. The variable moves block allocation from the 0th local bitmap straight to the
+# Nth, so a database holding a few hundred blocks is laid out across a file of tens of terabytes,
+# nearly all of it hole, with blocks in use at BOTH ends of it - measured on one run as 6 MB at the
+# front and 624 KB near the very end of a 38.9 TiB file. "cmp" reads holes like any other bytes, so
+# each of the two calls in stage 4 read 38.9 TiB and took about 12 hours: the subtest tripped the
+# 18000 second hang alert with "cmp" at 99 PCT CPU and 4:58 of CPU time against it, and ran 26 hours
+# in all. Bounding the comparison is not an alternative, since what is in use sits at both ends.
+#
+# Nothing this subtest checks - standalone access for MUPIP SET, REORG, statsDB, the toggle - has
+# anything to do with 8-byte block numbers, so it opts out the same way it opts out of V6 databases
+# and REORG above. The other search index subtests still run under whatever the framework picks, so
+# the feature keeps its coverage against high block numbers.
+setenv ydb_test_4g_db_blks 0
 
 # Checks rather than displays : every call names the pair the stage expects. See the comment in
 # search_index_check-ydb1143.csh for why a displayed value is not a checked one.
