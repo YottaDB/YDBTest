@@ -212,6 +212,18 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			set huge_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB' | wc -l`
 			set huge_eperm_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB.*EPERM' | wc -l`
 			set huge_enomem_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB.*ENOMEM' | wc -l`
+			# Count the shmget calls that SUCCEEDED with SHM_HUGETLB. strace renders a failure as
+			# "= -1 ENOMEM (...)", so requiring a digit immediately after "= " matches successes
+			# only. Recorded for diagnosis; deliberately not used in the verdict below.
+			set huge_success_found=`cat strace_${test_id}.outx | grep -E 'shmget.*SHM_HUGETLB.*= [0-9]' | wc -l`
+			# Keep the raw counts. The verdict messages below say which branch was taken but not
+			# what was observed, so diagnosing a failure otherwise means unpacking the strace files
+			# by hand to learn whether SHM_HUGETLB failed with EPERM, meaning the wrong group id in
+			# /proc/sys/vm/hugetlb_shm_group, or with ENOMEM, meaning the host has no huge pages
+			# free. Those are completely different causes and the output does not distinguish them.
+			# This is a ".outx" file, so it is kept with the subtest output but not compared against
+			# the reference file, and the varying numbers therefore cannot themselves cause a diff.
+			echo "${test_id}: pin_found=$pin_found huge_found=$huge_found eperm=$huge_eperm_found enomem=$huge_enomem_found huge_success=$huge_success_found" >>! pinhuge_counts.outx
 			# Valid pin outputs are
 			# 0. If pin is not valued, and not found, we pass
 			# 1. If pin is requested and found
