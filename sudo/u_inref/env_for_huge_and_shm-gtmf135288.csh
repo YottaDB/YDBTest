@@ -265,18 +265,22 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			# Note that it is possible for this file to have been unexpected modified but for $hugetlb_shm_group_last_mod_time and $hugetlb_shm_group_init_mod_time to
 			# nevertheless be the same, in case the modification occurred after copying enable_group_id.txt or disable_group_id.txt to /proc/sys/vm/hugetlb_shm_group,
 			# but before setting $hugetlb_shm_group_init_mod_time. So, also check that the content of /proc/sys/vm/hugetlb_shm_group matches what is expected.
+			# Both checks have to run. They were previously an if/else-if chain whose first two
+			# conditions ("enable" == $enabled and "enable" != $enabled) are exhaustive, so the
+			# modification time check below could never execute. The comment above says "also check
+			# the content", meaning as well as the modification time, not instead of it: the content
+			# check alone misses a competing process that changed the file and changed it back,
+			# which is the case the modification time check exists for.
 			set unexpected = 0
 			if ("enable" == $enabled) then
 				diff enable_group_id.txt /proc/sys/vm/hugetlb_shm_group >& /dev/null
-				if (0 != $status) then
-					set unexpected = 1
-				endif
-			else if ("enable" != $enabled) then
+			else
 				diff disable_group_id.txt /proc/sys/vm/hugetlb_shm_group >& /dev/null
-				if (0 != $status) then
-					set unexpected = 1
-				endif
-			else if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
+			endif
+			if (0 != $status) then
+				set unexpected = 1
+			endif
+			if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
 				set unexpected = 1
 			endif
 			if (1 == $unexpected) then
