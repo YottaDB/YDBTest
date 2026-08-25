@@ -22,12 +22,19 @@
 #	$gtm_dist          = /usr/library/V71002_R206 VS
 #	realpath $gtm_dist = /usr/library/R206
 
+# Both searches are done BEFORE anything is killed, and the deduplicated union is killed in ONE
+# "sudo kill". Doing them as two separate searches each followed by its own kill (as this script used
+# to) is a race whenever "$gtm_dist" is NOT a soft link, because then both searches return the SAME
+# pids. The first kill signals them, the second "pgrep" a moment later still sees them while they are
+# going away, and by the time the second kill runs they are gone, so it writes
+#
+#	kill: (<pid>): No such process
+#
+# to stderr, once per pid. That is captured into the subtest output file and shows up as a subtest
+# diff. It only fails when the processes finish exiting between the two kills, which is why it is
+# seen on rare occasions rather than on every run.
 set gtmsecshr_realpath = `realpath $gtm_dist/gtmsecshr`
-set secshrpid = `pgrep -f $gtmsecshr_realpath`
-if ("$secshrpid" != "") then
-	sudo kill $secshrpid
-endif
-set secshrpid = `pgrep -f $gtm_dist/gtmsecshr`
+set secshrpid = `(pgrep -f $gtmsecshr_realpath; pgrep -f $gtm_dist/gtmsecshr) | sort -u`
 if ("$secshrpid" != "") then
 	sudo kill $secshrpid
 endif
