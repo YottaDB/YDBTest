@@ -163,6 +163,24 @@ if ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) then
 		setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 shmhugetlb_syslog-gtmf221672"
 	endif
 endif
+# Disable the huge page tests on a system with no huge page pool configured. Both subtests ask
+# YottaDB to allocate shared memory with SHM_HUGETLB and check that it worked, and their reference
+# files record the outcome where it did. On a system with HugePages_Total of 0 every such shmget
+# returns ENOMEM, YottaDB correctly falls back to pinning, and the subtest reports the fallback -
+# which is right, but is not what the reference file says, so the subtest fails for a reason that
+# is a property of the machine rather than of YottaDB. The pool is checked rather than assumed
+# because it is not configured on every test system: three of the systems in one weekend run had
+# HugePages_Total of 0 and every one of them failed this way, with 46 shmget calls between them and
+# every single one ENOMEM.
+#
+# The pool is deliberately NOT created here. nr_hugepages is system wide, so raising it would take
+# memory from everything else on the machine and would change under any test running concurrently.
+set hugepages_total = `grep HugePages_Total /proc/meminfo | $tst_awk '{print $2}'`
+if ("$hugepages_total" == "") set hugepages_total = 0
+if ($hugepages_total == 0) then
+	setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 shmhugetlb_syslog-gtmf221672"
+endif
+
 # Disable Huge page test on Docker, as it requires changing /proc/sys which is not normally writable
 # Disable erofs-ydb1103 on Docker, as it requires mounting permissions from host
 if ($?ydb_test_inside_docker) then
