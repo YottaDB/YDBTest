@@ -67,6 +67,21 @@ setenv ydb_msgprefix "GTM"
 # unset gtm_hugetlb_shm and gtm_pinshm if randomized by test system
 unsetenv gtm_hugetlb_shm gtm_pinshm ydb_hugetlb_shm ydb_pinshm
 
+# The checks below infer PIN and huge page behaviour from an strace of dbcreate.csh, so they need
+# dbcreate to actually CREATE shared memory, which it does only if it OPENS the database. It opens
+# it only when gtm_test_dbcreate_initial_tn is non-zero: com/dbcreate_base.csh sources
+# com/change_current_tn.csh, which begins
+#
+#       if (0 == $gtm_test_dbcreate_initial_tn) exit #no need to do anything
+#
+# and so never reaches its "mumps -run changecurtn". That value is a random draw in [0,63] made once
+# per run, so roughly one run in 64 traces a dbcreate that never opened the database. Every count
+# below is then 0 and every verdict is meaningless, reported as "PIN not found" and "shmget NOT
+# called with SHM_HUGETLB" failures that have nothing to do with pinning or huge pages. Pin it
+# non-zero, since this subtest is about gtm_pinshm and gtm_hugetlb_shm and not about the starting
+# transaction number.
+setenv gtm_test_dbcreate_initial_tn 1
+
 # print group id into a file
 id -g > enable_group_id.txt
 echo 0 > disable_group_id.txt
@@ -223,7 +238,13 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			# free. Those are completely different causes and the output does not distinguish them.
 			# This is a ".outx" file, so it is kept with the subtest output but not compared against
 			# the reference file, and the varying numbers therefore cannot themselves cause a diff.
-			echo "${test_id}: pin_found=$pin_found huge_found=$huge_found eperm=$huge_eperm_found enomem=$huge_enomem_found huge_success=$huge_success_found" >>! pinhuge_counts.outx
+			set shmget_any_found=`cat strace_${test_id}.outx | grep -c 'shmget('`
+			echo "${test_id}: pin_found=$pin_found huge_found=$huge_found eperm=$huge_eperm_found enomem=$huge_enomem_found huge_success=$huge_success_found shmget_any=$shmget_any_found" >>! pinhuge_counts.outx
+			# Safety net for the above. If dbcreate created no shared memory at all then nothing
+			# below can be concluded, so say that instead of reporting a pile of derived failures.
+			if (0 == $shmget_any_found) then
+				echo "FAIL: no shmget seen while creating the database, so PIN and huge page behaviour cannot be determined for this test case"
+			endif
 			# Valid pin outputs are
 			# 0. If pin is not valued, and not found, we pass
 			# 1. If pin is requested and found
