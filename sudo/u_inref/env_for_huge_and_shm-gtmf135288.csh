@@ -227,10 +227,12 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			set huge_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB' | wc -l`
 			set huge_eperm_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB.*EPERM' | wc -l`
 			set huge_enomem_found=`cat strace_${test_id}.outx | grep 'shmget.*SHM_HUGETLB.*ENOMEM' | wc -l`
+
 			# Count the shmget calls that SUCCEEDED with SHM_HUGETLB. strace renders a failure as
 			# "= -1 ENOMEM (...)", so requiring a digit immediately after "= " matches successes
 			# only. Recorded for diagnosis; deliberately not used in the verdict below.
 			set huge_success_found=`cat strace_${test_id}.outx | grep -E 'shmget.*SHM_HUGETLB.*= [0-9]' | wc -l`
+
 			# Keep the raw counts. The verdict messages below say which branch was taken but not
 			# what was observed, so diagnosing a failure otherwise means unpacking the strace files
 			# by hand to learn whether SHM_HUGETLB failed with EPERM, meaning the wrong group id in
@@ -240,11 +242,13 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			# the reference file, and the varying numbers therefore cannot themselves cause a diff.
 			set shmget_any_found=`cat strace_${test_id}.outx | grep -c 'shmget('`
 			echo "${test_id}: pin_found=$pin_found huge_found=$huge_found eperm=$huge_eperm_found enomem=$huge_enomem_found huge_success=$huge_success_found shmget_any=$shmget_any_found" >>! pinhuge_counts.outx
+
 			# Safety net for the above. If dbcreate created no shared memory at all then nothing
 			# below can be concluded, so say that instead of reporting a pile of derived failures.
 			if (0 == $shmget_any_found) then
 				echo "FAIL: no shmget seen while creating the database, so PIN and huge page behaviour cannot be determined for this test case"
 			endif
+
 			# Valid pin outputs are
 			# 0. If pin is not valued, and not found, we pass
 			# 1. If pin is requested and found
@@ -291,6 +295,7 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 				echo "# Check: when gtm_hugetlb_shm is unset/disabled, expect that shmget is not called with SHM_HUGETLB at all"
 				set pass_msg = "PASS: gtm_hugetlb_shm unset, SHM_HUGETLB disabled, gtm_pinshm=${pr_pinshm}: shmget NOT called with SHM_HUGETLB"
 			endif
+
 			# Get the current modification time /proc/sys/vm/hugetlb_shm_group to determine whether it was changed since this test case modified it above
 			set hugetlb_shm_group_last_mod_time = `stat /proc/sys/vm/hugetlb_shm_group | grep Modify | sed 's/^.*: \([0-9\-]*\) \([0-9:.]*\) -.*$/\1\2/g' | tr -d '\-:.'`
 
@@ -316,6 +321,7 @@ foreach parms ( "/" "0/0" "1/0" "0/1" "1/1" )
 			if ($hugetlb_shm_group_last_mod_time > $hugetlb_shm_group_init_mod_time) then
 				set unexpected = 1
 			endif
+
 			if (1 == $unexpected) then
 				# /proc/sys/vm/hugetlb_shm_group was modified by another process. So, fail this test case since
 				# it is not possible to confirm the expected behavior for the value of that file set above.
