@@ -57,6 +57,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_upgrade-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_slots-ydb1143"
 setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_gde-ydb1143"
 setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_misc-ydb1143"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zsigproc_pid0-ydb1256"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

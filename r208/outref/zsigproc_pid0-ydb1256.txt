@@ -1,0 +1,31 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1256] $ZSIGPROC() and %YDBPROCSTUCKEXEC must not signal when the pid is not positive         #
+#--------------------------------------------------------------------------------------------------#
+
+# Stage 1 : $ZSIGPROC() with a pid of 0 must return EINVAL
+# Command : $ydb_dist/mumps -run %XCMD write "retcode=",$zsigproc(0,0),!
+PASS : returned EINVAL (22)
+
+# Stage 2 : $ZSIGPROC() with a pid of -1 must return EINVAL
+# Command : $ydb_dist/mumps -run %XCMD write "retcode=",$zsigproc(-1,0),!
+PASS : returned EINVAL (22)
+
+# Stage 3 : a positive pid must still work, so the check above did not break $ZSIGPROC()
+# Command : $ydb_dist/mumps -run %XCMD write "retcode=",$zsigproc(<a live pid>,0),!
+PASS : a live process returned 0
+# Command : the same, after that process has gone away
+PASS : a process that has gone away returned ESRCH (3)
+
+# Stage 4 : %YDBPROCSTUCKEXEC handed a blocking pid of 0 must collect nothing and signal nothing
+# Command : setsid -w env ydb_tmp=. gtm_tmp=. $ydb_dist/mumps -run %YDBPROCSTUCKEXEC BUFRDTIMEOUT <own pid> 0 1
+PASS : the calling process survived
+PASS : the report shows no signal was sent
+PASS : the report says why it collected nothing
+
+# Stage 5 : the same for a blocking pid of -1, the value that would reach every process
+# Command : setsid -w env ydb_tmp=. gtm_tmp=. $ydb_dist/mumps -run %YDBPROCSTUCKEXEC BUFRDTIMEOUT <own pid> -1 1
+PASS : the calling process survived
+PASS : the report shows no signal was sent
+PASS : the report says why it collected nothing
+
+# Done
