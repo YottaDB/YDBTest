@@ -183,8 +183,19 @@ endif
 
 # Disable Huge page test on Docker, as it requires changing /proc/sys which is not normally writable
 # Disable erofs-ydb1103 on Docker, as it requires mounting permissions from host
+# Disable support on Docker, as it cannot test the build under test there. That subtest installs a
+# YottaDB into a directory of its own and points $ydb_dist at it, then creates a database with the
+# build under test and has %YDBSUPPORT read it, so the two have to be the same YottaDB. On a test
+# system they are: "ydbinstall" finds the distribution sitting beside it and installs that. In the
+# container it cannot, because docker/build_and_install_yottadb.csh deletes the distribution and
+# keeps only "ydbinstall" itself, the intermediate objects being about 5GB, and ydbinstall needs the
+# rest of the distribution beside it to install from. Finding none, it falls back to downloading the
+# latest RELEASE. That release is older than the build under test by definition, so once the two
+# disagree about a file format the subtest fails for a reason that has nothing to do with what it
+# tests: YDB#1143 changed the global directory label from GTCGBDUNX115 to GTCGBDUNX116 and
+# %YDBSUPPORT began reporting GDINVALID on a database the build under test had just written.
 if ($?ydb_test_inside_docker) then
-	if (1 == $ydb_test_inside_docker) setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 erofs-ydb1103"
+	if (1 == $ydb_test_inside_docker) setenv subtest_exclude_list "$subtest_exclude_list env_for_huge_and_shm-gtmf135288 erofs-ydb1103 support"
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
