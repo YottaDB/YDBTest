@@ -1,6 +1,22 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 # A helper script for the maskpass_term test. It verifies that maskpass restores
 # the terminal settings when terminated with a Ctrl-C.
-set timeout 10
+#
+# The timeout below governs every "expect" block in this script. It was 10 seconds, which is not
+# enough on a slow system: the first block waits for bash to run "echo $0" after being spawned, and
+# a loaded machine has been seen to echo the command back and still not have run it 10 seconds
+# later. 60 is the value a437d5b1 used for the same class of failure in encryption/exp_test.
+set timeout 60
 spawn bash
 
 send -- "PS1=\"CTRLC>\"; echo \$0\r"
