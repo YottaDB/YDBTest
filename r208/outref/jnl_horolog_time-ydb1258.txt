@@ -1,0 +1,32 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1258] A journal record time must never be behind a $HOROLOG read that preceded the update   #
+#--------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Command : $MUPIP set -journal=enable,on,before -region "*"
+PASS : journaling is enabled
+
+# Stage 1 : record $HOROLOG just past a second boundary, then update a global.
+#           ^x(1) to ^x(10) are updated with nothing in between, ^y(1) to ^y(3) with a HANG 1,
+#           which is the shape rollback_A/full_qual uses.
+# Command : $ydb_dist/mumps -run update^ydb1258
+PASS : the update program completed
+
+# Command : $MUPIP journal -extract=jnlext.mjf -forward mumps.mjl
+PASS : the journal extract succeeded
+
+# Stage 2 : compare each journal record time against the $HOROLOG recorded before that update.
+#           ^x records must not be BEHIND it. ^y records must be strictly LATER, since a whole
+#           second was spent in HANG 1 before the update.
+# Command : $ydb_dist/mumps -run check^ydb1258
+PASS : all 10 ^x journal records are at or after the $HOROLOG read just before the update
+PASS : all 3 ^y journal records are later than the $HOROLOG read before HANG 1
+
+# Done
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
