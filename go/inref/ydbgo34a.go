@@ -182,7 +182,7 @@ func main() {
 	// before continuing with the test
 	f, _ := os.Create("ydbgo34a.pid")
 	defer f.Close()
-	fmt.Fprintf(f, "%d\n", os.Getpid)
+	fmt.Fprintf(f, "%d\n", os.Getpid())
 
 	errStr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	// Create channels we use for notification/acknowledgement for our two handlers (expected and unexpected)
