@@ -54,6 +54,16 @@ set ftok_key = `$MUPIP ftok mumps.dat |& $grep mumps | $tst_awk '{print substr($
 set ftok_id = `$gtm_tst/com/ipcs -a | $grep $ftok_key | $tst_awk '{print $2}'`
 
 # switch to backup.gld
+# Keep the original mumps.dat inode linked so that it cannot be recycled. The ftok key of the
+# semaphore left behind by the "kill -9" above is a 24-bit hash of this file's st_dev and st_ino
+# ("gtm_ftok" in sr_unix/gtm_ftok.c). If the "mv" below were to free that inode, a concurrently
+# running test whose database or statsDB file lands on the same inode number would compute the same
+# key and share this semaphore, and the "ipcrm -s" at the end of this subtest would then remove it
+# out from under that process (YDBTest#1046) - or that process would remove it first, which is the
+# "invalid id" this subtest used to report. A hard link costs nothing and takes the inode out of
+# circulation for the rest of the subtest. Its name must not end in ".dat" because
+# "com/dbcheck_base.csh" counts "*.dat" files to determine the number of regions.
+ln mumps.dat mumps.dat.inode_holder
 cp mumps.dat backup.dat
 mv backup.dat mumps.dat
 $GTM << GTM_EOF
@@ -80,14 +90,36 @@ END
 
 BEGIN  "Remove leftover ftok semaphore"
 echo "ftok id="$ftok_id
-# The "mv backup.dat mumps.dat" done in an earlier step unlinked the inode that this ftok key was
-# computed from ("gtm_ftok" hashes st_dev and st_ino), and the "kill -9" done before that left the
-# semaphore's counter at 0 (the counter increment is done with SEM_UNDO, so the kernel undid it).
-# A concurrently running test whose database file reuses that freed inode number therefore computes
-# the same ftok key, grabs this semaphore and removes it when it exits, in which case the ipcrm
-# below fails with an "invalid id" error. That is not a test failure so filter that message out
-# (any other ipcrm error is still let through).
-$gtm_tst/com/ipcrm -s $ftok_id | $grep -v "invalid id"
+# The "kill -9" done earlier left this semaphore's counter at 0 (the counter increment is done with
+# SEM_UNDO, so the kernel undid it), so any process that computes the same ftok key can attach to
+# it. The inode the key was computed from is held by the "mumps.dat.inode_holder" link created
+# earlier and so cannot be recycled, but "gtm_ftok" truncates the hash of st_dev and st_ino to 24
+# bits, so a database or statsDB file on another filesystem can still land on this key. A statsDB is
+# as likely a sharer as a ".dat": every region goes through "ftok_sem_get(reg, ..., GTM_ID, ...)",
+# so both are drawn from the same key space.
+#
+# "ipcrm -s" removes by id with no counter check, so removing this semaphore unconditionally would
+# take it away from such a sharer, which would then fail in "gds_rundown" with an assert and a core
+# on a dbg build, or a CRITSEMFAIL on a pro build (YDBTest#1046). So read the counter first and
+# leave the semaphore alone unless nothing is counted on it, the way "com/rem_ftok_sem.csh" already
+# does for the same reason. The check is not atomic with the removal, so it narrows the window
+# rather than closing it.
+#
+# If the semaphore is already gone, the ipcrm fails with an "invalid id" error. That is not a test
+# failure so filter that message out (any other ipcrm error is still let through).
+set ftok_semval = `$MUPIP semaphore $ftok_id |& $grep "sem  1" | $tst_awk '{print($4);}' | sed 's/,//'`
+if ("$ftok_semval" == "0") then
+	$gtm_tst/com/ipcrm -s $ftok_id | $grep -v "invalid id"
+else
+	# Either another database is counted on this semaphore or it is already gone (in which case
+	# MUPIP SEMAPHORE printed nothing and $ftok_semval is empty). Either way there is nothing for
+	# this subtest to remove. Whether this branch is taken at all depends on what other tests are
+	# doing at the time, so the message below must not reach the compared output. Writing it to a
+	# file rather than to stdout is most of that. The ".outx" rather than ".out" is for the step
+	# after: "com/submit_subtest.csh" appends "com/errors.csh" output to the compared log, and
+	# "com/errors.csh" scans "*.out" while skipping "*.*x".
+	echo "Did not remove ftok semaphore $ftok_id : counter is [$ftok_semval]" >> ftok_sem_not_removed.outx
+endif
 END
 
 $gtm_tst/com/dbcheck.csh
