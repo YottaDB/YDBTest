@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,7 +67,10 @@ cat mupip_rundown_rctl3c.logx
 echo
 
 echo "4a. MUMPS on a directory whose relinkctl file has not been run down due to a crash."
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".*" do ^a write:($zsigproc($job,9)) "TEST-E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
+# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
+# subtest. See the same note at step 3a above. The message printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".*" do ^a write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".*"' >&! mumps_rctl4a.logx
 cat mumps_rctl4a.logx
 echo
@@ -100,7 +103,10 @@ cat mupip_rundown_rctl6.logx
 echo
 
 echo "7a. MUMPS on directories whose relinkctl files have not been run down due to a crash."
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" write:($zsigproc($job,9)) "TEST-E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
+# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
+# subtest. See the same note at step 3a above. The message printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*"' >&! mumps_rctl7a.logx
 cat mumps_rctl7a.logx
 echo
@@ -117,7 +123,10 @@ cat mupip_rundown_rctl7c.logx
 echo
 
 echo "8a. MUMPS on directories whose relinkctl files have not been run down due to a crash."
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b write:($zsigproc($job,9)) "TEST-E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
+# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
+# subtest. See the same note at step 3a above. The message printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b' >&! mumps_rctl8a.logx
 cat mumps_rctl8a.logx
 echo
