@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,8 +11,12 @@
 #################################################################
 
 #tests that Ctrl-C exits program, returning to it's previous program
-#5 seconds
-set timeout 5
+# The timeout below governs every "expect" block in this script. It was 5 seconds, which is not enough
+# on a slow system: the block that has been seen to time out is the one waiting for the "YDB>" prompt
+# after Ctrl+C is sent to GDE invoked from inside a YDB direct mode session, on a build carrying both
+# ASAN and code coverage. 60 is the value 9d7c3905 used for the same class of failure in
+# expect/maskpass_term, and a437d5b1 before it in encryption/exp_test.
+set timeout 60
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 #intended to enter the GDE interface
