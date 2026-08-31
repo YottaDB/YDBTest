@@ -102,20 +102,12 @@ if ( "$rand_ver" == "RANDOMVER-E-CANNOTRUN") then
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ("pro" == "$tst_image") then
-	if ($gtm_test_libyottadb_asan_enabled) then
-		# We see cores when ASAN is used with tests that send signals (ydb534 sends SIGABRT etc.)
-		# This happens whether YottaDB is compiled with gcc or clang.
-		# And the stack traces are inside ASAN code where a SIG-11 occurs as well.
-		# There is an indication of stack smash error too in some cases.
-		# Not yet sure if it is an ASAN issue or a YottaDB issue inside the signal handler.
-		# Exclude this subtest until we can find time to investigate this further.
-		# The same test runs fine without ASAN and so is enabled in that case.
-		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
-	endif
-else
+if ("pro" != "$tst_image") then
 	# ydb534 subtest generates a SIGABRT signal which causes an assert in `generic_signal_handler.c` assert(SIGABRT != sig)`
 	# to fail hence this subtest needs to be skipped in dbg (i.e. run it only in pro).
+	# That assert is there because a SIGABRT usually means glibc detected memory corruption. That is not the case here.
+	# The SIGABRT is the subtest's own doing: "do_abort()" in "r130/inref/ydb534.c" calls abort(), and the core that
+	# results is what the subtest verifies. So the assert failure is expected in dbg and the exclusion stays.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb534"
 endif
 
