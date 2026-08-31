@@ -1,0 +1,203 @@
+# Acquire a port and start a GT.CM GNP server against a local database
+$GDE exit
+$MUPIP create
+# A second database whose keys are long enough to overflow the server's message buffer
+$GDE change -region/-segment, exit
+$gtm_exe/mumps -run %XCMD set of ^big(<900 byte subscript>) and two 31 byte global names
+$gtm_tst/com/GTCM_SERVER.csh $portno 0
+# GT.CM server started
+
+# sanity : a valid handshake, INITREG and GET. Expect all three answered, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat sanity
+sanity : valid handshake, INITREG and $GET all answered, server still serving
+# bigframe : a message larger than the server buffer, announced in one write. Expect the link closed, no error logged
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bigframe
+bigframe : link closed by the server, server still serving
+# splitframe : the same, with the 2 byte prefix split across two writes. Expect the link closed, no error logged
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat splitframe
+splitframe : link closed by the server, server still serving
+# longdbname : an INITREG naming a file longer than MAX_FN_LEN. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat longdbname
+longdbname : rejected with BADGTMNETMSG, server still serving
+# shortjpv : a handshake carrying 40 of the 88 jnl_process_vector bytes. Expect it accepted and zero filled
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat shortjpv
+shortjpv : short INITPROC accepted, server still serving
+# keylenbig : a GET whose declared key length exceeds the bytes sent. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keylenbig
+keylenbig : rejected with BADGTMNETMSG, server still serving
+# keylenzero : a declared length of 0, which the former len-- made 65535. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keylenzero
+keylenzero : rejected with BADGTMNETMSG, server still serving
+# keylentiny : a key too short to hold its own top/end/prev header. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keylentiny
+keylentiny : rejected with BADGTMNETMSG, server still serving
+# keynoname : a key whose global variable name is empty. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keynoname
+keynoname : rejected with BADGTMNETMSG, server still serving
+# keylongname : a global variable name longer than MAX_MIDENT_LEN. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keylongname
+keylongname : rejected with BADGTMNETMSG, server still serving
+# keyshape : a key that fits but whose end points outside it. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keyshape
+keyshape : rejected with BADGTMNETMSG, server still serving
+# keybadname : a legal length name whose bytes are not an M name, a-b. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keybadname
+keybadname : rejected with BADGTMNETMSG, server still serving
+# keydigitname : a name whose first byte is a digit, 1ab. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat keydigitname
+keydigitname : rejected with BADGTMNETMSG, server still serving
+# lenzerodata : a declared length of 0 sent to the data handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzerodata
+lenzerodata : rejected with BADGTMNETMSG, server still serving
+# lenzerokill : a declared length of 0 sent to the kill handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzerokill
+lenzerokill : rejected with BADGTMNETMSG, server still serving
+# lenzeroorder : a declared length of 0 sent to the order handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzeroorder
+lenzeroorder : rejected with BADGTMNETMSG, server still serving
+# lenzerozprev : a declared length of 0 sent to the zprev handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzerozprev
+lenzerozprev : rejected with BADGTMNETMSG, server still serving
+# lenzeroput : a declared length of 0 sent to the put handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzeroput
+lenzeroput : rejected with BADGTMNETMSG, server still serving
+# lenzeroquery : a declared length of 0 sent to the query handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzeroquery
+lenzeroquery : rejected with BADGTMNETMSG, server still serving
+# lenzerozwith : a declared length of 0 sent to the zwith handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzerozwith
+lenzerozwith : rejected with BADGTMNETMSG, server still serving
+# lenzeroincr : a declared length of 0 sent to the incr handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzeroincr
+lenzeroincr : rejected with BADGTMNETMSG, server still serving
+# lenzerorevqry : a declared length of 0 sent to the revqry handler. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lenzerorevqry
+lenzerorevqry : rejected with BADGTMNETMSG, server still serving
+# bufflush : a buffered SET writing 255 key bytes at offset 255. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflush
+bufflush : rejected with BADGTMNETMSG, server still serving
+# bufflushlenzero : a buffered SET with a key length of 0. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushlenzero
+bufflushlenzero : rejected with BADGTMNETMSG, server still serving
+# bufflushend : a buffered SET whose end is at a NUL not preceded by one. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushend
+bufflushend : rejected with BADGTMNETMSG, server still serving
+# bufflushprev : a buffered SET whose prev points past its own end. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushprev
+bufflushprev : rejected with BADGTMNETMSG, server still serving
+# bufflushnoname : a buffered SET whose global variable name is empty. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushnoname
+bufflushnoname : rejected with BADGTMNETMSG, server still serving
+# bufflushnodata : a buffered SET with the value length missing. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushnodata
+bufflushnodata : rejected with BADGTMNETMSG, server still serving
+# bufflushbigdata : a buffered SET whose value length exceeds the bytes sent. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushbigdata
+bufflushbigdata : rejected with BADGTMNETMSG, server still serving
+# locklen : a lock entry of declared length 0, formerly 65533. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat locklen
+locklen : rejected with BADGTMNETMSG, server still serving
+# locksubcnt : a subscript count larger than the subscripts sent. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat locksubcnt
+locksubcnt : rejected with BADGTMNETMSG, server still serving
+# locktrail : subscripts that parse but stop short of the declared length. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat locktrail
+locktrail : rejected with BADGTMNETMSG, server still serving
+# locknolistlen : a lock request ending before the entry count byte. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat locknolistlen
+locknolistlen : rejected with BADGTMNETMSG, server still serving
+# lockshortentry : one lock entry announced, its 5 byte header not all there. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lockshortentry
+lockshortentry : rejected with BADGTMNETMSG, server still serving
+# lockshortnref : a lock entry whose length runs past the bytes received. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat lockshortnref
+lockshortnref : rejected with BADGTMNETMSG, server still serving
+# bufflushnotrans : a buffered SET ending before its transaction count. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushnotrans
+bufflushnotrans : rejected with BADGTMNETMSG, server still serving
+# bufflushnohdr : one transaction announced, none of its four header bytes. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushnohdr
+bufflushnohdr : rejected with BADGTMNETMSG, server still serving
+# bufflushshortkey : a key length longer than the key bytes that follow. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat bufflushshortkey
+bufflushshortkey : rejected with BADGTMNETMSG, server still serving
+# shortproto : a handshake that ends inside the protocol string. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat shortproto
+shortproto : rejected with BADGTMNETMSG, server still serving
+# initregnolen : an INITREG ending before its file name length. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat initregnolen
+initregnolen : rejected with BADGTMNETMSG, server still serving
+# initregshort : a file name length longer than the name bytes sent. Expect BADGTMNETMSG, server serving
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/mumps.dat initregshort
+initregshort : rejected with BADGTMNETMSG, server still serving
+# orderbigreply : an ORDER whose 917 byte answer exceeds the 532 byte buffer. Expect it returned intact
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/big.dat orderbigreply
+orderbigreply : reply larger than the message buffer returned intact, server still serving
+# zprevbigreply : a ZPREVIOUS whose answer exceeds the 532 byte buffer. Expect it returned intact
+$gtm_exe/mumps -run gnpfuzz $portno $PWD/big.dat zprevbigreply
+zprevbigreply : reply larger than the message buffer returned intact, server still serving
+
+# A reply larger than the server's message buffer has to come back intact
+$GDE change -region/-segment for @<node>:<path>/big.dat, exit
+$gtm_exe/mumps -run gnpbig 900
+$ORDER returned its 900 byte subscript intact
+$ZPREVIOUS returned its 900 byte subscript intact
+name level $ORDER over a 31 byte global name returned the next name
+
+# The server process must have survived every one of them
+$gtm_tst/com/is_proc_alive.csh $srvpid
+GT.CM server process is still alive : as expected
+
+# Stop the GT.CM server
+$gtm_tst/com/GTCM_SERVER_STOP.csh $time_stamp
+
+# The server logged one BADGTMNETMSG for each message it refused, and nothing else beyond the
+# FORCEDHALT from its own shutdown. Count both.
+BADGTMNETMSG count in the server log is 37 : as expected
+total message count in the server log is 38 : as expected
+$gtm_tst/com/check_error_exist.csh $cmerrlog BADGTMNETMSG FORCEDHALT
+BADGTMNETMSG and FORCEDHALT both found in the server log : as expected
+
+
+# A fake server sends a real GT.CM client replies it cannot parse. Each case below names what
+# it sends and what it should produce, then the command, then what the client reported.
+$GDE change -segment DEFAULT -file_name=@<node>:$PWD/nosuch.dat
+# srvstaleprev : a well formed reply whose prev exceeds end, which is what a real server sends. Expect it accepted
+$gtm_exe/mumps -run gnpcli srvstaleprev
+srvstaleprev : accepted the reply, $QUERY returned "^etpr(""subaaa"")"
+# srvbadlen : a reply whose declared length is below the key header. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvbadlen
+srvbadlen : rejected with BADSRVRNETMSG
+# srvshortkey : a reply that declares more key bytes than it carries. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvshortkey
+srvshortkey : rejected with BADSRVRNETMSG
+# srvbadshape : a reply whose end does not point at a NUL terminator. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvbadshape
+srvbadshape : rejected with BADSRVRNETMSG
+# srvbigkey : a reply whose key is larger than the client gv_altkey. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvbigkey
+srvbigkey : rejected with BADSRVRNETMSG
+# srvneglen : a reply whose value length has its high bit set. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvneglen
+srvneglen : rejected with BADSRVRNETMSG
+# srvnolen : a reply that stops after its message type. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvnolen
+srvnolen : rejected with BADSRVRNETMSG
+# srvnovallen : a reply that ends after the key with no value length. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvnovallen
+srvnovallen : rejected with BADSRVRNETMSG
+# srvshortval : a reply declaring a 50 byte value and carrying 2. Expect BADSRVRNETMSG
+$gtm_exe/mumps -run gnpcli srvshortval
+srvshortval : rejected with BADSRVRNETMSG
+# srvbigframe : a reply announced and never sent, the client waiting for it. Expect GVQUERYFAIL rather than a hang
+$gtm_exe/mumps -run gnpcli srvbigframe
+srvbigframe : the operation failed rather than hanging
+# srvidleframe : the same announcement queued while the client is idle. Expect GVQUERYFAIL rather than a hang
+$gtm_exe/mumps -run gnpcli srvidleframe
+srvidleframe : the operation failed rather than hanging
+
+# Check the database the server was serving is intact
+$gtm_tst/com/dbcheck_base.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
