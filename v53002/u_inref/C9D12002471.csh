@@ -40,16 +40,24 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 	source $gtm_tst/com/cre_xcall_utils.csh
 
 	if !($?gtm_test_replay) then
-		# Generates a random number between 64K and 1Mb; an exception to this is UTF8 mode which will raise the minimum
-		# to 256K. This will in turn be the virtual memory quota set for running c002471 i.e. virtual memory quota
-		# of the process  would be 64Mb (256Mb in UTF8 mode) to 512Mb. Note that a previous minimum of 32MB (which was
-		# doubled to 64MB for IA64 and then again if UTF-8) was using 64MB for UTF-8 on non-IA64 bit platforms which
-		# caused several issues with loading ICU libraries and other test issues. So we now start with 64MB and raise
-		# to 256MB for UTF-8 on all platforms because loading the locale and ICU libraries does consume significant
-		# resources and even more on a 64 bit system.
-		setenv gtm_test_vlimit `$gtm_exe/mumps -run %XCMD 'set min=16 set:($zchset="UTF-8") min=min+2 write (2**min)+$r((2**19)-(2**min))'`
-		echo "# Randomly chosen virtual memory limit:"		>>&! settings.csh
-		echo "setenv gtm_test_vlimit $gtm_test_vlimit"		>>&! settings.csh
+		# The quota has to leave the process room to attach the database shared memory, which it does at its first
+		# global variable reference, well after "setup^c002471" has set the quota. A quota below what the process has
+		# already mapped by then makes the "shmat()" fail with ENOMEM, and the subtest gets a DBFILERR at that first
+		# reference instead of the MEMORY error it is testing for (YDBTest#1057). An absolute quota cannot guarantee
+		# that room, because the address space a "mumps" process starts with is not something this test controls: in
+		# UTF-8 mode the glibc locale archive and the ICU libraries alone map more than 300Mb on some systems, and
+		# they grow as those files grow. So measure the baseline with a "mumps" process of the build under test in
+		# this environment, and pick the quota relative to it.
+		set vmbase = `$gtm_exe/mumps -run vmsize^c002471`
+		if ("$vmbase" == "") set vmbase = 0	# /proc is unavailable; fall back to an absolute quota as before
+		# Generates a random number between 64K and 512K, which is the amount of address space in Kb, over and above
+		# the baseline, that c002471 gets to exhaust. The lower end is small enough that the process runs out of
+		# memory quickly and the upper end is what it took before this was made relative to the baseline.
+		set vmincr = `$gtm_exe/mumps -run %XCMD 'write (2**16)+$r((2**19)-(2**16))'`
+		@ vmlimit = $vmbase + $vmincr
+		setenv gtm_test_vlimit $vmlimit
+		echo "# Randomly chosen virtual memory limit ($vmbase Kb baseline + $vmincr Kb):"	>>&! settings.csh
+		echo "setenv gtm_test_vlimit $gtm_test_vlimit"						>>&! settings.csh
 	endif
 endif
 

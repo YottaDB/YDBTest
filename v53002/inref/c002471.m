@@ -30,6 +30,18 @@ setup;
 	if $&utils.setrlimit(limit,.errno)
 	quit
 
+	; Write this process's virtual memory size in Kb, or nothing if it cannot be determined.
+	; "C9D12002471.csh" runs this to find out how much address space a "mumps" process of the build
+	; under test has already mapped by the time "setup" above sets the virtual memory limit. That
+	; limit has to be above the baseline, or else the "shmat()" of the database shared memory fails
+	; with ENOMEM and "test1"/"test2" below get a DBFILERR at their first global variable reference
+	; instead of the MEMORY error this test exists to check. The baseline cannot be assumed: in UTF-8
+	; mode it is dominated by the glibc locale archive and the ICU libraries, which together map more
+	; than 300Mb on some systems and grow as those files grow. See YDBTest#1057 for the measurements.
+vmsize;
+	zsystem "awk '/^VmSize:/ {print $2}' /proc/"_$job_"/status"
+	quit
+
 test1;
 	do:($zversion'["HP-UX") setup
 	write "Starting test1",!
