@@ -45,6 +45,17 @@ else
 	setenv GOPATH $PWD/gopath
 	cd $curdir
 endif
+# Set a GOCACHE (the Go build cache) alongside the GOPATH set above so it too is private to this
+# gtmtest run. Two reasons.
+#   a) The default GOCACHE is "$HOME/.cache/go-build" which is shared by every test run on the system.
+#      "com/ver.csh" used to do a "go clean -cache" on that shared cache. That could delete entries out
+#      from under a "go build" or "go test" running in a concurrent test run, which then failed with
+#      "could not import xxx (open .../go-build/...: no such file or directory)". See YDBTest#1042.
+#      A cache private to this run cannot be disturbed by any other run.
+#   b) A per-run cache starts out empty, so it holds no entry built against a previous YottaDB build.
+#      That is the guarantee the "go clean -cache" in "com/ver.csh" was there to provide, which is why
+#      that clean has since been removed.
+setenv GOCACHE $GOPATH:h/gocache
 # Ensure go toolchains are not downloaded by the test as this creates huge artifacts
 # in GOPATH (up to gigabytes) every time imptp.csh is run.
 # Ensure the machine has a Go version at least as recent as required in go.mod and by YDBGo's go.mod files.

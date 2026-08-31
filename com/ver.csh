@@ -1,6 +1,6 @@
 ###########################################################
 #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.
 # All rights reserved.
 #
 #	This source code contains the intellectual property
@@ -61,9 +61,15 @@ setenv tst_image $image
 
 # Go-related switches
 setenv PKG_CONFIG_PATH $ydb_dist
-if (`which go` != "" && ! $?skip_go_clean) then
-	go clean -testcache -cache >& /dev/null
-endif
+# Note: a "go clean -testcache -cache" used to run here to keep a Go build done against a previously
+# tested YottaDB build from being reused against this one. It has been removed. "go clean -cache"
+# empties the entire build cache, not just the entries this test run created, and the cache it emptied
+# was the default "$HOME/.cache/go-build" shared by every test run on the system. Since "com/ver.csh"
+# is sourced by dozens of subtests that have nothing to do with Go, any one of them could delete the
+# cache out from under a "go build" or "go test" running in a concurrent test run, which then failed
+# with "could not import xxx (open .../go-build/...: no such file or directory)". See YDBTest#1042.
+# "com/setupgoenv.csh" now sets a GOCACHE private to each gtmtest run. That cache starts out empty, so
+# it holds nothing built against a previous YottaDB build and there is nothing here left to clean.
 
 if ( ! $?quiet ) echo '   $gtm_dist set to '$gtm_dist
 
