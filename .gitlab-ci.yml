@@ -64,10 +64,30 @@ docker-ydbtest-image:
   variables:
     BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
   services:
-    - docker:dind
+    # "docker push" runs up to 5 blob uploads at once (the dockerd default) and registry.gitlab.com
+    # has been seen closing one of them mid upload. Push 2 at a time instead: fewer connections are
+    # open at any instant, so a push is less likely to run into one that the registry has closed.
+    - name: docker:dind
+      command: ["--max-concurrent-uploads=2"]
+  # A job level retry re-runs the ~20 minute "docker image build" below, so it is an expensive way
+  # to get past a "docker push" that died on a network error. Retry the push itself instead; it
+  # skips the blobs the registry already has, so a retry after a partial push takes seconds. The
+  # job level retry stays as a backstop for a network error in the build itself.
+  retry: 1
   script:
     - docker image build -f docker/Dockerfile --progress=plain -t registry.gitlab.com/yottadb/db/ydbtest .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push registry.gitlab.com/yottadb/db/ydbtest
+    # Note: the docker:latest image runs busybox sh, hence the POSIX shell syntax below.
+    - |
+      n=0
+      until docker push registry.gitlab.com/yottadb/db/ydbtest; do
+        n=$((n+1))
+        if [ $n -ge 5 ]; then
+          echo "docker push failed after $n attempts"
+          exit 1
+        fi
+        echo "docker push attempt $n failed; retrying in 30 seconds"
+        sleep 30
+      done
   only:
     - master@YottaDB/DB/YDBTest
