@@ -150,7 +150,7 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
     let gtm8086 = env_var_is("test_subtest_name", "gtm8086");
 
     // 5% of the time, use an M call-in instead of running in Rust natively
-    let use_ci = rng.gen_range(0, 20) == 0 || gtm8086;
+    let use_ci = rng.gen_range(0..20) == 0 || gtm8086;
     if use_ci {
         println!("impjob; Elected to do M call-in to impjob^imptp for this process");
         // MCode: do impjob^imptp
@@ -706,14 +706,14 @@ fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatu
     if istp != 0 && crash != 0 {
         // MCode: . . set rndm=$r(10)
         // MCode: . . if rndm=1 if $TRESTART>2  do noop^imptp	; Just randomly hold crit for long time
-        let rndm = rng.gen_range(0, 10);
+        let rndm = rng.gen_range(0..10);
         let trestart: i32 = Key::variable(ctx, "$TRESTART").get_and_parse()?;
         if trestart > 2 {
             if rndm == 1 {
                 call(ctx, b"noop\0")?;
             // MCode: . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time
             } else if rndm == 2 {
-                thread::sleep(Duration::from_secs(rng.gen_range(1, 11)));
+                thread::sleep(Duration::from_secs(rng.gen_range(1..11)));
             }
         // MCode: . . if $TRESTART set ^zdummy($TRESTART)=jobno	; In case of restart cause different TP transaction flow
         } else if trestart != 0 {
