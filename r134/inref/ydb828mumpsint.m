@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -150,7 +150,20 @@ ydb828mumpsint; Test various functions/commands that use MUMPS_INT (i.e. mval2i(
 	write "# Testing ZBREAK label::BreakpointCount with random huge BreakpointCount",!
 	for i=1:1:maxiters set xstr="zbreak sstep::"_num(i,1) do execute(xstr)
 	write "# Testing ZGOTO LEVEL with random huge LEVEL",!
-	for i=1:1:maxiters set xstr="zgoto 100+"_num(i,1) do execute(xstr)
+	; [YDBTest#998] This loop must not let ZGOTO terminate the process. A ZGOTO level goes through mval2i(),
+	; which truncates, and a level of 0 is effectively a HALT. A negative level is relative to the current
+	; level, so a level of -$ZLEVEL is also a 0. Either way the process exits with status 0 and prints
+	; nothing, and every section of this routine below this line is then skipped. The levels that end the
+	; process are therefore -1 < level < 1, and, at the $ZLEVEL of 3 that this loop runs at, -4 < level <= -3.
+	; num(i,1) is INTENDED to be a huge number, but gennumber^ydb828arith does not always return one. A short
+	; mantissa with a minus sign and no exponent yields a small value like -99.36571, which is nowhere near
+	; huge, and "100+" that is .63429, which truncates to level 0. Hence the guard below.
+	; The +/-10 in that guard is a round number picked to sit clear of both ranges listed above, so this loop
+	; need not be revisited if the number of stack levels here ever changes. The substituted level is 100
+	; because it is far above $ZLEVEL, so ZGOTO gives ZGOTOTOOBIG, which is one of the errors the "start"
+	; label below lists as expected. A level outside the window, which is the huge case this test is really
+	; about, is passed through untouched and still gives ZGOTOTOOBIG or ZGOTOLTZERO.
+	for i=1:1:maxiters set xstr="set zglvl=100+"_num(i,1)_" zgoto $select((zglvl>-10)&(zglvl<10):100,1:zglvl)" do execute(xstr)
 	write "# Testing ZHALT LEVEL with random huge LEVEL",!
 	for i=1:1:maxiters set xstr="zhalt "_num(i,1)_"+abcd" do execute(xstr)
 	write "# Testing ZMESSAGE with random huge 1st argument",!
@@ -161,7 +174,7 @@ ydb828mumpsint; Test various functions/commands that use MUMPS_INT (i.e. mval2i(
 	quit
 
 execute(xstr)
-	new $etrap,%io
+	new $etrap,%io,zglvl	; zglvl is set by the ZGOTO LEVEL test above
 	set $etrap="use $principal do etrap"
 	set %io=$io
 	use %stdout write " ",xstr,! use %io
