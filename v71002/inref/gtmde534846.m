@@ -17,25 +17,31 @@ gtmde534846 ;
 	; test in that case by calling DO ^incretrap.
 	set $ztrap="goto incrtrap^incrtrap"
 	set incrtrapNODISP=1
-	set initial(0)=0.1,hangtime(0)=0.045
-	set initial(1)=.012345,hangtime(1)=0.005
-	set initial(2)=.002345,hangtime(2)=0.001
+	; lowlimit(i) mirrors the LOWER bound of the corresponding ##TEST_AWK pattern in
+	; outref/ztimeout_microresolution-gtmde534846.txt (lines 20-22). Without it, a reading below
+	; that bound is one this routine accepts and prints and the outref then rejects, with nothing
+	; retrying it, so the reference file rather than the test carries the machine-speed dependency.
+	set initial(0)=0.1,hangtime(0)=0.045,lowlimit(0)=.04
+	set initial(1)=.012345,hangtime(1)=0.005,lowlimit(1)=.004
+	set initial(2)=.002345,hangtime(2)=0.001,lowlimit(2)=0
 
-	; An attempt whose timer expires before $ZTIMEOUT is read comes back 0 and has measured nothing.
-	; That is a scheduling artifact rather than a failure: it only means the process took longer to
-	; resume from the HANG than the margin between "initial" and "hangtime", which for scenario 2 is
-	; 1.345 ms. Widening that margin is not an option, since the margin IS the value under test:
-	; scenario 2 exists to show a remainder below 2 ms still carrying microsecond digits. So retry
-	; such an attempt, and report a failure only if no attempt produced a reading.
+	; An attempt can fail to measure anything in two ways. If the timer expires before $ZTIMEOUT is
+	; read, the attempt comes back 0. If the process is slow to resume from the HANG, it comes back
+	; below lowlimit(i). Both are scheduling artifacts rather than failures: they only mean the
+	; process took longer to resume from the HANG than the margin between "initial" and "hangtime",
+	; which for scenario 2 is 1.345 ms. Widening that margin is not an option, since the margin IS
+	; the value under test: scenario 2 exists to show a remainder below 2 ms still carrying
+	; microsecond digits. So retry such an attempt, and report a failure only if no attempt
+	; produced a usable reading.
 	set maxtries=10
 	for i=0:1:2  do
 	. set out(i)=0
-	. for try=1:1:maxtries  do measure  quit:0<out(i)
+	. for try=1:1:maxtries  do measure  quit:lowlimit(i)<out(i)
 	set $ztimeout=-1	; Clear the timer so it doesn't expire before results are output
 
 	; Output the value of $ZTIMEOUT for each scenario
 	for i=0:1:2  do
-	. if 0=out(i)  write "FAIL: $ztimeout=0 on every one of "_maxtries_" attempts at scenario "_i,!  quit
+	. if out(i)'>lowlimit(i)  write "FAIL: $ztimeout="_out(i)_", not above "_lowlimit(i)_", on every one of "_maxtries_" attempts at scenario "_i,!  quit
 	. if out(i)'<(initial(i)-hangtime(i))  write "FAIL: $ztimeout="_out(i)_", but expected < "_(initial(i)-hangtime(i)),!  quit
 	. write "$ZTIMEOUT="""_out(i)_"""",!
 
