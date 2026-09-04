@@ -67,10 +67,12 @@ cat mupip_rundown_rctl3c.logx
 echo
 
 echo "4a. MUMPS on a directory whose relinkctl file has not been run down due to a crash."
-# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
-# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
-# subtest. See the same note at step 3a above. The message printed is unchanged.
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".*" do ^a write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The error token below is built from two pieces so that it never appears in this process's command
+# line, where a concurrent subtest's ps capture would pick it up and fail that subtest. The split
+# has to fall before the "E-": com/errors_catch.txt line 1 is the bare string -E-, not TEST-E-FAIL,
+# so splitting any later leaves -E- contiguous. See the same note at step 3a above. The message
+# printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".*" do ^a write:($zsigproc($job,9)) "TEST-"_"E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-"_"E-FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".*"' >&! mumps_rctl4a.logx
 cat mumps_rctl4a.logx
 echo
@@ -103,10 +105,12 @@ cat mupip_rundown_rctl6.logx
 echo
 
 echo "7a. MUMPS on directories whose relinkctl files have not been run down due to a crash."
-# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
-# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
-# subtest. See the same note at step 3a above. The message printed is unchanged.
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The error token below is built from two pieces so that it never appears in this process's command
+# line, where a concurrent subtest's ps capture would pick it up and fail that subtest. The split
+# has to fall before the "E-": com/errors_catch.txt line 1 is the bare string -E-, not TEST-E-FAIL,
+# so splitting any later leaves -E- contiguous. See the same note at step 3a above. The message
+# printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" write:($zsigproc($job,9)) "TEST-"_"E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-"_"E-FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*"' >&! mumps_rctl7a.logx
 cat mumps_rctl7a.logx
 echo
@@ -123,10 +127,12 @@ cat mupip_rundown_rctl7c.logx
 echo
 
 echo "8a. MUMPS on directories whose relinkctl files have not been run down due to a crash."
-# The TEST-E-FAIL token below is built from two pieces so that the literal never appears in this
-# process's command line, where a concurrent subtest's ps capture would pick it up and fail that
-# subtest. See the same note at step 3a above. The message printed is unchanged.
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b write:($zsigproc($job,9)) "TEST-E-"_"FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-"_"FAIL, Process "_$job_" did not die in 30 seconds",!'
+# The error token below is built from two pieces so that it never appears in this process's command
+# line, where a concurrent subtest's ps capture would pick it up and fail that subtest. The split
+# has to fall before the "E-": com/errors_catch.txt line 1 is the bare string -E-, not TEST-E-FAIL,
+# so splitting any later leaves -E- contiguous. See the same note at step 3a above. The message
+# printed is unchanged.
+$gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b write:($zsigproc($job,9)) "TEST-"_"E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-"_"E-FAIL, Process "_$job_" did not die in 30 seconds",!'
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".* dir*" do ^a do ^b' >&! mumps_rctl8a.logx
 cat mumps_rctl8a.logx
 echo

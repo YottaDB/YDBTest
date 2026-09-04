@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -97,47 +97,47 @@ if (("CRASH" == $crash_stop) || ("STOP" == $crash_stop)) then
 		touch $KILL_LOG
 		$convert_to_gtm_chset $KILL_LOG
 		echo "------------------" |& tee -a $KILL_LOG
-                echo "Before MUPIP STOP:" |& tee -a $KILL_LOG
-                echo "------------------" |& tee -a $KILL_LOG
-                echo "The time is (try_rolrec3):" `date`
-                $psuser | $grep -E "mupip|mumps" |& tee -a $KILL_LOG
-                $gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
-                echo "Will MUPIP STOP $mupip_pid" |& tee -a $KILL_LOG
-                echo "The time is (try_rolrec4):" `date`
-                echo $MUPIP stop $mupip_pid
-                $MUPIP stop $mupip_pid |& tee -a $KILL_LOG >& mstop_$KILL_LOG
-                set mstop_status = $status
-                echo Status of MUPIP STOP is: $mstop_status
-                if (0 != $mstop_status) echo "TEST-E-KILL error from MUPIP STOP"
-                # We assume that "kill -9" on all Unix platforms prints either "No such process" or "The process does not exist" in case $mupip_pid does not exist
-                $grep -E "No such process|The process does not exist" mstop_$KILL_LOG
-                if (0 == $status) then
-                        # process died before we attempted MUPIP STOP. do not consider this as an error.
-                        cat mstop_$KILL_LOG >> $KILL_LOG
-                        echo "`date` TEST-X-NOTALIVE, the process is not alive, cannot issue STOP"
-                        echo "cannot continue with this step."
-                        $gtm_tst/$tst/u_inref/check_status.csh $logfile
-                        set stat =  $status
-                        if (! $stat) exit 0 # NOTALIVE is not an error now
-                        exit $stat
-                endif
-                echo "-----------------" |& tee -a $KILL_LOG
-                echo "After MUPIP STOP:" |& tee -a $KILL_LOG
-                echo "-----------------" |& tee -a $KILL_LOG
-		# wait for the process to die
-                $gtm_tst/com/wait_for_proc_to_die.csh $mupip_pid 120 # MUPIP STOP should not take 2 minutes to kill process
+		echo "Before MUPIP STOP:" |& tee -a $KILL_LOG
+		echo "------------------" |& tee -a $KILL_LOG
+		echo "The time is (try_rolrec3):" `date`
+		$psuser | $grep -E "mupip|mumps" >>& $KILL_LOG
+		$gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
+		echo "Will MUPIP STOP $mupip_pid" |& tee -a $KILL_LOG
+		echo "The time is (try_rolrec4):" `date`
+		echo $MUPIP stop $mupip_pid
+		$MUPIP stop $mupip_pid |& tee -a $KILL_LOG >& mstop_$KILL_LOG
 		set mstop_status = $status
-                echo "The time is (try_rolrec5):" `date`
-                $gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
-                $psuser | $grep -E "mupip|mumps" |& tee -a $KILL_LOG
-                if (0 != $mstop_status) then
-                        echo "TEST-E-MUPIPSTOPERROR process $mupip_pid did not stop"
-                        uptime
+		echo Status of MUPIP STOP is: $mstop_status
+		if (0 != $mstop_status) echo "TEST-E-KILL error from MUPIP STOP"
+		# We assume that "kill -9" on all Unix platforms prints either "No such process" or "The process does not exist" in case $mupip_pid does not exist
+		$grep -E "No such process|The process does not exist" mstop_$KILL_LOG
+		if (0 == $status) then
+			# process died before we attempted MUPIP STOP. do not consider this as an error.
+			cat mstop_$KILL_LOG >> $KILL_LOG
+			echo "`date` TEST-X-NOTALIVE, the process is not alive, cannot issue STOP"
+			echo "cannot continue with this step."
+			$gtm_tst/$tst/u_inref/check_status.csh $logfile
+			set stat =  $status
+			if (! $stat) exit 0 # NOTALIVE is not an error now
+			exit $stat
+		endif
+		echo "-----------------" |& tee -a $KILL_LOG
+		echo "After MUPIP STOP:" |& tee -a $KILL_LOG
+		echo "-----------------" |& tee -a $KILL_LOG
+		# wait for the process to die
+		$gtm_tst/com/wait_for_proc_to_die.csh $mupip_pid 120 # MUPIP STOP should not take 2 minutes to kill process
+		set mstop_status = $status
+		echo "The time is (try_rolrec5):" `date`
+		$gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
+		$psuser | $grep -E "mupip|mumps" >>& $KILL_LOG
+		if (0 != $mstop_status) then
+			echo "TEST-E-MUPIPSTOPERROR process $mupip_pid did not stop"
+			uptime
 			echo "Check file ${mupip_pid}_stack_trace.outx for trace of the process"
 			$gtm_tst/com/get_dbx_c_stack_trace.csh $mupip_pid $MUPIP >>&! ${mupip_pid}_stack_trace.outx
 			$gtm_tst/com/check_PC_INVAL_err.csh $mupip_pid ${mupip_pid}_stack_trace.outx
-                        exit 4
-                endif
+			exit 4
+		endif
 		$gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
 		set ipcs_count = `$gtm_tst/com/ipcs -a | $grep $USER | wc -l`
 		if (0 < $ipcs_count) then
@@ -167,30 +167,30 @@ if (("CRASH" == $crash_stop) || ("STOP" == $crash_stop)) then
 		#i.e. CRASH
 		echo "CRASHING MUPIP..." |& tee -a $KILL_LOG
 		echo "-----------------" |& tee -a $KILL_LOG
-                echo "Before the kill:" |& tee -a $KILL_LOG
-                echo "-----------------" |& tee -a $KILL_LOG
-                echo "The time is (try_rolrec6):" `date`
-                $gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
-                $psuser | $grep -E "mupip|mumps" |& tee -a $KILL_LOG
-                echo "Will kill $mupip_pid" |& tee -a $KILL_LOG
-                echo "The time is (try_rolrec7):" `date`
-                echo "kill -9 $mupip_pid"					# BYPASSOK kill
-                kill -9 $mupip_pid |& tee -a $KILL_LOG >& kill9_$KILL_LOG	# BYPASSOK kill
-                set kill_status = $status
-                # We assume that "kill -9" on all Unix platforms prints either "No such process" or "The process does not exist" in case $mupip_pid does not exist
-                $grep -E "No such process|The process does not exist" kill9_$KILL_LOG
+		echo "Before the kill:" |& tee -a $KILL_LOG
+		echo "-----------------" |& tee -a $KILL_LOG
+		echo "The time is (try_rolrec6):" `date`
+		$gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
+		$psuser | $grep -E "mupip|mumps" >>& $KILL_LOG
+		echo "Will kill $mupip_pid" |& tee -a $KILL_LOG
+		echo "The time is (try_rolrec7):" `date`
+		echo "kill -9 $mupip_pid"					# BYPASSOK kill
+		kill -9 $mupip_pid |& tee -a $KILL_LOG >& kill9_$KILL_LOG	# BYPASSOK kill
+		set kill_status = $status
+		# We assume that "kill -9" on all Unix platforms prints either "No such process" or "The process does not exist" in case $mupip_pid does not exist
+		$grep -E "No such process|The process does not exist" kill9_$KILL_LOG
 		if (0 == $status) then
-                        # process died before we attempted kill -9. do not consider this as an error.
-                        cat kill9_$KILL_LOG >> $KILL_LOG
-                        echo "`date` TEST-X-NOTALIVE, the process is not alive, cannot CRASH"
-                        echo "cannot continue with this step."
-                        $gtm_tst/$tst/u_inref/check_status.csh $logfile
-                        set stat =  $status
-                        if (! $stat) exit 0 # NOTALIVE is not an error now
-                        exit $stat
-                endif
-                echo Status of kill is: $kill_status
-                if (0 != $kill_status) echo "TEST-E-KILL error from kill"
+			# process died before we attempted kill -9. do not consider this as an error.
+			cat kill9_$KILL_LOG >> $KILL_LOG
+			echo "`date` TEST-X-NOTALIVE, the process is not alive, cannot CRASH"
+			echo "cannot continue with this step."
+			$gtm_tst/$tst/u_inref/check_status.csh $logfile
+			set stat =  $status
+			if (! $stat) exit 0 # NOTALIVE is not an error now
+			exit $stat
+		endif
+		echo Status of kill is: $kill_status
+		if (0 != $kill_status) echo "TEST-E-KILL error from kill"
 		# If gtm_mupjnl_parallel is 0 or > 1, it is possible multiple child mupip processes are running.
 		# If so, they need to be killed as well. "fuser -k *.dat" comes in handy for this. That will send a
 		# kill9 to all processes which have some *.dat file (in the current directory) open.
@@ -241,13 +241,13 @@ if (("CRASH" == $crash_stop) || ("STOP" == $crash_stop)) then
 		set mkill_status = $status
 		echo "The time is (try_rolrec8):" `date`
 		$gtm_tst/com/ipcs -a | $grep $USER >>& $KILL_LOG
-		$psuser | $grep -E "mupip|mumps" |& tee -a $KILL_LOG
-                if (0 != $mkill_status) then
-                        echo "`date` TEST-E-ALIVE, the process is still alive, could not KILL -9"
-                        echo "cannot continue with the test."
-                        $gtm_tst/com/get_dbx_c_stack_trace.csh $mupip_pid $MUPIP
-                        exit 4
-                endif
+		$psuser | $grep -E "mupip|mumps" >>& $KILL_LOG
+		if (0 != $mkill_status) then
+			echo "`date` TEST-E-ALIVE, the process is still alive, could not KILL -9"
+			echo "cannot continue with the test."
+			$gtm_tst/com/get_dbx_c_stack_trace.csh $mupip_pid $MUPIP
+			exit 4
+		endif
 		$grep "End processing at" $logfile > /dev/null
 		if (! $status) then
 			#it means mupip actually finished, which it should not have.

@@ -83,13 +83,14 @@ if (! $?gtm_test_replay) then
 endif
 
 set data_creation = 'set beg=$ascii("a") for i=beg:1:beg+'$REG_COUNT'-1 set var="^"_$char(i) set @var=(i-beg+1)'
-# The verification message is built in two pieces so that the literal string TEST-E-FAIL never
-# appears in this process's command line. It is passed to "mumps -run %XCMD", so it is visible in
-# any ps listing, and other subtests capture ps output into logs that errors.csh then scans for that
-# very token. A concurrent subtest catching one of these mid flight fails through no fault of its
-# own; see relink/u_inref/rundown.csh for the same hazard noted there. The message printed is
-# unchanged.
-set data_verification = 'set beg=$ascii("a") for i=beg:1:beg+'$REG_COUNT'-1 set var="^"_$char(i) write:($select(@var=(i-beg+1):0,1:1)) "TEST-E-"_"FAIL, Bad value for "_var,!'
+# The verification message is built in two pieces so that no error token appears in this process's
+# command line. It is passed to "mumps -run %XCMD", so it is visible in any ps listing, and other
+# subtests capture ps output into logs that errors.csh then scans. A concurrent subtest catching one
+# of these mid flight fails through no fault of its own. The split has to fall before the "E-":
+# com/errors_catch.txt line 1 is the bare string -E-, not TEST-E-FAIL, so splitting any later leaves
+# -E- contiguous and the capture still fails the other subtest. See relink/u_inref/rundown.csh for
+# the same hazard noted there. The message printed is unchanged.
+set data_verification = 'set beg=$ascii("a") for i=beg:1:beg+'$REG_COUNT'-1 set var="^"_$char(i) write:($select(@var=(i-beg+1):0,1:1)) "TEST-"_"E-FAIL, Bad value for "_var,!'
 
 # First, the encrypted case (to get keys created).
 echo "Case 1. Reencrypting an encrypted database."
