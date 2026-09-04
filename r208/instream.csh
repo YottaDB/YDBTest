@@ -32,6 +32,7 @@
 # search_index_slots-ydb1143		[nars]	Test MUPIP SET -SEARCH_INDEX_SIZE=bytes keeps the slot count the database already has
 # search_index_gde-ydb1143		[nars]	Test the SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS global directory characteristics and the format label change
 # search_index_misc-ydb1143		[nars]	Test MUPIP SET standalone access, MUPIP REORG with the feature on, and that a statsDB gets no search index
+# ydbenv_mkdir_stderr-ydb1267		[nars]	Test %YDBENV reports the stderr of a failed "mkdir -p" in its CREATEFAIL error
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -59,6 +60,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_gde-ydb114
 setenv subtest_list_non_replic	"$subtest_list_non_replic search_index_misc-ydb1143"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zsigproc_pid0-ydb1256"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnl_horolog_time-ydb1258"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_mkdir_stderr-ydb1267"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

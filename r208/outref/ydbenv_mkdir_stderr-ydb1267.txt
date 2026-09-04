@@ -1,0 +1,31 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1267] %YDBENV reports the stderr of a failed "mkdir -p" in the CREATEFAIL error              #
+#--------------------------------------------------------------------------------------------------#
+
+# Stage 1 : "mkdir -p" of $ydb_tmp fails with EACCES
+# Command : mkdir noperm; chmod 555 noperm; sh ydbenv_mkdir_stderr-ydb1267.sh $cwd/noperm/tmp
+PASS : exit status 237, which is the U237 CREATEFAIL error
+PASS : CREATEFAIL names [Permission denied]
+
+# Stage 2 : "mkdir -p" of $ydb_tmp fails with ENOTDIR
+# Command : touch notadir; sh ydbenv_mkdir_stderr-ydb1267.sh $cwd/notadir/tmp
+PASS : exit status 237, which is the U237 CREATEFAIL error
+PASS : CREATEFAIL names [Not a directory]
+
+# Stage 3 : "mkdir -p" of $ydb_tmp succeeds, so ydb_env_set must still build an environment
+# Command : mkdir stage3home; sh ydbenv_mkdir_stderr-ydb1267.sh $cwd/goodtmp $cwd/stage3home
+PASS : exit status 0
+PASS : no error message was reported
+PASS : $ydb_tmp was created
+PASS : $ydb_tmp is group writable, so the "umask 0" prefix survived
+
+# Stage 4 : no stage reported DEVICEWRITEONLY
+# Command : grep -c DEVICEWRITEONLY stage1.out stage2.out stage3.out
+PASS : no DEVICEWRITEONLY error
+
+# Stage 5 : declare the errors stages 1 and 2 provoked, so the framework error scan expects them
+# Command : $gtm_tst/com/check_error_exist.csh stage<N>.out CREATEFAIL SETECODE
+PASS : CREATEFAIL and SETECODE in stage1.out are now declared expected
+PASS : CREATEFAIL and SETECODE in stage2.out are now declared expected
+
+# Done
