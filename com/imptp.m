@@ -609,6 +609,14 @@ loadinfofileifneeded(fillid)
 	set needinfo=(($data(^%imptp(fillid,"trigger"))=0)!($data(^endloop)=0))
 	quit:needinfo=0
 	set file="gtm_test_imptp_info"
+	; "writeinfofileifneeded" creates this file only if "gtm_test_onlinerollback" is TRUE, but the
+	; "needinfo" check above is also satisfied by a plain crash followed by MUPIP JOURNAL -ROLLBACK
+	; (e.g. the rollback_B/repeat_rollback_after_crash subtest), which rolls ^%imptp and ^endloop
+	; away without any file having been written. There is nothing to recover in that case, so quit
+	; instead of failing with DEVOPENFAIL/ENO2 and killing this process through $ETRAP.
+	; Stream -1 resets the $ZSEARCH context and returns the first match, so this is a stateless
+	; existence check that stays correct on repeated calls in the same process.
+	quit:""=$zsearch(file,-1)
 	open file:readonly
 	use file
 	for i=1:1  read line xecute:$length(line) "set "_line quit:$zeof
