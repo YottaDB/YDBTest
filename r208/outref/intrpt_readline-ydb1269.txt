@@ -1,0 +1,54 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [YDB#1269] Test MUPIP INTRPT at a readline direct mode prompt                                                       #
+# Direct mode reads through the readline library when ydb_readline is set. A MUPIP INTRPT that arrives while the      #
+# process sits in that read makes the signal handler longjmp out of libreadline; readline_read_mval() then saves the  #
+# partially typed line, drives $ZINTERRUPT and restores the line on the way back in. An interrupt that arrives when   #
+# the process is NOT inside libreadline reaches the same code with nothing to save, and saving libreadline state      #
+# there is what caused the SIGSEGV of YDB#1269. An expect script sends MUPIP INTRPT to a mumps -direct process and    #
+# verifies that:                                                                                                      #
+#   1. an interrupt while a line is partially typed drives $ZINTERRUPT and readline comes back with the line intact   #
+#   2. an interrupt that arrives while a command is executing, i.e. outside libreadline, drives $ZINTERRUPT and       #
+#      leaves the process at a working prompt                                                                         #
+#   3. a burst of interrupts at the prompt leaves the process alive with the prompt still usable                      #
+#   4. an interrupt that is still pending when the process first reaches the direct mode prompt, which is             #
+#      the SIGSEGV of YDB#1269 itself, runs $ZINTERRUPT and leaves the process at a working prompt                    #
+#---------------------------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# $gtm_dist/mumps -direct
+# YDB>kill ^intr1269 set $zinterrupt="set ^intr1269=$get(^intr1269,0)+1"
+#      every step below reads ^intr1269 to tell that $ZINTERRUPT ran, since a WRITE to the
+#      terminal from $ZINTERRUPT would get ZINTRECURSEIO
+
+# Step 1 : type 'write "PART","IAL",!' at the YDB> prompt and leave it unterminated, run
+#          $gtm_dist/mupip intrpt <pid>, then send <CR>
+#          expect the typed line to come back intact, so the <CR> prints PARTIAL, and ^intr1269 to be 1
+PASS: readline resumed the partially typed line after the interrupt
+PASS: $ZINTERRUPT ran for the interrupt that arrived inside libreadline
+
+# Step 2 : with 'hang 5' executing, i.e. with the process not inside libreadline, run
+#          $gtm_dist/mupip intrpt <pid>
+#          expect ^intr1269 to be 2 and the prompt to run a command afterwards
+PASS: $ZINTERRUPT ran for the interrupt that arrived outside libreadline
+PASS: the prompt still runs commands after an interrupt outside libreadline
+
+# Step 3 : at the YDB> prompt, run $gtm_dist/mupip intrpt <pid> ten times back to back
+#          expect the process to still be there, and ^intr1269 to have moved past 2. The count is
+#          not checked exactly, since signals sent this fast can coalesce
+PASS: the process survived a burst of interrupts and its prompt still works
+PASS: $ZINTERRUPT ran again for the burst
+
+# Step 4 : run $gtm_dist/mumps -run intr1269, which does 'zsystem "sleep 3" break' on one M line,
+#          and run $gtm_dist/mupip intrpt <pid> while that ZSYSTEM child is still running, so the
+#          interrupt is still pending when the process first reaches the direct mode prompt
+#          expect the YDB> prompt instead of a SIGSEGV, ^intr1269 to be 1, and zcontinue to resume
+PASS: the process reached the direct mode prompt with an interrupt pending
+PASS: $ZINTERRUPT ran for the interrupt that was pending at direct mode entry
+PASS: the routine resumed after the interrupt that was pending at direct mode entry
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

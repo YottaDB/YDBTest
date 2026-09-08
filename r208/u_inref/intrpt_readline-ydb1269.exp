@@ -1,0 +1,143 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# Everything the session writes is matched by the "expect"s below but none of it is echoed to the
+# reference file: readline redraws the prompt and the input line with terminal dependent escape
+# sequences, so only the PASS lines this script writes make up the reference output.
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+
+# The interrupts below are sent with MUPIP INTRPT, which needs the pid of the direct mode process
+send -- "write \"PID=\",\$job,!\r"
+expect -re {PID=([0-9]+)}
+set pid $expect_out(1,string)
+expect -exact "YDB>"
+
+# $ZINTERRUPT counts its invocations in a global, which is how each step below tells that the
+# interrupt was handled and not merely delivered. It cannot report itself by writing to the terminal:
+# $PRINCIPAL is the active device when these interrupts arrive, and writing to it from $ZINTERRUPT
+# gets a ZINTRECURSEIO error.
+puts "# \$gtm_dist/mumps -direct"
+puts "# YDB>kill ^intr1269 set \$zinterrupt=\"set ^intr1269=\$get(^intr1269,0)+1\""
+puts "#      every step below reads ^intr1269 to tell that \$ZINTERRUPT ran, since a WRITE to the"
+puts "#      terminal from \$ZINTERRUPT would get ZINTRECURSEIO"
+send -- "kill ^intr1269 set \$zinterrupt=\"set ^intr1269=\$get(^intr1269,0)+1\"\r"
+expect -exact "YDB>"
+send -- "write \"COUNT=\",\$get(^intr1269,0),!\r"
+expect -exact "COUNT=0"
+expect -exact "YDB>"
+
+# (1) An interrupt while a line is partially typed at the readline prompt drives $ZINTERRUPT, and
+# readline then comes back with the partially typed line intact. Note the text typed below is
+# deliberately not the text it writes, so that expecting the latter cannot match the echo of the
+# former (or its redraw after $ZINTERRUPT has run).
+puts ""
+puts "# Step 1 : type 'write \"PART\",\"IAL\",!' at the YDB> prompt and leave it unterminated, run"
+puts "#          \$gtm_dist/mupip intrpt <pid>, then send <CR>"
+puts "#          expect the typed line to come back intact, so the <CR> prints PARTIAL, and ^intr1269 to be 1"
+send -- "write \"PART\",\"IAL\",!"
+expect -exact "write \"PART\",\"IAL\",!"	;# wait for the echo, so the interrupt cannot beat the input into readline
+catch {exec $::env(gtm_dist)/mupip intrpt $pid} mupip_out
+sleep 2						;# let the interrupt be delivered and $ZINTERRUPT run
+send -- "\r"
+expect -exact "PARTIAL"
+puts "PASS: readline resumed the partially typed line after the interrupt"
+expect -exact "YDB>"
+send -- "write \"COUNT=\",\$get(^intr1269,0),!\r"
+expect -exact "COUNT=1"
+puts "PASS: \$ZINTERRUPT ran for the interrupt that arrived inside libreadline"
+expect -exact "YDB>"
+
+# (2) An interrupt that arrives while a command is executing reaches readline_read_mval() with the
+# event pending but with libreadline not in the picture, which is the YDB#1269 path. $ZINTERRUPT must
+# still run and the process must come back to a prompt that works.
+puts ""
+puts "# Step 2 : with 'hang 5' executing, i.e. with the process not inside libreadline, run"
+puts "#          \$gtm_dist/mupip intrpt <pid>"
+puts "#          expect ^intr1269 to be 2 and the prompt to run a command afterwards"
+send -- "hang 5\r"
+sleep 1
+catch {exec $::env(gtm_dist)/mupip intrpt $pid} mupip_out
+expect -exact "YDB>"
+send -- "write \"COUNT=\",\$get(^intr1269,0),!\r"
+expect -exact "COUNT=2"
+puts "PASS: \$ZINTERRUPT ran for the interrupt that arrived outside libreadline"
+expect -exact "YDB>"
+send -- "write \"AFTER\",\"HANG\",!\r"
+expect -exact "AFTERHANG"
+puts "PASS: the prompt still runs commands after an interrupt outside libreadline"
+expect -exact "YDB>"
+
+# (3) A burst of interrupts at the prompt, which is how the YDB#1269 SIGSEGV was originally hit. The
+# count is not checked here since signals sent this fast can coalesce; what matters is that the
+# process is still alive and its prompt still works.
+puts ""
+puts "# Step 3 : at the YDB> prompt, run \$gtm_dist/mupip intrpt <pid> ten times back to back"
+puts "#          expect the process to still be there, and ^intr1269 to have moved past 2. The count is"
+puts "#          not checked exactly, since signals sent this fast can coalesce"
+for {set i 0} {$i < 10} {incr i 1} {
+	catch {exec $::env(gtm_dist)/mupip intrpt $pid} mupip_out
+}
+sleep 2
+send -- "write \"STILL\",\"ALIVE \",\$job,!\r"
+expect -exact "STILLALIVE $pid"
+puts "PASS: the process survived a burst of interrupts and its prompt still works"
+expect -exact "YDB>"
+send -- "write \"MOREFIRED=\",(2<\$get(^intr1269,0)),!\r"
+expect -exact "MOREFIRED=1"
+puts "PASS: \$ZINTERRUPT ran again for the burst"
+expect -exact "YDB>"
+
+send -- "halt\r"
+expect -exact "SHELL"
+
+# (4) The YDB#1269 SIGSEGV itself. intr1269.m runs "zsystem" and "break" on one M line, so a MUPIP INTRPT
+# delivered while the ZSYSTEM child runs is still pending when the process enters direct mode, and it is
+# pending there before libreadline has ever been initialized. Saving libreadline state in that condition
+# is what SIGSEGVed: the restore on the way back in hands readline() a NULL rl_executing_keyseq.
+puts ""
+puts "# Step 4 : run \$gtm_dist/mumps -run intr1269, which does 'zsystem \"sleep 3\" break' on one M line,"
+puts "#          and run \$gtm_dist/mupip intrpt <pid> while that ZSYSTEM child is still running, so the"
+puts "#          interrupt is still pending when the process first reaches the direct mode prompt"
+puts "#          expect the YDB> prompt instead of a SIGSEGV, ^intr1269 to be 1, and zcontinue to resume"
+send -- "\$gtm_dist/mumps -run intr1269\r"
+expect -re {DMPID=([0-9]+)}
+set dmpid $expect_out(1,string)
+sleep 1						;# the interrupt has to arrive while the ZSYSTEM child is still running
+catch {exec $::env(gtm_dist)/mupip intrpt $dmpid} mupip_out
+expect {
+	-exact "YDB>" { }
+	-re "KILLBYSIGSINFO" {
+		# Without the YDB#1269 fix the process dies here. Say so and stop, rather than let every
+		# remaining step of this step time out against a process that is no longer there.
+		puts "TEST-E-FAIL : the process was killed at the direct mode prompt with an interrupt pending"
+		exit
+	}
+}
+puts "PASS: the process reached the direct mode prompt with an interrupt pending"
+send -- "write \"DMCOUNT=\",\$get(^intr1269,0),!\r"
+expect -exact "DMCOUNT=1"
+puts "PASS: \$ZINTERRUPT ran for the interrupt that was pending at direct mode entry"
+expect -exact "YDB>"
+send -- "zcontinue\r"
+expect -exact "AFTERBREAK"
+puts "PASS: the routine resumed after the interrupt that was pending at direct mode entry"
+expect -exact "SHELL"
+
+send -- "exit\r"
+expect eof
+
+exit
