@@ -112,7 +112,11 @@ echo "# So now we check to ensure that none of this created a TERMWRITE error."
 echo "# Note that contamination from other concurrent tests on the "
 echo "# system is theoretically possible for this part of the test."
 $gtm_tst/com/getoper.csh "$start_time" "" syslog1.txt ""
-grep TERMWRITE syslog1.txt || echo "no TERMWRITE message found in syslog."
+# Restrict the scan to this subtest's own image. "sr_unix/util_output.c" builds the syslog facility
+# name from the image type, so the mupip commands above log as YDB-MUPIP. Without this, a concurrent
+# v62000/gtm7919 (which ZMESSAGEs every message in the catalogue, TERMWRITE included, from a mumps
+# process) shows up here and fails this subtest.
+grep TERMWRITE syslog1.txt | grep "YDB-MUPIP\[" || echo "no TERMWRITE message found in syslog."
 echo
 
 echo "# Now checking the error message for mupip upgrade with the -file argument"
