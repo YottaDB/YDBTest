@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -44,7 +44,7 @@ set pidsrc=`$tst_awk  '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }' health0.ou
 $pri_shell "cd $PRI_SIDE; $MUPIP replic -source -shut -time=0" >&  init_off.out
 $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 120
 if ($status) then
-        echo "TEST-E-ERROR source server $pidsrc did not die."
+	echo "TEST-E-ERROR source server $pidsrc did not die."
 endif
 
 $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -shut -time=0" >>& init_off.out
@@ -75,7 +75,7 @@ set pidsrc=`$tst_awk  '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }' health2.ou
 $MUPIP replic -source -shut $gtm_test_instsecondary -time=0 >>&inst1_activity.out
 $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 120
 if ($status) then
-        echo "TEST-E-ERROR source server $pidsrc did not die."
+	echo "TEST-E-ERROR source server $pidsrc did not die."
 endif
 ## -conn= 5 (hard tries times), 500 (hard tries period, ms), 1 (soft tries period), 2 (alert period), 15 (heartbeat period), 60 (max heartbeat wait)
 $MUPIP replic -source -start -log=src2.log -secondary="$HOST":"$portno" -buff=$tst_buffsize $gtm_test_instsecondary -conn=5,500,1,2,15,60 >>&inst1_activity.out
@@ -124,7 +124,7 @@ set pidsrc=`$tst_awk  '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }' health4.ou
 $MUPIP replic -source -shut $gtm_test_instsecondary -time=0 >>&inst1_activity.out
 $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 120
 if ($status) then
-        echo "TEST-E-ERROR source server $pidsrc did not die."
+	echo "TEST-E-ERROR source server $pidsrc did not die."
 endif
 ## Turn on INST1-source,set the soft tries period as 155 seconds and alert period as 310 seconds
 $MUPIP replic -source -start -log=src4.log -secondary="$HOST":"$portno" -log=src4.log -buf=1 $gtm_test_instsecondary -conn=2,500,155,310,15,60 >>&inst1_activity.out
@@ -142,7 +142,8 @@ $gtm_tst/com/wait_for_log.csh -log src4.log -message "Connection information" -d
 echo "src4.log:"
 ## Note the first REPLALERT in this subtest does not pop for at least 310 seconds (soft interval is 155 so two soft intervals
 ## is 310 seconds). Generally 311 is the expected value as there's also a hard spin that takes a second thus giving us the
-## expected value of 11. Because of this, set our "last message" base value to 310 we values up to 320 are acceptable.
+## expected value of 311. Because of this, set our "last message" base value to 310; the filter allows the soft
+## tries period plus 10 seconds on top of that, so values up to 475 are acceptable.
 $gtm_dist/mumps -r filterSRClog^lesslog src4.log 310
 ## In src4.log, there will be no "3 soft connection attempt failed", which would mean that the source server connects to the
 ## receiver after more than 310 seconds. In the src4.log, the alert message  "Could not connect to secondary in 311 seconds"
@@ -163,7 +164,7 @@ $pri_shell "cd $PRI_SIDE; $MUPIP replic -source -shut -time=0" >&inst1_final_shu
 ## Turn off INST2 after the source server is shut down
 $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 120
 if ($status) then
-        echo "# `date` TEST-E-ERROR source server $pidsrc did not die in 120 seconds. Test will exit now"
+	echo "# `date` TEST-E-ERROR source server $pidsrc did not die in 120 seconds. Test will exit now"
 	exit 1
 endif
 $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -shut -time=0" >>&inst2_activity.out
