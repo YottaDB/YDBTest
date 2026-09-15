@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,7 +91,13 @@ echo "GTM_TEST_DEBUGINFO at the end : `date`"		>>&! backup_loop.out
 $echoline
 echo "# Backups complete on INST2, signal the updates to stop:"
 touch end_imptp_loop.txt
-$gtm_tst/com/wait_for_log.csh -log imptp_loop.done -waitcreation -duration 480
+# imptp_loop.csh only tests this flag between iterations, and one iteration has been seen to take 20
+# minutes on a busy system (YDBTest#1068). Every step of its loop body is needed to end the update
+# processes it started, and the "$MSR STARTSRC INST1 INST2" it does after leaving the loop took 6
+# minutes in that same run, so the wait here cannot be bounded by checking the flag more often. It
+# has to be long enough for the worst case: 480 seconds expired 731 seconds into a tail that
+# completed normally, leaving a source server running into this script's wrap-up.
+$gtm_tst/com/wait_for_log.csh -log imptp_loop.done -waitcreation -duration 1800
 # We've brought up and shutdown the links explicitly, let's fix up the link information
 $MSR REFRESHLINK INST1 INST2
 
@@ -121,7 +127,7 @@ while ($cntx)
 		$MSR STOPRCV INST1 INST2		>>&! restore_loop.out
 	endif
 	#for debugging:
-  	$MSR RUN INST2 '$gtm_tst/com/backup_dbjnl.csh cpdir'$cntx' "*.dat *.gld *.mjl* *.repl"'
+	$MSR RUN INST2 '$gtm_tst/com/backup_dbjnl.csh cpdir'$cntx' "*.dat *.gld *.mjl* *.repl"'
 	set bakdircntx = bakdir$cntx
 	echo "#- Revert to bakdircntx ($bakdircntx) contents, and cut new journal files (not traced below)"
 	# do not trace the below run because, test_remote_jnldir of -multisite is not handled by the framework
@@ -129,7 +135,7 @@ while ($cntx)
 	#$MSR RUN INST2 "mv mumps.repl sec_${cntx}_mumps.repl"
 	$MSR RUN INST2 'set msr_dont_trace ; $MUPIP replic -instance_create '$suppl_parm' '$gtm_test_qdbrundown_parms' -name=__SRC_INSTNAME__'
 	$MSR STARTRCV INST1 INST2 waitforconnect updateresync=sec_${cntx}_mumps.repl
-  	echo "# - check that the connection is alive by doing a checkhealth and checking the backlog reduces"
+	echo "# - check that the connection is alive by doing a checkhealth and checking the backlog reduces"
 	$gtm_tst/com/is_src_backlog_below.csh 0
 	set backlog = $status
 	echo "# `date` : backlog value returned is: $backlog"					>>&! restore_loop.out
