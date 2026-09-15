@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,7 +75,7 @@ $MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 100"
 # get initialized to the same value for all instances. So wait for all updates from INST1 to be synced to INST3
 # and then roll them back to jnl seqno 1 with a -resync rollback. The rollback will leave the LMS Group Info untouched.
 $MSR START INST1 INST3 RP
-$MSR SYNC ALL_LINKS
+$MSR SYNC ALL_LINKS sync_to_disk
 $MSR STOP INST1 INST3
 $MSR RUN SRC=INST3 '$gtm_tst/com/mupip_rollback.csh -resync=1 -losttrans=ignore.glo "*" >&! rollback_fetchresync_1.out ; $grep -E "RLBKJNSEQ|JNLSUCCESS" rollback_fetchresync_1.out'
 $gtm_tst/com/view_instancefiles.csh -print -instance INST1 INST2
@@ -137,7 +137,7 @@ echo "######### STEP 3 #############"
 $MSR RUN INST1 '$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*"'
 $MSR START INST1 INST4 RP
 $MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 110"
-$MSR SYNC ALL_LINKS
+$MSR SYNC ALL_LINKS sync_to_disk
 #$gtm_tst/com/view_instancefiles.csh -diff
 $gtm_tst/com/view_instancefiles.csh -print
 $MSR CRASH INST1

@@ -48,7 +48,7 @@ YDB>
 ==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
-==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -488,7 +488,7 @@ YDB>
 YDB>
 
 YDB>
-==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
 ==========================================================
 The instance file contents on INST1 (instancefile_3.out):
 YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
