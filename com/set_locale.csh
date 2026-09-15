@@ -3,7 +3,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,15 @@ else
 	set utflocale = `locale -a | grep $binaryopt -iE 'en_us\.utf.?8$' | head -n 1`  #BYPASSOK grep head
 endif
 
-setenv LC_CTYPE $utflocale
+if ("" == "$utflocale") then
+	# "locale -a" gave us nothing to use. Say so and leave LC_CTYPE alone. Setting it to the empty
+	# string starts every "mumps" of the subtest in the C locale, which fails immediately with
+	# NONUTF8LOCALE, so every subtest in the gtm_chset=UTF-8 stream looks like a product defect
+	# until its .log is read.
+	echo "TEST-E-SET_LOCALE : 'locale -a' returned no UTF-8 locale. Leaving LC_CTYPE unchanged."
+else
+	setenv LC_CTYPE $utflocale
+endif
 setenv LC_COLLATE C # because regular unix commands like ls, sort etc. rely on LC_COLLATE to be "C" for sorting names
 
 # ??? other platforms???
