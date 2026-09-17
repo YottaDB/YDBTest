@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,7 @@ set tstpath = `pwd`
 set pypath = $tstpath/python
 setenv PKG_CONFIG_PATH $ydb_dist
 
-git clone https://gitlab.com/YottaDB/Lang/YDBPython.git $pypath
+$gtm_tst/com/git_clone_retry.csh ydbpython_clone.out https://gitlab.com/YottaDB/Lang/YDBPython.git $pypath
 @ status1 = $status
 if ($status1) then
 	echo "SETUPPYENV-E-FAILED : [git clone https://gitlab.com/YottaDB/Lang/YDBPython.git $pypath] failed with status = [$status1]"

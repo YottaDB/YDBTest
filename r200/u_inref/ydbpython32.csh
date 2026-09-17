@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,7 +13,7 @@
 # Clone YDBPython
 echo "# Starting test for CTRL-C on Interactive (started from terminal) Flask Application terminates properly"
 echo "# Cloning and Installing YDBPython"
-git clone -q https://gitlab.com/YottaDB/Lang/YDBPython.git
+$gtm_tst/com/git_clone_retry.csh ydbpython_clone.out -q https://gitlab.com/YottaDB/Lang/YDBPython.git YDBPython
 cd YDBPython
 
 # Create Python virtual environment:

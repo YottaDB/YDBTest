@@ -40,7 +40,7 @@ echo "# specification is an open ended range is followed by its -xecute text, wh
 echo "# quote. The plugin is cloned and built here, against the YottaDB under test, rather than installed with"
 echo "# ydbinstall: ydbinstall installs the distribution its own copy is bundled with, which is not the build"
 echo "# under test in every pipeline, and the subtest would then report on an unrelated YottaDB."
-git clone -q https://gitlab.com/YottaDB/Util/YDBAIM.git
+$gtm_tst/com/git_clone_retry.csh ydbaim_clone.out -q https://gitlab.com/YottaDB/Util/YDBAIM.git YDBAIM
 mkdir YDBAIM/build
 cd YDBAIM/build
 cmake .. >& cmake.out

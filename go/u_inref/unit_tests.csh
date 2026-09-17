@@ -43,8 +43,8 @@ rm -f go.mod go.work
 if ( ! -d YDBGo ) then
 	# clone -depth 1 gets only the latest version for testing (faster)
 	set ydbgo_repo = "https://gitlab.com/YottaDB/Lang/YDBGo.git"
-	git clone -q --depth 1 $ydbgo_repo $tstpath/YDBGo >>& ydbgo_clone.out || \
-		echo "[git clone --depth 1 $ydbgo_repo:q] failed with status [$status]:" && cat ydbgo_clone.out && exit 1
+	$gtm_tst/com/git_clone_retry.csh ydbgo_clone.out -q --depth 1 $ydbgo_repo $tstpath/YDBGo || \
+		echo "[git clone --depth 1 $ydbgo_repo:q] failed with status [$status]" && exit 1
 endif
 
 # We need to set the global directory to an absolute path because "go test" operates in a subdirectory

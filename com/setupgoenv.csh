@@ -81,8 +81,8 @@ if ( $?ydbgo_repo ) then
 	echo "# Cloning $ydbgo_repo to $tstpath/YDBGo"
 	# clone -depth 1 gets only the latest version for testing (faster)
 	rm $tstpath/YDBGo go.work -rf # remove first in case setupgoenv.csh gets run twice
-	git clone -q --depth 1 $ydbgo_repo $tstpath/YDBGo >>& ydbgo_clone.out || \
-		echo "[git clone --depth 1 $ydbgo_repo:q] failed with status [$status]:" && cat ydbgo_clone.out && exit 1
+	$gtm_tst/com/git_clone_retry.csh ydbgo_clone.out -q --depth 1 $ydbgo_repo $tstpath/YDBGo || \
+		echo "[git clone --depth 1 $ydbgo_repo:q] failed with status [$status]" && exit 1
 	# If it's a local file repository diff + apply includes any uncommitted working files from the local YDBGo
 	if ( "$ydbgo_repo" =~ "file://*" ) git -C "$ydbgo_repo_path" diff | git -C $tstpath/YDBGo apply --allow-empty -
 	# include '.' below for several tests that assume it's included
