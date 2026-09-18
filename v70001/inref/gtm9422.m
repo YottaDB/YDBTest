@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -17,7 +17,7 @@ gtm9422
 	view "STATSHARE"	; Enable global stat sharing
 	set $etrap="set ^shutdown=1 write $zstatus,!!! zshow ""*"""
 	set maxKids=12		; Max worker bee children
-	set maxTime=20		; Max time (in seconds) for test
+	set maxTime=180		; Max time (in seconds) to wait for every monitored stat to increment
 	set interval=4		; Monitor interval
 	set ^shutdown=0		; Initialize
 	kill ^a
@@ -32,9 +32,8 @@ gtm9422
 	; The following set of stats are those that we typically see being non-zero. This set of stats are those
 	; which we verify had at least one non-zero stat during the run. These are the "monitored" stats.
 	;
-	; Note - The following stats are those that this test is capable of getting non-zero values out of
-	;	 over the 20 second run time of the test. The following stats did not reliably have a non-zero
-	;	 value: "PRC,ZAD"
+	; Note - The following stats are those that this test is capable of getting non-zero values out of.
+	;	 The following stats did not reliably have a non-zero value: "PRC,ZAD"
 	;
 	set statIncrementeds="DEXA,GLB,JNL,MLK,TRX,JOPA,AFRA,BREA,MLBA,TRGA"	; Stats to be "monitored"
 	write !,"# Unmonitored stats: PRC,ZAD (to be added in a future commit)",!
@@ -56,13 +55,22 @@ gtm9422
 	; Now that the children are playing, lets start watching some stats. Look at each stat line generated.
 	; At the end of the day, we need at least one non-zero stat for SOME toggle value.
 	;
-	write $zdate($horolog,"24:60:SS")," Statistics @ ",interval," second intervals for ",maxTime," seconds",!
-	for time=0:interval:maxTime hang interval do
-	. write "%YGBLSTAT: "
+	; Sample until every monitored stat has been seen incrementing, or until maxTime seconds have passed.
+	; A fixed window is not enough. DEXA and AFRA need the database to outgrow its allocation and BREA
+	; needs it to outgrow the global buffers, and on a loaded system the workers do not get through
+	; enough operations for either to happen in a window short enough to be worth fixing in advance.
+	; The individual samples go to a file rather than to the output the test compares, so that the
+	; number of samples can vary.
+	write $zdate($horolog,"24:60:SS")," Statistics @ ",interval," second intervals until every monitored stat increments, up to ",maxTime," seconds",!
+	set statLogFile="ygblstat.log"
+	open statLogFile:(newversion)
+	set startTime=$horolog
+	for  hang interval do  quit:$$allIncremented!(maxTime<$$^difftime($horolog,startTime))
 	. set start=$zut
 	. set statLine=$$STAT^%YGBLSTAT("*",collectStats)
 	. set end=$zut				; Compute ^%YGBLSTAT() execution time - no test purpose - just interesting
-	. write statLine,"  (compute time ",(end-start)/(1000)," milliseconds)",!
+	. use statLogFile write "%YGBLSTAT: ",statLine,"  (compute time ",(end-start)/(1000)," milliseconds)",!
+	. use $principal
 	. ;
 	. ; Now parse the stat line we got and check each value for both <= to number of processes and that
 	. ; we saw the required non-zero stat value.
@@ -74,6 +82,7 @@ gtm9422
 	. . if (statVal>statPrevVal(statName)) do
 	. . . if $increment(statIncremented(statName))	; Bump non-zero counter for this stat if non-zero
 	. . . set statPrevVal(statName)=statVal
+	close statLogFile
 	;
 	; Shutdown the workers
 	;
@@ -95,6 +104,17 @@ gtm9422
 	else  write "SUCCESS - Saw at least one increment for each monitored counter stat above",!
 	write !,$zdate($horolog,"24:60:SS")," Complete",!
 	quit
+
+;
+; Return 1 if every monitored stat has been seen incrementing at least once, 0 otherwise.
+;
+allIncremented()
+	new i,ret,stat
+	set ret=1
+	for i=1:1:$zlength(statIncrementeds,",") do  quit:'ret
+	. set stat=$zpiece(statIncrementeds,",",i)
+	. set:'$get(statIncremented(stat),0) ret=0
+	quit ret
 
 ;
 ; Routine run by each child/worker-bee to do various operations (M Locks, DB updates both singular and inside a
