@@ -1,0 +1,37 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1248] Every spelling of the ZBFSIZE deviceparameter down to ZB is accepted                   #
+#-----------------------------------------------------------------------------------------------#
+
+# sr_port/deviceparameters.c records ZBFSIZE with a minimum abbreviation of two characters, so
+# ZB, ZBF, ZBFS, ZBFSI and ZBFSIZ all mean ZBFSIZE. Each of them was rejected at compile time
+# with a DEVPARUNK error instead: the Z entry of dev_param_index[] pointed one entry past the
+# start of the Z section of dev_param_names[], so int_namelook never reached the ZB* entry that
+# holds the abbreviation. The only assert on that table checks its total size, which an index
+# left behind does not change, so nothing caught it.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Command : $ydb_dist/yottadb -run abbrev^ydb1248
+#   expect all six spellings, ZB through ZBFSIZE, to be accepted by an OPEN of a SOCKET device
+ZB : accepted
+ZBF : accepted
+ZBFS : accepted
+ZBFSI : accepted
+ZBFSIZ : accepted
+ZBFSIZE : accepted
+PASS : all six spellings of ZBFSIZE were accepted
+
+# Command : $ydb_dist/yottadb -run value^ydb1248
+#   expect the two character spelling to set the deviceparameter the full name sets. The device
+#   is OPENed with a listening socket, since ZBFSIZE is reported for each socket rather than for
+#   the device, and with 2048 rather than the default 1024 so that a reading of the default
+#   cannot pass for a reading of what was asked for
+PASS : an OPEN with zb=2048 set ZBFSIZE to 2048 on the socket it created
+
+# Done
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
