@@ -631,6 +631,14 @@ writeSources
 	.	set sources(i,"ver")=version
 	.	set exists=$data(^SRCDIRS(dirName,"rtns",name))
 	.	if ('exists) if $increment(^SRCDIRS(dirName,"rtns")) set ^SRCDIRS(dirName,"rtns",name)=1
+	; Wait once more before releasing ^ACTION. The next operation, by any of the concurrent processes,
+	; may be an "executeRoutine" (recorded as ACTEXECUTE) whose auto-ZLINK compiles a source file
+	; into an object file, and without this wait that object file can land in the same OS timestamp
+	; granule as the source file written above. "op_zlink" recompiles unless the source file is
+	; strictly OLDER than the object file, so equal timestamps recompile, while "simulateExec"
+	; compares recorded operation times, which can never be equal, so it has no equivalent of that
+	; case and predicts no recompile where the real files tie.
+	hang TIMESTAMPTIME
 	lock -^ACTION
 	do record(ACTWRITESOURCES,time,.sources)
 	quit
