@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -2785,7 +2785,12 @@ getboolexpr(dlrtest,boolexpr)
 	new depth
 	set depth=$random(256)
 	set dlrtest=$random(2)	; construct boolexpr assuming $test=dlrtest
-	set boolexpr=$select(0=boolrslt:$$zero(depth),1=boolrslt:$$one(depth),1:$$null(depth))
+	; Regenerate while the expression is too long: callers XECUTE a command built around it and an
+	; overlong one gets an INDRMAXLEN error. Halving the depth on each retry guarantees this
+	; terminates, since the generators return a single leaf token at depth 0.
+	for  do  quit:($$maxboolexprlen'<$length(boolexpr))
+	. set boolexpr=$select(0=boolrslt:$$zero(depth),1=boolrslt:$$one(depth),1:$$null(depth))
+	. set depth=depth\2
 	quit
 
 valueinit	;
@@ -2805,7 +2810,11 @@ RetSame(boolvalue,depth)
 	quit:$random(8) boolvalue	; return boolean value as is from function call 87.5% of the time
 	; 12.5% of the time, evaluate a boolean expression inside a function call that is already inside a boolean expression
 	new xstr,boolret,boolexpr
-	set boolexpr=$select(0=boolvalue:$$zero(depth),1=boolvalue:$$one(depth),1:$$null(depth))
+	; Bound this nested expression the same way as in "getboolexpr": it is XECUTEd below, so an
+	; overlong one gets an INDRMAXLEN error, and halving the depth guarantees the loop terminates.
+	for  do  quit:($$maxboolexprlen'<$length(boolexpr))
+	. set boolexpr=$select(0=boolvalue:$$zero(depth),1=boolvalue:$$one(depth),1:$$null(depth))
+	. set depth=depth\2
 	set xstr="set boolret="_boolexpr
 	xecute xstr
 	quit boolret
@@ -2823,3 +2832,9 @@ boolexprtoodeep	;
 	write !
 	write " zwrite x",!
 	quit
+
+maxboolexprlen()	;
+	; Callers XECUTE a command built around the generated boolean expression, wrapped in at most a few
+	; dozen bytes. Keep the expression well below the 32766 byte limit on an indirection argument so
+	; that command does not get an INDRMAXLEN error.
+	quit 32000
