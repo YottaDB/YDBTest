@@ -15,18 +15,18 @@ MUPIP CREATE
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/create2.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
 ##SUSPEND_OUTPUT HOST_OS390_S390
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
 %SYSTEM-E-ENO17, File exists
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/create1.dat
 : EDC5117I File exists. (errno2=0x05620063)
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/create2.dat
 : EDC5117I File exists. (errno2=0x05620063)
 ##ALLOW_OUTPUT HOST_ALL
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 PASS from fill1^myfill("set")
 PASS from fill1^myfill("ver")
 ##SOURCE_PATH##/mupip

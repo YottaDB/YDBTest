@@ -8,10 +8,10 @@ default.dat
 # Run [ls -1 *.dat]. Verify that a.dat did get created
 a.dat
 # Test that [mupip create -region=AREG] issues File-exists error if AREG (AUTODB region) file a.dat already exists
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/a.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 # Test that [mupip create] without [-region=] issues File-exists error only for DEFAULT but not for AREG (AUTODB region)
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/default.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/default.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created

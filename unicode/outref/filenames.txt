@@ -1419,15 +1419,15 @@ YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract UTF-8
 #- mupip load using a filename with multi-byte characters.
 #	--> This should succeed.
 # mupip create - will give 'File exists' error for the existing database files... please ignore
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/安办在.好
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/安办在.好
 %SYSTEM-E-ENO17, File exists
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 # mupip load ｍｕｐｉｐｅｘｔ1.ext
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract ｍｕｐｉｐｅｘｔ1.ext UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR

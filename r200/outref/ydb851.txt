@@ -20,13 +20,13 @@ Fileheader dump of region DEFAULT
 # Testing [mupip dumpfhead -region=DEFAULT]
 Fileheader dump of region DEFAULT
 # Testing [mupip create -region DEFAULT]
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 # Testing [mupip create -region=DEFAULT]
-%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
+%YDB-W-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO17, File exists
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 # Testing [mupip extract -region DEFAULT extract1_space.ext]
 %YDB-I-RECORDSTAT, ^d:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8

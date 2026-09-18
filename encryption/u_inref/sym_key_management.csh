@@ -73,10 +73,10 @@ $gpg --homedir=$GNUPGHOME --batch --yes --delete-secret-and-public-key "$fingerp
 echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test1.out
-	$gtm_tst/com/check_error_exist.csh test1.out YDB-F-DBNOCRE >&! dbnocre1.outx
+	$gtm_tst/com/check_error_exist.csh test1.out YDB-W-DBNOCRE >&! dbnocre1.outx
 	$grep -q "seen in test1.out as expected" dbnocre1.outx
 	if ($status) then
-		echo "TEST-E-FAIL, YDB-F-DBNOCRE is not found in test1.out."
+		echo "TEST-E-FAIL, YDB-W-DBNOCRE is not found in test1.out."
 	endif
 else if ("db" == $operation) then
 	$gtm_dist/mumps -run %XCMD 'set ^a(1)=$horolog' >&! test1.out
@@ -211,10 +211,10 @@ ln -s mumps_dat_key mumps_dat_key_link
 echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test4.out
-	$gtm_tst/com/check_error_exist.csh test4.out YDB-F-DBNOCRE >&! dbnocre4.outx
+	$gtm_tst/com/check_error_exist.csh test4.out YDB-W-DBNOCRE >&! dbnocre4.outx
 	$grep -q "seen in test4.out as expected" dbnocre4.outx
 	if ($status) then
-		echo "TEST-E-FAIL, YDB-F-DBNOCRE is not found in test4.out."
+		echo "TEST-E-FAIL, YDB-W-DBNOCRE is not found in test4.out."
 	endif
 else if ("db" == $operation) then
 	$gtm_dist/mumps -run %XCMD 'set ^a(4)=$horolog' >&! test4.out

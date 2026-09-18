@@ -28,20 +28,20 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 #########TEST CONDITION:BAD PASSPHRASE###########
 %YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. Incorrect password or error while obtaining password
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 %YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. Incorrect password or error while obtaining password
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 %YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. Incorrect password or error while obtaining password
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 #########TEST CONDITION:gtm_passwd unset#########
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file a.dat. Environment variable ydb_passwd/gtm_passwd not set
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file b.dat. Environment variable ydb_passwd/gtm_passwd not set
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file create.dat. Environment variable ydb_passwd/gtm_passwd not set
-%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+%YDB-W-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 #########TEST CONDITION:gtm_passwd restored to the true value########
