@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,15 +75,15 @@ $MUPIP set -statsdb_allocation=128 -reg "*"
 echo "# Start process in background to have DEFAULT region open for the duration of the test"
 $gtm_dist/mumps -run job^gtm9131 1 2	# parameter 1 indicates 1 job to start, parameter 2 indicates jobid=2
 echo "# Verify initial statsdb allocation size is indeed close to 128 by examining total blocks count in statsdb"
-$gtm_dist/mumps -run dbsize^gtm9131
+$gtm_dist/mumps -run dbsizewait^gtm9131 129
 echo "# Start 128 more processes in background to kick in first statsdb extension"
 $gtm_dist/mumps -run job^gtm9131 128 3	# parameter 128 indicates 128 jobs to start, parameter 3 indicates jobid=3
 echo "# Verify new statsdb file size is indeed close to 2*128 by examining total blocks count in statsdb"
-$gtm_dist/mumps -run dbsize^gtm9131
+$gtm_dist/mumps -run dbsizewait^gtm9131 258
 echo "# Start 256 more processes in background to kick in second statsdb extension"
 $gtm_dist/mumps -run job^gtm9131 256 4	# parameter 256 indicates 256 jobs to start, parameter 4 indicates jobid=4
 echo "# Verify new statsdb file size is indeed close to 2*2*128 by examining total blocks count in statsdb"
-$gtm_dist/mumps -run dbsize^gtm9131
+$gtm_dist/mumps -run dbsizewait^gtm9131 517
 echo "# Stop ALL background processes"
 $gtm_dist/mumps -run stop^gtm9131 4	# parameter 2 indicates stop all jobs started with jobid=4
 $gtm_dist/mumps -run stop^gtm9131 3	# parameter 2 indicates stop all jobs started with jobid=3
