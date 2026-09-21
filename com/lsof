@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,12 +14,27 @@
 # Invoke the system "lsof" utility from a centralized script in the test framework.
 # This lets us add options that will speed up lsof on some systems (YDBTest#721).
 
-# For now, exclude all "chrome" processes from lsof as they have been seen to slow lsof output dramatically
-# in some cases (without chrome took 1.35 seconds vs with chrome took 18 seconds). It is possible other browsers
-# like chrome also have a similar issue and need to be excluded in similar fashion. Add such cases below as needed.
+# "-n" inhibits the conversion of network numbers to host names, and is the option that actually makes
+# lsof fast. Without it, lsof does a reverse DNS lookup for the peer address of every socket it lists.
+# An address with no PTR record whose authoritative side does not answer makes that lookup time out
+# rather than fail, and lsof blocks for the whole timeout. Measured on one system: a single such
+# address held by a browser cost 10.5 seconds, after which the resolver negative-caches the answer and
+# the next run takes 0.42 seconds. That is why the slowness looks intermittent.
+#
+# "-n" replaces an earlier workaround which excluded "chrome" and "firefox" processes, since a browser
+# is a likely holder of such a socket. Excluding them lost information: those processes' open files
+# were not listed at all. With "-n" the exclusion is unnecessary, so it has been removed and the
+# output is complete again, at no cost in time.
+# No information is lost by "-n" itself, because the network number it prints is what the kernel
+# holds; the host name it would otherwise print is derived from it.
+
+# "-P" inhibits the conversion of port numbers to port names. Again nothing is lost, since the number
+# is what the kernel holds. It also makes com/is_port_in_use.csh reliable: that script greps its lsof
+# output for the port NUMBER, which cannot match when lsof renders a well known port by name.
 
 # Additionally, only look for processes belonging to the current user as it was seen to also speed up the
-# lsof noticeably (without -u took 1.35 seconds vs with -u took 0.40 seconds).
+# lsof noticeably (without -u took 3.2 seconds vs with -u took 0.42 seconds). Note this does mean
+# processes belonging to other users are not listed.
 
 # Need the "-a" after the "-u $USER" to ensure any condition that user specified in "$*" is ANDed with the condition
 # and not ORed (which is the default). For example if "$lsof mumps.dat" was the caller invocation, then translating
@@ -27,4 +42,4 @@
 # Adding the "-a" in between will ensure it translates to "lsof -u $USER -a mumps.dat" which would mean we will only
 # list all open files by the current user AND that relate to the file mumps.dat.
 
-lsof -c '^chrome' -c '^firefox' -u $USER -a $*
+lsof -n -P -u $USER -a $*
