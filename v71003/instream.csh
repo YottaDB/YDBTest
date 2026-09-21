@@ -26,6 +26,7 @@
 # tlsconf_default-gtmde568389	[jon]	Test Receiver Server TLS configuration default change
 # gvsuboflow_context-gtmf134571		[jon]	Test improve context in GVSUBOFLOW error message
 # sockprinc_sighup-gtmf135133	[jon]	Test SOCKET $PRINCIPAL devices recognize and report SIGHUP signals
+# recservop_ontlserr-gtmde567906	[jon]	Test Receiver Server continues to operate after a TLSHANDSHAKE or REPLNOTLS error
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -46,6 +47,7 @@ setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf22899
 setenv subtest_list_replic	"$subtest_list_replic statsdb_exclinstfrz-gtmde551455"
 setenv subtest_list_replic	"$subtest_list_replic tlsreneg_msg-gtmde567908"
 setenv subtest_list_replic	"$subtest_list_replic tlsconf_default-gtmde568389"
+setenv subtest_list_replic	"$subtest_list_replic recservop_ontlserr-gtmde567906"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

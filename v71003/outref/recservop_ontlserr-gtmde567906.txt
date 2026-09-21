@@ -1,0 +1,76 @@
+# ********************************************************************************************
+# GTM-DE567906 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE567906)
+# 
+# The Receiver Server continues to operate after a TLSHANDSHAKE or REPLNOTLS error. The Source Server operation is unchanged, without plaintext fallback enabled, it terminates for all TLSHANDSHAKE or REPLNOTLS errors. Previously, the Receiver Server terminated when issuing such an error. (GTM-DE567906)
+# 
+
+# Create a database
+
+### Test 1: Receiver Server continues to operate after a REPLNOTLS error
+# Start the Source Server without -TLSID, so it does not request TLS/SSL communication
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Start the Receiver Server with -TLSID and without plaintext fallback
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for a second REPLNOTLS error from the Receiver Server. The Receiver Server closes the connection after each
+# REPLNOTLS error and the Source Server reconnects, so a second error means the Receiver Server survived the first one.
+# Previously, the Receiver Server terminated after the first REPLNOTLS error.
+# Verify the Receiver Server is still alive
+# Receiver Server is alive
+
+## Restart the Source Server with -TLSID and verify the same Receiver Server process replicates updates using TLS/SSL
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Run an update on INST1 to confirm replication is working correctly over TLS/SSL
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Confirm the receiver server is still running with the same PID
+# Receiver Server PID is unchanged
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+----------
+Error REPLNOTLS seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-E-REPLNOTLS, Receiver side requested TLS/SSL communication but the Source side was either not started with TLSID qualifier or does not support TLS/SSL protocol
+----------
+
+### Test 2: Receiver Server continues to operate after a TLSHANDSHAKE error
+# Remove the certificate and private key from the Source Server TLS configuration, so that the Source Server presents no
+# certificate, and require a peer certificate in the Receiver Server TLS configuration, so that the missing certificate
+# causes a TLSHANDSHAKE error in the Receiver Server.
+# Start the Source Server with -TLSID and plaintext fallback, so it reconnects rather than terminating after the
+# handshake error
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Require a peer certificate in the INSTANCE2 section of the Receiver Server TLS configuration
+# Start the Receiver Server with -TLSID and without plaintext fallback
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Wait for a TLSHANDSHAKE error from the Receiver Server
+# Wait for a second error from the Receiver Server. After the failed handshake, the Source Server reconnects, by either
+# retrying TLS/SSL (another TLSHANDSHAKE error) or falling back to plaintext (a REPLNOTLS error), depending on timing.
+# Either error means that the Receiver Server survived the first TLSHANDSHAKE error.
+# Previously, the Receiver Server terminated after the first TLSHANDSHAKE error.
+# Verify the Receiver Server is still alive
+# Receiver Server is alive
+
+# Restore the Source Server's original TLS configuration, then restart the Source Server without plaintext fallback, and verify that the
+# same Receiver Server process replicates updates using TLS/SSL
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Restore the TLS configuration
+# Start the source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Run an update on INST1 to confirm replication is working
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Confirm that TLS is working
+# Confirm that the receiver server is still running with the same PID
+# Receiver Server PID is unchanged
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+----------
+Error TLSHANDSHAKE seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-E-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+
