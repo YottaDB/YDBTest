@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,6 +20,7 @@ zinthandle ;
 	quit
 
 waitinterrupt ;
-	write "# Wait up to 30 seconds for zinthandle^ydb665 to signal that an interrupt was received"
+	write "# Wait up to 30 seconds for zinthandle^ydb665 to set $ZINTERRUPT and then ^x(1)",!
 	for i=0:1:300 quit:($data(^x(1))'=0)  hang .1
+	write:'$data(^x(1)) "WRONG : ^x(1) was not set within 30 seconds, so zinthandle^ydb665 is not ready for the interrupt",!
 	quit

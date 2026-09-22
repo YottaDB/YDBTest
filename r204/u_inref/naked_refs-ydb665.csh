@@ -390,6 +390,9 @@ $gtm_tst/$tst/inref/list.csh openexception.m 2
 $gtm_exe/mumps -run openexception
 
 echo '## Test that ZINTERRUPT handlers save and restore $REFERENCE'
+# Earlier stages set ^x(1), and waitinterrupt^ydb665 takes ^x(1) as the sign that zinthandle^ydb665 has set $ZINTERRUPT
+echo '# Remove ^x(1) so that it is set only by zinthandle^ydb665: [$gtm_exe/mumps -run %XCMD "kill ^x(1)"]'
+$gtm_exe/mumps -run %XCMD "kill ^x(1)"
 echo '# Run [$gtm_exe/mumps -run zinthandle^ydb665] in the background'
 ($gtm_exe/mumps -run zinthandle^ydb665 >&! zinthandle.out & ; echo $! >&! zinthandle.pid ) >&! zinthandle-bg.out
 echo '# Give signal handlers time to register: [$gtm_exe/mumps -run waitinterrupt]'
