@@ -192,13 +192,24 @@ foreach options ( \
 				(strace -o raw-$case-$readback.outx $gtm_dist/mumps -run wrtest^gtmf135169 $portno wrtest-$case server bg $options $command $readback >>& server.out & ; echo $! >&! ${readback}-server.pid) >&! ${readback}-server-bg.out
 				($gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-1 bg $options $command >>& client1-$case-$readback.out & ; echo $! >&! ${readback}-client.pid) >&! ${readback}-client-bg.out
 				$gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-2 fg $options $command >>& client2-$case-$readback.out
+				# Wait for the server and client processes backgrounded above to terminate before reading
+				# what they produced. strace buffers what it writes to its -o file, so reading that file
+				# while the traced process is still alive can yield an empty file, and appending to
+				# server.out while the server is still writing to it interleaves the two. Waiting here also
+				# keeps chkrst below from killing ^checkpoint while a process is still using it.
+				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-server.pid`
+				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-client.pid`
+				# gtmf135169.m gives up if a process never reaches a checkpoint and reports that into the
+				# foreground client's output file, which is not compared against a reference. Repeat it in
+				# the compared output, or a round that never ran shows up only as missing lines.
+				if (0 != `grep -c "timed out waiting at checkpoint" client2-$case-$readback.out`) then
+					echo "TEST-E-CHECKPOINT wrtest-$case-$readback did not run, a process never reached its checkpoint"
+					cat client2-$case-$readback.out
+				endif
 				cat raw-$case-$readback.outx | grep -v "access.*hugepages.*EACCES" > trace-$case-$readback.out  # SUSE filter
 				$gtm_dist/mumps -run parse^gtmf135169 $portno wrtest-$case parse - $options trace-$case-$readback.out $readback >>& filtered-$case-$readback.out
 				$gtm_dist/mumps -run chkrst^gtmf135169 $portno
 				cat filtered-$case-$readback.out >>& server.out
-				# Wait for server and client processes backgrounded above to terminate before moving on to the next stage of the test
-				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-server.pid`
-				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-client.pid`
 
 			end
 			echo '#' >>& server.out
