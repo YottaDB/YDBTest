@@ -40,3 +40,11 @@ CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the 
 # Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK
 YDB-I-STUCKACT, Process stuck script invoked: FAILURE : ##TEST_PATH##/noexist.csh
 ##TEST_AWKYDB-E-WRITERSTUCK, Buffer flush stuck waiting for concurrent writer PID [0-9][0-9]* \(1 of 1\) to finish writing to database file ##TEST_PATH##/mumps.dat
+
+#####################################################################
+# Test case 4: WRITERSTUCK repeats once per stuck writer (GTM-DE568333)
+# Time before test case 4 : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Starting the dse process now
+# Check the operator log for two YDB-E-WRITERSTUCK messages, one per stuck writer
+##TEST_AWKYDB-E-WRITERSTUCK, Buffer flush stuck waiting for concurrent writer PID [0-9][0-9]* \(1 of 2\) to finish writing to database file ##TEST_PATH##/mumps.dat
+##TEST_AWKYDB-E-WRITERSTUCK, Buffer flush stuck waiting for concurrent writer PID [0-9][0-9]* \(2 of 2\) to finish writing to database file ##TEST_PATH##/mumps.dat

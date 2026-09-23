@@ -28,6 +28,7 @@
 # sockprinc_sighup-gtmf135133	[jon]	Test SOCKET $PRINCIPAL devices recognize and report SIGHUP signals
 # recservop_ontlserr-gtmde567906	[jon]	Test Receiver Server continues to operate after a TLSHANDSHAKE or REPLNOTLS error
 # zpeekbyname_multirepl-gtmf235505	[jon]	Test $ZPEEK() / %PEEKBYNAME() access to multiple replication instances
+# spcfcbufdelay_pid-gtmde568333		[jon]	Test SPCFCBUFDELAY includes the PID of the block resource holder
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71003 test starts..."
@@ -42,6 +43,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ztimeoutdefer_zinterrup
 setenv subtest_list_non_replic	"$subtest_list_non_replic pattalterr_memleak-gtmde559768"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gvsuboflow_context-gtmf134571"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sockprinc_sighup-gtmf135133"
+setenv subtest_list_non_replic	"$subtest_list_non_replic spcfcbufdelay_pid-gtmde568333"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic noconsumer_jnlfileonly-gtmf228991"
 setenv subtest_list_replic	"$subtest_list_replic jnlwritereserve_order-gtmf228991"
@@ -69,6 +71,9 @@ if ("pro" == "$tst_image") then
 	# Disable the below subtest because it is a white-box test that sets gdb breakpoints on
 	# functions that are only reliably resolvable in a debug build.
 	setenv subtest_exclude_list "$subtest_exclude_list jnlwritereserve_order-gtmf228991"
+	# Disable the below subtest because the white box test cases it relies on (143 and 410) are
+	# compiled out of PRO builds.
+	setenv subtest_exclude_list "$subtest_exclude_list spcfcbufdelay_pid-gtmde568333"
 endif
 
 if ("dbg" == "$tst_image") then

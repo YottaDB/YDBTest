@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -114,5 +114,39 @@ $gtm_tst/com/getoper.csh "$syslog_before3" "" syslog3a.txt "" STUCKACT
 $gtm_tst/com/getoper.csh "$syslog_before3" "" syslog3b.txt "" WRITERSTUCK
 $grep "YDB-I-STUCKACT" syslog3a.txt | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*noexist.csh\).*/\1/'
 $grep "YDB-E-WRITERSTUCK" syslog3b.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITERSTUCK\)/\1/; s/\(.*mumps.dat\).*/\1/'
+
+echo ""
+echo $banner
+echo "# Test case 4: WRITERSTUCK repeats once per stuck writer (GTM-DE568333)"
+# Test cases 1 through 3 use white box test case 25 (WBTEST_BUFOWNERSTUCK_STACK), which fakes a single stuck
+# writer and so always yields a "(1 of 1)" WRITERSTUCK message. White box test case 409
+# (WBTEST_MULTI_WRITERSTUCK) fakes two stuck writers instead, so we expect one WRITERSTUCK message per writer,
+# counted "(1 of 2)" and "(2 of 2)". This covers the "WRITERSTUCK messages repeat for each block resource held"
+# part of the V7.1-003 release note.
+#
+# ydb_procstuckexec is still pointing at noexist.csh from test case 3 and is deliberately left that way. Both
+# faked writers carry the same PID, so a working $ydb_procstuckexec would be invoked twice with identical
+# arguments and would produce either one or two %YDBPROCSTUCKEXEC output files depending on whether the two
+# invocations land in the same second. Leaving it broken keeps this test case deterministic. The
+# %YDBPROCSTUCKEXEC file behavior is already covered by test cases 1 through 3.
+sleep 1	# See comment against "sleep 1" above for why this is needed at the start of each Test case
+set syslog_before4 = `date +"%b %e %H:%M:%S"`
+echo "# Time before test case 4 : GTM_TEST_DEBUGINFO $syslog_before4"
+echo "# Starting the dse process now"
+($gtm_tst/$tst/u_inref/do_dse_flush.csh 4 409 >>& dse_flush.out_4&) >&! dse_flush.log_4
+$gtm_tst/com/wait_for_log.csh -log do_dse_flush.started_4
+$gtm_tst/$tst/u_inref/get_dse_pid.csh 4
+if (0 != $status) echo "Did not get DSE PID, status: $status"
+# HERE WAIT FOR THE DSE PROCESS TO EXIT
+$gtm_tst/com/wait_for_log.csh -log do_dse_flush.done_4
+# Check if the error/messages are logged in operator log
+echo "# Check the operator log for two YDB-E-WRITERSTUCK messages, one per stuck writer"
+set dsepid = `cat dse.pid_4`
+# Wait for the *second* of the two messages rather than for "WRITERSTUCK", which returns on the first matching
+# line. The YDB-I-WCSFLUFAILED message "wcs_flu" sends just before the pair carries the literal text
+# "WRITERSTUCK" too, so a bare pattern can capture the syslog before "(2 of 2)" has been written to it.
+# getoper.csh passes its 5th argument to "grep -E".
+$gtm_tst/com/getoper.csh "$syslog_before4" "" syslog4.txt "" "YDB-E-WRITERSTUCK.*2 of 2"
+$grep "YDB-E-WRITERSTUCK" syslog4.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITERSTUCK\)/\1/; s/\(.*mumps.dat\).*/\1/'
 
 # End of test

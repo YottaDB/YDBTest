@@ -1,0 +1,19 @@
+# ********************************************************************************************
+# GTM-DE568333 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-003_Release_Notes.html#GTM-DE568333)
+# 
+# GT.M messages SPCFCBUFDELAY and WRITERSTUCK include the process ID (PID) of the block resource holder. Note: GT.M WRITERSTUCK messages repeat for each block resource held. Previously, BUFSPCDELAY and WRITERSTUCK did not include the PID of the block resource holder. (GTM-DE568333)
+# 
+
+# Create a BG database with a small global buffer cache
+# Time before test : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Start the holder process, which hangs inside a database write still owning a dirty cache record
+# Wait for the holder to reach the hang
+# Holder process is hung : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Start the delayed process, which has to wait on the cache record the holder owns
+# Check the operator log for the message YDB-W-SPCFCBUFDELAY
+##TEST_AWKYDB-W-SPCFCBUFDELAY, Request for block 0xBLOCKNUMBER in database file ##TEST_PATH##/mumps.dat delayed by PID PIDNUMBER.*
+# SPCFCBUFDELAY correctly named the PID of the process holding the block resource
+# Stop the holder process
