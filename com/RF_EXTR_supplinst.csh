@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,6 +32,24 @@ if ("trg" == "$extractx:e") then
 	$grep -vE "triggernameforinsertsanddels" $extracty >&! ${extracty}.tmp
 	set extractx = ${extractx}.tmp
 	set extracty = ${extracty}.tmp
+endif
+
+# com/db_extract.csh does not leave the extract of an empty database empty: it writes a blank line
+# followed by the line "EMPTY DATABASE(S)". Neither line is a global record, so an instance holding
+# no globals would otherwise look like it has two entries that the other instance is missing, and
+# the comparison below would report a difference that does not exist. Compare an extract that is
+# exactly that placeholder as the empty file it stands for.
+set emptyextract = "RF_EXTR_supplinst_emptydb.txt"
+printf '\nEMPTY DATABASE(S)\n' >&! $emptyextract
+cmp -s $emptyextract $extractx
+if (0 == $status) then
+	cat /dev/null >&! ${extractx}.noemptymsg
+	set extractx = ${extractx}.noemptymsg
+endif
+cmp -s $emptyextract $extracty
+if (0 == $status) then
+	cat /dev/null >&! ${extracty}.noemptymsg
+	set extracty = ${extracty}.noemptymsg
 endif
 
 # Check if a supplementary instance is involved with a non-supplementary instance.
