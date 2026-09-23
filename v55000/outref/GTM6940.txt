@@ -4,7 +4,7 @@ YDB>f i=1:1:10 s a(i)=i*2,b(i)=i
 
 YDB>set $zinterrupt="zwr a m a=b"
 
-YDB>zsy "mupip intr "_$j
+YDB>zsy "$gtm_dist/mupip intr "_$j
 ##TEST_AWKINTRPT issued to process [0-9]*
 
 ##SUSPEND_OUTPUT YDB_READLINE
