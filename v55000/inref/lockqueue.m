@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -25,8 +28,10 @@ lockqueue
 	kill ^lookup
 	set ^launch=0
 	do ^job("lockjob^lockqueue",numlock,"""""")
-	for i=1:1:300 quit:^launch=numlock  hang 1 ; wait for the children to lock themselves.
-	write:i=300 "Waited too long for processes to launch.",!
+	for i=1:1:1200 quit:^launch=numlock  hang 1 ; wait for the children to lock themselves.
+	; Report on the condition being waited for, not on the loop variable: i is 1200 both when
+	; the wait ran out and when the last child arrived on the final iteration.
+	write:^launch'=numlock "Waited too long for processes to launch. ^launch="_^launch_", expected "_numlock,!
 	lock
 	do wait^job ; All processes must complete
 	; This loop is to make sure that lock+ holds all processes including excessive ones. If lock is bypassed by any of the processes,
@@ -39,7 +44,7 @@ lockqueue
 
 lockjob
 	set id=$increment(^launch) ; Notify parent right before locking
- 	lock +a("xxx","yyy")
- 	set ^table(^tend)=id ; Only protection is lock (No TPs).
- 	set ^tend=^tend+1   ; if lock doesn't hold processes, those updates will fail.
- 	quit
+	lock +a("xxx","yyy")
+	set ^table(^tend)=id ; Only protection is lock (No TPs).
+	set ^tend=^tend+1   ; if lock doesn't hold processes, those updates will fail.
+	quit
