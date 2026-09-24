@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -244,6 +244,12 @@ foreach param ( \
 		echo "# stop audit_listener and wait for finish"
 		kill -TERM $pid >>& stop_audit_listener.outx
 		$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& stop_audit_listener.outx
+		if ($status) then
+			# Save its signal state (handlers, pending, blocked) for analysis before killing it
+			cat /proc/$pid/status /proc/$pid/wchan >& audit_listener_${pid}_status.txt
+			echo "TEST-E-FAIL : audit_listener pid $pid did not stop on SIGTERM, see stop_audit_listener.outx"
+			kill -KILL $pid
+		endif
 		rm -f $pidfile
 	endif
 

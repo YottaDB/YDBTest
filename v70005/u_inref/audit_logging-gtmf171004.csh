@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -288,7 +288,7 @@ foreach param ( \
 						| $gtm_dist/mumps -dir \
 						|& grep -v '^$' | grep -v '^GTM' | grep -v '^YDB'
 
-                                        echo "# wait for message to be appended to the audit log file"
+					echo "# wait for message to be appended to the audit log file"
 					# for more information see: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2086
 					$gtm_tst/com/wait_for_log.csh -log ${aulogfile} \
 						-message "$unique_message" -duration 600 -waitcreation
@@ -305,7 +305,7 @@ foreach param ( \
 					# preserve expect output for debugging, append a small separator
 					echo "--" >> expect.log
 
-                                        echo "# wait for message to be appended to the audit log file"
+					echo "# wait for message to be appended to the audit log file"
 					$gtm_tst/com/wait_for_log.csh -log ${aulogfile} \
 						-message "$unique_message" -duration 600 -waitcreation
 
@@ -330,7 +330,7 @@ foreach param ( \
 					echo "stamp check failed, BEFORE <= LOG_STAMP <= AFTER is not true: $before_epoch <= $log_epoch <= $after_epoch"
 					echo "log stamp: $log_stamp"
 					echo "contents of $aulogfile follow:"
-    					cat $aulogfile
+					cat $aulogfile
 					# save $aulogfile contents for later debugging
 					mv $aulogfile ${aulogfile}_${mode}_${resetlog}_${execmode}.save
 				endif
@@ -342,6 +342,12 @@ foreach param ( \
 	echo "# stop audit_listener and wait for finish"
 	kill -TERM $pid >>& waitforproc.log
 	$gtm_tst/com/wait_for_proc_to_die.csh $pid >>& waitforproc.log
+	if ($status) then
+		# Save its signal state (handlers, pending, blocked) for analysis before killing it
+		cat /proc/$pid/status /proc/$pid/wchan >& audit_listener_${pid}_status.txt
+		# The WAITTOOLONG in waitforproc.log fails the subtest; do not leave the listener running
+		kill -KILL $pid
+	endif
 	rm -f $aupidfile
 	rm -f $aulogfile
 

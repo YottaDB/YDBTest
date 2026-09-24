@@ -3,7 +3,7 @@
  * Copyright (c) 2022 Fidelity National Information		*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.      *
+ * Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.      *
  * All rights reserved.                                         *
  *								*
  *	This source code contains the intellectual property	*
@@ -82,22 +82,23 @@ char 	*pass;					/* Used to store the TLS/SSL certificate passphrase */
 
 /* Common */
 char 	logfile[PATH_MAX + 1];
-int	terminate = 0;				/* Boolean value set by signal handler to let program know to terminate */
 int 	logfileswitch = 0;			/* Boolean value set by signal handler to let program know to switch
-	        				   the log file */
+						   the log file */
 int	logfd;
 char* 	prognam;
 char* 	pidfilename;
 
-/* Handler for SIGINT and SIGTERM caused by Ctrl-C and kill (-15) respectively.
+/* Handler for SIGHUP caused by kill (-1).
+ *
+ * SIGINT and SIGTERM are left at their default action (terminate the program). A handler that sets a flag
+ * cannot be used for them: a signal that arrives after the loop has checked the flag but before accept()
+ * blocks is lost, and the listener then waits in accept() for a connection that never comes.
  *
  * params:
  * 	@sig signal number
  */
 void listener_signal_handler(int sig)
 {
-	if ((SIGTERM == sig) || (SIGINT == sig))
-		terminate = 1;
 	if (SIGHUP == sig)
 		logfileswitch = 1;
 	return;
@@ -173,7 +174,7 @@ void escape_string(const char* source, char *target, int maxlen)
 int switch_logfile(char *logfile)
 {
 	int			logfile_len, switchlogfile_len, suffix, logfd, timefmtlen = 101;
-        char			time_format[timefmtlen],  switchlogfile[PATH_MAX + 1];
+	char			time_format[timefmtlen],  switchlogfile[PATH_MAX + 1];
 	time_t			switchtime;
 	struct tm		*timeptr;
 	struct stat     	fs;
@@ -197,11 +198,18 @@ int switch_logfile(char *logfile)
 		sprintf(&switchlogfile[switchlogfile_len], "_%d", suffix);
 		suffix++;
 	}
-	if ((-1 == rename(logfile, &switchlogfile[0])) || (-1 == (logfd = open(logfile, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR))) || (-1 == dup2(logfd, STDERR_FILENO)) || (-1 == dup2(logfd, STDOUT_FILENO)))
+	if ((-1 == rename(logfile, &switchlogfile[0])) || (-1 == (logfd = open(logfile, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR))))
 	{
 		perror("Error switching log file");
 		return EXIT_ERROR;
 	}
+	if ((-1 == dup2(logfd, STDERR_FILENO)) || (-1 == dup2(logfd, STDOUT_FILENO)))
+	{
+		perror("Error switching log file");
+		close(logfd);
+		return EXIT_ERROR;
+	}
+	close(logfd);
 	return EXIT_OK;
 }
 
@@ -269,8 +277,6 @@ int main_tcp(int argc, char *argv[])
 	memset(&listener_term_handler, 0, sizeof(struct sigaction));
 	listener_term_handler.sa_handler = listener_signal_handler;
 	listener_term_handler.sa_flags = 0;
-	sigaction(SIGINT, &listener_term_handler, NULL);
-	sigaction(SIGTERM, &listener_term_handler, NULL);
 	sigaction(SIGHUP, &listener_term_handler, NULL);
 
 	/* Create socket to start listening */
@@ -300,7 +306,7 @@ int main_tcp(int argc, char *argv[])
 
 	save_pidfile();
 
-	while (!terminate)
+	for (;;)
 	{
 		if ((0 < logfileswitch) && (0 == switch_logfile(logfile)))
 			logfileswitch = 0;
@@ -356,10 +362,6 @@ int main_tcp(int argc, char *argv[])
 		}
 		accepted = 0;
 	}
-
-	if (-1 == close(listen_sockfd))
-		perror("Failed to close listener socket");
-	return EXIT_ERROR;
 }
 
 /* Set default password for certificate/key (More info on this function can be found in OpenSSL documentation) */
@@ -469,8 +471,7 @@ SSL_CTX *ssl_context_init(char *certfile, char *privkeyfile, char *cafile, char 
  * 	@CApath (optional) path to directory containing CA certificates in PEM format (specifies the locations for SSL context,
  * 			at which CA certificates for verification purposes are located)
  * returns:
- * 	1 if program executed successfully and exited (terminated)
- * 	0 if something went wrong and program exited
+ * 	only if something went wrong (EXIT_ERROR or EXIT_SSL_ERROR), otherwise it runs until killed
  */
 int main_tls(int argc, char *argv[])
 {
@@ -579,7 +580,6 @@ int main_tls(int argc, char *argv[])
 		free(pass);
 		return EXIT_ERROR;	/* Something went wrong when opening log file */
 	}
-	terminate = 0;
 
 	/* Ignore signals as needed */
 	memset(&ignore, 0, sizeof(struct sigaction));
@@ -591,8 +591,6 @@ int main_tls(int argc, char *argv[])
 	memset(&listener_term_handler, 0, sizeof(struct sigaction));
 	listener_term_handler.sa_handler = listener_signal_handler;
 	listener_term_handler.sa_flags = 0;
-	sigaction(SIGINT, &listener_term_handler, NULL);	/* Handle Ctrl + C */
-	sigaction(SIGTERM, &listener_term_handler, NULL);	/* Handle kill -15 */
 	sigaction(SIGHUP, &listener_term_handler, NULL);	/* Handle kill -1  */
 
 	/* Create socket to start listening */
@@ -629,7 +627,7 @@ int main_tls(int argc, char *argv[])
 
 	save_pidfile();
 
-	while (!terminate)
+	for (;;)
 	{
 		if ((0 < logfileswitch) && (0 == switch_logfile(logfile)))
 			logfileswitch = 0;
@@ -703,25 +701,12 @@ int main_tls(int argc, char *argv[])
 		close(client_sockfd);
 		accepted = 0;
 	}
-#	if DEBUG
-	time(&curtime);
-	timeptr = gmtime(&curtime);
-	strftime(date, 100, "%Y-%m-%d %H:%M:%S", timeptr);
-	fprintf(stderr, "%s; exiting\n", date);
-#	endif
-	SSL_CTX_free(ssl_ctx);
-	close(listen_sockfd);
-	free(pass);
-	return EXIT_OK;
 }
 
-/* Loops infinitely, accepts all connections, and logs received messages
+/* Loops infinitely, accepts all connections, and logs received messages. Does not return.
  *
  * params:
  * 	@fd file descriptor of socket to accept connections on
- * returns:
- *	1 if finished listening (terminated)
- *	0 if something went wrong
  */
 int unix_listen_loop(int fd)
 {
@@ -733,7 +718,7 @@ int unix_listen_loop(int fd)
 	time_t			curtime;
 	socklen_t		cli_len;
 
-	while (!terminate)
+	for (;;)
 	{
 		cli_len = sizeof(client);
 		clifd = accept(fd, (struct sockaddr *) &client, &cli_len);
@@ -771,7 +756,6 @@ int unix_listen_loop(int fd)
 			close(clifd);
 		}
 	}
-	return EXIT_OK;
 }
 
 /* Creates listener UNIX socket, starts listening for connections,
@@ -786,27 +770,13 @@ int main_unix(int argc, char *argv[])
 	/* Open log file for logging */
 	if (1 != open_logfile(argv[LOGFILE]))
 		return EXIT_ERROR;	/* Something went wrong when opening log file */
-	terminate = 0;
 
 	/* Set signal handler */
 	memset(&listener_term_handler, 0, sizeof(struct sigaction));
 	listener_term_handler.sa_handler = listener_signal_handler;
 	listener_term_handler.sa_flags = 0;
 
-        // The signal handler set the `terminate` variable's value to `true`
-        // if SIGINT or SIGTERM received, and the main program checks it, and
-        // if it's set, exits (`while !terminate`). But this mechanism does not
-        // work it does not stop the program.
-        // So, changed SIGINT and SIGTERM to do the default action (terminate
-        // the program). Otherwise SIGKILL should be used.
-        //
-        // These lines have intentionally commented out (do the default action):
-        //  sigaction(SIGINT, &listener_term_handler, NULL);	/* Handle Ctrl + C */
-	//  sigaction(SIGTERM, &listener_term_handler, NULL);	/* Handle kill -15 */
-        //
-        // More information: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2136
-
-        sigaction(SIGHUP, &listener_term_handler, NULL);	/* Handle kill -1  */
+	sigaction(SIGHUP, &listener_term_handler, NULL);	/* Handle kill -1  */
 
 	/* Create socket to start listening */
 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
@@ -832,16 +802,7 @@ int main_unix(int argc, char *argv[])
 
 	save_pidfile();
 
-	if (1 != unix_listen_loop(fd))
-		return EXIT_ERROR;
-
-	if (-1 == close(fd))
-	{
-		perror("Failed to close");
-		return EXIT_ERROR;
-	}
-
-	return EXIT_OK;
+	return unix_listen_loop(fd);
 }
 
 int main(int argc, char* argv[])
