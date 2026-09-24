@@ -14,12 +14,33 @@ stages:
   - build
   - docker-create
 
+# The Ubuntu and Debian mirrors are briefly inconsistent while a sync is in progress (a "Hash Sum
+# mismatch" on an index, or a 404 for a package that a newer index no longer lists), and are
+# occasionally unreachable. apt_get_install takes the arguments of "apt-get install" and retries
+# the update and the install as a pair, since only a fresh index fixes the 404, waiting longer
+# after each attempt, since a sync takes minutes.
+.apt-get-retry:
+  script:
+    - |
+      apt_get_install() {
+        attempt=1
+        while ! { apt-get update -qq && apt-get install "$@"; }; do
+          if [ "$attempt" -ge 5 ]; then
+            echo "apt-get failed after 5 attempts" >&2
+            return 1
+          fi
+          echo "apt-get failed on attempt ${attempt} of 5; retrying in $((attempt * 60)) seconds" >&2
+          sleep $((attempt * 60))
+          attempt=$((attempt + 1))
+        done
+      }
+
 commit-verify:
   image: ubuntu:22.04
   stage: build
   script:
-    - apt-get update
-    - apt-get install -yq git wget gnupg
+    - !reference [.apt-get-retry, script]
+    - apt_get_install -yq git wget gnupg
     # Copy commit script to build directory and execute
     - wget https://gitlab.com/YottaDB/DB/YDB/-/raw/master/ci/commit_verify.sh
     - chmod +x commit_verify.sh
@@ -32,8 +53,8 @@ build-imptp-rs:
       entrypoint: [""]
   stage: build
   script:
-    - apt-get update
-    - apt-get install -yq --no-install-recommends build-essential bindgen
+    - !reference [.apt-get-retry, script]
+    - apt_get_install -yq --no-install-recommends build-essential bindgen
     - cd com/imptp-rs; . $HOME/.cargo/env; cargo check
 
 # Run changed tests on every push
