@@ -102,4 +102,16 @@ block size 16384 : DEFAULT : Search Index Size 4096 Search Index Slots 4096 : as
 # 1024/4=256, 2048/4=512, 8192/4=2048, 16384/4=4096, each rounded up to a multiple of 8 and
 # held within the 128 minimum and the ceiling of 8192 or 8 less than the block size.
 
+# 11. A segment template keeps its settings when the global directory is saved and opened again.
+# GDE writes SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS into every segment template, so reading them
+# back is what keeps the entries after them in step. The MM template is used because it is not the
+# active one : GDE refreshes the active template from the DEFAULT segment on exit. Every value named
+# differs from its default (LOCK_SPACE 220, EXTENSION_COUNT 100, SEARCH_INDEX_SIZE 0, SLOTS 1024).
+# template -segment -access_method=MM -lock_space=500 -extension_count=777 -search_index_size=512 -search_index_slots=64
+# show -command, in a new GDE session
+MM template LOCK_SPACE=500 : as expected
+MM template EXTENSION_COUNT=777 : as expected
+MM template SEARCH_INDEX_SIZE=512 : as expected
+MM template SEARCH_INDEX_SLOTS=64 : as expected
+
 # YDB1143 SEARCH INDEX GDE TEST DONE

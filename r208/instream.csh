@@ -30,7 +30,7 @@
 # search_index_mm-ydb1143		[nars]	Test the MM search index, where a block number picks one of a fixed number of slots
 # search_index_upgrade-ydb1143		[nars]	Test that a database created by an older release picks up search index characteristics on upgrade
 # search_index_slots-ydb1143		[nars]	Test MUPIP SET -SEARCH_INDEX_SIZE=bytes keeps the slot count the database already has
-# search_index_gde-ydb1143		[nars]	Test the SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS global directory characteristics and the format label change
+# search_index_gde-ydb1143		[nars]	Test the SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS global directory characteristics, the format label change and that segment templates survive a reopen
 # search_index_misc-ydb1143		[nars]	Test MUPIP SET standalone access, MUPIP REORG with the feature on, and that a statsDB gets no search index
 # ydbenv_mkdir_stderr-ydb1267		[nars]	Test %YDBENV reports the stderr of a failed "mkdir -p" in its CREATEFAIL error
 # intrpt_readline-ydb1269		[nars]	Test MUPIP INTRPT at a readline direct mode prompt drives $ZINTERRUPT and restores the typed line

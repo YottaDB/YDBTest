@@ -203,4 +203,29 @@ echo "# 1024/4=256, 2048/4=512, 8192/4=2048, 16384/4=4096, each rounded up to a 
 echo "# held within the 128 minimum and the ceiling of 8192 or 8 less than the block size."
 echo
 
+echo "# 11. A segment template keeps its settings when the global directory is saved and opened again."
+echo "# GDE writes SEARCH_INDEX_SIZE and SEARCH_INDEX_SLOTS into every segment template, so reading them"
+echo "# back is what keeps the entries after them in step. The MM template is used because it is not the"
+echo "# active one : GDE refreshes the active template from the DEFAULT segment on exit. Every value named"
+echo "# differs from its default (LOCK_SPACE 220, EXTENSION_COUNT 100, SEARCH_INDEX_SIZE 0, SLOTS 1024)."
+rm -f mumps.gld
+echo "# template -segment -access_method=MM -lock_space=500 -extension_count=777 -search_index_size=512 -search_index_slots=64"
+$ydb_dist/mumps -run GDE <<GDE13 >& gde13.out
+template -segment -access_method=MM -lock_space=500 -extension_count=777 -search_index_size=512 -search_index_slots=64
+GDE13
+echo "# show -command, in a new GDE session"
+echo "show -command" | $ydb_dist/mumps -run GDE >& gde14.out
+# The MM template is the run of TEMPLATE -SEGMENT lines from ACCESS_METHOD=MM up to the next ACCESS_METHOD
+awk '/^TEMPLATE -SEGMENT -ACCESS_METHOD=/ {inmm = ($0 ~ /=MM$/); next} inmm && /^TEMPLATE -SEGMENT -/' gde14.out >& mmtemplate.out
+foreach pair (LOCK_SPACE=500 EXTENSION_COUNT=777 SEARCH_INDEX_SIZE=512 SEARCH_INDEX_SLOTS=64)
+	set qual = `echo $pair | cut -d= -f1`
+	set act = `grep -- "-$qual=" mmtemplate.out | sed "s/.*-$qual=//"`
+	if ("$qual=$act" == "$pair") then
+		echo "MM template $qual=$act : as expected"
+	else
+		echo "MM template $qual=$act : WRONG, expected $pair"
+	endif
+end
+echo
+
 echo "# YDB1143 SEARCH INDEX GDE TEST DONE"
