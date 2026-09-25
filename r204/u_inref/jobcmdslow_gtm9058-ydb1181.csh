@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,21 +23,15 @@ echo '# NO read() after the sendto() call of 8264 bytes.'
 echo "# -----------------------------------------------------------------------------------------------"
 echo '# Create [test1.m] which does nothing but a [quit]'
 echo " quit" > test1.m
-echo '# Run [job ^test1] through [mumps -direct] and [strace -T -ff] to trace the system calls invoked.'
+echo '# Run [job ^test1] through [mumps -direct] and [strace -ff] to trace the system calls invoked.'
 echo '# The [-ff] will cause all forked child/grandchild processes to also be traced and each would'
 echo '# create a [trace.out.PID] file. There will be a total of 3 such files and the file corresponding'
 echo '# to the middle child would be the middle of those in a [ls -1 trace.out.*] output.'
-echo '# Run [grep -A 1 -n "sendto("] on that middle [trace.out.*] file'
+echo '# Run [grep -A 1 "sendto("] on that middle [trace.out.*] file'
 echo '# Expect to see NO read() call line AFTER the sendto() line which returned 8264'
-echo '# When run without the fix, one would see a read() call show up and the time taken (due to "-T")'
-echo '# would be significantly higher than the time taken by the sendto() calls. If the sendto() calls'
-echo '# take the order of 20 to 50 microseconds, the read() call would take 65,000 microseconds.'
-echo '# The reference file allows for up to 100 microseconds for the sendto() calls. While this is okay on'
-echo '# x86_64, on aarch64 this can take even 1000 microseconds or more so run this only on x86_64.'
-if ("x86_64" == `uname -m`) then
-	echo "job ^test1" | strace -o trace.out -T -ff $gtm_dist/mumps -direct
-	grep -A 1 "sendto(" `ls -1 trace.out.* | head -2 | tail -1` | grep -B 1 -A 1 "sendto.* = 8264"
-endif
+echo '# When run without the fix, one would see a read() call show up after that sendto() line.'
+echo "job ^test1" | strace -o trace.out -ff $gtm_dist/mumps -direct
+grep -A 1 "sendto(" `ls -1 trace.out.* | head -2 | tail -1` | grep -B 1 -A 1 "sendto.* = 8264"
 echo
 
 setenv gtmroutines ".*"	# Needed by test of the tests below
