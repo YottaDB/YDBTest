@@ -35,6 +35,7 @@
 # ydbenv_mkdir_stderr-ydb1267		[nars]	Test %YDBENV reports the stderr of a failed "mkdir -p" in its CREATEFAIL error
 # intrpt_readline-ydb1269		[nars]	Test MUPIP INTRPT at a readline direct mode prompt drives $ZINTERRUPT and restores the typed line
 # pipe_stderr_writeonly-ydb1268		[nars]	Test the stderr= device of a PIPE is readable when the OPEN also specifies writeonly
+# spsize_2gib-ydb1280			[nars]	Test $VIEW("SPSIZE") and $VIEW("SPSIZESORT") report sizes of 2GiB or more correctly
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -65,6 +66,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic jnl_horolog_time-ydb125
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_mkdir_stderr-ydb1267"
 setenv subtest_list_non_replic	"$subtest_list_non_replic intrpt_readline-ydb1269"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pipe_stderr_writeonly-ydb1268"
+setenv subtest_list_non_replic	"$subtest_list_non_replic spsize_2gib-ydb1280"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -74,6 +76,13 @@ else
 endif
 
 setenv subtest_exclude_list ""
+
+# spsize_2gib-ydb1280 fills the stringpool with 2100MiB of live strings and the process peaks at about 8GiB,
+# so exclude it on systems with less than 16GiB of memory, where it would risk the out-of-memory killer.
+set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
+if ($ramsize < 16) then
+	setenv subtest_exclude_list "$subtest_exclude_list spsize_2gib-ydb1280"
+endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then

@@ -1,0 +1,38 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1280] $VIEW("SPSIZE") and $VIEW("SPSIZESORT") return correct values once a size reaches 2GiB  #
+#----------------------------------------------------------------------------------------------------#
+
+# op_fnview.c converted each size to an mval through a 32-bit int, so a stringpool size, a count of
+# bytes in use, or the space a $VIEW("SPSIZESORT") garbage collection needs wrapped around to a
+# negative or unrelated positive number once it reached 2GiB.
+#
+# The routine fills the stringpool with 2100MiB of live strings. The process needs about 8GiB of
+# memory at its peak, which is why r208/instream.csh excludes this subtest on systems with less than
+# 16GiB. The garbage collection mode is left to ydb_stp_gcol_nosort, which do_random_settings.csh
+# sets at random: every expected value below holds in both modes.
+
+# Command : $ydb_dist/yottadb -run ydb1280
+
+# Stage 1 : set s(1) to s(2100) each to a different 1MiB string, then write $VIEW("SPSIZE")
+#   expect piece 2 (bytes in use) to be at least 2100MiB, piece 1 (stringpool size) to be at least
+#   piece 2, and piece 3 to be zero or more
+PASS : piece 2 is at least 2100MiB
+PASS : piece 1 is at least piece 2, and so at least 2100MiB
+PASS : piece 3 is zero or more
+
+# Stage 2 : write $VIEW("SPSIZESORT") with s(1) to s(2100) still set
+#   expect piece 2 (space needed with sorting) to be 2100MiB plus less than 64KiB, and piece 1
+#   (space needed without sorting) to be at least piece 2 and also less than 2100MiB plus 64KiB
+PASS : piece 2 is 2100MiB plus less than 64KiB
+PASS : piece 1 is at least piece 2 and less than 2100MiB plus 64KiB
+
+# Stage 3 : KILL s, then set x to a new 1MiB string repeatedly until a garbage collection sets
+#   piece 3 of $VIEW("SPSIZE") to something other than zero
+#   expect piece 1 to be unchanged from stage 1, piece 2 to be 2MiB plus less than 64KiB, piece 1
+#   minus piece 3 to be 6MiB plus less than 192KiB, and so piece 3 to be at least 2093MiB
+PASS : piece 1 is unchanged from stage 1, and so at least 2100MiB
+PASS : piece 2 is 2MiB plus less than 64KiB
+PASS : piece 1 minus piece 3 is 6MiB plus less than 192KiB
+PASS : piece 3 is at least 2093MiB
+
+# Done
