@@ -1,0 +1,30 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1281] VIEW "STP_GCOL" does not expand the stringpool when it reclaims no space                #
+#----------------------------------------------------------------------------------------------------#
+
+# op_view.c asked the garbage collector for one byte more than the free space in the stringpool. When
+# nothing had been allocated since the previous garbage collection, nothing was reclaimed, so the
+# stringpool had to expand, by a factor approaching 2 as the calls repeated.
+#
+# Stages 1 and 2 fail without the fix: 12 calls in a row take the stringpool from 96KiB to about
+# 79MiB. Stage 3 passes without the fix too; it checks that VIEW "STP_GCOL" still reclaims space.
+#
+# Each stage runs in its own process, so each starts from a new stringpool.
+
+# Stage 1 : VIEW "STP_GCOL_NOSORT":0, then VIEW "STP_GCOL" 12 times in a row
+# Command : $ydb_dist/yottadb -run repeat^ydb1281 0
+#   expect the stringpool size to be unchanged
+PASS : piece 1 of $VIEW("SPSIZE") (stringpool size) is the same after the 12 VIEW "STP_GCOL" as before them
+
+# Stage 2 : VIEW "STP_GCOL_NOSORT":1, then VIEW "STP_GCOL" 12 times in a row
+# Command : $ydb_dist/yottadb -run repeat^ydb1281 1
+#   expect the stringpool size to be unchanged
+PASS : piece 1 of $VIEW("SPSIZE") (stringpool size) is the same after the 12 VIEW "STP_GCOL" as before them
+
+# Stage 3 : VIEW "STP_GCOL", create 20 strings of 1000 bytes that are garbage by the end, then VIEW "STP_GCOL"
+# Command : $ydb_dist/yottadb -run reclaim^ydb1281
+#   expect bytes in use to grow by at least 20000, then drop back to within 2048 bytes of the start
+PASS : piece 2 of $VIEW("SPSIZE") (bytes in use) grew by at least 20000 after 20 strings of 1000 bytes
+PASS : piece 2 of $VIEW("SPSIZE") is back within 2048 bytes of what it was before the strings
+
+# Done

@@ -36,6 +36,7 @@
 # intrpt_readline-ydb1269		[nars]	Test MUPIP INTRPT at a readline direct mode prompt drives $ZINTERRUPT and restores the typed line
 # pipe_stderr_writeonly-ydb1268		[nars]	Test the stderr= device of a PIPE is readable when the OPEN also specifies writeonly
 # spsize_2gib-ydb1280			[nars]	Test $VIEW("SPSIZE") and $VIEW("SPSIZESORT") report sizes of 2GiB or more correctly
+# stp_gcol_repeat-ydb1281		[nars]	Test VIEW "STP_GCOL" does not expand the stringpool when it reclaims no space
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -67,6 +68,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_mkdir_stderr-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic intrpt_readline-ydb1269"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pipe_stderr_writeonly-ydb1268"
 setenv subtest_list_non_replic	"$subtest_list_non_replic spsize_2gib-ydb1280"
+setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_repeat-ydb1281"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
