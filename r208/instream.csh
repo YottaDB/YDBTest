@@ -43,6 +43,7 @@
 # zwr2str_invalid-ydb1286		[nars]	Test $ZWRITE(str,1), ydb_zwr2str_s(), MUPIP LOAD and trigger -delim= reject a str that is not a complete ZWRITE format string without reading past its end
 # mupip_load_ze-ydb1289			[nars]	Test MUPIP LOAD of a ZWR file with over 2.3 million $ze(...) records stays within its line buffer
 # load_zwr_cut_key-ydb1287		[nars]	Test MUPIP LOAD does not read past the end of a ZWR record whose key is cut short, and a source or receiver server does not SIG-11 on a filter's $ze(...) key
+# stp_gcol_free-ydb1284			[nars]	Test VIEW "STP_GCOL_FREE" returns the unused part of the stringpool to the operating system
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -81,6 +82,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic char_code_overflow-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic zwr2str_invalid-ydb1286"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_load_ze-ydb1289"
 setenv subtest_list_non_replic	"$subtest_list_non_replic load_zwr_cut_key-ydb1287"
+setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_free-ydb1284"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -96,6 +98,13 @@ setenv subtest_exclude_list ""
 set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
 if ($ramsize < 16) then
 	setenv subtest_exclude_list "$subtest_exclude_list spsize_2gib-ydb1280"
+endif
+
+# stp_gcol_free-ydb1284 measures how much memory the C library returns to the operating system. With ASAN, YottaDB
+# uses the ASAN allocator, which keeps freed memory in quarantine and is not affected by malloc_trim(), so exclude it.
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
+if ($gtm_test_libyottadb_asan_enabled) then
+	setenv subtest_exclude_list "$subtest_exclude_list stp_gcol_free-ydb1284"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS

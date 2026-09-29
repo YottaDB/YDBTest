@@ -1,0 +1,48 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1284] VIEW "STP_GCOL_FREE" returns the unused part of the stringpool to the operating system  #
+#----------------------------------------------------------------------------------------------------#
+
+# VIEW "STP_GCOL_FREE" does a garbage collection of the stringpool, returns the physical memory of the
+# whole pages in its unused part to the operating system with madvise(MADV_DONTNEED), and calls
+# malloc_trim(0) to do the same for the free pages in the C library heap, such as those of the smaller
+# stringpools freed as the stringpool expanded. The stringpool keeps its size.
+#
+# Each stage sets 20000 local variable nodes to 1000-byte strings, KILLs them, runs the VIEW, and
+# compares VmRSS from /proc/self/status with what it was before the nodes were set. Each stage then
+# sets the nodes again, to check the memory returned to the operating system is usable.
+#
+# Stage 3 is the control: VIEW "STP_GCOL" returns nothing to the operating system. Each stage runs
+# in its own process, so each starts from a new stringpool.
+#
+# Stage 4 checks that $VIEW() rejects STP_GCOL_FREE, which is a VIEW command keyword only.
+
+# Stage 1 : VIEW "STP_GCOL_NOSORT":0, fill, KILL, then VIEW "STP_GCOL_FREE"
+# Command : $ydb_dist/yottadb -run free^ydb1284 STP_GCOL_FREE 0
+#   expect the stringpool size to be unchanged and VmRSS back within a quarter of what the fill added
+PASS : filling 20000 nodes with 1000-byte strings added at least 19531 KiB to VmRSS
+PASS : piece 1 of $VIEW("SPSIZE") (stringpool size) is the same after VIEW "STP_GCOL_FREE" as before it
+PASS : VmRSS after VIEW "STP_GCOL_FREE" is back within a quarter of what the fill added
+PASS : all 20000 nodes hold the expected value after they are set again
+
+# Stage 2 : VIEW "STP_GCOL_NOSORT":1, fill, KILL, then VIEW "STP_GCOL_FREE"
+# Command : $ydb_dist/yottadb -run free^ydb1284 STP_GCOL_FREE 1
+#   expect the stringpool size to be unchanged and VmRSS back within a quarter of what the fill added
+PASS : filling 20000 nodes with 1000-byte strings added at least 19531 KiB to VmRSS
+PASS : piece 1 of $VIEW("SPSIZE") (stringpool size) is the same after VIEW "STP_GCOL_FREE" as before it
+PASS : VmRSS after VIEW "STP_GCOL_FREE" is back within a quarter of what the fill added
+PASS : all 20000 nodes hold the expected value after they are set again
+
+# Stage 3 : VIEW "STP_GCOL_NOSORT":0, fill, KILL, then VIEW "STP_GCOL"
+# Command : $ydb_dist/yottadb -run free^ydb1284 STP_GCOL 0
+#   expect the stringpool size to be unchanged and VmRSS to still hold most of what the fill added
+PASS : filling 20000 nodes with 1000-byte strings added at least 19531 KiB to VmRSS
+PASS : piece 1 of $VIEW("SPSIZE") (stringpool size) is the same after VIEW "STP_GCOL" as before it
+PASS : VmRSS after VIEW "STP_GCOL" still holds more than three quarters of what the fill added
+PASS : all 20000 nodes hold the expected value after they are set again
+
+# Stage 4 : $VIEW("STP_GCOL_FREE")
+# Command : $ydb_dist/yottadb -run fnview^ydb1284
+#   expect a VIEWFN error
+PASS : $VIEW("STP_GCOL_FREE") issues VIEWFN
+
+# Done
