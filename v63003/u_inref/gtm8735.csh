@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,34 +66,33 @@ $DSE dump -file|&$grep "Read Only"
 
 echo '# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other'
 $gtm_tst/com/lsminusl.csh $ydb_dist/*.dat|$tst_awk '{print $1,$9}'
-foreach dir ($ydb_dist/*.gld)
-	echo "# Displaying status of "$dir
-	setenv ydb_gbldir $dir
+# The help databases in $ydb_dist are shared by every concurrently running subtest. If another process has one
+# open, for example a process that used %PEEKBYNAME (such as an imptp worker), which keeps the help database open
+# until it exits, MUPIP SET issues READONLYLKFAIL instead of DBFILOPERR. So the steps below work on a copy of each
+# help database, which has the same file header and read-only permissions, through a copy of its global directory
+# that points at the copy.
+foreach gld ($ydb_dist/*.gld)
+	set name = $gld:t:r
+	echo "# Copying $name.gld and $name.dat from ydb_dist and pointing the copy of $name.gld at the copy of $name.dat"
+	cp $gld $name.gld
+	chmod u+w $name.gld
+	cp $gld:r.dat $name.dat
+	chmod 444 $name.dat
+	setenv ydb_gbldir $name.gld
+	# -file_name must be the last qualifier on the line as it takes the rest of the line
+	$GDE change -segment DEFAULT -file_name=$PWD/$name.dat >& gde_$name.out
+	if ($status) then
+		echo "GDE Failed, Output Below"
+		cat gde_$name.out
+	endif
+	echo "# Displaying status of $name.dat"
 	$DSE dump -file |& $grep "Read Only"
 	echo "# Attempting to change to no read only"
-	# Occasionally there is a READONLYLKFAIL Error instead of the desired DBFILEOPERR.
-	# This is possible if the help database file is opened by another concurrently running test.
-	# We have the program retry in a sleep-loop if it encounters this.
-	set num = 300	# wait for a max of 300 seconds before signaling a failure
-	while ($num)
-		$MUPIP SET -region DEFAULT -NOREAD_ONLY >& temp.out
-		$grep READONLYLKFAIL temp.out > /dev/null
-		if ($status) then
-			break
-		endif
-		sleep 1
-		@ num = $num - 1
-	end
-	if (0 == $num) then
-		# Timed out in above while loop. Find out which process still has the help database file open.
-		echo "# Below processes still have the help database file $dir open"
-		fuser $dir:r.dat >> temp.out
-	endif
-	cat temp.out
-	rm temp.out
+	$MUPIP SET -region DEFAULT -NOREAD_ONLY
 	echo "# Attempting to write to database"
 	$ydb_dist/mumps -run ^%XCMD "set ^X=2"
 end
+unsetenv ydb_gbldir	# so dbcheck.csh below checks mumps.dat and not the last help database copy
 $gtm_tst/com/dbcheck.csh mumps 1 >>& check1.out
 if ($status) then
 	echo "DB Check Failed, Output Below"

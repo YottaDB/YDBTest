@@ -30,43 +30,48 @@ Database file ##TEST_PATH##/mumps.dat now has BG access method
 -r--r--r-- ##SOURCE_PATH##/gtmhelp.dat
 -r--r--r-- ##SOURCE_PATH##/lkehelp.dat
 -r--r--r-- ##SOURCE_PATH##/mupiphelp.dat
-# Displaying status of ##SOURCE_PATH##/dsehelp.gld
+# Copying dsehelp.gld and dsehelp.dat from ydb_dist and pointing the copy of dsehelp.gld at the copy of dsehelp.dat
+# Displaying status of dsehelp.dat
   LOCK shares DB critical section             FALSE  Read Only                               ON
 # Attempting to change to no read only
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##SOURCE_REALPATH##/dsehelp.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/dsehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Attempting to write to database
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_REALPATH##/dsehelp.dat
-# Displaying status of ##SOURCE_PATH##/gdehelp.gld
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/dsehelp.dat
+# Copying gdehelp.gld and gdehelp.dat from ydb_dist and pointing the copy of gdehelp.gld at the copy of gdehelp.dat
+# Displaying status of gdehelp.dat
   LOCK shares DB critical section             FALSE  Read Only                               ON
 # Attempting to change to no read only
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##SOURCE_REALPATH##/gdehelp.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/gdehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Attempting to write to database
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_REALPATH##/gdehelp.dat
-# Displaying status of ##SOURCE_PATH##/gtmhelp.gld
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/gdehelp.dat
+# Copying gtmhelp.gld and gtmhelp.dat from ydb_dist and pointing the copy of gtmhelp.gld at the copy of gtmhelp.dat
+# Displaying status of gtmhelp.dat
   LOCK shares DB critical section             FALSE  Read Only                               ON
 # Attempting to change to no read only
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##SOURCE_REALPATH##/gtmhelp.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/gtmhelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Attempting to write to database
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_REALPATH##/gtmhelp.dat
-# Displaying status of ##SOURCE_PATH##/lkehelp.gld
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/gtmhelp.dat
+# Copying lkehelp.gld and lkehelp.dat from ydb_dist and pointing the copy of lkehelp.gld at the copy of lkehelp.dat
+# Displaying status of lkehelp.dat
   LOCK shares DB critical section             FALSE  Read Only                               ON
 # Attempting to change to no read only
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##SOURCE_REALPATH##/lkehelp.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/lkehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Attempting to write to database
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_REALPATH##/lkehelp.dat
-# Displaying status of ##SOURCE_PATH##/mupiphelp.gld
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/lkehelp.dat
+# Copying mupiphelp.gld and mupiphelp.dat from ydb_dist and pointing the copy of mupiphelp.gld at the copy of mupiphelp.dat
+# Displaying status of mupiphelp.dat
   LOCK shares DB critical section             FALSE  Read Only                               ON
 # Attempting to change to no read only
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##SOURCE_REALPATH##/mupiphelp.dat
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/mupiphelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Attempting to write to database
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_REALPATH##/mupiphelp.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mupiphelp.dat
