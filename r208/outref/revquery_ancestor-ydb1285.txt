@@ -1,0 +1,56 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1285] Reverse $QUERY() and ydb_node_previous_s() on a local variable return an ancestor that  #
+# has a value but no descendants, when the starting node does not exist                              #
+#----------------------------------------------------------------------------------------------------#
+
+# An ancestor of a node collates immediately before it. When the starting node does not exist and an
+# ancestor of it has a value but no descendants, that ancestor is the result. op_fnreversequery.c
+# skipped it, and returned the node before it, or the empty string if there was none.
+#
+# Without the fix, every check below prints WRONG except the controls: $query(x("a",4),-1) and
+# ydb_node_previous_s() once x("a") has a descendant, $query(b(1,2),-1) with only b defined, and the
+# $order() that confirms the collation in stage 3.
+
+# Stage 1 : $QUERY(lvn,-1) with the direction known at compile time
+# Command : $ydb_dist/yottadb -run direct^ydb1285
+#   expect each result to be the ancestor of the starting node that has a value
+PASS : $query(x("a",4),-1) returned x("a")
+PASS : $query(x("a",""),-1) returned x("a")
+PASS : $query(x("a",4),-1) after set x("a",5)=3 returned x("a")
+PASS : $query(y("a",4),-1) returned y("a")
+PASS : $query(w(2,"x","y"),-1) returned w(2)
+PASS : $query(n(1.5,-3,"q"),-1) returned n(1.5)
+PASS : $query(z(2,"k",1),-1) after kill z(2,"k") returned z(2)
+PASS : $query(b(1,2),-1) returned b
+
+# Stage 2 : $QUERY(lvn,d) with d=-1, and $QUERY(@ref,-1) and $QUERY(@ref,d)
+# Command : $ydb_dist/yottadb -run runtime^ydb1285
+#   expect the same results as the compile time form
+PASS : $query(x("a",4),d) with d=-1 returned x("a")
+PASS : $query(y("a",4),d) with d=-1 returned y("a")
+PASS : $query(@r,-1) with r="x(""a"",4)" returned x("a")
+PASS : $query(@r,d) with r="y(""a"",4)" and d=-1 returned y("a")
+
+# Stage 3 : $QUERY(lvn,-1) with a local collation sequence that reverses the order of strings
+# Command : source $gtm_tst/com/cre_coll_sl_reverse.csh 1 ; $ydb_dist/yottadb -run revcoll^ydb1285
+#   expect $order(x("")) to be "b", confirming the collation is in effect, and the ancestor x("a")
+#   rather than x("b","c"), which collates before it
+PASS : $order(x("")) returned b
+PASS : $query(x("a","z"),-1) returned x("a")
+
+# Stage 4 : ydb_node_previous_s() on a local variable
+# Command : build and run ydb1285_sapi.c
+#   expect the same results as $QUERY(lvn,-1)
+PASS : ydb_node_previous_s() of x("a",4) returned 1 subscript(s) : a
+PASS : ydb_node_previous_s() of y("a",4) returned 1 subscript(s) : a
+PASS : ydb_node_previous_s() of w(2,"x","y") returned 1 subscript(s) : 2
+PASS : ydb_node_previous_s() of x("a",4) after setting x("a",5) returned 1 subscript(s) : a
+
+# Stage 5 : compare $QUERY(lvn,-1) with $QUERY(gvn,-1), which was not affected, over 500 random trees
+#           of up to 8 nodes with up to 3 subscripts, and 50 random starting nodes with up to 4
+#           subscripts in each tree
+# Command : $ydb_dist/yottadb -run random^ydb1285
+#   expect no differences
+PASS : the count of $query(lvn,-1) results that differ from $query(gvn,-1), over 25000 starting nodes, returned 0
+
+# Done
