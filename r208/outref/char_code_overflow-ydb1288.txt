@@ -1,0 +1,134 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1288] $C()/$ZCH() arguments in a ZWRITE format string and trigger -pieces= values of           #
+# 2147483648 or more are rejected, not wrapped around modulo 2**32                                    #
+#----------------------------------------------------------------------------------------------------#
+
+# The A2I() macro, which parses these numbers, kept going after an int overflow as long as the value
+# stayed positive, so it returned the number modulo 2**32: $C(4294967361) was read as $C(65), and
+# -pieces=4294967298 as -pieces=2. When the value went negative it stopped, and a debug build failed
+# an assert, for example on $C(2147483713).
+#
+# Without the fix, the checks below of numbers that wrap to a valid code print WRONG, and on a debug
+# build the checks of numbers that go negative, such as 2147483713, fail an assert instead.
+
+# Stage 1 : $ZWRITE(str,1) of a $C() or $ZCH() with an argument too large for an int, and controls
+# Command : $ydb_dist/yottadb -run zwr^ydb1288
+#   expect "" for each argument of 2147483648 or more, and the character for each control
+PASS : $zwrite("$C(4294967361)",1) returned ""
+PASS : $zwrite("$ZCH(4294967361)",1) returned ""
+PASS : $zwrite("$C(8589934657)",1) returned ""
+PASS : $zwrite("$C(4294967296065)",1) returned ""
+PASS : $zwrite("$C(4294967306)",1) returned ""
+PASS : $zwrite("$C(2147483648)",1) returned ""
+PASS : $zwrite("$C(2147483713)",1) returned ""
+PASS : $zwrite("$C(18446744073709551681)",1) returned ""
+PASS : $zwrite("$C(65,4294967361)",1) returned ""
+PASS : $zwrite("""X""_$C(4294967361)",1) returned ""
+PASS : $zwrite("$C(2147483647)",1) returned ""
+PASS : $zwrite("$C(65)",1) returned "A"
+PASS : $zwrite("$C(0065)",1) returned "A"
+PASS : $zwrite("$ZCH(255)",1) returned $C(255)
+PASS : $zwrite("$C(1,2,3)",1) returned $C(1,2,3)
+
+# Stage 2 : $ZWRITE("$C(n)",1) for 1000 random n = k*2**32+c, with k from 1 to 2**20 and c from 0 to 255
+# Command : $ydb_dist/yottadb -run random^ydb1288
+#   expect "" for every n
+PASS : $zwrite("$C(n)",1) returned "" for 1000 values of n = k*2**32+c, with c from 0 to 255
+
+##SUSPEND_OUTPUT NON_UTF8
+# Stage 3 : $ZWRITE(str,1) in UTF-8 mode, where $C() takes code points above 255
+# Command : $ydb_dist/yottadb -run zwrutf8^ydb1288
+#   expect "" for 2**32+1234 and 2**32+1114109, and the character for 1234 and 1114109
+PASS : $zwrite("$C(4294968530)",1) returned ""
+PASS : $zwrite("$C(4296081405)",1) returned ""
+PASS : $zwrite("$C(1234)",1) returned "Ӓ"
+PASS : $zwrite("$C(1114109)",1) returned $C(1114109)
+
+##ALLOW_OUTPUT NON_UTF8
+# Stage 4 : $QSUBSCRIPT() of a name whose subscript is a $C() with an argument too large for an int
+# Command : $ydb_dist/yottadb -run qsub^ydb1288
+#   expect no character for the too-large argument, and "A" for $C(65)
+PASS : $qsubscript("x($C(4294967361))",1) returned ""
+PASS : $qsubscript("x($C(2147483713))",1) returned ""
+PASS : $qsubscript("x(""a""_$C(4294967361))",1) returned "a"
+PASS : $qsubscript("x($C(65))",1) returned "A"
+
+# Stage 5 : MUPIP LOAD of a ZWR file with $C() arguments too large for an int in values and subscripts
+# load.zwr holds :
+YottaDB MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^x(1)=$C(4294967361)
+^x($C(4294967361))=1
+^x(2)=$C(2147483713)
+^x($C(2147483713))=2
+^x(3)=$C(65)
+# Command : $ydb_dist/mupip load load.zwr
+#   expect a format error for each value, DLRCUNXEOR and RECLOAD for each subscript, FAILEDRECCOUNT, and only
+#   ^x(3) to be loaded
+----------
+Error DLRCUNXEOR seen in load.out as expected:
+%YDB-E-DLRCUNXEOR, 	^x($C(4294967361))
+%YDB-E-DLRCUNXEOR, 	^x($C(2147483713))
+----------
+----------
+Error RECLOAD seen in load.out as expected:
+%YDB-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 6
+----------
+----------
+Error FAILEDRECCOUNT seen in load.out as expected:
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+----------
+YottaDB MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+Format error in record number: 3
+With content:
+$C(4294967361)
+			unexpected end of record in $CHAR()/$ZCHAR() subscript
+		Global variable : 
+Format error in record number: 5
+With content:
+$C(2147483713)
+			unexpected end of record in $CHAR()/$ZCHAR() subscript
+		Global variable : 
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 1
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
+PASS : the list of ^x subscripts loaded returned 3
+PASS : ^x(3) returned "A"
+
+# Stage 6 : $ZTRIGGER("item") with -pieces= values, and pattern repeat counts in a subscript (a plain
+#           count, the upper bound of a range, and a count inside an alternation), too large for an int
+#   expect each to be rejected, and only the trigger with -pieces=2 to be added
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim="","" -pieces=4294967298")
+Integer overflow in PIECES - "4294967298"
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim="","" -pieces=2:4294967299")
+Integer overflow in PIECES - "2:4294967299"
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim="","" -pieces=2147483648")
+Integer overflow in PIECES - "2147483648"
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^b(?4294967297N) -commands=S -xecute=""set y=1""")
+Integer overflow in pattern repeat count
+"^b(?4294967297N) -commands=S -xecute=""set y=1"""
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^c(?1.4294967297N) -commands=S -xecute=""set y=1""")
+Integer overflow in pattern repeat count
+"^c(?1.4294967297N) -commands=S -xecute=""set y=1"""
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^d(?1(4294967297N,1A)) -commands=S -xecute=""set y=1""")
+Integer overflow in pattern repeat count
+"^d(?1(4294967297N,1A)) -commands=S -xecute=""set y=1"""
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^e(?2147483648N) -commands=S -xecute=""set y=1""")
+Integer overflow in pattern repeat count
+"^e(?2147483648N) -commands=S -xecute=""set y=1"""
+PASS : $ztrigger("item") returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim="","" -pieces=2")
+Added SET trigger on ^a named a#1
+PASS : $ztrigger("item") returned 1
+PASS : $ztrigger("select") output returned "+^a -commands=S -delim="","" -pieces=2 -xecute=""set y=1"""
+
+# Done
