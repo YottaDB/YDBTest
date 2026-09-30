@@ -1,0 +1,165 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1286] $ZWRITE(str,1) and ydb_zwr2str_s() return the empty string for a str that is not a      #
+# complete ZWRITE format string, and do not read past its end                                        #
+#----------------------------------------------------------------------------------------------------#
+
+# zwr2format() converts a ZWRITE format string to the string it represents, for $ZWRITE(str,1),
+# ydb_zwr2str_s(), MUPIP LOAD and trigger definitions. It read the byte after a string that ended
+# in "$", "$Z", "$ZC", "$C", or after the number in an unterminated $C( or $ZCH(. It also accepted
+# strings ending in "_", in an unterminated quoted string, in an unterminated $C( or $ZCH(, or in a
+# number that does not end in a digit.
+#
+# $EXTRACT() and $ZEXTRACT() return a string that shares memory with their source, so a prefix of a
+# ZWRITE format string taken that way is followed in memory by the rest of the string, and a read past
+# its end finds the byte that makes it valid. In stage 5 a read past the end gets a SIGSEGV.
+#
+# Without the fix, every check below prints WRONG except the controls, whose expected result is not
+# the empty string, and the invalid strings "X"_$C(65)Y and _"X". In stage 5 the six strings in the
+# first group each end the process with a SIGSEGV.
+
+# Stage 1 : prefixes of a valid ZWRITE format string, taken with $EXTRACT()
+# Command : $ydb_dist/yottadb -run truncated^ydb1286
+#   expect "" for each prefix that ends in "$", "$Z", "$ZC", "$C" or an unterminated $C( or $ZCH(, and
+#   "XA" for the complete strings
+PASS : $zwrite(y,1) with y="X"_$, the first 5 characters of "X"_$C(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$Z, the first 6 characters of "X"_$ZCH(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$ZC, the first 7 characters of "X"_$ZCH(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$C, the first 6 characters of "X"_$C(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$C(65, the first 9 characters of "X"_$C(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$ZCH(65, the first 11 characters of "X"_$ZCH(65) returned ""
+PASS : $zwrite(y,1) with y="X"_$C(65), the first 10 characters of "X"_$C(65) returned "XA"
+PASS : $zwrite(y,1) with y="X"_$ZCH(65), the first 12 characters of "X"_$ZCH(65) returned "XA"
+
+# Stage 2 : strings that are not valid ZWRITE format strings on their own, and valid controls
+# Command : $ydb_dist/yottadb -run invalid^ydb1286
+#   expect "" for each invalid string, and the string it represents for each valid one
+PASS : $zwrite(y,1) with y="X"_$C( returned ""
+PASS : $zwrite(y,1) with y="X"_$ZCH( returned ""
+PASS : $zwrite(y,1) with y=$C(65, returned ""
+PASS : $zwrite(y,1) with y="X"_ returned ""
+PASS : $zwrite(y,1) with y="X"_$C(65)_ returned ""
+PASS : $zwrite(y,1) with y="X"_"Y returned ""
+PASS : $zwrite(y,1) with y="a"" returned ""
+PASS : $zwrite(y,1) with y="X"_$C(65)Y returned ""
+PASS : $zwrite(y,1) with y=_"X" returned ""
+PASS : $zwrite(y,1) with y=- returned ""
+PASS : $zwrite(y,1) with y=. returned ""
+PASS : $zwrite(y,1) with y=-. returned ""
+PASS : $zwrite(y,1) with y=1. returned ""
+PASS : $zwrite(y,1) with y="X"_"Y" returned "XY"
+PASS : $zwrite(y,1) with y="a""" returned "a"""
+PASS : $zwrite(y,1) with y="X"_$C(65,66)_$ZCH(67) returned "XABC"
+PASS : $zwrite(y,1) with y="" returned ""
+PASS : $zwrite(y,1) with y=1 returned 1
+PASS : $zwrite(y,1) with y=-1 returned -1
+PASS : $zwrite(y,1) with y=.5 returned .5
+PASS : $zwrite(y,1) with y=-.5 returned -.5
+PASS : $zwrite(y,1) with y=-1.5 returned -1.5
+PASS : $zwrite(y,1) with y=12 returned 12
+PASS : $zwrite(y,1) with y=123 returned 123
+
+# Stage 3 : every prefix of 2000 random ZWRITE format strings of 1 to 4 tokens, each token a quoted
+#           string, a $C() or a $ZCH(), with each prefix taken with $ZEXTRACT()
+# Command : $ydb_dist/yottadb -run randm^ydb1286
+#   expect "" for each prefix that does not end with a complete token, or at the first " of a "" in a
+#   quoted string, and the string the prefix represents for each one that does
+PASS : every prefix of 2000 random ZWRITE format strings returned its expected value
+
+##SUSPEND_OUTPUT NON_UTF8
+# Stage 4 : stages 1 and 3 in UTF-8 mode, where $C() also takes code points above 255
+# Command : $ydb_dist/yottadb -run truncutf8^ydb1286 ; $ydb_dist/yottadb -run randutf8^ydb1286
+#   expect "" for the prefix "X"_$C(1234, and the same results as stage 3
+PASS : $zwrite(y,1) with y="X"_$C(1234, the first 11 characters of "X"_$C(1234) returned ""
+PASS : $zwrite(y,1) with y="X"_$C(1234), the first 12 characters of "X"_$C(1234) returned "XӒ"
+PASS : every prefix of 2000 random ZWRITE format strings returned its expected value
+
+##ALLOW_OUTPUT NON_UTF8
+# Stage 5 : ydb_zwr2str_s() of each string placed at the end of a page that is followed by a page with
+#           no access, in a child process per string
+# Command : build and run ydb1286_guard.c
+#   expect "" for each invalid string and no SIGSEGV, and the string it represents for each valid one
+PASS : ydb_zwr2str_s() of "X"_$ returned []
+PASS : ydb_zwr2str_s() of "X"_$Z returned []
+PASS : ydb_zwr2str_s() of "X"_$ZC returned []
+PASS : ydb_zwr2str_s() of "X"_$C returned []
+PASS : ydb_zwr2str_s() of "X"_$C(65 returned []
+PASS : ydb_zwr2str_s() of "X"_$ZCH(65 returned []
+PASS : ydb_zwr2str_s() of "X"_$C( returned []
+PASS : ydb_zwr2str_s() of "X"_$ZCH( returned []
+PASS : ydb_zwr2str_s() of $C(65, returned []
+PASS : ydb_zwr2str_s() of "X"_ returned []
+PASS : ydb_zwr2str_s() of "X"_$C(65)_ returned []
+PASS : ydb_zwr2str_s() of "X"_"Y returned []
+PASS : ydb_zwr2str_s() of "a"" returned []
+PASS : ydb_zwr2str_s() of - returned []
+PASS : ydb_zwr2str_s() of . returned []
+PASS : ydb_zwr2str_s() of -. returned []
+PASS : ydb_zwr2str_s() of 1. returned []
+PASS : ydb_zwr2str_s() of "X" returned [X]
+PASS : ydb_zwr2str_s() of "X"_$C(65) returned [XA]
+PASS : ydb_zwr2str_s() of "X"_$ZCH(65,66) returned [XAB]
+PASS : ydb_zwr2str_s() of "a""" returned [a"]
+PASS : ydb_zwr2str_s() of "" returned []
+PASS : ydb_zwr2str_s() of -12.5 returned [-12.5]
+
+# Stage 6 : MUPIP LOAD of a ZWR file whose records hold ZWRITE format values
+# load.zwr holds :
+YottaDB MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+^x(1)="X"_
+^x(2)="X"_$C(
+^x(3)="X"_$C(65)_
+^x(4)="X"_"Y
+^x(5)="a""
+^x(6)="X"_$C(65)
+# Command : $ydb_dist/mupip load load.zwr
+#   expect a format error for each of ^x(1) to ^x(5), LOADFILERR, and only ^x(6) to be loaded
+----------
+Error LOADFILERR seen in load.out as expected:
+%YDB-E-LOADFILERR, Error with load file 
+----------
+YottaDB MUPIP EXTRACT
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+Format error in record number: 3
+With content:
+"X"_
+Format error in record number: 4
+With content:
+"X"_$C(
+Format error in record number: 5
+With content:
+"X"_$C(65)_
+Format error in record number: 6
+With content:
+"X"_"Y
+Format error in record number: 7
+With content:
+"a""
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 2
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 8
+PASS : the list of ^x subscripts loaded returned 6
+PASS : ^x(6) returned "XA"
+
+# Stage 7 : $ZTRIGGER("item") of a trigger whose -delim= value is a ZWRITE format string
+#   expect each -delim= value that is not a complete ZWRITE format string to be rejected with
+#   "Invalid delimiter", and only the trigger with the complete one to be added
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim=""a""_")
+Invalid delimiter
+Error : Parsing DELIM string: """a""_"
+PASS : $ztrigger("item") with -delim="a"_ returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim=""a""_$C(")
+Invalid delimiter
+Error : Parsing DELIM string: """a""_$C("
+PASS : $ztrigger("item") with -delim="a"_$C( returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim=""a""_$C(9)_")
+Invalid delimiter
+Error : Parsing DELIM string: """a""_$C(9)_"
+PASS : $ztrigger("item") with -delim="a"_$C(9)_ returned 0
+# Command : write $ztrigger("item","+^a -commands=S -xecute=""set y=1"" -delim=""a""_$C(9)")
+Added SET trigger on ^a named a#1
+PASS : $ztrigger("item") with -delim="a"_$C(9) returned 1
+PASS : $ztrigger("select") output returned "+^a -commands=S -delim=""a""_$C(9) -xecute=""set y=1"""
+
+# Done
