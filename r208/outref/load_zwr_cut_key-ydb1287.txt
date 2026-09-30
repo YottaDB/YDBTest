@@ -1,0 +1,88 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1287] MUPIP LOAD does not read past the end of a ZWR record whose key is cut short            #
+#----------------------------------------------------------------------------------------------------#
+
+# zwrkeyvallen() finds the key of a ZWR record for MUPIP LOAD. After a $, a closing " or a ) in the key,
+# it read the next one to three bytes without checking them against the length of the record, and it
+# scanned the ,<offset>,<length>) part of a $ze(...) record until it found a ) wherever that was.
+# str2gvargs(), which then turns the key into a global reference, read past its end in the same way.
+# MUPIP LOAD reads every line into the same buffer, so on a record whose key is cut short those reads
+# found bytes left over from an earlier, longer line. The error LOAD reported, or whether it took the
+# key as complete, then depended on those bytes. A dbg build failed an assert in one of the two instead.
+#
+# For each of 4 records, and each length that cuts the record within its key, the cut copy is loaded
+# once after the full record and once after a filler record of the same length. Without the fix, the
+# two loads of most cuts report different errors, as the error quotes bytes past the end of the cut.
+
+# Create a database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Run [ydb1287] : for each cut of each record, run $ydb_dist/mupip load on a ZWR file of 3 records:
+#   the full record or the filler, then ^s=1, then the cut copy
+# expect each load to report the cut copy as its only failed record, and the output of the two loads
+# of each cut to be the same
+PASS : each of the 24 cuts of ^a($C(65)_"x"_$ZCH(10))="val" is the only failed record, with the same output after the full record as after filler
+PASS : each of the 21 cuts of ^a("x"_$C(1),"a""b")="v" is the only failed record, with the same output after the full record as after filler
+PASS : each of the 26 cuts of ^a($C(65)_$ZCH(66)_"y",2)="v" is the only failed record, with the same output after the full record as after filler
+PASS : each of the 24 cuts of $ze(^a($C(65)_"x"),0,3)="abc" is the only failed record, with the same output after the full record as after filler
+
+# Stage 2 : The scan for the ) of a $ze(...) record did not stop at the end of the record. In stage 1 the line
+# before each cut copy holds a ), which stopped the scan. Here each record has no ) and no line before it, so
+# without the fix a pro build read on until it ran off the end of mapped memory and terminated with a SIG-11.
+# Run [ydb1287] : for each record, run $ydb_dist/mupip load on a ZWR file holding only that record
+# expect each load to report the record as its only failed record
+PASS : $ze(^a,0,3 is the only failed record
+PASS : $ze(^a,0,3= is the only failed record
+PASS : $ze(^a,0 is the only failed record
+PASS : $ze(^a is the only failed record
+
+# Stage 3 : A record whose key is empty, e.g. =1, reached str2gvargs() with a length of 0, which failed an assert
+# in a dbg build. The code after that assert reports NOTGBL for an empty key.
+# Run [ydb1287] : run $ydb_dist/mupip load on a ZWR file holding only =1
+# expect the load to report =1 as its only failed record, with a NOTGBL error
+PASS : =1 is the only failed record, and is reported as NOTGBL
+
+# Stage 4 : a replication filter in the source server returns a SET whose key is in $ze(...) form
+# ext2jnl() converts each record a filter returns back into a journal record. It passes NULL to zwrkeyvallen() for
+# the two outputs of the $ze(...) form, but zwrkeyvallen() wrote through them whenever the key started with $, so
+# the server running the filter terminated with a SIG-11. Such a key is not a global name, and must now be reported
+# as NOTGBL.
+# Create instances INSTA (in sourceA) and INSTB (in sourceB), each with one region, journaled and replicated
+# Start a passive source server and a receiver server for INSTB
+# Start the source server for INSTA with -filter="$gtm_exe/mumps -run filter^ydb1287"
+# Run [set ^good=1,^zebad="abc",^after=2] on INSTA. The filter returns the SET of ^zebad as a SET of $ze(^zebad,0,3)
+# expect the source server to exit, reporting NOTGBL for the $ze(...) key, and not to be killed by a signal
+PASS : the source server exited
+PASS : the source server was not killed by a signal
+----------
+Error NOTGBL seen in sourceA/source.log as expected:
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): $ze(^zebad,0,3)
+----------
+# expect INSTB to hold ^good, sent before the rewritten SET, and neither ^zebad nor ^after, as nothing after it is applied
+PASS : INSTB holds ^good=1, and neither ^zebad nor ^after
+# Shut down the replication servers still running, and run down the instance whose source server exited
+
+# Stage 5 : the same filter, run in the receiver server instead
+# Create instances INSTA (in receiverA) and INSTB (in receiverB), each with one region, journaled and replicated
+# Start a passive source server, and a receiver server with -filter="$gtm_exe/mumps -run filter^ydb1287", for INSTB
+# Start the source server for INSTA
+# Run [set ^good=1,^zebad="abc",^after=2] on INSTA. The filter returns the SET of ^zebad as a SET of $ze(^zebad,0,3)
+# expect the receiver server to exit, reporting NOTGBL for the $ze(...) key, and not to be killed by a signal
+PASS : the receiver server exited
+PASS : the receiver server was not killed by a signal
+----------
+Error NOTGBL seen in receiverB/receiver.log as expected:
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): $ze(^zebad,0,3)
+----------
+# expect INSTB to hold ^good, sent before the rewritten SET, and neither ^zebad nor ^after, as nothing after it is applied
+PASS : INSTB holds ^good=1, and neither ^zebad nor ^after
+# Shut down the replication servers still running, and run down the instance whose receiver server exited
+
+# Invoking : dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
