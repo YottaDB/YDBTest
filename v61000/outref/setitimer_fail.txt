@@ -5,6 +5,9 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # This test simulates, via a white-box logic, an error return from timer_create()/setitimer(), which is used to
 # start a new system timer or cancel an existing one. We expect appropriate error messages to be printed in the console.
+# Each %YDB-E-SYSCALL for timer_settime() must carry the timer state as a %YDB-I-TEXT. No fork happens here, so that state
+# must say posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid()
+# and time_to_expir is a valid expiry time. setitimer_fail_check.awk checks this and prints PASS or WRONG per message.
 # Set the white-box test that simulates an error return from timer_create()/setitimer().
 setenv ydb_white_box_test_case_enable 1
 setenv ydb_white_box_test_case_number 98
@@ -14,17 +17,24 @@ unset echo
 ##################################################################
 ###################################################################
 # Try to do a database update from direct mode, thus starting a timer and invoking the white-box test logic.
-
-YDB>
+# Run [mumps -direct >& case1.out] and type [set ^x=1] and [quit]
+----------
+Error %YDB-E-SYSCALL seen in case1.out as expected:
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*
-%SYSTEM-E-ENO22, Invalid argument
-
-YDB>
-
-YDB>
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*
+----------
+----------
+Error %SYSTEM-E-ENO22 seen in case1.out as expected:
 %SYSTEM-E-ENO22, Invalid argument
+%SYSTEM-E-ENO22, Invalid argument
+----------
+----------
+Error %YDB-E-LKRUNDOWN seen in case1.out as expected:
 %YDB-E-LKRUNDOWN, Error during LOCK database rundown
+----------
+# Check the timer state reported with each timer_settime() error in case1.out
+PASS : message 1 : posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid(), time_to_expir is valid
+PASS : message 2 : posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid(), time_to_expir is valid
 
 ###################################################################
 # Case 2. A timer_create()/setitimer() failure from an M routine. #
@@ -32,13 +42,24 @@ YDB>
 ###################################################################
 # Produce a simple M file test.m for testing.
 # Invoke the M program with a database update, thus starting a timer and triggering the white-box test logic.
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*,%SYSTEM-E-ENO22, Invalid argument
-		At M source location test+1^test
-
-YDB>
+# Run [mumps -run test >& case2.out]
+----------
+Error %YDB-E-SYSCALL seen in case2.out as expected:
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*,%YDB-I-TEXT, posix_timer_id: [0-9]*; posix_timer_created: 1; posix_timer_thread_id: ##PID##; gettid\(\): ##PID##; process_id: ##PID##; getpid\(\): ##PID##; fork_after_ydb_init: 0; timer_active: [01]; time_to_expir: \[tv_sec: [0-9]*; tv_nsec: [0-9]*\],%SYSTEM-E-ENO22, Invalid argument
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*
+----------
+----------
+Error %SYSTEM-E-ENO22 seen in case2.out as expected:
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*,%YDB-I-TEXT, posix_timer_id: [0-9]*; posix_timer_created: 1; posix_timer_thread_id: ##PID##; gettid\(\): ##PID##; process_id: ##PID##; getpid\(\): ##PID##; fork_after_ydb_init: 0; timer_active: [01]; time_to_expir: \[tv_sec: [0-9]*; tv_nsec: [0-9]*\],%SYSTEM-E-ENO22, Invalid argument
 %SYSTEM-E-ENO22, Invalid argument
+----------
+----------
+Error %YDB-E-LKRUNDOWN seen in case2.out as expected:
 %YDB-E-LKRUNDOWN, Error during LOCK database rundown
+----------
+# Check the timer state reported with each timer_settime() error in case2.out
+PASS : message 1 : posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid(), time_to_expir is valid
+PASS : message 2 : posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid(), time_to_expir is valid
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

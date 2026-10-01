@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,7 @@
 #						damage, create out-of-design situations, or result in its own or other processes'
 #						ungraceful termination.
 # setitimer_fail		[sopini]	Verify that a syslog message and a fatal rts_error is generated when setitimer
-# 						returns an error status.
+# 						returns an error status, and that a timer_settime() error reports the timer state.
 # gtm7845			[base]		Verify that MUPIP RUNDOWN -FILE clears semaphores and shared memory.
 #						Note: -override flag inside MUPIP RUNDOWN might be randomized once GTM-7859 is fixed.
 # gtm7858			[base]		Verify GTMSECSHRVFID is not issued if the kill() target PID does not exist (ESRCH).

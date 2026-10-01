@@ -1,0 +1,30 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1291] A SimpleAPI process forked while a flush timer was deferred can make YottaDB calls in   #
+# the child                                                                                          #
+#----------------------------------------------------------------------------------------------------#
+
+# A child inherits the parent's timer queue, including a timer whose handling the parent deferred,
+# and the record that a POSIX timer was created, but not the POSIX timer itself. The first YottaDB
+# call in the child ran the deferred timer handler, which restarted the system timer with the
+# parent's timer id, and failed with %YDB-E-SYSCALL from timer_settime() (ENO22).
+#
+# Without the fix, stage 2 prints WRONG. Stage 1 is a control that forks before any timer is due.
+
+# Create a database with regions DEFAULT and AREG (^a maps to AREG)
+# Command : $MUPIP set -flush_time=100 -region "*"
+
+# Stage 1 : update ^x, then ^a 500 milliseconds later, fork 300 milliseconds after the ^x update (no
+#           flush timer is due yet) and read ^x in the child
+# Command : ./ydb1291_fork 300
+#   expect the read to work and the child to exit with status 0
+PASS : child ydb_get_s(^x) returned YDB_OK and [1]
+PASS : child exited with status 0
+
+# Stage 2 : the same, but fork 1200 milliseconds after the ^x update, when the DEFAULT flush timer has
+#           come due and been deferred and the AREG flush timer is still pending
+# Command : ./ydb1291_fork 1200
+#   expect the read to work and the child to exit with status 0
+PASS : child ydb_get_s(^x) returned YDB_OK and [1]
+PASS : child exited with status 0
+
+# Done

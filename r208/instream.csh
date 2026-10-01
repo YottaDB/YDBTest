@@ -38,6 +38,7 @@
 # spsize_2gib-ydb1280			[nars]	Test $VIEW("SPSIZE") and $VIEW("SPSIZESORT") report sizes of 2GiB or more correctly
 # stp_gcol_repeat-ydb1281		[nars]	Test VIEW "STP_GCOL" does not expand the stringpool when it reclaims no space
 # revquery_ancestor-ydb1285		[nars]	Test reverse $QUERY() and ydb_node_previous_s() on a local variable return an ancestor that has a value but no descendants
+# fork_deferred_timer-ydb1291		[nars]	Test a SimpleAPI process forked while a flush timer was deferred can make YottaDB calls in the child
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -71,6 +72,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic pipe_stderr_writeonly-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic spsize_2gib-ydb1280"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_repeat-ydb1281"
 setenv subtest_list_non_replic	"$subtest_list_non_replic revquery_ancestor-ydb1285"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fork_deferred_timer-ydb1291"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
