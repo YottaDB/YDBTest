@@ -1,0 +1,28 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1289] MUPIP LOAD of a ZWR file with many $ze(...) records stays within its line buffer         #
+#----------------------------------------------------------------------------------------------------#
+
+# go_load.c read every line of the file into a 9,446,402 byte buffer, but each $ze(...) record left
+# the read position 4 bytes further into it. After about 2,361,600 such records, lines were copied
+# past the end of the buffer, and MUPIP LOAD reported errors on valid records or died with a SIG-11.
+#
+# The file loaded here has 3,000,000 $ze(...) records. Stages 2 and 3 fail without the fix.
+
+# Stage 1 : write the ZWR file ze.zwr, a 2 line header and 3,000,000 records $ze(^a(i#1000+1),0,1)=$char(97+(i#26))
+# Command : $ydb_dist/yottadb -run gen^ydb1289 ze.zwr
+#   expect 3,000,002 lines, each record line of the form $ze(^a(<n>),0,1)="<letter>"
+PASS : ze.zwr has 3000002 lines, 3000000 of them records of the expected form
+
+# Stage 2 : load the file
+# Command : $ydb_dist/mupip load ze.zwr
+#   expect exit status 0, no error message, and a key count of 3000000
+PASS : MUPIP LOAD exited with status 0
+PASS : MUPIP LOAD issued no error or warning message
+PASS : MUPIP LOAD reported a key count of 3000000
+
+# Stage 3 : check the loaded data
+# Command : $ydb_dist/yottadb -run check^ydb1289
+#   expect ^a(1) to ^a(1000) to exist, and each to hold the letter of the last record that set it
+PASS : ^a has 1000 subscripts and each holds the value of the last record that set it
+
+# Done

@@ -41,6 +41,7 @@
 # fork_deferred_timer-ydb1291		[nars]	Test a SimpleAPI process forked while a flush timer was deferred can make YottaDB calls in the child
 # char_code_overflow-ydb1288		[nars]	Test $C()/$ZCH() arguments in a ZWRITE format string and trigger -pieces= values too large for an int are rejected, not wrapped around
 # zwr2str_invalid-ydb1286		[nars]	Test $ZWRITE(str,1), ydb_zwr2str_s(), MUPIP LOAD and trigger -delim= reject a str that is not a complete ZWRITE format string without reading past its end
+# mupip_load_ze-ydb1289			[nars]	Test MUPIP LOAD of a ZWR file with over 2.3 million $ze(...) records stays within its line buffer
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -77,6 +78,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic revquery_ancestor-ydb12
 setenv subtest_list_non_replic	"$subtest_list_non_replic fork_deferred_timer-ydb1291"
 setenv subtest_list_non_replic	"$subtest_list_non_replic char_code_overflow-ydb1288"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zwr2str_invalid-ydb1286"
+setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_load_ze-ydb1289"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
