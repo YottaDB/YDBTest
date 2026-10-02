@@ -1085,7 +1085,11 @@ if ( $stat == 0 ) then
 		if ($?test_replic) then
 			$sec_shell "\chmod -R g+w $SEC_DIR; if (-d $test_remote_jnldir) \chmod -R g+w $test_remote_jnldir; if (-d $test_remote_bakdir) \chmod -R g+w $test_remote_bakdir"
 		else if ("GT.CM" == $test_gtm_gtcm) then
-			$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; \chmod -R g+w SEC_DIR_GTCM"
+			# Note: "chmod" below must not be written as "\chmod". This string is rewritten by
+			# com/gtcm_command.csh using the tcsh "echo" builtin, whose default echo_style of
+			# "both" treats "\cX" as a control character, so "\chmod" becomes Ctrl-H ("^Hmod")
+			# before it is handed to ssh and the remote shell reports "Command not found".
+			$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; chmod -R g+w SEC_DIR_GTCM"
 		endif
 	endif
 endif
