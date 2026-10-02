@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -51,6 +54,10 @@ $MSR START INST2 INST3 PP
 get_msrtime
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log SRC_'$time_msr'.log  -message "now in ACTIVE mode"'
 $MSR RUN INST1 '$gtm_tst/com/simpleinstanceupdate.csh 20'
+# Ensure INST2 has received the updates (and with them, the history record that INST1 wrote when it became a root primary)
+# before INST1 is shut down. Otherwise, INST2 could have no history records in its instance file, in which case the
+# "-activate -rootprimary" on INST2 below would not switch journal files and the expected FILERENAME message would be missing.
+$MSR SYNC INST1 INST2
 $MSR STOP INST1
 $MSR STOPRCV INST1 INST2
 $MSR RUN SRC=INST2 RCV=INST3 '$MUPIP replic -source -deactivate -instsecondary=__RCV_INSTNAME__ -propagateprimary >& INST3_replic2.tmp; cat INST3_replic2.tmp'
