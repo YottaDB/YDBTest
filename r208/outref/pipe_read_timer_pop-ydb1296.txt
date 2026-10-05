@@ -1,0 +1,28 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1296] A timed READ of a PIPE device returns when its timeout expires, even if the timer       #
+# pops between two read() calls                                                                      #
+#----------------------------------------------------------------------------------------------------#
+
+# A timed READ of a PIPE relies on the timer's SIGALRM to interrupt a blocking read(). If the timer
+# popped after one read() returned a partial line and before the next read() started, nothing
+# interrupted that read(), and the READ waited for more input forever.
+#
+# White-box case 412 makes the READ wait for its timer to pop after each read() that returns input,
+# which makes the race happen every time. Without the fix, stage 2 prints WRONG. Stage 1 is a control
+# without the white-box case.
+
+# Stage 1 : READ x:5 from a PIPE that writes a partial line and keeps the PIPE open
+# Command : $gtm_dist/mumps -run ydb1296
+#   expect x to be "DSE> ", $TEST to be 0, and the READ to take less than 60 seconds
+# x is "DSE> " as expected
+# $TEST is 0 as expected
+# READ took less than 60 seconds as expected
+
+# Stage 2 : the same, with white-box case 412 making the timer pop between two read() calls
+# Command : $gtm_dist/mumps -run ydb1296
+#   expect x to be "DSE> ", $TEST to be 0, and the READ to take less than 60 seconds
+# x is "DSE> " as expected
+# $TEST is 0 as expected
+# READ took less than 60 seconds as expected
+
+# Done
