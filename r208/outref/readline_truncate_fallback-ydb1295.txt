@@ -1,0 +1,47 @@
+#-------------------------------------------------------------------------------------------------------------------#
+# [YDB#1295] Test the readline history file is kept to 1000 entries even if history_truncate_file() fails           #
+# At exit, a process that used readline appends its history to the history file and calls history_truncate_file()   #
+# of the readline library to keep the file to 1000 entries. In some readline builds that function always fails      #
+# without trimming the file, which then grows without limit. YottaDB now does the truncation itself when that       #
+# happens. White box test case 411 (WBTEST_YDB_READLINE_TRUNCFAIL) makes YottaDB behave as if the function failed.  #
+# Each step starts from a history file of 3000 entries, "write 1" to "write 3000". This subtest verifies that:      #
+#   1. a direct mode session leaves the file with the last 1000 entries (this exercises the YottaDB fallback only   #
+#      on systems whose readline library has the failing history_truncate_file())                                   #
+#   2. the same, with the failure forced by the white box test case, so the YottaDB fallback does the truncation    #
+#   3. the same, with a second session that starts and exits while the first one is at its prompt: the file keeps   #
+#      the entries the second session added                                                                         #
+#-------------------------------------------------------------------------------------------------------------------#
+
+
+# Step 1 : from a terminal, HOME=home1 $gtm_dist/yottadb -direct, then
+#          YDB>write "O","NE",!
+#          YDB>halt
+#          expect ONE, and home1/.ydb_YottaDB_history to hold 1000 entries: "write 2003" to "write 3000",
+#          then the 2 lines typed at the prompt
+PASS: yottadb -direct wrote ONE and halted
+PASS: home1/.ydb_YottaDB_history holds 1000 lines
+PASS: its first line is [write 2003]
+PASS: its last line is [halt]
+
+# Step 2 : the same as step 1 with HOME=home2, and with white box test case 411 enabled
+#          expect the same, now from the YottaDB fallback
+PASS: yottadb -direct wrote ONE and halted
+PASS: home2/.ydb_YottaDB_history holds 1000 lines
+PASS: its first line is [write 2003]
+PASS: its last line is [halt]
+
+# Step 3 : with white box test case 411 still enabled, from terminal A, HOME=home3 $gtm_dist/yottadb -direct
+#          then, from terminal B, HOME=home3 $gtm_dist/yottadb -direct, then
+#          YDB>write "B","EE",!
+#          YDB>halt
+#          then, at the prompt of terminal A,
+#          YDB>write "A","AA",!
+#          YDB>halt
+#          expect BEE and AAA, and home3/.ydb_YottaDB_history to hold 1000 entries: "write 2005" to "write 3000",
+#          then the 2 lines typed in terminal B, then the 2 lines typed in terminal A
+PASS: yottadb -direct wrote BEE and halted
+PASS: yottadb -direct wrote AAA and halted
+PASS: home3/.ydb_YottaDB_history holds 1000 lines
+PASS: its first line is [write 2005]
+PASS: its last line is [halt]
+PASS: it holds the line [write "B","EE",!]

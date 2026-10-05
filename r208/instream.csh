@@ -46,6 +46,7 @@
 # stp_gcol_free-ydb1284			[nars]	Test VIEW "STP_GCOL_FREE" returns the unused part of the stringpool to the operating system
 # enospc_mupip_stop-ydb1300		[nars]	Test a MUPIP STOP of a process waiting for disk space does not make it exit holding the journal pool lock
 # readline_lazy_load-ydb1294		[nars]	Test a process loads the readline history file only when it reads from a terminal through readline
+# readline_truncate_fallback-ydb1295	[nars]	Test the readline history file is kept to 1000 entries even if history_truncate_file() fails
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -86,6 +87,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_load_ze-ydb1289"
 setenv subtest_list_non_replic	"$subtest_list_non_replic load_zwr_cut_key-ydb1287"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_free-ydb1284"
 setenv subtest_list_non_replic	"$subtest_list_non_replic readline_lazy_load-ydb1294"
+setenv subtest_list_non_replic	"$subtest_list_non_replic readline_truncate_fallback-ydb1295"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -115,6 +117,8 @@ endif
 if ("pro" == "$tst_image") then
 	# enospc_mupip_stop-ydb1300 uses gdb to turn on fake ENOSPC, which exists only in Debug builds
 	setenv subtest_exclude_list "$subtest_exclude_list enospc_mupip_stop-ydb1300"
+	# readline_truncate_fallback-ydb1295 needs a white box test case, which only a dbg build supports
+	setenv subtest_exclude_list "$subtest_exclude_list readline_truncate_fallback-ydb1295"
 endif
 
 if ("dbg" == "$tst_image") then

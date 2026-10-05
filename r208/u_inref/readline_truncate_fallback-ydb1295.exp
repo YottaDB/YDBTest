@@ -1,0 +1,59 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+# Runs one step of the readline_truncate_fallback-ydb1295 subtest from one or two terminals. The step is the first
+# argument. The caller checks the history file once this script is done and the processes it ran have exited.
+set step [lindex $argv 0]
+
+# Starts tcsh in a new terminal, starts yottadb -direct in it and returns the spawn_id of that terminal
+proc start_direct_mode {} {
+	global spawn_id
+	# -noecho since the spawn line would otherwise be session output in the reference file
+	spawn -noecho /usr/local/bin/tcsh -f
+	source $::env(gtm_tst)/com/expectinit.exp
+	send -- "\$gtm_dist/yottadb -direct\r"
+	expect -exact "YDB>"
+	return $spawn_id
+}
+
+# Types a WRITE command that writes $text at the prompt of the terminal $id, then halts the process and exits tcsh.
+# The command splits $text into two string literals, so that expecting $text cannot match the echo of the command.
+proc write_and_halt {id first second} {
+	global spawn_id
+	set spawn_id $id
+	send -- "write \"$first\",\"$second\",!\r"
+	expect -exact "$first$second"
+	expect -exact "YDB>"
+	send -- "halt\r"
+	expect -exact "SHELL"
+	send -- "exit\r"
+	expect eof
+	puts "PASS: yottadb -direct wrote $first$second and halted"
+}
+
+# None of the session output goes to the reference file: readline redraws the prompt and the input line with
+# terminal dependent escape sequences. Only the lines this script writes with "puts" make up the reference output.
+log_user 0
+switch -- $step {
+	single {
+		set a [start_direct_mode]
+		write_and_halt $a "O" "NE"
+	}
+	concurrent {
+		# Terminal A loads the history file and waits at its prompt while terminal B starts, adds 2 entries to the
+		# file and exits. Terminal A then adds its own 2 entries and exits. Its truncation must keep those of B.
+		set a [start_direct_mode]
+		set b [start_direct_mode]
+		write_and_halt $b "B" "EE"
+		write_and_halt $a "A" "AA"
+	}
+}
