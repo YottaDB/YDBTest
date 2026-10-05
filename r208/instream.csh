@@ -49,6 +49,7 @@
 # readline_truncate_fallback-ydb1295	[nars]	Test the readline history file is kept to 1000 entries even if history_truncate_file() fails
 # pthread_exit_nomem-ydb1292		[nars]	Test a MUPIP JOURNAL worker thread that exits when no more memory can be mapped does not abort the process
 # pipe_read_timer_pop-ydb1296		[nars]	Test a timed READ of a PIPE device returns when its timeout expires even if the timer pops between two read() calls
+# fork_core_in_malloc-ydb1293		[nars]	Test a process sent a fatal signal while inside malloc() dies with a core instead of hanging
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -92,6 +93,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic readline_lazy_load-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic readline_truncate_fallback-ydb1295"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pthread_exit_nomem-ydb1292"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pipe_read_timer_pop-ydb1296"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fork_core_in_malloc-ydb1293"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -128,6 +130,8 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list readline_truncate_fallback-ydb1295"
 	# pipe_read_timer_pop-ydb1296 needs white-box case 412, which only Debug builds have
 	setenv subtest_exclude_list "$subtest_exclude_list pipe_read_timer_pop-ydb1296"
+	# fork_core_in_malloc-ydb1293 needs a white box test case, which only a Debug build has
+	setenv subtest_exclude_list "$subtest_exclude_list fork_core_in_malloc-ydb1293"
 endif
 
 if ("dbg" == "$tst_image") then

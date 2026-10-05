@@ -1,0 +1,28 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1293] A process sent a fatal signal while inside malloc() dies with a core instead of hanging #
+#----------------------------------------------------------------------------------------------------#
+
+# A fatal signal sent to a process inside malloc() defers the exit until malloc() returns, but the
+# signal handler forked for a core right away. fork() runs the pthread_atfork() prepare handlers, and
+# an allocator whose handler takes the lock that the interrupted malloc() holds (ASAN's does) waits
+# for it forever. The process never died, and wrote neither a core nor a YDB_FATAL_ERROR file.
+#
+# White box case WBTEST_HOLD_FORK_LOCK_IN_MALLOC (413) stands in for such an allocator. Before the first
+# malloc() of 64MiB or more, it takes a lock that its own prepare handler also takes, and holds it for
+# 5 seconds. Without the fix, step 2 prints WRONG.
+
+# Step 1 : start [yottadb -run ydb1293] in the background with white box case 413 enabled
+#          expect it to report that it holds the fork lock in malloc()
+PASS : the process holds the fork lock in malloc()
+
+# Step 2 : kill -4 <pid>
+#          expect the process to die within 60 seconds
+PASS : the process died
+
+# Step 3 : check what the process left behind
+#          expect a core file, a YDB_FATAL_ERROR file and a %YDB-F-KILLBYSIGUINFO message
+PASS : core file found
+PASS : YDB_FATAL_ERROR file found
+PASS : %YDB-F-KILLBYSIGUINFO message seen
+
+# Done
