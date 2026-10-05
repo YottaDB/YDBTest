@@ -48,6 +48,12 @@
 # And since "perf stat" is used in the test system in lots of tests, it is better to do this logic in a centralized
 # place (to avoid duplication in all callers) and hence this script.
 
+# With readline enabled, every "mumps" process (even with "-run") loads the readline history file at startup.
+# That costs instructions in proportion to the size of that file, which has nothing to do with what the caller
+# wants to measure and can be large (e.g. 100+ million instructions for a history file with 50,000+ lines).
+# Hence disable readline for the measured command. This only affects the environment of this script.
+setenv ydb_readline 0
+
 set perfcmd = perf_$$.cmd
 if (-e /sys/devices/cpu_core/cpus) then
 	# This system contains Hybrid x86_64 cores. Use fancy "perf stat" command with "taskset" to make sure the
