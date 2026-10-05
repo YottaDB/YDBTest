@@ -45,6 +45,7 @@
 # load_zwr_cut_key-ydb1287		[nars]	Test MUPIP LOAD does not read past the end of a ZWR record whose key is cut short, and a source or receiver server does not SIG-11 on a filter's $ze(...) key
 # stp_gcol_free-ydb1284			[nars]	Test VIEW "STP_GCOL_FREE" returns the unused part of the stringpool to the operating system
 # enospc_mupip_stop-ydb1300		[nars]	Test a MUPIP STOP of a process waiting for disk space does not make it exit holding the journal pool lock
+# readline_lazy_load-ydb1294		[nars]	Test a process loads the readline history file only when it reads from a terminal through readline
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -84,6 +85,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zwr2str_invalid-ydb1286
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_load_ze-ydb1289"
 setenv subtest_list_non_replic	"$subtest_list_non_replic load_zwr_cut_key-ydb1287"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_free-ydb1284"
+setenv subtest_list_non_replic	"$subtest_list_non_replic readline_lazy_load-ydb1294"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

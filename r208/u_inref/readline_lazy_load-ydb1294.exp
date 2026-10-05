@@ -1,0 +1,71 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+# Runs one step of the readline_lazy_load-ydb1294 subtest from a terminal. The step is the first argument.
+# The caller checks the history file once this script is done and the process it ran has exited.
+set step [lindex $argv 0]
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# None of the session output goes to the reference file: readline redraws the prompt and the input line with
+# terminal dependent escape sequences. Only the lines this script writes with "puts" make up the reference output.
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+switch -- $step {
+	run {
+		send -- "\$gtm_dist/yottadb -run rl1294\r"
+		expect -exact "RUN"
+		expect -exact "SHELL"
+		puts "PASS: yottadb -run rl1294 wrote RUN"
+	}
+	direct {
+		send -- "\$gtm_dist/yottadb -direct\r"
+		expect -exact "YDB>"
+		# The text typed is deliberately not the text written, so that expecting the latter cannot match the echo
+		send -- "write \"D\",\"M\",!\r"
+		expect -exact "DM"
+		expect -exact "YDB>"
+		send -- "halt\r"
+		expect -exact "SHELL"
+		puts "PASS: yottadb -direct wrote DM"
+	}
+	lke {
+		send -- "\$gtm_dist/lke\r"
+		expect -exact "LKE>"
+		send -- "show -all\r"
+		expect -exact "LKE>"
+		send -- "exit\r"
+		expect -exact "SHELL"
+		puts "PASS: LKE returned to the shell after exit"
+	}
+	callin {
+		send -- "./ydb1294_ci\r"
+		expect -exact "CALLIN"
+		expect -exact "YDB>"
+		# The text typed is deliberately not the text written, so that expecting the latter cannot match the echo.
+		# Q and Z since the echo of a typed character can follow a cursor movement escape sequence that ends in C.
+		send -- "write \"Q\",\"Z\",!\r"
+		expect -exact "QZ"
+		expect -exact "YDB>"
+		send -- "zcontinue\r"
+		# BACK (written by the M code) and the line printed by the C program can reach the terminal in either order,
+		# so wait for the shell prompt and then look for both in what came before it
+		expect -exact "SHELL"
+		set out $expect_out(buffer)
+		if {([string first "BACK" $out] >= 0) && ([string first "ydb_ci returned 0" $out] >= 0)} {
+			puts "PASS: the call-in entered direct mode, wrote QZ, and returned 0 after zcontinue"
+		} else {
+			puts "WRONG: expected BACK and ydb_ci returned 0 after zcontinue, got \[$out\]"
+		}
+	}
+}
+send -- "exit\r"
+expect eof

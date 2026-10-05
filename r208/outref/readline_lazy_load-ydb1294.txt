@@ -1,0 +1,77 @@
+#-------------------------------------------------------------------------------------------------------------------#
+# [YDB#1294] Test a process loads the readline history file only when it reads from a terminal through readline     #
+# With ydb_readline=1, a process used to dlopen libreadline and load (creating it if needed) its history file at    #
+# startup, even when it could never use readline, e.g. with its input from a file or pipe, or a "yottadb -run" that #
+# never enters direct mode. That took time in proportion to the size of the file, and issued a READLINEFILEPERM     #
+# warning when the file could not be created. The history file is now loaded just before the first read through     #
+# readline, i.e. at the first direct mode or DSE/LKE/MUPIP prompt on a terminal. This subtest verifies that:        #
+#   1. yottadb -run with input from /dev/null does not create the history file                                      #
+#   2. yottadb -direct with input from a pipe does not create the history file                                      #
+#   3. LKE, DSE and MUPIP with input from a pipe do not create their history files                                  #
+#   4. yottadb -run with input from /dev/null and an unwritable HOME issues no READLINEFILEPERM warning             #
+#   5. yottadb -run from a terminal, that never enters direct mode, does not create the history file                #
+#   6. yottadb -direct from a terminal creates the history file and saves the line typed at the prompt              #
+#   7. LKE from a terminal creates its history file and saves the command typed at the prompt                       #
+#   8. A call-in whose M code enters direct mode from a terminal does not create the history file, since a        #
+#      call-in never uses readline                                                                                  #
+#-------------------------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Step 1 : HOME=home1 $gtm_dist/yottadb -run rl1294 < /dev/null
+#          expect RUN, and no home1/.ydb_YottaDB_history
+RUN
+PASS: home1/.ydb_YottaDB_history does not exist
+
+# Step 2 : echo "write 2*21,!" | HOME=home2 $gtm_dist/yottadb -direct
+#          expect 42, and no home2/.ydb_YottaDB_history
+
+YDB>
+42
+
+YDB>
+PASS: home2/.ydb_YottaDB_history does not exist
+
+# Step 3 : echo exit | HOME=home3 $gtm_dist/lke, then the same with $gtm_dist/dse and $gtm_dist/mupip
+#          expect no home3/.ydb_LKE_history, home3/.ydb_DSE_history or home3/.ydb_MUPIP_history
+PASS: home3/.ydb_LKE_history does not exist
+PASS: home3/.ydb_DSE_history does not exist
+PASS: home3/.ydb_MUPIP_history does not exist
+
+# Step 4 : HOME=home4 $gtm_dist/yottadb -run rl1294 < /dev/null, with home4 not writable
+#          expect RUN and no READLINEFILEPERM warning
+RUN
+PASS: no READLINEFILEPERM warning
+
+# Step 5 : from a terminal, HOME=home5 $gtm_dist/yottadb -run rl1294
+#          expect RUN, and no home5/.ydb_YottaDB_history since the process never enters direct mode
+PASS: yottadb -run rl1294 wrote RUN
+PASS: home5/.ydb_YottaDB_history does not exist
+
+# Step 6 : from a terminal, HOME=home6 $gtm_dist/yottadb -direct, then
+#          YDB>write "D","M",!
+#          YDB>halt
+#          expect DM, and home6/.ydb_YottaDB_history to hold the line typed at the prompt
+PASS: yottadb -direct wrote DM
+PASS: home6/.ydb_YottaDB_history exists and holds the line [write "D","M",!]
+
+# Step 7 : from a terminal, HOME=home7 $gtm_dist/lke, then
+#          LKE>show -all
+#          LKE>exit
+#          expect home7/.ydb_LKE_history to hold the command typed at the prompt
+PASS: LKE returned to the shell after exit
+PASS: home7/.ydb_LKE_history exists and holds the line [show -all]
+
+# Step 8 : from a terminal, HOME=home8 ./ydb1294_ci, a C program that calls in to ci^rl1294, which does a BREAK, then
+#          YDB>write "Q","Z",!
+#          YDB>zcontinue
+#          expect CALLIN, QZ, BACK and ydb_ci returned 0, and no home8/.ydb_YottaDB_history
+PASS: the call-in entered direct mode, wrote QZ, and returned 0 after zcontinue
+PASS: home8/.ydb_YottaDB_history does not exist
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
