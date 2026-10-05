@@ -47,6 +47,7 @@
 # enospc_mupip_stop-ydb1300		[nars]	Test a MUPIP STOP of a process waiting for disk space does not make it exit holding the journal pool lock
 # readline_lazy_load-ydb1294		[nars]	Test a process loads the readline history file only when it reads from a terminal through readline
 # readline_truncate_fallback-ydb1295	[nars]	Test the readline history file is kept to 1000 entries even if history_truncate_file() fails
+# pthread_exit_nomem-ydb1292		[nars]	Test a MUPIP JOURNAL worker thread that exits when no more memory can be mapped does not abort the process
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -88,6 +89,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic load_zwr_cut_key-ydb128
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_free-ydb1284"
 setenv subtest_list_non_replic	"$subtest_list_non_replic readline_lazy_load-ydb1294"
 setenv subtest_list_non_replic	"$subtest_list_non_replic readline_truncate_fallback-ydb1295"
+setenv subtest_list_non_replic	"$subtest_list_non_replic pthread_exit_nomem-ydb1292"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -111,6 +113,9 @@ endif
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
 if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list stp_gcol_free-ydb1284"
+	# pthread_exit_nomem-ydb1292 limits the address space of a MUPIP process to what it is using, which leaves the
+	# ASAN allocator no room to map memory, so exclude it.
+	setenv subtest_exclude_list "$subtest_exclude_list pthread_exit_nomem-ydb1292"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS

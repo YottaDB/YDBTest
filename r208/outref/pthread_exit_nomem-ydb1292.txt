@@ -1,0 +1,59 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1292] A MUPIP JOURNAL worker thread that exits when no more memory can be mapped does not     #
+# abort the process                                                                                  #
+#----------------------------------------------------------------------------------------------------#
+
+# glibc's pthread_exit() loads libgcc_s.so.1 the first time a thread calls it. If no more memory can be
+# mapped at that point, the load fails and glibc aborts the process with "libgcc_s.so.1 must be
+# installed for pthread_exit to work". MUPIP JOURNAL -RECOVER and -ROLLBACK run one worker thread per
+# region, which call pthread_exit() when the process is asked to stop (MUPIP STOP) or when they get an
+# error.
+#
+# This subtest stops a MUPIP JOURNAL -RECOVER -BACKWARD while its worker threads run, limits its
+# address space to what it is using, and sends it SIGTERM. Its worker threads then call pthread_exit().
+#
+# Without the fix, a Release build prints WRONG and MUPIP aborts with that glibc message. A Debug build
+# passes either way, since it loads libgcc_s.so.1 at startup to record which code allocates each block
+# of memory.
+
+# Journaling is set up explicitly below, so do not let dbcreate.csh enable it at random
+# Nothing may load libgcc_s.so.1 at MUPIP startup, or the test passes without the fix, so use M mode
+# (in UTF-8 mode, the ICU libraries depend on libgcc_s.so.1) and no gtmdbglvl (which turns on the same
+# allocation recording as a Debug build)
+# No asynchronous IO, whose worker thread would count as a thread of the MUPIP process
+# BEFORE_IMAGE journaling, which backward recovery needs, needs the BG access method
+# Create a database with regions AREG, BREG and DEFAULT
+# Command : $MUPIP set -journal="enable,on,before" -region "*"
+# Command : $ydb_dist/yottadb -run %XCMD 'for i=1:1:100000 set ^a(i)=$j(i,100),^b(i)=$j(i,100),^x(i)=$j(i,100)'
+
+# Use one worker thread per region
+# Stage 1 : run MUPIP JOURNAL -RECOVER -BACKWARD, stop it once it has worker threads, limit its address
+#           space to what it is using, send it SIGTERM and let it continue
+# Command : ./ydb1292_stopthreads recover1.out $gtm_exe/mupip journal -recover -backward -since=<time before the updates> "*"
+Stopped the MUPIP process while it had worker threads
+libgcc_s is mapped into it
+Set its address space limit to the address space it is using
+Sent it SIGTERM and SIGCONT
+MUPIP exited with status 241
+#   expect it to be stopped while it had worker threads
+PASS : it was stopped while it had worker threads
+#   expect libgcc_s to be mapped into it before its worker threads exit
+PASS : libgcc_s was mapped into it
+#   expect no glibc message about libgcc_s.so.1
+PASS : no glibc message about libgcc_s.so.1
+#   expect MUPIP to exit with status 241, the status of %YDB-F-FORCEDHALT
+PASS : MUPIP exited with status 241
+----------
+Error YDB-F-FORCEDHALT seen in recover1.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error YDB-E-MUNOACTION seen in recover1.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Stage 2 : run the same backward recovery again with no stop, which completes the interrupted one
+# Command : $MUPIP journal -recover -backward -since=<time before the updates> "*"
+PASS : %YDB-S-JNLSUCCESS
+
+# Done
