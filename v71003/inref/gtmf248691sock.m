@@ -30,9 +30,7 @@ gtmf248691sock	;
 	set ^gtmf248691("childpid")=$zjob
 	do server
 	; Let the child finish writing its outcome line before the caller compares the files
-	new maxwait
-	set maxwait=60
-	do ^waitforproctodie(^gtmf248691("childpid"))
+	do ^waitforproctodie(^gtmf248691("childpid"),60)
 	quit
 	;
 server	;

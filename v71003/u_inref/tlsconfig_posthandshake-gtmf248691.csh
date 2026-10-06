@@ -43,6 +43,10 @@ echo "# Create a database"
 $gtm_tst/com/dbcreate.csh mumps 1  >& dbcreate.out
 echo
 
+# Tests 1 and 2 assert by absence, not by output. Neither captures a log, so what they check is that no
+# TLSCONNINFO and no TLSHANDSHAKE reaches the Receiver Server log. The error scanner enforces that, because
+# both are warnings and these two stages leave their logs alone, unlike Test 3 which renames its own to
+# .logx. Renaming a log here, or sweeping them all, would void both stages and they would still pass.
 echo "### Test 1: TLS with Post Handshake Authentication (PHA)"
 echo "## Basic case. Confirm that PHA can successfully be enabled with SSL_VERIFY_POST_HANDSHAKE,"
 echo "## and a connection can be established without error."
