@@ -37,9 +37,9 @@ set testmsg = ( \
 foreach test ( 1 2 )
 	echo
 	echo "$testmsg[$test]"
-	set instructions = `$gtm_tst/com/perfstat.csh $gtm_exe/mumps -run test$test^strcatEfficiency`
-	echo "CPU instructions=$instructions[1]"
-	if ( "$instructions[1]" == "" ) echo "No instruction count produced by perf: $instructions"`false` || continue
-	if ( "$instructions[1]" > $limit ) echo "FAIL: Test took more than $limit instructions [($instructions[1] instructions]"`false` || continue
+	set instructions = `$gtm_tst/com/perfstat.csh $gtm_exe/mumps -run test$test^strcatEfficiency | $tst_awk -f $gtm_tst/com/perfstat_count.awk`
+	if ("" == "$instructions") continue
+	echo "CPU instructions=$instructions"
+	if ( "$instructions" > $limit ) echo "FAIL: Test took more than $limit instructions [($instructions instructions]"`false` || continue
 	echo "PASS: Took less than $limit instructions"
 end

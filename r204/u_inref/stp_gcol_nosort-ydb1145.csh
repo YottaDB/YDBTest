@@ -146,8 +146,10 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	foreach value (0 1)
 		setenv ydb_stp_gcol_nosort $value
 		$gtm_tst/com/perfstat.csh $gtm_dist/mumps -run gctest2^stpgcolydb1145 >& perf.gctest2.$value
-		set instructions$value = `head -1 perf.gctest2.$value | $tst_awk '{print $1}'`
+		set instructions$value = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf.gctest2.$value`
 	end
-	$gtm_dist/mumps -run gctest2verify^stpgcolydb1145 $instructions0 $instructions1
+	if (("" != "$instructions0") && ("" != "$instructions1")) then
+		$gtm_dist/mumps -run gctest2verify^stpgcolydb1145 $instructions0 $instructions1
+	endif
 	echo
 endif

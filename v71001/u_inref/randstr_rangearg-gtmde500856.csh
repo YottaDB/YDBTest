@@ -60,8 +60,9 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 			set testname = "missinglimit"
 		endif
 		$gtm_tst/com/perfstat.csh $gtm_dist/mumps -run $testname^gtmde500856 >& perf.out
-		set instructions = `tail -1 perf.out`
-		if ( "$instructions[1]" > $limit ) echo "FAIL: Test took more than $limit instructions [($instructions[1] instructions]"`false` || continue
+		set instructions = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf.out`
+		if ("" == "$instructions") continue
+		if ( "$instructions" > $limit ) echo "FAIL: Test took more than $limit instructions [($instructions instructions]"`false` || continue
 		echo "PASS: Took less than $limit instructions"
 		echo ""
 	end

@@ -65,9 +65,9 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 		set maxlimit = `$gtm_dist/mumps -run %XCMD 'write '$limit[$cnt]'*1.05\1'`
 		@ cnt = $cnt + 1
 		set fullcmd = "s y=\$justify(1,10),z=\"a\" for i=1:1:10000000 $cmd"
-		set instructions = `echo $fullcmd | $gtm_tst/com/perfstat.csh $gtm_dist/mumps -direct`
-		if ( "$instructions[3]" == "" ) echo "No instruction count produced by perf: $instructions"`false` || continue
-		if ( "$instructions[3]" > $maxlimit ) echo "FAIL: [Actual=$instructions[3]] more than [Maxlimit=$maxlimit] instructions"`false` || continue
+		set instructions = `echo $fullcmd | $gtm_tst/com/perfstat.csh $gtm_dist/mumps -direct | $tst_awk -f $gtm_tst/com/perfstat_count.awk`
+		if ("" == "$instructions") continue
+		if ( "$instructions" > $maxlimit ) echo "FAIL: [Actual=$instructions] more than [Maxlimit=$maxlimit] instructions"`false` || continue
 		echo "PASS: Test of [$cmd]"
 	end
 endif

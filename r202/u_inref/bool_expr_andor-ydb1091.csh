@@ -32,19 +32,26 @@ if (! $perf_missing && ! $gtm_test_libyottadb_asan_enabled && ("pro" == "$tst_im
 	echo "# The test allows for up to 5% more instructions. And signals failure if it exceeds even that."
 	cp $gtm_tst/$tst/inref/bool_expr_andor_mcmds.txt perfcmds.csh
 	cp perfcmds.csh perfcmds.txt
-	sed -i 's/^/echo \'/;s/$/\' | $gtm_tst\/com\/perfstat.csh $gtm_dist\/mumps -direct | grep instructions/;' perfcmds.csh
+	sed -i 's/^/echo \'/;s/$/\' | $gtm_tst\/com\/perfstat.csh $gtm_dist\/mumps -direct | $tst_awk -f $gtm_tst\/com\/perfstat_count.awk/;' perfcmds.csh
 	source perfcmds.csh >& perfcmds.out
-	$tst_awk '{printf "%.f\n", $1/1000000;}' perfcmds.out > perfcmds.actual
+	$tst_awk '/^[0-9]+$/ {printf "%.f\n", $1/1000000;}' perfcmds.out > perfcmds.actual
+	# Every command must have produced a count, or [paste] below pairs counts with the wrong baselines
+	set nexpected = `wc -l < $gtm_tst/$tst/inref/bool_expr_andor_mcmds_perf.txt`
+	set nactual = `wc -l < perfcmds.actual`
 	sed -i 's/^set .*000 //;s/ | .*//;s/s //;s/ x=1//;' perfcmds.txt
-	paste $gtm_tst/$tst/inref/bool_expr_andor_mcmds_perf.txt perfcmds.actual perfcmds.txt > awk.input
-	$tst_awk 	\
-		'{												\
-			if ($2 > ($1 * 1.05))									\
-			{											\
-				printf "FAIL : Command [%s] : MaxAllowed = [%s] Actual = [%s] instructions\n",	\
-					$3, $1 * 1.05, $2;							\
-			} else											\
-				printf "PASS : Performance test of [%s]\n", $3;					\
-		}' awk.input
+	if ($nexpected != $nactual) then
+		echo "TEST-E-NOCOUNT : expected $nexpected instruction counts but perfcmds.out has $nactual"
+	else
+		paste $gtm_tst/$tst/inref/bool_expr_andor_mcmds_perf.txt perfcmds.actual perfcmds.txt > awk.input
+		$tst_awk 	\
+			'{												\
+				if ($2 > ($1 * 1.05))									\
+				{											\
+					printf "FAIL : Command [%s] : MaxAllowed = [%s] Actual = [%s] instructions\n",	\
+						$3, $1 * 1.05, $2;							\
+				} else											\
+					printf "PASS : Performance test of [%s]\n", $3;					\
+			}' awk.input
+	endif
 endif
 

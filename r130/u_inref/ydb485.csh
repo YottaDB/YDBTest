@@ -89,8 +89,9 @@ if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $
 				$gtm_tst/com/perfstat.csh $ydb_dist/yottadb -r compdectohex^zconvert $version $num_digits >& perf-DH-${num_digits}-${version}.out
 			end
 			echo "# Test performance for %DH with ${num_digits}-digit values"
-			set cur_instructions = `tail -1 perf-DH-${num_digits}-c.out | awk '{print $1}'`
-			set prv_instructions = `tail -1 perf-DH-${num_digits}-p.out | awk '{print $1}'`
+			set cur_instructions = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf-DH-${num_digits}-c.out`
+			set prv_instructions = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf-DH-${num_digits}-p.out`
+			if (("" == "$cur_instructions") || ("" == "$prv_instructions")) continue
 			if ($cur_instructions < $prv_instructions) then
 				echo "PASS: Current %DH implementation executed in fewer instructions than the previous implementation when called with ${num_digits}-digit inputs"
 			else
@@ -103,8 +104,9 @@ if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $
 				$gtm_tst/com/perfstat.csh $ydb_dist/yottadb -r comphextodec^zconvert $version $num_digits >& perf-HD-${num_digits}-${version}.out
 			end
 			echo "# Test performance for %HD with ${num_digits}-digit values"
-			set cur_instructions = `tail -1 perf-HD-${num_digits}-c.out | awk '{print $1}'`
-			set prv_instructions = `tail -1 perf-HD-${num_digits}-p.out | awk '{print $1}'`
+			set cur_instructions = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf-HD-${num_digits}-c.out`
+			set prv_instructions = `$tst_awk -f $gtm_tst/com/perfstat_count.awk perf-HD-${num_digits}-p.out`
+			if (("" == "$cur_instructions") || ("" == "$prv_instructions")) continue
 			if ($cur_instructions < $prv_instructions) then
 				echo "PASS: Current %HD implementation executed in fewer instructions than the previous implementation when called with ${num_digits}-digit inputs"
 			else
