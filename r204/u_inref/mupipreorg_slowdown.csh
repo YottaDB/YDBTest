@@ -11,11 +11,12 @@
 #								#
 #################################################################
 
-# For the reason behind the below multiplier value see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/2630#note_3220725388
-# and the preceding discussion.
-set multiplier = 50
+# [multiplier] is the largest allowed ratio of the instructions MUPIP REORG -UPGRADE executes for 80000 nodes to those
+# for 10000 nodes. That ratio was measured at 59x to 85x without the YDB@a25c628b fix and at no more than 18x with it,
+# for both BG and MM, so the limit is drawn in between.
+set multiplier = 30
 echo "#--------------------------------------------------------------------------------------------------------------"
-echo "# Test MUPIP REORG -UPGRADE runtime does not increase more than ${multiplier}x as number of database nodes increases by 2x"
+echo "# Test MUPIP REORG -UPGRADE instructions do not increase more than ${multiplier}x as the number of database nodes increases 8x"
 echo "#"
 echo "# For original issue, see:            https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/803#note_2903069340"
 echo "# For source of below test case, see: https://gitlab.com/YottaDB/DB/YDBTest/-/work_items/803#note_3151504040"
@@ -64,23 +65,22 @@ foreach factor (1 2 4 8)
 	echo '# Run [perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt]'
 	$gtm_tst/com/perfstat.csh $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt >& ${tnum}-reorg.out
 	# perf stat $gtm_dist/mupip reorg -upgrade -reg DEFAULT < yes.txt >&! ${tnum}-reorg.out
-	# perf 6.12 emits lines for both cpu_atom and cpu_core instructions, but cpu_atom instructions may not be recorded,
-	# thus breaking the below sed command and causing test failures. So, omit cpu_atom instructions to so only one line
-	# gets passed to sed, ensuring consistency across perf versions.
-	grep "instructions" ${tnum}-reorg.out | awk '{print $3}'  >&! ${tnum}-instructions.out
+	$tst_awk -f $gtm_tst/com/perfstat_count.awk ${tnum}-reorg.out >! ${tnum}-instructions.out
 end
 echo
 
-echo "# Confirm that the number of instructions does not increase more than ${multiplier}x on average as the number of nodes processed doubles"
-echo "# YottaDB commits prior to a25c628b (i.e. commit 8d898f25 and earlier) show runtime increases ranging from 73x to 220x or more."
+echo "# Confirm that the number of instructions does not increase more than ${multiplier}x from 1${scale} to 8${scale} nodes"
+echo "# YottaDB commits prior to a25c628b (i.e. commit 8d898f25 and earlier) show instruction increases ranging from 59x to 85x."
 set first_count = `cat T1${scale}-instructions.out`
 set last_count = `cat T8${scale}-instructions.out`
-echo "scale=2; `echo $last_count` / `echo $first_count`" | bc >&! changed.out
-set changed = `cat changed.out`
-echo "$changed <= $multiplier" | bc -l >&! results.out # 3 is number of node increases that occur in above loop, i.e. the number of factors - 1
-if (0 == `cat results.out`) then
-	echo "TEST-E-FAIL, The number of instructions executed by MUPIP REORG -UPGRADE increased more than an average of ${changed}x as the number of nodes processed doubled (1${scale} nodes: $first_count vs. 8${scale} nodes: $last_count)"
-else
-	echo "PASS, MUPIP REORG -UPGRADE instructions increased less than ${multiplier}x on average as the number of nodes processed doubled"
+if (("" != "$first_count") && ("" != "$last_count")) then
+	echo "scale=2; `echo $last_count` / `echo $first_count`" | bc >&! changed.out
+	set changed = `cat changed.out`
+	echo "$changed <= $multiplier" | bc -l >&! results.out
+	if (0 == `cat results.out`) then
+		echo "TEST-E-FAIL, The number of instructions executed by MUPIP REORG -UPGRADE increased ${changed}x, more than ${multiplier}x, from 1${scale} to 8${scale} nodes (1${scale} nodes: $first_count vs. 8${scale} nodes: $last_count)"
+	else
+		echo "PASS, MUPIP REORG -UPGRADE instructions increased less than ${multiplier}x from 1${scale} to 8${scale} nodes"
+	endif
 endif
 $gtm_tst/com/dbcheck.csh >&! dbcheck.out

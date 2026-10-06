@@ -56,7 +56,7 @@
 # implicit_quit-ydb1218			[ben]		Test implicit quit before a FALLINTOFLST
 # dumpfhead_fl_W_permission-ydb1052	[ben]		Test mupip dumpfhead -flush without write permission and with read_only setting.
 # blks_to_upgrade_0-YDB1002		[ben]		Test setting BLKS_TO_UPGRADE=0 sets FULLY_UPGRADED=TRUE.
-# mupipreorg_slowdown			[jon]		Test MUPIP REORG -UPGRADE runtime does not increase more than ~2x as number of database nodes increases by 2x
+# mupipreorg_slowdown			[jon]		Test MUPIP REORG -UPGRADE instructions do not increase more than 30x as the number of database nodes increases 8x
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r204 test starts..."
