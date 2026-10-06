@@ -32,6 +32,8 @@ restore
 DSE_EOF
 sleep 1           # Some separation so last msg out gets included
 set syslog_time2 = `date +"%b %e %H:%M:%S"`
-$gtm_tst/com/getoper.csh "$syslog_time1" "$syslog_time2" gtm6348.txt "" "YDB-W-DBDANGER"
-$grep -c "YDB-W-DBDANGER" gtm6348.txt
+# Count only the DBDANGER messages for this subtest's database. Another test running on the same host can issue
+# DBDANGER for its own database in the same time window.
+$gtm_tst/com/getoper.csh "$syslog_time1" "$syslog_time2" gtm6348.txt "" "YDB-W-DBDANGER.*$PWD/mumps.dat"
+$grep "YDB-W-DBDANGER" gtm6348.txt | $grep -c -F "$PWD/mumps.dat"
 $gtm_tst/com/dbcheck.csh
