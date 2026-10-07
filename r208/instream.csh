@@ -44,6 +44,7 @@
 # mupip_load_ze-ydb1289			[nars]	Test MUPIP LOAD of a ZWR file with over 2.3 million $ze(...) records stays within its line buffer
 # load_zwr_cut_key-ydb1287		[nars]	Test MUPIP LOAD does not read past the end of a ZWR record whose key is cut short, and a source or receiver server does not SIG-11 on a filter's $ze(...) key
 # stp_gcol_free-ydb1284			[nars]	Test VIEW "STP_GCOL_FREE" returns the unused part of the stringpool to the operating system
+# enospc_mupip_stop-ydb1300		[nars]	Test a MUPIP STOP of a process waiting for disk space does not make it exit holding the journal pool lock
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -84,6 +85,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_load_ze-ydb1289"
 setenv subtest_list_non_replic	"$subtest_list_non_replic load_zwr_cut_key-ydb1287"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_gcol_free-ydb1284"
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -109,7 +111,8 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	# enospc_mupip_stop-ydb1300 uses gdb to turn on fake ENOSPC, which exists only in Debug builds
+	setenv subtest_exclude_list "$subtest_exclude_list enospc_mupip_stop-ydb1300"
 endif
 
 if ("dbg" == "$tst_image") then

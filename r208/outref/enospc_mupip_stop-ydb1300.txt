@@ -1,0 +1,96 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1300] A MUPIP STOP of a process waiting for disk space no longer exits holding the journal    #
+# pool lock                                                                                          #
+#----------------------------------------------------------------------------------------------------#
+
+# When a write gets ENOSPC and instance freeze is enabled for DSKNOSPCAVAIL, wait_for_disk_space() takes
+# the journal pool lock, freezes the instance and retries the write. A MUPIP STOP made it exit right there.
+# If a commit was underway, the exit handler found the journal pool lock still held and a Debug build
+# failed an assert in secshr_db_clnup() (and left the buffer being written owned by the dead process).
+#
+# This test needs a Debug build: gdb turns on the debug-only fake ENOSPC at a
+# chosen point in process A. Each stage then stops A with MUPIP STOP while it waits for disk space,
+# checks that A terminates with FORCEDHALT and no assert failure, and that process B can then update
+# the same globals. Without the fix, A fails an assert in secshr_db_clnup() in stage 1, and the state
+# that leaves makes the later stages report WRONG as well.
+
+# Start the source and receiver servers
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Stage 1 : a database write by the flush timer at the end of a TP commit gets ENOSPC
+# The instance is not frozen before the stage : as expected
+# Command : gdb -x gdb_a_dbtp.cmd --args mumps -run tp^ydb1300 dbtp   (process A, in the background)
+#   gdb turns on fake_db_enospc at the end of the second TP commit
+# YDB1300-A: in wait_for_disk_space() during tp_tend() : 1 : as expected
+# The instance is frozen : as expected
+# Command : mupip stop <pid of process A>
+# Process A terminated : as expected
+# Process A had no assert failure : as expected
+----------
+Error FORCEDHALT seen in gdb_a_dbtp.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+# Command : mupip replicate -source -freeze=off
+# Command : gdb -x gdb_b.cmd --args mumps -run b^ydb1300   (process B, turns fake_db_enospc off again in t_end())
+# Process B updated ^x, ^y and ^z(1) and exited : as expected
+
+# Stage 2 : a journal write by the flush timer at the end of a TP commit gets ENOSPC
+# The instance is not frozen before the stage : as expected
+# Command : gdb -x gdb_a_jnltp.cmd --args mumps -run tp^ydb1300 jnltp   (process A, in the background)
+#   gdb turns on fake_jnl_enospc at the end of the second TP commit
+# YDB1300-A: in wait_for_disk_space() during tp_tend() : 1 : as expected
+# The instance is frozen : as expected
+# Command : mupip stop <pid of process A>
+# Process A terminated : as expected
+# Process A had no assert failure : as expected
+----------
+Error FORCEDHALT seen in gdb_a_jnltp.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+# Command : mupip replicate -source -freeze=off
+# Command : gdb -x gdb_b.cmd --args mumps -run b^ydb1300   (process B, turns fake_jnl_enospc off again in t_end())
+# Process B updated ^x, ^y and ^z(1) and exited : as expected
+
+# Stage 3 : as stage 1, and another process then changes the instance freeze (DSKNOSPCBLOCKED)
+# The instance is not frozen before the stage : as expected
+# Command : gdb -x gdb_a_blocked.cmd --args mumps -run tp^ydb1300 blocked   (process A, in the background)
+#   gdb turns on fake_db_enospc at the end of the second TP commit, and once A waits for disk space runs
+#   mupip replicate -source -freeze=on -comment=ydb1300
+# YDB1300-A: in wait_for_disk_space() during tp_tend() : 1 : as expected
+# The instance is frozen : as expected
+# Process A reported DSKNOSPCBLOCKED : as expected
+# Command : mupip stop <pid of process A>
+# Process A terminated : as expected
+# Process A had no assert failure : as expected
+----------
+Error FORCEDHALT seen in gdb_a_blocked.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+# Command : mupip replicate -source -freeze=off
+# Command : gdb -x gdb_b.cmd --args mumps -run b^ydb1300   (process B, turns fake_db_enospc off again in t_end())
+# Process B updated ^x, ^y and ^z(1) and exited : as expected
+
+# Stage 4 : a database write done while holding crit in phase 1 of a TP commit gets ENOSPC
+# The instance is not frozen before the stage : as expected
+# Command : gdb -x gdb_a_crit.cmd --args mumps -run crit^ydb1300 crit   (process A, in the background)
+#   gdb turns on fake_db_enospc when A is in phase 1 of a TP commit holding crit, and calls wcs_wtstart() there
+# YDB1300-A: stopped in bg_update_phase1() during tp_tend(), holding crit : 1 : as expected
+# The instance is frozen : as expected
+# Command : mupip stop <pid of process A>
+# Process A terminated : as expected
+# Process A had no assert failure : as expected
+----------
+Error FORCEDHALT seen in gdb_a_crit.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+# Command : mupip replicate -source -freeze=off
+# Command : gdb -x gdb_b.cmd --args mumps -run b^ydb1300   (process B, turns fake_db_enospc off again in t_end())
+# Process B updated ^x, ^y and ^z(1) and exited : as expected
+
+# Stop the source and receiver servers
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+# Done
