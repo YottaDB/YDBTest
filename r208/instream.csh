@@ -53,6 +53,7 @@
 # lock_err_cleanup-ydb1302		[nars]	Test an error inside a LOCK does not make a later LOCK + report success without acquiring the lock, or the next simpleAPI lock call issue BADLOCKNEST
 # zydecode_numeric_values-ydb1304	[david]	Test ZYDECODE of a local variable accepts a computed number, which has no string form, in its root or a chunk
 # zbfsize_abbrev-ydb1248		[nars]	Test every abbreviation of the ZBFSIZE deviceparameter is accepted
+# rollback_endseqno_zero-ydb1276	[nars]	Test a failed MUPIP JOURNAL -ROLLBACK leaves no journal file with start seqno > end seqno
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -100,6 +101,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fork_core_in_malloc-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic lock_err_cleanup-ydb1302"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zydecode_numeric_values-ydb1304"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zbfsize_abbrev-ydb1248"
+setenv subtest_list_non_replic	"$subtest_list_non_replic rollback_endseqno_zero-ydb1276"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

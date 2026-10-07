@@ -1,0 +1,47 @@
+#----------------------------------------------------------------------------------------------------#
+# A MUPIP JOURNAL -ROLLBACK that exits with an error must not leave a journal file whose header has   #
+# a start sequence number greater than its end sequence number                                       #
+#----------------------------------------------------------------------------------------------------#
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Stage 1 : build a replicated instance with before-image journaling and advance the journal sequence number
+# Command : $MUPIP replicate -instance_create -name=INSTRLBK
+PASS : the replication instance file was created
+# Command : $MUPIP set -replication=on -journal=enable,on,before -region "*"
+PASS : replication and before-image journaling are on
+# Command : $MUPIP replicate -source -start -passive -updok -instsecondary=INSTRLBKSEC -log=src.log
+PASS : the passive source server started, so the journal pool exists
+# Command : $gtm_dist/mumps -run %XCMD 'for i=1:1:100 set ^a(i)=i'
+PASS : 100 updates were applied
+# Command : $MUPIP journal -show=header -forward -noverify mumps.mjl
+PASS : the journal file header starts with a non-zero start seqno and an end seqno at or above it
+
+# Stage 2 : crash the instance, so the shared memory is left orphaned with the journal file open in it
+#           and freeaddr advanced past the point at which the file was opened (condition 3)
+# Command : $gtm_tst/com/kill9.csh <passive source server pid>
+PASS : the source server was killed with SIGKILL
+# Command : $MUPIP journal -show=header -forward -noverify mumps.mjl
+PASS : the journal file is marked as crashed, so nothing has closed it cleanly yet
+
+# Stage 3 : run a ROLLBACK that exits with an error after mur_open_files has set repl_state to repl_closed.
+#           WBTEST_REPL_INIT_ERR2 (160) makes the listen() in gtmrecv_comm_init fail, so FETCHRESYNC errors out.
+# Command : $MUPIP journal -rollback -backward -online -fetchresync=<portno> -losttrans=lost1.glo "*"
+PASS : the rollback exited with an error, as this stage intends
+PASS : the rollback failed with the expected REPLCOMM, MUNOACTION, ENO98 and ORLBKTERMNTD messages
+
+# Stage 4 : no journal file may have start seqno > end seqno
+# Command : $MUPIP journal -show=header -forward -noverify <each journal file generation>
+PASS : no journal file has a start sequence number greater than its end sequence number
+
+# Stage 5 : and a plain backward rollback must still be able to recover the instance
+# Command : $MUPIP journal -rollback -backward -losttrans=lost2.glo "*"
+PASS : the instance was rolled back successfully
+
+# Done
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
