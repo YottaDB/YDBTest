@@ -50,6 +50,7 @@
 # pthread_exit_nomem-ydb1292		[nars]	Test a MUPIP JOURNAL worker thread that exits when no more memory can be mapped does not abort the process
 # pipe_read_timer_pop-ydb1296		[nars]	Test a timed READ of a PIPE device returns when its timeout expires even if the timer pops between two read() calls
 # fork_core_in_malloc-ydb1293		[nars]	Test a process sent a fatal signal while inside malloc() dies with a core instead of hanging
+# lock_err_cleanup-ydb1302		[nars]	Test an error inside a LOCK does not make a later LOCK + report success without acquiring the lock, or the next simpleAPI lock call issue BADLOCKNEST
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -94,6 +95,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic readline_truncate_fallb
 setenv subtest_list_non_replic	"$subtest_list_non_replic pthread_exit_nomem-ydb1292"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pipe_read_timer_pop-ydb1296"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fork_core_in_malloc-ydb1293"
+setenv subtest_list_non_replic	"$subtest_list_non_replic lock_err_cleanup-ydb1302"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

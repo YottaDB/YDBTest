@@ -1,0 +1,70 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1302] An error inside a LOCK makes a later incremental LOCK of the same name report success #
+# without acquiring it, and makes the next simpleAPI lock call fail with BADLOCKNEST               #
+#--------------------------------------------------------------------------------------------------#
+
+# While a LOCK is processed, lks_this_cmd counts its names and the trans flag of each name is set.
+# An error that interrupted the LOCK left the flags set, so a later incremental LOCK of such a name
+# did not count it, and returned success without acquiring it. The simpleAPI error handler also left
+# lks_this_cmd set, so the next simpleAPI lock call issued BADLOCKNEST.
+#
+# Without the fix, stages 1 to 3 and 5 each print WRONG for the lock taken after the error: a timed LOCK +
+# sets $TEST to 1, and an untimed one returns at once, without acquiring the lock (even if another process
+# holds it), and a simpleAPI lock call returns BADLOCKNEST, or YDB_OK without acquiring the lock.
+
+# Stage 1 : LOCK (alock,alock(<256 bytes>)), which issues LOCKSUB2LONG, then LOCK +alock:5
+# Command : $ydb_dist/yottadb -run sub2long^ydb1302
+#   expect LOCK +alock:5 to set $TEST to 1 and ZSHOW "L" to show alock held
+PASS : multi^ydb1302 issued LOCKSUB2LONG
+PASS : LOCK +alock:5 set $TEST to 1 and the process holds alock
+
+# Stage 2 : LOCK +(clock,dlock($$nest)), where $$nest does a LOCK and so issues BADLOCKNEST, then
+#           LOCK +clock:5
+# Command : $ydb_dist/yottadb -run nested^ydb1302
+#   expect LOCK +clock:5 to set $TEST to 1 and ZSHOW "L" to show clock held
+PASS : outer^ydb1302 issued BADLOCKNEST
+PASS : LOCK +clock:5 set $TEST to 1 and the process holds clock
+
+# Stage 3 : the same errors in simpleAPI lock calls
+# Command : build and run ydb1302_sapi.c
+#   expect each lock call after the error to return YDB_OK, and another process to find the lock held
+# LOCKSUB2LONG on the second name of ydb_lock_s()
+PASS : ydb_lock_s(alock, alock(<256 bytes>)) returned YDB_ERR_LOCKSUB2LONG
+PASS : ydb_lock_incr_s(block) returned YDB_OK
+PASS : after ydb_lock_incr_s(block), another process finds block held
+PASS : ydb_lock_incr_s(alock) returned YDB_OK
+PASS : after ydb_lock_incr_s(alock), another process finds alock held
+PASS : ydb_lock_s() with no names, to release all locks returned YDB_OK
+# TPLOCK from ydb_lock_decr_s() inside ydb_tp_s()
+PASS : ydb_lock_incr_s(clock) returned YDB_OK
+PASS : ydb_lock_decr_s(clock) inside ydb_tp_s() returned YDB_ERR_TPLOCK
+PASS : ydb_tp_s() returned YDB_OK
+PASS : ydb_lock_incr_s(block) returned YDB_OK
+PASS : after ydb_lock_incr_s(block), another process finds block held
+PASS : ydb_lock_s() with no names, to release all locks returned YDB_OK
+
+# Stage 4 : LOCK -(^a,^x), where AREG (the region of ^a) shares LOCK crit with database crit and its file
+#           header is marked corrupt. LOCK - releases ^x and removes it from the list of locks, then
+#           issues DBFLCORRP for ^a, leaving lks_this_cmd larger than the list.
+# Commands: $MUPIP SET -REGION AREG -LCK_SHARES_DB_CRIT
+#           $ydb_dist/yottadb -run crit^ydb1302
+#   expect DBFLCORRP, and the process to continue. A build whose error handler clears the trans flags
+#   (lckclr()) without lckclr() stopping at the end of the list gets a SIG-11 in the handler instead.
+PASS : MUPIP SET -LCK_SHARES_DB_CRIT reported TRUE for AREG
+PASS : LOCK +(^a,^x):5 set $TEST to 1
+PASS : DSE CHANGE -FILEHEADER -CORRUPT_FILE=true on AREG
+PASS : decr^ydb1302 issued DBFLCORRP
+PASS : the process continued after the error
+PASS : DSE CHANGE -FILEHEADER -CORRUPT_FILE=false on AREG
+
+# Stage 5 : LOCK (ulock,ulock(<256 bytes>)), which issues LOCKSUB2LONG, then an untimed LOCK +ulock while
+#           a child process holds ulock for 2 seconds
+# Command : $ydb_dist/yottadb -run untimed^ydb1302
+#   expect LOCK +ulock to wait until the child process releases ulock, and then to hold it. Without the
+#   fix, it returns at once without acquiring ulock.
+PASS : LOCK ulock:0 set $TEST to 0 while the child process holds ulock
+PASS : ulong^ydb1302 issued LOCKSUB2LONG
+PASS : LOCK +ulock returned only after the child process released ulock
+PASS : LOCK +ulock, the process holds ulock
+
+# Done
