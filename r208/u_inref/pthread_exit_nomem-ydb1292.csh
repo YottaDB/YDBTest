@@ -115,6 +115,12 @@ if ($status) then
 else
 	echo "PASS : MUPIP exited with status 241"
 endif
+# If the helper stopped MUPIP after it created some but not all of its worker threads, the next pthread_create() fails
+# under the lower limit and MUPIP issues SYSCALL for it. The worker threads it did create still see the forced exit and
+# call pthread_exit() under that limit, which is what this stage tests, so remove that message. It can share a line with
+# the FORCEDHALT message that follows it. Keep the output as it was in recover1_all.outx.
+cp recover1.out recover1_all.outx
+sed -i '/^%YDB-E-SYSCALL, Error received from system call pthread_create() /{s/^%YDB-E-SYSCALL, .* at line [0-9]*//;/^$/d;}' recover1.out
 $gtm_tst/com/check_error_exist.csh recover1.out YDB-F-FORCEDHALT YDB-E-MUNOACTION
 echo
 
