@@ -96,6 +96,8 @@ else
 endif
 # Start of the syslog window searched below (local time, as com/getoper.csh expects)
 set syslog_start = `date +"%b %e %H:%M:%S"`
+# Create the gdb output file before gdb starts so the wait loop below never greps a file that does not exist yet
+touch gdb_a_$stage.out
 # Start gdb in the background from sh, which also records its pid (a tcsh background job prints job notices)
 sh -c 'gdb -batch -x gdb_a_'$stage'.cmd --args '$gtm_dist'/mumps -run '${mlabel}'^ydb1300 '$stage' > gdb_a_'$stage'.out 2>&1 & echo $! > gdb_a_'$stage'.pid'
 set gdbpid = `cat gdb_a_$stage.pid`
