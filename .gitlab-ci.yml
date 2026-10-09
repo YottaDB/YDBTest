@@ -38,6 +38,7 @@ stages:
 commit-verify:
   image: ubuntu:22.04
   stage: build
+  interruptible: true
   script:
     - !reference [.apt-get-retry, script]
     - apt_get_install -yq git wget gnupg
@@ -52,6 +53,7 @@ build-imptp-rs:
       name: yottadb/yottadb-debian:latest-master
       entrypoint: [""]
   stage: build
+  interruptible: true
   script:
     - !reference [.apt-get-retry, script]
     - apt_get_install -yq --no-install-recommends build-essential bindgen
