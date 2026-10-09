@@ -60,6 +60,7 @@ $MSR START INST1 INST2
 
 # Process B turns the fake ENOSPC off again (nothing else would, as the source server stays alive). It stops in the
 # first t_end() for the region that has it on, as other regions (e.g. a statsdb region) can be updated first.
+# gdb then waits for B to exit and exits with its exit status, so the check after B sees all of the output of B.
 cat > gdb_b.cmd << CAT_EOF
 set breakpoint pending on
 set confirm off
@@ -69,8 +70,8 @@ run
 delete
 set var cs_addrs->nl->fake_db_enospc = 0
 set var cs_addrs->nl->fake_jnl_enospc = 0
-detach
-quit
+continue
+quit \$_exitcode
 CAT_EOF
 
 echo
