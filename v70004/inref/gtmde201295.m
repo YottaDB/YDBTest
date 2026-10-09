@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -39,6 +39,7 @@ server	; entry: server
 	open "server":::"SOCKET"
 	use "server":LISTEN=portno_":TCP"
 	write /listen(clicount)
+	set ^checkpoint(portno,"listening")=1	; clients of a server with no delay wait for this, see "client"
 	do checkpoint(actor,9,"client has finished",5)
 	lock +(^wait):5
 	;
@@ -71,6 +72,11 @@ client	; entry: client
 	do procArgs
 	do checkpoint(actor,1,"server start")
 	do incc("stuck")
+	;
+	; A server with no delay is expected to be listening by the time a client connects. Processes leave
+	; the checkpoint above at different times, and the server still has to OPEN and LISTEN after it, so
+	; wait until the server is listening. Otherwise a client with timeout=0 can connect first and fail.
+	if delay=0 for i=1:1:600 quit:$get(^checkpoint(portno,"listening"))  hang 0.1
 	;
 	set pre=0.1
 	write "# stretch client start in time, hang "
