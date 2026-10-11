@@ -1,0 +1,90 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1304] ZYDECODE of a local variable accepts a computed number in its root or a chunk           #
+#----------------------------------------------------------------------------------------------------#
+
+# A value computed by an arithmetic expression, such as i-1, has a numeric form but no string form
+# until something such as WRITE or ZWRITE forces one. op_zydecode() read the string length of the
+# root node and of each chunk node of a local source without forcing a string form, so it read
+# whatever was left in those fields. A computed root could issue ZYDECODEWRONGCNT for a valid
+# count, and a computed chunk could issue LVUNDEF for a node that is defined, or be decoded as the
+# wrong value with no error.
+#
+# op_zydecode() has a separate branch for a local and for a global destination, so each case runs
+# with both. Stages 1 to 6 fail without the fix. Stages 7 to 10 pass without the fix too; they check
+# that a root that is not a positive integer, and a chunk that is empty, missing, or has no value,
+# still issue the same errors as before.
+#
+# Each stage runs in its own process, since the bug showed up reliably only on the first ZYDECODE in
+# a process.
+
+# Stage 1 : computed root (src=i-1), local destination
+# Command : $ydb_dist/yottadb -run root^ydb1304 0
+#   expect dst("a")=1
+dst("a")=1
+
+# Stage 2 : computed root (src=i-1), global destination
+# Command : $ydb_dist/yottadb -run root^ydb1304 1
+#   expect ^dst("a")=1
+^dst("a")=1
+
+# Stage 3 : computed chunk in the middle of the JSON (src(2)=i+40), local destination
+# Command : $ydb_dist/yottadb -run chunk^ydb1304 0
+#   expect dst(0)=1 and dst(1)=42
+dst(0)=1
+dst(1)=42
+
+# Stage 4 : computed chunk in the middle of the JSON (src(2)=i+40), global destination
+# Command : $ydb_dist/yottadb -run chunk^ydb1304 1
+#   expect ^dst(0)=1 and ^dst(1)=42
+^dst(0)=1
+^dst(1)=42
+
+# Stage 5 : computed root (src=i+1) and computed chunk (src(2)=i+40), local destination
+# Command : $ydb_dist/yottadb -run both^ydb1304 0
+#   expect dst(0)=1 and dst(1)=42
+dst(0)=1
+dst(1)=42
+
+# Stage 6 : computed root (src=i+1) and computed chunk (src(2)=i+40), global destination
+# Command : $ydb_dist/yottadb -run both^ydb1304 1
+#   expect ^dst(0)=1 and ^dst(1)=42
+^dst(0)=1
+^dst(1)=42
+
+# Stage 7 : roots that are not a positive integer: "" and a computed 0, local destination
+# Command : $ydb_dist/yottadb -run badroot^ydb1304 0
+#   expect ZYDECODEWRONGCNT for each
+# root ""
+ZSTATUS=%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+# computed root 0
+ZSTATUS=%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+# Stage 8 : roots that are not a positive integer: "" and a computed 0, global destination
+# Command : $ydb_dist/yottadb -run badroot^ydb1304 1
+#   expect ZYDECODEWRONGCNT for each
+# root ""
+ZSTATUS=%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+# computed root 0
+ZSTATUS=%YDB-E-ZYDECODEWRONGCNT, Error encountered during ZYDECODE; JSON chunk count in root of source variable must be a positive integer
+
+# Stage 9 : a chunk that is "", a chunk that is missing, and a chunk with only a descendant, local destination
+# Command : $ydb_dist/yottadb -run badchunk^ydb1304 0
+#   expect LVUNDEF for src(2) each time
+# empty chunk
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+# missing chunk
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+# chunk with no value, only a descendant
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+
+# Stage 10 : a chunk that is "", a chunk that is missing, and a chunk with only a descendant, global destination
+# Command : $ydb_dist/yottadb -run badchunk^ydb1304 1
+#   expect LVUNDEF for src(2) each time
+# empty chunk
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+# missing chunk
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+# chunk with no value, only a descendant
+ZSTATUS=%YDB-E-LVUNDEF, Undefined local variable: src(2)
+
+# Done
