@@ -78,9 +78,30 @@ else
 endif
 
 # Unit test YDBGo v2
+# TestCalloc requests the largest size_t to check that YDBGo's calloc() wrapper panics when the C
+# library cannot allocate, so it needs calloc() to return NULL. ASAN intercepts calloc() and, with
+# allocator_may_return_null at its default of 0, treats an unsatisfiable request as an error instead
+# of returning NULL. With ASAN that one test therefore runs on its own with that option enabled, the
+# way YDBGo's own .gitlab-ci.yml splits the run.
 echo "# Running : go test on YDBGo v2"
-go test -C YDBGo/v2 $goflags -testdb=$ydb_gbldir >& $tstpath/go_test2.log
-if (0 != $status) then
+if ($gtm_test_libyottadb_asan_enabled) then
+	set v2status = 0
+	go test -C YDBGo/v2 $goflags -skip '^TestCalloc$' -testdb=$ydb_gbldir >& $tstpath/go_test2.log
+	if (0 != $status) set v2status = $status
+	set asanopts = `printenv ASAN_OPTIONS`
+	if ("" == "$asanopts") then
+		set asanopts = "allocator_may_return_null=1"
+	else
+		set asanopts = "${asanopts}:allocator_may_return_null=1"
+	endif
+	# Run in a subshell so the relaxed ASAN_OPTIONS does not outlive this one "go test"
+	( setenv ASAN_OPTIONS "$asanopts" ; go test -C YDBGo/v2 $goflags -run '^TestCalloc$' -testdb=$ydb_gbldir ) >>& $tstpath/go_test2.log
+	if (0 != $status) set v2status = $status
+else
+	go test -C YDBGo/v2 $goflags -testdb=$ydb_gbldir >& $tstpath/go_test2.log
+	set v2status = $status
+endif
+if (0 != $v2status) then
 	echo "TEST-E-FAILED : [go test -C YDBGo/v2 $goflags] failed for v2:" && cat $tstpath/go_test2.log
 else
 	echo "PASS"
