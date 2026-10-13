@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -21,6 +24,14 @@
 #
 
 setenv test_specific_gde $gtm_tst/suppl_inst_C/inref/seqno.gde
+
+if ($gtm_test_trigger) then
+	# This tests A->P with imptp.csh (with SLOWFILL) invoked on both sides, so "slowfill.trg" is loaded on A and on P.
+	# With -trigupdate, the updates made inside a trigger on A are replicated to P, where they invoke P's own copy of
+	# the same trigger. The SET trigger for ^%slowfill("trigger") does "set $ztvalue=$ztvalue+1", so that node can end
+	# up as 1 on A and 2 on P, and the test then fails with "TEST-E-FAILED: RF_EXTR failed". Hence disable -trigupdate.
+	source $gtm_tst/com/gtm_test_trigupdate_disabled.csh
+endif
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2 2
@@ -115,11 +126,11 @@ foreach point ( $points:q )
 	set seqno_tuple = ( $point )
 	@ resync_seqno = $seqno_tuple[1]
 	@ strm_num = $seqno_tuple[2]
-        @ strm_seqno = $seqno_tuple[3]
+	@ strm_seqno = $seqno_tuple[3]
 	@ value++
 	echo "point under processing is $seqno_tuple" >&! iter_$value.log
 	echo "Trying rollback with -resync=$resync_seqno on INSTANCE3" >>&! iter_$value.log
-        echo "$gtm_tst/com/mupip_rollback.csh -lost=x_$resync_seqno.los -resync=$resync_seqno ""*"" on INSTANCE3" >>&! iter_$value.log
+	echo "$gtm_tst/com/mupip_rollback.csh -lost=x_$resync_seqno.los -resync=$resync_seqno ""*"" on INSTANCE3" >>&! iter_$value.log
 	$MSR RUN INST3 "$gtm_tst/com/mupip_rollback.csh -lost=x_$resync_seqno.los -resync=$resync_seqno"' "*"'" >>& rollback_$resync_seqno.log" >>&! iter_$value.log
 	$MSR RUN INST3 '$grep "Rollback successful"'" rollback_$resync_seqno.log" >>&! iter_$value.log
 	$MSR RUN INST3 '$grep -E "RLBKJNSEQ|RLBKSTRMSEQ"'" rollback_$resync_seqno.log >& rollback_$resync_seqno.outx" >>&! iter_$value.log
@@ -127,10 +138,10 @@ foreach point ( $points:q )
 
 	echo "Rollback with -resync=$strm_seqno -rsync_strm=$strm_num on INSTANCE3" >>&! iter_$value.log
 	echo "$gtm_tst/com/mupip_rollback.csh -lost=x_${strm_seqno}_${strm_num}.los -resync=$strm_seqno -rsync_strm=$strm_num ""*"" on INSTANCE3"  >>&! iter_$value.log
-        $MSR RUN INST3 "$gtm_tst/com/mupip_rollback.csh -lost=x_${strm_seqno}_${strm_num}.los -resync=$strm_seqno -rsync_strm=$strm_num"' "*" >>& '"rollback_${resync_seqno}_strm_${strm_num}.log" >>&! iter_$value.log
+	$MSR RUN INST3 "$gtm_tst/com/mupip_rollback.csh -lost=x_${strm_seqno}_${strm_num}.los -resync=$strm_seqno -rsync_strm=$strm_num"' "*" >>& '"rollback_${resync_seqno}_strm_${strm_num}.log" >>&! iter_$value.log
 	$MSR RUN INST3 '$grep "Rollback successful"'" rollback_${resync_seqno}_strm_${strm_num}.log" >>&! iter_$value.log
 	$MSR RUN INST3 '$grep -E "RLBKJNSEQ|RLBKSTRMSEQ"'" rollback_${resync_seqno}_strm_${strm_num}.log >& rollback_${resync_seqno}_strm_${strm_num}.outx " >>&! iter_$value.log
-        $MSR RUN INST3 'mv rollback_*.log rlbak' >>&! iter_$value.log
+	$MSR RUN INST3 'mv rollback_*.log rlbak' >>&! iter_$value.log
 	$MSR RUN INST3 '$grep -v NOSELECT *.outx; mv *.outx rlbak' >>&! iter_$value.log
 end
 

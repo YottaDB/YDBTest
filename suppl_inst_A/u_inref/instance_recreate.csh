@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,14 @@
 #       the first A update gets propagated from P. Without this knowledge, a switchover in the P<->Q LMS
 #       group will cause errors when A and Q connect.
 #
+
+if ($gtm_test_trigger) then
+	# This tests A->P with imptp.csh (with SLOWFILL) invoked on both sides, so "slowfill.trg" is loaded on A and on P.
+	# With -trigupdate, the updates made inside a trigger on A are replicated to P, where they invoke P's own copy of
+	# the same trigger. The SET trigger for ^%slowfill("trigger") does "set $ztvalue=$ztvalue+1", so that node can end
+	# up as 1 on A and 2 on P, and the test then fails with "TEST-E-FAILED: RF_EXTR failed". Hence disable -trigupdate.
+	source $gtm_tst/com/gtm_test_trigupdate_disabled.csh
+endif
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2 2
