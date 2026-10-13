@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2025 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -145,9 +145,10 @@ void *childthread(void *threadparm)
 
 	child = fork();
 
-	status = pthread_mutex_unlock(&lock);
-	YDB_ASSERT(status == 0);
-
+	/* The parent thread holds the lock until its child terminates, so only one child process runs at a time.
+	 * Each child writes a YDBNOTACTIVE message to the stderr it shares with the others, and children running
+	 * concurrently can interleave those messages.
+	 */
 	if (0 == child)
 	{		/* Child Process */
 		status = ydb_data_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &data_value); CHECK_STATUS("ydb_data_st()", status, fp);
@@ -197,5 +198,7 @@ void *childthread(void *threadparm)
 			save_errno = errno;
 		} while ((-1 == ret) && (EINTR == save_errno));
 		YDB_ASSERT(-1 != ret);
+		status = pthread_mutex_unlock(&lock);
+		YDB_ASSERT(status == 0);
 	}
 }
