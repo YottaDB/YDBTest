@@ -1,0 +1,51 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1297] A SimpleThreadAPI process sent a fatal signal while a non-YottaDB thread is inside      #
+# malloc() dies with a core instead of hanging                                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# A signal sent with kill() goes to whichever thread the kernel picks. If that thread did not hold the
+# YottaDB engine lock, it forked the core itself, either when the engine lock holder told it to or at
+# once if it could take the engine lock. If it had been interrupted inside malloc(), its fork() waited
+# forever for the malloc() arena lock that the interrupted malloc() holds, since glibc's fork() takes
+# those locks in a process with more than one thread. The process never died, and wrote neither a
+# core nor a YDB_FATAL_ERROR file.
+#
+# The program below has a main thread that makes no YottaDB call and loops on malloc() and free(), and
+# a worker thread that makes the YottaDB calls. Without the fix, step 2 of each stage usually prints
+# WRONG. A Debug build dumps the core without forking in SimpleThreadAPI mode, so the subtest runs
+# only with a pro build.
+
+# Stage 1 : the worker thread loops on ydb_set_st(), so a thread usually holds the engine lock
+
+# Step 1 : start [./ydb1297_stapi_kill busy] in the background
+#          expect it to print ready once the worker's first ydb_set_st() call has returned
+PASS : the program is ready
+
+# Step 2 : kill -4 <pid>
+#          expect the process to die within 60 seconds
+PASS : the process died
+
+# Step 3 : check what the process left behind
+#          expect a core file, a YDB_FATAL_ERROR file and a %YDB-F-KILLBYSIGUINFO message
+PASS : core file found
+PASS : YDB_FATAL_ERROR file found
+PASS : %YDB-F-KILLBYSIGUINFO message seen
+
+# Stage 2 : the worker thread makes one ydb_set_st() call and then waits, so no thread holds the
+#           engine lock
+
+# Step 1 : start [./ydb1297_stapi_kill idle] in the background
+#          expect it to print ready once the worker's first ydb_set_st() call has returned
+PASS : the program is ready
+
+# Step 2 : kill -4 <pid>
+#          expect the process to die within 60 seconds
+PASS : the process died
+
+# Step 3 : check what the process left behind
+#          expect a core file, a YDB_FATAL_ERROR file and a %YDB-F-KILLBYSIGUINFO message
+PASS : core file found
+PASS : YDB_FATAL_ERROR file found
+PASS : %YDB-F-KILLBYSIGUINFO message seen
+
+# Done
