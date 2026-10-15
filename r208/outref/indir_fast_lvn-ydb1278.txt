@@ -1,0 +1,56 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1278] Indirection naming a local variable with simple subscripts is not compiled             #
+#----------------------------------------------------------------------------------------------------#
+
+# An indirection whose source string names a local variable, with subscripts that are canonical
+# numbers, string literals or defined unsubscripted local variables, is located directly instead
+# of compiling the string. Any other string is compiled as before.
+#
+# Stages 1 to 5 check that the fast path gives what the compiled code gives. Each compares an
+# indirection through @ref with the same indirection through @(ref_" "). The compiler ignores the
+# trailing space but the fast path does not accept it, so the second is always compiled. The two
+# must agree, value or error, for every string. These stages pass without the change too.
+#
+# Stages 6 and 7 fail without the change. Stage 6 compares the cost of a new reference string on
+# every call with the cost of a repeated one, about 20 to 1 without the change and under 2 to 1 with
+# it. Stage 7 checks that, in a process with a large local array, garbage collections grow the
+# stringpool instead of walking the array every few KiB.
+#
+# Each stage runs in its own process.
+
+# Stage 1 : $DATA, $ZDATA, $GET, $ORDER, value fetch and $NAME on 62 reference strings of many shapes
+# Command : $gtm_dist/mumps -run reads^ydb1278
+#   expect every result through the fast path to be the same as compiled
+PASS : all 682 reads checks give the same result through the fast path as compiled
+
+# Stage 2 : SET, multiple SET, SET $PIECE and $EXTRACT, FOR, MERGE, KILL and $INCREMENT with an indirect target
+# Command : $gtm_dist/mumps -run saves^ydb1278
+#   expect every command to leave the same variables through the fast path as compiled
+PASS : all 96 saves checks give the same result through the fast path as compiled
+
+# Stage 3 : name indirection @r@(subs), with subscripts that change r or another subscript
+# Command : $gtm_dist/mumps -run names^ydb1278
+#   expect every result to be the same as the compiled text op_indname builds
+PASS : all 960 names checks give the same result through the fast path as compiled
+
+# Stage 4 : 5000 randomly generated reference strings, valid and not, many sharing a prefix with the one before
+# Command : $gtm_dist/mumps -run random^ydb1278
+#   expect every result through the fast path to be the same as compiled
+PASS : all 35000 random checks give the same result through the fast path as compiled
+
+# Stage 5 : string literals from 20000 unique indirect compilations, cache evictions and garbage collections
+# Command : $gtm_dist/mumps -run lits^ydb1278
+#   expect every variable to hold the literal assigned to it
+PASS : all 60000 values hold what was assigned
+
+# Stage 6 : $DATA(@ref@("b")) 100000 times with the same ref, then with a new ref every time, in 3 alternating rounds
+# Command : $gtm_dist/mumps -run cost^ydb1278
+#   expect the fastest round with a new ref every time to cost less than 5 times the fastest with the same ref
+PASS : a new reference string on every call costs less than 5 times a repeated one
+
+# Stage 7 : a local array of 200000 nodes, then $DATA(@ref@("b")) with a new ref 200000 times
+# Command : $gtm_dist/mumps -run grow^ydb1278
+#   expect the stringpool to have grown beyond twice its initial 96KiB
+PASS : the stringpool grew beyond twice its initial 96KiB
+
+# Done

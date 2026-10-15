@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -17,7 +17,9 @@
 ;  The hit ratio used have a numeric overflow bug resulting in a hit ratio of 0%.
 ;  The 44 million value is chosen because in the hit ratio calculation, 44 million is multiplied by 100 to get 4.4 billion, overflowing a 4-byte integer.
 ;  We use indirection in the set operation lhs to prevent the compiler from optimizing out the xecute.
+;  The lhs subscript is an expression, so the indirection is compiled and goes through the indirect code cache,
+;  rather than taking the fast path that locates a local variable with simple subscripts without compiling.
 ;
 zindcacheoverflow()
-	for i=1:1:22000000 xecute "set @""x""=1"
+	for i=1:1:22000000 xecute "set @""x(1+0)""=1"
 	halt
