@@ -189,7 +189,10 @@ foreach options ( \
 		set valid=`$gtm_dist/mumps -run isnotdupe^gtmf135169 $options $command`
 		if ("$valid" == "1") then
 			foreach readback ( "indv" "opts" )
-				(strace -o raw-$case-$readback.outx $gtm_dist/mumps -run wrtest^gtmf135169 $portno wrtest-$case server bg $options $command $readback >>& server.out & ; echo $! >&! ${readback}-server.pid) >&! ${readback}-server-bg.out
+				# Record how and when strace ended, so that a server process that never reaches its first
+				# checkpoint leaves evidence of why. A strace killed by a signal also leaves the shell's
+				# report of that signal in ${readback}-server-bg.out.
+				((strace -o raw-$case-$readback.outx $gtm_dist/mumps -run wrtest^gtmf135169 $portno wrtest-$case server bg $options $command $readback >>& server.out ; echo "strace exit status $status at `date`" >&! strace-$case-$readback.status) & ; echo $! >&! ${readback}-server.pid) >&! ${readback}-server-bg.out
 				($gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-1 bg $options $command >>& client1-$case-$readback.out & ; echo $! >&! ${readback}-client.pid) >&! ${readback}-client-bg.out
 				$gtm_dist/mumps -run client^gtmf135169 $portno wrtest-$case client-2 fg $options $command >>& client2-$case-$readback.out
 				# Wait for the server and client processes backgrounded above to terminate before reading
@@ -200,11 +203,12 @@ foreach options ( \
 				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-server.pid`
 				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-client.pid`
 				# gtmf135169.m gives up if a process never reaches a checkpoint and reports that into the
-				# foreground client's output file, which is not compared against a reference. Repeat it in
-				# the compared output, or a round that never ran shows up only as missing lines.
-				if (0 != `grep -c "timed out waiting at checkpoint" client2-$case-$readback.out`) then
+				# output file of whichever client timed out first, and neither client file is compared
+				# against a reference. Repeat it in the compared output, or a round that never ran shows up
+				# only as missing lines.
+				if (0 != `cat client1-$case-$readback.out client2-$case-$readback.out | grep -c "timed out waiting at checkpoint"`) then
 					echo "TEST-E-CHECKPOINT wrtest-$case-$readback did not run, a process never reached its checkpoint"
-					cat client2-$case-$readback.out
+					cat client1-$case-$readback.out client2-$case-$readback.out strace-$case-$readback.status ${readback}-server-bg.out
 				endif
 				cat raw-$case-$readback.outx | grep -v "access.*hugepages.*EACCES" > trace-$case-$readback.out  # SUSE filter
 				$gtm_dist/mumps -run parse^gtmf135169 $portno wrtest-$case parse - $options trace-$case-$readback.out $readback >>& filtered-$case-$readback.out
