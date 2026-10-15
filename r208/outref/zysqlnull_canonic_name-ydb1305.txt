@@ -1,0 +1,96 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1305] $QLENGTH, $QSUBSCRIPT and 2-argument $NAME accept a name with a $ZYSQLNULL subscript   #
+#----------------------------------------------------------------------------------------------------#
+
+# $NAME writes a $ZYSQLNULL subscript as $ZYSQLNULL. The parser that $QLENGTH, $QSUBSCRIPT and
+# 2-argument $NAME of an indirect reference use took a subscript starting with $ to be $C() or $ZCH(),
+# so they issued NOCANONICNAME for such a name, and 2-argument $NAME failed an assert in Debug builds.
+#
+# Stages 1 and 3 fail without the fix. Stage 2 passes without the fix too; it checks that strings
+# that are not such names give the same results as before. Each check names the result it expects,
+# shows a $ZYSQLNULL result as <$ZYSQLNULL> and an error by its mnemonic. $ZYSQLNULL is a YottaDB
+# feature, so this subtest does not apply to GT.M.
+#
+# Each stage runs in its own process.
+
+# Stage 1 : $QLENGTH, $QSUBSCRIPT and $NAME(@r,depth) of names with $ZYSQLNULL subscripts or environment
+# Command : $gtm_dist/mumps -run names^ydb1305
+#   expect the subscript count and subscripts of each name, and $NAME(@r,depth) to equal $NAME of the
+#   same reference written directly
+#   previously, each of these issued NOCANONICNAME, and a Debug build failed an assert at the first
+#   $NAME(@r,depth)
+# r = x(1,$ZYSQLNULL,"a")
+PASS : $qlength(r) is 3
+PASS : $qsubscript(r,0) is x
+PASS : $qsubscript(r,1) is 1
+PASS : $qsubscript(r,2) is <$ZYSQLNULL>
+PASS : $qsubscript(r,3) is a
+PASS : $qsubscript(r,4) is 
+PASS : $name(@r,0) is x
+PASS : $name(@r,1) is x(1)
+PASS : $name(@r,2) is x(1,$ZYSQLNULL)
+PASS : $name(@r,3) is x(1,$ZYSQLNULL,"a")
+# r = x($ZYSQLNULL)
+PASS : $qlength(r) is 1
+PASS : $qsubscript(r,1) is <$ZYSQLNULL>
+PASS : $name(@r,0) is x
+PASS : $name(@r,1) is x($ZYSQLNULL)
+PASS : $name(@r,2) is x($ZYSQLNULL)
+# r = x($ZYSQLNULL,"b",$ZYSQLNULL)
+PASS : $qlength(r) is 3
+PASS : $qsubscript(r,1) is <$ZYSQLNULL>
+PASS : $qsubscript(r,2) is b
+PASS : $qsubscript(r,3) is <$ZYSQLNULL>
+PASS : $name(@r,0) is x
+PASS : $name(@r,1) is x($ZYSQLNULL)
+PASS : $name(@r,2) is x($ZYSQLNULL,"b")
+PASS : $name(@r,3) is x($ZYSQLNULL,"b",$ZYSQLNULL)
+# r = ^g(1,$ZYSQLNULL)
+PASS : $qlength(r) is 2
+PASS : $qsubscript(r,0) is ^g
+PASS : $qsubscript(r,2) is <$ZYSQLNULL>
+PASS : $name(@r,0) is ^g
+PASS : $name(@r,1) is ^g(1)
+PASS : $name(@r,2) is ^g(1,$ZYSQLNULL)
+# r = x($zysqlnull,1) (lower case)
+PASS : $qlength(r) is 2
+PASS : $qsubscript(r,1) is <$ZYSQLNULL>
+PASS : $qsubscript(r,2) is 1
+PASS : $name(@r,1) is x($ZYSQLNULL)
+# r = ^|$ZYSQLNULL|x(1) (environment)
+PASS : $qlength(r) is 1
+PASS : $qsubscript(r,-1) is <$ZYSQLNULL>
+PASS : $qsubscript(r,0) is ^x
+PASS : $name(@r,0) is ^|$ZYSQLNULL|x
+
+# Stage 2 : the same functions on strings that are not names with a $ZYSQLNULL subscript
+# Command : $gtm_dist/mumps -run others^ydb1305
+#   expect NOCANONICNAME for each malformed name, and "$ZYSQLNULL" in quotes to be a string subscript
+#   previously the same results, since the fix does not apply to these strings
+# r = x($ZYSQLNULLX)
+PASS : $qlength(r) is NOCANONICNAME
+PASS : $qsubscript(r,1) is NOCANONICNAME
+# r = x($ZYSQLNUL)
+PASS : $qlength(r) is NOCANONICNAME
+PASS : $qsubscript(r,1) is NOCANONICNAME
+# r = x($ZYSQLNULL
+PASS : $qlength(r) is NOCANONICNAME
+PASS : $qsubscript(r,1) is NOCANONICNAME
+# r = x($ZYSQLNULL)x
+PASS : $qlength(r) is NOCANONICNAME
+PASS : $qsubscript(r,1) is NOCANONICNAME
+# r = x(1,$ZYSQLNULL,)
+PASS : $qlength(r) is NOCANONICNAME
+PASS : $qsubscript(r,1) is NOCANONICNAME
+# r = x("$ZYSQLNULL") (a string subscript)
+PASS : $qlength(r) is 1
+PASS : $qsubscript(r,1) is $ZYSQLNULL
+PASS : $name(@r,1) is x("$ZYSQLNULL")
+
+# Stage 3 : $ZCOLLATE of a global name with a $ZYSQLNULL subscript
+# Command : $gtm_dist/mumps -run gvn^ydb1305
+#   expect ZYSQLNULLNOTVALID, since a global subscript cannot be $ZYSQLNULL
+#   previously NOCANONICNAME
+PASS : $zcollate("^g(1,$ZYSQLNULL)",0) is ZYSQLNULLNOTVALID
+
+# Done

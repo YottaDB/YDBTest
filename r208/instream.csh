@@ -63,6 +63,7 @@
 # qsubscript_badchar-ydb1311		[nars]	Test $QLENGTH() and $QSUBSCRIPT() issue BADCHAR in UTF-8 mode for a name holding an invalid UTF-8 byte sequence
 # indir_fast_lvn-ydb1278		[nars]	Test the indirection fast path that locates a local variable with simple subscripts without compiling the string
 # stapi_kill_in_malloc-ydb1297		[nars]	Test a SimpleThreadAPI process sent a fatal signal while a non-YottaDB thread is inside malloc() dies with a core instead of hanging
+# zysqlnull_canonic_name-ydb1305	[nars]	Test $QLENGTH, $QSUBSCRIPT and 2-argument $NAME accept a name with a $ZYSQLNULL subscript
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -120,6 +121,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic updproc_fork_fail-ydb13
 setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_badchar-ydb1311"
 setenv subtest_list_non_replic	"$subtest_list_non_replic indir_fast_lvn-ydb1278"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stapi_kill_in_malloc-ydb1297"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zysqlnull_canonic_name-ydb1305"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
