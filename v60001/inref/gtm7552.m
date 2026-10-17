@@ -2,7 +2,7 @@
 ;								;
 ;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -57,19 +57,27 @@ tp      ;
 	do sstep  ; to print $trestart at every M line executed inside of TP
 		; with the bug, one would notice that $trestart changed but M code execution did not resume from after TSTART
 		; This is the process that would fail with TPFAIL error before GTM-7552 was fixed.
-	for  quit:^stop=1  do
-	.	tstart ():serial
-	.	set ^a(jobindex)=$get(^a(jobindex))+1
-	.	set ^b(jobindex)=$get(^b(jobindex))+1
-	.	lock ^c(jobindex)		; this is the lock name which mapped to a region (DEFAULT) where no other
-	.					; database references happened inside the TP transaction and caused
-	.					; the tp restart to try inserting DEFAULT into the tp_reg_list using tp_grab_crit.
-	.					; We want that to fail hence have "dsecrit" process randomly getting crit in
-	.					; DEFAULT so this tp_grab_crit will fail and cause us to retry which in turn
-	.					; exposes the GTM-7552 bug (leading to the TPFAIL error).
-	.	set x=$incr(^b(2*jobindex))	; this is the restart point where things used to not work correctly
-	.	lock
-	.	tcommit
+	for  quit:^stop=1  do tptrans(jobindex)
+	quit
+tptrans(jobindex) ;
+	; The contention this test creates can restart a transaction past the TPNOTACID retry limit (16 restarts by
+	; default, GTM-10098). The LOCK below has no timeout, so it then gets a TPNOTACID error. That is expected and
+	; is not the bug this test checks for, so the transaction is rolled back and the loop starts a new one. Any
+	; other error, including the TPFAIL this test checks for, is not handled here and still fails the test.
+	new $etrap,x
+	set $etrap="if $zstatus[""TPNOTACID"" trollback  set $ecode="""""
+	tstart ():serial
+	set ^a(jobindex)=$get(^a(jobindex))+1
+	set ^b(jobindex)=$get(^b(jobindex))+1
+	lock ^c(jobindex)		; this is the lock name which mapped to a region (DEFAULT) where no other
+					; database references happened inside the TP transaction and caused
+					; the tp restart to try inserting DEFAULT into the tp_reg_list using tp_grab_crit.
+					; We want that to fail hence have "dsecrit" process randomly getting crit in
+					; DEFAULT so this tp_grab_crit will fail and cause us to retry which in turn
+					; exposes the GTM-7552 bug (leading to the TPFAIL error).
+	set x=$incr(^b(2*jobindex))	; this is the restart point where things used to not work correctly
+	lock
+	tcommit
 	quit
 dsecrit ;
 	set dev="dse"
