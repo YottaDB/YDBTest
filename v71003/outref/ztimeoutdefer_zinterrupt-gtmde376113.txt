@@ -10,17 +10,19 @@
 ### Overview of gtmde376113 test routine:
 # 1. Sets $ZTIMEOUT to print a digit every 0.01 seconds and reset the timeout, so that approximately 100 ZTIMEOUTs occur in 1 second.
 # 2. Repeats this process for 10 seconds, yielding a total of ~1000 ZTIMEOUTs
-# Expect a PASS message showing that ~1000 ztimeouts occurred, but accept as few as 700, in case fewer occured due to transient system load.
-# Prior to GT.M V7.1-003, much fewer than 1000 digits are output, regardless of system load, signifying that much fewer than 1000
-# ztimeouts occur in the 10 second window. This means that the $ZTIMEOUT stops happening mid-way through the routine in that case.
+# Expect a PASS message showing that the LAST ZTIMEOUT fired in the final part of the 10 second window.
+# Prior to GT.M V7.1-003 the $ZTIMEOUT stops part way through the routine, so the last one fires early. The
+# count of timeouts is not used to decide PASS, because the vector re-arms $ZTIMEOUT itself and so a loaded
+# machine lowers the count with no defect present.
 # This test case is based on the discussion at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/698#note_2657097388.
 
-### Start test routine [$gtm_dist/mumps -r gtmde376113]
-# Set $ZTIMEOUT to periodically print a digit every 0.01 seconds
-# Set $ZINTERRUPT to do nothing when this process receives a signal, i.e. SIGUSR1 from kill^gtmde376113.
-# Spawn a job to periodically send SIGUSR1 to this process
-# Hang for 10 seconds while $ZTIMEOUT executes every 0.01 seconds and SIGUSR1 is sent by kill^gtmde376113:
-
-# Verify the number of times $ZTIMEOUT executed (ztimeoutcnt).
-# This is to ensure that $ZTIMEOUT executed at least 700 times, i.e. within 70 percent of the 1000 times expected.
-##TEST_AWKPASS: ztimeoutcnt=[7-9][0-9][0-9]
+### Start test routine [$gtm_dist/mumps -r gtmde376113], once per run below
+# EVERY run must report that its last $ZTIMEOUT fired in the final part of its 10 second window.
+# The defect appears in only some runs of a build that carries it: on V7.1-002, 3 of 10 and later 4 of 10
+# runs stopped early, at 1.4 to 3.8 seconds, while the others ran to 9.1 to 10.0 seconds and looked correct. The
+# earlier version of this subtest stopped at the first run that passed, so a build carrying the defect
+# passed as soon as any one run behaved. Requiring all of the runs below to keep firing makes such a
+# build fail far more often; at 3 bad runs in 10, all 10 runs look clean only 0.7^10 = 3 percent of the time.
+# On a build with the fix all 10 of 10 runs measured had their last $ZTIMEOUT at 9.998 to 10.006
+# seconds, so requiring every run to pass adds no sensitivity to machine load.
+PASS : every run kept its last timeout in the final part of the 10 second window

@@ -20,16 +20,23 @@ gtmde376113 ;
 	write "# Spawn a job to periodically send SIGUSR1 to this process",!
 	job kill^gtmde376113
 	write "# Hang for 10 seconds while $ZTIMEOUT executes every 0.01 seconds and SIGUSR1 is sent by kill^gtmde376113:",!
+	set start=$zut
 	hang 10
 	write !
-	write "# Verify the number of times $ZTIMEOUT executed (ztimeoutcnt).",!
-	write "# This is to ensure that $ZTIMEOUT executed at least 700 times, i.e. within 70 percent of the 1000 times expected.",!
-	set prefix=$select((ztimeoutcnt>=700):"PASS",1:"FAIL")
-	write prefix_": ztimeoutcnt="_ztimeoutcnt,!
+	write "# Verify that the LAST $ZTIMEOUT fired in the final part of the 10 second window.",!
+	write "# The defect stops $ZTIMEOUT part way through the window, so the offset of the last one separates the two",!
+	write "# behaviours whatever the machine's load, where a count of the timeouts does not: the vector re-arms",!
+	write "# $ZTIMEOUT itself, so the achievable count is 10 seconds divided by 0.01 plus the per-iteration overhead,",!
+	write "# and a loaded machine drops it below any fixed floor.",!
+	; $ZUT is microseconds. ztlast is undefined if $ZTIMEOUT never fired at all, which must also fail.
+	set lastoff=$select($data(ztlast):(ztlast-start)/1000000,1:-1)
+	if lastoff>8 write "PASS: $ZTIMEOUT kept firing to the end of the window",!
+	else  write "FAIL: the last $ZTIMEOUT fired "_lastoff_" seconds into the 10 second window, ztimeoutcnt="_$get(ztimeoutcnt,0),!
 	quit
 
 ztim ;
 	if $increment(ztimeoutcnt)
+	set ztlast=$zut
 	; Set $ZTIMEOUT to call this label again in 0.01 seconds
 	set $ztimeout="0.01:do ztim"
 	quit
