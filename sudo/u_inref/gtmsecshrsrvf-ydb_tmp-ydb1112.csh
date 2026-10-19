@@ -39,11 +39,14 @@ $gtm_tst/$tst/u_inref/kill_gtmsecshr.csh
 echo '# Start $gtm_dist/gtmsecshr after setting ydb_tmp/gtm_tmp to /tmp/tmp.xxxx (where xxxx is a randomly generated name)'
 set tmpdir = `mktemp -d`
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tmp gtm_tmp $tmpdir
+# The syslog search window has to open BEFORE the server is started, because the server's
+# GTMSECSHRDMNSTARTED and GTMSECSHRTMPPATH messages are what the checks below look for, and
+# getoper.csh searches from this timestamp onwards at a granularity of one second. Taken after the
+# server was started, the window begins in the same second only when the two happen to fall in it.
+set syslog_before1 = `date +"%b %e %H:%M:%S"`
 $gtm_dist/gtmsecshr
 echo "# Unset ydb_tmp/gtm_tmp env var"
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
-
-set syslog_before1 = `date +"%b %e %H:%M:%S"`
 
 echo '# Open $gtm_dist/gtmhelp.dat as current userid'
 echo '# This would need help from gtmsecshr server to remove the ftok semaphore when it terminates'
