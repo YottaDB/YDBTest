@@ -153,5 +153,20 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 endif
 
+# The sem_counter subtest starts 32800 processes, and how much memory they need depends on the build (a Debug build
+# needs about twice what a Release build does). Estimate it from a sample of those processes, and skip the subtest if it
+# is more than 80% of the memory and swap available. Otherwise the OOM killer kills processes at random, including
+# those of sem_counter, whose teardown then cannot remove the IPCs. The details are in tmp/sem_counter_memprobe/memprobe.txt.
+if ($?gtm_test_st_list) then
+	set selected_subtests = " `echo $gtm_test_st_list | sed 's/,/ /g'` "
+else
+	set selected_subtests = " $subtest_list "
+endif
+if (("$selected_subtests" =~ "* sem_counter *") && (" $subtest_exclude_list " !~ "* sem_counter *")) then
+	if ("SKIP" == `$tst_tcsh $gtm_tst/$tst/u_inref/sem_counter_memprobe.csh`) then
+		setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
+	endif
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."
