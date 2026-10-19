@@ -50,7 +50,9 @@ echo
 # path is reached more often by a FETCHRESYNC connection timeout, where gtmrecv_fetchresync waits 60 seconds for
 # the primary's source server and then issues REPLCOMM; both reach the same mupip_exit(ERR_MUNOACTION). 160 is
 # used rather than 159 (the BIND hook) because 160 sets save_errno to 98 before issuing the message, so the
-# SYSTEM-E-ENO98 text is deterministic, where 159 reports whatever errno happened to be set.
+# SYSTEM-E-ENO98 text is deterministic, where 159 reports whatever errno happened to be set. White box cases
+# exist only in a Debug build, so a pro build takes the timeout route and reports no errno at all, which is
+# why stage 3 expects ENO98 only on dbg.
 #
 # WBTEST_KILL_ROLLBACK (100) looks like the obvious hook and is not: it SIGKILLs, so gds_rundown never runs and no
 # EOF is written. The damage needs an ORDERLY exit after an error.
@@ -160,7 +162,8 @@ endif
 echo
 
 echo '# Stage 3 : run a ROLLBACK that exits with an error after mur_open_files has set repl_state to repl_closed.'
-echo '#           WBTEST_REPL_INIT_ERR2 (160) makes the listen() in gtmrecv_comm_init fail, so FETCHRESYNC errors out.'
+echo '#           On a Debug build WBTEST_REPL_INIT_ERR2 (160) makes the listen() in gtmrecv_comm_init fail.'
+echo '#           A pro build has no white box cases, so the rollback fails on the FETCHRESYNC timeout instead.'
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 160
 setenv gtm_white_box_test_case_count 1
@@ -177,11 +180,19 @@ else
 	echo "WRONG : the rollback unexpectedly succeeded, so the rest of this subtest proves nothing"
 	cat rollback_fail.out
 endif
-$gtm_tst/com/check_error_exist.csh rollback_fail.out REPLCOMM MUNOACTION ENO98 ORLBKTERMNTD >&! check_rollback_fail.logx
-if (0 == $status) then
-	echo "PASS : the rollback failed with the expected REPLCOMM, MUNOACTION, ENO98 and ORLBKTERMNTD messages"
+# White box case 160 sets save_errno to 98 before issuing REPLCOMM, and white box cases exist only in a
+# Debug build. A pro build reaches the same mupip_exit(ERR_MUNOACTION) by the FETCHRESYNC connection
+# timeout, which sets no errno, so ENO98 is expected only on dbg.
+if ("dbg" == "$tst_image") then
+	set experr = "REPLCOMM MUNOACTION ENO98 ORLBKTERMNTD"
 else
-	echo "WRONG : the expected REPLCOMM, MUNOACTION and ENO98 messages were not found - see check_rollback_fail.logx"
+	set experr = "REPLCOMM MUNOACTION ORLBKTERMNTD"
+endif
+$gtm_tst/com/check_error_exist.csh rollback_fail.out $experr >&! check_rollback_fail.logx
+if (0 == $status) then
+	echo "PASS : the rollback failed with the expected error messages [$experr]"
+else
+	echo "WRONG : expected [$experr] in rollback_fail.out - see check_rollback_fail.logx"
 	cat check_rollback_fail.logx
 endif
 echo

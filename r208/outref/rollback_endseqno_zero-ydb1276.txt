@@ -28,10 +28,16 @@ PASS : the source server was killed with SIGKILL
 PASS : the journal file is marked as crashed, so nothing has closed it cleanly yet
 
 # Stage 3 : run a ROLLBACK that exits with an error after mur_open_files has set repl_state to repl_closed.
-#           WBTEST_REPL_INIT_ERR2 (160) makes the listen() in gtmrecv_comm_init fail, so FETCHRESYNC errors out.
+#           On a Debug build WBTEST_REPL_INIT_ERR2 (160) makes the listen() in gtmrecv_comm_init fail.
+#           A pro build has no white box cases, so the rollback fails on the FETCHRESYNC timeout instead.
 # Command : $MUPIP journal -rollback -backward -online -fetchresync=<portno> -losttrans=lost1.glo "*"
 PASS : the rollback exited with an error, as this stage intends
-PASS : the rollback failed with the expected REPLCOMM, MUNOACTION, ENO98 and ORLBKTERMNTD messages
+##SUSPEND_OUTPUT PRO
+PASS : the rollback failed with the expected error messages [REPLCOMM MUNOACTION ENO98 ORLBKTERMNTD]
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT DBG
+PASS : the rollback failed with the expected error messages [REPLCOMM MUNOACTION ORLBKTERMNTD]
+##ALLOW_OUTPUT DBG
 
 # Stage 4 : no journal file may have start seqno > end seqno
 # Command : $MUPIP journal -show=header -forward -noverify <each journal file generation>
