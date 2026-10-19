@@ -592,11 +592,13 @@ tpnoiso;
 	write "$view(""NOISOLATION"",""^irandomvariableinimptpfillprgrm"")=",$view("NOISOLATION","^irandomvariableinimptpfillprgrm"),!
 	write "$view(""NOISOLATION"",""^jrandomvariableinimptpfillprogram"")=",$view("NOISOLATION","^jrandomvariableinimptpfillprogram"),!
 	quit
-	; attempt to recover ^%imptp from a file after online rollback rolled it away
+	; attempt to recover ^%imptp from a file after a rollback rolled it away
 writeinfofileifneeded
-	new needinfo,file
-	set needinfo=($ztrnlnm("gtm_test_onlinerollback")="TRUE")
-	quit:needinfo=0
+	new file
+	; Written unconditionally. The reader, "loadinfofileifneeded", decides it needs this file from
+	; whether ^%imptp and ^endloop are missing, and a plain crash followed by MUPIP JOURNAL -ROLLBACK
+	; satisfies that too, not only an online rollback. The name is kept because it pairs with the
+	; reader's.
 	set file="gtm_test_imptp_info"
 	open file:newversion
 	use file
