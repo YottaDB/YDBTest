@@ -18,6 +18,8 @@ PASS : the receiver server logged REPLERR with its complete text
 PASS : no core file
 
 # Stage 3 : clean up
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+PASS : the receive pool was removed
 # Command : $MUPIP replicate -source -shutdown -timeout=0
 PASS : the passive source server shut down
 PASS : dbcheck.csh found no integrity errors

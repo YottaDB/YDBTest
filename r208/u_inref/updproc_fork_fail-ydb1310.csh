@@ -103,6 +103,17 @@ endif
 echo
 
 echo '# Stage 3 : clean up'
+# The receiver server exited without removing the receive pool. MUPIP REPLICATE -RECEIVER -SHUTDOWN removes it, and
+# reports that the receiver server exited abnormally, which is expected here.
+echo '# Command : $MUPIP replicate -receiver -shutdown -timeout=0'
+$MUPIP replicate -receiver -shutdown -timeout=0 >&! rcvstop.out
+$grep -q 'Receive pool shared memory removed' rcvstop.out
+if (0 == $status) then
+	echo "PASS : the receive pool was removed"
+else
+	echo "WRONG : the receive pool was not removed - see rcvstop.out"
+	cat rcvstop.out
+endif
 echo '# Command : $MUPIP replicate -source -shutdown -timeout=0'
 $MUPIP replicate -source -shutdown -timeout=0 >&! srcstop.out
 if (0 == $status) then
