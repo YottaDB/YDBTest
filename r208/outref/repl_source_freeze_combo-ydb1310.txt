@@ -1,0 +1,28 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1310] MUPIP REPLICATE -SOURCE rejects -FREEZE together with another control qualifier       #
+#-----------------------------------------------------------------------------------------------#
+
+# Command : $MUPIP replicate -source -start -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -shutdown -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -activate -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -deactivate -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -checkhealth -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -statslog=on -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -showbacklog -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -changelog -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -stopsourcefilter -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -losttncomplete -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -needrestart -freeze
+PASS : rejected with CLIERR
+# Command : $MUPIP replicate -source -jnlpool -freeze
+PASS : rejected with CLIERR
