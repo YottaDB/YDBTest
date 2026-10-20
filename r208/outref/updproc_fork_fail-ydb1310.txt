@@ -1,0 +1,23 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1310] The receiver server reports REPLERR when it cannot fork the update process            #
+#-----------------------------------------------------------------------------------------------#
+
+# Stage 1 : make this instance a secondary with a passive source server, and build the fork library
+# Command : $MUPIP replicate -instance_create -name=INSTB
+# Command : $MUPIP set -replication=on -region DEFAULT
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src.log
+PASS : the instance file, replication and the passive source server are in place
+# Command : compile and link ydb1310_forkfail.c into libydb1310_forkfail
+PASS : libydb1310_forkfail was built
+
+# Stage 2 : start a receiver server that cannot fork the update process
+# Command : env LD_PRELOAD=./libydb1310_forkfail.so $MUPIP replicate -receiver -start -listenport=<port> -log=rcv.logx -buffsize=1048576
+PASS : the receiver server exited
+PASS : the receiver server logged that it could not fork the update process
+PASS : the receiver server logged REPLERR with its complete text
+PASS : no core file
+
+# Stage 3 : clean up
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the passive source server shut down
+PASS : dbcheck.csh found no integrity errors

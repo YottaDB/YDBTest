@@ -59,6 +59,7 @@
 # v6_upgrade_msgs-ydb1310		[nars]	Test DBFILERDONLY and MUUPGRDNRDY on a partly upgraded V6 database are issued without extra messages
 # repl_source_freeze_combo-ydb1310	[nars]	Test MUPIP REPLICATE -SOURCE rejects -FREEZE together with another control qualifier
 # recload_encr_index-ydb1310		[nars]	Test RECLOAD for a bad encryption handle index in a binary extract keeps its TEXT detail
+# updproc_fork_fail-ydb1310		[nars]	Test the receiver server logs a complete REPLERR when it cannot fork the update process
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -112,6 +113,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic dbioerr_syscall-ydb1310
 setenv subtest_list_non_replic	"$subtest_list_non_replic v6_upgrade_msgs-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic repl_source_freeze_combo-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recload_encr_index-ydb1310"
+setenv subtest_list_non_replic	"$subtest_list_non_replic updproc_fork_fail-ydb1310"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
