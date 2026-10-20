@@ -1,0 +1,134 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1311] $QLENGTH() and $QSUBSCRIPT() issue BADCHAR in UTF-8 mode for a name holding a byte      #
+# sequence that is not a valid UTF-8 character                                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# $QLENGTH() and $QSUBSCRIPT() first check that their argument is a canonic name. In UTF-8 mode that
+# check stepped over each non-ASCII character by the length its first byte implies, and did not check
+# that the bytes form a valid character, so it accepted such a name. $QSUBSCRIPT() then copied the
+# subscript, and for a byte that cannot start a UTF-8 character it wrote past the end of its buffer.
+#
+# $ZCOLLATE(name,0) and $VIEW("YGVN2GDS",name) use the same check, but do not issue BADCHAR, because the
+# reverse $ZCOLLATE(key,0,1) returns a name holding the bytes of a subscript inside quotes as they are.
+#
+# Without the fix, stage 1 prints WRONG for its first $QLENGTH() and then ends the process with a SIG-11
+# (an assert failure in a Debug build) at its first $QSUBSCRIPT(), stage 2 ends the same way at its
+# first $QSUBSCRIPT(), stage 4 prints WRONG with NOCANONICNAME for $ZCH(224), where the step over
+# the byte skips the closing quote, and stages 3 and 5 PASS.
+
+# Stage 1 : UTF-8 mode, VIEW "BADCHAR"
+# Command : $gtm_dist/mumps -run badchar^ydb1311
+#   expect $QLENGTH() and $QSUBSCRIPT() to issue BADCHAR for each name, naming its invalid bytes: a
+#   continuation byte, a byte that is never valid, a first byte followed by a byte that does not
+#   continue it, a first byte followed by the closing quote, a surrogate code point, a bad byte in a
+#   subscript after the one asked for, and a global name
+PASS : $qlength("x("""_$zchar(128)_""")") issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x("""_$zchar(128)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("x("""_$zchar(255)_""")") issued %YDB-E-BADCHAR, $ZCHAR(255) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x("""_$zchar(255)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(255) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("x("""_$zchar(195,40)_""")") issued %YDB-E-BADCHAR, $ZCHAR(195) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x("""_$zchar(195,40)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(195) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("x("""_$zchar(224)_""")") issued %YDB-E-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x("""_$zchar(224)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("x("""_$zchar(237,160,128)_""")") issued %YDB-E-BADCHAR, $ZCHAR(237,160,128) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x("""_$zchar(237,160,128)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(237,160,128) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("x(""a"",""b"_$zchar(128)_"c"")") issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("x(""a"",""b"_$zchar(128)_"c"")",1) issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+PASS : $qlength("^x("""_$zchar(128)_""")") issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+PASS : $qsubscript("^x("""_$zchar(128)_""")",1) issued %YDB-E-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+
+# Stage 2 : UTF-8 mode, VIEW "NOBADCHAR"
+# Command : $gtm_dist/mumps -run nobadchar^ydb1311
+#   expect the same names to be accepted, each subscript to be returned with its bytes unchanged, and
+#   each invalid byte to count as one character in $LENGTH()
+PASS : $qlength("x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(128)_""")",1) returned $ZCH(128)
+PASS : $length($qsubscript("x("""_$zchar(128)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(255)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(255)_""")",1) returned $ZCH(255)
+PASS : $length($qsubscript("x("""_$zchar(255)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(195,40)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(195,40)_""")",1) returned $ZCH(195)_"("
+PASS : $length($qsubscript("x("""_$zchar(195,40)_""")",1)) returned 2
+PASS : $qlength("x("""_$zchar(224)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(224)_""")",1) returned $ZCH(224)
+PASS : $length($qsubscript("x("""_$zchar(224)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(237,160,128)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(237,160,128)_""")",1) returned $ZCH(237,160,128)
+PASS : $length($qsubscript("x("""_$zchar(237,160,128)_""")",1)) returned 3
+PASS : $qlength("x(""a"",""b"_$zchar(128)_"c"")") returned 2
+PASS : $qsubscript("x(""a"",""b"_$zchar(128)_"c"")",2) returned "b"_$ZCH(128)_"c"
+PASS : $length($qsubscript("x(""a"",""b"_$zchar(128)_"c"")",2)) returned 3
+PASS : $qlength("^x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("^x("""_$zchar(128)_""")",0) returned "^x"
+PASS : $length($qsubscript("^x("""_$zchar(128)_""")",0)) returned 2
+PASS : $qlength("^x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("^x("""_$zchar(128)_""")",1) returned $ZCH(128)
+PASS : $length($qsubscript("^x("""_$zchar(128)_""")",1)) returned 1
+
+# Stage 3 : UTF-8 mode, VIEW "BADCHAR", names whose subscripts hold valid 2, 3 and 4 byte characters,
+#           one of them written with a $C() term so $QSUBSCRIPT() copies through its $C() branch too
+# Command : $gtm_dist/mumps -run valid^ydb1311
+#   expect each subscript to be returned unchanged, with each character counting as one in $LENGTH()
+PASS : $qlength("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")") returned 3
+PASS : $qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",1) returned $ZCH(195,169)
+PASS : $length($qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",1)) returned 1
+PASS : $qlength("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")") returned 3
+PASS : $qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",2) returned $ZCH(226,130,172)
+PASS : $length($qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",2)) returned 1
+PASS : $qlength("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")") returned 3
+PASS : $qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",3) returned $ZCH(240,157,132,158)
+PASS : $length($qsubscript("x("""_$char(233)_""","""_$char(8364)_""","""_$char(119070)_""")",3)) returned 1
+PASS : $qlength("x("""_$char(233)_"""_$c(1)_"""_$char(8364)_""",2)") returned 2
+PASS : $qsubscript("x("""_$char(233)_"""_$c(1)_"""_$char(8364)_""",2)",1) returned $ZCH(195,169,1,226,130,172)
+PASS : $length($qsubscript("x("""_$char(233)_"""_$c(1)_"""_$char(8364)_""",2)",1)) returned 3
+PASS : $qlength("^x(""a"_$char(233)_""")") returned 1
+PASS : $qsubscript("^x(""a"_$char(233)_""")",1) returned "a"_$ZCH(195,169)
+PASS : $length($qsubscript("^x(""a"_$char(233)_""")",1)) returned 2
+
+# Stage 4 : UTF-8 mode, VIEW "BADCHAR", $ZCOLLATE() round trip of a key whose subscript is not valid UTF-8
+# Command : $gtm_dist/mumps -run zcoll^ydb1311
+#   expect the reverse $ZCOLLATE(key,0,1) to return the name with the bytes inside quotes as they are, and
+#   $ZCOLLATE(name,0) and $VIEW("YGVN2GDS",name) to accept that name and return the same key
+PASS : $zfind($zcollate(key,0,1),$zchar(128)) for key=$zcollate("^x($ZCH(128),2)",0) returned 6
+PASS : $zcollate($zcollate(key,0,1),0)=key for key=$zcollate("^x($ZCH(128),2)",0) returned 1
+PASS : $view("YGVN2GDS",$zcollate(key,0,1))=key for key=$zcollate("^x($ZCH(128),2)",0) returned 1
+PASS : $zfind($zcollate(key,0,1),$zchar(224)) for key=$zcollate("^x($ZCH(224),2)",0) returned 6
+PASS : $zcollate($zcollate(key,0,1),0)=key for key=$zcollate("^x($ZCH(224),2)",0) returned 1
+PASS : $view("YGVN2GDS",$zcollate(key,0,1))=key for key=$zcollate("^x($ZCH(224),2)",0) returned 1
+PASS : $zfind($zcollate(key,0,1),$zchar(195,40)) for key=$zcollate("^x($ZCH(195,40),2)",0) returned 7
+PASS : $zcollate($zcollate(key,0,1),0)=key for key=$zcollate("^x($ZCH(195,40),2)",0) returned 1
+PASS : $view("YGVN2GDS",$zcollate(key,0,1))=key for key=$zcollate("^x($ZCH(195,40),2)",0) returned 1
+PASS : $zfind($zcollate(key,0,1),$zchar(237,160,128)) for key=$zcollate("^x($ZCH(237,160,128),2)",0) returned 8
+PASS : $zcollate($zcollate(key,0,1),0)=key for key=$zcollate("^x($ZCH(237,160,128),2)",0) returned 1
+PASS : $view("YGVN2GDS",$zcollate(key,0,1))=key for key=$zcollate("^x($ZCH(237,160,128),2)",0) returned 1
+
+# Stage 5 : Run stage 2 but in M (not UTF-8) mode
+# Command : $gtm_dist/mumps -run mmode^ydb1311
+#   expect each subscript to be returned with its bytes unchanged, each byte counting as one character
+PASS : $qlength("x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(128)_""")",1) returned $ZCH(128)
+PASS : $length($qsubscript("x("""_$zchar(128)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(255)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(255)_""")",1) returned $ZCH(255)
+PASS : $length($qsubscript("x("""_$zchar(255)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(195,40)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(195,40)_""")",1) returned $ZCH(195)_"("
+PASS : $length($qsubscript("x("""_$zchar(195,40)_""")",1)) returned 2
+PASS : $qlength("x("""_$zchar(224)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(224)_""")",1) returned $ZCH(224)
+PASS : $length($qsubscript("x("""_$zchar(224)_""")",1)) returned 1
+PASS : $qlength("x("""_$zchar(237,160,128)_""")") returned 1
+PASS : $qsubscript("x("""_$zchar(237,160,128)_""")",1) returned $ZCH(237,160,128)
+PASS : $length($qsubscript("x("""_$zchar(237,160,128)_""")",1)) returned 3
+PASS : $qlength("x(""a"",""b"_$zchar(128)_"c"")") returned 2
+PASS : $qsubscript("x(""a"",""b"_$zchar(128)_"c"")",2) returned "b"_$ZCH(128)_"c"
+PASS : $length($qsubscript("x(""a"",""b"_$zchar(128)_"c"")",2)) returned 3
+PASS : $qlength("^x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("^x("""_$zchar(128)_""")",0) returned "^x"
+PASS : $length($qsubscript("^x("""_$zchar(128)_""")",0)) returned 2
+PASS : $qlength("^x("""_$zchar(128)_""")") returned 1
+PASS : $qsubscript("^x("""_$zchar(128)_""")",1) returned $ZCH(128)
+PASS : $length($qsubscript("^x("""_$zchar(128)_""")",1)) returned 1
+
+# Done

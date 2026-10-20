@@ -60,6 +60,7 @@
 # repl_source_freeze_combo-ydb1310	[nars]	Test MUPIP REPLICATE -SOURCE rejects -FREEZE together with another control qualifier
 # recload_encr_index-ydb1310		[nars]	Test RECLOAD for a bad encryption handle index in a binary extract keeps its TEXT detail
 # updproc_fork_fail-ydb1310		[nars]	Test the receiver server logs a complete REPLERR when it cannot fork the update process
+# qsubscript_badchar-ydb1311		[nars]	Test $QLENGTH() and $QSUBSCRIPT() issue BADCHAR in UTF-8 mode for a name holding an invalid UTF-8 byte sequence
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -114,6 +115,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic v6_upgrade_msgs-ydb1310
 setenv subtest_list_non_replic	"$subtest_list_non_replic repl_source_freeze_combo-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recload_encr_index-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic updproc_fork_fail-ydb1310"
+setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_badchar-ydb1311"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -140,6 +142,11 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# pthread_exit_nomem-ydb1292 limits the address space of a MUPIP process to what it is using, which leaves the
 	# ASAN allocator no room to map memory, so exclude it.
 	setenv subtest_exclude_list "$subtest_exclude_list pthread_exit_nomem-ydb1292"
+endif
+
+# qsubscript_badchar-ydb1311 tests UTF-8 mode only, so exclude it where UTF-8 mode is not supported
+if ("TRUE" != "$gtm_test_unicode_support") then
+	setenv subtest_exclude_list "$subtest_exclude_list qsubscript_badchar-ydb1311"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
