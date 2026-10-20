@@ -1,0 +1,23 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1310] A DBIOERR that names the failing asyncio system call is issued in full                #
+#-----------------------------------------------------------------------------------------------#
+
+# Stage 1 : create an ASYNCIO database and build the library that makes io_submit() fail
+# Command : $gtm_tst/com/dbcreate.csh mumps -block_size=4096 -asyncio
+PASS : the database was created
+# Command : $DSE dump -fileheader
+PASS : the database file header shows Async IO ON
+# Command : compile and link ydb1310_iosubmit.c into libydb1310_iosubmit
+PASS : libydb1310_iosubmit was built
+
+# Stage 2 : update the database while every asyncio write fails, so the flush timer reports DBIOERR
+# Command : env LD_PRELOAD=./libydb1310_iosubmit.so $gtm_dist/mumps -run %XCMD 'for i=1:1:10  hang 1  set ^a(i)=$j(i,10)'
+PASS : the process did not fail an assert
+PASS : the process reported DBIOERR, ENO2, NOTALLDBRNDWN and GVRUNDOWN at exit
+
+# Stage 3 : the DBIOERR in the operator log carries the SYSCALL for io_submit() and then ENO2
+# Command : $gtm_tst/com/getoper.csh "$syslog_start" "" syslog.txt "" "YDB-E-DBIOERR.*<database file>"
+PASS : the operator log has a DBIOERR for this database file
+PASS : the DBIOERR is followed by SYSCALL for io_submit() from wcs_wterror.c and by ENO2, with nothing else
+
+PASS : dbcheck.csh found no integrity errors

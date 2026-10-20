@@ -55,6 +55,7 @@
 # zbfsize_abbrev-ydb1248		[nars]	Test every abbreviation of the ZBFSIZE deviceparameter is accepted
 # rollback_endseqno_zero-ydb1276	[nars]	Test a failed MUPIP JOURNAL -ROLLBACK leaves no journal file with start seqno > end seqno
 # mupip_kip_wait-ydb1231		[nars]	Test MUPIP INTEG, FREEZE and BACKUP do not wait for an abandoned KILL, and do wait for one beyond the 8 recorded pids
+# dbioerr_syscall-ydb1310		[nars]	Test a DBIOERR that names the failing asyncio system call (io_submit) is issued in full
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -104,6 +105,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zydecode_numeric_values
 setenv subtest_list_non_replic	"$subtest_list_non_replic zbfsize_abbrev-ydb1248"
 setenv subtest_list_non_replic	"$subtest_list_non_replic rollback_endseqno_zero-ydb1276"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_kip_wait-ydb1231"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dbioerr_syscall-ydb1310"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -142,6 +144,8 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list pipe_read_timer_pop-ydb1296"
 	# fork_core_in_malloc-ydb1293 needs a white box test case, which only a Debug build has
 	setenv subtest_exclude_list "$subtest_exclude_list fork_core_in_malloc-ydb1293"
+	# dbioerr_syscall-ydb1310 needs white box case 65, which only a Debug build has
+	setenv subtest_exclude_list "$subtest_exclude_list dbioerr_syscall-ydb1310"
 endif
 
 if ("dbg" == "$tst_image") then
