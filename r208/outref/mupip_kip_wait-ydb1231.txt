@@ -1,0 +1,155 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1231] MUPIP INTEG, FREEZE and BACKUP do not wait for an abandoned KILL                       #
+#-----------------------------------------------------------------------------------------------#
+
+# A KILL whose process terminated without running its cleanup leaves kill_in_prog set in the file
+# header, and its own process id in the shared memory list of processes doing a KILL, with nothing
+# left that can clear either. MUPIP INTEG waited a minute for that field in ss_initiate, or in
+# region_freeze_main for a -noonline INTEG, and then another minute in mu_int_maps, so MUKILLIP,
+# which it was going to issue either way, took two minutes to arrive. MUPIP FREEZE and MUPIP BACKUP
+# waited a minute before failing with MUNOFINISH and before warning with BACKUPKILLIP respectively.
+#
+# The WBTEST_ABANDONEDKILL white box test case holds a process in phase II of a KILL, where
+# kill_in_prog is set. This subtest terminates it there with SIGKILL, which the process cannot
+# handle, so nothing of it runs again. Each stage times its command and compares the elapsed seconds
+# against a limit instead of printing them, since the number itself is not reproducible.
+#
+# The INTEG output goes to a file rather than to this log. Stopping a KILL in its second phase
+# leaves blocks marked busy that nothing references any more, and INTEG reports one DBLOCMBINC
+# and DBMRKBUSY per bitmap and block involved, which is not a fixed number across the block sizes
+# the test system chooses from. MUKILLIP is asserted out of that file; the rest of it is gzipped
+# so that com/errors.csh does not read those messages as a failure.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT DBG
+# Stages 1 to 6 need the WBTEST_ABANDONEDKILL white box test case, which is DEBUG only, so with a
+# pro build they are skipped and only stages 7 and 8 run
+
+##ALLOW_OUTPUT DBG
+##SUSPEND_OUTPUT PRO
+# Command : $gtm_dist/mumps -run setup^ydb1231
+setup done
+# Enable WBTEST_ABANDONEDKILL, which holds a process in phase II of every KILL it does
+# Command : $gtm_tst/$tst/u_inref/callabandon-ydb1231.csh, which starts [mumps -run abandon^ydb1231]
+# Send SIGKILL to that process, whose pid it wrote to job.txt
+# Command : $DSE dump -fileheader, reporting the KILLs in progress field it shows
+PASS : the file header reports a KILL in progress
+
+# Stage 1 : an ONLINE MUPIP INTEG, the default, which waited in ss_initiate and then in mu_int_maps
+# Expected : MUKILLIP within the 30 second limit, in under a second on an idle system
+# Before YDB#1231 : MUKILLIP after about 122 seconds, a minute in each of the two waits
+# Command : $MUPIP integ -reg "*" -online
+----------
+Error YDB-W-MUKILLIP seen in integ_online.out as expected:
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+----------
+PASS : the ONLINE INTEG reported MUKILLIP in fewer than 30 seconds
+
+# Stage 2 : MUPIP INTEG -noonline, which waited in region_freeze_main and then in mu_int_maps
+# Expected : MUKILLIP within the 30 second limit, in under a second on an idle system
+# Before YDB#1231 : MUKILLIP after about 122 seconds, a minute in each of the two waits
+# Command : $MUPIP integ -reg "*" -noonline
+----------
+Error YDB-W-MUKILLIP seen in integ_noonline.out as expected:
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+----------
+PASS : the -noonline INTEG reported MUKILLIP in fewer than 30 seconds
+
+# Stage 3 : MUPIP FREEZE, which waited in region_freeze_main and then failed with MUNOFINISH
+# Expected : MUNOFINISH within the 30 second limit, in under a second on an idle system
+# Before YDB#1231 : MUNOFINISH after about 61 seconds
+# Command : $MUPIP freeze -on "*"
+----------
+Error YDB-E-MUNOFINISH seen in freeze.out as expected:
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+----------
+PASS : the FREEZE failed with MUNOFINISH in fewer than 30 seconds
+
+# Stage 4 : MUPIP BACKUP -online, which waited in mupip_backup and then warned with BACKUPKILLIP
+# Expected : BACKUPKILLIP and BACKUPSUCCESS within the 30 second limit, in under a second on an
+# idle system
+# Before YDB#1231 : BACKUPKILLIP and BACKUPSUCCESS after about 61 seconds
+# Command : $MUPIP backup -online "*" bak
+----------
+Error YDB-W-BACKUPKILLIP seen in backup.out as expected:
+%YDB-W-BACKUPKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat, backup database could have incorrectly marked busy integrity errors
+----------
+PASS : the BACKUP warned with BACKUPKILLIP and succeeded, in fewer than 30 seconds
+
+# Stage 5 : put back the database as it was created, where no KILL was ever interrupted, and
+# check that an INTEG of it reports nothing and does not wait either
+# Expected : no errors and no MUKILLIP within the 30 second limit
+# Before YDB#1231 : the same, since there is no KILL in progress to wait for
+# Command : $MUPIP integ -reg "*" -online
+PASS : the INTEG detected no errors and reported no MUKILLIP, in fewer than 30 seconds
+
+# Stage 6 : a KILL in progress that the shared memory list of processes doing a KILL does not record.
+# The list has 8 slots, so a ninth concurrent KILL is counted instead of recorded. Hold 8 KILLs in
+# phase II with WBTEST_ABANDONEDKILL, which sleeps there for about a minute, start a ninth 20 seconds
+# later, and let the first 8 finish. The ninth is still in phase II and alive, so an INTEG has to
+# wait for it rather than report MUKILLIP, and once it finishes the database has no errors.
+# Expected : the INTEG waits for the ninth KILL, then reports no MUKILLIP and no errors
+# Before YDB#1231 : the same, since an INTEG then always waited for a KILL in progress
+# Command : $gtm_dist/mumps -run setupc^ydb1231
+setupc done
+# Command : $gtm_dist/mumps -run hold^ydb1231 <n>, in the background, for n = 1 to 8
+# Command : $gtm_dist/mumps -run hold^ydb1231 9, in the background
+PASS : the first 8 KILLs are done and the ninth is still in phase II
+# Command : $MUPIP integ -reg "*" -online
+PASS : the INTEG waited for the ninth KILL, reported no MUKILLIP and detected no errors
+
+##ALLOW_OUTPUT PRO
+# Stage 7 : kip_set_by_dse in a database created by an older release. The field was taken from the
+# end of secshr_ops_array_filler, so an older file header can carry any bytes there, and a non-zero
+# value would make every wait act as if a DSE-set kill_in_prog were in progress. Auto upgrade has to
+# zero it once, and only once, so that a kill_in_prog that DSE sets later is still recognised after
+# DSE exits. This is done for a V7 database, which db_auto_upgrade handles, and for a V6 database,
+# which v6_db_auto_upgrade handles. Each is created by a random prior release, gets 0xDEADBEEF
+# written over the field, and is then opened by the current release.
+# Expected : kip_set_by_dse reads 0 after opening and is zeros on disk after close, then reads 1
+# after DSE sets kill_in_prog and exits, and 0 after DSE clears it
+# Before YDB#1231 : there is no kip_set_by_dse field, so offset^ydb1231 gets LVUNDEF and
+# %PEEKBYNAME gets PBNINVALID
+# Command : $gtm_dist/mumps -run offset^ydb1231
+## Stage 7 with a V7 database, in directory stage7_V7
+# Create V7.dat with a random prior release
+# Command : $GDE exit, which converts the global directory to the current format
+# Write 0xDEADBEEF over kip_set_by_dse in the file header of V7.dat
+# Command : $gtm_dist/mumps -run peek^ydb1231, which opens the database and reads kip_set_by_dse
+PASS : the current release reads kip_set_by_dse as 0
+PASS : the file header holds zeros at kip_set_by_dse after the database is closed
+# Command : $DSE change -fileheader -kill_in_prog=1
+PASS : kip_set_by_dse is 1 after DSE exits, so auto upgrade did not zero it a second time
+# Command : $DSE change -fileheader -kill_in_prog=0
+PASS : kip_set_by_dse is 0 again
+## Stage 7 with a V6 database, in directory stage7_V6
+# Create V6.dat with a random prior release
+# Command : $GDE exit, which converts the global directory to the current format
+# Write 0xDEADBEEF over kip_set_by_dse in the file header of V6.dat
+# Command : $gtm_dist/mumps -run peek^ydb1231, which opens the database and reads kip_set_by_dse
+PASS : the current release reads kip_set_by_dse as 0
+PASS : the file header holds zeros at kip_set_by_dse after the database is closed
+# Command : $DSE change -fileheader -kill_in_prog=1
+PASS : kip_set_by_dse is 1 after DSE exits, so auto upgrade did not zero it a second time
+# Command : $DSE change -fileheader -kill_in_prog=0
+PASS : kip_set_by_dse is 0 again
+
+# Stage 8 : DSE MAPS -RESTORE, which an operator runs to repair the bitmaps an abandoned KILL leaves,
+# clears kill_in_prog, so it has to clear kip_set_by_dse as well. Otherwise a later abandoned KILL
+# would be taken for one that DSE set, and every wait for it would run its full minute again.
+# Expected : kip_set_by_dse is 1 after the DSE set, and kip_set_by_dse and kill_in_prog are both 0
+# after DSE MAPS -RESTORE
+# Before YDB#1231 : there is no kip_set_by_dse field, so %PEEKBYNAME gets PBNINVALID
+# Command : $DSE change -fileheader -kill_in_prog=1
+PASS : kip_set_by_dse is 1
+# Command : $DSE maps -restore
+PASS : kip_set_by_dse and kill_in_prog are both 0
+
+# Done
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
