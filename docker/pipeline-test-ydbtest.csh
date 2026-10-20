@@ -81,8 +81,11 @@ endif
 rm ydb_mr.json
 popd >& /dev/null
 echo " "
-echo "### YottaDB commit being tested"
-git -C /Distrib/YottaDB log -1 --format="%H %cd %s" --date=iso
+echo "### YottaDB build being tested"
+# This reports the commit compiled into the installed binary, along with its build date and build type. A "(dirty)"
+# after the commit SHA is expected, because build_and_install_yottadb.csh edits sr_linux/platform.cmake,
+# sr_unix/configure.gtc and sr_unix/ydbinstall.sh before it builds.
+/usr/library/V999_R999/dbg/yottadb -version
 echo " "
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location

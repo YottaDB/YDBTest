@@ -101,6 +101,12 @@ if ( ! -d /Distrib/YottaDB/V999_R999 ) then
 endif
 echo " "
 
+echo "### YottaDB build being tested"
+# This reports the commit compiled into the installed binary, along with its build date and build type. A "(dirty)"
+# after the commit SHA is expected, because build_and_install_yottadb.csh edits sr_linux/platform.cmake,
+# sr_unix/configure.gtc and sr_unix/ydbinstall.sh before it builds.
+/usr/library/V999_R999/dbg/yottadb -version
+echo " "
 echo "### Verify contents of source/build directory (/Distrib/YottaDB/V999_R999):"
 ls -lrt /Distrib/YottaDB/V999_R999/
 echo " "
