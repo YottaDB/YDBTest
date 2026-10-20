@@ -1,0 +1,58 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [YDB#1090] Test that direct mode does not loop once a transaction passes the TPNOTACID retry limit                  #
+# GTM-10098 in GT.M V7.1-004 makes an operation that can violate ACID properties raise a TPNOTACID error once a       #
+# transaction has restarted more than 16 times by default. Direct mode checks for TPNOTACID before its prompt, so     #
+# with the default $ZTRAP="B" the error would take the process back to direct mode, which would raise it again, and   #
+# the process would never reach the prompt.                                                                           #
+# YottaDB exempts the direct mode prompt from the limit, and sends a TPNOTACID error repeated at the same place in a  #
+# transaction to the syslog only once. Each stage below restarts a transaction past the limit and verifies that:      #
+#   1. a JOB, whose input is /dev/null, enters direct mode once and exits at end of file                              #
+#   2. with piped input, direct mode accepts commands, and TROLLBACK ends the transaction                             #
+#   3. at a terminal, direct mode accepts commands, and TROLLBACK ends the transaction                                #
+#   4. a $ZTRAP that retries the failing line sends the TPNOTACID error to the syslog once, and two transactions      #
+#      that each pass the limit send it once each                                                                     #
+#---------------------------------------------------------------------------------------------------------------------#
+
+# Stage 1 : JOB a process that passes the limit, with /dev/null as its input
+#           expect one direct mode prompt in its .mjo, the TPNOTACID error once in its .mje, and the process to
+#           end on its own after it reads end of file at the prompt
+# mumps -run job^tpna1090
+# The JOBbed process ended on its own
+# Direct mode prompts in stage1.mjo : 1
+# TPNOTACID errors in stage1.mje    : 1
+%YDB-E-TPNOTACID, ZSYSTEM at pastlimit+5^tpna1090 violates ACID properties of a TRANSACTION and could exceed 2000 milliseconds; 17 RESTARTs have occurred
+
+# Stage 2 : pass the limit with direct mode reading commands from a pipe
+#           expect the TPNOTACID error once, then $TLEVEL to be 1 before TROLLBACK and 0 after it
+# mumps -run pastlimit^tpna1090, with these direct mode commands as its input :
+#   write "TLEVEL=",$tlevel,!
+#   trollback
+#   write "TLEVEL=",$tlevel,!
+#   halt
+# TPNOTACID errors in stage2.out : 1
+%YDB-E-TPNOTACID, ZSYSTEM at pastlimit+5^tpna1090 violates ACID properties of a TRANSACTION and could exceed 2000 milliseconds; 17 RESTARTs have occurred
+TLEVEL=1
+TLEVEL=0
+
+# Stage 3 : pass the limit with direct mode reading commands from a terminal, driven by expect
+#           expect the YDB> prompt, then $TLEVEL to be 1 before TROLLBACK and 0 after it
+# mumps -run pastlimit^tpna1090
+PASS: the process reached the direct mode prompt after passing the TPNOTACID retry limit
+# write "TLEVEL=",$tlevel,!
+PASS: $TLEVEL is 1 at the prompt, so the process is still inside the transaction
+# trollback
+# write "TLEVEL=",$tlevel,!
+PASS: TROLLBACK at the prompt ended the transaction
+# halt
+# exit
+
+# Stage 4 : count the TPNOTACID errors each process sends to the syslog
+#           expect 1 from ztloop, whose $ZTRAP retries the failing line 20 times, and 2 from twotp, which
+#           passes the limit in two separate transactions
+# mumps -run ztloop^tpna1090
+# The $ZTRAP code ran 20 times
+# TPNOTACID errors in the syslog from ztloop : 1
+# mumps -run twotp^tpna1090
+# Transaction 1 got TPNOTACID
+# Transaction 2 got TPNOTACID
+# TPNOTACID errors in the syslog from twotp : 2

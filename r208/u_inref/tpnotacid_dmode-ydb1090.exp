@@ -1,0 +1,58 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 60
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# Everything the session writes is matched by the "expect"s below but none of it is echoed to the
+# reference file, since whether direct mode reads through readline (ydb_readline is randomized) changes
+# how it echoes typed commands
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+
+# pastlimit^tpna1090 restarts a transaction past the TPNOTACID retry limit, and with the default $ZTRAP="B"
+# the TPNOTACID error takes the process to direct mode. If direct mode looped, it would raise the error
+# again before every prompt, so the prompt would never appear.
+puts "# mumps -run pastlimit^tpna1090"
+send -- "\$gtm_dist/mumps -run pastlimit^tpna1090\r"
+expect {
+	-exact "YDB>" { }
+	timeout {
+		puts "TEST-E-FAIL, no direct mode prompt within 60 seconds, so direct mode is presumably looping"
+		exit
+	}
+}
+puts "PASS: the process reached the direct mode prompt after passing the TPNOTACID retry limit"
+
+# The command typed below writes "TLEVEL=" and the value as separate arguments, so that the echo of the
+# typed command cannot match what is expected
+puts "# write \"TLEVEL=\",\$tlevel,!"
+send -- "write \"TLEVEL=\",\$tlevel,!\r"
+expect -exact "TLEVEL=1"
+puts "PASS: \$TLEVEL is 1 at the prompt, so the process is still inside the transaction"
+expect -exact "YDB>"
+puts "# trollback"
+send -- "trollback\r"
+expect -exact "YDB>"
+puts "# write \"TLEVEL=\",\$tlevel,!"
+send -- "write \"TLEVEL=\",\$tlevel,!\r"
+expect -exact "TLEVEL=0"
+puts "PASS: TROLLBACK at the prompt ended the transaction"
+expect -exact "YDB>"
+puts "# halt"
+send -- "halt\r"
+expect -exact "SHELL"
+
+puts "# exit"
+send -- "exit\r"
+expect eof
+
+exit
