@@ -1,0 +1,20 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1310] RECLOAD for a bad encryption handle index in a binary extract keeps its TEXT detail   #
+#-----------------------------------------------------------------------------------------------#
+
+# Stage 1 : make an encrypted binary extract and give its first data block an out-of-range handle index
+# Command : $gtm_tst/com/dbcreate.csh mumps
+PASS : the encrypted database was created
+# Command : $gtm_exe/mumps -run %XCMD 'for i=1:1:10 set ^a(i)=i'
+# Command : $MUPIP extract -format=binary extr.bin
+PASS : 10 records were extracted
+# Command : perl $gtm_tst/$tst/inref/ydb1310_patch_handle.pl extr.bin 99
+PASS : the handle index of the first data block is now 99
+# Command : $gtm_exe/mumps -run %XCMD 'kill ^a'
+
+# Stage 2 : load the patched extract
+# Command : $MUPIP load -format=binary extr.bin
+PASS : MUPIP LOAD reported RECLOAD followed by TEXT with the expected handle range, and no other message
+PASS : the one core file that bin_load() forks was found
+
+PASS : dbcheck.csh found no integrity errors

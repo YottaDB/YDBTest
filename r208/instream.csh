@@ -58,6 +58,7 @@
 # dbioerr_syscall-ydb1310		[nars]	Test a DBIOERR that names the failing asyncio system call (io_submit) is issued in full
 # v6_upgrade_msgs-ydb1310		[nars]	Test DBFILERDONLY and MUUPGRDNRDY on a partly upgraded V6 database are issued without extra messages
 # repl_source_freeze_combo-ydb1310	[nars]	Test MUPIP REPLICATE -SOURCE rejects -FREEZE together with another control qualifier
+# recload_encr_index-ydb1310		[nars]	Test RECLOAD for a bad encryption handle index in a binary extract keeps its TEXT detail
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -110,6 +111,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_kip_wait-ydb1231"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dbioerr_syscall-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic v6_upgrade_msgs-ydb1310"
 setenv subtest_list_non_replic	"$subtest_list_non_replic repl_source_freeze_combo-ydb1310"
+setenv subtest_list_non_replic	"$subtest_list_non_replic recload_encr_index-ydb1310"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -150,6 +152,11 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list fork_core_in_malloc-ydb1293"
 	# dbioerr_syscall-ydb1310 needs white box case 65, which only a Debug build has
 	setenv subtest_exclude_list "$subtest_exclude_list dbioerr_syscall-ydb1310"
+endif
+
+# recload_encr_index-ydb1310 needs an encrypted database, so run it only when the test runs with encryption
+if ("ENCRYPT" != $test_encryption) then
+	setenv subtest_exclude_list "$subtest_exclude_list recload_encr_index-ydb1310"
 endif
 
 if ("dbg" == "$tst_image") then
