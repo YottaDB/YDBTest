@@ -50,19 +50,20 @@ if ( $?CI_COMMIT_BRANCH ) then
 	endif
 
 	echo " "
-	# 7957113 is YDBTest Gitlab project id
-	curl -s -k "https://gitlab.com/api/v4/projects/7957113/merge_requests?scope=all&state=opened" > ydbtest_open_mrs.json
-	set ydbtest_branches = `jq -r '.[].source_branch' ydbtest_open_mrs.json`
 	echo "# ydb_branch: $ydb_branch"
-	echo "# ydb_branches: $ydbtest_branches"
+	# Ask for the open YDBTest MR from this exact source branch (7957113 is the YDBTest GitLab project id).
+	# Listing all open YDBTest MRs instead returns only the most recent page of them, and matching the branch
+	# name against that list as a pattern also matches longer branch names that contain it.
+	curl -s -k "https://gitlab.com/api/v4/projects/7957113/merge_requests?scope=all&state=opened&source_branch=${ydb_branch}" > ydbtest_open_mrs.json
+	set filter = ".[] | select(.source_branch == \"$ydb_branch\") | .iid"
+	set ydbtest_mr_id = `jq -r "$filter" ydbtest_open_mrs.json | head -1`
 
-	# Check whether the YDB branch and YDBTest have the same name and that name is not master."
-	# If so, it is a YDBTest MR. In that case, test against that MR branch."
-	if ( $ydb_branch != "master" && " $ydbtest_branches " =~ " *$ydb_branch* " ) then
+	# Check whether an open YDBTest MR has the same branch name as the YDB branch and that name is not master.
+	# If so, test against that MR branch.
+	if ( $ydb_branch != "master" && "$ydbtest_mr_id" != "" ) then
 		echo " "
 		echo -n "## Matching YDBTest MR found. Get the MR ID: "
-		set filter = ".[] | select(.source_branch == \"$ydb_branch\") | .iid"
-		set mr_id = `jq -r "$filter" ydbtest_open_mrs.json`
+		set mr_id = $ydbtest_mr_id
 		echo "$mr_id"
 
 		# We are testing against a specific YDBTest MR branch
