@@ -37,13 +37,17 @@ set ydb_branch = `jq -r '.[].source_branch' ydb_mr.json`
 
 if ( $ydb_branch == "" ) then
 	echo "# Branch name matching YDB open branch not found..."
-	echo "# Get a merged branch that matches the name of the current YDBTest MR:"
-	curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=merged" > ydb_mr.json
-	set ydb_branches = `jq -r '.[].source_branch' ydb_mr.json`
-	echo "# Merged branches: $ydb_branches"
-	if ( " $ydb_branches " =~ " *$ydbtest_branch* " ) set mr_id = `jq -r "$filter" ydb_mr.json`
-	if ( $?mr_id ) then
+	echo "# Get the merged MR that matches the name of the current YDBTest MR:"
+	# Ask for merged MRs from this exact source branch. Listing all merged MRs instead returns only the most recent
+	# page of them, and matching the branch name against that list as a pattern also matches longer branch names
+	# that contain it. If more than one merged MR came from this branch, the API lists the newest first.
+	curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=merged&source_branch=${ydbtest_branch}" > ydb_mr.json
+	set merged_mr_id = `jq -r "$filter" ydb_mr.json | head -1`
+	if ( "$merged_mr_id" != "" ) then
+		set mr_id = $merged_mr_id
 		echo "# MR ID for merged branch is $mr_id"
+	else
+		echo "# Branch name matching YDB merged branch not found..."
 	endif
 else
 	set mr_id = `jq -r "$filter" ydb_mr.json`
@@ -76,6 +80,10 @@ else
 endif
 rm ydb_mr.json
 popd >& /dev/null
+echo " "
+echo "### YottaDB commit being tested"
+git -C /Distrib/YottaDB log -1 --format="%H %cd %s" --date=iso
+echo " "
 
 # Sudo tests rely on the source code for ydbinstall to be in a specific location
 ln -s /Distrib/YottaDB /Distrib/YottaDB/V999_R999
