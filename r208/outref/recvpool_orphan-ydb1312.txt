@@ -1,0 +1,116 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1312] MUPIP REPLICATE -SOURCE -SHUTDOWN keeps the ids of a receive pool it does not remove  #
+#-----------------------------------------------------------------------------------------------#
+
+# Stage 1 : make this instance a secondary with a passive source server
+# Command : $MUPIP replicate -instance_create -name=INSTB
+# Command : $MUPIP set -journal=enable,on,before -replication=on -region DEFAULT
+PASS : the instance file was created and replication is on
+
+# Stage 2 : MUPIP RUNDOWN -REGION "*" removes the receive pool that the source server shutdown left behind
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage2.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage2.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the instance file header still has the receive pool ids
+# Command : $MUPIP rundown -region "*"
+PASS : MUPIP RUNDOWN reported MURPOOLRNDWNSUC for the receive pool shared memory
+PASS : the receive pool left behind in this stage no longer exists
+
+# Stage 3 : a restarted receiver server attaches to the receive pool that the source server shutdown left behind
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage3.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage3.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage3b.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage3b.log -buffsize=1048576
+PASS : the receiver server attached to the existing receive pool
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the receive pool left behind in this stage no longer exists
+
+# Stage 4 : receive pool ids that no longer name an existing pool are still reset
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage4.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage4.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $gtm_tst/com/ipcrm -m <receive pool shm id> -s <receive pool sem id>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the instance file header receive pool ids were reset
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage4b.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage4b.log -buffsize=1048576
+PASS : a receiver server started
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+
+# Stage 5a : a receive pool whose semaphore is gone but whose shared memory remains keeps both ids, and MUPIP
+#   JOURNAL -ROLLBACK, as the REPLREQROLLBACK message asks, removes the shared memory
+#   previously both ids were cleared, so a receiver server started with a new receive pool, and nothing removed the
+#   old shared memory
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5a.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5a.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $gtm_tst/com/ipcrm -s <receive pool sem id>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the instance file header still has both receive pool ids
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5ab.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5ab.log -buffsize=1048576
+PASS : the receiver server did not start, with REPLREQROLLBACK
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+# Command : $MUPIP journal -rollback -backward "*"
+PASS : MUPIP JOURNAL -ROLLBACK succeeded
+PASS : MUPIP JOURNAL -ROLLBACK reported MURPOOLRNDWNSUC for the receive pool shared memory
+PASS : the receive pool shared memory left behind no longer exists
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5ac.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5ac.log -buffsize=1048576
+PASS : the passive source server and a receiver server started
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the receive pool left behind in this stage no longer exists
+
+# Stage 5b : a receive pool left as in stage 5a, cleaned up with MUPIP RUNDOWN -REGION "*" instead
+#   previously both ids were cleared, so a receiver server started with a new receive pool, and MUPIP RUNDOWN
+#   -REGION "*" did not remove the old shared memory
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5b.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5b.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $gtm_tst/com/ipcrm -s <receive pool sem id>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the instance file header still has both receive pool ids
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5bb.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5bb.log -buffsize=1048576
+PASS : the receiver server did not start, with REPLREQROLLBACK
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+# Command : $MUPIP rundown -region "*"
+PASS : MUPIP RUNDOWN reported MURPOOLRNDWNSUC for the receive pool shared memory
+PASS : the receive pool shared memory left behind no longer exists
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage5bc.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage5bc.log -buffsize=1048576
+PASS : the passive source server and a receiver server started
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the receive pool left behind in this stage no longer exists
+
+# Stage 6 : a receive pool whose shared memory is gone but whose semaphore remains keeps the semaphore id
+#   previously both ids were cleared, so the receiver server created a new semaphore beside the one left behind,
+#   which then stayed on the system
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage6.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage6.log -buffsize=1048576
+PASS : the receiver server and update process are running and the receive pool exists
+# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>
+# Command : $gtm_tst/com/ipcrm -m <receive pool shm id>
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the instance file header has the receive pool semaphore id and an INVALID shared memory id
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage6b.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -log=rcv_stage6b.log -buffsize=1048576
+PASS : a receiver server started
+PASS : the receive pool uses the semaphore that was left and a new shared memory
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the receive pool left behind in this stage no longer exists
+
+PASS : dbcheck.csh found no integrity errors
