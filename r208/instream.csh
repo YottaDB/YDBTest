@@ -56,6 +56,7 @@
 # rollback_endseqno_zero-ydb1276	[nars]	Test a failed MUPIP JOURNAL -ROLLBACK leaves no journal file with start seqno > end seqno
 # mupip_kip_wait-ydb1231		[nars]	Test MUPIP INTEG, FREEZE and BACKUP do not wait for an abandoned KILL, and do wait for one beyond the 8 recorded pids
 # dbioerr_syscall-ydb1310		[nars]	Test a DBIOERR that names the failing asyncio system call (io_submit) is issued in full
+# v6_upgrade_msgs-ydb1310		[nars]	Test DBFILERDONLY and MUUPGRDNRDY on a partly upgraded V6 database are issued without extra messages
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -106,6 +107,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zbfsize_abbrev-ydb1248"
 setenv subtest_list_non_replic	"$subtest_list_non_replic rollback_endseqno_zero-ydb1276"
 setenv subtest_list_non_replic	"$subtest_list_non_replic mupip_kip_wait-ydb1231"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dbioerr_syscall-ydb1310"
+setenv subtest_list_non_replic	"$subtest_list_non_replic v6_upgrade_msgs-ydb1310"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

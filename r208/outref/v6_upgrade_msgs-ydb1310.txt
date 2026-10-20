@@ -1,0 +1,32 @@
+#-----------------------------------------------------------------------------------------------#
+# [#1310] DBFILERDONLY and MUUPGRDNRDY on a partly upgraded V6 database are issued in full      #
+#-----------------------------------------------------------------------------------------------#
+
+# Stage 1 : create a V6 database with a prior V6 version, then run MUPIP UPGRADE on it with this version
+# Command : $gtm_tst/com/dbcreate.csh mumps 1 255 1024 4096   (with the prior version)
+PASS : the V6 database was created
+# Command : $gtm_exe/mumps -run %XCMD 'for i=1:1:5000 set ^a(i)=$justify(i,200)'   (with the prior version)
+PASS : 5000 nodes were set, so ^a has index blocks
+# Command : $GDE exit   (converts the global directory)
+# Command : $MUPIP upgrade -region DEFAULT
+PASS : MUPIP UPGRADE completed, leaving the index blocks and local bit maps to MUPIP REORG -UPGRADE
+# Command : $MUPIP set -access_method=MM -region DEFAULT
+# Command : $MUPIP set -nostats -region DEFAULT
+# Command : $MUPIP set -read_only -region DEFAULT
+PASS : the database is now MM with the READ_ONLY flag set
+
+# Stage 2 : reading a global goes through an index block that needs its pointers adjusted
+# Command : $gtm_exe/mumps -run %XCMD 'write $data(^a(4000)),!'
+PASS : the process reported DBFILERDONLY followed by TEXT, and no other message
+
+# Stage 3 : DSE reads local bit map 0, which still has a V6 block version
+# Command : $DSE dump -block=0
+PASS : DSE reported DBFILERDONLY followed by TEXT, and no other message
+
+# Stage 4 : interrupt MUPIP REORG -UPGRADE once its index block upgrade has started
+# Command : $MUPIP set -noread_only -region DEFAULT
+PASS : the READ_ONLY flag is cleared
+# Command : gdb -batch -x gdb_reorg.cmd $MUPIP   (gdb sets mu_ctrlc_occurred at the first find_gvt_roots() call)
+PASS : MUPIP REORG -UPGRADE reported MUUPGRDNRDY, then REORGCTRLY and MUNOFINISH, and no other message
+
+PASS : dbcheck.csh found no integrity errors
