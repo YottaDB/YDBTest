@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -27,18 +27,17 @@ gtm9238
 	write "to be printed containing stringpool stats from $view(""spsize"") and then an STPOFLOW error",!
 	write "which will stop the test because it is a fatal error (cannot be caught). Note if run on a",!
 	write "version without GTM-9238, the loop below won't get a STPOFLOW but instead get an indefinite",!
-	write "number of STPCRIT errorsand end only due to the maximum of 20 loops we allow.",!!
+	write "number of STPCRIT errors and end only due to the maximum of 20 loops we allow.",!!
 	zwrite $zstrpllim
 	write !,"Stringpool before the loop ($view(""spsize"")): ",$view("spsize"),!
-	write !,"Iteration",?12,"SPSize",?25,"SPUsed",?37,"SPResv",!
-	write "---------",?12,"------",?25,"------",?37,"------",!
+	write !,"Iteration",?12,"SPSize",?25,"SPUsed",!
+	write "---------",?12,"------",?25,"------",!
 	for i=1:1:maxLoops  do			; Max of maxLoops loops
 	. do chewStringPool
 	. set strPlSize=$view("spsize")
 	. set spsize=$zpiece(strPlSize,",",1)
 	. set spused=$zpiece(strPlSize,",",2)
-	. set spresv=$zpiece(strPlSize,",",3)
-	. write $increment(iter),?12,$fnumber(spsize,","),?25,$fnumber(spused,","),?37,$fnumber(spresv,","),!
+	. write $increment(iter),?12,$fnumber(spsize,","),?25,$fnumber(spused,","),!
 	. set:(spsize>400000) i=maxLoops	; Exit loop if stringpool gets too big.
 	write:(i<maxLoops) !,"Complete",!
 	write:(i>=maxLoops) !,"Loop ended due to limiting factor - no STPOFLOW seen",!
