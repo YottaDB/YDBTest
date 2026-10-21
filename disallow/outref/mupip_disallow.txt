@@ -721,7 +721,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START PASSIVE SECONDARY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -activate ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -deactivate ------------
@@ -740,13 +740,8 @@ YDB>
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
-! output of below command might be different because of the following reason.
-! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
-! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
-! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
-! keep this comment till the software gets fixed
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -deactivate ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -checkhealth ------------
@@ -764,7 +759,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ACTIVATE SECONDARY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -checkhealth ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -statslog="dummylog" ------------
@@ -779,13 +774,8 @@ YDB>
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
-! output of below command might be different because of the following reason.
-! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
-! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
-! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
-! keep this comment till the software gets fixed
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -statslog="dummylog" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -showbacklog ------------
@@ -799,7 +789,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -showbacklog ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -changelog ------------
@@ -811,7 +801,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -changelog ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -stopsourcefilter ------------
@@ -829,19 +819,19 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGELOG LOG LOG_INTERVAL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -losttncomplete ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 !
 !	DISALLOW (statslog AND log)
 !

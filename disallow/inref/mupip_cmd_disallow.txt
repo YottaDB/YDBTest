@@ -487,11 +487,6 @@ p replicate -source -shutdown -changelog
 p replicate -source -shutdown -stopsourcefilter
 u replicate -source -shutdown -losttncomplete
 u replicate -source -shutdown -needrestart
-! output of below command might be different because of the following reason.
-! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
-! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
-! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
-! keep this comment till the software gets fixed
 u replicate -source -shutdown -jnlpool
 p replicate -source -activate -deactivate
 p replicate -source -activate -checkhealth
@@ -509,11 +504,6 @@ p replicate -source -deactivate -changelog
 p replicate -source -deactivate -stopsourcefilter
 u replicate -source -deactivate -losttncomplete
 u replicate -source -deactivate -needrestart
-! output of below command might be different because of the following reason.
-! source has its disallows and -jnlpool has its own set of disallows. It is a design limitation of our parsing scheme
-! that we can have only one disallow active at any point in time. The moment -jnlpool is parsed,
-! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
-! keep this comment till the software gets fixed
 u replicate -source -deactivate -jnlpool
 p replicate -source -checkhealth -statslog="dummylog"
 p replicate -source -checkhealth -showbacklog
