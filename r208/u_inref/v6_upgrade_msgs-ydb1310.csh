@@ -38,6 +38,7 @@ setenv gtm_test_jnl NON_SETJNL
 setenv gtm_test_spanreg 0
 setenv gtm_test_use_V6_DBs 0	# This subtest creates its V6 database itself
 setenv gtm_test_asyncio 0	# MM cannot be enabled on a database with ASYNCIO
+setenv test_encryption NON_ENCRYPT	# MM cannot be used with an encrypted database
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 echo '# Stage 1 : create a V6 database with a prior V6 version, then run MUPIP UPGRADE on it with this version'
