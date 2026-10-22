@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -189,6 +189,6 @@ tlschild
 	set sock="socket"
 	open sock:(CONNECT="localhost:"_$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
-	write /tls("server")
+	write /tls("server",60,"server")
 	for  quit:^stop  hang 0.1
 	quit
