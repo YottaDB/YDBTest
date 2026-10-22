@@ -61,7 +61,11 @@ $pri_shell "cd $PRI_SIDE; $MUPIP replic -source -start -secondary="$HOST":"$port
 # Let source server run up to 175 seconds, during which the logging period will increase such that logs are printed at 5, 10, 20, 40, 80, and then 160 seconds.
 # The value of 175 was chosen to (safely) exceed the following: 5 + 10 + 20 + 40 + 80 + hard tries time (5 * 0.5) = 157.5 seconds.
 $gtm_tst/com/wait_for_log.csh -log src1.log -message "%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[0-9] seconds" -duration 175
-echo "src1.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT' src1.log | cut -c 28-
+# The REPLALERT check runs after each soft tries sleep and compares whole-second time() values. Since the alert period (30)
+# is exactly 6 soft tries periods (5), that check after the 6th sleep finds an elapsed time within a few milliseconds of
+# 30 seconds and so can see 29. The REPLALERT then comes after the 7th sleep, in the same second as the 8th attempt, which
+# is logged before the grep below runs. Stop at the first REPLALERT so the output does not depend on that timing.
+echo "src1.log:"; $tst_awk '/soft connection attempt failed|YDB-W-REPLALERT/ {print} /YDB-W-REPLALERT/ {exit}' src1.log | cut -c 28-
 echo "============Test1 ends=========="
 
 ##Test 2 is to test that the logging period can exponentially increase until exceeding the threshold after changing the connection parameters when the receiver is not started
