@@ -121,7 +121,9 @@ echo "# Check the operator log for the message YDB-W-SPCFCBUFDELAY"
 # another subtest running on the same host would otherwise add a line to the reference output and a second PID
 # to $spcfcpid. v54000/C9D08002390 narrows its syslog greps the same way, by the DSE PID.
 $gtm_tst/com/getoper.csh "$syslog_before" "" syslog.txt "" "SPCFCBUFDELAY.*$PWD/mumps.dat"
-$grep "YDB-W-SPCFCBUFDELAY" syslog.txt | $grep -q "$PWD/mumps.dat"
+# One grep, not a pipeline into "grep -q". "grep -q" exits at its first match, so a first grep still writing a large
+# syslog.txt gets SIGPIPE, which makes $status nonzero.
+$grep -q "YDB-W-SPCFCBUFDELAY.*$PWD/mumps.dat" syslog.txt
 if (0 != $status) then
 	echo "TEST-E-FAIL no SPCFCBUFDELAY message was issued. The delayed process likely never had to wait on"
 	echo "TEST-E-FAIL the cache record the holder owned. Check holder.outx, delayed.out and syslog.txt."
