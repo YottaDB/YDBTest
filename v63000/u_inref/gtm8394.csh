@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -116,7 +116,7 @@ while (1)
 	if (0 == $status) then
 		@ max = $mem
 		@ mem = $mem / 2
-		if (-e rollback_1_${mem}) then
+		if (-e rollback_1_${mem}.outx) then
 			# If a rollback file corresponding to the newly computed memory setting already exists,
 			# it means we already had a rollback run with that setting. And that must have failed as
 			# otherwise we would not have come to a later iteration with twice that memory setting.
@@ -144,7 +144,6 @@ while (1)
 	echo $file.outx >>! rollback_filename_order.txt
 	cp bak/* .
 	$gtm_tst/$tst/u_inref/gtm8394_helper.sh $mid >>& $file.outx
-	rm -f *.gld *.repl *.dat *.mjl*
 	# See test/v62000/u_inref/gtm8047.csh for comment on why we need to also search for ENO12 in addition to YDB-F-MEMORY
 	$grep -Eq "$oompattern|SYSTEM-E-ENO12|Cannot allocate memory|$gccabort" $file.outx
 	if (0 == $status) then
@@ -158,10 +157,18 @@ while (1)
 				@ num++
 			end
 		endif
-		# Check if error happened in forward phase. If so, we are done.
+		# Check if an out-of-memory error happened in forward phase. If so, we are done. This rollback is the first
+		# rollback of the test and the db/jnl state it left behind is kept (not removed) for the later stages.
 		$grep -q "Forward processing started" $file.outx
-		if (0 == $status) then
+		set fwdstat = $status
+		$grep -qE "$oompattern" $file.outx
+		if ((0 == $fwdstat) && (0 == $status)) then
 			break
+		endif
+		$grep -q "JNLSUCCESS" $file.outx
+		if (0 == $status) then
+			# The memory-related error was not fatal and the rollback succeeded, so decrease the upper limit
+			@ end = $mid
 		else
 			# Increase memory limit so we proceed further to forward recovery and get memory error there.
 			@ start = $mid
@@ -184,6 +191,7 @@ while (1)
 			endif
 		endif
 	endif
+	rm -f *.gld *.repl *.dat *.mjl*
 	@ midnew = ($start + $end) / 2
 	if ($mid == $midnew) then
 		echo "Values of start: $start and end: $end are (almost) the same"
@@ -202,23 +210,27 @@ while (1)
 	endif
 end
 
-echo ">>> Induce out-of-memory error in first rollback by setting vmemoryuse to GTM_TEST_DEBUGINFO [$mid]"
-cp bak/* .  # Restore db/jnl from bak subdirectory before first YDB-F-MEMORY rollback
-(source $gtm_tst/com/limit_vmemoryuse.csh $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=50001 "*" >& rollback1.out)
+echo ">>> Use the last Phase 2 rollback, which got an out-of-memory error in the forward phase, as the first rollback. vmemoryuse : GTM_TEST_DEBUGINFO [$mid]"
+# The last rollback of the Phase 2 loop (run on a fresh copy of the bak subdirectory) got an out-of-memory error in the
+# forward phase and is the first rollback. Do not rerun the rollback at the vmemoryuse limit Phase 2 found, since the
+# address space a rollback uses varies from one run to the next, so a rerun at a limit close to the boundary can succeed
+# and leave no interrupted rollback for the later stages to work on.
+cp $file.outx rollback1.out
 
 $gtm_tst/com/backup_dbjnl.csh bak1 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont use "mv". Want next rollback to use this db/jnl
 
-echo ">>> Verify out-of-memory error in first rollback (logfile = rollback1.out)"
+# Phase 2 stops only when this output has an out-of-memory error, so this check cannot fail. It masks those
+# expected lines in rollback1.out, so the test framework does not report them.
 $gtm_tst/com/check_error_exist.csh rollback1.out "$oompattern" >>& check_error_rollback1.outx
 if ($status) then
 	echo "TEST-E-VERIFY : Out-of-memory error verification failed. See rollback1.out and check_error_rollback1.outx"
 endif
-# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION", "YDB-E-SYSCALL", "SYSTEM-E-ENO11" messages
-# and/or "KILLBYSIGSINFO1, MUPIP process ... has been killed by a signal 6" along with the "YDB-F-MEMORY message.
+# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION", "YDB-E-SYSCALL", "SYSTEM-E-ENO11", "YDB-E-RELINKCTLERR"
+# messages and/or "KILLBYSIGSINFO1, MUPIP process ... has been killed by a signal 6" along with the "YDB-F-MEMORY message.
 # If so filter those out as well to avoid the test framework from catching them.
-set errmsgs = ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11" "YDB-E-SYSCALL" "killed by a signal 6 ")
+set errmsgs = ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11" "YDB-E-SYSCALL" "YDB-E-RELINKCTLERR" "killed by a signal 6 ")
 
-foreach message ($errmsgs)
+foreach message ($errmsgs:q)
 	$gtm_tst/com/check_error_exist.csh rollback1.out "$message" >>& check_error_rollback1.outx
 end
 echo ">> Move core file (from FATAL YDB-F-MEMORY) to avoid test framework from treating this as a test failure"
@@ -237,12 +249,35 @@ $MUPIP set -journal="enable,on,before" -reg BREG
 $MUPIP set -journal="enable,on,before" -reg DEFAULT
 
 echo ">>> Induce out-of-memory error in second rollback by setting vmemoryuse to same value"
-(source $gtm_tst/com/limit_vmemoryuse.csh $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=1 "*" >& rollback2.out)
+# For the same reason as the first rollback, the second rollback can succeed at the vmemoryuse limit Phase 2 found. If it
+# does not get an out-of-memory error, retry it on the db/jnl state the first rollback left (in the bak1 subdirectory) at
+# limits 16Mb lower each time, down to the 32Mb that Phase 1 starts with. The second rollback works on the state that the
+# interrupted first rollback left, and can need less memory than a rollback that starts from the bak subdirectory.
+@ mem2 = $mid
+@ try2 = 1
+while (1)
+	(source $gtm_tst/com/limit_vmemoryuse.csh $mem2; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=1 "*" >& rollback2.out)
+	$grep -qE "$oompattern" rollback2.out
+	if (0 == $status) then
+		break
+	endif
+	@ mem2 = $mem2 - 16384
+	if ($mem2 < 32768) then
+		break
+	endif
+	mv rollback2.out rollback2_try${try2}.outx
+	@ try2++
+	rm -f *.gld *.repl *.dat *.mjl*
+	cp bak1/* .
+end
 $gtm_tst/com/backup_dbjnl.csh bak2 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont use "mv". Want next rollback to use this db/jnl
 
 echo ">>> Verify out-of-memory error in second rollback (logfile = rollback2.out)"
 $gtm_tst/com/check_error_exist.csh rollback2.out "$oompattern" >>& check_error_rollback2.outx
-foreach message ($errmsgs)
+if ($status) then
+	echo "TEST-E-VERIFY : Out-of-memory error verification failed. See rollback2.out and check_error_rollback2.outx"
+endif
+foreach message ($errmsgs:q)
 	$gtm_tst/com/check_error_exist.csh rollback2.out "$message" >>& check_error_rollback2.outx
 end
 echo ">> Move core file (from FATAL YDB-F-MEMORY) to avoid test framework from treating this as a test failure"

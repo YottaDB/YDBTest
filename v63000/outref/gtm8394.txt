@@ -19,8 +19,7 @@ YDB>
 >>> Shut down passive source server
 >>> Save db/jnl to bak subdirectory
 >>> Find one value of <limit vmemoryuse> that will cause a YDB-F-MEMORY error in the forward phase of rollback
->>> Induce out-of-memory error in first rollback by setting vmemoryuse to ##FILTERED##GTM_TEST_DEBUGINFO.*
->>> Verify out-of-memory error in first rollback (logfile = rollback1.out)
+>>> Use the last Phase 2 rollback, which got an out-of-memory error in the forward phase, as the first rollback. vmemoryuse : ##FILTERED##GTM_TEST_DEBUGINFO.*
 >> Move core file (from FATAL YDB-F-MEMORY) to avoid test framework from treating this as a test failure
 >>> Attempt journal switch in each region individually. Should be disallowed on ALL regions
 %YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
