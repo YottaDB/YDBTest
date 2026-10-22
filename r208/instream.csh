@@ -65,6 +65,7 @@
 # stapi_kill_in_malloc-ydb1297		[nars]	Test a SimpleThreadAPI process sent a fatal signal while a non-YottaDB thread is inside malloc() dies with a core instead of hanging
 # zysqlnull_canonic_name-ydb1305	[nars]	Test $QLENGTH, $QSUBSCRIPT and 2-argument $NAME accept a name with a $ZYSQLNULL subscript
 # recvpool_orphan-ydb1312		[nars]	Test MUPIP REPLICATE -SOURCE -SHUTDOWN keeps the ids of a receive pool it does not remove
+# thread_create_fail_stop-ydb1309	[nars]	Test MUPIP JOURNAL -RECOVER stopped while it cannot create a worker thread terminates with FORCEDHALT, and its other worker threads get no errors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -124,6 +125,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic indir_fast_lvn-ydb1278"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stapi_kill_in_malloc-ydb1297"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zysqlnull_canonic_name-ydb1305"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recvpool_orphan-ydb1312"
+setenv subtest_list_non_replic	"$subtest_list_non_replic thread_create_fail_stop-ydb1309"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

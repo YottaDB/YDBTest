@@ -1,0 +1,51 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1309] MUPIP JOURNAL -RECOVER stopped while it cannot create a worker thread terminates with   #
+# FORCEDHALT, and its other worker threads get no errors                                             #
+#----------------------------------------------------------------------------------------------------#
+
+# MUPIP JOURNAL -RECOVER and -ROLLBACK run one worker thread per region. If MUPIP cannot create one of
+# them, it issues SYSCALL for pthread_create() while the worker threads it did create are still
+# running. A MUPIP STOP that arrives at that point must wait until those threads are done.
+#
+# This subtest LD_PRELOADs ydb1309_threadfail, which makes the third worker thread fail to be created
+# after it sends MUPIP SIGTERM, and slows the reads of the worker threads so that they are still
+# reading their journal files at that point.
+#
+# Without the fix, MUPIP runs its exit handling in the middle of the SYSCALL message, so that message
+# lacks its second line (ENO11) and FORCEDHALT follows on the same line. The exit handling also closes
+# the journal files the worker threads read, so depending on timing they issue JNLREAD with ENO9
+# (Bad file descriptor) in a Release build, or fail an assert in a Debug build.
+
+# Journaling is set up explicitly below, so do not let dbcreate.csh enable it at random
+# No asynchronous IO, whose worker thread would count as a thread of the MUPIP process
+# BEFORE_IMAGE journaling, which backward recovery needs, needs the BG access method
+# Create a database with regions AREG, BREG and DEFAULT
+# Command : $MUPIP set -journal="enable,on,before" -region "*"
+# Command : $gtm_dist/mumps -run %XCMD 'for i=1:1:100000 set ^a(i)=$j(i,100),^b(i)=$j(i,100),^x(i)=$j(i,100)'
+# Command : compile and link ydb1309_threadfail.c into libydb1309_threadfail
+PASS : libydb1309_threadfail was built
+
+# Use one worker thread per region
+# Stage 1 : run MUPIP JOURNAL -RECOVER -BACKWARD with libydb1309_threadfail preloaded
+# Command : env LD_PRELOAD=./libydb1309_threadfail.so $MUPIP journal -recover -backward -since=<time before the updates> "*"
+#   expect the third worker thread to fail to be created after SIGTERM was sent
+PASS : the third worker thread failed to be created after SIGTERM was sent
+#   expect MUPIP to exit with status 241, the status of %YDB-F-FORCEDHALT
+PASS : MUPIP exited with status 241
+#   expect exactly these messages, each at the start of a line and in this order : SYSCALL for
+#   pthread_create() followed by its ENO11 (Resource temporarily unavailable), FORCEDHALT and MUNOACTION
+PASS : SYSCALL, ENO11, FORCEDHALT and MUNOACTION, each at the start of a line
+----------
+Error YDB-F-FORCEDHALT seen in recover1.out as expected:
+%YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
+----------
+----------
+Error YDB-E-MUNOACTION seen in recover1.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Stage 2 : run the same backward recovery again with no preload, which completes the interrupted one
+# Command : $MUPIP journal -recover -backward -since=<time before the updates> "*"
+PASS : %YDB-S-JNLSUCCESS
+
+# Done
