@@ -67,6 +67,7 @@
 # recvpool_orphan-ydb1312		[nars]	Test MUPIP REPLICATE -SOURCE -SHUTDOWN keeps the ids of a receive pool it does not remove
 # thread_create_fail_stop-ydb1309	[nars]	Test MUPIP JOURNAL -RECOVER stopped while it cannot create a worker thread terminates with FORCEDHALT, and its other worker threads get no errors
 # tls_handshake_timeout-ydb1313		[nars]	Test WRITE /TLS("client",timeout) and WRITE /TLS("server",timeout) time out when the peer sends no TLS handshake messages
+# stack_nogrow_fatal-ydb1314		[nars]	Test a SIGSEGV is reported when the stack cannot grow
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -128,6 +129,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zysqlnull_canonic_name-
 setenv subtest_list_non_replic	"$subtest_list_non_replic recvpool_orphan-ydb1312"
 setenv subtest_list_non_replic	"$subtest_list_non_replic thread_create_fail_stop-ydb1309"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tls_handshake_timeout-ydb1313"
+setenv subtest_list_non_replic	"$subtest_list_non_replic stack_nogrow_fatal-ydb1314"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

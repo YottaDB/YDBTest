@@ -1,0 +1,31 @@
+#-------------------------------------------------------------#
+# [YDB#1314] A SIGSEGV is reported when the stack cannot grow #
+#-------------------------------------------------------------#
+
+# YottaDB installs its signal handlers with SA_ONSTACK, but used to install an alternate signal stack
+# only when the process already had one that was smaller than 256 KB, such as the 32 KB one that the
+# Go runtime sets up. In a process with no alternate signal stack, a SIGSEGV because the stack cannot
+# grow then had no stack for the YottaDB handler to run on, so the kernel killed the process with the
+# default action of SIGSEGV, and the process reported nothing. YottaDB now installs its own alternate
+# signal stack when there is none.
+#
+# ydb1314_nogrow.c initializes YottaDB with ydb_set_s(), limits its stack to 8 MiB, then recurses until
+# the stack cannot grow. It installs no alternate signal stack of its own.
+
+# Stage 1 : build ydb1314_nogrow.c
+# Before the fix, this stage passed, with the output below
+PASS : ydb1314_nogrow was built
+
+# Stage 2 : run ydb1314_nogrow
+#           expect the YottaDB SIGSEGV handler to run and report KILLBYSIGSINFO1 and SIGMAPERR, instead
+#           of the kernel killing the process with the default action of SIGSEGV (exit status 139)
+# Command : ./ydb1314_nogrow
+# Before the fix, the process was killed by the default action of SIGSEGV with no message, so the two
+# lines below were WRONG lines, one for its exit status, followed by its output, and one for the
+# missing messages
+PASS : the process was not killed by the default action of SIGSEGV
+PASS : the process reported %YDB-F-KILLBYSIGSINFO1 and %YDB-F-SIGMAPERR
+
+# Stage 3 : keep any core and YDB_FATAL_ERROR file from the process out of the check for unexpected ones
+
+# Done
