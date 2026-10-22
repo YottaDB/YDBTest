@@ -1,0 +1,50 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1313] WRITE /TLS("client",timeout) and WRITE /TLS("server",timeout) time out when the peer    #
+# sends no TLS handshake messages                                                                    #
+#----------------------------------------------------------------------------------------------------#
+
+# On a socket that is not nonblocking (the default), the TLS handshake waits in read() for the peer.
+# Without the fix, WRITE /TLS("client",1) to a peer that accepts the TCP connection but never answers
+# the handshake, and WRITE /TLS("server",1) with a TCP client that never starts the handshake, wait
+# until the peer does something, instead of returning after 1 second with $TEST set to 0. With the fix,
+# the socket is nonblocking during a handshake with a timeout, and blocking again afterwards.
+#
+# The silent peer of stages 1 and 2 gives up after 15 seconds, so that without the fix the handshake
+# returns after about 15 seconds instead of waiting forever.
+
+# This subtest needs TLS, so set it up if the test system did not
+# Create a database, which also creates the TLS configuration file gtmcrypt.cfg
+
+# Stage 1 : WRITE /TLS("client",1) to a peer that accepts the TCP connection and never answers the handshake
+# Command : $gtm_dist/mumps -run clienttimeout^ydb1313
+# Before the fix, WRITE /TLS returned only when the peer gave up, after about 15 seconds, and the second
+# line below was a WRONG line that reported the time the client handshake took
+PASS : the socket is blocking before WRITE /TLS
+PASS : the client handshake timed out with $TEST=0 after about 1 second
+PASS : the socket is blocking after WRITE /TLS timed out
+
+# Stage 2 : WRITE /TLS("server",1) with a TCP client that never starts the handshake
+# Command : $gtm_dist/mumps -run servertimeout^ydb1313
+# Before the fix, WRITE /TLS returned only when the peer gave up, after about 15 seconds, and the second
+# line below was a WRONG line that reported the time the server handshake took
+PASS : the socket is blocking before WRITE /TLS
+PASS : the server handshake timed out with $TEST=0 after about 1 second
+PASS : the socket is blocking after WRITE /TLS timed out
+
+# Stage 3 : a TLS server and client with WRITE /TLS("server",10) and WRITE /TLS("client",10), then a line each way
+# Command : $gtm_dist/mumps -run %XCMD 'do handshake^ydb1313(10)'
+# Before the fix, this stage passed, with the output below
+PASS : the server handshake succeeded
+PASS : the socket is blocking after the server handshake
+PASS : the server read [ping from client]
+PASS : the client handshake succeeded, its socket is blocking, and the client read [pong from server]
+
+# Stage 4 : a TLS server and client with WRITE /TLS("server") and WRITE /TLS("client") without a timeout
+# Command : $gtm_dist/mumps -run %XCMD 'do handshake^ydb1313("")'
+# Before the fix, this stage passed, with the output below
+PASS : the server handshake succeeded
+PASS : the socket is blocking after the server handshake
+PASS : the server read [ping from client]
+PASS : the client handshake succeeded, its socket is blocking, and the client read [pong from server]
+
+# Check that no JOBbed peer reported an error
