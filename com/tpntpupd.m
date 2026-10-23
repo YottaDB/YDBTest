@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2003, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -126,7 +126,11 @@ tp	;
 	; since we do a $r(nreg) below we will touch some but not all regions
 	set count=$r(tpopers)
 	write space,"tstart ():serial",!
+	; tptries counts the tries of the outermost transaction. It is not restored on a restart, and unlike $trestart
+	; it is not capped at 4, so xlock can use it.
+	set:'$tlevel tptries=0
 	tstart ():serial
+	set:1=$tlevel tptries=tptries+1
 	do:tpnomultigld&($tlevel=1)&$data(secgldno)
 	. set str="set tpgld="""_secgldnm_$random(secgldno)_".gld"""
 	. write space,str,!
@@ -191,7 +195,10 @@ xget	;
 	quit
 
 xlock	;
-	set str="lock +^"_global_"("_index_")  lock -^"_global_"("_index_")"
+	; An untimed LOCK inside TP releases crit in the final retry, so the transaction can restart indefinitely and
+	; would fail with a TPNOTACID error once it passes the ydb_tpnotacidtries limit (16 by default). After 10
+	; restarts use a zero timeout, which keeps crit, so the next final retry commits.
+	set str="lock +^"_global_"("_index_")"_$select($tlevel&(11<tptries):":0",1:"")_"  lock -^"_global_"("_index_")"
 	quit
 xincr	;
 	set str="set x=$increment(^"_global_"("_index_"))"
