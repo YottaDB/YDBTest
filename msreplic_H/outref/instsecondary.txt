@@ -236,6 +236,7 @@ YDB>
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 ##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 source servers still attached to jnlpool
+##FILTERED##... ... .. ..:..:.. 20.. : Finished source server SHUTDOWN operation
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -start $filter_arg -secondary=__RCV_HOST__:__RCV_PORTNO__ -log=$SRC_LOG_FILE -buff=$tst_buffsize $instsecvar'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -stopsourcefilter $instsecvar'==
@@ -291,6 +292,7 @@ YDB>
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 ##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 source servers still attached to jnlpool
+##FILTERED##... ... .. ..:..:.. 20.. : Finished source server SHUTDOWN operation
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -start $filter_arg -secondary=__RCV_HOST__:__RCV_PORTNO__ -log=$SRC_LOG_FILE -buff=$tst_buffsize $instsecvar'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -stopsourcefilter $instsecvar'==

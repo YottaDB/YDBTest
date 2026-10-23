@@ -60,9 +60,10 @@ Database fill program ends
 ##              |--> INST3 (C)
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -receiv -shutdown -timeout=0 >& INST2_shut.tmp; cat INST2_shut.tmp'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on receiver server pid [##PID##]
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished SHUTDOWN operation on receiver server pid [##PID##]
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]

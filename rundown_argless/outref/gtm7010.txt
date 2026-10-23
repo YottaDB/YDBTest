@@ -31,19 +31,22 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished source server SHUTDOWN operation
 
 ===> Now, shutdown the receiver server and passive source server as well to avoid dbcheck errors
 
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on receiver server pid [##PID##]
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished SHUTDOWN operation on receiver server pid [##PID##]
 
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE1]
 ##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished source server SHUTDOWN operation
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

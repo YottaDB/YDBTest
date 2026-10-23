@@ -136,6 +136,17 @@ BEGIN {
 	#Wed Feb 15 13:26:20 2006 : Initiating shut down
 	str = "Initiating shut down"
 	gsub(replicationtimeexpr str, replicationtimerepl str)
+	#Tue Oct 13 14:40:32 2026 : Initiating SHUTDOWN operation on receiver server pid [37779]
+	strexpr = "Initiating SHUTDOWN operation on receiver server pid .[0-9][0-9]*."
+	strrepl = "Initiating SHUTDOWN operation on receiver server pid [##PID##]"
+	gsub(replicationtimeexpr strexpr, replicationtimerepl strrepl)
+	#Tue Oct 13 14:40:33 2026 : Finished SHUTDOWN operation on receiver server pid [37779]
+	strexpr = "Finished SHUTDOWN operation on receiver server pid .[0-9][0-9]*."
+	strrepl = "Finished SHUTDOWN operation on receiver server pid [##PID##]"
+	gsub(replicationtimeexpr strexpr, replicationtimerepl strrepl)
+	#Tue Oct 13 14:41:29 2026 : Finished source server SHUTDOWN operation
+	str = "Finished source server SHUTDOWN operation"
+	gsub(replicationtimeexpr str, replicationtimerepl str)
 	#Wed Jan 18 19:44:02 2006 : Initiating NEEDRESTART operation on source server pid [16772] for secondary instance [INSTANCE1]
 	strexpr = "Initiating NEEDRESTART operation on source server pid .[0-9][0-9]*. "
 	strrepl = "Initiating NEEDRESTART operation on source server pid [##PID##] "

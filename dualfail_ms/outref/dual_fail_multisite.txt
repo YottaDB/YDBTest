@@ -29,9 +29,10 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'STOP INST3'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -receiv -shutdown -timeout=0 >&! shutdown12.out ; cat shutdown12.out'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on receiver server pid [##PID##]
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished SHUTDOWN operation on receiver server pid [##PID##]
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]
@@ -55,9 +56,10 @@ Simulating crash on Instance INSTANCE3 in ##FILTERED##_REMOTE_TEST_PATH_
 Instance INSTANCE3 crashed!
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST2 $MUPIP replic -receiv -shutdown -timeout=0 >&! shutdown21.out ; cat shutdown21.out'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on receiver server pid [##PID##]
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished SHUTDOWN operation on receiver server pid [##PID##]
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST1 INST2 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]

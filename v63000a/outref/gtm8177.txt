@@ -37,9 +37,10 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 # Stop Receiver
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiv -shutdown -timeout=0'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating shut down
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on receiver server pid [##PID##]
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Receive pool semaphore removed
+##FILTERED##... ... .. ..:..:.. 20.. : Finished SHUTDOWN operation on receiver server pid [##PID##]
 # Restart Receiver
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
