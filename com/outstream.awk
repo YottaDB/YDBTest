@@ -121,6 +121,10 @@ BEGIN {
 	#Thu Jan  5 16:25:36 2006 : Not deleting jnlpool ipcs. 2 processes still attached to jnlpool
 	str = "Not deleting jnlpool ipcs."
 	gsub(replicationtimeexpr str, replicationtimerepl str)
+	#Not deleting jnlpool ipcs. 1 processes still attached to jnlpool:  last pid 88594
+	strexpr = "processes still attached to jnlpool:  last pid [0-9][0-9]*"
+	strrepl = "processes still attached to jnlpool:  last pid ##PID##"
+	gsub(strexpr, strrepl)
 	#Thu Dec 15 18:46:54 2005 : Initiating STATSLOG operation on source server pid [5162] for secondary instance name [INST2]
 	strexpr = "Initiating STATSLOG operation on source server pid .[0-9][0-9]*. "
 	strrepl = "Initiating STATSLOG operation on source server pid [##PID##] "
