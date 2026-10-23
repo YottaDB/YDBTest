@@ -34,8 +34,15 @@ gtm10098 ;
 	; HANG, LOCK and ZSYSTEM are each reported by a different module of the source, and each is on its own line
 	; here so that every one of them has a distinct $ZPOSITION.
 trans(mode,cap)
-	new cycle
+	new cycle,giveup,passes
+	; The highest supported TPNOTACID retry limit is 100, so a transaction that runs 1000 passes means that the limit
+	; is not applied. Give up then, instead of restarting forever and logging a TPNOTACID message on every pass.
+	; The passes are counted in a local variable, which TSTART () does not restore on a restart, because the
+	; $TRESTART that M code sees stays at 4 once the restarts come from the TPNOTACID operation.
+	set giveup=1000,passes=0
 	tstart ():serial
+	set passes=passes+1
+	if passes>giveup  trollback  write "WRONG : the transaction ran ",giveup," passes without a TPNOTACID error",!  quit
 	set cycle=("cycle"=mode)
 	hang .001
 	lock:cycle ^gtm10098lock:.002
