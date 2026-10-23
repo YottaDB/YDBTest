@@ -37,7 +37,7 @@ foreach arg ($testlist)
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
 	echo "# Checking the syslog"
-	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper1_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper1_$arg.txt |& sed 's/.*%YDB-W-TPNOTACID/%YDB-W-TPNOTACID/' |& sed 's/ [0-9]* RESTARTs have occurred.*//'
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""
@@ -63,7 +63,7 @@ foreach arg ($testlist)
 	endif
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
-	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper2_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper2_$arg.txt |& sed 's/.*%YDB-W-TPNOTACID/%YDB-W-TPNOTACID/' |& sed 's/ [0-9]* RESTARTs have occurred.*//'
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""

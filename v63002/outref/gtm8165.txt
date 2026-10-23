@@ -3,7 +3,7 @@
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
-%YDB-I-TPNOTACID, /WAIT at writeslashwait+7^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /WAIT at writeslashwait+7^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
-%YDB-I-TPNOTACID, /PASS at writeslashpass+14^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /PASS at writeslashpass+14^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
@@ -19,7 +19,8 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
-%YDB-I-TPNOTACID, /ACCEPT at writeslashaccept+12^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /ACCEPT at writeslashaccept+12^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
+%YDB-W-TPNOTACID, OPEN at writeslashaccept+12^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
-%YDB-I-TPNOTACID, /TLS at writeslashtls+12^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /TLS at writeslashtls+12^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
@@ -35,7 +36,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT is NOT owned by our pid
 # Checking the syslog
-%YDB-I-TPNOTACID, LOCK at locktimeout+8^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, LOCK at locktimeout+8^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
@@ -43,37 +44,38 @@ Post Transaction DB Crit of DEFAULT is NOT owned by our pid
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
-%YDB-I-TPNOTACID, OPEN at opentimeout+5^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, OPEN at opentimeout+5^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (writeslashwait), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, /WAIT at writeslashwait+8^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /WAIT at writeslashwait+8^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (writeslashpass), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, /PASS at writeslashpass+15^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /PASS at writeslashpass+15^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (writeslashaccept), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, /ACCEPT at writeslashaccept+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /ACCEPT at writeslashaccept+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
+%YDB-W-TPNOTACID, OPEN at writeslashaccept+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (writeslashtls), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, /TLS at writeslashtls+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, /TLS at writeslashtls+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (locktimeout), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, LOCK at locktimeout+9^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, LOCK at locktimeout+9^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 
 # Testing command without a specified timeout (opentimeout), Expect a TPNOTACID message in the syslog still
-%YDB-I-TPNOTACID, OPEN at opentimeout+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+%YDB-W-TPNOTACID, OPEN at opentimeout+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed 123 milliseconds;
 
 ---------------------------------------------------------------------------------
 

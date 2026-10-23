@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,5 +29,5 @@ sleep 1
 echo '# Testing fractional timeout for $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)'
 $ydb_dist/mumps -run tpnotacid^gtm5250
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
-$grep "TPNOTACID.*gtm5250" getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+$grep "TPNOTACID.*gtm5250" getoper.txt |& sed 's/.*%YDB-W-TPNOTACID/%YDB-W-TPNOTACID/' |& sed 's/ [0-9]* RESTARTs have occurred.*//'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
