@@ -361,7 +361,7 @@ No errors detected by integ.
 *** TSTINTEGF.CSH ***
 
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
--rw-rw-rw- mumps.dat
+-rw-rw-r-- mumps.dat
 
 First with no journal
 
@@ -551,7 +551,7 @@ set ^a=1,^b=2,^c=3
 
 YDB>
 ***** mumps.dat R/W *****
--rw-rw-rw- mumps.dat
+-rw-rw-r-- mumps.dat
 mupip integ -region DEFAULT
 
 
@@ -754,7 +754,7 @@ set ^a=1,^b=2,^c=3
 
 YDB>
 ***** mumps.dat read_write *****
--rw-rw-rw- mumps.dat
+-rw-rw-r-- mumps.dat
 mupip integ -tn_reset mumps.dat
 
 No errors detected by integ.
@@ -1343,7 +1343,7 @@ YDB>
 No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ***** mumps.dat R/W mumps.mjl R/W *****
--rw-rw-rw- mumps.dat
+-rw-rw-r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip restore mumps.dat bak.dat
 %YDB-I-RESTORESUCCESS, Restore completed successfully
