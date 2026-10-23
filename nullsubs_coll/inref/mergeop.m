@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 mergeop;;
 ;	Test for merge among globals & locals with varying null collation order among them. All cases should be successful
 globalglobal;
@@ -26,34 +39,34 @@ globalglobal;
 ;	merge two globals of same std. null collation
 	write "MERGING ^aglobalvar(1)=^c(3,"") Result in std.nullcollation",!
 	MERGE ^aglobalvar(1)=^c(3,"")
-	ZWRITE ^aglobalvar
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "naked indicator checked, value written should be 11",!
 	zwrite ^(1,"")
+	ZWRITE ^aglobalvar
 ;
 ;	merge nostd. null collating globals with std. null collating globals
 	write "MERGING ^d(4)=^aglobalvar(1) Result in nostd.nullcollation",!
 	MERGE ^d(4)=^aglobalvar(1)
-	ZWRITE ^d
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "naked indicator checked, value written should be 11",!
 	zwrite ^(4,"")
+	ZWRITE ^d
 ;
 ;	merge std. null collating globals with nostd. null collating globals
 	write "MERGING ^c(3,"")=^bvariableglobally(2) Result in std.nullcollation",!
 	MERGE ^c(3,"")=^bvariableglobally(2)
-	ZWR ^c
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "naked indicator checked, value written should be 700",!
 	zwrite ^("",3)
+	ZWR ^c
 ;
 ;	merge two globals of same nostd. null collation
 	write "MERGE ^bvariableglobally(2)=^d(4) Result in nostd.nullcollation",!
 	MERGE ^bvariableglobally(2)=^d(4)
-	ZWRITE ^bvariableglobally
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "naked indicator checked, value written should be 111",!
 	zwrite ^(2,"",1)
+	ZWRITE ^bvariableglobally
 ;
 globallocal;
 	SET lcl("")="null"
@@ -106,7 +119,7 @@ localglobal;
 	WRITE "MERGE lcl(5,"""")=^aglobalvar(1) Result in std.nullcollation",!
 	MERGE lcl(5,"")=^aglobalvar(1)
 	ZWRITE lcl
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "check naked indicator reference here, value written should be 11",!
 	zwrite ^(1,"")
 ;
@@ -114,7 +127,7 @@ localglobal;
 	WRITE "MERGE lcl(5,"""")=^bvariableglobally(2) Result in std.nullcollation",!
 	MERGE lcl(5,"")=^bvariableglobally(2)
 	ZWRITE lcl
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "check naked indicator reference here, value written should be 111",!
 	zwrite ^(2,"",1)
 ;
@@ -131,7 +144,7 @@ localglobal;
 	WRITE "MERGE lcl(5,"""")=^c(3,"") Result in nostd.nullcollation",!
 	MERGE lcl(5,"")=^c(3,"")
 	ZWRITE lcl
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "check naked indicator reference here, value written should be 700",!
 	zwrite ^("",3)
 ;
@@ -139,7 +152,7 @@ localglobal;
 	WRITE "MERGE lcl(5,"""")=^d(4) Result in nostd.nullcollation",!
 	MERGE lcl(5,"")=^d(4)
 	ZWRITE lcl
-	write "naked reference now is",$reference,!
+	write "naked reference now is ",$reference,!
 	write "check naked indicator reference here, value written should be 11",!
 	zwrite ^(4,"")
 	quit

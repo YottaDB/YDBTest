@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -18,11 +21,11 @@ per2953a	;
 	write "^a(1)=",^a(1),!  ; should display "default gld" but would display "extended gld" before PER-2953 was fixed
 per2953b	;
 	write "# A reference to extended global followed by a zwrite",!
-	write "# A naked reference following that still should point to extended global reference",!
+	write "# A naked reference following that should point to the last node the zwrite displayed",!
 	set ^a(2)="default gld"
 	set ^|"a.gld"|a(2)="extended gld"
 	zwrite ^a               ; should display ^a(1)="default gld" ; ^a(2)="default gld"
-	write "^a(2)=",^(2),!   ; should display "extended gld"
+	write "^a(2)=",^(2),!   ; should display "default gld"
 per2953c	;
 	write "# make sure that even if savtarg and rectarg opcodes are generated in a boolean expression,",!
 	write "# the naked indicator is properly maintained and that gd_map/gd_map_top has nothing to do with this maintenance.",!

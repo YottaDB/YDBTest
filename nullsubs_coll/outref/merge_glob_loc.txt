@@ -45,26 +45,29 @@ YDB>
 =====================================================
 MERGE global=global
 MERGING ^aglobalvar(1)=^c(3,") Result in std.nullcollation
+naked reference now is ^aglobalvar(1)
+naked indicator checked, value written should be 11
+^aglobalvar(1,"")=11
 ^aglobalvar("")=10
 ^aglobalvar(1)=33
 ^aglobalvar(1,"")=11
 ^aglobalvar(1,"",1)=111
 ^aglobalvar(1,1)=333
 ^aglobalvar(1,3)=700
-naked reference now is^aglobalvar(1)
-naked indicator checked, value written should be 11
-^aglobalvar(1,"")=11
 MERGING ^d(4)=^aglobalvar(1) Result in nostd.nullcollation
+naked reference now is ^d(4)
+naked indicator checked, value written should be 11
+^d(4,"")=11
 ^d("")=40
 ^d(4)=33
 ^d(4,"")=11
 ^d(4,"",1)=111
 ^d(4,1)=333
 ^d(4,3)=700
-naked reference now is^d(4)
-naked indicator checked, value written should be 11
-^d(4,"")=11
 MERGING ^c(3,")=^bvariableglobally(2) Result in std.nullcollation
+naked reference now is ^c(3,"")
+naked indicator checked, value written should be 700
+^c(3,"",3)=700
 ^c("")=30
 ^c(3)=3
 ^c(3,"")=2
@@ -72,19 +75,16 @@ MERGING ^c(3,")=^bvariableglobally(2) Result in std.nullcollation
 ^c(3,"","",1)=222
 ^c(3,"",1)=333
 ^c(3,"",3)=700
-naked reference now is^c(3,"")
-naked indicator checked, value written should be 700
-^c(3,"",3)=700
 MERGE ^bvariableglobally(2)=^d(4) Result in nostd.nullcollation
+naked reference now is ^bvariableglobally(2)
+naked indicator checked, value written should be 111
+^bvariableglobally(2,"",1)=111
 ^bvariableglobally(2)=33
 ^bvariableglobally(2,1)=333
 ^bvariableglobally(2,3)=700
 ^bvariableglobally(2,"")=11
 ^bvariableglobally(2,"",1)=111
 ^bvariableglobally("")=20
-naked reference now is^bvariableglobally(2)
-naked indicator checked, value written should be 111
-^bvariableglobally(2,"",1)=111
 lcl("")="null"
 lcl(5)="five"
 lcl(5,"")="five_null"
@@ -146,7 +146,7 @@ lcl(5,"","",1)=111
 lcl(5,"",1)="five_null_one"
 lcl(5,"",3)=700
 lcl(5,"","x")="five_null_x"
-naked reference now is^aglobalvar(1)
+naked reference now is ^aglobalvar(1)
 check naked indicator reference here, value written should be 11
 ^aglobalvar(1,"")=11
 MERGE lcl(5,"")=^bvariableglobally(2) Result in std.nullcollation
@@ -158,7 +158,7 @@ lcl(5,"","",1)=111
 lcl(5,"",1)="five_null_one"
 lcl(5,"",3)=700
 lcl(5,"","x")="five_null_x"
-naked reference now is^bvariableglobally(2)
+naked reference now is ^bvariableglobally(2)
 check naked indicator reference here, value written should be 111
 ^bvariableglobally(2,"",1)=111
 1MERGE lcl(5,"")=^c(3,") Result in nostd.nullcollation
@@ -170,7 +170,7 @@ lcl(5,"","")=22
 lcl(5,"","",1)=222
 lcl(5,"","x")="five_null_x"
 lcl("")="null"
-naked reference now is^c(3,"")
+naked reference now is ^c(3,"")
 check naked indicator reference here, value written should be 700
 ^c(3,"",3)=700
 MERGE lcl(5,"")=^d(4) Result in nostd.nullcollation
@@ -182,7 +182,7 @@ lcl(5,"","")=11
 lcl(5,"","",1)=111
 lcl(5,"","x")="five_null_x"
 lcl("")="null"
-naked reference now is^d(4)
+naked reference now is ^d(4)
 check naked indicator reference here, value written should be 11
 ^d(4,"")=11
 
