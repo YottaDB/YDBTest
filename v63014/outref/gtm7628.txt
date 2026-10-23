@@ -19,13 +19,24 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 
 # Discover and print size of journal pool attached
 
-Journal pool size:    63.9992 GB (68718606168/0x0000000FFFF2B758)
-CTL Journal Pool Size (in bytes)               68718606168 [0x0000000FFFF2B758]
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+Journal pool size:    63.9992 GB (68718605944/0x0000000FFFF2B678)
+CTL Journal Pool Size (in bytes)               68718605944 [0x0000000FFFF2B678]
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+Journal pool size:    63.9992 GB (68718605936/0x0000000FFFF2B670)
+CTL Journal Pool Size (in bytes)               68718605936 [0x0000000FFFF2B670]
+##ALLOW_OUTPUT HOST_LINUX_X86_64
 
 # Discover and print size of receive pool attached
 
 Receive pool size:    64.0000 GB (68719465088/0x0000000FFFFFD280)
-CTL Journal Pool Size (in bytes)               68718606168 [0x0000000FFFF2B758]
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+CTL Journal Pool Size (in bytes)               68718605944 [0x0000000FFFF2B678]
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+CTL Journal Pool Size (in bytes)               68718605936 [0x0000000FFFF2B670]
+##ALLOW_OUTPUT HOST_LINUX_X86_64
 
 # Run dbcheck.csh -extract to ensure db extract on primary matches secondary
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

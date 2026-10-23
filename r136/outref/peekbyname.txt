@@ -27,6 +27,12 @@ set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
 set x=$$^%PEEKBYNAME("mutex_struct.mutex","DEFAULT")
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
 --
+set x=$$^%PEEKBYNAME("node_local.read_completed","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_cond_t
+--
+set x=$$^%PEEKBYNAME("node_local.read_completed_ctl","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
+--
 set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type unix_file_id
 --
@@ -37,6 +43,12 @@ set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type union
 --
 set x=$$^%PEEKBYNAME("mutex_struct.mutex","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
+--
+set x=$$^%PEEKBYNAME("node_local.read_completed","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_cond_t
+--
+set x=$$^%PEEKBYNAME("node_local.read_completed_ctl","DEFAULT")
 %YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
 --
 set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
