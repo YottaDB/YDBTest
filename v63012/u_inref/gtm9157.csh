@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,46 +39,46 @@ echo '# of validating them. See discussion of this at https://gitlab.com/YottaDB
 # of GETADDRINFO messages in it. It depends on how fast the source server is shutdown as to how many of them appear.
 $MUPIP replic -source -start -secondary=bogushost:${portno} -log=src.logx -buff=256 -instsecondary=INSTANCE2 -connectparams=5,1000,2,2,15,60
 if (0 != $status) then
-    echo
-    $echoline
-    echo "# TEST-F-NOSRCSRVSTART Starting of the source server failed - test terminating - cannot proceed"
-    # Release our acquired port
-    $gtm_tst/com/portno_release.csh
-    exit 1
+	echo
+	$echoline
+	echo "# TEST-F-NOSRCSRVSTART Starting of the source server failed - test terminating - cannot proceed"
+	# Release our acquired port
+	$gtm_tst/com/portno_release.csh
+	exit 1
 endif
 echo
 echo '# Wait for GETADDRINFO message to appear in src.logx'
 $gtm_tst/com/wait_for_log.csh -log src.logx -message "GETADDRINFO" -duration 90
 set waitForLogStatus = $status
 if (0 == $waitForLogStatus) then
-    echo "## GETADDRINFO message seen"
-    echo
-    echo '# Verify that not only did we see the GETADDRINFO message but this came out as a 3 message bundle with the secondary'
-    echo '# system name mentioned in this bundle of messages.'
-    $grep -m 1 -A 2 GETADDRINFO src.logx
-    echo
-    echo '# We know we have at least one GETADDRINFO message to indicate the condition has been detected. Now wait for'
-    echo '# a second and third GETADDRINFO message to show the server being more resilient about this error.'
-    $gtm_tst/com/wait_for_log.csh -log src.logx -message "GETADDRINFO" -duration 90 -count 3
-    if (0 == $status) echo "## 3 or more GETADDRINFO messages seen"
-    echo
-    echo '# Verify source server is *still* alive'
-    $MUPIP replicate -source -checkhealth
-    echo
-    echo '# Shutting down the source server'
-    # Note just prior to invoking the source server shutdown, randomly (just 30% of time) invoke a 10 second sleep which will get
-    # us past the hardspin loop and into the softspin loop to verify its correct operation as well.
-    if (1 == `$gtm_dist/mumps -run ^%XCMD 'write $random(10)>6'`) sleep 10s
-    $MUPIP replic -source -shutdown -timeout=0 >& SRC_SHUTDOWN.log
+	echo "## GETADDRINFO message seen"
+	echo
+	echo '# Verify that not only did we see the GETADDRINFO message but this came out as a 3 message bundle with the secondary'
+	echo '# system name mentioned in this bundle of messages.'
+	$grep -m 1 GETADDRINFO src.logx
+	echo
+	echo '# We know we have at least one GETADDRINFO message to indicate the condition has been detected. Now wait for'
+	echo '# a second and third GETADDRINFO message to show the server being more resilient about this error.'
+	$gtm_tst/com/wait_for_log.csh -log src.logx -message "GETADDRINFO" -duration 90 -count 3
+	if (0 == $status) echo "## 3 or more GETADDRINFO messages seen"
+	echo
+	echo '# Verify source server is *still* alive'
+	$MUPIP replicate -source -checkhealth
+	echo
+	echo '# Shutting down the source server'
+	# Note just prior to invoking the source server shutdown, randomly (just 30% of time) invoke a 10 second sleep which will get
+	# us past the hardspin loop and into the softspin loop to verify its correct operation as well.
+	if (1 == `$gtm_dist/mumps -run ^%XCMD 'write $random(10)>6'`) sleep 10s
+	$MUPIP replic -source -shutdown -timeout=0 >& SRC_SHUTDOWN.log
 else
-    # No need to print the return code here as wait_for_log would already have printed the needed messages. Just say we're
-    # exiting and we're done!
-    echo
-    $echoline
-    echo "## Failed to find GETADDRINFO in the log. Suspect possible issue with the source server starting"
-    $echoline
-    echo
-    # Fall into cleanup and exit
+	# No need to print the return code here as wait_for_log would already have printed the needed messages. Just say we're
+	# exiting and we're done!
+	echo
+	$echoline
+	echo "## Failed to find GETADDRINFO in the log. Suspect possible issue with the source server starting"
+	$echoline
+	echo
+	# Fall into cleanup and exit
 endif
 # Release our acquired port
 $gtm_tst/com/portno_release.csh
