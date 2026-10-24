@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -123,13 +123,13 @@ int main(int argc, char *argv[])
 	YDB_ASSERT(streams);
 
 	/* At the top level, the program reads and processes input lines, one at a time.  Each line specifies
-         * one problem to solve.  Since the program is designed to resume after a crash and reuse partial
-         * results computed before the crash, data in the database at the beginning is assumed to be partial
-         * results from the previous run.  After computing and writing results for a line, the database is
-         * cleared for next line of input or next run of the program.
+	 * one problem to solve.  Since the program is designed to resume after a crash and reuse partial
+	 * results computed before the crash, data in the database at the beginning is assumed to be partial
+	 * results from the previous run.  After computing and writing results for a line, the database is
+	 * cleared for next line of input or next run of the program.
 	 */
 
-        /* Loop for ever, read a line (quit on end of file), process that line */
+	/* Loop for ever, read a line (quit on end of file), process that line */
 	do
 	{
 		lineptr = fgets(linebuff, sizeof(linebuff), stdin);
@@ -216,38 +216,46 @@ int main(int argc, char *argv[])
 		startat = time(NULL);	/* Get starting time */
 
 		status = ydb_lock_incr_s(LOCK_TIMEOUT, &ylcl_l2, 0, NULL);	/* Wait for processes to finish (may take longer with a poollimit) */
-		YDB_ASSERT(YDB_OK == status);
+		if (YDB_LOCK_TIMEOUT == status)
+		{	/* Same message as threeen1f.m. The results are incomplete, and some of the globals they are read from are
+			 * only set when a process finishes, so do not report them.
+			 */
+			printf("\nsome jobs have not finished in 1 hour");
+		} else
+		{
+			YDB_ASSERT(YDB_OK == status);
 
-		endat = time(NULL);	/* Get ending time - time between startat and endat is the elapsed time */
-		duration = (int)(endat - startat);
+			endat = time(NULL);	/* Get ending time - time between startat and endat is the elapsed time */
+			duration = (int)(endat - startat);
 
-		status = ydb_get_s(&ygbl_result, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
-		value.buf_addr[value.len_used] = '\0';
-		printf(" %s", value.buf_addr);
+			status = ydb_get_s(&ygbl_result, 0, NULL, &value);
+			YDB_ASSERT(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
+			printf(" %s", value.buf_addr);
 
-		status = ydb_get_s(&ygbl_highest, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
-		value.buf_addr[value.len_used] = '\0';
-		printf(" %s", value.buf_addr);
+			status = ydb_get_s(&ygbl_highest, 0, NULL, &value);
+			YDB_ASSERT(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
+			printf(" %s", value.buf_addr);
 
-		printf(" %d", duration);
+			printf(" %d", duration);
 
-		status = ydb_get_s(&ygbl_updates, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
-		value.buf_addr[value.len_used] = '\0';
-		updates = atoi(value.buf_addr);
-		printf(" %s", value.buf_addr);
+			status = ydb_get_s(&ygbl_updates, 0, NULL, &value);
+			YDB_ASSERT(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
+			updates = atoi(value.buf_addr);
+			printf(" %s", value.buf_addr);
 
-		status = ydb_get_s(&ygbl_reads, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
-		value.buf_addr[value.len_used] = '\0';
-		reads = atoi(value.buf_addr);
-		printf(" %s", value.buf_addr);
+			status = ydb_get_s(&ygbl_reads, 0, NULL, &value);
+			YDB_ASSERT(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
+			reads = atoi(value.buf_addr);
+			printf(" %s", value.buf_addr);
 
-		/* If duration is greater than 0 seconds, display update and read rates */
-		if (duration)
-			printf(" %d %d", updates/duration, reads/duration);
+			/* If duration is greater than 0 seconds, display update and read rates */
+			if (duration)
+				printf(" %d %d", updates/duration, reads/duration);
+		}
 
 		printf("\n");
 

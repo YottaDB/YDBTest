@@ -87,8 +87,11 @@ $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 set mon_pid = `cat mon_pid.log`
 
 # If server has more than 4 CPUs, then consider it fast and have a higher limit. Else a lower limit.
+# An ASAN build also gets the lower limit, because it runs the higher one many times slower, which can take it past
+# the 1 hour that the 3n+1 programs wait for their jobs to finish.
 @ numcpus = `grep -c ^processor /proc/cpuinfo`
-if (4 < $numcpus) then
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# detect asan build into $gtm_test_libyottadb_asan_enabled
+if ((4 < $numcpus) && ! $gtm_test_libyottadb_asan_enabled) then
 	set upperbound=3000000
 	set expected=559
 else
