@@ -13,15 +13,20 @@
 /* Get a SIGSEGV because the stack cannot grow, in a process that uses YottaDB and has not installed an
  * alternate signal stack.
  *
- * 1. Initialize YottaDB with one ydb_set_s() call, which installs the YottaDB signal handlers.
- * 2. Limit the stack to 8MiB (or the hard limit if that is lower), so that the next step reaches the limit
+ * 1. Restore the default action of SIGSEGV and disable any alternate signal stack. An ASAN build links this program
+ *    with ASAN, which installs a SIGSEGV handler and an alternate signal stack before main() runs. After YottaDB
+ *    reports a SIGSEGV, it passes the signal to a handler that was there before it, and the ASAN handler ends the
+ *    process with the default action of SIGSEGV. This step makes the process start with neither, with or without ASAN.
+ * 2. Initialize YottaDB with one ydb_set_s() call, which installs the YottaDB signal handlers.
+ * 3. Limit the stack to 8MiB (or the hard limit if that is lower), so that the next step reaches the limit
  *    quickly whatever limit the process started with.
- * 3. Recurse with a 4KiB frame per call until the stack cannot grow any more.
+ * 4. Recurse with a 4KiB frame per call until the stack cannot grow any more.
  *
  * The YottaDB SIGSEGV handler can run only on an alternate signal stack, as the main stack is full.
  */
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 #include <unistd.h>
 #include <sys/resource.h>
 #include "libyottadb.h"
@@ -44,12 +49,33 @@ int main(void)
 {
 	ydb_buffer_t	var, val;
 	struct rlimit	rl;
+	stack_t		ss;
 	volatile char	frame[FRAME_SIZE];
 	int		status;
 	char		zbuf[1024];
 
 	printf("pid %d\n", getpid());
 	fflush(stdout);
+	/* Disable any alternate signal stack already in place, such as the one that ASAN installs before main() runs in
+	 * an ASAN build, so that the process has none when YottaDB initializes, which is the case this program tests.
+	 */
+	memset(&ss, 0, sizeof(ss));
+	ss.ss_flags = SS_DISABLE;
+	if (0 != sigaltstack(&ss, NULL))
+	{
+		perror("FAIL : sigaltstack(SS_DISABLE)");
+		return 1;
+	}
+	/* Restore the default action of SIGSEGV, replacing any handler already in place, such as the one that ASAN
+	 * installs. After reporting a fatal signal, YottaDB passes it to the handler that was in place when it
+	 * initialized. The ASAN handler would then end the process with the default action of SIGSEGV, so the exit
+	 * status would be 139 even though YottaDB reported the signal.
+	 */
+	if (SIG_ERR == signal(SIGSEGV, SIG_DFL))
+	{
+		perror("FAIL : signal(SIGSEGV, SIG_DFL)");
+		return 1;
+	}
 	YDB_LITERAL_TO_BUFFER("x", &var);
 	YDB_LITERAL_TO_BUFFER("init", &val);
 	status = ydb_set_s(&var, 0, NULL, &val);

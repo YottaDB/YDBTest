@@ -22,8 +22,9 @@ echo "# grow then had no stack for the YottaDB handler to run on, so the kernel 
 echo "# default action of SIGSEGV, and the process reported nothing. YottaDB now installs its own alternate"
 echo "# signal stack when there is none."
 echo "#"
-echo "# ydb1314_nogrow.c initializes YottaDB with ydb_set_s(), limits its stack to 8 MiB, then recurses until"
-echo "# the stack cannot grow. It installs no alternate signal stack of its own."
+echo "# ydb1314_nogrow.c restores the default action of SIGSEGV and disables any alternate signal stack, which"
+echo "# an ASAN build installs, initializes YottaDB with ydb_set_s(), limits its stack to 8 MiB, then recurses"
+echo "# until the stack cannot grow."
 echo
 
 echo "# Stage 1 : build ydb1314_nogrow.c"

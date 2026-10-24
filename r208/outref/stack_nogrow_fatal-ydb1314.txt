@@ -9,8 +9,9 @@
 # default action of SIGSEGV, and the process reported nothing. YottaDB now installs its own alternate
 # signal stack when there is none.
 #
-# ydb1314_nogrow.c initializes YottaDB with ydb_set_s(), limits its stack to 8 MiB, then recurses until
-# the stack cannot grow. It installs no alternate signal stack of its own.
+# ydb1314_nogrow.c restores the default action of SIGSEGV and disables any alternate signal stack, which
+# an ASAN build installs, initializes YottaDB with ydb_set_s(), limits its stack to 8 MiB, then recurses
+# until the stack cannot grow.
 
 # Stage 1 : build ydb1314_nogrow.c
 # Before the fix, this stage passed, with the output below
