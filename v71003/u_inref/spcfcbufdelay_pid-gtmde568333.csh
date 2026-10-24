@@ -152,5 +152,9 @@ echo "# Stop the holder process"
 # have finished its own loop and exited already, in which case MUPIP STOP says so in mupip_stop.out.
 $gtm_dist/mupip stop $holderpid >& mupip_stop.out
 $gtm_tst/com/wait_for_proc_to_die.csh $holderpid 120 >& wait_for_holder.log
+# Each SPCFCBUFDELAY runs $ydb_procstuckexec, which starts a DSE process in the background. Wait for those to finish,
+# as otherwise one still holding mumps.dat open makes the rundown in dbcheck.csh leave IPC behind (%YDB-W-MUNOTALLSEC,
+# CHECK-W-SEM and CHECK-W-SHM).
+$gtm_tst/com/wait_for_ydbprocstuckexec_jobbed_pids.csh
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.out
