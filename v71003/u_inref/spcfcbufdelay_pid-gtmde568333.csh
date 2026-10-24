@@ -93,14 +93,28 @@ setenv gtm_white_box_test_case_count $holderhang
 # because starting the delayed process before the holder is wedged would simply not produce the message.
 # getoper.csh waits for the message named in its 5th argument, so no polling loop is needed here.
 echo "# Wait for the holder to reach the hang"
-$gtm_tst/com/getoper.csh "$syslog_before" "" syslog_hang.txt "" LSEEKWRITEHANGSTART >& getoper_hang.log
-$grep -q "LSEEKWRITEHANGSTART" syslog_hang.txt
+# Match the message by the holder's PID, which it writes to [holder.pid] before it starts the writes that hang, so that a
+# TEST-I-LSEEKWRITEHANGSTART from another process on the same host cannot end the wait before this holder is hung.
+set holderpid = ""
+@ waited = 0
+while (1)
+	if (-e holder.pid) set holderpid = `cat holder.pid`
+	if ("" != "$holderpid") break
+	if (300 <= $waited) then
+		echo "TEST-E-FAIL holder process did not write holder.pid within 300 seconds"
+		exit 1
+	endif
+	sleep 1
+	@ waited = $waited + 1
+end
+set hangmsg = "\[$holderpid\]: .*LSEEKWRITEHANGSTART"
+$gtm_tst/com/getoper.csh "$syslog_before" "" syslog_hang.txt "" "$hangmsg" >& getoper_hang.log
+$grep -q -E "$hangmsg" syslog_hang.txt
 if (0 != $status) then
 	echo "TEST-E-FAIL holder process did not reach the database write hang"
 	exit 1
 endif
 
-set holderpid = `cat holder.pid`
 echo "# Holder process is hung : GTM_TEST_DEBUGINFO holder PID $holderpid"
 
 echo "# Start the delayed process, which has to wait on the cache record the holder owns"
