@@ -131,8 +131,13 @@ while (1)
 	set expectstatus = $status
 	mv expect.out expect.outx       # move .out to .outx to avoid -E- from being caught by test framework
 	perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+	# The Ctrl-C interrupted the copy only if BACKUPCTRL was issued AND the backup did not complete. A Ctrl-C that lands
+	# after the copy has finished can still issue BACKUPCTRL, but the backup then also reports BACKUPDBFILE and leaves
+	# its file in [bak1], which is the same race as no BACKUPCTRL at all.
 	$grep -q "BACKUPCTRL" expect_sanitized.outx
-	if (0 == $status) break         # the Ctrl-C interrupted the copy : this is the case being tested
+	set ctrlcstatus = $status
+	$grep -q "BACKUPDBFILE" expect_sanitized.outx
+	if ((0 == $ctrlcstatus) && (0 != $status)) break	# the Ctrl-C interrupted the copy : this is the case being tested
 	if (5 <= $attempt) break        # give up retrying and let the comparison report whatever we got
 	echo "# Attempt $attempt of the Ctrl-C stage did not interrupt the copy. Retrying." >> ctrlc_retry.outx
 	rm -f bak1/*                    # a completed backup leaves the file behind; the next attempt needs an empty [bak1]
@@ -157,6 +162,7 @@ echo
 echo "# Check that [bak1] directory has NO files in it (i.e. appropriate cleanup happened in [mupip backup] command)."
 echo "# Running [ls -l bak1]. Expecting no output."
 ls -l bak1
+rm -rf bak1 ; mkdir bak1	# so that a file left by a failed Ctrl-C stage does not change what Test 2 below creates
 
 echo "############################################################################################"
 echo "# Test 2 : Test 2nd paragraph of release note"
