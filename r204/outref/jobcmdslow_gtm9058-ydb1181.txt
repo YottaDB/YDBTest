@@ -11,9 +11,9 @@
 # Create [test1.m] which does nothing but a [quit]
 # Run [job ^test1] through [mumps -direct] and [strace -ff] to trace the system calls invoked.
 # The [-ff] will cause all forked child/grandchild processes to also be traced and each would
-# create a [trace.out.PID] file. There will be a total of 3 such files and the file corresponding
-# to the middle child would be the middle of those in a [ls -1 trace.out.*] output.
-# Run [grep -A 1 "sendto("] on that middle [trace.out.*] file
+# create a [trace.out.PID] file. There will be a total of 3 such files. The middle child is the process
+# that a clone() call in another [trace.out.*] file created and that makes a clone() call of its own.
+# Run [grep -A 1 "sendto("] on the [trace.out.*] file of the middle child
 # Expect to see NO read() call line AFTER the sendto() line which returned 8264
 # When run without the fix, one would see a read() call show up after that sendto() line.
 

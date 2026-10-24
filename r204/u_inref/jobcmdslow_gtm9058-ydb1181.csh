@@ -25,13 +25,24 @@ echo '# Create [test1.m] which does nothing but a [quit]'
 echo " quit" > test1.m
 echo '# Run [job ^test1] through [mumps -direct] and [strace -ff] to trace the system calls invoked.'
 echo '# The [-ff] will cause all forked child/grandchild processes to also be traced and each would'
-echo '# create a [trace.out.PID] file. There will be a total of 3 such files and the file corresponding'
-echo '# to the middle child would be the middle of those in a [ls -1 trace.out.*] output.'
-echo '# Run [grep -A 1 "sendto("] on that middle [trace.out.*] file'
+echo '# create a [trace.out.PID] file. There will be a total of 3 such files. The middle child is the process'
+echo '# that a clone() call in another [trace.out.*] file created and that makes a clone() call of its own.'
+echo '# Run [grep -A 1 "sendto("] on the [trace.out.*] file of the middle child'
 echo '# Expect to see NO read() call line AFTER the sendto() line which returned 8264'
 echo '# When run without the fix, one would see a read() call show up after that sendto() line.'
 echo "job ^test1" | strace -o trace.out -ff $gtm_dist/mumps -direct
-grep -A 1 "sendto(" `ls -1 trace.out.* | head -2 | tail -1` | grep -B 1 -A 1 "sendto.* = 8264"
+set middle = ()
+# Count only fork() style clone() calls, which have SIGCHLD in their flags. That leaves out other clone() calls,
+# such as the CLONE_UNTRACED one that an ASAN build makes at exit for its leak check when detect_leaks is enabled.
+foreach pid (`sed -n 's/^clone3*(.*SIGCHLD.* = \([0-9]*\)$/\1/p' trace.out.*`)
+	grep -q "^clone3*(.*SIGCHLD" trace.out.$pid
+	if (! $status) set middle = ($middle trace.out.$pid)
+end
+if (1 != $#middle) then
+	echo "WRONG : expected 1 [trace.out.*] file of a forked process that itself forks but found $#middle : [$middle]"
+else
+	grep -A 1 "sendto(" $middle | grep -B 1 -A 1 "sendto.* = 8264"
+endif
 echo
 
 setenv gtmroutines ".*"	# Needed by test of the tests below
