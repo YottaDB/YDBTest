@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -81,8 +81,17 @@ foreach type ($types)
 	if ($type == "rollback" ) then
 		$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh '.' < /dev/null >>& $SEC_SIDE/SHUT_A.out"
 	endif
-	$gtm_dist/mupip rundown -reg "*" >&! rundown$type.outx
+	# How far the killed MUPIP JOURNAL got varies from run to run. If it got far enough, MUPIP RUNDOWN declines to run
+	# down the crashed journaled database (MUUSERECOV or MUUSERLBK) and MUPIP INTEG then cannot open it (REQRECOV).
+	# -override makes the rundown happen in every case, so MUPIP INTEG always gets to read the file header.
+	$gtm_dist/mupip rundown -reg "*" -override >&! rundown$type.outx
 	$gtm_dist/mupip integ -reg "*" >&! integ$type.outx
+	# MUPIP INTEG is expected to issue DBFLCORRP and then report the flag. If it could not read the file header,
+	# report that, rather than a flag that is not TRUE.
+	$grep -q "DBFLCORRP" integ$type.outx
+	if ($status) then
+		echo "TEST-E-FAIL : MUPIP INTEG did not reach the file header of mumps$type.dat. See integ$type.outx and rundown$type.outx"
+	endif
 	echo '# greping integ output for "Recover Interrupted.*TRUE"'
 	grep "Recover Interrupted.*TRUE" integ$type.outx
 	if (0 == $status) then
