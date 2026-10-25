@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,8 +30,9 @@ mv getoper.txt getoper.txt.orig
 grep `pwd` getoper.txt.orig > getoper.txt
 echo "# Syslog message:"
 $grep "process id" getoper.txt |& sed 's/.*%YDB-I-MURNDWNARGLESS/%YDB-I-MURNDWNARGLESS/'
-set getoperpid=`$grep "process id" getoper.txt |& $tst_awk '{print $14}'`
-set getoperuid=`$grep "process id" getoper.txt |& $tst_awk '{print $17}'`
+# Take the pid and the user id from the text of the message, as the number of fields before it depends on the syslog format
+set getoperpid=`$grep "process id" getoper.txt |& sed -n 's/.*started with process id \([0-9]*\) by userid \([0-9]*\) .*/\1/p'`
+set getoperuid=`$grep "process id" getoper.txt |& sed -n 's/.*started with process id \([0-9]*\) by userid \([0-9]*\) .*/\2/p'`
 if ($uid == $getoperuid) then
 	echo "# User ID in syslog message correct"
 else

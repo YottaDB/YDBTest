@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ alias END "source $gtm_tst/com/END.csh"
 #TEST BEGINS#
 
 BEGIN "Choose randomly between -reg OR -file qualifier"
-        @ choice = `$gtm_exe/mumps -run rand 2`
+	@ choice = `$gtm_exe/mumps -run rand 2`
 END
 
 BEGIN "create database mumps.dat:"
@@ -42,7 +42,7 @@ BEGIN "Access the database(hence create the shared memory) and crash the databas
 $GTM << GTM_EOF
 write "set ^x=1"
 set ^x=1
-zsy "dse all -buff"
+zsy "$gtm_dist/dse all -buff"
 zsy "$kill9 "_\$j
 GTM_EOF
 END
@@ -54,7 +54,7 @@ $MUPIP create
 $GTM << GTM_EOF
 write "set ^x=11"
 set ^x=11
-zsy "mupip rundown >&! rundown.txt"
+zsy "$gtm_dist/mupip rundown >&! rundown.txt"
 write "set ^x=22"
 set ^y=22 ; test that shared memory was NOT removed by mupip rundown in previous step
 write "Shared memory is not removed by mupip rundown in previous command"
@@ -77,11 +77,11 @@ END
 BEGIN "Verify that shared memory corresponding to old_mumps.dat ($old_shmid) is removed"
 $grep -E "SHMREMOVED.* id $old_shmid " rundown.txt
 if ($status != 0) then
-        echo "No SHMREMOVED message found for shmid = $old_shmid"
+	echo "No SHMREMOVED message found for shmid = $old_shmid"
 endif
 $gtm_tst/com/ipcs -m | $tst_awk '{print $2}' | $grep -w $old_shmid
 if (  $status == 0 ) then
-        echo "ipcs -a output still shows shmid = $old_shmid existing"
+	echo "ipcs -a output still shows shmid = $old_shmid existing"
 endif
 END
 
@@ -97,11 +97,11 @@ END
 
 BEGIN "do MUPIP RUNDOWN on old_mumps.dat(now mumps.dat) and then access it. It should work fine"
 if ( $choice == 0 ) then
-        echo 'mupip rundown -reg "*"'
-        $MUPIP rundown -reg "*"
+	echo 'mupip rundown -reg "*"'
+	$MUPIP rundown -reg "*"
 else
-        echo 'mupip rundown -file mumps.dat'
-        $MUPIP rundown -file mumps.dat
+	echo 'mupip rundown -file mumps.dat'
+	$MUPIP rundown -file mumps.dat
 endif
 
 $GTM << GTM_EOF

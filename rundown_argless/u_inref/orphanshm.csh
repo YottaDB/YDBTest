@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@ alias END "source $gtm_tst/com/END.csh"
 
 #TEST BEGINS#
 BEGIN "Choose randomly between -reg OR -file qualifier"
-        @ choice = `$gtm_exe/mumps -run rand 2`
+	@ choice = `$gtm_exe/mumps -run rand 2`
 END
 
 BEGIN "Create database mumps.dat"
@@ -40,9 +40,9 @@ BEGIN "Access database mumps.dat(Hence create shared memory) and crash it"
 # at this point, gtmgbldir points to mumps.gld
 $GTM << GTM_EOF
 	write "set ^x=1"
-        set ^x=1
-	zsy "dse all -buff"
-        zsy "$kill9 "_\$j
+	set ^x=1
+	zsy "$gtm_dist/dse all -buff"
+	zsy "$kill9 "_\$j
 GTM_EOF
 END
 
@@ -54,11 +54,11 @@ $MUPIP rundown >&! rundown.txt
 BEGIN "Verify that shared memory corresponding to old_mumps.dat ($old_shmid) is removed"
 $grep -E "SHMREMOVED.* id $old_shmid " rundown.txt
 if ($status != 0) then
-        echo "No SHMREMOVED message found for shmid = $old_shmid"
+	echo "No SHMREMOVED message found for shmid = $old_shmid"
 endif
 $gtm_tst/com/ipcs -m | $tst_awk '{print $2}' | $grep -w $old_shmid
 if (  $status == 0 ) then
-        echo "ipcs -a output still shows shmid = $old_shmid existing"
+	echo "ipcs -a output still shows shmid = $old_shmid existing"
 endif
 END
 
@@ -72,11 +72,11 @@ END
 
 BEGIN "Verify that old_mumps.dat(now mumps.dat) can be accessed after doing mupip rundown"
 if ( $choice == 0 ) then
-        echo 'mupip rundown -reg "*"'
-        $MUPIP rundown -reg "*"
+	echo 'mupip rundown -reg "*"'
+	$MUPIP rundown -reg "*"
 else
-        echo 'mupip rundown -file mumps.dat'
-        $MUPIP rundown -file mumps.dat
+	echo 'mupip rundown -file mumps.dat'
+	$MUPIP rundown -file mumps.dat
 endif
 $GTM << GTM_EOF
 	write "set ^y=1"
