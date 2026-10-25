@@ -66,10 +66,46 @@ set onesleep = 1
 
 set treat_defunct_as_dead = "$5"
 
+# A pid can be reused by an unrelated process once the process being waited for has died. With pid_max at 100000 and many
+# processes created per second, that can happen within the wait, and a reused pid often belongs to a kernel worker thread
+# that never exits. So, where /proc is available, note the start time of the process (field 22 of /proc/<pid>/stat, in
+# clock ticks since boot) at entry, and treat the process as dead if the pid later has a different start time. Field 2 of
+# that file is the command name in parentheses and can contain spaces, so the fields are counted after its closing ")"
+# (field 22 becomes field 20, and field 4, the parent pid, becomes field 2). A process whose parent is pid 2 (kthreadd)
+# is a kernel thread and so cannot be the process a test is waiting for. Neither can a process owned by another non-root
+# user when the test runs as a non-root user. Root is left out because a test can wait for a process it started as root
+# (for example gtmsecshr). A test that waits as one non-root user for a process of another non-root user would need this
+# check removed. These checks cover a pid reused before this point by a kernel thread or by another non-root user's
+# process, but not by a root process or another process of the test user, which is waited for as if it were the original.
+set starttime = ""
+if (-r /proc/$pid/stat) then
+	set procstat = `awk '{sub(/^.*\) /, ""); print $2, $20}' /proc/$pid/stat |& cat`
+	if (2 == $#procstat) then
+		if ("2" == "$procstat[1]") then
+			echo "TEST-I-PIDREUSED, pid $pid is a kernel thread, so the process being waited for is dead" >>& $logfile
+			exit 0
+		endif
+		set procuid = `stat -c %u /proc/$pid |& cat`
+		set myuid = `id -u`
+		if (("0" != "$procuid") && ("0" != "$myuid") && ("$procuid" != "$myuid")) then
+			echo "TEST-I-PIDREUSED, pid $pid is owned by uid $procuid, not by the test's uid $myuid, so the process being waited for is dead" >>& $logfile
+			exit 0
+		endif
+		set starttime = "$procstat[2]"
+	endif
+endif
+
 @ iters = 1
 while ($iters <= $sleepiters)
 	$gtm_tst/com/is_proc_alive.csh $pid "" "$treat_defunct_as_dead"	# sets $status to 0 if process is alive, 1 if process is dead
 	if ($status == 0) then
+		if ("" != "$starttime") then
+			set nowstarttime = `awk '{sub(/^.*\) /, ""); print $20}' /proc/$pid/stat |& cat`
+			if ("$nowstarttime" != "$starttime") then
+				echo "TEST-I-PIDREUSED, pid $pid now has start time [$nowstarttime], not [$starttime], so the process being waited for is dead" >>& $logfile
+				break
+			endif
+		endif
 		sleep $onesleep	# process is still alive, sleep some more time
 	else
 		break		# ready to return
