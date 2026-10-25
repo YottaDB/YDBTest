@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -48,14 +51,30 @@ echo "Firing up a process that kills self..."
 $gtm_dist/mumps -run %XCMD 'write "PID is "_$job,! set ^a=1 if $zsigproc($job,9)' >&! kill_self${case}.out
 echo
 
-# Get the semaphore and shared memory ids.
+# Get the access semaphore id, the shared memory id and the FTOK key. MUPIP FTOK prints
+# "File :: Semaphore Id :: Shared Memory Id :: FTOK Key :: FileId", and the key is in brackets.
 $MUPIP ftok mumps.dat >&! mupip_ftok${case}.out
 set semid = `cat mupip_ftok${case}.out | $grep "mumps.dat" | $tst_awk '{print $3}'`
 set shmid = `cat mupip_ftok${case}.out | $grep "mumps.dat" | $tst_awk '{print $6}'`
+set ftok_key = `cat mupip_ftok${case}.out | $grep "mumps.dat" | $tst_awk '{print substr($10, 2, 10)}'`
 
-# Saving the status of our IPCs as well as the ID of the FTOK semaphore.
-$gtm_tst/com/check_ipcs.csh all >&! check_ipcs${case}a.outx
-set ftok_semid = `$grep -E -v "(CHECK|$semid|$shmid)" check_ipcs${case}a.outx | $tst_awk '{print $2}'`
+# The FTOK semaphore is known by its key, so find its id in the list of semaphores. com/ipcs prints one line per IPC,
+# in the form "<type> <id> <key> ...".
+$gtm_tst/com/ipcs -s >&! ipcs_s${case}a.outx
+$gtm_tst/com/ipcs -m >&! ipcs_m${case}a.outx
+set ftok_semid = `$tst_awk -v key=$ftok_key '$3 == key {print $2}' ipcs_s${case}a.outx`
+# Make sure all three IPCs exist before the test removes any of them, as otherwise the checks below are meaningless.
+if (1 != $#ftok_semid) then
+	echo "TEST-E-FAIL, Expected one FTOK semaphore with key $ftok_key but found [$ftok_semid]. See ipcs_s${case}a.outx."
+	exit 1
+endif
+foreach ipc ("s $semid access semaphore" "s $ftok_semid FTOK semaphore" "m $shmid shared memory")
+	set ipcarr = ($ipc)
+	if ("" == `$tst_awk -v id=$ipcarr[2] '$2 == id' ipcs_$ipcarr[1]${case}a.outx`) then
+		echo "TEST-E-FAIL, The $ipcarr[3-] (id [$ipcarr[2]]) does not exist before the test. See ipcs_$ipcarr[1]${case}a.outx."
+		exit 1
+	endif
+end
 
 if (! $keep_shared_memory) then
 	echo "Removing the shared memory..."
@@ -116,12 +135,13 @@ else
 endif
 echo
 
-# Reacquire the IPCs status after the operation.
-$gtm_tst/com/check_ipcs.csh all >&! check_ipcs${case}b.outx
+# Reacquire the IPCs status after the operation. Each IPC is looked up by its id, in the id column only.
+$gtm_tst/com/ipcs -s >&! ipcs_s${case}b.outx
+$gtm_tst/com/ipcs -m >&! ipcs_m${case}b.outx
 
 echo "Verifying the status of shared memory..."
-$grep -q $shmid check_ipcs${case}b.outx
-set shared_memory_gone = $status
+set shared_memory_gone = `$tst_awk -v id=$shmid 'BEGIN {gone = 1} $2 == id {gone = 0} END {print gone}' ipcs_m${case}b.outx`
+echo "Shared memory gone: $shared_memory_gone"
 if ($shared_memory_should_be_gone && (! $shared_memory_gone)) then
 	echo "TEST-E-FAIL, Shared memory should be gone but is present."
 else if ((! $shared_memory_should_be_gone) && $shared_memory_gone) then
@@ -130,8 +150,8 @@ endif
 echo
 
 echo "Verifying the status of FTOK semaphore..."
-$grep -q $ftok_semid check_ipcs${case}b.outx
-set ftok_sem_gone = $status
+set ftok_sem_gone = `$tst_awk -v id=$ftok_semid 'BEGIN {gone = 1} $2 == id {gone = 0} END {print gone}' ipcs_s${case}b.outx`
+echo "FTOK semaphore gone: $ftok_sem_gone"
 if ($ftok_sem_should_be_gone && (! $ftok_sem_gone)) then
 	echo "TEST-E-FAIL, FTOK semaphore should be gone but is present."
 else if ((! $ftok_sem_should_be_gone) && $ftok_sem_gone) then
@@ -140,8 +160,8 @@ endif
 echo
 
 echo "Verifying the status of access semaphore..."
-$grep -q $semid check_ipcs${case}b.outx
-set access_sem_gone = $status
+set access_sem_gone = `$tst_awk -v id=$semid 'BEGIN {gone = 1} $2 == id {gone = 0} END {print gone}' ipcs_s${case}b.outx`
+echo "Access semaphore gone: $access_sem_gone"
 if ($access_sem_should_be_gone && (! $access_sem_gone)) then
 	echo "TEST-E-FAIL, Access semaphore should be gone but is present."
 else if ((! $access_sem_should_be_gone) && $access_sem_gone) then
