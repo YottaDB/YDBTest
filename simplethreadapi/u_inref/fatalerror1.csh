@@ -32,9 +32,7 @@ foreach file (fatalerror.c)
 		continue
 	endif
 
-	echo "# Set vmemoryuse limit to 400Mb; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR1 error in syslog)"
-	# Note: A value of 200Mb causes occasional NONUTF8LOCALE errors on RHEL 10 with -unicode. Hence the 400Mb choice.
-	source $gtm_tst/com/limit_vmemoryuse.csh 400000
+	echo "# fatalerror.c limits its vmemoryuse to 300Mb more than it uses once YottaDB initializes; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR1 error in syslog)"
 	echo "# setenv gtmdbglvl 0x400 (needed for FATALERROR1)"
 	setenv gtmdbglvl 0x400
 	# We background the executable to get its pid. This is needed so we can search for FATALERROR1 message in syslog
@@ -48,9 +46,6 @@ foreach file (fatalerror.c)
 	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid -1
 	echo ""
 end
-
-echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper.csh call (or dbcheck.csh) below"
-limit vmemoryuse unlimited
 
 set searchpattern = "\<$bgpid\>.*FATALERROR1|fatalerror.*\<$bgpid\>.*out of memory"
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "$searchpattern"
