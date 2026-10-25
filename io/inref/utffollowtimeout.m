@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -58,9 +58,9 @@ reader(p)
 	use p
 	for i=1:1:2 do
 	. ; timeout a couple of times with an empty file
-        . set time1=$$getTime($test)
+	. set time1=$$getTime($test)
 	. read x:1
-        . set time2=$$getTime($test)
+	. set time2=$$getTime($test)
 	. do prnttimeout(1,time1,time2,$test)
 	. do results(x,"$device= 0  $za= 0 $test= 0 $zeof= 0 $x= 0",0)
 	set time1=$$getTime($test)
@@ -469,6 +469,14 @@ results(x,expected,test1)
 	write "expect:",!
 	write expected,!
 	write "$device= "_d_" "_" $za= "_za_" $test= "_t_" $zeof= "_z_" $x= ",dx,!
+	; If the result is not the expected one, show when the READ ran and what the writer did for this step (^a), so that
+	; a failure shows whether the writer was late, never wrote, or wrote data that the READ did not see.
+	if expected'=("$device= "_d_" "_" $za= "_za_" $test= "_t_" $zeof= "_z_" $x= "_dx) do
+	. new i
+	. write "TEST-E-DIAG for ^a=",^a,", times are in microseconds since the epoch",!
+	. write:$data(time1) time1," reader READ started",!
+	. write:$data(time2) time2," reader READ ended",!
+	. for i=1:1:$get(^diag(^a)) write ^diag(^a,i),!
 	use %io
 	quit
 

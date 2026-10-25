@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -114,6 +114,8 @@ wait(avalue)
 	. hang 1
 	. set cnt=1+cnt
 	. if 1800'>cnt use $p write "no change in 30 min so exiting",! halt
+	; Record when this process saw ^a change, for utffollowtimeout.m to report if a READ does not get what it expects
+	set ^diag(avalue,$increment(^diag(avalue)))=$zut_" writer saw ^a="_avalue
 	quit
 
 ; The input parameters are all strings.  The purpose is to
@@ -145,4 +147,6 @@ modfile(outfile,str,operation,doOpen,doClose)
 	write outstr
 	set:doClose $x=0
 	close:doClose outfile
+	; Record when this process wrote, and whether it closed the file, which is when the data reaches the file
+	set ^diag(^a,$increment(^diag(^a)))=$zut_" writer wrote "_str_" ("_operation_$select(doClose:", closed",1:", not closed")_")"
 	quit
