@@ -1,0 +1,51 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1307] $QUERY() of a local whose last subscript is "" never returns that node itself with      #
+# standard null collation                                                                            #
+#----------------------------------------------------------------------------------------------------#
+
+# With standard null collation, $QUERY(x(...,"")) of a local variable returned x(...,"") itself when
+# that node existed, unless the previous $QUERY() in the process had returned that same reference. So
+# the result of a call depended on the call before it.
+#
+# Stages 1 and 2 fail without the fix. Stage 3 passes without the fix too; it checks that GT.M null
+# collation, where $QUERY(x(...,"")) returns the first node at that level, is unchanged. Each check
+# names the result it expects.
+#
+# Each stage runs in its own process.
+
+# Stage 1 : $QUERY() of locals with a trailing null subscript, with standard null collation
+# Command : $gtm_dist/mumps -run stdnull^ydb1307 (with ydb_lct_stdnull=1)
+#   expect the node that follows x(...,""), whatever the previous $QUERY() returned
+#   previously x(...,"") itself when that node existed, unless the previous $QUERY() had returned it
+PASS : $query(a("")), the first call is a(-1)
+PASS : $query(a("")) again, right after a $query() that returned a(-1) is a(-1)
+PASS : $query(a("")) after $query(b(1)) of another variable is a(-1)
+PASS : $query(a("")) after $query(a(-1)) is a(-1)
+PASS : $query(a("x","")), a null subscript at the second level is a("x",2)
+PASS : $query(@r) with r="a("""")" is a(-1)
+PASS : $query(c("")) where c("") has a descendant c("",5) is c("",5)
+PASS : $query(d("")) where d("") does not exist is d(-1)
+PASS : for  set q=$query(@q) quit:q=""  from q="a" visits is  a("") a(-1) a(1) a("x") a("x","") a("x",2)
+
+# Stage 2 : $QUERY() of locals compared with $QUERY() of globals holding the same random trees
+# Command : $gtm_dist/mumps -run random^ydb1307 (with ydb_lct_stdnull=1, and a database with
+#           null subscripts and standard null collation)
+#   expect the same result for a local and a global, for every node and every node with an extra
+#   trailing "" subscript
+#   The fixed seed builds the same 500 trees in every run, each with 1 to 8 nodes up to 3 levels deep.
+#   x(""), every node and every node with an extra trailing "" subscript are checked, which is 4605
+#   references in all.
+#   previously a local returned x(...,"") itself where the global returned the node that follows it
+PASS : $query() of all 4605 references matched the global
+
+# Stage 3 : $QUERY() of locals with a trailing null subscript, with GT.M null collation
+# Command : $gtm_dist/mumps -run gtmnull^ydb1307 (with ydb_lct_stdnull=0)
+#   expect the first node at that level, the node after a("") right after a $QUERY() that returned
+#   a(""), and a $QUERY() loop to visit every node once
+#   previously the same results, since the fix does not apply to GT.M null collation
+PASS : $query(a("")), the first node at that level is a(-1)
+PASS : $query(a("")) after $query(b(1)) of another variable is a(-1)
+PASS : $query(a("")) right after a $query() that returned a("") is a("x")
+PASS : for  set q=$query(@q) quit:q=""  from q="a" visits is  a(-1) a(1) a("") a("x") a("x",2) a("x","")
+
+# Done
