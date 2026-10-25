@@ -38,6 +38,8 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2 ydb3n1)
 		if ("$prog" == "threeenp1C2") setenv ydb_filepfx_threeenp1C2 "$prog-$run"
 		# Calculating this many sequences takes minutes on pro build and over an hour on a debug asan build.
 		# This is important so that the program doesn't finish before it can be killed.
+		# ^queued is how ydb3n1 tells when all its workers run (see below), so clear the value the previous run left
+		if ("ydb3n1" == "$prog") $gtm_dist/mumps -run %XCMD 'kill ^queued'
 		(echo 100000000 | `pwd`/$prog $logargs &) >&! $prog-$run.out
 		unsetenv ydb_filepfx_threeenp1C2 # Don't leave it set
 		if ($?gtm_tst_quick) then
@@ -47,6 +49,37 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2 ydb3n1)
 		endif
 		set goPID = ""
 		set pathto = `pwd`
+		# threeenp1C2 and ydb3n1 launch their worker processes one at a time after their own setup, and the main process
+		# keeps launching them after it is signaled, until its next YottaDB call fails. A worker that is not running when
+		# the pids are listed below is never signaled. The listing of the next run then finds and signals it, so its
+		# FORCEDHALT lands in this run's output file after the filtering below has looked for it. So wait until all the
+		# workers run before listing. threeenp1C2 prints its worker count as the second number of its output, and each of
+		# its workers writes "doblk started" to its own output file when it starts. Workers are counted by those lines and
+		# not by processes, because a worker that finds no block left to process exits at once. ydb3n1 sets ^queued to its
+		# worker count, and each worker decrements it once it runs. The main process, which is one of the workers, waits
+		# for it to be 1 and then decrements it too, so 1 or 0 means all workers run. threeenp1B1 and threeenp1B2 run
+		# goroutines in a single process. This does not cover ydb3n1 --manyworkers, which starts a worker per block.
+		set started = 0
+		@ waited = 0
+		while (300 > $waited)
+			switch ($prog)
+			case threeenp1C2:
+				set nworkers = `$tst_awk 'NR == 1 && NF >= 2 {n = $2} END {print n + 0}' $prog-$run.out`
+				set nstarted = `cat /dev/null $prog-$run-*.out |& $grep -c "doblk started"`
+				if ((0 < $nworkers) && ($nworkers <= $nstarted)) set started = 1
+				breaksw
+			case ydb3n1:
+				if ("1" == `$gtm_dist/mumps -run %XCMD 'write ($data(^queued)#2)&(2>$get(^queued))'`) set started = 1
+				breaksw
+			default:
+				set started = 1
+				breaksw
+			endsw
+			if ($started) break
+			sleep 1
+			@ waited++
+		end
+		if (! $started) echo "TEST-E-FAIL : not all processes of $prog-$run started within $waited seconds"
 		echo "Terminating $prog; Run $run"
 		# Get pids of all processes we ran. Use [] to ensure grep doesn't find itself in the list of processes
 		set goPID = `ps -x | grep "${pathto}[/]$prog" | awk '{print $1}'`

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2025 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -317,16 +317,7 @@ func main() {
 			}
 			tmp += blk
 			if tmp > endnum {
-				tmp = endnum
-				err = value.SetValStr(tptoken, &errstr, fmt.Sprintf("%d", tmp))
-				if checkErrorReturn(err) {
-					return
-				}
-				err = limitsGbl.SetValST(tptoken, &errstr, &value)
-				if checkErrorReturn(err) {
-					return
-				}
-				break
+				tmp = endnum // The last block ends at endnum. It is stored as ^limits(i) below, like every other block.
 			}
 			err = limitsGbl.Subary.SetValStr(tptoken, &errstr, 0, fmt.Sprintf("%d", i)) // ^limits(i)
 			if checkErrorReturn(err) {
