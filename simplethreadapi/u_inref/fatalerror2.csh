@@ -39,7 +39,18 @@ foreach file (fatalerror.c)
 	# from just this pid. That way we avoid failing the test due to other FATALERROR2 messages in syslog from concurrent tests.
 	# Normally we would use the test output directory in the syslog search string to address such issues but this is not
 	# possible because FATALERROR2 message does not include the absolute path of the current directory.
-	( `pwd`/$exefile & ; echo $! >&! bg.pid)
+	# On an ASAN build, the ASAN allocator aborts the process when it cannot get memory instead of returning NULL,
+	# so YottaDB would never report YDB-F-MEMORY. allocator_may_return_null=1 makes it return NULL. Set it only for
+	# this process, with "env", which replaces itself with the program, so that $! is still the pid of the program.
+	set asanopts = `printenv ASAN_OPTIONS`
+	if ($gtm_test_libyottadb_asan_enabled) then
+		if ("" == "$asanopts") then
+			set asanopts = "allocator_may_return_null=1"
+		else
+			set asanopts = "${asanopts}:allocator_may_return_null=1"
+		endif
+	endif
+	( env ASAN_OPTIONS="$asanopts" `pwd`/$exefile & ; echo $! >&! bg.pid)
 	set bgpid = `cat bg.pid`
 	# The process could take a while to reach the FATALERROR1 point and some more time to generate a core file on
 	# slower/loaded systems (e.g. ARMV6L or ARMV7L) so wait generously of instead of the default 1 minute hence the -1 below.
