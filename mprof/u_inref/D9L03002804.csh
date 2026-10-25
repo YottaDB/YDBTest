@@ -3,7 +3,7 @@
 # Copyright (c) 2011-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -85,6 +85,8 @@ if (0 == $storage_diff) then
 	echo "PASSED: storage difference is tolerable"
 else
 	echo "FAILED: storage difference $storage_diff > threshold 0"
+	echo "Storage samples taken during the measured iterations:"
+	cat threeen_mprof_storage_samples
 endif
 
 echo ""

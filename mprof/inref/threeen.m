@@ -1,4 +1,18 @@
-; This script tests various functionality of MPROF, including implicit tracing 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+; Portions Copyright (c) Fidelity National			;
+; Information Services, Inc. and/or its subsidiaries.		;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This script tests various functionality of MPROF, including implicit tracing
 ; with and without saving to db, absolute time fields (UNIX only), and cumulative
 ; process's and subprocesses' (UNIX only) CPU information, and so on. It is used
 ; by D9L03002804 and D9L06002815 subtests.
@@ -11,7 +25,7 @@ threeen(fin,opt,gbl)
 	;  2 - Runs with tracing; the total absolute time is saved in the calling script to the specified file
 	;  3 - Runs without tracing
 	;  4 - Runs with tracing
-	;  5 - Runs without tracing and either zwrites the specified global into the specified file (UNIX) or 
+	;  5 - Runs without tracing and either zwrites the specified global into the specified file (UNIX) or
 	;      checks the total CPU time with that recorded by OS (VMS)
 	;  6 - Runs with tracing and either zwrites the specified global into the specified file (UNIX) or
 	;      checks the total CPU time with that recorded by OS (VMS)
@@ -19,12 +33,12 @@ threeen(fin,opt,gbl)
 	;  8 - Runs without tracing but attempts to save the data into some global
 	;
 	set unix=$zv'["VMS"
-	new start,finish,file,option,iterations,global,hor1,hor2
+	new start,finish,file,option,iterations,global,hor1,hor2,samples
 	read input
 	if unix do
 	.	set start=$piece(input," ",1)		; lower bound
-        .	set finish=$piece(input," ",2)		; upper bound
-        .	set file=$piece(input," ",3)		; file where to save the results
+	.	set finish=$piece(input," ",2)		; upper bound
+	.	set file=$piece(input," ",3)		; file where to save the results
 	.	set option=$piece(input," ",4)		; operation mode (explained above)
 	.	set iterations=$piece(input," ",5)	; number of iterations
 	.	set global=$piece(input," ",6)		; name of global where tracing is stored
@@ -68,25 +82,37 @@ threeen(fin,opt,gbl)
 	.	.	kill ^cycle set max=$$docycle(start,finish,"^cycle")
 	.	.	view "TRACE":0:"^trc"
 	.	.	kill ^trc
+	.	; With ASYNCIO, the first write of a dirty buffer to the database file allocates storage (to set up the thread that
+	.	; handles the asynchronous IO completions). Flush the dirty buffers left by the priming iterations here, so that this
+	.	; happens before storage1 is recorded and not when the flush timer first fires during the measured iterations.
+	.	view "flush"
 	.	; actual testing
+	.	; Besides the $ZREALSTOR difference that the caller checks, record $ZREALSTOR and $ZALLOCSTOR at the start, after
+	.	; each quarter of the iterations, and at the end, so that a failure shows whether the growth happened once (an
+	.	; allocation outside MPROF, for example) or grew steadily with the iterations (a leak). The nodes are created
+	.	; beforehand and only ever hold numbers, so that recording a sample does not itself allocate storage.
+	.	for k=0:1:4  set samples(k,1)=0,samples(k,2)=0,samples(k,3)=0
+	.	set samples=0
 	.	set storage1=$zrealstor
+	.	set samples(0,2)=storage1,samples(0,3)=$zallocstor
 	.	for k=1:1:iterations  do
 	.	.	view "TRACE":1:"^trc"
 	.	.	kill cycle set max=$$docycle(start,finish,"cycle")
 	.	.	kill ^cycle set max=$$docycle(start,finish,"^cycle")
 	.	.	view "TRACE":0:"^trc"
 	.	.	kill ^trc
+	.	.	if (k=iterations)!'(k#(iterations\4+1))  set samples=samples+1,samples(samples,1)=k,samples(samples,2)=$zrealstor,samples(samples,3)=$zallocstor
 	.	set storage2=$zrealstor
 	; print approximate total MPROF time or storage difference,
 	; depending on the option specified
 	if option=8  do
-        .	set value=@(global_"(""threeen"",""docycle"")")
+	.	set value=@(global_"(""threeen"",""docycle"")")
 	.	if value'="" write "saved to "_global,!
 	.	else  write "saving to "_global_" failed!",!
 	else  if (option=5)!(option=6)  do
 	.	view "TRACE":0:""_global
 	.	if unix do
-	.	.	open file:writeonly  
+	.	.	open file:writeonly
 	.	.	use file
 	.	.	zwrite @global
 	.	.	close file
@@ -99,10 +125,15 @@ threeen(fin,opt,gbl)
 	.	.	else  do
 	.	.	.	write "discrepancy ",disc," exceeds threshold of 0.3",!
 	else  if option=7  do
-	.	open file:writeonly  
+	.	open file:writeonly
 	.	use file
 	.	write (storage2-storage1)
 	.	close file
+	.	open file_"_samples":writeonly
+	.	use file_"_samples"
+	.	write "iterations $zrealstor $zallocstor",!
+	.	for k=0:1:samples  write samples(k,1)," ",samples(k,2)," ",samples(k,3),!
+	.	close file_"_samples"
 	quit
 	;
 docycle(first,last,var)
