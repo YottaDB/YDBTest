@@ -73,13 +73,14 @@ else
 	echo "# Send SIGKILL to that process, whose pid it wrote to job.txt"
 	kill -9 $killpid
 	$gtm_tst/com/wait_for_proc_to_die.csh $killpid 60
-	# The INTEGs below, and the final database check, must not run with the white box test case still
-	# enabled. Unset the variable rather than setting it to 0: "wbox_test_init" turns white box testing on
-	# when the variable EXISTS and never looks at its value, so a 0 leaves it on, and the next process
-	# that reaches phase II of a KILL prints the WBTEST_ABANDONEDKILL message and sleeps for a minute.
-	unsetenv gtm_white_box_test_case_enable
-	unsetenv gtm_white_box_test_case_number
+	# The INTEGs below, and the final database check, must not run with WBTEST_ABANDONEDKILL still
+	# enabled, or the next process that reaches phase II of a KILL sleeps for a minute. Switch to the
+	# WBTEST_CRASH_SHUTDOWN_EXPECTED white box test case, as other tests that kill -9 a process do. The
+	# SIGKILL can land while the flush timer of that process is writing a dirty block in wcs_wtstart,
+	# which leaves the block owned by a dead process, and in a Debug build the next process that flushes
+	# the cache, DSE or the first INTEG below, would otherwise fail an assert in wcs_flu.
 	unsetenv gtm_white_box_test_case_count
+	source $gtm_tst/com/set_crash_test.csh
 
 	echo '# Command : $DSE dump -fileheader, reporting the KILLs in progress field it shows'
 	$DSE dump -fileheader >&! dse_dump1.out
