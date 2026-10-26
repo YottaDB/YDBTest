@@ -167,6 +167,15 @@ BEGIN {
         if ("1" == ENVIRON["gtm_test_nopriorgtmver"])
                 envir[no_options] = "PLATFORM_NO_PRIORGTM"
         #
+	# YDB_BUILD or GTM_BUILD, from the name of the version directory of $gtm_exe ($gtm_exe:h:t in a test script):
+	# a YottaDB build is named like V998_R207, a pure GT.M build like V71002
+	option_names[++no_options] = "gtm_exe"
+	nexe = split(ENVIRON["gtm_exe"], exe_parts, "/")
+	if (exe_parts[nexe - 1] ~ /^V.*_R/)
+		envir[no_options] = "YDB_BUILD"
+	else
+		envir[no_options] = "GTM_BUILD"
+	#
 	option_names[++no_options] = "gtm_platform_no_compress_ver"
         if ("1" == ENVIRON["gtm_platform_no_compress_ver"])
                 envir[no_options] = "PLATFORM_NO_COMPRESS_VER"

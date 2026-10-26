@@ -1,0 +1,77 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1316] $ZTRIGGER("ITEM") gets no SIG-11 or false errors after a stringpool garbage collection, #
+# and leaves its argument unchanged                                                                  #
+#----------------------------------------------------------------------------------------------------#
+
+# When the trigger definition passed to $ZTRIGGER("ITEM") contains a newline, trigger_update_rec()
+# kept C pointers into it. The definition is usually in the stringpool, and calls made while those
+# pointers were in use can run a garbage collection, which moves the definition but not the C
+# pointers. Stages 1 to 3 and 5 call $ZTRIGGER("ITEM") 20000 or more times with a definition built by
+# concatenation, so that it is in the stringpool, and allocate a string of random length before each
+# call, so that garbage collections happen at varying points. Each stage checks that every call
+# returns 1 and leaves its argument unchanged.
+#
+# Before the fix, stages 1 to 3 and 5 failed, at least on some runs, since it depends on where the
+# garbage collections happen. Stage 4 passes without the fix too; it checks that a definition more
+# than twice as long as an earlier one still works now that the definition is copied into a malloced
+# buffer that then has to be replaced by a bigger one. Stage 5 has a qualifier after the closing >> of
+# a multi-line -xecute, which only YottaDB accepts, so it runs only with a YottaDB build. The other
+# stages also run with GT.M.
+#
+# Each stage runs in its own process.
+
+# Stage 1 : multi-line -xecute and a numeric subscript (the case reported in YDB#1316)
+#   +^OR(sub1=100,sub2=0:$C(0)) -command=kill -name=multi -xecute=<<<newline> do dft($reference) quit<newline>...
+# Command : $gtm_dist/mumps -run multi^ydb1316
+#   expect all 20000 calls to return 1 and none to change its argument
+# Before the fix, a Release build terminated with KILLBYSIGSINFO1, or issued compilation errors such as
+# MULTLAB for an XECUTE string read from freed memory, and a Debug build failed an assert in
+# trigger_update.c, so the lines below were missing
+PASS : 20000 of 20000 $ZTRIGGER calls returned 1
+PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument
+
+# Stage 2 : single-line definition that ends in a newline, with a numeric subscript
+#   +^X(sub=1) -command=S -name=single -xecute="set y=1"<newline>
+# Command : $gtm_dist/mumps -run single^ydb1316
+#   expect all 20000 calls to return 1 and none to change its argument
+# Before the fix, a Release build had a few of the calls return 0 with "Error : Newline allowed only
+# inside multi-line xecute in $ztrigger ITEM", so the first line below was a WRONG line, and a Debug
+# build failed an assert in trigger_update.c
+PASS : 20000 of 20000 $ZTRIGGER calls returned 1
+PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument
+
+# Stage 3 : multi-line -xecute, a new trigger per call, while the stringpool keeps expanding
+#   +^D -command=kill -name=t<i> -xecute=<<<newline> set ^B=<i><newline> set ^C=<i><newline>
+# Command : $gtm_dist/mumps -run newtrig^ydb1316
+#   expect all 30000 calls to return 1 and none to change its argument, and $ZTRIGGER("SELECT") to show
+#   all 30000 triggers, each with the XECUTE string of its own call
+# Before the fix, most runs of a Release build, and some runs of a Debug build, terminated with
+# KILLBYSIGSINFO1 before all 30000 calls were done, so the lines below were missing
+PASS : 30000 of 30000 $ZTRIGGER calls returned 1
+PASS : 0 of 30000 $ZTRIGGER calls changed the value of their argument
+PASS : $ZTRIGGER("SELECT") shows 30000 of 30000 triggers
+PASS : 0 of 30000 triggers have a wrong XECUTE string
+
+# Stage 4 : multi-line -xecute, each definition more than twice as long as the one before
+#   +^E(sub=<i>) -command=kill -name=big<i> -xecute=<<<newline> set ^F(<i>)=$length("<spaces>")<newline>
+# Command : $gtm_dist/mumps -run bigger^ydb1316
+#   expect all 4 calls to return 1 and none to change its argument, and each trigger, when it runs, to
+#   store the length of its own XECUTE string
+# Before the fix, the same results, since the buffer that has to be replaced by a bigger one is new
+PASS : 4 of 4 $ZTRIGGER calls returned 1
+PASS : 0 of 4 $ZTRIGGER calls changed the value of their argument
+PASS : 0 of 4 triggers ran a wrong XECUTE string
+
+##SUSPEND_OUTPUT GTM_BUILD
+# Stage 5 : multi-line -xecute followed by a qualifier after the closing >> (YottaDB only)
+#   +^A -command=kill -xecute=<<<newline> set ^B=1<newline>>><newline>-name=reorder
+# Command : $gtm_dist/mumps -run reorder^ydb1316
+#   expect all 20000 calls to return 1 and none to change its argument
+# Before the fix, every call changed its argument to the definition with -name=reorder moved ahead of
+# -xecute, so the second line below was a WRONG line for all 20000 calls, and a Debug build also
+# terminated with KILLBYSIGSINFO1 when a garbage collection moved the definition
+PASS : 20000 of 20000 $ZTRIGGER calls returned 1
+PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument
+
+##ALLOW_OUTPUT GTM_BUILD
+# Done
