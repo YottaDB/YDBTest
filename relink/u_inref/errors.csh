@@ -35,6 +35,9 @@ eof
 # Remember the environment variable for library preload.
 set lib_preload_var = LD_PRELOAD
 
+# Snapshot the shared memory segments that exist before step 1, for report_new_ipcs.csh to compare against.
+$gtm_tst/com/ipcs -mp > shms0.log
+
 # Note: The "grep -v mumps" bit in this and subsequent cases is to filter out the messages about the completion of the
 # backgrounded mumps process that certain tcsh versions may spew.
 echo "1. Change permissions on an active relinkctl file and start a concurrent process to access it."

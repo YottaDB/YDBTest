@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,10 +14,14 @@
 #								#
 #################################################################
 
-# This script reports left-over relinkctl files and new IPCs based on the potential creators' PIDs.
+# This script reports left-over relinkctl files and new IPCs based on the PIDs of the processes that last attached to them.
+# A segment counts as new only if it is not in shms<index-1>.log, the snapshot taken before this step started.
+# Matching on the PID alone is not enough because a segment last attached by an unrelated process that has
+# since exited carries that process's PID, which the OS can reuse for a process of this step.
 
 set index = $1
 set pids = "$2"
+@ previndex = $index - 1
 
 # Make sure there are no left-over relinkctl files.
 ls gtm-* >&! /dev/null
@@ -27,21 +31,12 @@ if (! $status) then
 endif
 
 # Make sure there are no left-over shared memory segments.
+# The fields, as reordered by com/ipcs.awk, are as follows:
+# owner  shmid  lpid  cpid
 $gtm_tst/com/ipcs -mp > shms${index}.log
-if ("Linux" == $HOSTOS) then
-	# On Linux the fields are as follows:
-	# shmid  owner  cpid  lpid
-	@ new_shm_count = `$tst_awk '$3 ~ mymatch {print $0}' mymatch='^('$pids')$' shms${index}.log | wc -l`
-else
-	# On all other platforms the fields are as follows:
-	# T  ID  KEY  MODE  OWNER  GROUP  CPID  LPID
-	@ new_shm_count = `$tst_awk '$7 ~ mymatch {print $0}' mymatch='^('$pids')$' shms${index}.log | wc -l`
-endif
-if ($new_shm_count) then
+$tst_awk 'NR == FNR {old[$2]; next} ($3 ~ mymatch) && !($2 in old) {print $0}' mymatch='^('$pids')$'	\
+	shms${previndex}.log shms${index}.log > newshms${index}.log
+if (! -z newshms${index}.log) then
 	echo "TEST-E-FAIL, There are left-over shared memory segments:"
-	if ("Linux" == $HOSTOS) then
-		$tst_awk '$3 ~ mymatch {print $0}' mymatch='^('$pids')$' shms${index}.log
-	else
-		$tst_awk '$7 ~ mymatch {print $0}' mymatch='^('$pids)')$' shms${index}.log
-	endif
+	cat newshms${index}.log
 endif
