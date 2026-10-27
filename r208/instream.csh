@@ -71,6 +71,7 @@
 # query_null_sub-ydb1307		[nars]	Test $QUERY() of a local whose last subscript is "" never returns that node itself with standard null collation
 # revquery_null_sub-ydb794		[nars]	Test reverse $QUERY() of a global whose last subscript is "" and that has no value returns the last node at that level with standard null collation
 # ztrigger_gcol-ydb1316			[nars]	Test $ZTRIGGER("ITEM") gets no SIG-11 or false errors after a stringpool garbage collection, and leaves its argument unchanged
+# query_prev_subs_len-ydb1317		[nars]	Test $QUERY() of a local whose last subscript is "" returns the right node after an earlier $QUERY() returned another such node
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -136,6 +137,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic stack_nogrow_fatal-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic query_null_sub-ydb1307"
 setenv subtest_list_non_replic	"$subtest_list_non_replic revquery_null_sub-ydb794"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_gcol-ydb1316"
+setenv subtest_list_non_replic	"$subtest_list_non_replic query_prev_subs_len-ydb1317"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

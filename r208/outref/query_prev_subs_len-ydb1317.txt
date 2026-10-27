@@ -1,0 +1,63 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1317] $QUERY() of a local whose last subscript is "" returns the right node after an earlier  #
+# $QUERY() of that local returned another node whose last subscript is ""                            #
+#----------------------------------------------------------------------------------------------------#
+
+# To tell a request for the first or last node at a level from a call that continues a $QUERY() loop,
+# $QUERY() of a local compares its input with the previous $QUERY() result. That check treated string
+# subscripts of different lengths as equal, and it compared a saved subscript in its formatted form,
+# such as "b", with the input subscript b. So a $QUERY() of y("b","") right after a $QUERY() that
+# returned y("aa","") took y("b","") for that result and returned a wrong node.
+#
+# Each check names the result it expects. Stages 1 to 3 print WRONG for the checks right after a
+# $QUERY() that returned y("aa","") without the fix. Stages 4 and 5 pass without the fix too; they
+# check that a $QUERY() loop still continues from the previous result now that the saved subscripts
+# are kept in their unformatted form across garbage collections. Stages 2 to 5 use reverse $QUERY(),
+# which only YottaDB has, so they run only with a YottaDB build.
+#
+# Each stage runs in its own process.
+
+# Stage 1 : forward $QUERY() of a local with GT.M null collation
+# Command : $gtm_dist/mumps -run gtmfwd^ydb1317 (with ydb_lct_stdnull=0)
+#   expect each check to return the node named, including y("b",5) right after a $QUERY() that
+#   returned y("aa","")
+#   previously "" right after a $QUERY() that returned y("aa",""), since that call took y("b","") for
+#   the previous result
+PASS : $query(y("b","")) after $query(b(1)) of another variable is y("b",5)
+PASS : $query(y("b","")) right after a $query() that returned y("aa","") is y("b",5)
+PASS : $query(y("b","")) right after a $query() that returned y("b","") is 
+
+##SUSPEND_OUTPUT GTM_BUILD
+# Stage 2 : reverse $QUERY() of a local with standard null collation
+# Command : $gtm_dist/mumps -run stdrev^ydb1317rev (with ydb_lct_stdnull=1)
+#   expect each check to return the node named, including y("b",5), and y("b","a") when y("b","")
+#   has no value, right after a $QUERY() that returned y("aa","")
+#   previously y("aa","") in both of those checks
+PASS : $query(y("b",""),-1) after $query(b(1)) of another variable is y("b",5)
+PASS : $query(y("b",""),-1) right after a $query() that returned y("aa","") is y("b",5)
+PASS : $query(y("b",""),-1) right after a $query() that returned y("b","") is y("aa","")
+PASS : $query(y("b",""),-1) where y("b","") has no value, right after a $query() that returned y("aa","") is y("b","a")
+
+# Stage 3 : reverse $QUERY() of a local with GT.M null collation
+# Command : $gtm_dist/mumps -run gtmrev^ydb1317rev (with ydb_lct_stdnull=0)
+#   expect each check to return the node named, including y("b","") right after a $QUERY() that
+#   returned y("aa","")
+#   previously y("b",5) in that check
+PASS : $query(y("b",""),-1) after $query(b(1)) of another variable is y("b","")
+PASS : $query(y("b",""),-1) right after a $query() that returned y("aa","") is y("b","")
+PASS : $query(y("b",""),-1) right after a $query() that returned y("b","") is y("b",5)
+
+# Stage 4 : forward and reverse $QUERY() loops over 400 random trees, standard null collation
+# Command : $gtm_dist/mumps -run walk^ydb1317rev (with ydb_lct_stdnull=1)
+#   expect both loops to visit every node with a value once, the reverse loop in the reverse order
+#   previously the same result
+PASS : 0 of 400 trees walked differently forward and reverse
+
+# Stage 5 : forward and reverse $QUERY() loops over 400 random trees, GT.M null collation
+# Command : $gtm_dist/mumps -run walk^ydb1317rev (with ydb_lct_stdnull=0)
+#   expect both loops to visit every node with a value once, the reverse loop in the reverse order
+#   previously the same result
+PASS : 0 of 400 trees walked differently forward and reverse
+
+##ALLOW_OUTPUT GTM_BUILD
+# Done
