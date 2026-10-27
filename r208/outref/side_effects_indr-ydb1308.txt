@@ -1,0 +1,58 @@
+#-------------------------------------------------------------------------------------------------#
+# [YDB#1308] With gtm_side_effects=1, an indirect reference is compiled the same after an earlier   #
+# indirect reference with a nested indirection                                                     #
+#-------------------------------------------------------------------------------------------------#
+
+# With gtm_side_effects set to 1, compiling an indirect reference with a nested indirection, such as
+# x(@y), left a side effect flag set in the compiler, and the next indirect reference was compiled as
+# if it too had a side effect. For $DATA(@ref) with ref="z(p,n)", where z and p are undefined, that
+# code evaluates the subscript p, which issues LVUNDEF, whereas $DATA(z(p,n)) is 0 since z does not
+# exist. It did not matter whether the earlier reference issued an error.
+#
+# Each stage runs in its own process, with gtm_side_effects set to 1.
+
+# Stage 1 : the example in YDB#1308, with the two $DATA() values joined:
+#   set y="y",v=$data(@"x(@y)")_$data(@"z(p,1)")
+# Command : $gtm_dist/mumps -run short^ydb1308
+#   expect 00
+# Before the fix, LVUNDEF, so the line below was a WRONG line
+PASS : short : $data(@"x(@y)")_$data(@"z(p,1)") with y="y" : 00 (expected 00)
+
+# Stages 2 to 6 are variations of stage 1: the second reference is $DATA(@ref) with ref="z(p,n)",
+# and the first is the one named in each stage, or none
+
+# Stage 2 : $DATA(@ref) with ref="z(p,n)" without a first indirect reference
+# Command : $gtm_dist/mumps -run nofirst^ydb1308
+#   expect 0
+# Before the fix, the same result
+PASS : nofirst : $data(@ref) with ref=z(p,n) : 0 (expected 0)
+
+# Stage 3 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a defined
+# Command : $gtm_dist/mumps -run nested^ydb1308
+#   expect 0
+# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# nested : $data(@ref) with ref=x(@y) : 0
+PASS : nested : $data(@ref) with ref=z(p,n) : 0 (expected 0)
+
+# Stage 4 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a undefined, which issues an error
+# Command : $gtm_dist/mumps -run nestederr^ydb1308
+#   expect 0
+# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# nestederr : $data(@ref) with ref=x(@y) : an error
+PASS : nestederr : $data(@ref) with ref=z(p,n) : 0 (expected 0)
+
+# Stage 5 : the same after $DATA(@ref) with ref="x(1,@y)", y="a" and a defined
+# Command : $gtm_dist/mumps -run nested2^ydb1308
+#   expect 0
+# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# nested2 : $data(@ref) with ref=x(1,@y) : 0
+PASS : nested2 : $data(@ref) with ref=z(p,n) : 0 (expected 0)
+
+# Stage 6 : the same after $DATA(@ref) with ref="x(a)" and a defined, which has no nested indirection
+# Command : $gtm_dist/mumps -run plain^ydb1308
+#   expect 0
+# Before the fix, the same result
+# plain : $data(@ref) with ref=x(a) : 0
+PASS : plain : $data(@ref) with ref=z(p,n) : 0 (expected 0)
+
+# Done
