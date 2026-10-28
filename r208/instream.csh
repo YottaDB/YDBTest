@@ -74,6 +74,7 @@
 # query_prev_subs_len-ydb1317		[nars]	Test $QUERY() of a local whose last subscript is "" returns the right node after an earlier $QUERY() returned another such node
 # indr_frame_glvn_slot-ydb1306		[nars]	Test glvn pool slots used inside XECUTE and other indirect frames are freed when the frame ends, and do not replace the slot of a FOR in the frame they run in
 # side_effects_indr-ydb1308		[nars]	Test an indirect reference is compiled the same with gtm_side_effects=1 after an earlier indirect reference with a nested indirection
+# indr_err_glvn_slot-ydb1319		[nars]	Test an error while an indirect reference is saved in the glvn pool does not crash the process when the glvn pool later needs more space for subscripts
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -142,6 +143,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_gcol-ydb1316"
 setenv subtest_list_non_replic	"$subtest_list_non_replic query_prev_subs_len-ydb1317"
 setenv subtest_list_non_replic	"$subtest_list_non_replic indr_frame_glvn_slot-ydb1306"
 setenv subtest_list_non_replic	"$subtest_list_non_replic side_effects_indr-ydb1308"
+setenv subtest_list_non_replic	"$subtest_list_non_replic indr_err_glvn_slot-ydb1319"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

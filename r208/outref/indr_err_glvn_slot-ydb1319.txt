@@ -1,0 +1,66 @@
+#-------------------------------------------------------------------------------------------------#
+# [YDB#1319] A glvn pool slot left unfilled by an error while an indirect reference is saved does #
+# not crash the process when the glvn pool later needs more space for subscripts                  #
+#-------------------------------------------------------------------------------------------------#
+
+# SET @ref=..., $ORDER(@ref,-1) and MERGE @ref=... reserve a slot in the glvn pool, then evaluate the
+# indirect reference and its subscripts, and only then fill in the slot. An error in between leaves the
+# slot reserved but unfilled, and the rest of a slot that was never used before holds whatever the memory
+# allocator returned. When the glvn pool later needs more space for subscripts, it adjusts the pointers
+# in every reserved slot, and it took the number of pointers in the unfilled slot from that memory.
+#
+# Each stage raises DIVZERO while it evaluates an indirect reference to a(1/z) with z=0. Its $ETRAP
+# handler, which runs before the frame of the failed reference ends, then sets three indirect references
+# with many subscripts in one SET, which needs more space than the 64 subscripts the glvn pool starts with.
+#
+# To make the memory hold a large count, the stages use the system memory allocator (gtmdbglvl=0x80000000)
+# and have glibc fill new allocations with 0x55 bytes (MALLOC_PERTURB_=170). MERGE @ref=... uses the glvn
+# pool only when side effects are evaluated left to right, so the stages also set gtm_side_effects=1.
+#
+# Each stage runs in its own process.
+
+# Command : setenv gtmdbglvl 0x80000000
+# Command : setenv MALLOC_PERTURB_ 170
+# Command : setenv gtm_side_effects 1
+
+# Stage 1 : the example in YDB#1319:
+#   ZNOOP  set z=0,$etrap="do h" set @"a(1/z)"=1
+#   h      set s="1" for i=2:1:22 set s=s_",1"
+#          set (@("x("_s_")"),@("y("_s_")"),@("w("_s_")"))=1
+# Command : $gtm_dist/mumps -run znoop^ydb1319
+# Before the fix, a Release build was killed by a SIG-11 in glvn_pool_expand_mvals(), so a KILLBYSIGSINFO1
+# error was printed in place of the PASS line below, and a Debug build failed an assert in glvn_pool.c
+PASS : znoop : DIVZERO raised, then $ETRAP set x, y and w with 22 subscripts each
+
+# Stages 2 to 4 are variations of stage 1: the error is in SET @ref=1, $ORDER(@ref,-1) or MERGE @ref=b
+# with ref="a(1/z)", and the $ETRAP handler sets three indirect references with 30 subscripts each
+
+# Stage 2 : SET @ref=1
+# Command : $gtm_dist/mumps -run setind^ydb1319
+# Before the fix, a Release build was killed by a SIG-11 in glvn_pool_expand_mvals(), so a KILLBYSIGSINFO1
+# error was printed in place of the PASS line below, and a Debug build failed an assert in glvn_pool.c
+PASS : setind : DIVZERO raised, then $ETRAP set x(1,...,30), y(1,...,30) and w(1,...,30)
+
+# Stage 3 : $ORDER(@ref,-1)
+# Command : $gtm_dist/mumps -run ordind^ydb1319
+# Before the fix, a Release build was killed by a SIG-11 in glvn_pool_expand_mvals(), so a KILLBYSIGSINFO1
+# error was printed in place of the PASS line below, and a Debug build failed an assert in glvn_pool.c
+PASS : ordind : DIVZERO raised, then $ETRAP set x(1,...,30), y(1,...,30) and w(1,...,30)
+
+# Stage 4 : MERGE @ref=b
+# Command : $gtm_dist/mumps -run mrgind^ydb1319
+# Before the fix, a Release build was killed by a SIG-11 in glvn_pool_expand_mvals(), so a KILLBYSIGSINFO1
+# error was printed in place of the PASS line below, and a Debug build failed an assert in glvn_pool.c
+PASS : mrgind : DIVZERO raised, then $ETRAP set x(1,...,30), y(1,...,30) and w(1,...,30)
+
+# Stage 5 : stage 1 with default memory allocator settings, after writing 65000 "U" characters, which
+# are 0x55 bytes, to a file and closing it, which frees its output buffer. The glvn pool can get that
+# memory, so the count in its never-used slot is large without MALLOC_PERTURB_.
+# Command : unsetenv MALLOC_PERTURB_ gtmdbglvl
+# Command : $gtm_dist/mumps -run zpre^ydb1319
+# Before the fix, in some runs, a SIG-11, or in a Debug build an assert failure in glvn_pool.c, in place
+# of the PASS line below, and in other runs the same PASS line, since whether the glvn pool gets that
+# memory depends on the build and the environment of the run
+PASS : zpre : DIVZERO raised, then $ETRAP set x, y and w with 22 subscripts each
+
+# Done
