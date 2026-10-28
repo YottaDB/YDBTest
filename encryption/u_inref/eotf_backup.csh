@@ -106,13 +106,46 @@ if ($use_journaling) then
 	cp mumps_mjl.orig mumps.mjl
 endif
 
+# The backup records the encryption settings of the copy of the file header it takes when it starts. Case 2 below
+# restores it with only the original key, so the (re)encryption must not start before that copy is taken. MUPIP BACKUP
+# takes that copy first, and only then sets node_local.nbb to mark the online backup as started. eotfbkupwait.m polls
+# node_local.nbb and exits when the backup is marked as started (or is done, in which case it also started before the
+# (re)encryption). Start eotfbkupwait.m before the backup so that it sees the backup start soon enough for the
+# (re)encryption to run while the backup is still underway.
+rm -f pid.out eotfbkupwait.ready eotfbkupwait.done
+($gtm_dist/mumps -run eotfbkupwait >&! eotfbkupwait.out &) >&! /dev/null
+# Wait until eotfbkupwait.m has opened the region and is polling, so that it is already watching when MUPIP BACKUP
+# starts. Otherwise a short backup can finish before the first poll, and the (re)encryption would no longer overlap it.
+@ waitcnt = 0
+while (! -e eotfbkupwait.ready)
+	@ waitcnt = $waitcnt + 1
+	if (3000 < $waitcnt) then
+		echo "TEST-E-FAIL, eotfbkupwait.m did not start polling within 300 seconds. See eotfbkupwait.out"
+		exit 1
+	endif
+	sleep 0.1
+end
+
 # Start MUPIP BACKUP in the background.
 ($MUPIP backup -bytestream DEFAULT mumps.dat.bak >&! mupip_backup.out &; echo $! > pid.out) >&! /dev/null
+@ pid = `cat pid.out`
+# Wait for eotfbkupwait.m to report that the backup has started (or is done), so that MUPIP REORG -ENCRYPT starts only
+# after the backup has taken its copy of the file header.
+@ waitcnt = 0
+while (! -e eotfbkupwait.done)
+	@ waitcnt = $waitcnt + 1
+	if (30000 < $waitcnt) break
+	sleep 0.01
+end
+$grep -qE '^(STARTED|DONE)$' eotfbkupwait.out
+if ($status) then
+	echo "TEST-E-FAIL, MUPIP BACKUP (pid $pid) did not start. See eotfbkupwait.out"
+	exit 1
+endif
 
 # Start a MUPIP REORG -ENCRYPT.
 $MUPIP reorg -encrypt=$new_key -region "*" >&! mupip_reorg_encrypt.out
 
-@ pid = `cat pid.out`
 $gtm_tst/com/wait_for_proc_to_die.csh $pid 1800
 
 $grep -q "%YDB-I-BACKUPSUCCESS" mupip_backup.out
