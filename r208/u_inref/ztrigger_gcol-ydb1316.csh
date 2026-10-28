@@ -36,6 +36,10 @@ echo
 
 cp $gtm_tst/$tst/inref/ydb1316.m .
 
+# With journaling, each of the about 90000 $ZTRIGGER calls syncs the journal file to disk, which takes many minutes
+# on a slow disk, for example 18 minutes or more in the pipeline, against about 1 minute there without journaling.
+# Journaling has nothing to do with what this subtest verifies, so disable test-system dictated journaling.
+setenv gtm_test_jnl NON_SETJNL
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.out
 if ($status) then
 	echo "# dbcreate.csh failed. Output follows."
