@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,6 +26,9 @@ if ($?gtm_chset) then
 		$switch_chset M >&! disable_utf8.txt
 	endif
 endif
+# With ASYNCIO, the first write of a database block allocates storage for an AIO helper thread. That write is done by
+# a timer some time after the update, so the allocation can happen during a cycle below and be reported as a leak.
+setenv gtm_test_asyncio 0
 
 @ dbglvl = 0
 # Use the following memory debugging flags (from gtmdbglvl.h); comment out as needed:
@@ -48,7 +54,7 @@ $gtm_tst/com/dbcreate.csh mumps 10
 
 cat >> $gtmcrypt_config <<EOF
 files : {
-        key1 : "a_dat_key";
+	key1 : "a_dat_key";
 	key2 : "key2.key";
 	key3 : "c_dat_key";
 	key4 : "key4.key";
@@ -65,7 +71,7 @@ cp $gtmcrypt_config gtmcrypt1.cfg
 
 cat > gtmcrypt2.cfg <<EOF
 files : {
-        key1 : "b_dat_key";
+	key1 : "b_dat_key";
 	key2 : "key2.key";
 	key3 : "d_dat_key";
 	key4 : "key4.key";
@@ -131,7 +137,7 @@ database : {
 	} );
 };
 files : {
-        key2 : "i_dat_key";
+	key2 : "i_dat_key";
 	key4 : "j_dat_key";
 };
 EOF
