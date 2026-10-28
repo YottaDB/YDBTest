@@ -104,11 +104,16 @@ if ( ! -f /YDBTest/com/gtmtest.csh ) then
 	git fetch upstream_repo
 	set basecommit = `git merge-base HEAD upstream_repo/master`
 	setenv filelist `git diff --name-only $basecommit ':(exclude)docker' ':(exclude)com'`
+	# pipeline-run-changed-tests.csh uses these to tell whether a change only adds subtests
+	setenv ydbtest_basecommit $basecommit
+	setenv ydbtest_gitdir $cwd
 else
 	echo "# YDBTest already present at /YDBTest: no fetch needed"
 	git config --global --add safe.directory /YDBTest
 	set basecommit = `git merge-base HEAD master`
 	setenv filelist `git diff --name-only $basecommit | grep -v "docker/"`
+	setenv ydbtest_basecommit $basecommit
+	setenv ydbtest_gitdir $cwd
 endif
 echo " "
 

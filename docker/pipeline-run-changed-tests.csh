@@ -10,6 +10,16 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
+# pipeline-test-ydb.csh and pipeline-test-ydbtest.csh export the YDBTest checkout this pipeline runs and the commit
+# its changes are based on. With them, a change that only adds subtests runs just those subtests. Without them, such
+# as in a YDB pipeline whose docker image has an older pipeline-test-ydb.csh, a changed instream.csh or inref file runs
+# its whole test.
+set basecommit = ""
+if ($?ydbtest_basecommit && $?ydbtest_gitdir) then
+	set basecommit = "$ydbtest_basecommit"
+	set gitdir = "$ydbtest_gitdir"
+endif
+
 cd /usr/library/gtm_test/T999
 
 set instream_invokelist_regular = ""
@@ -82,6 +92,7 @@ echo " "
 # If it is, add it so that we invoke the test system with "-t xxx -t yyy -t zzz"
 # Reorg tests are added to a separate list, as they are run with -reorg
 foreach file ($filelist)
+	unset test
 	set filename = $file:t
 	set directory_name = `echo $file | cut -d / -f 2`
 	# If instream.csh changes, then test the entire test
@@ -90,6 +101,28 @@ foreach file ($filelist)
 	# If a file inside inref changes, then test the entire test, as we can't tell which test it belongs to
 	else if ( "inref" == "$directory_name" ) then
 		set test = `echo $file | cut -d / -f 1`
+	endif
+	# Two kinds of change only add subtests:
+	# 1. An instream.csh change whose lines, other than its copyright line, are all "# <subtest> ... [author]" lines in
+	#    the subtest table or 'setenv subtest_list_<kind> "$subtest_list_<kind> <subtest>"' lines.
+	# 2. A new inref file, in a test that refers to no inref files by wildcard.
+	# If u_inref or outref files of the same test change too, run just those subtests, in the loop below.
+	if ( $?test && ("" != "$basecommit") ) then
+		if (0 != `echo $filelist | tr " " "\n" | grep -cE "^$test/(u_inref|outref)/"`) then
+			if ("instream.csh" == "$filename") then
+				set nother = `git -C $gitdir diff -U0 $basecommit -- $file | grep -E '^[-+]' | grep -vE '^(---|[+][+][+])' | grep -v 'Copyright' | grep -vcE '^[+](#[[:space:]]+[^[:space:]]+[[:space:]]+\[|setenv[[:space:]]+subtest_list_[a-z_]+[[:space:]]+"[$]subtest_list_[a-z_]+ [^ ]+"$)'`
+				@ only_adds = (0 == $nother)
+			else
+				set nadded = `git -C $gitdir diff --name-only --diff-filter=A $basecommit -- $file | wc -l`
+				# A subtest that picks up inref files by wildcard can use the new file too
+				set nwildcard = `grep -rhE 'inref/[^[:space:]]*[*?[{]' $test/u_inref $test/instream.csh | wc -l`
+				@ only_adds = ((1 == $nadded) && (0 == $nwildcard))
+			endif
+			if ($only_adds) then
+				echo "# $file only adds subtests: run just the changed subtests of [$test]"
+				unset test
+			endif
+		endif
 	endif
 	if ( $?test ) then
 		# Space delimiters ensure we don't accidentally exclude a test due to partial matching; it needs to be a whole word
@@ -202,6 +235,7 @@ endif
 # We cross check that xxx is found in the subtest_list in test/instream.csh
 # Note that we run each sequentially (rather than together as above) because the test system is incapable of combining different -t xxx/yyy -t aaa/bbb
 set subtest_non_replic_invokelist = ""
+set seen_subtests = ""
 set subtest_replic_invokelist = ""
 foreach file ($filelist)
 	set directory_name = `echo $file | cut -d / -f 2`
@@ -251,6 +285,9 @@ foreach file ($filelist)
 		rm instream_setenvs
 
 		set subtest = $file:r:t
+		# Consider each subtest once, even when both its u_inref and its outref file change
+		if (" $seen_subtests " =~ "* $test/$subtest *") continue
+		set seen_subtests = "$seen_subtests $test/$subtest"
 
 		# Regular tests
 		if ( " $subtest_list_non_replic " =~ " *$subtest* " || " $subtest_list_common " =~ " *$subtest* " || ( " $subtest_list " =~ " *$subtest* " && $is_regular_test ) ) then

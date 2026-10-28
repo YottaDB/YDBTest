@@ -87,6 +87,9 @@ if ( $?CI_COMMIT_BRANCH ) then
 
 		set basecommit = `git merge-base HEAD upstream_repo/master`
 		setenv filelist `git diff --name-only $basecommit`
+		# pipeline-run-changed-tests.csh uses these to tell whether a change only adds subtests
+		setenv ydbtest_basecommit $basecommit
+		setenv ydbtest_gitdir $gtm_tst
 		popd >& /dev/null
 	endif
 	rm ydbtest_open_mrs.json
