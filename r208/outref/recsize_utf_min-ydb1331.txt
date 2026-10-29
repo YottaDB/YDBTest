@@ -1,0 +1,56 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1331] RECORDSIZE of a device with a UTF-8 or UTF-16 CHSET must hold any one character        #
+#----------------------------------------------------------------------------------------------------#
+
+# A character takes up to 4 bytes in UTF-8 and in UTF-16. A device with a smaller RECORDSIZE wrote a
+# character that did not fit anyway, producing records longer than RECORDSIZE, looped forever writing
+# a UTF-16 surrogate pair, or issued BADCHAR reading a valid FIXED file. Now OPEN and USE issue
+# RECSIZETOOSMALL for such a device, and a USE, or an OPEN of an open device, that fails leaves the device
+# as it was. The STDERR device of a PIPE, whose RECORDSIZE was 0, now gets the RECORDSIZE of the PIPE.
+#
+# Each case names the error it expects, or the bytes in hex that the file must hold, and prints PASS or
+# WRONG.
+
+# Stage 1 : devices with a UTF-8 or UTF-16 CHSET, in UTF-8 mode
+# Command : $gtm_dist/mumps -run utf^ydb1331
+# Before the fix, each OPEN and USE with a RECORDSIZE of 1 to 3 worked (except RECORDSIZE=3 with UTF-16,
+# which issued RECSIZENOTEVEN), so the cases that expect RECSIZETOOSMALL printed WRONG, and the pipeerr
+# READ returned an empty string (an assert failure in iorm_readfl.c in a Debug build). recsize0, pipeerrvar
+# and pipeerrrec had the same result
+#   expect RECSIZETOOSMALL for a RECORDSIZE of 1 to 3, leaving a device that is open as it was, RECORDSIZE=4
+#   to hold any character, and the STDERR device of a FIXED PIPE to READ its line
+PASS : fixed1 : OPEN of a FIXED file with RECORDSIZE=1 : RECSIZETOOSMALL
+PASS : var3 : OPEN of a VARIABLE file with RECORDSIZE=3 : RECSIZETOOSMALL
+PASS : stream2 : OPEN of a STREAM file with RECORDSIZE=2 : RECSIZETOOSMALL
+PASS : utf16be2 : OPEN of a FIXED file with RECORDSIZE=2 and OCHSET="UTF-16BE" : RECSIZETOOSMALL
+PASS : utf16be3 : OPEN of a FIXED file with RECORDSIZE=3 and OCHSET="UTF-16BE" : RECSIZENOTEVEN
+PASS : utf16le2 : OPEN of a FIXED file with RECORDSIZE=2 and ICHSET="UTF-16LE" : RECSIZETOOSMALL
+PASS : ichonly : OPEN of a FIXED file with RECORDSIZE=1, ICHSET="UTF-8" and OCHSET="M" : RECSIZETOOSMALL
+PASS : msgtext : OPEN of a FIXED file with RECORDSIZE=2 (the text of the error) : RECORDSIZE [2] needs to be at least 4
+PASS : recsize0 : OPEN of a FIXED file with RECORDSIZE=0 : RMWIDTHPOS
+PASS : pipe2 : OPEN of a PIPE with RECORDSIZE=2 (open file descriptors added, what the command saw) : RECSIZETOOSMALL 0 eof
+PASS : usechset : USE with OCHSET="UTF-8" of a device with OCHSET="M" and RECORDSIZE=1 : RECSIZETOOSMALL REC=1 ICHSET=M OCHSET=M 61 62
+PASS : reopen : OPEN with RECORDSIZE=1 again with RECORDSIZE=4, then WRITE $CHAR(400) : RECSIZETOOSMALL c6 90 20 20
+PASS : openfail : OPEN of a new file with RECORDSIZE=1, then USE ($ZSEARCH(), file descriptors added) : RECSIZETOOSMALL IONOTOPEN 0 0
+PASS : openchset : OPEN with OCHSET="UTF-8" of an open M device with RECORDSIZE=1 : RECSIZETOOSMALL REC=1 ICHSET=M OCHSET=M 61 62
+PASS : openrec : OPEN, RECORDSIZE=2 and CHSET="UTF-8", of an open M device with RECORDSIZE=8 : RECSIZETOOSMALL REC=8 ICHSET=M OCHSET=M
+PASS : fixed4 : FIXED file with RECORDSIZE=4, WRITE $CHAR(65536),$CHAR(400),! : f0 90 80 80 c6 90 20 20
+PASS : utf16be4 : FIXED file with RECORDSIZE=4 and OCHSET="UTF-16BE", WRITE $CHAR(65536),! : d8 00 dc 00
+PASS : pipe4 : PIPE with RECORDSIZE=4 to cat, WRITE $CHAR(400),! and READ it back ($LENGTH and $ASCII) : 1 400
+PASS : pipeerr : FIXED PIPE with STDERR and no RECORDSIZE, READ a line from STDERR ($TEST, line) : 1 err
+PASS : pipeerr16 : PIPE with STDERR and ICHSET="UTF-16LE", READ a line from STDERR ($TEST, line) : 1 er
+PASS : pipeerrvar : PIPE that is not FIXED, with STDERR, READ a line from STDERR ($TEST, line) : 1 err
+PASS : pipeerrrec : FIXED PIPE with STDERR, RECORDSIZE=8, READ from STDERR (REC=, $TEST, record) : REC=8 1 abcdefgh
+PASS : mchset1 : FIXED file with RECORDSIZE=1 and OCHSET="M", WRITE "ab" : 61 62
+
+# Stage 2 : devices in M mode
+# Command : $gtm_dist/mumps -run m^ydb1331
+# Before the fix, the same result
+#   expect RECORDSIZE=1 to work, also with OCHSET="UTF-8", which M mode ignores, and the STDERR device of a
+#   FIXED PIPE to READ its line
+PASS : mfixed1 : FIXED file with RECORDSIZE=1, WRITE "ab" : 61 62
+PASS : mvar1 : VARIABLE file with RECORDSIZE=1, WRITE "ab",! : 61 0a 62 0a
+PASS : mutf1 : FIXED file with RECORDSIZE=1 and OCHSET="UTF-8" (ignored in M mode), WRITE $CHAR(200) : c8
+PASS : pipeerr : FIXED PIPE with STDERR and no RECORDSIZE, READ a line from STDERR ($TEST, line) : 1 err
+
+# Done

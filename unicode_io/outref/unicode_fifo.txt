@@ -62,9 +62,17 @@ OK, was expecting an error
 ---------------------------------------------
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-8"):60
--> USE "unicodefifoUTF-8.pipe"
-ZSHOW "D" output: unicodefifoUTF-8.pipe OPEN FIFO REC=1 
-PASS
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+151028274,open+13^io,%YDB-E-RECSIZETOOSMALL, RECORDSIZE [1] needs to be at least 4 if ICHSET or OCHSET is UTF-8, UTF-16, UTF-16LE or UTF-16BE
+error+6^unicodefifo
+open+13^io
+    ($ZTRAP)
+test+3^unicodefifo
+unicodefifo+33^unicodefifo
++1^GTM$DMOD    (Direct mode) 
+Will continue with the rest of the tests...
+OK, was expecting an error
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=32768:CHSET="UTF-8"):60

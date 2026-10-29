@@ -3,7 +3,7 @@
 ; Copyright (c) 2006-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -45,7 +45,7 @@ unicodefifo(encoding);
 	do test(file,"FIFO:WRITE:RECORDSIZE=-1","",FAIL)
 	do test(file,"FIFO:WRITE:RECORDSIZE=0","",FAIL)
 	if (is16) do test(file,"FIFO:WRITE:RECORDSIZE=1","",FAIL)
-	if ('is16) do test(file,"FIFO:WRITE:RECORDSIZE=1","",PASS) ; RECORDSIZE=1 is not allowed in UTF-16*
+	if ('is16) do test(file,"FIFO:WRITE:RECORDSIZE=1","",$select(isM:PASS,1:FAIL)) ; RECORDSIZE=1 is not allowed in UTF-8 and UTF-16*
 	do test(file,"FIFO:WRITE:RECORDSIZE=32768","",PASS)
 	do test(file,"FIFO:WRITE:RECORDSIZE=1048576","",PASS)
 	do test(file,"FIFO:WRITE:RECORDSIZE=1048580","",FAIL)

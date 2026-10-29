@@ -87,6 +87,7 @@
 # fuzz_asserts2-ydb1101			[nars]	Test more error paths found by fuzz testing that failed asserts in a Debug build issue the error
 # emit_rterror-ydb1344			[nars]	Test compiling a line with an invalid special variable or function name followed by another syntax error issues the errors
 # tstart_dm_args-ydb1326		[nars]	Test TSTART in direct mode with a transaction id or local variable names from expressions or indirection
+# recsize_utf_min-ydb1331		[nars]	Test OPEN and USE reject a RECORDSIZE smaller than 4 for a device with a UTF-8 or UTF-16 CHSET
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -168,6 +169,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts2-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic emit_rterror-ydb1344"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_dm_args-ydb1326"
+setenv subtest_list_non_replic	"$subtest_list_non_replic recsize_utf_min-ydb1331"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -196,9 +198,10 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list pthread_exit_nomem-ydb1292"
 endif
 
-# qsubscript_badchar-ydb1311 tests UTF-8 mode only, so exclude it where UTF-8 mode is not supported
+# qsubscript_badchar-ydb1311 and recsize_utf_min-ydb1331 test UTF-8 mode, so exclude them where UTF-8 mode is not supported
 if ("TRUE" != "$gtm_test_unicode_support") then
 	setenv subtest_exclude_list "$subtest_exclude_list qsubscript_badchar-ydb1311"
+	setenv subtest_exclude_list "$subtest_exclude_list recsize_utf_min-ydb1331"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
