@@ -1,0 +1,46 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1322] ZCOMPILE with qualifiers but no file name prompts for one after an earlier ZCOMPILE     #
+#----------------------------------------------------------------------------------------------------#
+
+# A ZCOMPILE with qualifiers but no file name used the state left by an earlier ZCOMPILE, and so did not
+# prompt for a file name.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : ZCOMPILE with qualifiers but no file name, after a ZCOMPILE of a file
+#   expect the second ZCOMPILE to prompt for the file name, and to compile okrtn.m, the next line
+#   previously a Release build issued FILEPARSE with a garbage file name and FILEPATHTOOLONG without
+#   prompting, and a Debug build failed an assert in zl_cmd_qlf.c
+# Command : $gtm_dist/mumps -direct < zcnofile.inp, where zcnofile.inp has these lines
+#   zcompile " -nowarning abcd"
+#   zcompile " -nowarning"
+#   okrtn.m
+#   write "okrtn.o ",$select(""=$zsearch("okrtn.o"):"missing",1:"exists"),!
+PASS : zcnofile output has okrtn.o exists
+PASS : zcnofile output does not have FILEPARSE
+PASS : zcnofile output does not have FILEPATHTOOLONG
+PASS : zcnofile output does not have a fatal error (-F-)
+----------
+Error FILENOTFND seen in zcnofile.out as expected:
+%YDB-E-FILENOTFND, File ##TEST_PATH##/abcd not found
+----------
+
+# Stage 2 : two ZCOMPILEs with qualifiers but no file name, each answering the prompt with a file name
+#   expect both ZCOMPILEs to prompt for the file name, and to compile okrtn1.m and okrtn2.m
+#   previously the second ZCOMPILE did not prompt, as in stage 1, because the first left its prompted
+#   file name marked as already returned
+# Command : $gtm_dist/mumps -direct < zcprompt2.inp, where zcprompt2.inp has these lines
+#   zcompile " -nowarning"
+#   okrtn1.m
+#   zcompile " -nowarning"
+#   okrtn2.m
+#   write "okrtn1.o ",$select(""=$zsearch("okrtn1.o"):"missing",1:"exists"),!
+#   write "okrtn2.o ",$select(""=$zsearch("okrtn2.o"):"missing",1:"exists"),!
+PASS : zcprompt2 output has okrtn1.o exists
+PASS : zcprompt2 output has okrtn2.o exists
+PASS : zcprompt2 output does not have FILEPARSE
+PASS : zcprompt2 output does not have FILEPATHTOOLONG
+PASS : zcprompt2 output does not have a fatal error (-F-)
+
+# Done

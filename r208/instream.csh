@@ -77,6 +77,7 @@
 # indr_err_glvn_slot-ydb1319		[nars]	Test an error while an indirect reference is saved in the glvn pool does not crash the process when the glvn pool later needs more space for subscripts
 # for_undef_lvtree-ydb1334		[nars]	Test a FOR whose subscripted control variable is new and whose initial value is undefined leaves the local variable intact
 # zcompile_repeat_qual-ydb1321		[nars]	Test ZCOMPILE and ZLINK with a qualifier repeated without a value do not corrupt the heap
+# zcompile_no_file-ydb1322		[nars]	Test ZCOMPILE with qualifiers but no file name prompts for one after an earlier ZCOMPILE
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -148,6 +149,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic side_effects_indr-ydb13
 setenv subtest_list_non_replic	"$subtest_list_non_replic indr_err_glvn_slot-ydb1319"
 setenv subtest_list_non_replic	"$subtest_list_non_replic for_undef_lvtree-ydb1334"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_repeat_qual-ydb1321"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_no_file-ydb1322"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
