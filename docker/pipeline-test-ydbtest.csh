@@ -31,11 +31,26 @@ endif
 echo "# ydbtest_branch: $ydbtest_branch"
 
 set filter = ".[] | select(.source_branch == \"$ydbtest_branch\") | .iid"
-echo "# Get the open MR that matches the name of the current YDBTest MR:"
-curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=opened&source_branch=${ydbtest_branch}" > ydb_mr.json
-set ydb_branch = `jq -r '.[].source_branch' ydb_mr.json`
-
-if ( $ydb_branch == "" ) then
+# A YDBTest change for a YDB issue (its commit title names one, e.g. "[YDB#NNNN]") usually goes with a YDB MR from a
+# branch of the same name. That YDB MR is often created a few seconds after this pipeline starts, in which case the
+# lookups below miss it and the test runs against YottaDB master instead. So, for such a change, keep retrying the
+# lookups for a while before falling back to master.
+if ( $?CI_COMMIT_TITLE ) then
+	set ydb_issue_in_title = `printenv CI_COMMIT_TITLE | grep -c 'YDB#[0-9]'`
+else
+	set ydb_issue_in_title = `git log -1 --format=%s | grep -c 'YDB#[0-9]'`
+endif
+set waited_secs = 0
+set max_wait_secs = 60
+while (1)
+	echo "# Get the open MR that matches the name of the current YDBTest MR:"
+	curl -s -k "https://gitlab.com/api/v4/projects/7957109/merge_requests?scope=all&state=opened&source_branch=${ydbtest_branch}" > ydb_mr.json
+	set ydb_branch = `jq -r '.[].source_branch' ydb_mr.json`
+	if ( "$ydb_branch" != "" ) then
+		set mr_id = `jq -r "$filter" ydb_mr.json`
+		echo "# MR ID for open branch is $mr_id"
+		break
+	endif
 	echo "# Branch name matching YDB open branch not found..."
 	echo "# Get the merged MR that matches the name of the current YDBTest MR:"
 	# Ask for merged MRs from this exact source branch. Listing all merged MRs instead returns only the most recent
@@ -46,13 +61,16 @@ if ( $ydb_branch == "" ) then
 	if ( "$merged_mr_id" != "" ) then
 		set mr_id = $merged_mr_id
 		echo "# MR ID for merged branch is $mr_id"
-	else
-		echo "# Branch name matching YDB merged branch not found..."
+		break
 	endif
-else
-	set mr_id = `jq -r "$filter" ydb_mr.json`
-	echo "# MR ID for open branch is $mr_id"
-endif
+	echo "# Branch name matching YDB merged branch not found..."
+	if ( ("$ydbtest_branch" == "master") || ($ydb_issue_in_title == 0) || ($waited_secs >= $max_wait_secs) ) then
+		break
+	endif
+	echo "# Commit title names a YDB issue: wait 30 seconds for a YDB MR from this branch to be created (waited $waited_secs of $max_wait_secs seconds so far)"
+	sleep 30
+	@ waited_secs += 30
+end
 
 if ( $ydbtest_branch != "master" && $?mr_id ) then
 	# We have a match... grab corresponding YDB MR number
