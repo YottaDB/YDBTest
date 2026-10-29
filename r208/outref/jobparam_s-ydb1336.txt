@@ -1,0 +1,37 @@
+#-------------------------------------------------------------------------------------------------#
+# [YDB#1336] A JOB command with an unknown job parameter name starting with S does not read past #
+# the end of the JOB parameter name table                                                         #
+#-------------------------------------------------------------------------------------------------#
+
+# The compiler looks up a job parameter name only among the names in the JOB parameter name table that
+# start with the same letter. The index of where the names after S start was one too high, so for a
+# name that starts with S but is not a valid name, the lookup compared one entry past the end of the
+# table. Only an ASAN build showed that (a global-buffer-overflow in namelook()), as the extra entry
+# did not match.
+#
+# Stage 1 compiles JOB commands with job parameter names that start with S, both names that are not
+# valid and the valid ones (STARTUP, SCHEDULE, SWAPPING and their 3 letter abbreviations). It compiles
+# each JOB command with XECUTE "if 0  job ^nosuchrtn:(<name>)", which compiles the JOB command without
+# running the JOB command, and checks that a name that is not valid gets a JOBPARUNK error and that a
+# valid name gets no error.
+
+# Stage 1 : compile JOB commands with job parameter names that start with S
+# Before the fix : an ASAN build was terminated by a global-buffer-overflow in namelook() at
+#                  the first name (S), so none of the lines below was printed. Other builds printed
+#                  the lines below.
+# With the fix   : expect JOBPARUNK for each name that is not valid, and no error for each valid name
+# Command : $gtm_dist/mumps -run names^ydb1336
+PASS : JOB parameter S is rejected with JOBPARUNK
+PASS : JOB parameter SA is rejected with JOBPARUNK
+PASS : JOB parameter SZ is rejected with JOBPARUNK
+PASS : JOB parameter SYS is rejected with JOBPARUNK
+PASS : JOB parameter STAR is rejected with JOBPARUNK
+PASS : JOB parameter SWAPPINGS is rejected with JOBPARUNK
+PASS : JOB parameter STA="/bin/true" is accepted
+PASS : JOB parameter STARTUP="/bin/true" is accepted
+PASS : JOB parameter SCH="x" is accepted
+PASS : JOB parameter SCHEDULE="x" is accepted
+PASS : JOB parameter SWA is accepted
+PASS : JOB parameter SWAPPING is accepted
+
+# Done
