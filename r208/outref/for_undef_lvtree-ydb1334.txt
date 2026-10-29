@@ -1,0 +1,75 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1334] A FOR whose subscripted control variable is new and whose initial value is undefined   #
+# leaves the local variable intact                                                                   #
+#----------------------------------------------------------------------------------------------------#
+
+# The FOR creates its control variable node, and any nodes above it that do not exist, before it
+# evaluates the initial value. When that issues LVUNDEF, the error handling deletes those nodes again.
+# Deleting the nodes above the control variable used a path through their trees left over from the
+# lookup of the initial value, which damaged the tree of the local variable.
+# Each stage runs its case in a new process. The case catches the LVUNDEF in $ETRAP, then prints PASS
+# or WRONG for each check, and the local variable with ZWRITE if it has fewer than 5 nodes.
+
+# Stage 1 : SET abc(2)=1, then FOR abc(1,1)=abc(3)
+#   expect LVUNDEF, abc(1) not to exist, and abc(2) to be intact
+#   previously an assert in lv_tree.c in a Debug build, and abc(1) left in place, then a SIG-11 in a
+#   Release build
+# Command : $gtm_dist/mumps -run minimal^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $data(abc(1))=0
+PASS : $QUERY visits the same 1 nodes as before the FOR
+abc(2)=1
+PASS : every node could be set and killed
+
+# Stage 2 : SET abc("",1)=1,abc("aaa",1)=1, then FOR abc(5,"ddx")=abc("aaa")
+#   expect LVUNDEF, abc(5) not to exist, and the 2 nodes to be intact
+#   previously the same failures as in stage 1
+# Command : $gtm_dist/mumps -run small^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $data(abc(5))=0
+PASS : $QUERY visits the same 2 nodes as before the FOR
+abc("",1)=1
+abc("aaa",1)=1
+PASS : every node could be set and killed
+
+# Stage 3 : 100 nodes with numeric and string first subscripts, then 50 times
+#           FOR abc(25.5,"x","y")=abc(<a numeric first subscript that exists>,"none")
+#   expect LVUNDEF each time, abc(25.5) not to exist, and the 100 nodes to be intact
+#   previously an assert in lv_tree.c in a Debug build, and a SIG-11 in a Release build
+# Command : $gtm_dist/mumps -run deep^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $data(abc(25.5))=0
+PASS : $QUERY visits the same 100 nodes as before the FOR
+PASS : every node could be set and killed
+
+# Stage 4 : SET abc("",1)=1,abc("aaa",1)=1,abc(5,"q")=1, then FOR abc(5,"ddx")=abc("aaa")
+#   expect LVUNDEF, abc(5,"ddx") not to exist, and the 3 nodes to be intact
+#   previously the same result, since abc(5) has another child and is not deleted
+# Command : $gtm_dist/mumps -run sibling^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $data(abc(5,"ddx"))=0
+PASS : $QUERY visits the same 3 nodes as before the FOR
+abc("",1)=1
+abc(5,"q")=1
+abc("aaa",1)=1
+PASS : every node could be set and killed
+
+# Stage 5 : SET abc(1)=1,abc(2)=2,abc(3)=3, then FOR abc(1,1)=abc(4), then SET abc(5)=5,abc(6)=6
+#   expect LVUNDEF, abc(1) to keep its value, and $QUERY to visit the 5 nodes
+#   previously the same result, since abc(1) has a value and is not deleted, so the error handling must
+#   leave the tree of the first level subscripts (and its lastLookup clue) as it was
+# Command : $gtm_dist/mumps -run valued^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $QUERY visits the 5 nodes
+PASS : abc(1) still has its value
+
+# Stage 6 : SET abc(1,2)=1,abc(2)=2,abc(3)=3, then FOR abc(1,1)=abc(4), then SET abc(5)=5,abc(6)=6
+#   expect LVUNDEF, abc(1,2) to keep its value, and $QUERY to visit the 5 nodes
+#   previously the same result, since abc(1) has another child and is not deleted, so the error handling
+#   must leave the tree of the first level subscripts (and its lastLookup clue) as it was
+# Command : $gtm_dist/mumps -run otherchild^ydb1334
+PASS : the FOR issued LVUNDEF
+PASS : $QUERY visits the 5 nodes
+PASS : abc(1,2) still has its value
+
+# Done
