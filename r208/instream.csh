@@ -78,6 +78,7 @@
 # for_undef_lvtree-ydb1334		[nars]	Test a FOR whose subscripted control variable is new and whose initial value is undefined leaves the local variable intact
 # zcompile_repeat_qual-ydb1321		[nars]	Test ZCOMPILE and ZLINK with a qualifier repeated without a value do not corrupt the heap
 # zcompile_no_file-ydb1322		[nars]	Test ZCOMPILE with qualifiers but no file name prompts for one after an earlier ZCOMPILE
+# view_trace_errors-ydb1323		[nars]	Test VIEW "TRACE" after an error turning tracing on or off saves the profile, without GTMASSERT2 or database damage
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -150,6 +151,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic indr_err_glvn_slot-ydb1
 setenv subtest_list_non_replic	"$subtest_list_non_replic for_undef_lvtree-ydb1334"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_repeat_qual-ydb1321"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_no_file-ydb1322"
+setenv subtest_list_non_replic	"$subtest_list_non_replic view_trace_errors-ydb1323"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

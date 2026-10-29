@@ -1,0 +1,70 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1323] VIEW "TRACE" after an error turning tracing on or off                                   #
+#----------------------------------------------------------------------------------------------------#
+
+# An error writing the profiling data left a subscript count one higher each time. An invalid global
+# name in VIEW "TRACE":0 left tracing on with a partly overwritten name, under which the profiling data
+# was written at exit.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : 35 cycles of VIEW "TRACE" on and off, with no global directory
+#   expect ZGBLDIRACC and ENO2 for each of the 35 attempts to write the profiling data and for the one
+#   at exit, then MPROFRUNDOWN at exit
+#   previously a Release build failed with GTMASSERT2 in callg.c, and a Debug build failed an assert in
+#   callg.c, after 31 to 35 cycles
+# Command : $gtm_dist/mumps -direct < vtnogld.inp, where vtnogld.inp has these lines
+#   view "trace":1:"^trace"
+#   view "trace":0
+#   view "trace":1:"^trace"
+#   view "trace":0
+#   ... (71 lines in all)
+PASS : vtnogld output has done
+PASS : vtnogld output does not have a fatal error (-F-)
+# ZGBLDIRACC was issued 36 times
+# ENO2 was issued 36 times
+# MPROFRUNDOWN was issued 1 times
+
+# Stage 2 : VIEW "TRACE":0 with the invalid global name "^ race" while VIEW "GDSCERT" is on
+#   expect VIEWNOTFOUND, the profiling data to be written to ^trace at exit, and MUPIP INTEG to find
+#   no errors
+#   previously a Release build failed with GTMASSERT2 in cert_blk.c at exit, writing into a global
+#   with an invalid name, and a Debug build failed an assert in gv_srch_map.c
+# Command : $gtm_dist/mumps -direct < vtcert.inp, where vtcert.inp has these lines
+#   kill ^trace
+#   view "trace":1:"^trace" view "gdscert":1 view "trace":0:"^ race"
+#   write "done",!
+PASS : vtcert output has done
+PASS : vtcert output does not have a fatal error (-F-)
+----------
+Error VIEWNOTFOUND seen in vtcert.out as expected:
+%YDB-E-VIEWNOTFOUND, View parameter ^ race not valid
+----------
+# Command : $gtm_dist/mumps -run %XCMD 'write $data(^trace)'
+PASS : $data(^trace) is 10
+# Command : $gtm_dist/mupip integ -region "*"
+PASS : MUPIP INTEG found no errors
+
+# Stage 3 : VIEW "TRACE":0 with the invalid global name "^max set x(i)=$trace"
+#   expect VIEWNOTFOUND, the profiling data to be written to ^trace at exit, and MUPIP INTEG to find
+#   no errors
+#   previously a Release build issued no error at exit but wrote into a global with an invalid
+#   name, which MUPIP INTEG reported, and a Debug build failed an assert in gvnh_spanreg_init.c
+# Command : $gtm_dist/mumps -direct < vtgarbage.inp, where vtgarbage.inp has these lines
+#   kill ^trace
+#   view "trace":1:"^trace"
+#   view "trace":0:"^max set x(i)=$trace"
+#   write "done",!
+PASS : vtgarbage output has done
+PASS : vtgarbage output does not have a fatal error (-F-)
+----------
+Error VIEWNOTFOUND seen in vtgarbage.out as expected:
+%YDB-E-VIEWNOTFOUND, View parameter ^max set x(i)=$trace not valid
+----------
+# Command : $gtm_dist/mumps -run %XCMD 'write $data(^trace)'
+PASS : $data(^trace) is 10
+# Command : $gtm_dist/mupip integ -region "*"
+PASS : MUPIP INTEG found no errors
+
+# Done
