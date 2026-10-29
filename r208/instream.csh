@@ -96,6 +96,7 @@
 # new_ztrap_stackcrit-ydb1325		[nars]	Test a NEW $ZTRAP that fails with STACKCRIT does not leave garbage in $ZTRAP
 # trap_after_exception-ydb1329		[nars]	Test an error in $ETRAP or $ZTRAP code after a device EXCEPTION ran in that code is reported as ERRWETRAP or ERRWZTRAP
 # trap_tstart_hang-ydb1332		[nars]	Test $ETRAP or $ZTRAP code that does a TSTART and ends without TCOMMIT or TROLLBACK does not hang
+# zgoto_dmod-ydb1328			[nars]	Test ZGOTO 0 from direct mode to an entryref with no label and no routine name issues RTNNAME
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -186,6 +187,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic invdlrcval_value-ydb134
 setenv subtest_list_non_replic	"$subtest_list_non_replic new_ztrap_stackcrit-ydb1325"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trap_after_exception-ydb1329"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trap_tstart_hang-ydb1332"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zgoto_dmod-ydb1328"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

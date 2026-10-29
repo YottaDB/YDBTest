@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,8 +25,8 @@ echo '# Expecting ADDRTOOLONG error in below output'
 echo "------------------------------------------------------------"
 set base = "ydb860opensocketlisten"
 cat > $base.m << CAT_EOF
- set sf=\$translate(\$justify("x",128)," ","x")
- open "s":(LISTEN=sf_":LOCAL")::"SOCKET"
+	set sf=\$translate(\$justify("x",128)," ","x")
+	open "s":(LISTEN=sf_":LOCAL")::"SOCKET"
 CAT_EOF
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
@@ -37,14 +37,14 @@ echo ""
 echo "------------------------------------------------------------"
 echo '# Test ZGOTO using long entryref names works fine'
 echo '# This used to previously (before YDB@1d843ecc) fail with a SIG-11/stack-buffer-overflow'
-echo '# Expecting LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output'
+echo '# Expecting RTNNAME/LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output'
 echo "------------------------------------------------------------"
 set base = "ydb860zgoto"
 cat > $base.m << CAT_EOF
- write "# Expecting a LABELMISSING error when using a label name longer than 31 bytes",!
- set y=\$translate(\$justify("x",2**(5+\$random(16)))," ","x") zgoto "*":@y
- write "# Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes",!
- set y=\$translate(\$justify("x",2**(5+\$random(16)))," ","x") zgoto "*":x+2^@y
+	write "# Expecting a LABELMISSING error (RTNNAME in direct mode) when using a label name longer than 31 bytes",!
+	set y=\$translate(\$justify("x",2**(5+\$random(16)))," ","x") zgoto "*":@y
+	write "# Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes",!
+	set y=\$translate(\$justify("x",2**(5+\$random(16)))," ","x") zgoto "*":x+2^@y
 
 CAT_EOF
 echo "# Try $base.m using [yottadb -direct]"
@@ -90,12 +90,12 @@ echo '# Expecting DEVICEREADONLY error in below output'
 echo "------------------------------------------------------------"
 set base = "ydb860devicereadonly"
 cat > $base.m << CAT_EOF
- set fn="generated.m"
- open fn:new
- use fn
- write " z"
- set \$zroutines=""
- zlink "generated.m"
+	set fn="generated.m"
+	open fn:new
+	use fn
+	write " z"
+	set \$zroutines=""
+	zlink "generated.m"
 CAT_EOF
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
@@ -138,8 +138,8 @@ echo '# This used to previously (before YDB@3d35722e) fail with a GTMASSERT fata
 echo "------------------------------------------------------------"
 set base = "ydb860zallocate"
 cat > $base.m << CAT_EOF
- zallocate ^x
- zsystem "\$ydb_dist/yottadb -run %XCMD 'zallocate (^x,^y):1 write ""In child process : \$test="",\$test,!'"
+	zallocate ^x
+	zsystem "\$ydb_dist/yottadb -run %XCMD 'zallocate (^x,^y):1 write ""In child process : \$test="",\$test,!'"
 CAT_EOF
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct

@@ -29,15 +29,15 @@ YDB>
 ------------------------------------------------------------
 # Test ZGOTO using long entryref names works fine
 # This used to previously (before YDB@1d843ecc) fail with a SIG-11/stack-buffer-overflow
-# Expecting LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output
+# Expecting RTNNAME/LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output
 ------------------------------------------------------------
 # Try ydb860zgoto.m using [yottadb -direct]
 
 YDB>
-# Expecting a LABELMISSING error when using a label name longer than 31 bytes
+# Expecting a LABELMISSING error (RTNNAME in direct mode) when using a label name longer than 31 bytes
 
 YDB>
-%YDB-E-LABELMISSING, Label referenced but not defined: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+%YDB-E-RTNNAME, Routine name expected here
 
 YDB>
 # Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes
@@ -51,7 +51,7 @@ YDB>
 
 YDB>
 # Try ydb860zgoto.m using [yottadb -run]
-# Expecting a LABELMISSING error when using a label name longer than 31 bytes
+# Expecting a LABELMISSING error (RTNNAME in direct mode) when using a label name longer than 31 bytes
 ZSTATUS=+2^ydb860zgoto,%YDB-E-LABELMISSING, Label referenced but not defined: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes
 ZSTATUS=+4^ydb860zgoto,%YDB-E-ZLINKFILE, Error while zlinking "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.m not found,%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.o not found
@@ -187,8 +187,8 @@ YDB>
 YDB>
 
 YDB>
-	 zlink "generated.m"
-	                    ^-----
+		zlink "generated.m"
+		                   ^-----
 		At column 21, line 1, source module generated.m
 %YDB-E-DEVICEREADONLY, Cannot write to read-only device
 

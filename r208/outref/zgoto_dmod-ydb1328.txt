@@ -1,0 +1,33 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1328] ZGOTO 0 from direct mode to an entryref with no label and no routine name               #
+#----------------------------------------------------------------------------------------------------#
+
+# Without a label or a routine name, ZGOTO uses the current routine, which in direct mode is the
+# direct mode routine GTM$DMOD. For level 0, ZGOTO unwound every frame and then failed to relink
+# GTM$DMOD.
+#
+# The stage runs the lines shown in direct mode in a new process, and checks the output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : ZGOTO $ZLEVEL-1 (that is, 0) to a label that starts with $CHAR(0), which is treated as
+#           no label
+# Before the fix : NOTMNAME and ZLNOOBJECT for GTM$DMOD, after which $ZLEVEL was 0, in a Release build
+#                  (on x86_64, the process then got a SIG-11 when it exited), and an assert in
+#                  mdb_condition_handler.c in a Debug build
+# With the fix   : expect RTNNAME, and the next lines to run with $ZLEVEL 1
+# Command : $gtm_dist/mumps -direct < zgdmod.inp, where zgdmod.inp has these lines
+#   set x=$char(0)_"dummy"
+#   zgoto $zlevel-1:@x
+#   write "next line ran",!
+#   write "$zlevel=",$zlevel,!
+PASS : zgdmod output has RTNNAME
+PASS : zgdmod output has next line ran
+PASS : zgdmod output has $zlevel=1
+PASS : zgdmod output does not have NOTMNAME
+PASS : zgdmod output does not have a fatal error (-F-)
+----------
+Error RTNNAME seen in zgdmod.out as expected:
+%YDB-E-RTNNAME, Routine name expected here
+----------
+
+# Done
