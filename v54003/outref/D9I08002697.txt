@@ -37,7 +37,7 @@ mumps.dat
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-Journal Extension: 1073741823
+Journal Extension: 8388607
 
 
 Test setting journal extension to maximum with gde
@@ -53,7 +53,7 @@ mumps.dat
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-Journal Extension: 1073741823
+Journal Extension: 8388607
 
 
 Test setting journal extension beyond maximum with mupip
@@ -63,7 +63,7 @@ Using: ##TEST_AWK.*/mumps -run GDE
 mumps.gld
 Using: ##TEST_AWK.*/mupip
 mumps.dat
-%YDB-W-JNLINVEXT, Journal file extension 1073741824 is greater than the maximum allowed size of 1073741823.  Journal file not created.
+%YDB-W-JNLINVEXT, Journal file extension 8388608 is greater than the maximum allowed size of 8388607.  Journal file not created.
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 
 
@@ -80,7 +80,7 @@ Using: ##TEST_AWK.*/mupip
 mumps.dat
 ----------
 Error GDE-I-VALTOOBIG seen in dbcreate.out as expected:
-%GDE-I-VALTOOBIG, 1073741824 is larger than the maximum of 1073741823 for a EXTENSION
+%GDE-I-VALTOOBIG, 8388608 is larger than the maximum of 8388607 for a EXTENSION
 ----------
 ----------
 Error GDE-E-OBJNOTCHG seen in dbcreate.out as expected:

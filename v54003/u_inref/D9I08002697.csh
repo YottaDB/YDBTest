@@ -16,8 +16,8 @@
 
 ###########################################################################
 
-set JNL_EXT_MAX=1073741823
-set JNL_EXT_MAX_PLUS_ONE=1073741824
+set JNL_EXT_MAX=8388607
+set JNL_EXT_MAX_PLUS_ONE=8388608
 
 setenv gtm_test_jnl NON_SETJNL
 

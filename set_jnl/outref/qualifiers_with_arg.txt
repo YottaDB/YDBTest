@@ -212,16 +212,16 @@ journal extension=: expected 16384 blocks, but actual 16384
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 journal extension=: expected 1048575 blocks, but actual 1048575
-##SOURCE_PATH##/mupip set -journal=[no]before,alloc=3000,auto=1049575,extension=1073741823 -file mumps.dat
+##SOURCE_PATH##/mupip set -journal=[no]before,alloc=3000,auto=1049575,extension=8388607 -file mumps.dat
 %YDB-I-JNLALLOCGROW, Increased Journal ALLOCATION from [3000 blocks] to [1049575 blocks] to match AUTOSWITCHLIMIT for database file ##TEST_PATH##/mumps.dat
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with (NO|)BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-journal extension=: expected 1073741823 blocks, but actual 1073741823
-##SOURCE_PATH##/mupip set -journal=[no]before,alloc=3000,auto=1049576,extension=1073741824 -file mumps.dat
-%YDB-W-JNLINVEXT, Journal file extension 1073741824 is greater than the maximum allowed size of 1073741823.  Journal file not created.
+journal extension=: expected 8388607 blocks, but actual 8388607
+##SOURCE_PATH##/mupip set -journal=[no]before,alloc=3000,auto=1049576,extension=8388608 -file mumps.dat
+%YDB-W-JNLINVEXT, Journal file extension 8388608 is greater than the maximum allowed size of 8388607.  Journal file not created.
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-journal extension=: expected 1073741824 blocks, but actual 1073741823
+journal extension=: expected 8388608 blocks, but actual 8388607
 ============================================================
 Test Case 29
 YIELD_LIMIT option

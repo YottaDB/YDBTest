@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -241,15 +241,15 @@ $MUPIP set -journal=$jnlimg,alloc=3000,auto=1049575,extension=1048575 -file mump
 set jnl_extension = `$DSE dump -fileheader |& $grep "Journal Extension" | $tst_awk '{print $6}'`
 echo journal extension=: expected 1048575 blocks, but actual $jnl_extension
 #
-echo "$MUPIP set -journal=[no]before,alloc=3000,auto=1049575,extension=1073741823 -file mumps.dat"
-$MUPIP set -journal=$jnlimg,alloc=3000,auto=1049575,extension=1073741823 -file mumps.dat
+echo "$MUPIP set -journal=[no]before,alloc=3000,auto=1049575,extension=8388607 -file mumps.dat"
+$MUPIP set -journal=$jnlimg,alloc=3000,auto=1049575,extension=8388607 -file mumps.dat
 set jnl_extension = `$DSE dump -fileheader |& $grep "Journal Extension" | $tst_awk '{print $6}'`
-echo journal extension=: expected 1073741823 blocks, but actual $jnl_extension
+echo journal extension=: expected 8388607 blocks, but actual $jnl_extension
 #
-echo "$MUPIP set -journal=[no]before,alloc=3000,auto=1049576,extension=1073741824 -file mumps.dat"
-$MUPIP set -journal=$jnlimg,alloc=3000,auto=1049576,extension=1073741824 -file mumps.dat
+echo "$MUPIP set -journal=[no]before,alloc=3000,auto=1049576,extension=8388608 -file mumps.dat"
+$MUPIP set -journal=$jnlimg,alloc=3000,auto=1049576,extension=8388608 -file mumps.dat
 set jnl_extension = `$DSE dump -fileheader |& $grep "Journal Extension" | $tst_awk '{print $6}'`
-echo journal extension=: expected 1073741824 blocks, but actual $jnl_extension
+echo journal extension=: expected 8388608 blocks, but actual $jnl_extension
 echo "============================================================"
 #
 echo Test Case 29
