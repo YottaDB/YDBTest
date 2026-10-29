@@ -1,0 +1,38 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1324] VIEW "TRACE" into a global with 26 or 27 subscripts                                     #
+#----------------------------------------------------------------------------------------------------#
+
+# A global name with 26 or more subscripts overran the array that holds the name, as M profiling adds
+# up to 5 subscripts of its own.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : VIEW "TRACE" into a global with 26 subscripts, the most that leaves room for the 5 that
+#           M profiling adds
+#   expect the profile to be saved
+#   previously a Release build got a SIG-11, and a Debug build got a SIG-11 or failed an assert in callg.c
+# Command : $gtm_dist/mumps -direct < vtsubs26.inp, where vtsubs26.inp has these lines
+#   view "trace":1:"^t26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)"
+#   for i=1:1:3 set x=i
+#   view "trace":0
+#   write "$data(^t26)=",$data(^t26),!
+PASS : vtsubs26 output has $data(^t26)=10
+PASS : vtsubs26 output does not have a fatal error (-F-)
+
+# Stage 2 : VIEW "TRACE" into a global with 27 subscripts
+#   expect MAXNRSUBSCRIPTS, and no profile to be saved
+#   previously a Release build got a SIG-11, and a Debug build got a SIG-11 or failed an assert in callg.c
+# Command : $gtm_dist/mumps -direct < vtsubs27.inp, where vtsubs27.inp has these lines
+#   view "trace":1:"^t27(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)"
+#   for i=1:1:3 set x=i
+#   view "trace":0
+#   write "$data(^t27)=",$data(^t27),!
+PASS : vtsubs27 output has $data(^t27)=0
+PASS : vtsubs27 output does not have a fatal error (-F-)
+----------
+Error MAXNRSUBSCRIPTS seen in vtsubs27.out as expected:
+%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+----------
+
+# Done
