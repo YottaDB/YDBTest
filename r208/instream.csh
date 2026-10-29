@@ -98,6 +98,7 @@
 # trap_tstart_hang-ydb1332		[nars]	Test $ETRAP or $ZTRAP code that does a TSTART and ends without TCOMMIT or TROLLBACK does not hang
 # zgoto_dmod-ydb1328			[nars]	Test ZGOTO 0 from direct mode to an entryref with no label and no routine name issues RTNNAME
 # ztexit_tp_exit-ydb1333		[nars]	Test a process exits cleanly when $ZTEXIT is true and a transaction is active
+# system_gcol-ydb1335			[nars]	Test $SYSTEM does not hold garbage after SET $SYSTEM once the string pool has been expanded
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -190,6 +191,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic trap_after_exception-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic trap_tstart_hang-ydb1332"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgoto_dmod-ydb1328"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztexit_tp_exit-ydb1333"
+setenv subtest_list_non_replic	"$subtest_list_non_replic system_gcol-ydb1335"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

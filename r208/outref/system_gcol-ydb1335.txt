@@ -1,0 +1,35 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1335] $SYSTEM does not hold garbage after SET $SYSTEM once the string pool has been expanded  #
+#----------------------------------------------------------------------------------------------------#
+
+# SET $SYSTEM to a non-empty value sets $SYSTEM to its initial value followed by the new value, and
+# SET $SYSTEM to the empty string sets $SYSTEM back to the initial value. The initial value is kept in
+# the string pool, but the string pool garbage collector did not update the copy of the initial value
+# that SET $SYSTEM uses, so after a garbage collection that moved strings or expanded the string pool,
+# SET $SYSTEM used freed or reused memory in place of the initial value.
+#
+# Each stage uses enough string space (long local variable values) to expand the string pool, then
+# does a SET $SYSTEM and checks the new value of $SYSTEM. So that the memory freed when the string
+# pool is expanded no longer holds the initial value, the stages use the system memory allocator
+# (gtmdbglvl=0x80000000) and have glibc fill freed memory (MALLOC_PERTURB_=170).
+#
+# Each stage runs in its own process.
+
+# Command : setenv gtmdbglvl 0x80000000
+# Command : setenv MALLOC_PERTURB_ 170
+
+# Stage 1 : the example in YDB#1335: expand the string pool, then SET $SYSTEM="abc"
+# Before the fix : $SYSTEM had garbage in place of the initial value, followed by abc (an ASAN build
+#                  reported a heap-use-after-free in op_svput())
+# With the fix   : expect $SYSTEM to be the initial value followed by abc
+# Command : $gtm_dist/mumps -run append^ydb1335
+PASS : after SET $SYSTEM="abc" $SYSTEM is the expected value
+
+# Stage 2 : SET $SYSTEM="xyz", expand the string pool, then SET $SYSTEM="" to get back the initial
+#           value
+# Before the fix : $SYSTEM was garbage in place of the initial value
+# With the fix   : expect $SYSTEM to be the initial value
+# Command : $gtm_dist/mumps -run reset^ydb1335
+PASS : after SET $SYSTEM="" $SYSTEM is the expected value
+
+# Done
