@@ -1,0 +1,45 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1321] ZCOMPILE and ZLINK with a qualifier repeated without a value do not corrupt the heap    #
+#----------------------------------------------------------------------------------------------------#
+
+# A qualifier repeated without a value left a pointer to freed memory, which the next command freed
+# again.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : ZLINK and ZCOMPILE with a qualifier that is repeated without a value
+#   expect only the errors for the invalid qualifier value and the missing files, then $VIEW("REGION")
+#   to work
+#   previously the second free of the same memory made a Release build get a SIG-11, and a Debug build
+#   fail an assert in gtm_malloc_src.h, at the second ZLINK or a later command
+# Command : $gtm_dist/mumps -direct < zcrepeat.inp, where zcrepeat.inp has these lines
+#   zlink "test.m":"-n=-1ject -lis=-1ject -list"
+#   zlink "test.m":".noobject -qwerty"
+#   zcompile "-list=y.lis -list a.m"
+#   zcompile "b.m"
+#   zcompile "c.m"
+#   write "region=",$view("REGION","^efgh"),!
+PASS : zcrepeat output has region=DEFAULT
+PASS : zcrepeat output does not have a fatal error (-F-)
+----------
+Error FILENOTFND seen in zcrepeat.out as expected:
+%YDB-E-FILENOTFND, File test.m not found
+%YDB-E-FILENOTFND, File ##TEST_PATH##/a.m not found
+%YDB-E-FILENOTFND, File ##TEST_PATH##/b.m not found
+%YDB-E-FILENOTFND, File ##TEST_PATH##/c.m not found
+----------
+----------
+Error NOTMNAME seen in zcrepeat.out as expected:
+%YDB-E-NOTMNAME, -1ject is not a valid M name
+----------
+----------
+Error ZLINKFILE seen in zcrepeat.out as expected:
+%YDB-E-ZLINKFILE, Error while zlinking "test"
+----------
+----------
+Error ZLNOOBJECT seen in zcrepeat.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+
+# Done
