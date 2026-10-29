@@ -10,8 +10,10 @@
 # White box case WBTEST_HOLD_FORK_LOCK_IN_MALLOC (413) stands in for such an allocator. Before the first
 # malloc() of 64MiB or more, it takes a lock that its own prepare handler also takes, and holds it for
 # 5 seconds. Without the fix, step 2 prints FAIL.
+#
+# ydb1293_malloc.c calls ydb_malloc() for 64MiB, which allocates it with malloc().
 
-# Step 1 : start [yottadb -run ydb1293] in the background with white box case 413 enabled
+# Step 1 : start [./ydb1293_malloc] in the background with white box case 413 enabled
 #          expect it to report that it holds the fork lock in malloc()
 PASS : the process holds the fork lock in malloc()
 

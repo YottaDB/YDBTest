@@ -23,21 +23,28 @@ echo "#"
 echo "# White box case WBTEST_HOLD_FORK_LOCK_IN_MALLOC (413) stands in for such an allocator. Before the first"
 echo "# malloc() of 64MiB or more, it takes a lock that its own prepare handler also takes, and holds it for"
 echo "# 5 seconds. Without the fix, step 2 prints FAIL."
+echo "#"
+echo "# ydb1293_malloc.c calls ydb_malloc() for 64MiB, which allocates it with malloc()."
 echo
+
+# The stringpool is allocated with mmap(), not malloc(), so growing it from M code would not reach
+# the white box case
+
+set file = ydb1293_malloc
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/$file.c
+$gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $file.map
+if ($status) then
+	echo "FAIL : linking $file failed. The linker output follows."
+	cat $file.map
+	exit 1
+endif
 
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 413
 
-cat > ydb1293.m << CAT_EOF
-ydb1293	; Grow the stringpool past 64MiB, so it does a malloc() that WBTEST_HOLD_FORK_LOCK_IN_MALLOC stops
-	for i=1:1:100 set x(i)=\$justify(i,1048576)
-	write "FAIL : the process was not killed",!
-	quit
-CAT_EOF
-
-echo "# Step 1 : start [yottadb -run ydb1293] in the background with white box case 413 enabled"
+echo "# Step 1 : start [./$file] in the background with white box case 413 enabled"
 echo "#          expect it to report that it holds the fork lock in malloc()"
-($ydb_dist/yottadb -run ydb1293 < /dev/null >& ydb1293.out & ; echo $! >&! ydb1293.pid) >& bg.out
+(./$file < /dev/null >& ydb1293.out & ; echo $! >&! ydb1293.pid) >& bg.out
 set pid = `cat ydb1293.pid`
 $gtm_tst/com/wait_for_log.csh -log ydb1293.out -message "WBTEST_HOLD_FORK_LOCK_IN_MALLOC : holding the fork lock" -duration 120
 if ($status) then
