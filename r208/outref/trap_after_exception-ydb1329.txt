@@ -1,0 +1,27 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1329] An error in $ETRAP or $ZTRAP code after a device EXCEPTION ran in that code           #
+#----------------------------------------------------------------------------------------------------#
+
+# An error in $ETRAP or $ZTRAP code, after that code invoked a device EXCEPTION, failed with GTMASSERT2
+# in set_zstatus.c, as the error handling found that the code last invoked was neither $ETRAP nor $ZTRAP.
+
+# Stage 1 : $ETRAP code READs past the end of an empty file, which invokes the device EXCEPTION, then
+#           divides by zero; then the same $ETRAP code without the READ
+# Before the fix : GTMASSERT2 in set_zstatus.c after the device EXCEPTION ran
+# With the fix   : expect ERRWETRAP and DIVZERO in $ZSTATUS both times
+# Command : $gtm_dist/mumps -run exc^ydb1329
+device EXCEPTION ran
+back in the error trap code after the device EXCEPTION, call 2
+PASS : $ZSTATUS after a device EXCEPTION ran in $ETRAP code has ERRWETRAP and DIVZERO
+PASS : $ZSTATUS without a device EXCEPTION has ERRWETRAP and DIVZERO
+
+# Stage 2 : the same as Stage 1 with $ZTRAP code in place of $ETRAP code
+# Before the fix : GTMASSERT2 in set_zstatus.c after the device EXCEPTION ran
+# With the fix   : expect ERRWZTRAP and DIVZERO in $ZSTATUS both times
+# Command : $gtm_dist/mumps -run ztr^ydb1329
+device EXCEPTION ran
+back in the error trap code after the device EXCEPTION, call 2
+PASS : $ZSTATUS after a device EXCEPTION ran in $ZTRAP code has ERRWZTRAP and DIVZERO
+PASS : $ZSTATUS without a device EXCEPTION has ERRWZTRAP and DIVZERO
+
+# Done

@@ -94,6 +94,7 @@
 # expr_too_deep-ydb1339			[nars]	Test compiling an expression nested too deeply issues EXPRTOODEEP instead of a SIG-11
 # invdlrcval_value-ydb1343		[nars]	Test INVDLRCVAL for a literal $CHAR() argument reports the invalid value at run time in UTF-8 mode
 # new_ztrap_stackcrit-ydb1325		[nars]	Test a NEW $ZTRAP that fails with STACKCRIT does not leave garbage in $ZTRAP
+# trap_after_exception-ydb1329		[nars]	Test an error in $ETRAP or $ZTRAP code after a device EXCEPTION ran in that code is reported as ERRWETRAP or ERRWZTRAP
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -182,6 +183,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic trestart_dm_uncounted-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic expr_too_deep-ydb1339"
 setenv subtest_list_non_replic	"$subtest_list_non_replic invdlrcval_value-ydb1343"
 setenv subtest_list_non_replic	"$subtest_list_non_replic new_ztrap_stackcrit-ydb1325"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trap_after_exception-ydb1329"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
