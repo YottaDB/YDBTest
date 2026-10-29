@@ -1,0 +1,112 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1330] A syntax error after an invalid special variable or function name is reported          #
+#----------------------------------------------------------------------------------------------------#
+
+# An invalid intrinsic special variable or function name is a warning at compile time. A syntax error
+# after it was taken to have been reported already, so it was not, and direct mode issued INDRCOMPFAIL.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : WRITE: with an invalid special variable name in its postconditional and a trailing space
+#   expect EXPR
+#   previously INDRCOMPFAIL, and an assert in linetail.c in a Debug build
+# Command : $gtm_dist/mumps -direct < swsvn.inp, where swsvn.inp has these lines
+#   write:$foo-1 
+PASS : swsvn output has EXPR
+PASS : swsvn output does not have INDRCOMPFAIL
+PASS : swsvn output does not have a fatal error (-F-)
+----------
+Error EXPR seen in swsvn.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 2 : NEW of an invalid special variable name followed by more of the line
+#   expect EXPR
+#   previously INDRCOMPFAIL, and an assert in linetail.c in a Debug build
+# Command : $gtm_dist/mumps -direct < swsvn2.inp, where swsvn2.inp has these lines
+#   new $ms o       set $et="do etr"
+PASS : swsvn2 output has EXPR
+PASS : swsvn2 output does not have INDRCOMPFAIL
+PASS : swsvn2 output does not have a fatal error (-F-)
+----------
+Error EXPR seen in swsvn2.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 3 : SET @ of a string that is an invalid function name whose argument list is followed by an unterminated string literal
+#   expect RPARENMISSING
+#   previously INDRCOMPFAIL, and an assert in comp_fini.c in a Debug build
+# Command : $gtm_dist/mumps -direct < swfcn.inp, where swfcn.inp has these lines
+#   set @("$zinterruvprjreq($zposition)""")
+PASS : swfcn output has RPARENMISSING
+PASS : swfcn output does not have INDRCOMPFAIL
+PASS : swfcn output does not have a fatal error (-F-)
+----------
+Error RPARENMISSING seen in swfcn.out as expected:
+%YDB-E-RPARENMISSING, Right parenthesis expected
+----------
+
+# Stage 4 : ZCOMPILE of a routine with the lines of stages 1 and 2
+#   expect INVSVN and EXPR for each line, and the object file to be written
+#   previously INVSVN only, and an assert in linetail.c in a Debug build
+# Command : $gtm_dist/mumps -direct < swcompile.inp, where swcompile.inp has these lines
+#   zcompile "warn.m"
+#   write "warn.o ",$select(""=$zsearch("warn.o"):"missing",1:"exists"),!
+PASS : swcompile output has EXPR
+PASS : swcompile output has warn.o exists
+PASS : swcompile output does not have a fatal error (-F-)
+----------
+Error INVSVN seen in swcompile.out as expected:
+%YDB-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
+----------
+----------
+Error EXPR seen in swcompile.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 5 : SET with an invalid function name as a target whose argument list is followed by an unterminated string
+#   literal, without indirection: alone, in an XECUTE, in a multiple target and before another target
+#   expect RPARENMISSING for each line, and the line after them to run
+#   previously CMD for each line
+# Command : $gtm_dist/mumps -direct < swfcn2.inp, where swfcn2.inp has these lines
+#   set $zfoo(1")=2
+#   xecute "set $zfoo(1"")=2"
+#   set (a,$zfoo(1"))=2
+#   set $zfoo(1"),b=2
+#   write "after the SET lines",!
+PASS : swfcn2 output has after the SET lines
+PASS : swfcn2 output does not have CMD
+PASS : swfcn2 output does not have a fatal error (-F-)
+----------
+Error RPARENMISSING seen in swfcn2.out as expected:
+%YDB-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
+----------
+
+# Stage 6 : ZCOMPILE of a routine with the first and third lines of stage 5
+#   expect INVFCN and RPARENMISSING for each line, and the object file to be written
+#   previously INVFCN and CMD for each line
+# Command : $gtm_dist/mumps -direct < swfcncompile.inp, where swfcncompile.inp has these lines
+#   zcompile "fcn.m"
+#   write "fcn.o ",$select(""=$zsearch("fcn.o"):"missing",1:"exists"),!
+PASS : swfcncompile output has INVFCN
+PASS : swfcncompile output has fcn.o exists
+PASS : swfcncompile output does not have CMD
+PASS : swfcncompile output does not have a fatal error (-F-)
+----------
+Error INVFCN seen in swfcncompile.out as expected:
+%YDB-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
+----------
+----------
+Error RPARENMISSING seen in swfcncompile.out as expected:
+%YDB-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
+----------
+
+# Done

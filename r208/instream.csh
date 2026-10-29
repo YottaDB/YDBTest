@@ -82,6 +82,7 @@
 # view_trace_subs-ydb1324		[nars]	Test VIEW "TRACE" into a global with 26 subscripts works and with 27 issues MAXNRSUBSCRIPTS
 # zpeek_int8-ydb1351			[nars]	Test $ZPEEK() with the "I" or "U" format for an 8-byte field does not write past the end of the stringpool
 # integ_dbflcorrp-ydb1353		[nars]	Test MUPIP INTEG -REGION releases crit on a region it skips because of DBFLCORRP
+# syntax_err_after_warn-ydb1330		[nars]	Test a syntax error after an invalid special variable or function name is reported
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -158,6 +159,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic view_trace_errors-ydb13
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_trace_subs-ydb1324"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zpeek_int8-ydb1351"
 setenv subtest_list_non_replic	"$subtest_list_non_replic integ_dbflcorrp-ydb1353"
+setenv subtest_list_non_replic	"$subtest_list_non_replic syntax_err_after_warn-ydb1330"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
