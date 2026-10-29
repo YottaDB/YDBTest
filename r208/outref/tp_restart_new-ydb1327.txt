@@ -1,0 +1,281 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1327] TP restart after an argumentless or exclusive NEW that follows TSTART                   #
+#----------------------------------------------------------------------------------------------------#
+
+# A TRESTART, or an implicit restart, of a transaction after an argumentless or exclusive NEW that
+# follows its TSTART failed with GTMASSERT2 or a SIG-11 when the TSTART and the NEW were in the same
+# XECUTE. Now the restart works as it does in a routine. In Direct Mode, which has no frame of its own
+# for the symbol table of the NEW, the restart now issues TRESTNEW and TRESTLOC instead, and leaves the
+# transaction as it was. And an argumentless NEW in Direct Mode after a BREAK moved the M stack
+# without adjusting the pointers the transaction keeps into it, which stages 5 to 7 check.
+#
+# Each case of stages 1 and 2 runs in its own process. It records the local variables it sees in the
+# transaction after the restart and after the transaction, compares them with the values the restart
+# rules give, and prints PASS or WRONG.
+
+# Stage 1 : TSTART and an argumentless or exclusive NEW in the same XECUTE, then a restart
+# Before the fix, each case except xn2, whose NEW is in an inner XECUTE, ended with GTMASSERT2 in tp_restart.c
+# (or a SIG-11, depending on the layout of the routine), and xn2 passed
+#   expect the restart to restore the local variables and undo the NEW
+# Command : $gtm_dist/mumps -run one^ydb1327 xa
+PASS : xa : XECUTE: TSTART (x), argumentless NEW, TRESTART
+       in the transaction, then after it : 10 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 xi
+PASS : xi : XECUTE: TSTART (x,z), NEW (x), TRESTART (x z $TRESTART, then x z $TLEVEL)
+       in the transaction, then after it : 10 <undef> 1|10 6 0
+# Command : $gtm_dist/mumps -run one^ydb1327 xx
+PASS : xx : XECUTE: TSTART (), NEW (x), TRESTART
+       in the transaction, then after it : 2 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 xn2
+PASS : xn2 : XECUTE: TSTART (x), then an inner XECUTE with an argumentless NEW and the TRESTART
+       in the transaction, then after it : 10 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 im
+PASS : im : XECUTE: TSTART (x), argumentless NEW, implicit restart from a concurrent update (x ^b $TLEVEL after)
+       in the transaction, then after it : 10 1|2 5 0
+
+# Stage 2 : the same restarts where the TSTART and the NEW are not in the same XECUTE
+# Before the fix, the same result
+#   expect the restart to restore the local variables and undo the NEW
+# Command : $gtm_dist/mumps -run one^ydb1327 ri
+PASS : ri : DO frame: TSTART (x,z), NEW (x), TRESTART (as xi, in a DO instead of an XECUTE)
+       in the transaction, then after it : 10 <undef> 1|10 6 0
+# Command : $gtm_dist/mumps -run one^ydb1327 b
+PASS : b : TSTART (x) then an XECUTE with an argumentless NEW, then TRESTART (x y $TRESTART in)
+       in the transaction, then after it : 2 <undef> 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 c
+PASS : c : TSTART (x) then a DO with an argumentless NEW, then TRESTART
+       in the transaction, then after it : 2 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 d
+PASS : d : TSTART (x), argumentless NEW and TRESTART in the same frame (x y $TRESTART in)
+       in the transaction, then after it : <undef> 3 1|<undef> 0
+# Command : $gtm_dist/mumps -run one^ydb1327 e
+PASS : e : TSTART (x) then an XECUTE with NEW x, then TRESTART
+       in the transaction, then after it : 2 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 f
+PASS : f : XECUTE: TSTART (x), NEW x, TRESTART
+       in the transaction, then after it : 3 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 g
+PASS : g : XECUTE: TSTART (x), NEW $ETRAP, TRESTART
+       in the transaction, then after it : 2 1|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 h
+PASS : h : XECUTE: TSTART (x), argumentless NEW, no TRESTART
+       in the transaction, then after it : 3 0|2 0
+# Command : $gtm_dist/mumps -run one^ydb1327 j
+PASS : j : XECUTE: TSTART (x), a DO with an argumentless NEW, TRESTART
+       in the transaction, then after it : 2 1|2 0
+
+# Stage 3 : TRESTART after TSTART (x) and an argumentless NEW in Direct Mode, after a BREAK
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect TRESTNEW and TRESTLOC, then the transaction to be still active until the TROLLBACK
+# Command : $gtm_dist/mumps -direct < trnewdm.inp, where trnewdm.inp has these lines
+#   set x=1
+#   break
+#   tstart (x) set x=2 new  set x=3 trestart:$trestart<1
+#   write "after the TRESTART: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+#   trollback
+#   write "after TROLLBACK: $tlevel=",$tlevel,!
+PASS : trnewdm output has after the TRESTART: x=3 $tlevel=1
+PASS : trnewdm output has after TROLLBACK: $tlevel=0
+PASS : trnewdm output does not have a fatal error (-F-)
+----------
+Error TRESTNEW seen in trnewdm.out as expected:
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+----------
+----------
+Error TRESTLOC seen in trnewdm.out as expected:
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+----------
+
+# Stage 4 : the same in Direct Mode with an implicit restart, from a concurrent update
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect TRESTNEW and TRESTLOC, the transaction to be still active until the TROLLBACK, and ^b not
+#   to be set
+# Command : $gtm_dist/mumps -direct < trnewdmimp.inp, where trnewdmimp.inp has these lines
+#   set x=1,^a=0 kill ^b
+#   break
+#   tstart (x) set x=2 new  set v=^a zsystem:$trestart<1 "$gtm_dist/mumps -run %XCMD 'set ^a=5'" set ^b=v tcommit
+#   write "after the restart: $tlevel=",$tlevel," $trestart=",$trestart,!
+#   trollback
+#   write "after TROLLBACK: $tlevel=",$tlevel," ^a=",^a," ^b=",$get(^b,"<undef>"),!
+PASS : trnewdmimp output has after the restart: $tlevel=1 $trestart=0
+PASS : trnewdmimp output has after TROLLBACK: $tlevel=0 ^a=5 ^b=<undef>
+PASS : trnewdmimp output does not have a fatal error (-F-)
+----------
+Error TRESTNEW seen in trnewdmimp.out as expected:
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+----------
+----------
+Error TRESTLOC seen in trnewdmimp.out as expected:
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+----------
+
+# Stage 5 : ZCONTINUE after a BREAK and a TSTART
+# Before the fix, the same result
+#   expect TPQUIT, as the ZCONTINUE would QUIT the frame where the transaction started
+# Command : $gtm_dist/mumps -direct < tpzcont.inp, where tpzcont.inp has these lines
+#   break
+#   tstart ()
+#   zcontinue
+#   write "$tlevel=",$tlevel,!
+#   trollback:$tlevel
+PASS : tpzcont output has TPQUIT
+PASS : tpzcont output does not have a fatal error (-F-)
+----------
+Error TPQUIT seen in tpzcont.out as expected:
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+
+# Stage 6 : ZCONTINUE after a BREAK, a TSTART and two argumentless NEWs
+# Before the fix, no TPQUIT, as the transaction pointed to where the M stack frame had been before the NEW
+#   expect TPQUIT, as in stage 5
+# Command : $gtm_dist/mumps -direct < tpzcontnew.inp, where tpzcontnew.inp has these lines
+#   break
+#   tstart ()
+#   new
+#   new
+#   zcontinue
+#   write "$tlevel=",$tlevel,!
+#   trollback:$tlevel
+PASS : tpzcontnew output has TPQUIT
+PASS : tpzcontnew output does not have a fatal error (-F-)
+----------
+Error TPQUIT seen in tpzcontnew.out as expected:
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+
+# Stage 7 : TRESTART after a BREAK, a TSTART and two argumentless NEWs
+# Before the fix, a SIG-11, sometimes after TPQUIT (in a Debug build, after an assert failure in
+# mdb_condition_handler.c)
+#   expect TRESTNEW and TRESTLOC, as the restart cannot undo a NEW in Direct Mode
+# Command : $gtm_dist/mumps -direct < tptrestart.inp, where tptrestart.inp has these lines
+#   break
+#   tstart
+#   new
+#   new
+#   trestart
+PASS : tptrestart output has TRESTNEW
+PASS : tptrestart output does not have a fatal error (-F-)
+----------
+Error TRESTNEW seen in tptrestart.out as expected:
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+----------
+----------
+Error TRESTLOC seen in tptrestart.out as expected:
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+----------
+
+# Stage 8 : TRESTART after TSTART (x) and an exclusive NEW in Direct Mode, after a BREAK
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect TRESTNEW and TRESTLOC, as in stage 3
+# Command : $gtm_dist/mumps -direct < trexdm.inp, where trexdm.inp has these lines
+#   set x=1
+#   break
+#   tstart (x) set x=2 new (y)  set x=3 trestart:$trestart<1
+#   write "after the TRESTART: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+#   trollback
+PASS : trexdm output has after the TRESTART: x=3 $tlevel=1
+PASS : trexdm output does not have a fatal error (-F-)
+----------
+Error TRESTNEW seen in trexdm.out as expected:
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+----------
+----------
+Error TRESTLOC seen in trexdm.out as expected:
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+----------
+
+# Stage 9 : as stage 3, with the TRESTART in a routine whose $ETRAP handles the error
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect the handler to get TRESTNEW with the transaction still active, and its TROLLBACK to end it
+# Command : $gtm_dist/mumps -direct < trnewhdl.inp, where trnewhdl.inp has these lines
+#   set x=1
+#   break
+#   tstart (x) set x=2 new  set x=3 do rst^ydb1327dm
+#   write "after: $tlevel=",$tlevel," x=",$get(x,"<undef>"),!
+PASS : trnewhdl output has handler: TRESTNEW $tlevel=1
+PASS : trnewhdl output has handler after TROLLBACK: $tlevel=0
+PASS : trnewhdl output has after: $tlevel=0 x=3
+PASS : trnewhdl output does not have a fatal error (-F-)
+
+# Stage 10 : as stage 3, with the TSTART, NEW and TRESTART in a ZBREAK action
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect TRESTNEW and TRESTLOC, reported as the error of the ZBREAK action, with the transaction still active
+# Command : $gtm_dist/mumps -direct < zbrdm.inp, where zbrdm.inp has these lines
+#   set x=1
+#   do zbr^ydb1327dm
+#   write "after the ZBREAK action: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+#   trollback
+PASS : zbrdm output has after the ZBREAK action: x=3 $tlevel=1
+PASS : zbrdm output does not have a fatal error (-F-)
+----------
+Error ERRWZBRK seen in zbrdm.out as expected:
+%YDB-E-ERRWZBRK, Error while processing ZBREAK action string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zbr+2^ydb1327dm, Transaction failure: zbr+2^ydb1327dm
+----------
+----------
+Error TRESTNEW seen in zbrdm.out as expected:
+%YDB-E-ERRWZBRK, Error while processing ZBREAK action string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zbr+2^ydb1327dm, Transaction failure: zbr+2^ydb1327dm
+----------
+----------
+Error TRESTLOC seen in zbrdm.out as expected:
+%YDB-E-ERRWZBRK, Error while processing ZBREAK action string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zbr+2^ydb1327dm, Transaction failure: zbr+2^ydb1327dm
+----------
+
+# Stage 11 : as stage 10, in a ZSTEP action
+# Before the fix, GTMASSERT2 in tp_unwind.c
+#   expect TRESTNEW and TRESTLOC, reported as the error of the ZSTEP action, with the transaction still active
+# Command : $gtm_dist/mumps -direct < zstdm.inp, where zstdm.inp has these lines
+#   set x=1
+#   do zst^ydb1327dm
+#   write "after the ZSTEP action: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+#   trollback
+PASS : zstdm output has after the ZSTEP action: x=3 $tlevel=1
+PASS : zstdm output does not have a fatal error (-F-)
+----------
+Error ERRWEXC seen in zstdm.out as expected:
+%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zst+2^ydb1327dm, Transaction failure: zst+2^ydb1327dm
+----------
+----------
+Error TRESTNEW seen in zstdm.out as expected:
+%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zst+2^ydb1327dm, Transaction failure: zst+2^ydb1327dm
+----------
+----------
+Error TRESTLOC seen in zstdm.out as expected:
+%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART,%YDB-E-TRESTLOC, Transaction start: zst+2^ydb1327dm, Transaction failure: zst+2^ydb1327dm
+----------
+
+# Stage 12 : as stage 3, without the BREAK, so the TSTART and the NEW are on the same frame
+# Before the fix, the same result
+#   expect the TRESTART to undo the NEW and go back to the prompt, with x restored
+# Command : $gtm_dist/mumps -direct < nobrkdm.inp, where nobrkdm.inp has these lines
+#   set x=1
+#   tstart (x) set x=2 new  set x=3 trestart:$trestart<1
+#   write "after the TRESTART: x=",$get(x,"<undef>")," $trestart=",$trestart," $tlevel=",$tlevel,!
+#   trollback
+PASS : nobrkdm output has after the TRESTART: x=1 $trestart=1 $tlevel=1
+PASS : nobrkdm output does not have a fatal error (-F-)
+
+# Stage 13 : TSTART (x), an argumentless NEW and TRESTART in a $ZTIMEOUT action, which runs as indirect code
+# Before the fix, a SIG-11
+#   expect the transaction to restart once in the action, with x restored
+# Command : $gtm_dist/mumps -direct < ztodm.inp, where ztodm.inp has these lines
+#   set x=1
+#   do zto^ydb1327dm
+#   write "after the $ZTIMEOUT action: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+PASS : ztodm output has in the $ZTIMEOUT action: x=3 $trestart=1 $tlevel=1
+PASS : ztodm output has after the $ZTIMEOUT action: x=2 $tlevel=0
+PASS : ztodm output does not have a fatal error (-F-)
+
+# Stage 14 : as stage 13, in $ZINTERRUPT
+# Before the fix, a SIG-11
+#   expect the transaction to restart once in the action, with x restored
+# Command : $gtm_dist/mumps -direct < zindm.inp, where zindm.inp has these lines
+#   set x=1
+#   do zin^ydb1327dm
+#   write "after the $ZINTERRUPT action: x=",$get(x,"<undef>")," $tlevel=",$tlevel,!
+PASS : zindm output has in the $ZINTERRUPT action: x=3 $trestart=1 $tlevel=1
+PASS : zindm output has after the $ZINTERRUPT action: x=2 $tlevel=0
+PASS : zindm output does not have a fatal error (-F-)
+
+# Done

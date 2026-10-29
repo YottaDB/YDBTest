@@ -88,6 +88,7 @@
 # emit_rterror-ydb1344			[nars]	Test compiling a line with an invalid special variable or function name followed by another syntax error issues the errors
 # tstart_dm_args-ydb1326		[nars]	Test TSTART in direct mode with a transaction id or local variable names from expressions or indirection
 # recsize_utf_min-ydb1331		[nars]	Test OPEN and USE reject a RECORDSIZE smaller than 4 for a device with a UTF-8 or UTF-16 CHSET
+# tp_restart_new-ydb1327		[nars]	Test a TP restart after an argumentless or exclusive NEW that follows TSTART in an XECUTE or in Direct Mode
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -170,6 +171,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts2-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic emit_rterror-ydb1344"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_dm_args-ydb1326"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recsize_utf_min-ydb1331"
+setenv subtest_list_non_replic	"$subtest_list_non_replic tp_restart_new-ydb1327"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
