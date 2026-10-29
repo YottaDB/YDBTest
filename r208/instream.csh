@@ -97,6 +97,7 @@
 # trap_after_exception-ydb1329		[nars]	Test an error in $ETRAP or $ZTRAP code after a device EXCEPTION ran in that code is reported as ERRWETRAP or ERRWZTRAP
 # trap_tstart_hang-ydb1332		[nars]	Test $ETRAP or $ZTRAP code that does a TSTART and ends without TCOMMIT or TROLLBACK does not hang
 # zgoto_dmod-ydb1328			[nars]	Test ZGOTO 0 from direct mode to an entryref with no label and no routine name issues RTNNAME
+# ztexit_tp_exit-ydb1333		[nars]	Test a process exits cleanly when $ZTEXIT is true and a transaction is active
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -188,6 +189,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic new_ztrap_stackcrit-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic trap_after_exception-ydb1329"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trap_tstart_hang-ydb1332"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zgoto_dmod-ydb1328"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztexit_tp_exit-ydb1333"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
