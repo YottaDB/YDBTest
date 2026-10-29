@@ -21,6 +21,8 @@
 # (in UTF-8 mode, the ICU libraries depend on libgcc_s.so.1) and no gtmdbglvl (which turns on the same
 # allocation recording as a Debug build)
 # No asynchronous IO, whose worker thread would count as a thread of the MUPIP process
+# No encryption, since decrypting journal records makes the worker threads allocate memory, which can fail
+# under the address space limit before MUPIP handles the SIGTERM
 # BEFORE_IMAGE journaling, which backward recovery needs, needs the BG access method
 # Create a database with regions AREG, BREG and DEFAULT
 # Command : $MUPIP set -journal="enable,on,before" -region "*"

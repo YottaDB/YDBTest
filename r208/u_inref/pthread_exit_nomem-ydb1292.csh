@@ -39,6 +39,9 @@ $switch_chset M >&! switch_chset_m.out
 unsetenv gtmdbglvl ydb_dbglvl
 echo "# No asynchronous IO, whose worker thread would count as a thread of the MUPIP process"
 setenv gtm_test_asyncio 0
+echo "# No encryption, since decrypting journal records makes the worker threads allocate memory, which can fail"
+echo "# under the address space limit before MUPIP handles the SIGTERM"
+setenv test_encryption NON_ENCRYPT
 echo "# BEFORE_IMAGE journaling, which backward recovery needs, needs the BG access method"
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
