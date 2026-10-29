@@ -1,0 +1,86 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1332] $ETRAP or $ZTRAP code that does a TSTART and ends without TCOMMIT or TROLLBACK          #
+#----------------------------------------------------------------------------------------------------#
+
+# When error trap code started a transaction and ended without a TCOMMIT or TROLLBACK, the QUIT out of
+# its frame issued TPQUIT, which ran the same error trap code again, and the process looped forever.
+# Now the TPQUIT is reported with ERRWZTRAP or ERRWETRAP, as for any other error in error trap code.
+#
+# Each stage runs its case in a new process, with a timeout so that a case that hangs fails instead.
+
+# Stage 1 : $ZTRAP or $ETRAP code that does a TSTART and ends without TCOMMIT or TROLLBACK
+# Before the fix : the process looped in the error trap code until it was stopped
+# With the fix   : expect the process to end by itself with ERRWZTRAP or ERRWETRAP and TPQUIT
+# Command : $gtm_dist/mumps -run ydb1332 a < /dev/null
+PASS : case a ended by itself
+PASS : case a issued ERRWZTRAP with TPQUIT
+----------
+Error ERRWZTRAP seen in a.out as expected:
+%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+# Command : $gtm_dist/mumps -run ydb1332 b < /dev/null
+PASS : case b ended by itself
+PASS : case b issued ERRWETRAP with TPQUIT
+----------
+Error ERRWETRAP seen in b.out as expected:
+%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+# Command : $gtm_dist/mumps -run ydb1332 c < /dev/null
+PASS : case c ended by itself
+PASS : case c issued ERRWETRAP with TPQUIT
+----------
+Error ERRWETRAP seen in c.out as expected:
+%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+
+# Stage 2 : TSTART outside error trap code, and error trap code that ends its own transaction
+# Before the fix : each case produced the line shown (these cases are controls)
+# With the fix   : expect each case to produce the line shown
+# Command : $gtm_dist/mumps -run ydb1332 d < /dev/null
+PASS : case d output has after d1 $tlevel=0
+----------
+Error TPQUIT seen in d.out as expected:
+etrap: 150376082,d1^ydb1332,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+# Command : $gtm_dist/mumps -run ydb1332 e < /dev/null
+PASS : case e output has after d1 $tlevel=0
+----------
+Error TPQUIT seen in e.out as expected:
+etrap: 150376082,d1^ydb1332,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+# Command : $gtm_dist/mumps -run ydb1332 f < /dev/null
+PASS : case f output has after f1 $tlevel=0
+----------
+Error DIVZERO seen in f.out as expected:
+etrap: 150373210,f1^ydb1332,%YDB-E-DIVZERO, Attempt to divide by zero
+----------
+# Command : $gtm_dist/mumps -run ydb1332 g < /dev/null
+PASS : case g output has outer etrap $tlevel=0
+# Command : $gtm_dist/mumps -run ydb1332 h < /dev/null
+PASS : case h output has after b1 $tlevel=0 ^h=1
+# Command : $gtm_dist/mumps -run ydb1332 i < /dev/null
+PASS : case i output has after tcommit ^i=1
+
+# Stage 3 : in Direct Mode, an error in a routine, then TSTART and ZCONTINUE at the BREAK it gives
+# Before the fix : the process looped in the error trap code until it was stopped
+# With the fix   : expect DIVZERO, then TPQUIT for the ZCONTINUE, and the next line to run with
+#                  $TLEVEL 0
+# Command : $gtm_dist/mumps -direct < trapdm.inp, where trapdm.inp has these lines
+#   do ^ydb1332x
+#   tstart
+#   zcontinue
+#   write "next $tlevel=",$tlevel,!
+PASS : trapdm output has DIVZERO
+PASS : trapdm output has TPQUIT
+PASS : trapdm output has next $tlevel=0
+PASS : trapdm output does not have a fatal error (-F-)
+----------
+Error DIVZERO seen in trapdm.out as expected:
+%YDB-E-DIVZERO, Attempt to divide by zero
+----------
+----------
+Error TPQUIT seen in trapdm.out as expected:
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+----------
+
+# Done
