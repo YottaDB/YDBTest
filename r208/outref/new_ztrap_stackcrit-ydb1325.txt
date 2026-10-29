@@ -1,0 +1,47 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1325] NEW $ZTRAP that fails with STACKCRIT leaves $ZTRAP usable                               #
+#----------------------------------------------------------------------------------------------------#
+
+# When $ZTRAP was explicitly null, NEW $ZTRAP set the length of $ZTRAP to -1, a marker for the saved
+# copy, before saving $ZTRAP. A STACKCRIT error from the NEW left that -1 in $ZTRAP, so a later error
+# ran garbage as the error trap.
+#
+# Each stage runs the lines shown in direct mode in a new process, and checks the output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : NEW $ZTRAP in a FOR loop until the M stack is full, then an error
+# Before the fix : a Release build ran garbage as the error trap, issuing INDRMAXLEN and ERRWETRAP,
+#                  and a Debug build failed an assert in mdb_condition_handler.c
+# With the fix   : expect STACKCRIT, and no error trap to run garbage
+# Command : $gtm_dist/mumps -direct < ztnew.inp, where ztnew.inp has these lines
+#   for  new $ztrap
+#   write "$length($ztrap)=",$length($ztrap),!
+#   write 1/0
+PASS : ztnew output has STACKCRIT
+PASS : ztnew output does not have INDRMAXLEN
+PASS : ztnew output does not have ERRWETRAP
+PASS : ztnew output does not have ERRWZTRAP
+PASS : ztnew output does not have a fatal error (-F-)
+----------
+Error STACKCRIT seen in ztnew.out as expected:
+%YDB-E-STACKCRIT, Stack space critical
+----------
+
+# Stage 2 : NEW $ZTRAP in a FOR loop until the M stack is full, then WRITE $ZTRAP
+# Before the fix : a Release build terminated with a SIG-11 or wrote garbage, and a Debug build
+#                  failed an assert in mdb_condition_handler.c
+# With the fix   : expect STACKCRIT, and no fatal error. A line after the STACKCRIT can get a
+#                  second STACKCRIT (for example in a Debug build, which needs more stack to compile
+#                  the line) and the process then exits, so the stage checks only for STACKCRIT and
+#                  no fatal error.
+# Command : $gtm_dist/mumps -direct < ztuse.inp, where ztuse.inp has these lines
+#   for  new $ztrap
+#   write $ztrap,!
+PASS : ztuse output has STACKCRIT
+PASS : ztuse output does not have a fatal error (-F-)
+----------
+Error STACKCRIT seen in ztuse.out as expected:
+%YDB-E-STACKCRIT, Stack space critical
+----------
+
+# Done
