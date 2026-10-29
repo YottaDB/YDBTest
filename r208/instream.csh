@@ -86,6 +86,7 @@
 # fuzz_asserts-ydb1101			[nars]	Test error paths found by fuzz testing that failed asserts in a Debug build
 # fuzz_asserts2-ydb1101			[nars]	Test more error paths found by fuzz testing that failed asserts in a Debug build issue the error
 # emit_rterror-ydb1344			[nars]	Test compiling a line with an invalid special variable or function name followed by another syntax error issues the errors
+# tstart_dm_args-ydb1326		[nars]	Test TSTART in direct mode with a transaction id or local variable names from expressions or indirection
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -166,6 +167,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic syntax_err_after_warn-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts2-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic emit_rterror-ydb1344"
+setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_dm_args-ydb1326"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

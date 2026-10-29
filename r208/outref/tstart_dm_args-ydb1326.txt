@@ -1,0 +1,52 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1326] TSTART in direct mode with indirect arguments                                           #
+#----------------------------------------------------------------------------------------------------#
+
+# In direct mode TSTART moves part of the M stack, and the transaction id and the names of the local
+# variables to restore can be in the moved part.
+#
+# Each stage runs its lines in direct mode in a new process, and checks its output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : TSTART with a local variable name from indirection
+#   expect LABELMISSING for the DO of the label x, which does not exist in direct mode
+#   previously a Release build got a SIG-11, and a Debug build failed an assert in op_tstart.c
+# Command : $gtm_dist/mumps -direct < tpindjob.inp, where tpindjob.inp has these lines
+#   tstart @"job" do x
+#   trollback
+#   write "$tlevel=",$tlevel,!
+PASS : tpindjob output has $tlevel=0
+PASS : tpindjob output does not have a fatal error (-F-)
+----------
+Error LABELMISSING seen in tpindjob.out as expected:
+%YDB-E-LABELMISSING, Label referenced but not defined: x
+----------
+
+# Stage 2 : TRESTART after TSTART (job), and after TSTART @v with v="job"
+#   expect the TRESTART to restore job to 1 in both cases
+#   previously job was 2 after the TRESTART with TSTART @v, and a Debug build failed an assert in
+#   op_tstart.c
+# Command : $gtm_dist/mumps -direct < tpindrest.inp, where tpindrest.inp has these lines
+#   set v="job",job=1
+#   tstart (job) set job=2 trestart:$trestart<1
+#   write "TSTART (job), after TRESTART: $trestart=",$trestart," job=",job,!
+#   tcommit
+#   set job=1
+#   tstart @v set job=2 trestart:$trestart<1
+#   write "TSTART @v, after TRESTART: $trestart=",$trestart," job=",job,!
+#   tcommit
+PASS : tpindrest output has TSTART (job), after TRESTART: $trestart=1 job=1
+PASS : tpindrest output has TSTART @v, after TRESTART: $trestart=1 job=1
+PASS : tpindrest output does not have a fatal error (-F-)
+
+# Stage 3 : TSTART with a transaction id that is an expression
+#   expect $VIEW("TRANSACTIONID",1) to be ABCD
+#   previously it was the empty string
+# Command : $gtm_dist/mumps -direct < tptid.inp, where tptid.inp has these lines
+#   set t="AB"
+#   tstart ():transactionid=t_"CD" write "transaction id=",$view("TRANSACTIONID",1),!
+#   trollback
+PASS : tptid output has transaction id=ABCD
+PASS : tptid output does not have a fatal error (-F-)
+
+# Done
