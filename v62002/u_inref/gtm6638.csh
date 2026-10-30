@@ -53,11 +53,11 @@ $DSE dump -fileheader -all | & $grep "Epoch taper"
 
 echo "Turn off tapering and verify it is off"
 $MUPIP set -noepochtaper -region "*"
-dse dump -fileheader -all | & $grep "Epoch taper"
+$DSE dump -fileheader -all | & $grep "Epoch taper"
 
 echo "Turn on tapering and verify it is on"
 $MUPIP set -epochtaper -region "*"
-dse dump -fileheader -all | & $grep "Epoch taper"
+$DSE dump -fileheader -all | & $grep "Epoch taper"
 
 echo "Verify if epoch taper is disabled in the template a new region picks it up"
 $GDE >>& gde_et3.out << END

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,6 +33,9 @@ echo "# Try MUPIP TRIGGER command. This used to assert fail"
 echo '+^ax(1,2,2) -commands=K -xecute="set x=1"' | $ydb_dist/mupip trigger -stdin
 
 echo "# Try MUPIP INTEG -STATS command. This used to SIG-11"
+# The key of the statsdb record holds the process id, and the record's counters start at the next 8-byte boundary
+# after the key. A process id of 7 or more digits makes the key 1 byte longer, which moves the counters 8 bytes
+# further and raises the Data block's % Used, so the reference file accepts both values.
 $ydb_dist/mumps -run %XCMD 'view "statshare" zsystem "$ydb_dist/mupip integ -reg DEFAULT -stats"'
 
 $gtm_tst/com/dbcheck.csh
