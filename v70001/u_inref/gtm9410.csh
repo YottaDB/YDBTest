@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,17 +63,23 @@ Test 1b) Test that creating a new mumps.gld sleeps 0.5 seconds when mumps.gldinp
 ---------------------------------------------------------------------------------------------------------------------------
 CAT_EOF
 
-echo "# Run [strace -o trace1b.outx -T GDE exit] after ensuring mumps.gldinprogress exists but mumps.gld does not"
+echo "# Run [strace -ttt -o trace1b.outx GDE exit] after ensuring mumps.gldinprogress exists but mumps.gld does not"
 rm -f mumps.gld
 touch mumps.gldinprogress
-strace -o trace1b.outx -T $GDE exit
+strace -ttt -o trace1b.outx $GDE exit
 rm -f mumps.gldinprogress
-echo "# Run [grep clock_nanosleep trace1b.outx] and count the time taken in each call (last field in strace -T output) and sum it"
-echo "# Expect to see a number around 0.5."
-echo "# Hence the %.1f usage below to avoid lower order decimal values as they can be non-deterministic."
-echo "# Expect to see 0.5 output below. But allow up to 0.9 seconds due to system load issues."
-echo "# On slow ARMV6L, allow up to 9.9 seconds."
-grep clock_nanosleep trace1b.outx | awk '{print $NF}' | sed 's/<//;s/>//;' | awk '{sum += $1;} END {printf "%.1f\n", sum}'
+echo "# Run [grep clock_nanosleep trace1b.outx] and, for each sleep, subtract the time of the call from the absolute"
+echo "# wake-up time it asks for (GDE sleeps with TIMER_ABSTIME) to get the sleep it requested, in microseconds."
+echo "# GDE waits for mumps.gldinprogress to be renamed by sleeping 1 millisecond at a time, at most 500 times."
+echo "# Check the number of sleeps and what each asked for, not the time they took, as a loaded system can stretch"
+echo "# each sleep. strace can also note a call late on a loaded system, which makes that one sleep look shorter, so"
+echo "# check the median for the length of a sleep, and every sleep for not asking for more than 1 millisecond."
+echo "# Expect 500 sleeps, none over 1 millisecond, and a median between 0.5 and 1 millisecond. The measured median"
+echo "# is a little under 1 millisecond, as strace notes each call shortly after GDE reads the clock for its wake-up time."
+echo "# The lower limit goes down to 0.5 millisecond to allow for system load, which can make strace note more calls late."
+grep clock_nanosleep trace1b.outx | awk '{match($0, /\{[^}]*\}/); split(substr($0, RSTART, RLENGTH), a, /[^0-9]+/); printf "%.0f\n", ((a[2] + a[3] / 1e9) - $1) * 1e6}' \
+	| sort -n | awk '{v[NR] = $1; if (1000 < $1) over++} END {med = v[int((NR + 1) / 2)]; printf "%d sleeps, %d over 1 millisecond, ", NR, over; \
+		if ((500 <= med) && (1000 >= med)) print "median between 0.5 and 1 millisecond"; else printf "median %d microseconds\n", med}'
 
 echo
 cat << CAT_EOF | sed 's/^/# /;'

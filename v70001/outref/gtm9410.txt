@@ -36,24 +36,23 @@
 # ---------------------------------------------------------------------------------------------------------------------------
 # Test 1b) Test that creating a new mumps.gld sleeps 0.5 seconds when mumps.gldinprogress exists but mumps.gld does not exist
 # ---------------------------------------------------------------------------------------------------------------------------
-# Run [strace -o trace1b.outx -T GDE exit] after ensuring mumps.gldinprogress exists but mumps.gld does not
+# Run [strace -ttt -o trace1b.outx GDE exit] after ensuring mumps.gldinprogress exists but mumps.gld does not
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-# Run [grep clock_nanosleep trace1b.outx] and count the time taken in each call (last field in strace -T output) and sum it
-# Expect to see a number around 0.5.
-# Hence the %.1f usage below to avoid lower order decimal values as they can be non-deterministic.
-# Expect to see 0.5 output below. But allow up to 0.9 seconds due to system load issues.
-# On slow ARMV6L, allow up to 9.9 seconds.
-##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
-##TEST_AWK0\.[5-9]
-##ALLOW_OUTPUT HOST_LINUX_ARMVXL
-##SUSPEND_OUTPUT HOST_LINUX_AARCH64 HOST_LINUX_X86_64
-##TEST_AWK[0-9]\.[0-9]
-##ALLOW_OUTPUT HOST_LINUX_AARCH64 HOST_LINUX_X86_64
+# Run [grep clock_nanosleep trace1b.outx] and, for each sleep, subtract the time of the call from the absolute
+# wake-up time it asks for (GDE sleeps with TIMER_ABSTIME) to get the sleep it requested, in microseconds.
+# GDE waits for mumps.gldinprogress to be renamed by sleeping 1 millisecond at a time, at most 500 times.
+# Check the number of sleeps and what each asked for, not the time they took, as a loaded system can stretch
+# each sleep. strace can also note a call late on a loaded system, which makes that one sleep look shorter, so
+# check the median for the length of a sleep, and every sleep for not asking for more than 1 millisecond.
+# Expect 500 sleeps, none over 1 millisecond, and a median between 0.5 and 1 millisecond. The measured median
+# is a little under 1 millisecond, as strace notes each call shortly after GDE reads the clock for its wake-up time.
+# The lower limit goes down to 0.5 millisecond to allow for system load, which can make strace note more calls late.
+500 sleeps, 0 over 1 millisecond, median between 0.5 and 1 millisecond
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Test 1c) Test that creating a new mumps.gld does not sleep when mumps.gld exists and mumps.gldinprogress exists or not
