@@ -1,0 +1,6 @@
+tstart (d)  new
+trestart
+write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+trollback
+write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TROLLBACK",!
+halt

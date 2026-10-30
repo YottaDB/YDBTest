@@ -1,0 +1,6 @@
+set a=1,d=1
+tstart (a)
+quit 1
+tstart (d)  set a=2,d=2  do newdo^ydb1338
+write $select((1=$trestart)&(1=$tlevel)&(1=a)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a," d=",$get(d),!
+trollback

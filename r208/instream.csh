@@ -90,6 +90,7 @@
 # recsize_utf_min-ydb1331		[nars]	Test OPEN and USE reject a RECORDSIZE smaller than 4 for a device with a UTF-8 or UTF-16 CHSET
 # tp_restart_new-ydb1327		[nars]	Test a TP restart after an argumentless or exclusive NEW that follows TSTART in an XECUTE or in Direct Mode
 # stp_expand_4gib-ydb1101		[nars]	Test a string pool expansion that copies over 2GiB at once works in a Debug build
+# trestart_dm_uncounted-ydb1338		[nars]	Test TRESTART in Direct Mode after a TPQUIT or BREAK gets TRESTNEW or TRESTNOT
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -174,6 +175,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_dm_args-ydb1326"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recsize_utf_min-ydb1331"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tp_restart_new-ydb1327"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_expand_4gib-ydb1101"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trestart_dm_uncounted-ydb1338"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

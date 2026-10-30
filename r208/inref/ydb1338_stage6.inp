@@ -1,0 +1,7 @@
+set a=1
+tstart (a)
+quit 1
+tstart (d)  set a=2
+trestart
+write $select((1=$trestart)&(1=$tlevel)&(1=a):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a,!
+trollback

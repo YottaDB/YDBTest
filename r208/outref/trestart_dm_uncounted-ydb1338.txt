@@ -1,0 +1,234 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1338] TRESTART after a TPQUIT or BREAK in Direct Mode, a TSTART and an argumentless NEW issues #
+# TRESTNEW and TRESTLOC, and without the NEW issues TRESTNOT and TRESTLOC                            #
+#----------------------------------------------------------------------------------------------------#
+
+# A TSTART in Direct Mode uses the frame under the Direct Mode frame as its restart frame. When Direct
+# Mode was entered by a BREAK in $ZTRAP, that is the $ZTRAP frame, which is not a counted frame. A
+# restart cannot resume in that frame, and an argumentless NEW puts its new symbol table below it, where
+# a restart cannot undo it. TRESTART now issues TRESTNEW and TRESTLOC, before it unwinds anything, if a
+# TSTART is such a TSTART and an argumentless NEW followed it, and TRESTNOT and TRESTLOC, also before it
+# unwinds anything, if the outermost TSTART is such a TSTART with no NEW after it.
+# A QUIT with an argument that issues TPQUIT in Direct Mode leaves Direct Mode running in such a frame.
+# Direct Mode prompts and blank lines are removed from the output below. Each check prints PASS or WRONG.
+
+# Stage 1 : Direct Mode, TSTART and QUIT 1 (TPQUIT), then TSTART (d) and an argumentless NEW, then TRESTART
+# Before the fix : GTMASSERT2 in tp_unwind.c (curr_symval == tp_pointer->sym)
+# With the fix   : expect TPQUIT, then TRESTNEW and TRESTLOC, with $TLEVEL still 2
+# Input :
+tstart  quit 1
+tstart (d)  new
+trestart
+write $select(2=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+trollback
+# Command : $gtm_dist/mumps -direct < stage1.inp
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+PASS : $TLEVEL=2 after TRESTNEW
+
+# Stage 2 : a routine divides by zero with $ZTRAP="break", then in Direct Mode TSTART (d) and an argumentless
+#           NEW, then TRESTART
+# Before the fix : the same result
+# With the fix   : expect DIVZERO, then TRESTNEW and TRESTLOC, with $TLEVEL still 1, and TROLLBACK works
+# Input :
+tstart (d)  new
+trestart
+write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+trollback
+write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TROLLBACK",!
+halt
+# Command : $gtm_dist/mumps -run ztrap^ydb1338 < stage2.inp
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location ztrap+2^ydb1338
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+%YDB-E-TRESTLOC, Transaction start: ztrap+1^ydb1338, Transaction failure: ztrap+2^ydb1338
+PASS : $TLEVEL=1 after TRESTNEW
+PASS : $TLEVEL=0 after TROLLBACK
+
+# Stage 3 : as stage 2, but with no NEW
+# Before the fix : the TRESTART never completed (bounded here by "timeout 60")
+# With the fix   : expect DIVZERO, then TRESTNOT and TRESTLOC, with $TLEVEL still 1 and d unchanged
+# Input :
+set d=1
+tstart (d)  set d=2  trestart
+write $select((1=$tlevel)&(2=d):"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
+trollback
+halt
+# Command : timeout 60 $gtm_dist/mumps -run ztrap^ydb1338 < stage3.inp
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location ztrap+2^ydb1338
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable
+%YDB-E-TRESTLOC, Transaction start: ztrap+1^ydb1338, Transaction failure: ztrap+2^ydb1338
+PASS : $TLEVEL=1 d=2 after TRESTNOT
+
+# Stage 4 : as stage 1, but with an argumentless QUIT, which is allowed in Direct Mode
+# Before the fix : the same result
+# With the fix   : expect TRESTNOT and TRESTLOC, as the first TSTART is not restartable, with $TLEVEL 1
+# Input :
+tstart  quit
+tstart (d)  new
+trestart
+write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNOT",!
+trollback
+# Command : $gtm_dist/mumps -direct < stage4.inp
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+		At M source location +1^GTM$DMOD
+PASS : $TLEVEL=1 after TRESTNOT
+
+# Stage 5 : as stage 1, but NEW d instead of an argumentless NEW
+# Before the fix : the same result
+# With the fix   : expect TPQUIT, then TRESTNOT and TRESTLOC, as the first TSTART is not restartable, with $TLEVEL 1
+# Input :
+tstart  quit 1
+tstart (d)  new d
+trestart
+write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNOT",!
+trollback
+# Command : $gtm_dist/mumps -direct < stage5.inp
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+		At M source location +1^GTM$DMOD
+PASS : $TLEVEL=1 after TRESTNOT
+
+# Stage 6 : Direct Mode, TSTART (a), QUIT 1 (TPQUIT), then TSTART (d) with no NEW, then TRESTART
+# Before the fix : the same result
+# With the fix   : expect TPQUIT, then the transaction to restart from the first TSTART, whose restart frame is
+#                  counted, with a restored
+# Input :
+set a=1
+tstart (a)
+quit 1
+tstart (d)  set a=2
+trestart
+write $select((1=$trestart)&(1=$tlevel)&(1=a):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a,!
+trollback
+# Command : $gtm_dist/mumps -direct < stage6.inp
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+PASS : $TRESTART=1 $TLEVEL=1 a=1
+
+# Stage 7 : Direct Mode with no $ZTRAP frame, TSTART (d), an argumentless NEW and TRESTART on one line
+# Before the fix : the same result
+# With the fix   : expect the transaction to restart once, with d restored
+# Input :
+set d=1
+tstart (d)  new  set d=2  trestart:$trestart<2
+write $select((1=$trestart)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," d=",$get(d),!
+tcommit
+# Command : $gtm_dist/mumps -direct < stage7.inp
+PASS : $TRESTART=1 d=1
+
+# Stage 8 : a BREAK in a routine (a counted frame under Direct Mode), then in Direct Mode TSTART (d), an
+#           argumentless NEW and TRESTART
+# Before the fix : the same result
+# With the fix   : expect the transaction to restart once, resuming the routine after the BREAK, with d restored
+# Input :
+tstart (d)  new  set d=2  trestart
+# Command : $gtm_dist/mumps -run brk^ydb1338 < stage8.inp
+%YDB-I-BREAK, Break instruction encountered
+		At M source location brk+3^ydb1338
+PASS : the transaction restarted once and d was restored ($TRESTART=1 d=1)
+PASS : $TLEVEL=0 after TCOMMIT
+
+# Stage 9 : TSTART (d), an argumentless NEW and TRESTART in a routine (no Direct Mode)
+# Before the fix : the same result
+# With the fix   : expect the transaction to restart twice, with d restored each time
+# Command : $gtm_dist/mumps -run rtn^ydb1338
+PASS : d=1 at the start of retry 1
+PASS : d=1 at the start of retry 2
+PASS : $TRESTART=2
+PASS : $TLEVEL=0 after TCOMMIT
+
+# Stage 10 : Direct Mode, TSTART (a), QUIT 1 (TPQUIT), then TSTART (d) and a DO of a routine that does an
+#            argumentless NEW and a TRESTART
+# Before the fix : the same result
+# With the fix   : expect the transaction to restart from the first TSTART, as the NEW is in a counted frame that
+#                  the restart unwinds, with a and d restored
+# Input :
+set a=1,d=1
+tstart (a)
+quit 1
+tstart (d)  set a=2,d=2  do newdo^ydb1338
+write $select((1=$trestart)&(1=$tlevel)&(1=a)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a," d=",$get(d),!
+trollback
+# Command : $gtm_dist/mumps -direct < stage10.inp
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+PASS : $TRESTART=1 $TLEVEL=1 a=1 d=1
+
+# Stage 11 : a BREAK in Direct Mode, then at the prompt that the BREAK starts, TSTART (d) with no NEW, then TRESTART
+# Before the fix : TPQUIT twice, as the restart resumes at the end of the break line, and d restored
+# With the fix   : expect TRESTNOT and TRESTLOC, as the restart cannot resume at the TSTART, with $TLEVEL still 1
+#                  and d unchanged
+# Input :
+set d=1
+break
+tstart (d)  set d=2  trestart
+write $select((1=$tlevel)&(2=d):"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
+trollback
+# Command : $gtm_dist/mumps -direct < stage11.inp
+%YDB-I-BREAK, Break instruction encountered
+		At M source location +1^GTM$DMOD
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable
+%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
+PASS : $TLEVEL=1 d=2 after TRESTNOT
+
+# Stage 12 : a routine does a TSTART, then divides by zero with $ZTRAP="break", then in Direct Mode TSTART (d) and
+#            an argumentless NEW, then TRESTART
+# Before the fix : GTMASSERT2, as only the outermost TSTART, which the NEW does not affect, was checked
+# With the fix   : expect DIVZERO, then TRESTNEW and TRESTLOC, with $TLEVEL still 2, and TROLLBACK works. TRESTLOC
+#                  reports the outermost TSTART in the routine (ztrapo+3) as the transaction start, not the inner
+#                  TSTART at the prompt
+# Input :
+set d=1
+tstart (d)  new
+trestart
+write $select(2=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+trollback
+write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TROLLBACK",!
+halt
+# Command : $gtm_dist/mumps -run ztrapo^ydb1338 < stage12.inp
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location ztrapo+4^ydb1338
+%YDB-E-TRESTNEW, Cannot restart transaction because the restart cannot undo an argumentless or exclusive NEW done after its TSTART
+%YDB-E-TRESTLOC, Transaction start: ztrapo+3^ydb1338, Transaction failure: ztrapo+4^ydb1338
+PASS : $TLEVEL=2 after TRESTNEW
+PASS : $TLEVEL=0 after TROLLBACK
+
+# Stage 13 : as stage 3, but with Direct Mode entered by a BREAK in a ZBREAK action
+# Before the fix : ERRWZBRK with TPQUIT, as the restart resumes in the ZBREAK action frame, and d restored
+# With the fix   : expect TRESTNOT and TRESTLOC, with $TLEVEL still 1 and d unchanged
+# Input : as stage 3
+# Command : timeout 60 $gtm_dist/mumps -run zbrk^ydb1338 < stage3.inp
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location zbrk1^ydb1338
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable
+%YDB-E-TRESTLOC, Transaction start: zbrk1^ydb1338, Transaction failure: zbrk1^ydb1338
+PASS : $TLEVEL=1 d=2 after TRESTNOT
+
+# Stage 14 : as stage 3, but with Direct Mode entered by a BREAK in a ZSTEP action
+# Before the fix : ERRWEXC with TPQUIT, as the restart resumes in the ZSTEP action frame, and d restored
+# With the fix   : expect TRESTNOT and TRESTLOC, with $TLEVEL still 1 and d unchanged
+# Input : as stage 3
+# Command : timeout 60 $gtm_dist/mumps -run zstp^ydb1338 < stage3.inp
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location zstp+3^ydb1338
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable
+%YDB-E-TRESTLOC, Transaction start: zstp+3^ydb1338, Transaction failure: zstp+3^ydb1338
+PASS : $TLEVEL=1 d=2 after TRESTNOT
+
+# Stage 15 : as stage 3, but with Direct Mode entered by a BREAK in a device EXCEPTION action (a READ past the end of a file)
+# Before the fix : the TRESTART never completed (bounded here by "timeout 60")
+# With the fix   : expect TRESTNOT and TRESTLOC, with $TLEVEL still 1 and d unchanged
+# Input : as stage 3
+# Command : timeout 60 $gtm_dist/mumps -run devex^ydb1338 < stage3.inp
+%YDB-I-BREAKDEA, Break instruction encountered during Device error action
+		At M source location devex+5^ydb1338
+%YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable
+%YDB-E-TRESTLOC, Transaction start: devex+4^ydb1338, Transaction failure: devex+5^ydb1338
+PASS : $TLEVEL=1 d=2 after TRESTNOT
+
+# Done
