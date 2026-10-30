@@ -1,0 +1,77 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1337] $ZPEEK() issues BADZPEEKARG for a first argument longer than 63 bytes, and no longer    #
+# overwrites the process stack                                                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# $ZPEEK() copied the part of its first argument before the first colon (the mnemonic) into a stack
+# buffer of 31 bytes without checking the length, so a longer first argument overwrote the process
+# stack. $ZPEEK() now copies into a buffer of 63 bytes (31 for the mnemonic, 1 for the colon, 31 for
+# the argument), so a first argument of 32 to 63 bytes gets the same BADZPEEKARG as before, and
+# $ZPEEK() issues BADZPEEKARG with "length" (the length of the first argument) for a longer first
+# argument.
+# Each stage runs its case in a new process and prints PASS or WRONG.
+
+# Create a database (stage 6 peeks at its region)
+# Create a global directory r31.gld with a region whose name has 31 bytes, the maximum, and its
+# database, for stages 7 to 9
+
+# Stage 1 : $ZPEEK(<100000 bytes, no colon>,0,0)
+# Before the fix : the process was killed by a signal 11 (SIG-11)
+# With the fix   : expect BADZPEEKARG with "length"
+# Command : $gtm_dist/mumps -run len100000^ydb1337
+PASS : a first argument of 100000 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus length parameter for $ZPEEK()
+
+# Stage 2 : $ZPEEK(<64 bytes, no colon>,0,0)
+# Before the fix : BADZPEEKARG with "mnemonic type", after the copy overwrote the stack, so the
+#                  line below was a WRONG line
+# With the fix   : expect BADZPEEKARG with "length"
+# Command : $gtm_dist/mumps -run len64^ydb1337
+PASS : a first argument of 64 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus length parameter for $ZPEEK()
+
+# Stage 3 : $ZPEEK(<63 bytes, no colon>,0,0)
+# Before the fix : the same output, after the copy overwrote the stack
+# With the fix   : expect BADZPEEKARG with "mnemonic type", as 63 bytes is not too long but is not a
+#                  valid mnemonic
+# Command : $gtm_dist/mumps -run len63^ydb1337
+PASS : a first argument of 63 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic type parameter for $ZPEEK()
+
+# Stage 4 : $ZPEEK(<32 bytes, no colon>,0,0)
+# Before the fix : the same output, after the copy overwrote the stack by 1 byte (which only an
+#                  ASAN build detects, as a stack-buffer-overflow)
+# With the fix   : expect BADZPEEKARG with "mnemonic type"
+# Command : $gtm_dist/mumps -run len32^ydb1337
+PASS : a first argument of 32 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic type parameter for $ZPEEK()
+
+# Stage 5 : $ZPEEK("GDRREG:<57 bytes>",0,0), a first argument of 64 bytes with a valid mnemonic
+# Before the fix : BADZPEEKARG with "mnemonic argument", so the line below was a WRONG line
+# With the fix   : expect BADZPEEKARG with "length"
+# Command : $gtm_dist/mumps -run arglong^ydb1337
+PASS : a first argument of 64 bytes (GDRREG: and a region name) issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus length parameter for $ZPEEK()
+
+# Stage 6 : $ZPEEK("GDRREG:DEFAULT",0,2,"U"), a valid first argument
+# Before the fix : the same output (this stage is a control)
+# With the fix   : expect 7, the length of the region name DEFAULT
+# Command : $gtm_dist/mumps -run valid^ydb1337
+PASS : $ZPEEK("GDRREG:DEFAULT",0,2,"U") returned 7, the length of the region name DEFAULT
+
+# Stage 7 : $ZPEEK("GDRREG:<31-byte region name>",0,2,"U"), a valid first argument of 38 bytes
+# Before the fix : the same output (this stage is a control)
+# With the fix   : expect 31, the length of the region name
+# Command : $gtm_dist/mumps -run gdrreg31^ydb1337, with the global directory r31.gld
+PASS : $ZPEEK("GDRREG:<31-byte region name>",0,2,"U") returned 31, the length of the region name
+
+# Stage 8 : $ZPEEK("CRITREG:<31-byte region name>",0,2,"U"), a valid first argument of 39 bytes,
+#           the longest valid first argument (CRITREG is one of the longest mnemonics, 7 bytes)
+# Before the fix : the same output (this stage is a control)
+# With the fix   : expect a number, and no error
+# Command : $gtm_dist/mumps -run critreg31^ydb1337, with the global directory r31.gld
+PASS : $ZPEEK("CRITREG:<31-byte region name>",0,2,"U") returned a number
+
+# Stage 9 : $ZPEEK("GDRREG:<32-byte region name>",0,0), a region name 1 byte longer than the
+#           maximum, in a first argument of 39 bytes
+# Before the fix : the same output (this stage is a control)
+# With the fix   : expect BADZPEEKARG with "mnemonic argument"
+# Command : $gtm_dist/mumps -run gdrreg32^ydb1337, with the global directory r31.gld
+PASS : a first argument of 39 bytes (GDRREG: and a 32-byte region name) issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument parameter for $ZPEEK()
+
+# Done
