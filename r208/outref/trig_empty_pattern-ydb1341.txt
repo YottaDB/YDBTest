@@ -1,0 +1,107 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1341] $ZTRIGGER() and MUPIP TRIGGER reject a trigger subscript pattern that is empty or       #
+# not valid, instead of loading it and then failing every SET of the global with PATCODE             #
+#----------------------------------------------------------------------------------------------------#
+
+# The trigger definition parser checked each pattern code after the ? of a pattern subscript, so it
+# accepted a ? with no pattern codes after it, and an empty alternation. When the trigger was used,
+# the pattern compiler rejected it, so every SET of the global failed with PATCODE until the trigger
+# was deleted, and a Debug build failed an assert in gv_trigger.c (0 < len) for an empty pattern.
+# The parser now also compiles the pattern the way the trigger code does when the trigger is used.
+#
+# Stages 1 to 5 each delete all triggers, load a trigger on ^x with a pattern subscript and the code
+# set ^y=$get(^y)+1, then SET ^x(1), ^x("a"), ^x("bc") and ^x("de"), and check the number of times
+# the trigger ran. Each stage runs in its own process.
+
+# Stage 1 : +^x(?)
+# Command : $gtm_dist/mumps -run empty^ydb1341
+# Before the fix : the trigger loaded, and each SET issued PATCODE in a Release build. In a Debug
+#                  build, the first SET failed an assert in gv_trigger.c
+# With the fix   : expect "Missing pattern code after ?", $ZTRIGGER() to return 0, and the SETs
+#                  to succeed
+No matching triggers found for deletion
+Missing pattern code after ?
+"^x(?) -commands=set -xecute=""set ^y=$get(^y)+1"""
+PASS : $ZTRIGGER() return value for ^x(?) is 0
+PASS : number of times the trigger ran is 0
+
+# Stage 2 : +^x(?;1)
+# Command : $gtm_dist/mumps -run emptysemi^ydb1341
+# Before the fix : the same failures as in stage 1
+# With the fix   : expect "Missing pattern code after ?", $ZTRIGGER() to return 0, and the SETs
+#                  to succeed
+No matching triggers found for deletion
+Missing pattern code after ?
+"^x(?;1) -commands=set -xecute=""set ^y=$get(^y)+1"""
+PASS : $ZTRIGGER() return value for ^x(?;1) is 0
+PASS : number of times the trigger ran is 0
+
+# Stage 3 : +^x(?1())
+# Command : $gtm_dist/mumps -run emptyalt^ydb1341
+# Before the fix : the trigger loaded, and each SET issued PATCODE
+# With the fix   : expect "Invalid pattern code", $ZTRIGGER() to return 0, and the SETs to succeed
+No matching triggers found for deletion
+Invalid pattern code
+"^x(?1()) -commands=set -xecute=""set ^y=$get(^y)+1"""
+PASS : $ZTRIGGER() return value for ^x(?1()) is 0
+PASS : number of times the trigger ran is 0
+
+# Stage 4 : +^x(?1(,))
+# Command : $gtm_dist/mumps -run emptyalt2^ydb1341
+# Before the fix : the trigger loaded, and each SET issued PATCODE
+# With the fix   : expect "Invalid pattern code", $ZTRIGGER() to return 0, and the SETs to succeed
+No matching triggers found for deletion
+Invalid pattern code
+"^x(?1(,)) -commands=set -xecute=""set ^y=$get(^y)+1"""
+PASS : $ZTRIGGER() return value for ^x(?1(,)) is 0
+PASS : number of times the trigger ran is 0
+
+# Stage 5 : valid patterns +^x(?1N;?1A), +^x(?1(1"a",1"bc")) and +^x(?.E), one at a time
+# Command : $gtm_dist/mumps -run valid^ydb1341
+# Before the fix : the same as with the fix
+# With the fix   : expect each trigger to load, and to run for 2, 2 and 4 of the SETs
+No matching triggers found for deletion
+Added SET trigger on ^x named x#1
+PASS : $ZTRIGGER() return value for ^x(?1N;?1A) is 1
+PASS : number of times the trigger ran is 2
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : $ZTRIGGER() return value for ^x(?1(1"a",1"bc")) is 1
+PASS : number of times the trigger ran is 2
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : $ZTRIGGER() return value for ^x(?.E) is 1
+PASS : number of times the trigger ran is 4
+
+# Stage 6 : MUPIP TRIGGER with a trigger file that has the 4 patterns of stages 1 to 4
+# Command : $gtm_dist/mumps -run trgfile^ydb1341, then
+#           $gtm_dist/mupip trigger -triggerfile=badpat.trg -noprompt
+# Before the fix : all 4 entries loaded, and the exit status was 0
+# With the fix   : expect an error for each entry, MUNOACTION, and an exit status that is not 0
+# MUPIP TRIGGER exit status is not 0 : PASS
+----------
+Error MUNOACTION seen in mupip.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+# mupip.out (renamed to mupip.outx by check_error_exist.csh), without the MUNOACTION line :
+File badpat.trg, Line 1: Missing pattern code after ?
+"^x(?) -commands=set -xecute=""set ^y=1"""
+File badpat.trg, Line 2: Missing pattern code after ?
+"^x(?;1) -commands=set -xecute=""set ^y=1"""
+File badpat.trg, Line 3: Invalid pattern code
+"^x(?1()) -commands=set -xecute=""set ^y=1"""
+File badpat.trg, Line 4: Invalid pattern code
+"^x(?1(,)) -commands=set -xecute=""set ^y=1"""
+=========================================
+4 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+
+# Stage 7 : $ZTRIGGER("SELECT")
+# Before the fix : $ZTRIGGER("SELECT") also showed the 4 triggers that stage 6 loaded
+# With the fix   : expect only the trigger left by stage 5 (+^x(?.E), stored as +^x(*))
+# Command : $gtm_dist/mumps -run %XCMD 'if $ztrigger("select")'
+;trigger name: x#1 (region DEFAULT)  cycle: 5
++^x(*) -commands=S -xecute="set ^y=$get(^y)+1"
+
+# Done
