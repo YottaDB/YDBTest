@@ -108,6 +108,7 @@
 # ztrap_new_noline-ydb1347		[nars]	Test an argumentless or exclusive NEW in $ZTRAP or device EXCEPTION code works correctly in a routine compiled with -noline_entry
 # zcompile_object_badchar-ydb1345	[nars]	Test an -object value with a byte that is not valid UTF-8 issues NOTMNAME for that value in UTF-8 mode
 # socket_block_mnemonic-ydb1348		[nars]	Test WRITE /mnemonic to a SOCKET device accepts BLOCK only as the whole mnemonic and does not read past the BLOCK literal
+# qsubscript_env_zero-ydb1349		[nars]	Test $QSUBSCRIPT() and related functions parse a global name whose second environment part is 0 or a $CHAR()
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -210,6 +211,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_many_names-ydb13
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrap_new_noline-ydb1347"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_object_badchar-ydb1345"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_block_mnemonic-ydb1348"
+setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_env_zero-ydb1349"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
