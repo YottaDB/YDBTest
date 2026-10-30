@@ -1,0 +1,74 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1346] A TSTART that names 6 or more local variables restores all of them on a restart        #
+#----------------------------------------------------------------------------------------------------#
+
+# A TSTART passes the names of the local variables to restore on a restart to op_tstart() through
+# opp_tstart. On AARCH64, the first 5 names fit in registers and the 6th and later ones are on the
+# stack. opp_tstart read those from the wrong place, so on AARCH64 a TSTART with 6 or more names
+# terminated with a SIG-11 (YottaDB r2.04 and later) or did not restore the 6th variable on a restart
+# (r2.02 and earlier). Other platforms were not affected.
+# Each stage runs its case in a new process. The case sets v1 to v<n> to 1, does a TSTART that names
+# them, sets them to 2 and does a TRESTART, then prints PASS if the restart restored all of them to 1,
+# or WRONG for each one that it did not restore.
+
+# Stage 1 : TSTART with 1, 2, 3, 4 and 5 names, which all fit in registers
+# Before the fix : the same result (these cases are controls)
+# With the fix   : expect PASS for each
+# Command : $gtm_dist/mumps -run low^ydb1346
+PASS : 1 name, $TRESTART=1, v1 to v1 restored
+PASS : 2 names, $TRESTART=1, v1 to v2 restored
+PASS : 3 names, $TRESTART=1, v1 to v3 restored
+PASS : 4 names, $TRESTART=1, v1 to v4 restored
+PASS : 5 names, $TRESTART=1, v1 to v5 restored
+
+# Stage 2 : TSTART with 6 names, the 6th on the stack
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t6^ydb1346
+PASS : 6 names, $TRESTART=1, v1 to v6 restored
+
+# Stage 3 : TSTART with 7 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t7^ydb1346
+PASS : 7 names, $TRESTART=1, v1 to v7 restored
+
+# Stage 4 : TSTART with 8 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t8^ydb1346
+PASS : 8 names, $TRESTART=1, v1 to v8 restored
+
+# Stage 5 : TSTART with 9 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t9^ydb1346
+PASS : 9 names, $TRESTART=1, v1 to v9 restored
+
+# Stage 6 : TSTART with 16 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t16^ydb1346
+PASS : 16 names, $TRESTART=1, v1 to v16 restored
+
+# Stage 7 : TSTART with 31 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build, and an assert in op_tstart.c in a Debug
+#                  build
+# With the fix   : expect PASS
+# Command : $gtm_dist/mumps -run t31^ydb1346
+PASS : 31 names, $TRESTART=1, v1 to v31 restored
+
+# Stage 8 : the same in Direct Mode, with 6 and with 9 names
+# Before the fix : on AARCH64, a SIG-11 in a Release build. In a Debug build, the restart did not
+#                  restore v6 with 6 names, and an assert in op_tstart.c failed with 9 names
+# With the fix   : expect PASS for each
+# Command : $gtm_dist/mumps -direct < dmode.inp
+PASS : 6 names, $TRESTART=1, v1 to v6 restored
+PASS : 9 names, $TRESTART=1, v1 to v9 restored
+
+# Done

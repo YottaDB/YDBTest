@@ -104,6 +104,7 @@
 # trig_lvn_limit-ydb1340		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER issue "Too many subscripts" for more than 31 local variable names in trigger subscripts, and accept chained names
 # trig_empty_pattern-ydb1341		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER reject a trigger subscript pattern that is empty or not valid
 # ztexit_implicit_tp-ydb1342		[nars]	Test an update that uses an implicit transaction (ZTRIGGER, $ZTRIGGER("ITEM"), SET or KILL with a trigger) runs once, then $ZINTERRUPT once, when $ZTEXIT is true
+# tstart_many_names-ydb1346		[nars]	Test a TSTART that names 6 or more local variables restores all of them on a restart
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -202,6 +203,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zpeek_len-ydb1337"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trig_lvn_limit-ydb1340"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trig_empty_pattern-ydb1341"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztexit_implicit_tp-ydb1342"
+setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_many_names-ydb1346"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
