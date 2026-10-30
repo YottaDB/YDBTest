@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -19,15 +19,15 @@ randomWalk	;
 
 	; start concurrent child processes
 	set ^isTimeout=0
-        for i=1:1:concurrent do
-        . set jobstr="job child^randomWalk("_i_"):(output=""child_randomWalk.mjo"_i_""":error=""child_randomWalk.mje"_i_""")"
-        . xecute jobstr
-        . set job(i)=$zjob
+	for i=1:1:concurrent do
+	. set jobstr="job child^randomWalk("_i_"):(output=""child_randomWalk.mjo"_i_""":error=""child_randomWalk.mje"_i_""")"
+	. xecute jobstr
+	. set job(i)=$zjob
 	hang testTimeout
 	set ^isTimeout=1
 	; wait for child processes to die
-        for i=1:1:concurrent set pid=job(i) for  quit:'$zgetjpi(pid,"ISPROCALIVE")  hang 0.001
-        quit
+	for i=1:1:concurrent set pid=job(i) for  quit:'$zgetjpi(pid,"ISPROCALIVE")  hang 0.001
+	quit
 
 child(jobindex) ;
 	for  do  quit:^isTimeout
@@ -62,10 +62,14 @@ runProc(tpNestRate) ;
 		. . for  set sub=$order(@sub,direction) quit:sub=""  write " set sub=$order(",sub,",",direction,")",!
 	else  if action<(20+(odds*(5/7))) set x=$increment(@basevar,$random(5)) write " set x=$increment(",basevar,",$random(5))",!
 	else  if action<(20+(odds*(6/7))) do
-		. write " lock ",basevar,!
-		. lock @basevar
-		. write " lock +",basevar,!
-		. lock +@basevar
+		. ; An untimed LOCK inside TP releases crit in the final retry, so the transaction can restart indefinitely and
+		. ; would fail with a TPNOTACID error once it passes the ydb_tpnotacidtries limit (16 by default). After 10
+		. ; restarts use a zero timeout, which keeps crit, so the next final retry commits.
+		. set timed=$select('$tlevel:0,1:11<tptries)
+		. write " lock ",basevar,$select(timed:":0",1:""),!
+		. lock:'timed @basevar  lock:timed @basevar:0
+		. write " lock +",basevar,$select(timed:":0",1:""),!
+		. lock:'timed +@basevar  lock:timed +@basevar:0
 		. write " lock -",basevar,!
 		. lock -@basevar
 		. write " lock",!
@@ -77,7 +81,11 @@ runProc(tpNestRate) ;
 	else  if action<100 do
 		. quit:$TLEVEL>^maxDepth
 		. write " tstart ():(serial:transaction=""BATCH"")",!
+		. ; tptries counts the tries of the outermost transaction. It is not restored on a restart, and unlike $trestart
+		. ; it is not capped at 4, so the LOCKs above can use it.
+		. set:'$tlevel tptries=0
 		. tstart ():(serial:transaction="BATCH")
+		. set:1=$tlevel tptries=tptries+1
 		. set n=$random(20)
 		. for i=1:1:n do runProc(tpNestRate/2)
 		. tcommit
