@@ -1761,6 +1761,12 @@ dummydebug
 dummydebugresult()
 	quit $ZYSQLNULL
 
+; Note: The below label points to an extrinsic function that is used as the HANG argument in AllCmdPostConditionalTest.
+; It records that the argument was evaluated and returns 0 so the HANG does not wait.
+hangarg()
+	set ^result=1
+	quit 0
+
 ydb484g	;
 	write "################################################################",!
 	write "# Test : ydb484g : Miscellaneous tests",!
@@ -2368,28 +2374,16 @@ AllCmdPostConditionalTest
 	;
 	for boolrslt=0,1,$zysqlnull do
 	. do getboolexpr(.dlrtest,.boolexpr)
-	. new skipHangPostconditional
-	. ; If ARMV7L, ARMV6L or AARCH64, we have seen failures from the HANG postconditionaltest part of the test.
-	. ; when boolrst is 0 or $zysqlnull. This is because the HANG command takes more than a second in some cases to run
-	. ; (not sure how long it actually takes to run). The reason being the evaluation of the postconditional involves a
-	. ; complex boolean expression and that takes more than a second to run which causes a false test failure since the
-	. ; test expects the elapsed time in such case to be less than 1 second. To avoid such failures, we skip this test
-	. ; on those platforms. In case boolrslt is 1, we test that the hang time is > 0 (i.e. hang took at least 1 second)
-	. ; and this will not fail even on a slow system so we continue to run that particular test even on the ARM platforms.
-	. set skipHangPostconditional=((1'=boolrslt)&(($ZVersion["armv7l")!($ZVersion["armv6l")!($ZVersion["aarch64")))
-	. if 'skipHangPostconditional do
-	. . ;
-	. . ; HANG
-	. . ; verification is done based on time. Difference in time before and after hang is checked.
-	. . set xstr="hang:"_boolexpr_" 1"
-	. . set innerstartime=$horolog,innerelapsedtime=0	; time before HANG
-	. . if dlrtest		; sets $test to dlrtest before boolexpr is evaluated
-	. . xecute xstr
-	. . set innerelapsedtime=$$^difftime($horolog,innerstartime)	; time after HANG
-	. . ; case boolrslt=0 or $zysqlnull,(innerelapsedtime>0): hang is not executed so elapsed time should be 0
-	. . ; case boolrslt=1,'(innerelapsedtime>0): hang is executed so elapsed time should be 1.
-	. . ; >0 is considered in case due to processor load the hang is more than expected.
-	. . do verifypcrslt("HANG",boolrslt,(innerelapsedtime>0),'(innerelapsedtime>0),dlrtest,boolexpr,.failcnt)
+	. ;
+	. ; HANG
+	. ; The HANG argument is evaluated only if the postconditional is TRUE, and $$hangarg sets ^result to 1 when it is.
+	. ; This checks the postconditional without timing the HANG, which a slow or loaded system can make unreliable.
+	. set ^result=0,xstr="hang:"_boolexpr_" $$hangarg"
+	. if dlrtest		; sets $test to dlrtest before boolexpr is evaluated
+	. xecute xstr
+	. ; In case of boolrslt=0 or $zysqlnull the HANG argument is not evaluated so the ^result is 0
+	. ; In case of boolrslt=1 the HANG argument is evaluated so the ^result is 1 which is set by $$hangarg
+	. do verifypcrslt("HANG",boolrslt,^result,(^result'=1),dlrtest,boolexpr,.failcnt)
 	.
 	. ; IF
 	. set result=0,xstr="if "_boolexpr_" set result=1"
