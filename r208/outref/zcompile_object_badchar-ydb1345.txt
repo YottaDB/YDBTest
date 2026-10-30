@@ -1,0 +1,114 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1345] In UTF-8 mode, an -object value with a byte that is not valid UTF-8 issues NOTMNAME for #
+# that value, as in M mode                                                                           #
+#----------------------------------------------------------------------------------------------------#
+
+# In UTF-8 mode, the command line lexer (sr_unix/cli_lex.c) dropped each byte that is not valid UTF-8
+# from a token. An -object value that started with such a byte became empty, which issued NOTMNAME for
+# "." (an assert failure in zl_cmd_qlf.c in a Debug build), and one that had a valid character too
+# lost the invalid bytes without an error, so the object file got another name. In M mode the value is
+# kept, and NOTMNAME reports it. Each byte 0xB6 in the output is shown as <0xB6>. In UTF-8 mode,
+# NOTMNAME shows a byte that is not valid UTF-8 as a "."
+
+# Stage 1 : UTF-8 mode, -object value of the byte 0xB6
+# Command : $gtm_dist/mumps -object=<value> x.m
+# Before the fix : NOTMNAME for "." and ZLNOOBJECT in a Release build. A Debug build failed an assert
+#                  in zl_cmd_qlf.c
+# With the fix   : expect NOTMNAME for the value, ZLNOOBJECT, and no object file
+----------
+Error NOTMNAME seen in stage1.out as expected:
+%YDB-E-NOTMNAME, . is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage1.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+PASS: no object file was produced
+
+# Stage 2 : UTF-8 mode, -object value of a and the byte 0xB6
+# Command : $gtm_dist/mumps -object=<value> x.m
+# Before the fix : no error, and a.o was produced
+# With the fix   : expect NOTMNAME for the value, ZLNOOBJECT, and no object file
+----------
+Error NOTMNAME seen in stage2.out as expected:
+%YDB-E-NOTMNAME, a. is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage2.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+PASS: no object file was produced
+
+# Stage 3 : UTF-8 mode, -object value of the byte 0xB6 and a
+# Command : $gtm_dist/mumps -object=<value> x.m
+# Before the fix : no error, and a.o was produced
+# With the fix   : expect NOTMNAME for the value, ZLNOOBJECT, and no object file
+----------
+Error NOTMNAME seen in stage3.out as expected:
+%YDB-E-NOTMNAME, .a is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage3.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+PASS: no object file was produced
+
+# Stage 4 : UTF-8 mode, ZCOMPILE with an -object value of the byte 0xB6
+# Command : $gtm_dist/mumps -run %XCMD 'do zc^ydb1345($zchar(182))'
+# Before the fix : NOTMNAME in a Release build. A Debug build failed an assert in zl_cmd_qlf.c
+# With the fix   : expect ZCOMPILE to issue NOTMNAME, and no object file
+PASS: ZCOMPILE issues NOTMNAME
+PASS: no object file was produced
+
+# Stage 5 : UTF-8 mode, ZCOMPILE with an -object value of a and the byte 0xB6
+# Command : $gtm_dist/mumps -run %XCMD 'do zc^ydb1345("a"_$zchar(182))'
+# Before the fix : no error, and a.o was produced
+# With the fix   : expect ZCOMPILE to issue NOTMNAME, and no object file (not a.o)
+PASS: ZCOMPILE issues NOTMNAME
+PASS: no object file was produced
+
+# Stage 6 : M mode, -object values of the byte 0xB6, and of a and the byte 0xB6 (unchanged by the fix)
+# Command : $gtm_dist/mumps -object=<value> x.m
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect NOTMNAME for each value, ZLNOOBJECT, and no object file
+----------
+Error NOTMNAME seen in stage6a.out as expected:
+%YDB-E-NOTMNAME, <0xB6> is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage6a.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+----------
+Error NOTMNAME seen in stage6b.out as expected:
+%YDB-E-NOTMNAME, a<0xB6> is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage6b.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+PASS: no object file was produced
+
+# Stage 7 : UTF-8 mode, -object value ab (all valid characters)
+# Command : $gtm_dist/mumps -object=ab x.m ; $gtm_dist/mumps -run ab
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect no error, and ab.o to be produced and to run as routine ab
+PASS: ab.o was produced
+x runs
+
+# Stage 8 : UTF-8 mode, -object value of a and the bytes 0xF0 0x9F 0x98, then A (the start of a 4-byte
+#           character whose 4th byte is not a continuation byte)
+# Command : $gtm_dist/mumps -object=<value> x.m
+# Before the fix : no error, and aA.o was produced (the 3 bytes that are not valid UTF-8 were dropped)
+# With the fix   : expect NOTMNAME for a...A (each of the 3 bytes shown as a "."), ZLNOOBJECT, and no
+#                  object file
+PASS: NOTMNAME is for a...A
+----------
+Error NOTMNAME seen in stage8.out as expected:
+%YDB-E-NOTMNAME, a...A is not a valid M name
+----------
+----------
+Error ZLNOOBJECT seen in stage8.out as expected:
+%YDB-E-ZLNOOBJECT, No object module was produced
+----------
+PASS: no object file was produced
