@@ -1,0 +1,120 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1344] Compiling a routine line with an invalid special variable or function name followed by #
+# another syntax error issues the errors and produces an object file                                 #
+#----------------------------------------------------------------------------------------------------#
+
+# An invalid special variable name (INVSVN) or function name (INVFCN) is a compile time warning, so
+# the compiler adds an OC_RTERROR triple and goes on parsing the line. When the line then has a real
+# error, ins_errtriple() took that OC_RTERROR triple for an earlier error on the line and left the
+# triples of the failed parse after it, which code generation could not handle. The compile ended with
+# GTMASSERT2 in emit_code.c (an assert failure in emit_code.c in a Debug build).
+#
+# Without the fix, stages 1, 2 and 5 end the compile with GTMASSERT2 (or the assert failure), and print
+# WRONG, and stages 3, 4 and 6 PASS.
+
+# Stage 1 : line 3 is [ w $length($zbar x]: INVSVN and then RPARENMISSING
+# Command : $gtm_dist/mumps ydb1344a.m
+# Before the fix, the compile issued INVSVN and RPARENMISSING and then ended with GTMASSERT2 in emit_code.c
+# (an assert failure in emit_code.c in a Debug build), and the WRONG lines below were printed
+#   expect the errors (INVSVN RPARENMISSING), no GTMASSERT2 or assert failure, and ydb1344a.o to be produced
+----------
+Error INVSVN seen in ydb1344a.cmp as expected:
+%YDB-E-INVSVN, Invalid special variable name
+----------
+----------
+Error RPARENMISSING seen in ydb1344a.cmp as expected:
+%YDB-E-RPARENMISSING, Right parenthesis expected
+----------
+PASS: compiling ydb1344a.m does not fail an assert
+PASS: ydb1344a.o was produced
+# Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344a","INVSVN")'
+#   expect line 2 to run and line 3 to issue the first error of the line (INVSVN)
+line 2 runs
+PASS: line 3 of ^ydb1344a issues INVSVN
+
+# Stage 2 : line 3 is [ w $zfoo,a(1)_","_a(2)_","_ ... _","_a(128)]: INVSVN and then MAXARGCNT
+# Command : $gtm_dist/mumps ydb1344b.m
+# Before the fix, the compile issued INVSVN and MAXARGCNT and then ended with GTMASSERT2 in emit_code.c
+# (an assert failure in emit_code.c in a Debug build), and the WRONG lines below were printed
+#   expect the errors (INVSVN MAXARGCNT), no GTMASSERT2 or assert failure, and ydb1344b.o to be produced
+----------
+Error INVSVN seen in ydb1344b.cmp as expected:
+%YDB-E-INVSVN, Invalid special variable name
+----------
+----------
+Error MAXARGCNT seen in ydb1344b.cmp as expected:
+%YDB-E-MAXARGCNT, Maximum number of arguments 253 exceeded
+----------
+PASS: compiling ydb1344b.m does not fail an assert
+PASS: ydb1344b.o was produced
+# Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344b","INVSVN")'
+#   expect line 2 to run and line 3 to issue the first error of the line (INVSVN)
+line 2 runs
+PASS: line 3 of ^ydb1344b issues INVSVN
+
+# Stage 3 : line 3 is [ w $zbar(1)+$length(]: INVFCN and then EXPR
+# Command : $gtm_dist/mumps ydb1344c.m
+# Before the fix, this stage passed too, with the output below
+#   expect the errors (INVFCN EXPR), no GTMASSERT2 or assert failure, and ydb1344c.o to be produced
+----------
+Error INVFCN seen in ydb1344c.cmp as expected:
+%YDB-E-INVFCN, Invalid function name
+----------
+----------
+Error EXPR seen in ydb1344c.cmp as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+PASS: compiling ydb1344c.m does not fail an assert
+PASS: ydb1344c.o was produced
+# Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344c","INVFCN")'
+#   expect line 2 to run and line 3 to issue the first error of the line (INVFCN)
+line 2 runs
+PASS: line 3 of ^ydb1344c issues INVFCN
+
+# Stage 4 : line 3 is [ w $zbar]: INVSVN only
+# Command : $gtm_dist/mumps ydb1344e.m
+# Before the fix, this stage passed too, with the output below
+#   expect the errors (INVSVN), no GTMASSERT2 or assert failure, and ydb1344e.o to be produced
+----------
+Error INVSVN seen in ydb1344e.cmp as expected:
+%YDB-E-INVSVN, Invalid special variable name
+----------
+PASS: compiling ydb1344e.m does not fail an assert
+PASS: ydb1344e.o was produced
+# Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344e","INVSVN")'
+#   expect line 2 to run and line 3 to issue the first error of the line (INVSVN)
+line 2 runs
+PASS: line 3 of ^ydb1344e issues INVSVN
+
+# Stage 5 : DO ^ydb1344d, whose line 3 is [ w $length($zbar x], compiles it with the automatic ZLINK
+# Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344d","INVSVN")'
+# Before the fix, the automatic ZLINK issued INVSVN and RPARENMISSING and then ended with GTMASSERT2 in
+# emit_code.c (an assert failure in emit_code.c in a Debug build), and the WRONG line below was printed
+#   expect the compile to issue INVSVN and RPARENMISSING with no GTMASSERT2 or assert failure, line 2
+#   to run and line 3 to issue INVSVN
+----------
+Error INVSVN, Invalid seen in stage5.out as expected:
+%YDB-E-INVSVN, Invalid special variable name
+----------
+----------
+Error RPARENMISSING, Right seen in stage5.out as expected:
+%YDB-E-RPARENMISSING, Right parenthesis expected
+----------
+PASS: the automatic ZLINK of ydb1344d does not fail an assert
+line 2 runs
+PASS: line 3 of ^ydb1344d issues INVSVN
+
+# Stage 6 : a line with FALLINTOFLST (whose OC_RTERROR triple line() adds at the start of the line) and
+#           NESTFORMP, the case YDB@c30512121 fixed
+# Command : $gtm_dist/mumps ydb1344f.m
+# Before the fix, this stage passed too, with the output below
+#   expect FALLINTOFLST and NESTFORMP, and no GTMASSERT2 or assert failure
+----------
+Error FALLINTOFLST seen in ydb1344f.cmp as expected:
+%YDB-W-FALLINTOFLST, Fall-through to a label with formallist is not allowed
+----------
+----------
+Error NESTFORMP seen in ydb1344f.cmp as expected:
+%YDB-E-NESTFORMP, Formal parameter list cannot be combined with nested line
+----------
+PASS: compiling ydb1344f.m does not fail an assert
