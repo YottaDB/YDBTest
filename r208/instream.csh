@@ -103,6 +103,7 @@
 # zpeek_len-ydb1337			[nars]	Test $ZPEEK() issues BADZPEEKARG for a first argument longer than 63 bytes instead of overwriting the stack
 # trig_lvn_limit-ydb1340		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER issue "Too many subscripts" for more than 31 local variable names in trigger subscripts, and accept chained names
 # trig_empty_pattern-ydb1341		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER reject a trigger subscript pattern that is empty or not valid
+# ztexit_implicit_tp-ydb1342		[nars]	Test an update that uses an implicit transaction (ZTRIGGER, $ZTRIGGER("ITEM"), SET or KILL with a trigger) runs once, then $ZINTERRUPT once, when $ZTEXIT is true
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -200,6 +201,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic jobparam_s-ydb1336"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zpeek_len-ydb1337"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trig_lvn_limit-ydb1340"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trig_empty_pattern-ydb1341"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztexit_implicit_tp-ydb1342"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

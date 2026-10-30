@@ -1,0 +1,114 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1342] With $ZTEXIT true, an update that uses an implicit transaction completes once and       #
+# then $ZINTERRUPT runs once                                                                         #
+#----------------------------------------------------------------------------------------------------#
+
+# A ZTRIGGER command, $ZTRIGGER("ITEM") and a SET or KILL that invokes a trigger use an implicit
+# transaction. With $ZTEXIT true, the end of that transaction issued the same error that a TCOMMIT
+# command issues to run $ZINTERRUPT. But after $ZINTERRUPT, the M command that did the update ran
+# again, so the update and $ZINTERRUPT repeated without end.
+#
+# Each stage runs in its own process, with a time limit so that the stage ends even if the update
+# repeats without end.
+
+# Stage 1 : SET ^x(1)=1 with a SET trigger on ^x, and $ZTEXIT true
+# Before the fix : the SET, its trigger and $ZINTERRUPT repeated without end in a Release build. A
+#                  Debug build failed an assert in gvcst_put.c
+# With the fix   : expect the SET and its trigger to run once, then $ZINTERRUPT once
+# Command : $gtm_dist/mumps -run settrig^ydb1342
+No matching triggers found for deletion
+Added SET trigger on ^x named x#1
+PASS : SET ^x(1)=1 : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 1 time(s) (expected 1), the trigger had run 1 time(s) when $ZINTERRUPT ran (expected 1)
+
+# Stage 2 : ZTRIGGER ^x(1) with no trigger defined, and $ZTEXIT true
+# Before the fix : the ZTRIGGER and $ZINTERRUPT repeated without end in a Release build. A Debug
+#                  build failed an assert in gvcst_put.c
+# With the fix   : expect $ZINTERRUPT to run once after the ZTRIGGER
+# Command : $gtm_dist/mumps -run ztrignone^ydb1342
+All existing triggers (count = 1) deleted
+PASS : ZTRIGGER ^x(1) : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 0 time(s) (expected 0), the trigger had run 0 time(s) when $ZINTERRUPT ran (expected 0)
+
+# Stage 3 : ZTRIGGER ^x(1) with a ZTRIGGER trigger on ^x, and $ZTEXIT true
+# Before the fix : the ZTRIGGER, its trigger and $ZINTERRUPT repeated without end in a Release
+#                  build. A Debug build failed an assert in gvcst_put.c
+# With the fix   : expect the trigger to run once, then $ZINTERRUPT once
+# Command : $gtm_dist/mumps -run ztrigtrig^ydb1342
+No matching triggers found for deletion
+Added Non-SET trigger on ^x named x#1
+PASS : ZTRIGGER ^x(1) : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 1 time(s) (expected 1), the trigger had run 1 time(s) when $ZINTERRUPT ran (expected 1)
+
+# Stage 4 : KILL ^x(1) with a KILL trigger on ^x, and $ZTEXIT true
+# Before the fix : the KILL, its trigger and $ZINTERRUPT repeated without end in a Release build. A
+#                  Debug build failed an assert in gvcst_put.c
+# With the fix   : expect the KILL and its trigger to run once, then $ZINTERRUPT once
+# Command : $gtm_dist/mumps -run killtrig^ydb1342
+All existing triggers (count = 1) deleted
+Added Non-SET trigger on ^x named x#1
+PASS : KILL ^x(1) : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 1 time(s) (expected 1), the trigger had run 1 time(s) when $ZINTERRUPT ran (expected 1)
+PASS : $data(^x(1))=0 after the KILL (expected 0)
+
+# Stage 5 : $ZTRIGGER("ITEM") that loads a trigger, and $ZTEXIT true
+# Before the fix : $ZTRIGGER("ITEM") and $ZINTERRUPT repeated without end
+# With the fix   : expect $ZTRIGGER("ITEM") to return 1, then $ZINTERRUPT to run once
+# Command : $gtm_dist/mumps -run ztrigitem^ydb1342
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : $ZTRIGGER("ITEM") returned 1 (expected 1)
+PASS : $ZTRIGGER("ITEM") : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 0 time(s) (expected 0), the trigger had run 0 time(s) when $ZINTERRUPT ran (expected 0)
+
+# Stage 6 : SET ^x(1)=1 with a SET trigger that issues DIVZERO, an $ETRAP, and $ZTEXIT true
+# Before the fix : $ZINTERRUPT ran again and again from inside the error handling until STACKCRIT
+# With the fix   : expect the $ETRAP to see the DIVZERO, the SET to be rolled back, then $ZINTERRUPT
+#                  to run once
+# Command : $gtm_dist/mumps -run trigerr^ydb1342
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : $ETRAP saw DIVZERO
+PASS : SET ^x(1)=1 with a failing trigger : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 0 time(s) (expected 0), the trigger had run 0 time(s) when $ZINTERRUPT ran (expected 0)
+PASS : $data(^x(1))=0 after the rolled back SET (expected 0)
+
+# Stage 7 : the SET of stage 1 and a ZTRIGGER inside TSTART () ... TCOMMIT, and $ZTEXIT true
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect $ZINTERRUPT not to run before the TCOMMIT, and to run once after the TCOMMIT
+# Command : $gtm_dist/mumps -run intp^ydb1342
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : $ZINTERRUPT ran 0 time(s) before the TCOMMIT (expected 0)
+PASS : TCOMMIT : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 1 time(s) (expected 1), the trigger had run 1 time(s) when $ZINTERRUPT ran (expected 1)
+
+# Stage 8 : ZTRIGGER ^x(1) with the default $ZINTERRUPT ($ZJOBEXAM()), and $ZTEXIT true
+# Before the fix : a new *_JOBEXAM.ZSHOW_DMP_* file was written thousands of times per second without
+#                  end in a Release build. A Debug build failed an assert in op_ztrigger.c after
+#                  1 file
+# With the fix   : expect one *_JOBEXAM.ZSHOW_DMP_* file
+# Command : $gtm_dist/mumps -run dflt^ydb1342
+PASS : exit status 0 and 1 *_JOBEXAM.ZSHOW_DMP_* file
+
+# Stage 9 : in Direct Mode, SET ^done=1 (a global with no trigger, so the SET loads the triggers of
+#           the region in an implicit transaction), then TSTART () and TCOMMIT, with the default
+#           $ZINTERRUPT ($ZJOBEXAM()) and $ZTEXIT true
+# Before the fix : the SET and $ZINTERRUPT repeated without end in a Release build. A Debug build
+#                  failed an assert in gvcst_put.c
+# With the fix   : expect the line after the TCOMMIT on the principal device, no fatal error, and one
+#                  *_JOBEXAM.ZSHOW_DMP_* file
+# Command : $gtm_dist/mumps -direct < dmode.inp, where dmode.inp has these lines
+#   set x=$ztrigger("item","+^y -commands=S -xecute=""set z=1""")
+#   set $ztexit=1
+#   set ^done=1
+#   tstart ()
+#   tcommit
+#   write "after the TCOMMIT",!
+PASS : exit status 0, the line after the TCOMMIT on the principal device, no fatal error and 1 dump file
+
+# Stage 10 : controls
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect no $ZINTERRUPT with $ZTEXIT false, and one after TSTART ()  TCOMMIT with
+#                  $ZTEXIT true
+# Command : $gtm_dist/mumps -run ctrl^ydb1342
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+PASS : SET ^x(1)=1 with $ZTEXIT false : $ZINTERRUPT ran 0 time(s) (expected 0), the trigger ran 1 time(s) (expected 1)
+All existing triggers (count = 1) deleted
+PASS : TSTART ()  TCOMMIT : $ZINTERRUPT ran 1 time(s) (expected 1), the trigger ran 0 time(s) (expected 0), the trigger had run 0 time(s) when $ZINTERRUPT ran (expected 0)
+
+# Done
