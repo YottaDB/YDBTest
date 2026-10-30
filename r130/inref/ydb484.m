@@ -2815,14 +2815,15 @@ RetSame(boolvalue,depth)
 
 boolexprtoodeep	;
 	;
-	; Below generates an M program that will issue a BOOLEXPRTOODEEP error when run
+	; Below generates an M program that will issue a BOOLEXPRTOODEEP error when run.
+	; The expression is a chain of maxdepth Boolean operators, which nests them maxdepth deep. It has no parentheses
+	; as more than 1024 levels of nested parentheses would get an EXPRTOODEEP error instead.
 	;
-	set maxdepth=4091
+	set maxdepth=3000
 	for i=1:1:(maxdepth+1)  write " set a"_(i#128)_"="_(i#2),!
 	write " set x="
-	for i=1:2:maxdepth  write "a"_(i#128)_"&(a"_((i+1)#128)_"!"
-	write "a"_((i+1)#128)
-	for i=1:2:maxdepth  write ")"
+	for i=1:1:maxdepth  write "a"_(i#128)_$select(i#2:"&",1:"!")
+	write "a"_((maxdepth+1)#128)
 	write !
 	write " zwrite x",!
 	quit

@@ -1,0 +1,91 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1339] Compiling an expression nested too deeply issues EXPRTOODEEP instead of a SIG-11        #
+#----------------------------------------------------------------------------------------------------#
+
+# The compiler processes an expression with recursive C functions. Tens of thousands of nested
+# expression items (unary operators, parentheses, function arguments, subscripts), or a chain of tens of
+# thousands of binary operators, used up the C stack and the process terminated with a SIG-11.
+# The compiler now issues EXPRTOODEEP beyond 1024 levels of nested expression items or 4096 levels of
+# operators. Each stage runs its case in a new process, and prints PASS or WRONG for each check.
+# Stages 1 to 6 compile the expression with argument indirection (SET @arg), which accepts an argument
+# longer than the maximum line length of 32766 bytes, then check that a later SET @arg still works.
+
+# Stage 1 : 100,000 unary minus operators
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run minus^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 2 : 100,000 levels of parentheses
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run paren^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 3 : 100,000 nested $LENGTH() calls
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run func^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 4 : a local variable reference with 100,000 nested subscripts
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run subs^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 5 : a chain of 100,000 + operators
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run plus^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 6 : a chain of 100,000 & operators
+# Before the fix : SIG-11
+# With the fix   : expect EXPRTOODEEP
+# Command : $gtm_dist/mumps -run and^ydb1339
+PASS : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=try+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later SET with argument indirection works : $ZSTATUS=
+
+# Stage 7 : XECUTE of a SET with 30,000 unary minus operators, then XECUTE of a simple SET
+# Before the fix : no error in a Release build, and a SIG-11 in a Debug build
+# With the fix   : expect EXPRTOODEEP, and the later XECUTE to work
+# Command : $gtm_dist/mumps -run xecute^ydb1339
+PASS : XECUTE issues EXPRTOODEEP : $ZSTATUS=tryx+3^ydb1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : a later XECUTE works : $ZSTATUS=
+
+# Stage 8 : ZLINK a routine whose line 3 has 2,000 unary minus operators, line 4 a chain of 5,000 +
+#           operators, line 5 1,024 unary minus operators and line 6 a chain of 4,095 + operators (the
+#           maximum depths), then run it
+# Before the fix : the routine compiled and ran without an error
+# With the fix   : expect EXPRTOODEEP when compiling and when running lines 3 and 4, and lines 2, 5 and 6
+#                  to run
+# Command : $gtm_dist/mumps -run routine^ydb1339
+# Compile deep1339.m with ZLINK; expect EXPRTOODEEP for lines 3 and 4
+Source lines exceeding 1023 character width are not displayed
+		At column 1038, line 3, source module ##TEST_PATH##/deep1339.m
+%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+Source lines exceeding 1023 character width are not displayed
+		At column 10015, line 4, source module ##TEST_PATH##/deep1339.m
+%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+# Run deep1339; expect lines 2, 5 and 6 to run and lines 3 and 4 to issue EXPRTOODEEP
+PASS : line 3 issues EXPRTOODEEP : $ZSTATUS=deep1339+2^deep1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : line 2 ran
+PASS : line 4 issues EXPRTOODEEP : $ZSTATUS=deep1339+3^deep1339,%YDB-E-EXPRTOODEEP, Expression nesting depth exceeds maximum supported limit
+PASS : line 5 (1,024 unary minus operators) runs and sets 1 : $ZSTATUS=
+PASS : line 6 (a chain of 4,095 + operators) runs and sets 4096 : $ZSTATUS=
+
+# Stage 9 : 1,000 levels of parentheses, a chain of 4,000 + operators and a chain of 2,000 & operators
+# Before the fix : the same result
+# With the fix   : expect all three to compile and evaluate correctly
+# Command : $gtm_dist/mumps -run limits^ydb1339
+PASS : 1,000 levels of parentheses evaluate to 5 : $ZSTATUS=
+PASS : a chain of 4,000 + operators evaluates to 4001 : $ZSTATUS=
+PASS : a chain of 2,000 & operators evaluates to 1 : $ZSTATUS=
+
+# Done
