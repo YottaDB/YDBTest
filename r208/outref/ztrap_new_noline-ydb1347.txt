@@ -1,0 +1,70 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1347] An argumentless or exclusive NEW in $ZTRAP or device EXCEPTION code for an error in a   #
+# routine compiled with -noline_entry works correctly when the line is retried                       #
+#----------------------------------------------------------------------------------------------------#
+
+# An argumentless or exclusive NEW in $ZTRAP or device EXCEPTION code creates a new symbol table and
+# clears the local variable slots of the routine frame where the error happened. The line with the
+# error is then retried. A routine compiled with -noline_entry fills those slots only at the start of
+# a line with a label, so the retried line used an empty slot and the process terminated with a
+# SIG-11.
+# The subtest compiles r208/inref/ydb1347.m with -noline_entry as ydb1347, and with -line_entry as
+# ydb1347le. Each stage runs its case in a new process. The results with -noline_entry must be the
+# same as with -line_entry.
+
+# Command : $gtm_dist/mumps -noline_entry ydb1347.m
+# Command : $gtm_dist/mumps -line_entry ydb1347le.m
+
+# Stage 1 : -noline_entry, $ZTRAP="new  set x=1" for an LVUNDEF of x
+# Before the fix : a SIG-11 when the line was retried
+# With the fix   : expect the retried line to write x=1, then the caller to continue
+# Command : $gtm_dist/mumps -run argless^ydb1347
+r1 x=r1 x=1
+back from r1
+
+# Stage 2 : -noline_entry, $ZTRAP="new (y) set x=y" with y=5, for an LVUNDEF of x
+# Before the fix : a SIG-11 when the line was retried
+# With the fix   : expect the retried line to write x=5, then the caller to continue
+# Command : $gtm_dist/mumps -run exclusive^ydb1347
+r1 x=r1 x=5
+back from r1
+
+# Stage 3 : -noline_entry, the LVUNDEF on the second line after the label, after SET z=1
+# Before the fix : a SIG-11 when the line was retried
+# With the fix   : expect the retried line to write x=1 and $get(z) empty, as z was set in the old
+#                  symbol table
+# Command : $gtm_dist/mumps -run laterline^ydb1347
+r2 x=r2 x=1 $get(z)=
+back from r2
+
+# Stage 4 : -noline_entry, OPEN f of a file that does not exist with EXCEPTION="new  set x=1"
+# Before the fix : a SIG-11 when the OPEN was retried
+# With the fix   : expect the retried OPEN to issue LVUNDEF for f, caught by $ETRAP, then the caller
+#                  to continue
+# Command : $gtm_dist/mumps -run device^ydb1347
+%YDB-E-LVUNDEF, Undefined local variable: f
+back from r3
+
+# Stage 5 : -noline_entry, the case of stage 1 from Direct Mode
+# Before the fix : a SIG-11 when the line was retried
+# With the fix   : expect the retried line to write x=1, then Direct Mode to continue
+# Command : $gtm_dist/mumps -direct < dmode.inp
+r1 x=r1 x=1
+back from r1
+
+# Stage 6 : -line_entry, the case of stage 1
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect the retried line to write x=1, then the caller to continue
+# Command : $gtm_dist/mumps -run argless^ydb1347le
+r1 x=r1 x=1
+back from r1
+
+# Stage 7 : -line_entry, the case of stage 4
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect the retried OPEN to issue LVUNDEF for f, caught by $ETRAP, then the caller
+#                  to continue
+# Command : $gtm_dist/mumps -run device^ydb1347le
+%YDB-E-LVUNDEF, Undefined local variable: f
+back from r3
+
+# Done
