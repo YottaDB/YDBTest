@@ -1,0 +1,98 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1343] INVDLRCVAL for a literal $CHAR() argument reports the invalid value at run time         #
+#----------------------------------------------------------------------------------------------------#
+
+# In UTF-8 mode, the compiler evaluates a $CHAR() whose arguments are all literals. For an argument that
+# is not a valid code point it issues INVDLRCVAL as a warning. It also inserted code to issue INVDLRCVAL
+# at run time, without the value, so the error reported the value as 0, and it returned an empty string
+# literal whose character length was wrong, which $TRANSLATE() could use as its default search string.
+# The compiler now generates a run time call of $CHAR() for such a $CHAR(), which issues INVDLRCVAL with
+# the value if and when it runs.
+
+# Stage 1 : Direct Mode, write $char(10000000)
+# Command : $gtm_dist/mumps -direct < stage1.inp >& stage1.out
+# Before the fix : INVDLRCVAL with the value 0, so check_error_exist.csh reported TEST-E-ERRORNOTSEEN
+# With the fix   : expect INVDLRCVAL with the value 10000000
+----------
+Error INVDLRCVAL, Invalid .CHAR.. value 10000000$ seen in stage1.out as expected:
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 10000000
+----------
+
+# Stage 2 : XECUTE "write $char(1114112)" from a routine
+# Command : $gtm_dist/mumps -run xecute^ydb1343
+# Before the fix : INVDLRCVAL with the value 0, so the line below was a WRONG line
+# With the fix   : expect INVDLRCVAL with the value 1114112
+PASS : the error is %YDB-E-INVDLRCVAL, Invalid $CHAR() value 1114112
+
+# Stage 3 : compile a routine with the line "set x=$char(65,1114112)", then run that line
+# Command : $gtm_dist/mumps ydb1343bad.m
+# Before the fix : the same warning, but running the line issued INVDLRCVAL with the value 0, so the
+#                  last line below was a WRONG line
+# With the fix   : expect the compiler to issue the INVDLRCVAL warning with the value 1114112, and
+#                  running the line to issue INVDLRCVAL with the value 1114112
+		set x=$char(65,1114112)
+		                      ^-----
+		At column 24, line 16, source module ##TEST_PATH##/ydb1343bad.m
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 1114112
+# Command : $gtm_dist/mumps -run rtn^ydb1343
+PASS : the error is %YDB-E-INVDLRCVAL, Invalid $CHAR() value 1114112
+
+# Stage 4 : Direct Mode, write $translate($char(0,10000000,""))
+# Command : $gtm_dist/mumps -direct < stage4.inp >& stage4.out
+# Before the fix : an assert failure in create_utf8_xlate_table.c in a Debug build, and INVDLRCVAL with
+#                  the value 0 in a Release build, so check_error_exist.csh reported TEST-E-ERRORNOTSEEN
+# With the fix   : expect INVDLRCVAL with the value 10000000
+----------
+Error INVDLRCVAL, Invalid .CHAR.. value 10000000$ seen in stage4.out as expected:
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 10000000
+----------
+
+# Stage 5 : Direct Mode, set x=$select(1:"ok",1:$char(1114112))
+# Command : $gtm_dist/mumps -direct < stage5.inp
+# Before the fix : the same result as below
+# With the fix   : expect "ok" and no error, as $SELECT() does not evaluate the $CHAR() after a true
+#                  condition (YDB#371)
+
+YDB>
+PASS : $SELECT() returned ok
+
+YDB>
+
+# Stage 6 : Direct Mode, view "NOBADCHAR" set x=$length($char(65,1114112,66)) on one line
+# Command : $gtm_dist/mumps -direct < stage6.inp
+# Before the fix : INVDLRCVAL with the value 0, as the compiler checked the code point before VIEW
+#                  "NOBADCHAR" ran, so the line below was not a PASS line
+# With the fix   : expect 2, as $CHAR() now runs after VIEW "NOBADCHAR" and drops the invalid code
+#                  point, as it does for an argument that is not a literal
+
+YDB>
+PASS : $length() returned 2
+
+YDB>
+
+# Stage 7 : Direct Mode, set x=$char(65,66,1046), all valid code points
+# Command : $gtm_dist/mumps -direct < stage7.inp
+# Before the fix : the same result as below
+# With the fix   : expect 3 characters in 4 bytes
+
+YDB>
+PASS : 3 characters in 4 bytes
+
+YDB>
+
+# Stage 8 : Direct Mode, load a trigger whose code has an invalid literal $CHAR() argument, then a SET
+# Command : $gtm_tst/com/dbcreate.csh mumps (the trigger needs a database)
+# Command : $gtm_dist/mumps -direct < stage8.inp >& stage8.out
+# Before the fix : a Debug build failed an assert in gvname2naked_optimize.c after the INVDLRCVAL error. A
+#                  Release build gave the result below
+# With the fix   : expect INVDLRCVAL with the value 1114112, and $ZTRIGGER() returning 0 as the trigger
+#                  is not loaded (in a trigger, INVDLRCVAL is an error, not a warning)
+PASS : no fatal error in stage8.out
+$ztrigger() returned 0
+PASS : the trigger was not loaded
+----------
+Error INVDLRCVAL, Invalid .CHAR.. value 1114112$ seen in stage8.out as expected:
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 1114112
+----------
+
+# Done

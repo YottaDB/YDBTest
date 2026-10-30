@@ -92,6 +92,7 @@
 # stp_expand_4gib-ydb1101		[nars]	Test a string pool expansion that copies over 2GiB at once works in a Debug build
 # trestart_dm_uncounted-ydb1338		[nars]	Test TRESTART in Direct Mode after a TPQUIT or BREAK gets TRESTNEW or TRESTNOT
 # expr_too_deep-ydb1339			[nars]	Test compiling an expression nested too deeply issues EXPRTOODEEP instead of a SIG-11
+# invdlrcval_value-ydb1343			[nars]	Test INVDLRCVAL for a literal $CHAR() argument reports the invalid value at run time in UTF-8 mode
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -178,6 +179,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic tp_restart_new-ydb1327"
 setenv subtest_list_non_replic	"$subtest_list_non_replic stp_expand_4gib-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trestart_dm_uncounted-ydb1338"
 setenv subtest_list_non_replic	"$subtest_list_non_replic expr_too_deep-ydb1339"
+setenv subtest_list_non_replic	"$subtest_list_non_replic invdlrcval_value-ydb1343"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -210,10 +212,11 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list stp_expand_4gib-ydb1101"
 endif
 
-# qsubscript_badchar-ydb1311 and recsize_utf_min-ydb1331 test UTF-8 mode, so exclude them where UTF-8 mode is not supported
+# qsubscript_badchar-ydb1311, recsize_utf_min-ydb1331 and invdlrcval_value-ydb1343 test UTF-8 mode, so exclude them where UTF-8 mode is not supported
 if ("TRUE" != "$gtm_test_unicode_support") then
 	setenv subtest_exclude_list "$subtest_exclude_list qsubscript_badchar-ydb1311"
 	setenv subtest_exclude_list "$subtest_exclude_list recsize_utf_min-ydb1331"
+	setenv subtest_exclude_list "$subtest_exclude_list invdlrcval_value-ydb1343"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
