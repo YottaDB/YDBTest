@@ -1,0 +1,77 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1340] $ZTRIGGER() and MUPIP TRIGGER issue "Too many subscripts" for a trigger with more than  #
+# 31 local variable names in its subscripts, and a subscript can still have more than one name       #
+#----------------------------------------------------------------------------------------------------#
+
+# A trigger subscript can have a local variable name, and more than one, for example ^x(a=b=1:2).
+# The trigger definition parser saved each name in stack arrays of 32 entries without checking the
+# count, so more names than that overwrote the process stack. Before the fix, 32 names loaded, and
+# 200 names in one subscript terminated the process with a SIG-11 in YottaDB r2.06, both with
+# $ZTRIGGER() and MUPIP TRIGGER. And when a trigger with more names than subscripts was used, a Debug
+# build failed an assert in gv_trigger.c (numlvsubs <= numsubs).
+#
+# Each stage runs in its own process.
+
+# Stage 1 : +^x(a=b=1:2,c=d=:) with -xecute="set ^y=$name(z(a,b,c,d))", then SET ^x(1,"z")=1
+# Before the fix : the same in a Release build, but an assert in gv_trigger.c in a Debug build
+# With the fix   : expect the trigger to load, and a and b to be 1, and c and d to be "z" in the
+#                  trigger code
+# Command : $gtm_dist/mumps -run chain^ydb1340
+Added SET trigger on ^x named x#1
+PASS : $ZTRIGGER() return value is 1
+PASS : local variables seen by the trigger code is z(1,1,"z","z")
+
+# Stage 2 : 31 chained names in one subscript, +^w31(v1=v2=...=v31=1), then SET ^w31(1)=1
+# Before the fix : the same in a Release build, but an assert in gv_trigger.c in a Debug build
+# With the fix   : expect the trigger to load, and v1 and v31 to be 1 in the trigger code
+# Command : $gtm_dist/mumps -run one31^ydb1340
+Added SET trigger on ^w31 named w31#1
+PASS : $ZTRIGGER() return value is 1
+PASS : local variables seen by the trigger code is z(1,1)
+
+# Stage 3 : 31 subscripts with one name each, +^v(v1=*,v2=*,...,v31=*), then SET ^v(1,2,...,31)=1
+# Before the fix : the same (this stage is a control)
+# With the fix   : expect the trigger to load, and v1 to be 1 and v31 to be 31 in the trigger code
+# Command : $gtm_dist/mumps -run sub31^ydb1340
+Added SET trigger on ^v named v#1
+PASS : $ZTRIGGER() return value is 1
+PASS : local variables seen by the trigger code is z(1,31)
+
+# Stage 4 : 32 chained names in one subscript, +^w32(v1=v2=...=v32=1)
+# Before the fix : the trigger loaded
+# With the fix   : expect "Too many subscripts" and $ZTRIGGER() to return 0
+# Command : $gtm_dist/mumps -run one32^ydb1340
+Too many subscripts
+"^w32(v1=v2=v3=v4=v5=v6=v7=v8=v9=v10=v11=v12=v13=v14=v15=v16=v17=v18=v19=v20=v21=v22=v23=v24=v25=v26=v27=v28=v29=v30=v31=v32=1) -commands=set -xecute=""set ^y=$name(z(v1,v32))"""
+PASS : $ZTRIGGER() return value is 0
+
+# Stage 5 : 200 chained names in one subscript, +^w200(v1=v2=...=v200=1)
+# Before the fix : a SIG-11 (KILLBYSIGSINFO1)
+# With the fix   : expect "Too many subscripts" and $ZTRIGGER() to return 0
+# Command : $gtm_dist/mumps -run one200^ydb1340 >& one200.out
+PASS : one200.out has the error, the trigger definition, the return value check and nothing else
+
+# Stage 6 : MUPIP TRIGGER with a trigger file that has 200 chained names in one subscript
+# Before the fix : a SIG-11 (KILLBYSIGSINFO1)
+# With the fix   : expect "Too many subscripts", and the trigger file entry to have an error
+# Command : $gtm_dist/mumps -run trgfile^ydb1340, then
+#           $gtm_dist/mupip trigger -triggerfile=trig200.trg -noprompt
+PASS : MUPIP TRIGGER reported the error for the entry, and its exit status is not 0
+# With the fix, expect MUNOACTION, as no trigger file entry was applied
+----------
+Error MUNOACTION seen in mupip200.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Stage 7 : $ZTRIGGER("SELECT")
+# Before the fix : also showed the ^w32 trigger of stage 4
+# With the fix   : expect the 3 triggers loaded by stages 1 to 3 and no other
+# Command : $gtm_dist/mumps -run %XCMD 'if $ztrigger("select")'
+;trigger name: v#1 (region DEFAULT)  cycle: 1
++^v(v1=*,v2=*,v3=*,v4=*,v5=*,v6=*,v7=*,v8=*,v9=*,v10=*,v11=*,v12=*,v13=*,v14=*,v15=*,v16=*,v17=*,v18=*,v19=*,v20=*,v21=*,v22=*,v23=*,v24=*,v25=*,v26=*,v27=*,v28=*,v29=*,v30=*,v31=*) -commands=S -xecute="set ^y=$name(z(v1,v31))"
+;trigger name: w31#1 (region DEFAULT)  cycle: 1
++^w31(v1=v2=v3=v4=v5=v6=v7=v8=v9=v10=v11=v12=v13=v14=v15=v16=v17=v18=v19=v20=v21=v22=v23=v24=v25=v26=v27=v28=v29=v30=v31=1) -commands=S -xecute="set ^y=$name(z(v1,v31))"
+;trigger name: x#1 (region DEFAULT)  cycle: 1
++^x(a=b=1:2,c=d=*) -commands=S -xecute="set ^y=$name(z(a,b,c,d))"
+
+# Done
