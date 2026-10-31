@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -611,6 +611,10 @@ togglestats
 	; Additionally 4 statistics were introduced in V7.0-002 which are zero in this non-replication test.
 	; But tests will expect them to be non-zero so filter these out too.
 	for stat="WRL","PRG","WFL","WHE" kill var(stat)
+	; V7.1-004 added 9 statistics that can be zero in this test, so filter these out too. JCS, JNS, WPCS, RCS, WFCS,
+	; and GCS count milliseconds slept waiting on another process, INC counts $INCREMENT operations, which this test
+	; does not do, and IDXH and IDXM count index block cache hits and misses, which are always zero with MM.
+	for stat="JCS","JNS","WPCS","RCS","WFCS","GCS","INC","IDXH","IDXM" kill var(stat)
 	quit
 
 zshowgfilter(zshvar,str)
@@ -620,6 +624,10 @@ zshowgfilter(zshvar,str)
 	; WRL,PRG,WFL,WHE. So filter those out too.
 	new filterstats
 	set filterstats=",DEXA,GLB,JNL,MLK,PRC,TRX,ZAD,JOPA,AFRA,BREA,MLBA,TRGA,WRL,PRG,WFL,WHE"
+	; V7.1-004 added 8 statistics that can also be non-deterministic: the sleep times JCS, JNS, WPCS, RCS, WFCS, and
+	; GCS, which depend on contention with the helper processes, and the index block cache counts IDXH and IDXM, which
+	; depend on the access method and on which blocks are in the cache. So filter those out too.
+	set filterstats=filterstats_",JCS,JNS,WPCS,RCS,WFCS,GCS,IDXH,IDXM"
 	do out^zshowgfilter(.zshvar,str_filterstats)
 	quit
 
