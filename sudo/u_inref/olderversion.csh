@@ -18,23 +18,26 @@ echo "# Copy ydbinstall to this directory (don't want it thinking it is installi
 cp /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall .
 echo "# Run ydbinstall to install the current version, r2.02, r2.00, r1.38"
 $sudostr ./ydbinstall --utf8 --installdir $PWD/current $installoptions
+# Determine the older versions that have a tarball for this platform
+set oldversions = ()
 foreach version ("r2.02" "r2.00" "r1.38")
 	if ("rhel" == $gtm_test_linux_distrib) then
 		if (("r1.38" == $version) && $gtm_test_rhel9_plus) then
-			# RHEL 9 does not have a r1.38 tarball so skip this step there
+			# RHEL 9 does not have a r1.38 tarball so skip this version there
 			continue
 		endif
 		if ((("r2.00" == $version) || ("r2.02" == $version)) && (10 == $gtm_test_linux_version:r)) then
-			# RHEL 10 does not have a r2.00 or r2.02 tarballs, so skip this step in those cases
+			# RHEL 10 does not have a r2.00 or r2.02 tarballs, so skip these versions there
 			continue
 		endif
 	endif
-	if ("ubuntu" == $gtm_test_linux_distrib) then
-		if (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version)) then
-			# AARCH64 on Ubuntu 24.04 has no tarballs prior to r2.04, so skip this step in those cases
-			break
-		endif
+	if ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) then
+		# AARCH64 has no Ubuntu tarballs prior to r2.04, so skip this version there
+		continue
 	endif
+	set oldversions = ($oldversions $version)
+end
+foreach version ($oldversions)
 	$sudostr ./ydbinstall --utf8 --installdir $PWD/$version $installoptions $version
 end
 
@@ -47,21 +50,7 @@ foreach mode ("M" "UTF-8")
 	unsetenv gtm_dist
 	unsetenv ydb_dist
 
-	foreach dir ("current" "r2.02" "r2.00" "r1.38")
-		if ("rhel" == $gtm_test_linux_distrib) then
-			if (("r1.38" == $dir) && $gtm_test_rhel9_plus) then
-				# RHEL 9 does not have a r1.38 tarball so skip this step there
-				continue
-			endif
-			if ((("r2.00" == $dir) || ("r2.02" == $dir)) && (10 == $gtm_test_linux_version:r)) then
-				# RHEL 10 does not have a r2.00 or r2.02 tarballs, so skip this step in those cases
-				continue
-			endif
-		endif
-		if (("current" != $dir) && (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version))) then
-			# AARCH64 on Ubuntu 24.04 has no tarballs prior to r2.04, so skip this step in those cases
-			continue
-		endif
+	foreach dir ("current" $oldversions)
 		echo "# $dir"
 		setenv ydb_dist $PWD/$dir
 		# Note that at this point "ydb_routines" and "gtmroutines" env vars are unset.
@@ -88,20 +77,6 @@ foreach mode ("M" "UTF-8")
 end
 
 # clean up the install directory since the files are owned by root and can't be gzipped by the test system
-foreach dir ("current" "r2.02" "r2.00" "r1.38")
-	if ("rhel" == $gtm_test_linux_distrib) then
-		if (("r1.38" == $dir) && $gtm_test_rhel9_plus) then
-			# RHEL 9 does not have a r1.38 tarball so skip this step there
-			continue
-		endif
-		if ((("r2.00" == $dir) || ("r2.02" == $dir)) && (10 == $gtm_test_linux_version:r)) then
-			# RHEL 10 does not have a r2.00 or r2.02 tarballs, so skip this step in those cases
-			continue
-		endif
-	endif
-	if (("current" != $dir) && (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version))) then
-		# AARCH64 on Ubuntu 24.04 has no tarballs prior to r2.04, so skip this step in those cases
-		continue
-	endif
+foreach dir ("current" $oldversions)
 	$sudostr rm -rf $PWD/$dir
 end

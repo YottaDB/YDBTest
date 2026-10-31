@@ -99,29 +99,24 @@ else if ("ubuntu" == $gtm_test_linux_distrib) then
 	if ("20.04" == $gtm_test_linux_version) then
 		# disable below subtests since no binaries/tarballs for Ubuntu 20.04 (not all versions supported)
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
-	else if (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("24.04" == $gtm_test_linux_version)) then
-		# Disable "configure_rmfile-gtmde201825" subtest since no r1.38 binaries/tarballs for Ubuntu 24.04 on AARCH64
+	else if ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) then
+		# Disable "configure_rmfile-gtmde201825" subtest since there are no r1.38 binaries/tarballs for Ubuntu on AARCH64
+		# (ydbinstall finds Ubuntu AARCH64 tarballs only for r2.04 and later)
 		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
-	else if (("25.10" == $gtm_test_linux_version) || ("26.04" == $gtm_test_linux_version)) then
-		# Disable "olderversion" subtest on Ubuntu 25.10 and 26.04 since this test uses ydbinstall which, in YottaDB r1.38, r2.00 and r2.02,
-		# uses `configure` that in turn relies on `ld.gold` which is not available in Ubuntu 25.10 or 26.04 because
-		# `gold` is no longer maintained by the developers.
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
-else if (("debian" == $gtm_test_linux_distrib) && ("13" == $gtm_test_linux_version)) then
-	# Disable "olderversion" subtest on Debian 13 since no YottaDB r1.38, r2.00 and r2.02 ydbinstall
-	# uses configure that in turn relies on ld.gold which is not available in Debian 13.
-	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 else if ("suse" == $gtm_test_linux_distrib) then
 	if ("16.0" == $gtm_test_linux_version) then
 		# olderversion/configure_rmfile-gtmde201825 disabled for SUSE 16 (no releases yet as of 2025-10-30)
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
-	else if ("15.7" == $gtm_test_linux_version) then
-		# Disable "olderversion" subtest on SLED 15.7 since this test uses ydbinstall which, in YottaDB r1.38, r2.00 and r2.02,
-		# uses `configure` that in turn relies on `ld.gold` which is not available in SLED 15.7 because
-		# `gold` is no longer maintained by the developers.
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
+endif
+
+# The "olderversion" subtest uses ydbinstall to install YottaDB r1.38, r2.00 and r2.02 whose `configure` relies on `ld.gold`.
+# `gold` is no longer maintained by the binutils developers so newer distributions do not install it by default.
+# Disable the subtest on systems where `ld.gold` is not available.
+set ldgold_paths = `where ld.gold`
+if (0 == $#ldgold_paths) then
+	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 endif
 
 # FIS only releases GT.M as x86_64 Linux binaries and ydbinstall knows of no SourceForge folder for any other
