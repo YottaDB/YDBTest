@@ -22,6 +22,7 @@ By default, TPNOTACID retries for a transaction exceed 16, GT.M issues a trappab
 CAT_EOF
 echo
 
+setenv ydb_msgprefix "GTM"
 # TPNOTACID considers a timed operation only when its timeout exceeds gtm_tpnotacidtime, so set that to 0 and let
 # gtm10098.m drive its restarts with a 1 millisecond HANG. HANG needs no fork, which keeps the 101 restart case cheap.
 setenv gtm_tpnotacidtime 0
@@ -35,9 +36,9 @@ echo '# The limit is compared against $TRESTART, which counts the restarts of a 
 echo '# is one transaction that restarts itself. See v71004/inref/gtm10098.m for why the restarts are driven that way.'
 echo
 
-set settings = ( unset 4 100 3 101 0 )
-set limits   = ( 16 4 100 16 16 16 )
-set descs = ( "the default limit" "the supported minimum" "the supported maximum" "below the supported minimum, so the default applies" "above the supported maximum, so the default applies" "audit mode, where the default limit still applies" )
+set settings = ( unset 4 100 3 101 abc 0 )
+set limits   = ( 16 4 100 16 16 16 16 )
+set descs = ( "the default limit" "the supported minimum" "the supported maximum" "below the supported minimum, so the default applies" "above the supported maximum, so the default applies" "not a number, so the default applies" "audit mode, where the default limit still applies" )
 
 set test_num = 1
 @ i = 1
@@ -103,8 +104,8 @@ echo ""
 # due, and expects the process to have written nothing at all. The grep deliberately matches any message from the
 # process rather than TPNOTACID ones, since a complaint about the rejected value need not be a TPNOTACID message.
 echo "### Test ${test_num}: an unsupported gtm_tpnotacidtries reverts to the default silently"
-echo '# Tests 4 and 5 showed that the default limit takes effect. Nothing may be said about the rejected value.'
-foreach badvalue (3 101)
+echo '# Tests 4, 5, and 6 showed that the default limit takes effect. Nothing may be said about the rejected value.'
+foreach badvalue (3 101 abc)
 	setenv gtm_tpnotacidtries $badvalue
 	set t = `date +"%b %e %H:%M:%S"`
 	($gtm_dist/mumps -run gtm10098 single 0 >& notacid_silent${badvalue}.out &; echo $! >& pid_silent${badvalue}.out) >& bckg_silent${badvalue}.out
@@ -117,38 +118,12 @@ foreach badvalue (3 101)
 	echo "# Count of syslog messages of any kind from that process:"
 	$grep -c "MUMPS\[\<$pid\>\]" syslog_silent${badvalue}.txt
 end
-
-# NOTE: a value that is not a number is outside the supported values too, but it does NOT revert to the default and
-# is NOT silent about it. "ydb_trans_numeric" reports the variable as defined and hands back the 0 that STRTOUL
-# returns for an unparseable string, and a defined 0 is exactly how audit mode is requested, so the run below turns
-# auditing on instead. This contradicts the release note and needs an upstream ruling, like the note above Test 9.
-echo '# A value that is not a number is read as 0, which requests audit mode rather than the default, so this run'
-echo '# reverts neither to the default nor silently:'
-setenv gtm_tpnotacidtries abc
-set t = `date +"%b %e %H:%M:%S"`
-($gtm_dist/mumps -run gtm10098 single 0 >& notacid_silentabc.out &; echo $! >& pid_silentabc.out) >& bckg_silentabc.out
-set pid = `cat pid_silentabc.out`
-$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
-cat notacid_silentabc.out
-$gtm_tst/com/getoper.csh "$t" "" syslog_silentabc.txt "" "MUMPS\[\<$pid\>\].*TPNOTACID"
-$grep "MUMPS\[\<$pid\>\].*TPNOTACID" syslog_silentabc.txt |& sed "$filter"
-echo "# Count of syslog messages of any kind from that process:"
-$grep -c "MUMPS\[\<$pid\>\]" syslog_silentabc.txt
 echo ""
-
 @ test_num = $test_num + 1
 
-# THIS TEST IS EXPECTED TO FAIL until the scoping of the TPNOTACID suppression state is fixed upstream. It asserts
-# the behaviour the release note describes, which the code as merged does not produce.
-#
 # The release note says GT.M "suppresses TPNOTACID syslog warning messages that originate from the same action as
-# the last prior message from a given process". In sr_port/tpnotacid_chk_inline.h the state that "the last prior
-# message" is compared against, "last_caller" and "last_zpos_addr", is declared STATICDEF at file scope in the
-# header. The header is included by 18 source modules, so each module holds its own copy and an operation is suppressed
-# against any prior message from its own module rather than against the last prior message from the process.
-#
-# The measured effect, from the 2026-09-29 V7.1-004 runs, is that each of the three operations below reports once
-# and then never again: 3 messages where the release note implies 6. See the YDBTest#747 discussion.
+# the last prior message from a given process". Each operation below differs from the one reported just before it,
+# so the suppression must not drop any of them.
 echo "### Test ${test_num}: TPNOTACID syslog messages are suppressed only when the operation does not change"
 echo '# Restart a transaction 4 times, encountering HANG, LOCK and ZSYSTEM on each pass. Passes 0 through 2 are'
 echo '# below the final retry and report nothing, so the passes at 3 and 4 RESTARTs are the reporting ones. On'
@@ -159,11 +134,7 @@ set t = `date +"%b %e %H:%M:%S"`
 set pid = `cat pid_cycle.out`
 $gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 cat notacid_cycle.out
-# The process has already exited, so every message it was going to write has been written and only the syslog's own
-# latency is left. A short sleep covers that. getoper.csh is deliberately not asked to wait for a message count,
-# which would stall this test for its full 300 second timeout on every run until the fix lands.
-sleep 2
-$gtm_tst/com/getoper.csh "$t" "" syslog_cycle.txt
+$gtm_tst/com/getoper.csh "$t" "" syslog_cycle.txt "" "MUMPS\[\<$pid\>\].*TPNOTACID" 6
 echo '# Expect HANG, LOCK and ZSYSTEM at 3 RESTARTs, and all three again at 4 RESTARTs'
 $grep "MUMPS\[\<$pid\>\].*TPNOTACID" syslog_cycle.txt |& sed "$filter"
 echo '# Count of TPNOTACID messages reported:'

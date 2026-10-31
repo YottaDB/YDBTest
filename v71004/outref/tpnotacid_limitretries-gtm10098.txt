@@ -40,19 +40,25 @@ Committed without a TPNOTACID error
 # Restarting it past that limit must get a trappable TPNOTACID error reporting exactly 17 restarts
 Trapped: %GTM-E-TPNOTACID, HANG at trans+OFFSET^gtm10098 violates ACID properties of a TRANSACTION and could exceed 0 milliseconds; 17 RESTARTs have occurred
 
-### Test 6: gtm_tpnotacidtries=0 - audit mode, where the default limit still applies
+### Test 6: gtm_tpnotacidtries=abc - not a number, so the default applies
 # Restarting a transaction twice, well short of the limit of 16, must not produce a TPNOTACID error
 Committed without a TPNOTACID error
 # Restarting it past that limit must get a trappable TPNOTACID error reporting exactly 17 restarts
 Trapped: %GTM-E-TPNOTACID, HANG at trans+OFFSET^gtm10098 violates ACID properties of a TRANSACTION and could exceed 0 milliseconds; 17 RESTARTs have occurred
 
-### Test 7: nothing is reported before the final retry unless gtm_tpnotacidtries is 0
+### Test 7: gtm_tpnotacidtries=0 - audit mode, where the default limit still applies
+# Restarting a transaction twice, well short of the limit of 16, must not produce a TPNOTACID error
+Committed without a TPNOTACID error
+# Restarting it past that limit must get a trappable TPNOTACID error reporting exactly 17 restarts
+Trapped: %GTM-E-TPNOTACID, HANG at trans+OFFSET^gtm10098 violates ACID properties of a TRANSACTION and could exceed 0 milliseconds; 17 RESTARTs have occurred
+
+### Test 8: nothing is reported before the final retry unless gtm_tpnotacidtries is 0
 # Run a transaction that does not restart at all, encountering HANG, LOCK and ZSYSTEM
 Committed without a TPNOTACID error
 # Expect no TPNOTACID line between this line
 # and this line
 
-### Test 8: gtm_tpnotacidtries=0 audits every operation encountered, from the very first try
+### Test 9: gtm_tpnotacidtries=0 audits every operation encountered, from the very first try
 # The same single pass, which reached the syslog not at all above, must now report all three operations
 Committed without a TPNOTACID error
 # Expect one message each for HANG, LOCK and ZSYSTEM, all reported at 0 RESTARTs
@@ -62,8 +68,8 @@ Committed without a TPNOTACID error
 # Count of TPNOTACID messages reported:
 3
 
-### Test 9: an unsupported gtm_tpnotacidtries reverts to the default silently
-# Tests 4 and 5 showed that the default limit takes effect. Nothing may be said about the rejected value.
+### Test 10: an unsupported gtm_tpnotacidtries reverts to the default silently
+# Tests 4, 5, and 6 showed that the default limit takes effect. Nothing may be said about the rejected value.
 # With gtm_tpnotacidtries=3, stdout and stderr hold this and nothing else:
 Committed without a TPNOTACID error
 # Count of syslog messages of any kind from that process:
@@ -72,14 +78,12 @@ Committed without a TPNOTACID error
 Committed without a TPNOTACID error
 # Count of syslog messages of any kind from that process:
 0
-# A value that is not a number is read as 0, which requests audit mode rather than the default, so this run
-# reverts neither to the default nor silently:
+# With gtm_tpnotacidtries=abc, stdout and stderr hold this and nothing else:
 Committed without a TPNOTACID error
-%GTM-W-TPNOTACID, HANG at trans+OFFSET^gtm10098 violates ACID properties of a TRANSACTION and could exceed 0 milliseconds; 0 RESTARTs have occurred
 # Count of syslog messages of any kind from that process:
-1
+0
 
-### Test 10: TPNOTACID syslog messages are suppressed only when the operation does not change
+### Test 11: TPNOTACID syslog messages are suppressed only when the operation does not change
 # Restart a transaction 4 times, encountering HANG, LOCK and ZSYSTEM on each pass. Passes 0 through 2 are
 # below the final retry and report nothing, so the passes at 3 and 4 RESTARTs are the reporting ones. On
 # both of them every operation differs from the message immediately before it, so none may be suppressed.
