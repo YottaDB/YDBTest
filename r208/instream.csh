@@ -80,6 +80,7 @@
 # zcompile_no_file-ydb1322		[nars]	Test ZCOMPILE with qualifiers but no file name prompts for one after an earlier ZCOMPILE
 # view_trace_errors-ydb1323		[nars]	Test VIEW "TRACE" after an error turning tracing on or off saves the profile, without GTMASSERT2 or database damage
 # view_trace_subs-ydb1324		[nars]	Test VIEW "TRACE" into a global with 26 subscripts works and with 27 issues MAXNRSUBSCRIPTS
+# zpeek_int8-ydb1351			[nars]	Test $ZPEEK() with the "I" or "U" format for an 8-byte field does not write past the end of the stringpool
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -154,6 +155,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_repeat_qual-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_no_file-ydb1322"
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_trace_errors-ydb1323"
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_trace_subs-ydb1324"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zpeek_int8-ydb1351"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

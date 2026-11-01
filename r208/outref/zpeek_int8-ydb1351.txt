@@ -1,0 +1,31 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1351] $ZPEEK() with the "I" or "U" format for an 8-byte field does not write past the end of    #
+# the stringpool                                                                                     #
+#----------------------------------------------------------------------------------------------------#
+
+# $ZPEEK() with the "I" or "U" format reserved stringpool space for 10 digits, but an 8-byte field can
+# have up to 20 digits. When less free space than the number of digits was left, the digits were
+# written past the end of the stringpool, which failed an assert in a Debug build and wrote past the
+# end of the allocated memory in a Release build. %PEEKBYNAME() uses $ZPEEK() so it had the same problem.
+# Each stage peeks at node_local.nbb (19 digits when no backup is in progress) 100000 times, with the
+# stringpool free space varied by a padding string, in a new process, and prints PASS or WRONG.
+
+# Create a database (the stages peek at its node_local structure)
+
+# Unset gtmdbglvl so that an ASAN Release build reports a write past the end of the stringpool
+
+# Stage 1 : $$^%PEEKBYNAME("node_local.nbb","DEFAULT","U")
+#   expect the same 19-digit value from every call
+#   previously a Debug build failed an assert in gtm_memcpy_validate_and_execute.c, so the line below
+#   was an ASSERT error, and a Release build wrote past the end of the stringpool
+# Command : $gtm_dist/mumps -run fmtU^ydb1351
+PASS : format U returned 9223372036854775807 at every stringpool offset
+
+# Stage 2 : $$^%PEEKBYNAME("node_local.nbb","DEFAULT","I")
+#   expect the same 19-digit value from every call
+#   previously a Debug build failed an assert in gtm_memcpy_validate_and_execute.c, so the line below
+#   was an ASSERT error, and a Release build wrote past the end of the stringpool
+# Command : $gtm_dist/mumps -run fmtI^ydb1351
+PASS : format I returned 9223372036854775807 at every stringpool offset
+
+# Done
