@@ -1,0 +1,115 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] Error paths found by fuzz testing that failed asserts in a Debug build                  #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage issued the error expected, or none, in a Release build, but failed an assert in a Debug
+# build.
+#
+# The direct mode stages run their lines in a new process, and check their output for the lines
+# named, and for no fatal error.
+
+# Stage 1 : $$ followed by an unterminated string literal where a routine name is expected
+#   expect RTNNAME for each line
+#   previously an assert in extern_func.c in a Debug build
+# Command : $gtm_dist/mumps -direct < fadollar.inp, where fadollar.inp has these lines
+#   set r=%*$$"foo
+#   write $$extrin(-$$")
+#   write $$indrq(,$$")
+PASS : fadollar output has RTNNAME
+PASS : fadollar output does not have a fatal error (-F-)
+----------
+Error RTNNAME seen in fadollar.out as expected:
+%YDB-E-RTNNAME, Routine name expected here
+%YDB-E-RTNNAME, Routine name expected here
+%YDB-E-RTNNAME, Routine name expected here
+----------
+
+# Stage 2 : pattern indirection followed by an unterminated string literal
+#   expect EXPR
+#   previously an assert in indirection.c in a Debug build
+# Command : $gtm_dist/mumps -direct < fapat.inp, where fapat.inp has these lines
+#   set x="^A",y=x?@".write i,!
+PASS : fapat output has EXPR
+PASS : fapat output does not have a fatal error (-F-)
+----------
+Error EXPR seen in fapat.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 3 : name indirection of a string that has a non-ASCII character after an at-sign
+#   expect EXPR
+#   previously an assert in indirection.c in a Debug build
+# Command : $gtm_dist/mumps -direct < faatsign.inp, where faatsign.inp has these lines
+#   set a="@"_$char(128)_"(66)",a(2)="(@a,d)",b="a",c(2)="c(2)"
+#   new @@b@(2)
+PASS : faatsign output has EXPR
+PASS : faatsign output does not have a fatal error (-F-)
+----------
+Error EXPR seen in faatsign.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 4 : SET $ZWRTACn followed by an unterminated string literal
+#   expect VAREXPECTED
+#   previously an assert in m_set.c in a Debug build
+# Command : $gtm_dist/mumps -direct < fazwrtac.inp, where fazwrtac.inp has these lines
+#   set $ZWRTAC9999999"
+PASS : fazwrtac output has VAREXPECTED
+PASS : fazwrtac output does not have a fatal error (-F-)
+----------
+Error VAREXPECTED seen in fazwrtac.out as expected:
+%YDB-E-VAREXPECTED, Variable expected in this context
+----------
+
+# Stage 5 : $VIEW() with more than two arguments
+#   expect the arguments after the second to be ignored
+#   previously an assert in op_fnview.c in a Debug build
+# Command : $gtm_dist/mumps -direct < faview.inp, where faview.inp has these lines
+#   write "$view(4 args)=",$view("REGION","^efghLLATE",1,1),!
+PASS : faview output has $view(4 args)=DEFAULT
+PASS : faview output does not have a fatal error (-F-)
+
+# Stage 6 : SET $ECODE to a value 32769 bytes long
+#   expect SETECODE, and the next line to run
+#   previously an assert in ecode_add.c in a Debug build
+# Command : $gtm_dist/mumps -direct < faecode.inp, where faecode.inp has these lines
+#   set y=",M10" for i=1:1:12 set y=y_y
+#   write "$length(y_y_"","")=",$length(y_y_","),!
+#   set $ecode=y_y_","
+#   write "after SET $ECODE",!
+PASS : faecode output has $length(y_y_",")=32769
+PASS : faecode output has SETECODE
+PASS : faecode output has after SET $ECODE
+PASS : faecode output does not have a fatal error (-F-)
+----------
+Error SETECODE seen in faecode.out as expected:
+%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)
+----------
+
+# Stage 7 : MUPIP JOURNAL -ROLLBACK -BACKWARD -ONLINE with no replication instance file defined
+#   expect REPLINSTUNDEF and MUNOACTION
+#   previously an assert in mur_close_files.c in a Debug build
+# Command : $gtm_dist/mupip journal -rollback -backward -online "*"
+PASS : MUPIP issued no fatal error
+----------
+Error REPLINSTUNDEF seen in rollback.out as expected:
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
+----------
+----------
+Error MUNOACTION seen in rollback.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Stage 8 : ZCOMPILE with $ZCOMPILE set to " -c", which matches -CROSS_REFERENCE
+#   expect the object file and the listing to be written
+#   previously an assert in list_file.c in a Debug build
+# Command : $gtm_dist/mumps -direct < zccross.inp, where zccross.inp has these lines
+#   set $zcompile=" -c"
+#   zcompile "foo.m"
+#   write "foo.o ",$select(""=$zsearch("foo.o"):"missing",1:"exists"),!
+#   write "foo.lis ",$select(""=$zsearch("foo.lis"):"missing",1:"exists"),!
+PASS : zccross output has foo.o exists
+PASS : zccross output has foo.lis exists
+PASS : zccross output does not have a fatal error (-F-)
+
+# Done
