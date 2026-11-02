@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -104,15 +104,13 @@ echo "# Temporarily disable this test until the regression noted in Test 1 is re
 echo "PASS: x successfully restored"
 echo
 
-echo "# Test 8: %ZSHOWVTOLCL continues to emit an when an LVN key both:"
-echo "# + Is greater than 8192 bytes long"
-echo "# + Cannot convert from ZWRITE format to string with embedded non-graphic characters"
-echo "# These conditions are based on an error path present in %ZSHOWVTOLCL prior to v71001."
-echo "# Since v71001, drops this error path, this test confirms that the v71001 version of"
-echo "# %ZSHOWVTOLCL still issues an error under the same error conditions."
-echo "# So, this test should pass with versions both before and after v71001."
-echo "# Expect a 'Could not extract valid key' error from %ZSHOWVTOLCL followed by an LVUNDEF error"
-echo "# for an attempt to access the local variable that was not restored due to the above error."
+echo '# Test 8: %ZSHOWVTOLCL restores a local variable node whose key (x and 16 subscripts) is longer than'
+echo '# 8192 bytes'
+echo '# The node has string subscripts and a string value ("TESTVALUE").'
+echo '# Expect PASS.'
+echo '# Previously, %ZSHOWVTOLCL issued "Could not extract a valid key" and did not restore the node, as it'
+echo '# did not find the end of the key in a ZSHOW "V" line with a string subscript and a string value'
+echo '# (YDB#1354).'
 $gtm_dist/mumps -run bigkey^gtmde512004
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.log

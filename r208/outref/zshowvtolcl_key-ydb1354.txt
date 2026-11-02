@@ -1,0 +1,54 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1354] ^%ZSHOWVTOLCL restores a local variable node with a string subscript and a string       #
+# value, or a subscript that contains an equal sign                                                  #
+#----------------------------------------------------------------------------------------------------#
+
+# ^%ZSHOWVTOLCL splits each ZSHOW "V" line, for example %GTM("p")="", into the local variable
+# reference (%GTM("p"), the name and its subscripts) and the value (""), at the first "=" that is not
+# within quotes. Before the fix, ^%ZSHOWVTOLCL reported "Could not extract a valid key" and did not
+# restore the variable for a node with a string subscript and a string value, because the quote count
+# included the quote that starts the value, and for some nodes with a subscript that contains "=",
+# because the first quote after an "=" within quotes was taken to be an opening quote. Each case
+# stores one ZSHOW "V" line in ^zv, restores the line with $$^%ZSHOWVTOLCL("^zv") in a frame with no
+# other local variables, and prints PASS if $$^%ZSHOWVTOLCL returns 1 and ZSHOW "V" then shows the
+# same line.
+
+# Create a database with a record size of 256, so that ZSHOW "V" splits long values in stage 4
+# Command : $gtm_tst/com/dbcreate.csh mumps 1 64 256 1024
+
+# Stage 1 : a string subscript and a string value
+# Before the fix : "Could not extract a valid key" for all 4, which were not restored
+# With the fix   : expect each variable to be restored
+# Command : $gtm_dist/mumps -run quote^ydb1354
+PASS : %GTM("p")="" is restored
+PASS : x("a")="""" is restored
+PASS : x(1,"a")="v" is restored
+PASS : x("a")="b"_$C(0) is restored
+
+# Stage 2 : a subscript contains "="
+# Before the fix : "Could not extract a valid key" for x("a=b")=1, which was not restored, and the
+#                  other two restored
+# With the fix   : expect each variable to be restored
+# Command : $gtm_dist/mumps -run equal^ydb1354
+PASS : x("a=b")=1 is restored
+PASS : x("=","=")="" is restored
+PASS : x("""=")=2 is restored
+
+# Stage 3 : quotes or "=" elsewhere in the line
+# Before the fix : the same result (this stage is a control)
+# With the fix   : expect each variable to be restored
+# Command : $gtm_dist/mumps -run other^ydb1354
+PASS : x="a=b" is restored
+PASS : x("a")="=" is restored
+PASS : x("""")=1 is restored
+PASS : x("p")="""=""" is restored
+
+# Stage 4 : 1000 times, ZSHOW "V" of up to 4 random nodes of a local variable, with names and values
+#           made of =, ", (, ), comma, a, 1 and space, then restore them
+# Before the fix : "Could not extract a valid key" and WRONG within the first few times
+# With the fix   : expect $$^%ZSHOWVTOLCL to return 1 and ZSHOW "V" after the restore to match
+#                  ZSHOW "V" before it every time
+# Command : $gtm_dist/mumps -run random^ydb1354
+PASS : 1000 sets of random local variables are restored
+
+# Done

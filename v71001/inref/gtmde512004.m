@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -109,7 +109,7 @@ bigkey ;
 	zshow "v":^x    ; zshow "v" into global ^x
 	kill x          ; kill local x in preparation for it to be restored from global ^x
 	if $$^%ZSHOWVTOLCL("^x")        ; restore local x from zshow "v" output stored in global ^x
-	if x'=^y write "FAIL",! ; check that restored local x matches global ^y
+	if x(t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1),t(1))'=^y write "FAIL",! ; check that restored local x matches global ^y
 	else  write "PASS",!
 	quit
 
