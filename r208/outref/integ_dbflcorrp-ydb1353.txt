@@ -1,0 +1,67 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1353] MUPIP INTEG -REGION releases crit on a region it skips because of DBFLCORRP             #
+#----------------------------------------------------------------------------------------------------#
+
+# MUPIP INTEG -REGION gets crit on each region, and gets DBFLCORRP right after it if the database file
+# header says the file is corrupt. It then skips that region and goes on to the next one, but it still
+# held crit on the skipped region, so in a Debug build freezing the next region with -NOONLINE failed an
+# assert in region_freeze.c. Each stage runs MUPIP INTEG on two regions, of which the first (AREG) is
+# marked corrupt, checks that it integs the second (DEFAULT) without an assert failure, and prints PASS
+# or WRONG.
+
+# Create a database with two regions, AREG (a.dat) and DEFAULT (mumps.dat)
+
+# Mark AREG as corrupt
+# Command : $DSE find -region=AREG, change -fileheader -corrupt_file=TRUE
+
+# Stage 1 : MUPIP INTEG -noonline -REGION *
+#   expect DBFLCORRP for AREG, then no errors for DEFAULT
+#   previously a Debug build failed an assert in region_freeze.c when it froze DEFAULT
+# Command : $MUPIP integ -noonline -reg "*"
+PASS : no assert failure
+PASS : DEFAULT has no errors
+# Expected errors : DBFLCORRP for AREG (also at exit, from the rundown of AREG), MUNOTALLINTEG, NOTALLDBRNDWN
+----------
+Error YDB-E-DBFLCORRP seen in integ1.out as expected:
+%YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+----------
+----------
+Error YDB-W-MUNOTALLINTEG seen in integ1.out as expected:
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+----------
+Error YDB-E-NOTALLDBRNDWN seen in integ1.out as expected:
+%YDB-E-NOTALLDBRNDWN, Not all regions were successfully rundown
+----------
+
+# Stage 2 : MUPIP INTEG -online -REGION *
+#   expect DBFLCORRP for AREG, then no errors for DEFAULT
+#   previously crit on AREG was also held when integ went on to DEFAULT, but nothing checked it
+# Command : $MUPIP integ -online -reg "*"
+PASS : no assert failure
+PASS : DEFAULT has no errors
+# Expected errors : DBFLCORRP for AREG (also at exit, from the rundown of AREG), MUNOTALLINTEG, NOTALLDBRNDWN
+----------
+Error YDB-E-DBFLCORRP seen in integ2.out as expected:
+%YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+----------
+----------
+Error YDB-W-MUNOTALLINTEG seen in integ2.out as expected:
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+----------
+----------
+Error YDB-E-NOTALLDBRNDWN seen in integ2.out as expected:
+%YDB-E-NOTALLDBRNDWN, Not all regions were successfully rundown
+----------
+
+# Mark AREG as not corrupt, so that the database can be checked
+# Command : $DSE find -region=AREG, change -fileheader -corrupt_file=FALSE
+# Expected error : DSE reports DBFLCORRP as a warning when it opens AREG, which is still marked corrupt
+----------
+Error YDB-W-DBFLCORRP seen in dse_uncorrupt.out as expected:
+%YDB-W-DBFLCORRP, ##TEST_PATH##/a.dat Header indicates database file is corrupt
+----------
+
+# Done
