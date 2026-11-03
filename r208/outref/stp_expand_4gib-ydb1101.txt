@@ -1,0 +1,19 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] A string pool expansion that copies more than 2GiB of live strings at once completes in #
+# a Debug build                                                                                      #
+#----------------------------------------------------------------------------------------------------#
+
+# When the string pool expands, the sorting garbage collection copies each contiguous block of live
+# strings into the new string pool with one memcpy(). With more than 2GiB of live strings, a block
+# could be larger than 2GiB, and in a Debug build memcpy() asserts that its length is at most 2GiB.
+# The routine creates 4.4GB of live strings. The process needs about 10GiB of memory at its peak,
+# which is why r208/instream.csh excludes this subtest on systems with less than 16GiB.
+# ydb_stp_gcol_nosort, which do_random_settings.csh sets at random, is set to 0 here, as the other
+# garbage collection mode copies one string at a time and so never copies more than 2GiB at once.
+# Before the fix, a Debug build failed the assert in gtm_memcpy_validate_and_execute.c
+#   expect the routine to complete in Debug and Release builds
+
+# Command : $ydb_dist/yottadb -run ydb1101stp
+# Set x(1) to x(4400000) each to a string of 1000 bytes, then write $VIEW("SPSIZE")
+#   expect the process to complete, with piece 2 (bytes in use) at least 4.4 billion
+PASS : piece 2 of $VIEW("SPSIZE") is at least 4.4 billion

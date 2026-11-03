@@ -89,6 +89,7 @@
 # tstart_dm_args-ydb1326		[nars]	Test TSTART in direct mode with a transaction id or local variable names from expressions or indirection
 # recsize_utf_min-ydb1331		[nars]	Test OPEN and USE reject a RECORDSIZE smaller than 4 for a device with a UTF-8 or UTF-16 CHSET
 # tp_restart_new-ydb1327		[nars]	Test a TP restart after an argumentless or exclusive NEW that follows TSTART in an XECUTE or in Direct Mode
+# stp_expand_4gib-ydb1101		[nars]	Test a string pool expansion that copies over 2GiB at once works in a Debug build
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -172,6 +173,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic emit_rterror-ydb1344"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tstart_dm_args-ydb1326"
 setenv subtest_list_non_replic	"$subtest_list_non_replic recsize_utf_min-ydb1331"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tp_restart_new-ydb1327"
+setenv subtest_list_non_replic	"$subtest_list_non_replic stp_expand_4gib-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -183,11 +185,13 @@ endif
 
 setenv subtest_exclude_list ""
 
-# spsize_2gib-ydb1280 fills the stringpool with 2100MiB of live strings and the process peaks at about 8GiB,
-# so exclude it on systems with less than 16GiB of memory, where it would risk the out-of-memory killer.
+# spsize_2gib-ydb1280 fills the stringpool with 2100MiB of live strings and the process peaks at about 8GiB, and
+# stp_expand_4gib-ydb1101 with 4.4GB and peaks at about 10GiB, so exclude them on systems with less than 16GiB of
+# memory, where they would risk the out-of-memory killer.
 set ramsize = `grep MemTotal /proc/meminfo | $tst_awk '{print int($2/1000000);}'`
 if ($ramsize < 16) then
 	setenv subtest_exclude_list "$subtest_exclude_list spsize_2gib-ydb1280"
+	setenv subtest_exclude_list "$subtest_exclude_list stp_expand_4gib-ydb1101"
 endif
 
 # stp_gcol_free-ydb1284 measures how much memory the C library returns to the operating system. With ASAN, YottaDB
@@ -198,6 +202,8 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# pthread_exit_nomem-ydb1292 limits the address space of a MUPIP process to what it is using, which leaves the
 	# ASAN allocator no room to map memory, so exclude it.
 	setenv subtest_exclude_list "$subtest_exclude_list pthread_exit_nomem-ydb1292"
+	# stp_expand_4gib-ydb1101 peaks at about 10GiB of memory, which the ASAN allocator would about double.
+	setenv subtest_exclude_list "$subtest_exclude_list stp_expand_4gib-ydb1101"
 endif
 
 # qsubscript_badchar-ydb1311 and recsize_utf_min-ydb1331 test UTF-8 mode, so exclude them where UTF-8 mode is not supported
