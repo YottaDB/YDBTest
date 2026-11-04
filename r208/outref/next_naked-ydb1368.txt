@@ -1,0 +1,166 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1368] A naked global reference after $NEXT() returns -1 uses the right node                   #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs a label of ydb1368.m in a new process, and
+# checks the output of the label, the nodes of ^x that a new process sees (with ZWRITE), and MUPIP
+# INTEG.
+
+# Stage 1 : a SET of a naked reference after a $NEXT() that returns -1
+# Command : $gtm_dist/mumps -run stage1^ydb1368, where the label has these lines
+#   stage1	; a SET of a naked reference after a $NEXT() that returns -1
+#   	set ^x(1)=1
+#   	write "$next=",$next(^x(5)),!
+#   	set ^(7)="seven"
+#   	write "$reference=",$reference,!
+#   	quit
+# Before the fix : the SET stored the value under an invalid subscript ($REFERENCE was ^x(-1.04*8*)),
+#                  a new process saw no node of ^x, and MUPIP INTEG reported DBBADNSUB
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $reference=^x(7)
+#                  a new process sees only these nodes of ^x : ^x(1)=1 ^x(7)="seven"
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage1.out
+PASS : stage1.out has $next=-1
+PASS : stage1.out has $reference=^x(7)
+PASS : stage1.out has no other line
+PASS : a new process sees only the 2 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 2 : a $GET() of a naked reference after a $NEXT() that returns -1
+# Command : $gtm_dist/mumps -run stage2^ydb1368, where the label has these lines
+#   stage2	; a $GET() of a naked reference after a $NEXT() that returns -1
+#   	set ^x(1)=1
+#   	write "$next=",$next(^x(5)),!
+#   	write "$get=",$get(^(1)),!
+#   	write "$reference=",$reference,!
+#   	quit
+# Before the fix : $GET() returned an empty string and $REFERENCE was ^x(-1.04*1+)
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $get=1 $reference=^x(1)
+#                  a new process sees only these nodes of ^x : ^x(1)=1
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage2.out
+PASS : stage2.out has $next=-1
+PASS : stage2.out has $get=1
+PASS : stage2.out has $reference=^x(1)
+PASS : stage2.out has no other line
+PASS : a new process sees only the 1 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 3 : a loop of 40 $NEXT() of a naked reference, each of which returns -1
+# Command : $gtm_dist/mumps -run stage3^ydb1368, where the label has these lines
+#   stage3	; a loop of $NEXT() of a naked reference, each of which returns -1
+#   	new i,y
+#   	write "$next=",$next(^x(5)),!
+#   	for i=1:1:40 set y=$next(^(-1))
+#   	write "i=",i," y=",y,!
+#   	write "$reference=",$reference,!
+#   	quit
+# Before the fix : a Release build issued GVSUBOFLOW, with an invalid subscript in GVIS. A Debug build
+#                  failed an assert in format_targ_key.c
+# With the fix   : expect each of these lines once :
+#                  $next=-1 i=40 y=-1 $reference=^x(-1)
+#                  a new process sees no node of ^x
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage3.out
+PASS : stage3.out has $next=-1
+PASS : stage3.out has i=40 y=-1
+PASS : stage3.out has $reference=^x(-1)
+PASS : stage3.out has no other line
+PASS : a new process sees only the 0 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 4 : a SET of a naked reference with 2 subscripts after a $NEXT() that returns -1
+# Command : $gtm_dist/mumps -run stage4^ydb1368, where the label has these lines
+#   stage4	; a SET of a naked reference with 2 subscripts after a $NEXT() that returns -1
+#   	set ^x(3,1)=31
+#   	write "$next=",$next(^x(3,5)),!
+#   	set ^(9)="nine"
+#   	write "$reference=",$reference,!
+#   	quit
+# Before the fix : the SET stored the value under an invalid subscript ($REFERENCE was
+#                  ^x(3,-1.04*6*)), a new process saw no node of ^x, and MUPIP INTEG reported
+#                  DBBADNSUB
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $reference=^x(3,9)
+#                  a new process sees only these nodes of ^x : ^x(3,1)=31 ^x(3,9)="nine"
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage4.out
+PASS : stage4.out has $next=-1
+PASS : stage4.out has $reference=^x(3,9)
+PASS : stage4.out has no other line
+PASS : a new process sees only the 2 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 5 : stage 1 with a database that allows null subscripts, with standard null collation
+# Command : $gtm_dist/mumps -run stage1^ydb1368, where the label has these lines
+#   stage1	; a SET of a naked reference after a $NEXT() that returns -1
+#   	set ^x(1)=1
+#   	write "$next=",$next(^x(5)),!
+#   	set ^(7)="seven"
+#   	write "$reference=",$reference,!
+#   	quit
+# Database : dbcreate.csh mumps 1 -null_subscripts=TRUE -stdnull
+# Before the fix : the SET stored the value under an invalid subscript ($REFERENCE was ^x(-1.04*8*)),
+#                  a new process saw no node of ^x, and MUPIP INTEG reported DBBADNSUB
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $reference=^x(7)
+#                  a new process sees only these nodes of ^x : ^x(1)=1 ^x(7)="seven"
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage5.out
+PASS : stage5.out has $next=-1
+PASS : stage5.out has $reference=^x(7)
+PASS : stage5.out has no other line
+PASS : a new process sees only the 2 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 6 : stage 1 with a database that allows null subscripts, with GT.M null collation
+# Command : $gtm_dist/mumps -run stage1^ydb1368, where the label has these lines
+#   stage1	; a SET of a naked reference after a $NEXT() that returns -1
+#   	set ^x(1)=1
+#   	write "$next=",$next(^x(5)),!
+#   	set ^(7)="seven"
+#   	write "$reference=",$reference,!
+#   	quit
+# Database : dbcreate.csh mumps 1 -null_subscripts=TRUE -nostdnull
+# Before the fix : the SET stored the value under an invalid subscript ($REFERENCE was ^x(-1.04*8*)),
+#                  a new process saw no node of ^x, and MUPIP INTEG reported DBBADNSUB
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $reference=^x(7)
+#                  a new process sees only these nodes of ^x : ^x(1)=1 ^x(7)="seven"
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage6.out
+PASS : stage6.out has $next=-1
+PASS : stage6.out has $reference=^x(7)
+PASS : stage6.out has no other line
+PASS : a new process sees only the 2 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Stage 7 : a $ORDER() and then a SET of a naked reference after a $NEXT() that returns -1
+# Command : $gtm_dist/mumps -run stage7^ydb1368, where the label has these lines
+#   stage7	; a $ORDER() and then a SET of a naked reference after a $NEXT() that returns -1
+#   	set ^x(1)=1
+#   	write "$next=",$next(^x(5)),!
+#   	write "$order=",$order(^(0)),!
+#   	write "$reference=",$reference,!
+#   	set ^(7)="seven"
+#   	write "$reference=",$reference,!
+#   	quit
+# Before the fix : $ORDER() returned an empty string ($REFERENCE was ^x(-1.07*)), the SET stored the
+#                  value under an invalid subscript ($REFERENCE was ^x(-1.04*8*)), a new process saw
+#                  no node of ^x, and MUPIP INTEG reported DBBADNSUB
+# With the fix   : expect each of these lines once :
+#                  $next=-1 $order=1 $reference=^x(0) $reference=^x(7)
+#                  a new process sees only these nodes of ^x : ^x(1)=1 ^x(7)="seven"
+#                  and MUPIP INTEG reports no error
+PASS : no fatal error in stage7.out
+PASS : stage7.out has $next=-1
+PASS : stage7.out has $order=1
+PASS : stage7.out has $reference=^x(0)
+PASS : stage7.out has $reference=^x(7)
+PASS : stage7.out has no other line
+PASS : a new process sees only the 2 node(s) of ^x expected
+PASS : MUPIP INTEG reports no error
+
+# Done
