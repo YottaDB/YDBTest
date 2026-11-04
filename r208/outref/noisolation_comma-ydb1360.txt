@@ -1,0 +1,73 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1360] VIEW "NOISOLATION" and $VIEW("NOISOLATION") with a global list that ends with a comma   #
+# issue VIEWGVN for ""                                                                               #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage feeds the line shown to "mumps -direct" in a new process, checks that the output has no
+# fatal error, and checks the output expected.
+
+# Command : $gtm_tst/com/dbcreate.csh mumps
+
+# Stage 1 : VIEW "NOISOLATION" with a global list that ends with a comma
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has this line
+#   view "NOISOLATION":"^b,"
+# Before the fix : a Release build issued VIEWGVN with bytes read from past the end of the argument in
+#                  place of the name, or got a SIG-11, and a Debug build failed an assert in
+#                  view_arg_convert.c
+# With the fix   : expect VIEWGVN for the empty name ("")
+PASS : no fatal error in stage1.out
+PASS : stage1.out has the line %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+Error VIEWGVN seen in stage1.out as expected:
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+
+# Stage 2 : $VIEW("NOISOLATION") with a global list that ends with a comma
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has this line
+#   write $view("NOISOLATION","^b,"),!
+# Before the fix : a Release build issued VIEWGVN with bytes read from past the end of the argument in
+#                  place of the name, or got a SIG-11, and a Debug build failed an assert in
+#                  view_arg_convert.c
+# With the fix   : expect VIEWGVN for the empty name ("")
+PASS : no fatal error in stage2.out
+PASS : stage2.out has the line %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+Error VIEWGVN seen in stage2.out as expected:
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+
+# Stage 3 : VIEW "NOISOLATION" with a + and a list of two globals that ends with a comma
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has this line
+#   view "NOISOLATION":"+^a,^b,"
+# Before the fix : a Release build issued VIEWGVN with bytes read from past the end of the argument in
+#                  place of the name, or got a SIG-11, and a Debug build failed an assert in
+#                  view_arg_convert.c
+# With the fix   : expect VIEWGVN for the empty name ("")
+PASS : no fatal error in stage3.out
+PASS : stage3.out has the line %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+Error VIEWGVN seen in stage3.out as expected:
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+
+# Stage 4 : VIEW "NOISOLATION" with an empty name between two commas
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has this line
+#   view "NOISOLATION":"^a,,^b"
+# Before the fix : VIEWGVN for the empty name ("") (this stage is a control)
+# With the fix   : expect VIEWGVN for the empty name ("")
+PASS : no fatal error in stage4.out
+PASS : stage4.out has the line %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+Error VIEWGVN seen in stage4.out as expected:
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): ""
+----------
+
+# Stage 5 : VIEW "NOISOLATION" with a list of two globals, then $VIEW("NOISOLATION") of the second
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has this line
+#   view "NOISOLATION":"^a,^b" write "$view(""NOISOLATION"",""^b"")=",$view("NOISOLATION","^b"),!
+# Before the fix : $view("NOISOLATION","^b")=1 (this stage is a control)
+# With the fix   : expect $view("NOISOLATION","^b")=1
+PASS : no fatal error in stage5.out
+PASS : stage5.out has the line $view("NOISOLATION","^b")=1
+
+# Done
