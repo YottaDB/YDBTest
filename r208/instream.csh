@@ -116,6 +116,7 @@
 # noisolation_comma-ydb1360		[nars]	Test VIEW "NOISOLATION" and $VIEW("NOISOLATION") with a trailing comma issue VIEWGVN
 # fuzz_asserts3-ydb1101			[nars]	Test more code paths found by fuzz testing that failed asserts in a Debug build
 # invcmd_syntax_err-ydb1361		[nars]	Test a syntax error in an invalid command with a negated invalid special variable name in its postconditional issues CMD
+# utf8_read_cr_badchar-ydb1364		[nars]	Test READ in UTF-8 mode returns the record that a CR at the end of the READ buffer terminates
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -226,6 +227,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic undef_rtn_name-ydb1359"
 setenv subtest_list_non_replic	"$subtest_list_non_replic noisolation_comma-ydb1360"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts3-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic invcmd_syntax_err-ydb1361"
+setenv subtest_list_non_replic	"$subtest_list_non_replic utf8_read_cr_badchar-ydb1364"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -258,11 +260,13 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list stp_expand_4gib-ydb1101"
 endif
 
-# qsubscript_badchar-ydb1311, recsize_utf_min-ydb1331 and invdlrcval_value-ydb1343 test UTF-8 mode, so exclude them where UTF-8 mode is not supported
+# qsubscript_badchar-ydb1311, recsize_utf_min-ydb1331, invdlrcval_value-ydb1343 and utf8_read_cr_badchar-ydb1364 test UTF-8
+# mode, so exclude them where UTF-8 mode is not supported
 if ("TRUE" != "$gtm_test_unicode_support") then
 	setenv subtest_exclude_list "$subtest_exclude_list qsubscript_badchar-ydb1311"
 	setenv subtest_exclude_list "$subtest_exclude_list recsize_utf_min-ydb1331"
 	setenv subtest_exclude_list "$subtest_exclude_list invdlrcval_value-ydb1343"
+	setenv subtest_exclude_list "$subtest_exclude_list utf8_read_cr_badchar-ydb1364"
 endif
 
 # zcompile_object_badchar-ydb1345 tests UTF-8 mode, so exclude it where UTF-8 mode is not supported

@@ -1,0 +1,70 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1364] READ in UTF-8 mode returns the record that a CR at the end of the READ buffer terminates#
+#----------------------------------------------------------------------------------------------------#
+
+# READ fills the READ buffer 8192 bytes at a time, and reads the first 3 bytes of a file separately to
+# check for a byte order mark. When a CR line terminator is the last byte in the buffer, READ reads
+# the next character to check whether that character is an LF. Each case of ydb1364.m runs in a new
+# process, writes <n> "x" characters, CR, some bytes and LF to a file, READs the file in UTF-8 mode
+# until $ZEOF, and prints PASS or FAIL for the list of results (L<length of the record> for a READ,
+# E<mnemonic> for a READ that issued an error, EOF for the READ that sets $ZEOF). The READ after the
+# last LF of a file returns an empty record (L0).
+
+# Stage 1 : CR as the last byte of the first 3 bytes, and of the first and second 8192 bytes after
+# them, then a byte that is not valid UTF-8 ($ZCHAR(152)), or the first byte of a 2-byte character
+# followed by a byte that is not a continuation byte ($ZCHAR(195,40))
+# Before the fix : a Debug build failed an assert in iorm_readfl.c after the BADCHAR error. A Release
+#                  build gave EBADCHAR L0 L0 EOF (the record that the CR terminates is lost, and an
+#                  extra empty record follows)
+# With the fix   : expect the record, then BADCHAR
+# 2 x characters, CR, $ZCHAR(152), LF
+PASS : READ results are L2 EBADCHAR L0 EOF
+# 8194 x characters, CR, $ZCHAR(152), LF
+PASS : READ results are L8194 EBADCHAR L0 EOF
+# 16386 x characters, CR, $ZCHAR(152), LF
+PASS : READ results are L16386 EBADCHAR L0 EOF
+# 2 x characters, CR, $ZCHAR(195,40), LF
+PASS : READ results are L2 EBADCHAR L0 EOF
+
+# Stage 2 : CR as the last byte of the first 3 bytes, and of the first 8192 bytes after them, then a
+# valid 2-byte character ($ZCHAR(195,169))
+# Before the fix : a Debug build failed an assert in iorm_readfl.c. A Release build gave L2 L0 EOF and
+#                  L8194 L0 EOF (the 2-byte character is lost)
+# With the fix   : expect the record, then the 2-byte character
+# 2 x characters, CR, $ZCHAR(195,169), LF
+PASS : READ results are L2 L1 L0 EOF
+# 8194 x characters, CR, $ZCHAR(195,169), LF
+PASS : READ results are L8194 L1 L0 EOF
+
+# Stage 3 : the same bytes with a CR that is not the last byte in the buffer, and a CR as the last
+# byte of the first 8192 bytes followed by an ASCII character (Y)
+# Before the fix : the results that each case expects (this stage is a control)
+# With the fix   : expect the results that each case expects
+# 3 x characters, CR, $ZCHAR(152), LF
+PASS : READ results are L3 EBADCHAR L0 EOF
+# 8193 x characters, CR, $ZCHAR(152), LF
+PASS : READ results are L8193 EBADCHAR L0 EOF
+# 3 x characters, CR, $ZCHAR(195,40), LF
+PASS : READ results are L3 EBADCHAR L0 EOF
+# 3 x characters, CR, $ZCHAR(195,169), LF
+PASS : READ results are L3 L1 L0 EOF
+# 8194 x characters, CR, $ZCHAR(89), LF
+PASS : READ results are L8194 L1 L0 EOF
+
+# Stage 4 : the same bytes as the first case as Direct Mode input (ab, CR, $ZCHAR(152), LF)
+# Command : $gtm_dist/mumps -direct < stage4.inp
+# Before the fix : BADCHAR, then (in a Debug build) an assert failure in iorm_readfl.c. The line ab
+#                  was not run
+# With the fix   : expect INVCMD (the line ab runs as a command), then BADCHAR
+PASS : no fatal error in stage4.out
+PASS : INVCMD and BADCHAR were issued once each
+----------
+Error INVCMD seen in stage4.out as expected:
+%YDB-E-INVCMD, Invalid command keyword encountered
+----------
+----------
+Error BADCHAR seen in stage4.out as expected:
+%YDB-E-BADCHAR, $ZCHAR(152) is not a valid character in the UTF-8 encoding form
+----------
+
+# Done
