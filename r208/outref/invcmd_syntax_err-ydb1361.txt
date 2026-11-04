@@ -1,0 +1,76 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1361] A syntax error in an invalid command with a negated invalid special variable name in    #
+# its postconditional issues CMD                                                                     #
+#----------------------------------------------------------------------------------------------------#
+
+# T is not a command. Each stage feeds the line shown to "mumps -direct" in a new process (stage 3
+# compiles a routine), checks that the output has no fatal error, and checks the errors expected.
+
+# Stage 1 : an invalid command whose postconditional negates an invalid special variable name, with
+# an unterminated string literal as its argument
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has this line
+#   t:'$foo 0"
+# Before the fix : GT.M and a Release build issued INDRCOMPFAIL, which does not say what the error is.
+#                  A Debug build failed an assert in linetail.c
+# With the fix   : expect CMD, as stage 4 issues
+PASS : no fatal error in stage1.out
+PASS : no INDRCOMPFAIL in stage1.out
+PASS : the CMD error was issued once
+----------
+Error CMD seen in stage1.out as expected:
+%YDB-E-CMD, Command expected but not found
+----------
+
+# Stage 2 : the same with $T0 as the invalid special variable name
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has this line
+#   t:'$t0 0"
+# Before the fix : GT.M and a Release build issued INDRCOMPFAIL. A Debug build failed an assert in
+#                  linetail.c
+# With the fix   : expect CMD
+PASS : no fatal error in stage2.out
+PASS : no INDRCOMPFAIL in stage2.out
+PASS : the CMD error was issued once
+----------
+Error CMD seen in stage2.out as expected:
+%YDB-E-CMD, Command expected but not found
+----------
+
+# Stage 3 : compiling a routine (invcmd.m) that has the line of stage 1
+# Command : $gtm_dist/mumps invcmd.m, where invcmd.m has these lines
+#   invcmd	t:'$foo 0"
+#   	quit
+# Before the fix : GT.M and a Release build issued the INVCMD warning and the INVSVN error, but no
+#                  error for the rest of the line. A Debug build failed an assert in linetail.c after the
+#                  INVSVN error
+# With the fix   : expect INVCMD, INVSVN and CMD
+PASS : no fatal error in stage3.out
+PASS : no INDRCOMPFAIL in stage3.out
+PASS : the CMD error was issued once
+----------
+Error INVCMD seen in stage3.out as expected:
+%YDB-W-INVCMD, Invalid command keyword encountered
+----------
+----------
+Error INVSVN seen in stage3.out as expected:
+%YDB-E-INVSVN, Invalid special variable name
+----------
+----------
+Error CMD seen in stage3.out as expected:
+%YDB-W-INVCMD, Invalid command keyword encountered
+%YDB-E-CMD, Command expected but not found
+----------
+
+# Stage 4 : the line of stage 1 with a postconditional of 1
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has this line
+#   t:1 0"
+# Before the fix : CMD (this stage is a control)
+# With the fix   : expect CMD
+PASS : no fatal error in stage4.out
+PASS : no INDRCOMPFAIL in stage4.out
+PASS : the CMD error was issued once
+----------
+Error CMD seen in stage4.out as expected:
+%YDB-E-CMD, Command expected but not found
+----------
+
+# Done
