@@ -1,0 +1,74 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1367] A $ZTRIGGER("ITEM") error for a line without + or - does not affect a later global SET  #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in a new process, and
+# checks the output ($REFERENCE after the SET), the nodes of ^b in a new process, and MUPIP INTEG of
+# the database.
+
+# Stage 1 : $ZTRIGGER("ITEM") with the line x, then a SET of ^b on the same Direct Mode line
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has this line
+#   set x=$ztrigger("item","x") set ^b=1 write "$reference=",$reference,!
+# Before the fix : a Release build stored the value under an empty global name ($REFERENCE was ^, ^b
+#                  was not there, and MUPIP INTEG reported DBBADKYNM). A Debug build failed an assert
+#                  in gv_srch_map.c
+# With the fix   : expect $reference=^b,
+#                  1 node(s) of ^b, and no MUPIP INTEG error
+PASS : no fatal error in stage1.out
+PASS : stage1.out has $reference=^b
+PASS : a new process sees 1 node(s) of ^b
+PASS : MUPIP INTEG reports no error
+
+# Stage 2 : the same with a trigger definition that starts with a space before the +
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has this line
+#   set x=$ztrigger("item"," +^a -commands=S -xecute=""set y=1""") set ^b=1 write "$reference=",$reference,!
+# Before the fix : a Release build stored the value under an empty global name ($REFERENCE was ^, ^b
+#                  was not there, and MUPIP INTEG reported DBBADKYNM). A Debug build failed an assert
+#                  in gv_srch_map.c
+# With the fix   : expect $reference=^b,
+#                  1 node(s) of ^b, and no MUPIP INTEG error
+PASS : no fatal error in stage2.out
+PASS : stage2.out has $reference=^b
+PASS : a new process sees 1 node(s) of ^b
+PASS : MUPIP INTEG reports no error
+
+# Stage 3 : the same 3 times in a loop of a compiled routine (ydb1367.m)
+# Command : $gtm_dist/mumps -run ydb1367, where ydb1367.m has these lines
+#   ydb1367	; $ZTRIGGER("ITEM") with a line that does not start with + or -, then a SET of a global, 3 times [YDB#1367]
+#   	for i=1:1:3 set x=$ztrigger("item","x") set ^b(i)=i write "$reference=",$reference,!
+#   	quit
+# Before the fix : a Release build stored the 3 values under an empty global name, and MUPIP INTEG
+#                  reported DBBADKYNM and DBCOMPTOOLRG. A Debug build failed an assert in
+#                  gv_srch_map.c
+# With the fix   : expect $reference=^b(1) $reference=^b(2) $reference=^b(3),
+#                  3 node(s) of ^b, and no MUPIP INTEG error
+PASS : no fatal error in stage3.out
+PASS : stage3.out has $reference=^b(1) $reference=^b(2) $reference=^b(3)
+PASS : a new process sees 3 node(s) of ^b
+PASS : MUPIP INTEG reports no error
+
+# Stage 4 : $ZTRIGGER("ITEM") with a line that has an unknown qualifier, then a SET of ^b
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has this line
+#   set x=$ztrigger("item","+^a -badqual") set ^b=1 write "$reference=",$reference,!
+# Before the fix : $REFERENCE was ^b, ^b was there, and MUPIP INTEG reported no error (this stage is a
+#                  control)
+# With the fix   : expect $reference=^b,
+#                  1 node(s) of ^b, and no MUPIP INTEG error
+PASS : no fatal error in stage4.out
+PASS : stage4.out has $reference=^b
+PASS : a new process sees 1 node(s) of ^b
+PASS : MUPIP INTEG reports no error
+
+# Stage 5 : $ZTRIGGER("ITEM") with a valid line, then a SET of ^b
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has this line
+#   set x=$ztrigger("item","+^a -commands=S -xecute=""set y=1""") set ^b=1 write "$reference=",$reference,!
+# Before the fix : $REFERENCE was ^b, ^b was there, and MUPIP INTEG reported no error (this stage is a
+#                  control)
+# With the fix   : expect $reference=^b,
+#                  1 node(s) of ^b, and no MUPIP INTEG error
+PASS : no fatal error in stage5.out
+PASS : stage5.out has $reference=^b
+PASS : a new process sees 1 node(s) of ^b
+PASS : MUPIP INTEG reports no error
+
+# Done
