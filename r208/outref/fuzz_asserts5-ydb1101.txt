@@ -1,0 +1,83 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] A socket OPEN with an empty ATTACH handle does not fail an assert                       #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs a label of ydb1101sock.m in a new process, checks that the output has no fatal
+# error, and checks the lines that the stage writes. ydb1101sock.m writes "error=<mnemonic>" for an
+# error, and each stage writes "end" at the end.
+
+# Stage 1 : an OPEN of a listening socket with ATTACH="", then WRITE /LISTEN(1)
+# Command : $gtm_dist/mumps -run stage1^ydb1101sock, where the label has these lines
+#   stage1	; OPEN of a listening socket with an empty handle
+#   	new s,k
+#   	set $etrap="do err^ydb1101sock"
+#   	set s="socdev"
+#   	open s:(listen="0:TCP":attach="")::"socket"
+#   	use s
+#   	write /listen(1)
+#   	set k=$key
+#   	use $principal
+#   	write "$key starts with ",$piece(k,"|",1),"|",$piece(k,"|",2),"|",!
+#   	close s
+#   	write "end",!
+#   	quit
+# Before the fix : a Release build wrote the lines expected. A Debug build failed an assert in
+#                  iosocket_open.c
+# With the fix   : expect each of these lines once : $key starts with LISTENING|| end
+PASS : no fatal error in stage1.out
+PASS : stage1.out has $key starts with LISTENING||
+PASS : stage1.out has end
+PASS : stage1.out has no other line
+
+# Stage 2 : the same OPEN twice for the same device (the second OPEN finds the socket with the empty
+# handle)
+# Command : $gtm_dist/mumps -run stage2^ydb1101sock, where the label has these lines
+#   stage2	; a second OPEN of the same device with the same empty handle
+#   	new s
+#   	set $etrap="do err^ydb1101sock"
+#   	set s="socdev"
+#   	open s:(listen="0:TCP":attach="")::"socket"
+#   	do open2(s)
+#   	close s
+#   	write "end",!
+#   	quit
+#   open2(s)	; the second OPEN of stage2, in a frame of its own, so that stage2 goes on after the error
+#   	open s:(listen="0:TCP":attach="")::"socket"
+#   	quit
+# Before the fix : a Release build wrote the lines expected. A Debug build failed an assert in
+#                  iosocket_open.c
+# With the fix   : expect each of these lines once : error=SOCKETEXIST end
+PASS : no fatal error in stage2.out
+PASS : stage2.out has error=SOCKETEXIST
+PASS : stage2.out has end
+PASS : stage2.out has no other line
+
+# Stage 3 : an OPEN of a socket that connects to a listening socket of the process, with ATTACH=""
+# Command : $gtm_dist/mumps -run stage3^ydb1101sock, where the label has these lines
+#   stage3	; OPEN of a connecting socket with an empty handle
+#   	new s,c,k,p
+#   	set $etrap="do err^ydb1101sock"
+#   	set s="socdev"
+#   	open s:(listen="0:TCP":attach="h1")::"socket"
+#   	use s
+#   	write /listen(1)
+#   	set p=$piece($key,"|",3)
+#   	use $principal
+#   	set c="client"
+#   	open c:(connect="127.0.0.1:"_p_":TCP":attach="")::"socket"
+#   	use c
+#   	set k=$key
+#   	use $principal
+#   	write "$key starts with ",$piece(k,"|",1),"|",$piece(k,"|",2),"|",!
+#   	close c,s
+#   	write "end",!
+#   	quit
+# Before the fix : a Release build wrote the lines expected. A Debug build failed an assert in
+#                  iosocket_open.c
+# With the fix   : expect each of these lines once : $key starts with ESTABLISHED|| end
+PASS : no fatal error in stage3.out
+PASS : stage3.out has $key starts with ESTABLISHED||
+PASS : stage3.out has end
+PASS : stage3.out has no other line
+
+# Done

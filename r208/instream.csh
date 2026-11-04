@@ -120,6 +120,7 @@
 # zlink_undef_quals-ydb1365		[nars]	Test ZLINK with an undefined local variable as the qualifiers issues LVUNDEF
 # zstatus_fao-ydb1366			[nars]	Test SET $ZSTATUS in the error trap of a SET $ECODE displays a ! in the value as is
 # fuzz_asserts4-ydb1101			[nars]	Test an @# indirect name or a postconditional that overflows does not fail an assert in a Debug build
+# fuzz_asserts5-ydb1101			[nars]	Test a socket OPEN with an empty ATTACH handle does not fail an assert in a Debug build
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -234,6 +235,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic utf8_read_cr_badchar-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic zlink_undef_quals-ydb1365"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zstatus_fao-ydb1366"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts4-ydb1101"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts5-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
