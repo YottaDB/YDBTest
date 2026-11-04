@@ -1,0 +1,46 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] More code paths found by fuzz testing that failed asserts in a Debug build              #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage feeds the lines shown to "mumps -direct" in a new process, checks that the output has no
+# fatal error, and checks the output that is expected.
+
+# Command : $gtm_tst/com/dbcreate.csh mumps (stages 2 and 3 use the database)
+
+# Stage 1 : an extrinsic function that calls itself 20 levels deep from an IF in each level (f.m)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   write "$$^f(1)=",$$^f(1),!
+# Before the fix : a Debug build failed an assert in bool_init.c, as the Debug build counted the IF of
+#                  every level as one more nested Boolean expression. GT.M and a Release build gave
+#                  $$^f(1)=1
+# With the fix   : expect $$^f(1)=1
+PASS : no fatal error in stage1.out
+PASS : stage1.out has the line $$^f(1)=1
+
+# Stage 2 : a trigger that updates the node it is defined on from an IF, until $ZTLEVEL is 20
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x=$ztrigger("item","+^x(index=:) -commands=S -xecute=""if $ztlevel<20,$increment(^x(index))""")
+#   set ^x(1)=1
+#   write "^x(1)=",^x(1),!
+# Before the fix : a Debug build failed an assert in bool_init.c, as the Debug build counted the IF of
+#                  every trigger level as one more nested Boolean expression. GT.M and a Release build
+#                  gave ^x(1)=20
+# With the fix   : expect ^x(1)=20 (the SET and an $INCREMENT() at each of the levels 1 to 19)
+PASS : no fatal error in stage2.out
+PASS : stage2.out has the line ^x(1)=20
+
+# Stage 3 : $TEXT() of a trigger name that is too long for a trigger (32 bytes) in a region, and of a
+# trigger name that exists in that region
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set x=$ztrigger("item","+^y -name=abc -commands=S -xecute=""set z=1""")
+#   write "[",$text(^t0000000000000000000#0000000000#/DEFAULT),"]",!
+#   write "[",$text(^abc#/DEFAULT),"]",!
+# Before the fix : a Debug build failed an assert in trigger_locate_andor_load.c (after the fix there,
+#                  also in trigger_source_read_andor_verify.c). GT.M and a Release build gave [] and
+#                  then the trigger code of abc
+# With the fix   : expect [] (no such trigger) and then the trigger code of abc
+PASS : no fatal error in stage3.out
+PASS : stage3.out has the line []
+PASS : stage3.out has the line [ set z=1]
+
+# Done

@@ -114,6 +114,7 @@
 # dse_cache_hole_bml-ydb1358		[nars]	Test DSE CACHE -VERIFY with a local bitmap from the db hole of ydb_test_4g_db_blks
 # undef_rtn_name-ydb1359		[nars]	Test an undefined local variable as an indirect routine name issues LVUNDEF
 # noisolation_comma-ydb1360		[nars]	Test VIEW "NOISOLATION" and $VIEW("NOISOLATION") with a trailing comma issue VIEWGVN
+# fuzz_asserts3-ydb1101			[nars]	Test more code paths found by fuzz testing that failed asserts in a Debug build
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -222,6 +223,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_gde_err-ydb1355"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dse_cache_hole_bml-ydb1358"
 setenv subtest_list_non_replic	"$subtest_list_non_replic undef_rtn_name-ydb1359"
 setenv subtest_list_non_replic	"$subtest_list_non_replic noisolation_comma-ydb1360"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts3-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
