@@ -1,0 +1,84 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1365] ZLINK with an undefined local variable as the qualifiers issues LVUNDEF                 #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs in a new process, checks that the output has no fatal error, and counts the LVUNDEF
+# and CLIERR errors and the calls of zz.m (a routine that says when zz.m is called).
+
+# Stage 1 : ZLINK with a qualifiers variable that held -bogus and was killed, in Direct Mode
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set q="-bogus" kill q zlink "zz":q
+# Before the fix : used -bogus (CLIERR Unrecognized option : BOGUS)
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage1.out
+PASS : LVUNDEF was issued 1 times, CLIERR 0 times, and zz was called 0 times
+----------
+Error LVUNDEF seen in stage1.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: q
+----------
+
+# Stage 2 : ZLINK with a qualifiers variable that was never set, in Direct Mode
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   zlink "zz":undefq
+# Before the fix : linked zz with no qualifiers and no error
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage2.out
+PASS : LVUNDEF was issued 1 times, CLIERR 0 times, and zz was called 0 times
+----------
+Error LVUNDEF seen in stage2.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: undefq
+----------
+
+# Stage 3 : the same as stage 1 in a compiled routine (caller.m), with a $ETRAP that writes $ZSTATUS
+# and goes on
+# Command : $gtm_dist/mumps -run caller, where caller.m has these lines
+#   caller	set $etrap="write $zstatus,! set $ecode="""""
+#   	set q="-bogus"
+#   	kill q
+#   	zlink "zz":q
+#   	quit
+# Before the fix : used -bogus (CLIERR Unrecognized option : BOGUS)
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage3.out
+PASS : LVUNDEF was issued 1 times, CLIERR 0 times, and zz was called 0 times
+----------
+Error LVUNDEF seen in stage3.out as expected:
+150373850,caller+3^caller,%YDB-E-LVUNDEF, Undefined local variable: q
+----------
+
+# Stage 4 : ZLINK with the qualifiers variable qlf undefined, after $$^%PEEKBYNAME("")
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   write $$^%PEEKBYNAME("")
+#   zlink "zz":qlf
+# Before the fix : a Release build linked zz with no error. A Debug build failed an assert in
+#                  zl_cmd_qlf.c, as the storage of qlf held the 0xFD bytes that a Debug build fills
+#                  new memory with
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage4.out
+PASS : LVUNDEF was issued 1 times, CLIERR 0 times, and zz was called 0 times
+----------
+Error LVUNDEF seen in stage4.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: qlf
+----------
+----------
+Error PBNNOFIELD seen in stage4.out as expected:
+%YDB-E-PBNNOFIELD, %ZPEEKBYNAME() requires a field.item as its first parameter
+----------
+
+# Stage 5 : ZLINK with a qualifiers variable that was never set, after VIEW "NOUNDEF", then DO ^zz
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   view "NOUNDEF" zlink "zz":undefq do ^zz
+# Before the fix : linked zz with no qualifiers, with no error (this stage is a control)
+# With the fix   : expect no error (NOUNDEF makes the variable an empty string), and zz to be called
+PASS : no fatal error in stage5.out
+PASS : LVUNDEF was issued 0 times, CLIERR 0 times, and zz was called 1 times
+
+# Stage 6 : ZLINK with a qualifiers variable that holds -nolist, then DO ^zz
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   set q="-nolist" zlink "zz":q do ^zz
+# Before the fix : linked zz, with no error (this stage is a control)
+# With the fix   : expect no error, and zz to be called
+PASS : no fatal error in stage6.out
+PASS : LVUNDEF was issued 0 times, CLIERR 0 times, and zz was called 1 times
+
+# Done
