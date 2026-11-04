@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -31,7 +31,7 @@ gtm10123 ;
 	write "# Run [ZSHOW ""G""]. Expect SET>"_subtotal_", INC="_subtotal_". Previously, INC would not appear.",!
 	zshow "G":stats
 	write $piece(stats("G",0),",",3)_","_$piece(stats("G",0),",",90),!
-	write $piece(stats("G",1),",",3)_","_$piece(stats("G",0),",",90),!
+	write $piece(stats("G",1),",",3)_","_$piece(stats("G",1),",",90),!
 	write "# Run [$$STAT^%YGBLSTAT($JOB,""INC,SET"")]. Expect SET>"_subtotal_", INC="_subtotal_". Previously, INC would not appear.",!
 	view "STATSHARE"
 	write $$STAT^%YGBLSTAT($JOB,"INC,SET"),!
