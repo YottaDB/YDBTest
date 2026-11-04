@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,8 +40,11 @@ $grep "\[$parentpid\]: %YDB-E-LOCKSPACEFULL.*`pwd`" test_syslog.txt
 
 echo "# Verify at least one TPNOTACID message was seen in syslog by child pids"
 # Skip first line in pidlist.txt as it is parent pid. The rest of lines are child pids. Hence the "tail -n +2" below.
+# Match each pid only where syslog puts it, as "[pid]:" after the program name. A bare pid can also match digits
+# in other text of a message from another process, such as digits in a routine name.
 set pidlist = `tail -n +2 pidlist.txt`
-$grep -E `echo $pidlist | sed 's/ /|/g'` test_syslog.txt | grep TPNOTACID | head -1
+set pidpat = `echo $pidlist | sed 's/ /|/g'`
+$grep -E "\[($pidpat)\]:" test_syslog.txt | grep TPNOTACID | head -1
 
 echo '# Validate DB'
 $gtm_tst/com/dbcheck.csh
