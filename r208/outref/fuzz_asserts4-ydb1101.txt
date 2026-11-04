@@ -1,0 +1,139 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] An @# indirect name or a postconditional that overflows does not fail an assert         #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage feeds the lines shown to "mumps -direct" in a new process, checks that the output has no
+# fatal error, and checks for the error that is expected and that the next line of input ran.
+
+# Stage 1 : an exclusive NEW of @a, with a="@#" (the at-hash token, then nothing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set a="@#" new (@a)
+#   write "end",!
+# Before the fix : a Release build issued EXPR. A Debug build failed an assert in indirection.c
+# With the fix   : expect EXPR
+PASS : no fatal error in stage1.out
+PASS : EXPR was issued once, c^zz did not run, and the next line of input ran
+----------
+Error EXPR seen in stage1.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 2 : the same with an exclusive KILL
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set a="@#" kill (@a)
+#   write "end",!
+# Before the fix : a Release build issued EXPR. A Debug build failed an assert in indirection.c
+# With the fix   : expect EXPR
+PASS : no fatal error in stage2.out
+PASS : EXPR was issued once, c^zz did not run, and the next line of input ran
+----------
+Error EXPR seen in stage2.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 3 : the same NEW as stage 1 in an XECUTE
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set a="@#" xecute "new (@a)"
+#   write "end",!
+# Before the fix : a Release build issued EXPR. A Debug build failed an assert in indirection.c
+# With the fix   : expect EXPR
+PASS : no fatal error in stage3.out
+PASS : EXPR was issued once, c^zz did not run, and the next line of input ran
+----------
+Error EXPR seen in stage3.out as expected:
+%YDB-E-EXPR, Expression expected but not found
+----------
+
+# Stage 4 : an exclusive NEW of @a, with a="@#x"
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set a="@#x" new (@a)
+#   write "end",!
+# Before the fix : a Release build issued LVUNDEF. A Debug build failed an assert in indirection.c
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage4.out
+PASS : LVUNDEF was issued once, c^zz did not run, and the next line of input ran
+----------
+Error LVUNDEF seen in stage4.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: x
+----------
+
+# Stage 5 : a DO with a postconditional on its argument whose string literal overflows as a number
+# (zz.m has the label c, which writes "in c")
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   do c^zz:"1E47"&1
+#   write "end",!
+# Before the fix : a Release build issued NUMOFLOW. A Debug build failed an assert in put_tjmp.c
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage5.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage5.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Stage 6 : the same with a GOTO
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   goto c^zz:"1E47"&1
+#   write "end",!
+# Before the fix : a Release build issued NUMOFLOW. A Debug build failed an assert in put_tjmp.c
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage6.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage6.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Stage 7 : the same with an XECUTE
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   xecute "write 1,!":"1E47"&1
+#   write "end",!
+# Before the fix : a Release build issued NUMOFLOW. A Debug build failed an assert in put_tjmp.c
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage7.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage7.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Stage 8 : the same Boolean expression as the argument of an IF (this stage is a control)
+# Command : $gtm_dist/mumps -direct < stage8.inp, where stage8.inp has these lines
+#   if "1E47"&1 do c^zz
+#   write "end",!
+# Before the fix : Debug and Release builds issued NUMOFLOW
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage8.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage8.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Stage 9 : the same Boolean expression as a $SELECT() condition (this stage is a control)
+# Command : $gtm_dist/mumps -direct < stage9.inp, where stage9.inp has these lines
+#   write $select("1E47"&1:"yes",1:"no"),!
+#   write "end",!
+# Before the fix : Debug and Release builds issued NUMOFLOW
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage9.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage9.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Stage 10 : the same Boolean expression as a postconditional on DO (this stage is a control)
+# Command : $gtm_dist/mumps -direct < stage10.inp, where stage10.inp has these lines
+#   do:"1E47"&1 c^zz
+#   write "end",!
+# Before the fix : Debug and Release builds issued NUMOFLOW
+# With the fix   : expect NUMOFLOW
+PASS : no fatal error in stage10.out
+PASS : NUMOFLOW was issued once, c^zz did not run, and the next line of input ran
+----------
+Error NUMOFLOW seen in stage10.out as expected:
+%YDB-E-NUMOFLOW, Numeric overflow
+----------
+
+# Done
