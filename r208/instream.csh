@@ -112,6 +112,7 @@
 # zshowvtolcl_key-ydb1354		[nars]	Test ^%ZSHOWVTOLCL restores a node with a string subscript and a string value, or a subscript that contains "="
 # ydbenv_gde_err-ydb1355		[bhaskar]	Test ydb_env_set reports GDE command errors instead of silently skipping the bad command
 # dse_cache_hole_bml-ydb1358		[nars]	Test DSE CACHE -VERIFY with a local bitmap from the db hole of ydb_test_4g_db_blks
+# undef_rtn_name-ydb1359		[nars]	Test an undefined local variable as an indirect routine name issues LVUNDEF
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -218,6 +219,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_env_zero-ydb
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshowvtolcl_key-ydb1354"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_gde_err-ydb1355"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dse_cache_hole_bml-ydb1358"
+setenv subtest_list_non_replic	"$subtest_list_non_replic undef_rtn_name-ydb1359"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

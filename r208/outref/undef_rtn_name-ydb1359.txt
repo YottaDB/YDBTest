@@ -1,0 +1,110 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1359] An undefined local variable as an indirect routine name issues LVUNDEF                 #
+#----------------------------------------------------------------------------------------------------#
+
+# zz.m is a routine that says when it is called. In stages 1 to 4, the local variable rtn held the
+# name zz and was then killed, after zz was linked. Each stage runs in a new process, checks that the
+# output has no fatal error and has the LVUNDEF error expected, and that zz was not used.
+
+# Stage 1 : DO ^@rtn in Direct Mode
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   zlink "zz"
+#   set rtn="zz" kill rtn
+#   do ^@rtn
+# Before the fix : called zz (zz was called), with no error
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage1.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 1 times
+----------
+Error LVUNDEF seen in stage1.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: rtn
+----------
+
+# Stage 2 : $TEXT(+1^@rtn) in Direct Mode
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   zlink "zz"
+#   set rtn="zz" kill rtn
+#   write "[",$text(+1^@rtn),"]",!
+# Before the fix : returned the first line of zz, with no error
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage2.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 1 times
+----------
+Error LVUNDEF seen in stage2.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: rtn
+----------
+
+# Stage 3 : $$^@rtn in Direct Mode
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   zlink "zz"
+#   set rtn="zz" kill rtn
+#   write $$^@rtn,!
+# Before the fix : found zz and issued FMLLSTMISSING for it in place of LVUNDEF
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage3.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 1 times
+----------
+Error LVUNDEF seen in stage3.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: rtn
+----------
+
+# Stage 4 : DO ^@rtn and DO @x (x="^@rtn") in a compiled routine (caller.m), with a $ETRAP that writes
+# $ZSTATUS and goes on
+# Command : $gtm_dist/mumps -run caller, where caller.m has these lines
+#   caller	set $etrap="write $zstatus,! set $ecode="""""
+#   	zlink "zz"
+#   	set rtn="zz",x="^@rtn"
+#   	kill rtn
+#   	do d1,d2
+#   	quit
+#   d1	do ^@rtn
+#   	quit
+#   d2	do @x
+#   	quit
+# Before the fix : called zz twice (zz was called), with no error
+# With the fix   : expect LVUNDEF twice
+PASS : no fatal error in stage4.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 2 times
+----------
+Error LVUNDEF seen in stage4.out as expected:
+150373850,d1^caller,%YDB-E-LVUNDEF, Undefined local variable: rtn
+150373850,d2^caller,%YDB-E-LVUNDEF, Undefined local variable: rtn
+----------
+
+# Stage 5 : DO ^@M with M undefined, after a call of a routine that does a NEW of a local variable
+#           (newy.m)
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   do ^newy
+#   do ^@M
+# Before the fix : a Release build issued LVUNDEF. A Debug build terminated with a SIG-11 in
+#                  find_rtn_tabent(), as the storage of M held the 0xFD bytes that a Debug build
+#                  fills new memory with
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage5.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 1 times
+----------
+Error LVUNDEF seen in stage5.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: M
+----------
+
+# Stage 6 : $TEXT(^@E) with E undefined, after the same call
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   do ^newy
+#   write $text(^@E),!
+# Before the fix : a Release build issued RTNNAME. A Debug build failed an assert in
+#                  gtm_memcpy_validate_and_execute.c
+# With the fix   : expect LVUNDEF
+PASS : no fatal error in stage6.out
+PASS : zz was not called and its text was not returned
+PASS : LVUNDEF was issued 1 times
+----------
+Error LVUNDEF seen in stage6.out as expected:
+%YDB-E-LVUNDEF, Undefined local variable: E
+----------
+
+# Done
