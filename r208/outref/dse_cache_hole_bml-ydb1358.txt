@@ -1,0 +1,28 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1358] DSE CACHE -VERIFY does not fail an assert on a local bitmap in the hole of a database     #
+# created with ydb_test_4g_db_blks                                                                   #
+#----------------------------------------------------------------------------------------------------#
+
+# With the ydb_test_4g_db_blks env var set to N (honored only in Debug builds), local bitmaps 1 to N-1
+# of a new database file are never written, and a read of any block in that hole returns a zeroed
+# buffer. A process can read such a block into the cache for a transaction that then restarts.
+# wcs_verify() skipped the block certification for such a block if it was not a bitmap, but always
+# certified a bitmap, so DSE CACHE -VERIFY of a cache holding a bitmap from the hole issued DBLVLINC
+# and failed the assert (expect_damage) in wcs_verify.c. Here DSE DUMP brings such a bitmap into the
+# cache. Each stage prints PASS or FAIL for each check.
+
+# Stage 1 : DSE DUMP -BLOCK=200 (local bitmap 1, in the hole), then DSE CACHE -VERIFY
+# Before the fix : DBLVLINC for block 0x200, then an assert failure (expect_damage) in wcs_verify.c
+# With the fix   : expect the cache verification to be clean
+# Command : $DSE with "dump -block=200 -header" and "cache -verify"
+PASS : the cache verification is clean
+PASS : DSE issued no error
+
+# Stage 2 : DSE DUMP -BLOCK=0 (local bitmap 0, ahead of the hole), then DSE CACHE -VERIFY
+# Before the fix : the cache verification is clean (this stage is a control)
+# With the fix   : expect the cache verification to be clean
+# Command : $DSE with "dump -block=0 -header" and "cache -verify"
+PASS : the cache verification is clean
+PASS : DSE issued no error
+
+# Done

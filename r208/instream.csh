@@ -111,6 +111,7 @@
 # qsubscript_env_zero-ydb1349		[nars]	Test $QSUBSCRIPT() and related functions parse a global name whose second environment part is 0 or a $CHAR()
 # zshowvtolcl_key-ydb1354		[nars]	Test ^%ZSHOWVTOLCL restores a node with a string subscript and a string value, or a subscript that contains "="
 # ydbenv_gde_err-ydb1355		[bhaskar]	Test ydb_env_set reports GDE command errors instead of silently skipping the bad command
+# dse_cache_hole_bml-ydb1358		[nars]	Test DSE CACHE -VERIFY with a local bitmap from the db hole of ydb_test_4g_db_blks
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -216,6 +217,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic socket_block_mnemonic-y
 setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_env_zero-ydb1349"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshowvtolcl_key-ydb1354"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_gde_err-ydb1355"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dse_cache_hole_bml-ydb1358"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -272,6 +274,8 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list fork_core_in_malloc-ydb1293"
 	# dbioerr_syscall-ydb1310 needs white box case 65, which only a Debug build has
 	setenv subtest_exclude_list "$subtest_exclude_list dbioerr_syscall-ydb1310"
+	# dse_cache_hole_bml-ydb1358 needs the ydb_test_4g_db_blks env var, which only a Debug build honors
+	setenv subtest_exclude_list "$subtest_exclude_list dse_cache_hole_bml-ydb1358"
 endif
 
 # recload_encr_index-ydb1310 needs an encrypted database, so run it only when the test runs with encryption
