@@ -1,0 +1,94 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1366] SET $ZSTATUS in the error trap of a SET $ECODE displays a ! in the value as is          #
+#----------------------------------------------------------------------------------------------------#
+
+# t^ydb1366(val) does a SET $ECODE, whose $ETRAP sets $ZSTATUS to val and lets the error go to Direct
+# Mode, which displays the error text and the entry reference of the new $ZSTATUS. Each stage feeds
+# the lines shown to "mumps -direct" in a new process, checks that the output has no fatal YDB error,
+# and checks the lines that are expected (shown with a tab as <TAB>).
+
+# Stage 1 : $ZSTATUS with no ! in the value
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   do t^ydb1366("1,x,plain text")
+#   write "end",!
+# Before the fix : plain text, then the entry reference x (this stage is a control)
+# With the fix   : expect these lines
+#   plain text
+#   <TAB><TAB>At M source location x
+PASS : no fatal error in stage1.out
+PASS : the 2 expected lines are in stage1.out, and the next line of input ran
+
+# Stage 2 : a ! at the end of the error text
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   do t^ydb1366("1,x,100% done!")
+#   write "end",!
+# Before the fix : a Release build displayed 100% done without the exclamation mark, followed by other
+#                  bytes from memory. A Debug build failed an assert in util_output.c
+# With the fix   : expect these lines
+#   100% done!
+#   <TAB><TAB>At M source location x
+PASS : no fatal error in stage2.out
+PASS : the 2 expected lines are in stage2.out, and the next line of input ran
+
+# Stage 3 : !AD in the error text
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   do t^ydb1366("1,x,a!ADb")
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11. A Debug build displayed ab
+# With the fix   : expect these lines
+#   a!ADb
+#   <TAB><TAB>At M source location x
+PASS : no fatal error in stage3.out
+PASS : the 2 expected lines are in stage3.out, and the next line of input ran
+
+# Stage 4 : four !AD in the error text
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   do t^ydb1366("1,x,!AD!AD!AD!AD")
+#   write "end",!
+# Before the fix : Debug and Release builds terminated with a SIG-11
+# With the fix   : expect these lines
+#   !AD!AD!AD!AD
+#   <TAB><TAB>At M source location x
+PASS : no fatal error in stage4.out
+PASS : the 2 expected lines are in stage4.out, and the next line of input ran
+
+# Stage 5 : !AD in the entry reference
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   do t^ydb1366("1,x!AD,text")
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11. A Debug build displayed the entry
+#                  reference as x
+# With the fix   : expect these lines
+#   text
+#   <TAB><TAB>At M source location x!AD
+PASS : no fatal error in stage5.out
+PASS : the 2 expected lines are in stage5.out, and the next line of input ran
+
+# Stage 6 : !AD in a value with no comma (displayed as a whole)
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   do t^ydb1366("no commas !AD")
+#   write "end",!
+# Before the fix : a Release build displayed "no commas " many times over, or terminated with a SIG-11
+#                  (each seen in different runs). A Debug build displayed "no commas "
+# With the fix   : expect these lines
+#   no commas !AD
+PASS : no fatal error in stage6.out
+PASS : the 1 expected lines are in stage6.out, and the next line of input ran
+
+# Stage 7 : %YDBJNLF, which sets $ZSTATUS in this way with the journal file name in the error text
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   do INGEST^%YDBJNLF("!")
+#   write "end",!
+# Before the fix : a Release build displayed "Journal file ot found". A Debug build failed an assert
+#                  in util_output.c
+# With the fix   : expect these lines
+#   %YDBJNLF-F-FILENOTEXIST Journal file ! not found
+#   <TAB><TAB>At M source location INGEST+8^%YDBJNLF
+PASS : no fatal error in stage7.out
+PASS : the 2 expected lines are in stage7.out, and the next line of input ran
+----------
+Error FILENOTEXIST seen in stage7.out as expected:
+%YDBJNLF-F-FILENOTEXIST Journal file ! not found
+----------
+
+# Done
