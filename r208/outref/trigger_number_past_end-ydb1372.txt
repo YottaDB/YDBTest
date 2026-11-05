@@ -1,0 +1,177 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1372] $ZTRIGGER("ITEM") of an item that ends in a number subscript does not read past the item#
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in Direct Mode in a new
+# process, and checks that the output has no fatal error, has the line expected, and the number of
+# triggers that $ZTRIGGER("SELECT") lists at the end.
+
+# Stage 1 : an item that ends in a number, after a longer item with digits at the same place
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set x=$ztrigger("item","+^b(000000) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b(100")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b(100000) -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage1.out
+PASS : stage1.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 2 : the same with a range (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x=$ztrigger("item","+^someglobal(1:000000) -commands=S -xecute=""set x=1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^someglobal(1:100")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^someglobal(1:100000) -commands=S -xecute="set x=1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage2.out
+PASS : stage2.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 3 : the item of stage 1 as the first item of the process
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set x=$ztrigger("item","+^b(100")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : Missing ")" after global subscript, and no trigger (this stage is a control)
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage3.out
+PASS : stage3.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 4 : the first item of stage 1 alone
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set x=$ztrigger("item","+^b(000000) -commands=S -xecute=""write 1""")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : Added SET trigger on ^b named b#1 (this stage is a control)
+# With the fix   : expect Added SET trigger on ^b named b#1, and 1 trigger(s) listed at the end
+PASS : no fatal error in stage4.out
+PASS : stage4.out has Added SET trigger on ^b named b#1
+PASS : $ZTRIGGER("SELECT") lists 1 trigger(s)
+PASS : the last line of input ran
+
+# Stage 5 : an item that ends in a number, which is the first part of a longer string ($EXTRACT()
+# of a valid item), so the digits and the ")" of the longer string follow it
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set x="+^b(100000) -commands=S -xecute=""write 1""",y=$extract(x,1,7)
+#   set x=$ztrigger("item",y)
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : Missing ")" after global subscript, and no trigger (this stage is a control. GT.M
+#                  V7.2-001, which parses the item where it is, reported Invalid XECUTE string, from the bytes
+#                  after the item)
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage5.out
+PASS : stage5.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 6 : an item that ends right after the global name, after a longer item
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   set x=$ztrigger("item","+^b(""abc"") -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : Error: XECUTE value missing (the parse went on with the bytes of the first item)
+# With the fix   : expect Error : Invalid global name:, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage6.out
+PASS : stage6.out has Error : Invalid global name:
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 7 : an item that ends inside a $CHAR() subscript, after a longer item with the closing ")"
+# at the same place
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   set x=$ztrigger("item","+^b($C(65,66)) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b($C(65,66")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b("AB") -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Invalid subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage7.out
+PASS : stage7.out has Invalid subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 8 : an item that ends right after the ")" of a $CHAR() subscript, before the ")" that ends the
+# subscripts, after a longer item
+# Command : $gtm_dist/mumps -direct < stage8.inp, where stage8.inp has these lines
+#   set x=$ztrigger("item","+^b($C(65,66),1) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b($C(65,66)")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b("AB",1) -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage8.out
+PASS : stage8.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 9 : an item that ends right after the ":" of a range, after a longer item
+# Command : $gtm_dist/mumps -direct < stage9.inp, where stage9.inp has these lines
+#   set x=$ztrigger("item","+^b(1:20) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b(1:")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b(1:20) -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Missing ")" after global subscript, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage9.out
+PASS : stage9.out has Missing ")" after global subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 10 : an item that ends inside a pattern, after a longer item
+# Command : $gtm_dist/mumps -direct < stage10.inp, where stage10.inp has these lines
+#   set x=$ztrigger("item","+^b(?1N.E) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b(?1N.")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b(*) -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Invalid pattern code, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage10.out
+PASS : stage10.out has Invalid pattern code
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 11 : an item that ends right after the repeat count of a pattern, after a longer item
+# Command : $gtm_dist/mumps -direct < stage11.inp, where stage11.inp has these lines
+#   set x=$ztrigger("item","+^b(?1N) -commands=S -xecute=""write 1""")
+#   set x=$ztrigger("item","-*")
+#   set x=$ztrigger("item","+^b(?1")
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the third $ZTRIGGER() added +^b(?1N) -commands=S -xecute="write 1",
+#                  made from the bytes of the first item. With gtmdbglvl 0x40000 (which fills new storage with
+#                  0xdeadbeef), Invalid XECUTE string, from the bytes after the first item
+# With the fix   : expect Invalid pattern code, and 0 trigger(s) listed at the end
+PASS : no fatal error in stage11.out
+PASS : stage11.out has Invalid pattern code
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Done
