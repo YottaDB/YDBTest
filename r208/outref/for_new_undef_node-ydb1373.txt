@@ -1,0 +1,82 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1373] A FOR with a subscripted control variable leaves no node without a value                #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the FOR shown in Direct Mode in a new process, then writes $DATA(a) and
+# $ORDER(a("")), and checks that the output has no error and has the line expected.
+
+# Stage 1 : a FOR whose scope has an argumentless NEW
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   for a(1)=1 new
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : the FOR left the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage1.out
+PASS : stage1.out has $data(a)=0 $order(a(""))=
+
+# Stage 2 : the same as stage 1, then an exclusive KILL (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   for a(1)=1 new
+#   kill (x)
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : a Debug build failed an assert in op_putindx.c at the KILL. A Release build left
+#                  the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage2.out
+PASS : stage2.out has $data(a)=0 $order(a(""))=
+
+# Stage 3 : the same as stage 1 with two values
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   for a(1)=1,2 new
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : the FOR left the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage3.out
+PASS : stage3.out has $data(a)=0 $order(a(""))=
+
+# Stage 4 : a FOR whose scope kills the variable of the control variable
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   kill a for a(1)=1 kill a
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : the FOR left the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage4.out
+PASS : stage4.out has $data(a)=0 $order(a(""))=
+
+# Stage 5 : a FOR whose scope kills the control variable
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   kill a for a(1)=1 kill a(1)
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : the FOR left the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage5.out
+PASS : stage5.out has $data(a)=0 $order(a(""))=
+
+# Stage 6 : the same as stage 1 with an indirect control variable
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   set y="a(1)" for @y=1 new
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : the FOR left the node a(1) without a value: $data(a)=10 $order(a(""))=1
+# With the fix   : expect $data(a)=0 $order(a(""))=
+PASS : no error in stage6.out
+PASS : stage6.out has $data(a)=0 $order(a(""))=
+
+# Stage 7 : a FOR with a subscripted control variable and an increment (no NEW or KILL)
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   kill a for a(1)=1:1:3 set b=a(1)
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : $data(a)=10 $order(a(""))=1 (this stage is a control)
+# With the fix   : expect $data(a)=10 $order(a(""))=1
+PASS : no error in stage7.out
+PASS : stage7.out has $data(a)=10 $order(a(""))=1
+
+# Stage 8 : a FOR with a subscripted control variable and one value (no NEW or KILL)
+# Command : $gtm_dist/mumps -direct < stage8.inp, where stage8.inp has these lines
+#   kill a for a(1)=1 set b=a(1)
+#   write "$data(a)=",$data(a)," $order(a(""""))=",$order(a("")),!
+# Before the fix : $data(a)=10 $order(a(""))=1 (this stage is a control)
+# With the fix   : expect $data(a)=10 $order(a(""))=1
+PASS : no error in stage8.out
+PASS : stage8.out has $data(a)=10 $order(a(""))=1
+
+# Done
