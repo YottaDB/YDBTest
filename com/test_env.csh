@@ -108,7 +108,7 @@ alias rmtmp '$work_dir/YDBDevOps/devtools/rmtmp.csh'
 alias cln 'sudo -v; rmproc; rmtst; rmtmp'
 
 if ( ! $?original_path ) setenv original_path "$path"   # set only the first time we run this
-set path = (. $original_path $gtm_tst/com/)
+set path = ($original_path $gtm_tst/com/)
 
 # If serverconf.txt doesn't exist, assume we're on localhost and create a dummy so tests don't complain
 # You can create this file manually if you don't like it in your .cshrc-int
