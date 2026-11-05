@@ -1,0 +1,78 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1371] DSE FIND -KEY reports an error for an index block that points to itself                 #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the DSE commands shown on a database with the nodes shown, and checks that the
+# output has no fatal error, has the lines expected once, and that the DSE command after FIND -KEY
+# ran.
+
+# Stage 1 : FIND -KEY=^a(1) after DSE OVERWRITE made the root block of ^a point to itself
+# Before the fix : DSE terminated with a SIG-11 (KILLBYSIGSINFO1)
+# Command : DSE with these lines as input
+#   find -key=^a(1)
+#   find -block=2
+# With the fix   : expect is at level 1, but its parent block 0x,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage1.out
+PASS : stage1.out has is at level 1, but its parent block 0x
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Stage 2 : the same as stage 1 with FIND -KEY=^a
+# Before the fix : DSE terminated with a SIG-11 (KILLBYSIGSINFO1)
+# Command : DSE with these lines as input
+#   find -key=^a
+#   find -block=2
+# With the fix   : expect is at level 1, but its parent block 0x,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage2.out
+PASS : stage2.out has is at level 1, but its parent block 0x
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Stage 3 : FIND -KEY=^a(1500) on a database without damage, with 2000 nodes of ^a
+# Before the fix : Key found in block, then the output of FIND -BLOCK=2 (this stage is a control)
+# Command : DSE with these lines as input
+#   find -key=^a(1500)
+#   find -block=2
+# With the fix   : expect Key found in block,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage3.out
+PASS : stage3.out has Key found in block
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Stage 4 : FIND -KEY=^a(1) after DSE CHANGE made the level of the root block of ^a 11 (0xB), the
+#           maximum number of levels of a tree
+# Before the fix : FIND -KEY reported "Key found in block", as it did not check the level of a block
+# Command : DSE with these lines as input
+#   find -key=^a(1)
+#   find -block=2
+# With the fix   : expect is at level 11, but the highest level of a block is 10.,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage4.out
+PASS : stage4.out has is at level 11, but the highest level of a block is 10.
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Stage 5 : FIND -KEY=^a(1) after DSE CHANGE made the level of the root block of ^a 2, so the data
+#           block that it points to (level 0) is not one level below it
+# Before the fix : FIND -KEY reported "Key found in block", as it did not check the level of a block
+# Command : DSE with these lines as input
+#   find -key=^a(1)
+#   find -block=2
+# With the fix   : expect is at level 0, but its parent block 0x,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage5.out
+PASS : stage5.out has is at level 0, but its parent block 0x
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Stage 6 : the same as stage 1 with FIND -KEY=^a(1) -NOCRIT (DSE does not get crit for the search, and no
+#           other process updates the database, so the output is the same as with crit)
+# Before the fix : DSE terminated with a SIG-11 (KILLBYSIGSINFO1)
+# Command : DSE with these lines as input
+#   find -key=^a(1) -nocrit
+#   find -block=2
+# With the fix   : expect is at level 1, but its parent block 0x,
+#                  then the output of FIND -BLOCK=2
+PASS : no fatal error in stage6.out
+PASS : stage6.out has is at level 1, but its parent block 0x
+PASS : FIND -BLOCK=2 ran after FIND -KEY
+
+# Done
