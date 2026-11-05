@@ -1,0 +1,157 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1369] A TCOMMIT after a KILL that fails with TRANS2BIG does not damage the database           #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in Direct Mode (or the routine
+# shown) in a new process, and checks that the output has the lines expected, the values that a new
+# process sees, and MUPIP INTEG.
+
+# Stage 1 : a loop of KILL and SET of ^a(1) in a transaction until TRANS2BIG, then TCOMMIT
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set ^a(1)=1
+#   tstart ()
+#   for i=1:1:1E6 kill ^a(1) set ^a(1)=$justify(1,150)
+#   tcommit
+#   write "$tlevel=",$tlevel,!
+#   trollback
+#   write "end",!
+# Before the fix : the TCOMMIT committed part of the KILL that issued TRANS2BIG ($TLEVEL was 0), a new
+#                  process got GVDATAFAIL for ^a, and MUPIP INTEG reported DBBDBALLOC
+# With the fix   : expect TRANS2BIG 2 time(s), then each of these lines once :
+#                  $tlevel=1 end
+#                  a new process sees a(1)=1 b= c= d= a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage1.out
+PASS : stage1.out has TRANS2BIG 2 time(s)
+PASS : stage1.out has $tlevel=1
+PASS : stage1.out has end
+PASS : a new process sees a(1)=1 b= c= d= a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 2 : the same with TROLLBACK after TRANS2BIG, then a new transaction that sets ^b
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set ^a(1)=1
+#   tstart ()
+#   for i=1:1:1E6 kill ^a(1) set ^a(1)=$justify(1,150)
+#   trollback
+#   tstart ()
+#   set ^b=2
+#   tcommit
+#   write "$tlevel=",$tlevel,!
+#   write "end",!
+# Before the fix : the new transaction committed, and a new process saw ^b=2 (this stage is a control)
+# With the fix   : expect TRANS2BIG 1 time(s), then each of these lines once :
+#                  $tlevel=0 end
+#                  a new process sees a(1)=1 b=2 c= d= a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage2.out
+PASS : stage2.out has TRANS2BIG 1 time(s)
+PASS : stage2.out has $tlevel=0
+PASS : stage2.out has end
+PASS : a new process sees a(1)=1 b=2 c= d= a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 3 : the loop in a nested transaction (that sets ^c first), then TCOMMIT of both levels
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set ^a(1)=1
+#   tstart ()
+#   set ^c=3
+#   tstart ()
+#   for i=1:1:1E6 kill ^a(1) set ^a(1)=$justify(1,150)
+#   tcommit
+#   write "inner $tlevel=",$tlevel,!
+#   tcommit
+#   write "outer $tlevel=",$tlevel,!
+#   trollback
+#   write "end",!
+# Before the fix : the inner TCOMMIT went on, the outer TCOMMIT issued TRANS2BIG, and a new process
+#                  saw no ^c (this stage is a control)
+# With the fix   : expect TRANS2BIG 2 time(s), then each of these lines once :
+#                  inner $tlevel=1 outer $tlevel=1 end
+#                  a new process sees a(1)=1 b= c= d= a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage3.out
+PASS : stage3.out has TRANS2BIG 2 time(s)
+PASS : stage3.out has inner $tlevel=1
+PASS : stage3.out has outer $tlevel=1
+PASS : stage3.out has end
+PASS : a new process sees a(1)=1 b= c= d= a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 4 : the same as stage 3 with TROLLBACK -1 after TRANS2BIG, then TCOMMIT of the outer level
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set ^a(1)=1
+#   tstart ()
+#   set ^c=3
+#   tstart ()
+#   for i=1:1:1E6 kill ^a(1) set ^a(1)=$justify(1,150)
+#   trollback -1
+#   tcommit
+#   write "$tlevel=",$tlevel,!
+#   write "end",!
+# Before the fix : the outer TCOMMIT committed, and a new process saw ^c=3 (this stage is a control)
+# With the fix   : expect TRANS2BIG 1 time(s), then each of these lines once :
+#                  $tlevel=0 end
+#                  a new process sees a(1)=1 b= c=3 d= a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage4.out
+PASS : stage4.out has TRANS2BIG 1 time(s)
+PASS : stage4.out has $tlevel=0
+PASS : stage4.out has end
+PASS : a new process sees a(1)=1 b= c=3 d= a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 5 : the loop of stage 1 in a transaction, then TRESTART in Direct Mode (the restarted transaction
+#           does not run the loop), then a SET of ^d and TCOMMIT
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set ^a(1)=1
+#   tstart ()  if '$trestart for i=1:1:1E6 kill ^a(1) set ^a(1)=$justify(1,150)
+#   trestart
+#   write "$tlevel=",$tlevel," $trestart=",$trestart,!
+#   set ^d=4
+#   tcommit
+#   write "$tlevel=",$tlevel,!
+#   write "end",!
+# Before the fix : the restarted transaction committed, and a new process saw ^d=4 (this stage is a control)
+# With the fix   : expect TRANS2BIG 1 time(s), then each of these lines once :
+#                  $tlevel=1 $trestart=1 $tlevel=0 end
+#                  a new process sees a(1)=1 b= c= d=4 a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage5.out
+PASS : stage5.out has TRANS2BIG 1 time(s)
+PASS : stage5.out has $tlevel=1 $trestart=1
+PASS : stage5.out has $tlevel=0
+PASS : stage5.out has end
+PASS : a new process sees a(1)=1 b= c= d=4 a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 6 : the same as stage 5 in a routine (restart^ydb1369), whose error trap goes to a label at the
+#           level of the TSTART that does the TRESTART
+# Command : $gtm_dist/mumps -run restart^ydb1369
+# Before the fix : the restarted transaction committed, and a new process saw ^d=4 (this stage is a control)
+# With the fix   : expect TRANS2BIG 1 time(s), then each of these lines once :
+#                  retry $tlevel=1 $trestart=0 $tlevel=1 $trestart=1 $tlevel=0 end
+#                  a new process sees a(1)=1 b= c= d=4 a(5,*) nodes=0, and MUPIP INTEG reports no error
+PASS : no fatal error in stage6.out
+PASS : stage6.out has TRANS2BIG 1 time(s)
+PASS : stage6.out has retry $tlevel=1 $trestart=0
+PASS : stage6.out has $tlevel=1 $trestart=1
+PASS : stage6.out has $tlevel=0
+PASS : stage6.out has end
+PASS : a new process sees a(1)=1 b= c= d=4 a(5,*) nodes=0
+PASS : MUPIP INTEG reports no error
+
+# Stage 7 : in a routine (partial^ydb1369), a transaction 2 cw_set elements short of its limit, then a KILL
+#           of a subtree that spans many blocks (^a(5,*)), which issues TRANS2BIG after it changed some
+#           blocks, then TCOMMIT. ^a(4,*), ^a(5,*) and ^a(6,*) have 3000 nodes each (fill^ydb1369 sets
+#           them first). The database has a block size of 1024 and 1024 global buffers (BG)
+# Commands : $gtm_dist/mumps -run fill^ydb1369, then $gtm_dist/mumps -run partial^ydb1369
+# Before the fix : the TCOMMIT committed part of the KILL ($TLEVEL was 0), a new process saw fewer than 3000
+#                  nodes of ^a(5,*), and MUPIP INTEG reported DBMRKFREE
+# With the fix   : expect TRANS2BIG 2 time(s), then each of these lines once :
+#                  after the KILL $tlevel=1 after the TCOMMIT $tlevel=1 end
+#                  a new process sees a(1)= b= c= d= a(5,*) nodes=3000, and MUPIP INTEG reports no error
+PASS : no fatal error in stage7.out
+PASS : stage7.out has TRANS2BIG 2 time(s)
+PASS : stage7.out has after the KILL $tlevel=1
+PASS : stage7.out has after the TCOMMIT $tlevel=1
+PASS : stage7.out has end
+PASS : a new process sees a(1)= b= c= d= a(5,*) nodes=3000
+PASS : MUPIP INTEG reports no error
+
+# Done
