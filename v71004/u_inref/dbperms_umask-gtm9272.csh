@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,10 +23,8 @@ CAT_EOF
 echo
 
 
-echo "## Test mumps.dat is created with same permissions as umask."
-echo "## Previously, mumps.dat would be created with umask 666 in all cases."
-set umask_init = `umask`
-echo $umask_init >& umask_init.txt
+echo "## Test MUPIP CREATE applies the umask to the permissions of mumps.dat."
+echo "## Previously, mumps.dat would be created with permissions 666 in all cases."
 set masks = "027 022 000"
 set expected = "640 644 666"
 set i = 1
@@ -39,7 +37,7 @@ foreach mask ($masks)
 	mkdir $dir
 	cd $dir
 	echo "# Show directory permissions:"
-	ls -lha .
+	stat -c "%a" .
 	echo "# Create a database"
 	$gtm_dist/mumps -r GDE exit >& gde.out
 	$gtm_dist/mupip create >& mupip.out

@@ -7,15 +7,13 @@
 # MUPIP CREATE gives database files permissions based on the umask setting of the target directory. Previously new database files always took 0666 as their permission regardless umask setting. (GTM-9272)
 # 
 
-## Test mumps.dat is created with same permissions as umask.
-## Previously, mumps.dat would be created with umask 666 in all cases.
+## Test MUPIP CREATE applies the umask to the permissions of mumps.dat.
+## Previously, mumps.dat would be created with permissions 666 in all cases.
 
 # Set umask: 027
 # Create directory: tmp027
 # Show directory permissions:
-total 8.0K
-##TEST_AWKdrwxr-x--- 2 .* .
-##TEST_AWKdrwxrwxr-x 3 .* ..
+750
 # Create a database
 # Show database permissions. Expect 640. Previously, was 666.
 640
@@ -23,9 +21,7 @@ total 8.0K
 # Set umask: 022
 # Create directory: tmp022
 # Show directory permissions:
-total 8.0K
-##TEST_AWKdrwxr-xr-x 2 .* .
-##TEST_AWKdrwxrwxr-x 4 .* ..
+755
 # Create a database
 # Show database permissions. Expect 644. Previously, was 666.
 644
@@ -33,9 +29,7 @@ total 8.0K
 # Set umask: 000
 # Create directory: tmp000
 # Show directory permissions:
-total 8.0K
-##TEST_AWKdrwxrwxrwx 2 .* .
-##TEST_AWKdrwxrwxr-x 5 .* ..
+777
 # Create a database
 # Show database permissions. Expect 666. Previously, was 666.
 666
