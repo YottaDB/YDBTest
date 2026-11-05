@@ -1,0 +1,116 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1374] $ZTRIGGER("ITEM") rejects a trigger subscript with two values next to each other        #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in Direct Mode in a new
+# process, and checks that the output has no fatal error, has the line expected, the value that
+# $ZTRIGGER() returns, and the number of triggers that $ZTRIGGER("SELECT") lists.
+
+# Stage 1 : a range whose upper end is --5
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set x=$ztrigger("item","+^x1(index=:--5) -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added with the range index=:0-5
+# With the fix   : expect Invalid subscript,
+#                  $ZTRIGGER() returns 0, and 0 trigger(s) listed
+PASS : no fatal error in stage1.out
+PASS : stage1.out has Invalid subscript
+PASS : $ZTRIGGER() returns 0
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 2 : a subscript that is only -
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x=$ztrigger("item","+^x1(-) -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added on ^x1(0)
+# With the fix   : expect Invalid subscript,
+#                  $ZTRIGGER() returns 0, and 0 trigger(s) listed
+PASS : no fatal error in stage2.out
+PASS : stage2.out has Invalid subscript
+PASS : $ZTRIGGER() returns 0
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 3 : a subscript with two decimal points
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set x=$ztrigger("item","+^x1(1.5.2) -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added on ^x1(1.52)
+# With the fix   : expect Invalid subscript,
+#                  $ZTRIGGER() returns 0, and 0 trigger(s) listed
+PASS : no fatal error in stage3.out
+PASS : stage3.out has Invalid subscript
+PASS : $ZTRIGGER() returns 0
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 4 : a number followed by a string
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set x=$ztrigger("item","+^x1(1""a"") -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added on ^x1(1"a")
+# With the fix   : expect Invalid subscript,
+#                  $ZTRIGGER() returns 0, and 0 trigger(s) listed
+PASS : no fatal error in stage4.out
+PASS : stage4.out has Invalid subscript
+PASS : $ZTRIGGER() returns 0
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 5 : the range from fuzz testing, then a ZTRIGGER of ^x1(2)
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set x=$ztrigger("item","+^x1(index=:------""H""-------------------) -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   ztrigger ^x1(2)
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added, and a Debug build failed an assert in gv_trigger.c at the
+#                  ZTRIGGER
+# With the fix   : expect Invalid subscript,
+#                  $ZTRIGGER() returns 0, and 0 trigger(s) listed
+PASS : no fatal error in stage5.out
+PASS : stage5.out has Invalid subscript
+PASS : $ZTRIGGER() returns 0
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+PASS : the last line of input ran
+
+# Stage 6 : a subscript with three values separated by ;
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   set x=$ztrigger("item","+^x1(1;2;""a"") -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added (this stage is a control)
+# With the fix   : expect Added SET and/or Non-SET trigger on ^x1 named x1#1,
+#                  $ZTRIGGER() returns 1, and 1 trigger(s) listed
+PASS : no fatal error in stage6.out
+PASS : stage6.out has Added SET and/or Non-SET trigger on ^x1 named x1#1
+PASS : $ZTRIGGER() returns 1
+PASS : $ZTRIGGER("SELECT") lists 1 trigger(s)
+PASS : the last line of input ran
+
+# Stage 7 : a range with decimal ends
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   set x=$ztrigger("item","+^x1(-.5:.5) -commands=S,ZTR -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added (this stage is a control)
+# With the fix   : expect Added SET and/or Non-SET trigger on ^x1 named x1#1,
+#                  $ZTRIGGER() returns 1, and 1 trigger(s) listed
+PASS : no fatal error in stage7.out
+PASS : stage7.out has Added SET and/or Non-SET trigger on ^x1 named x1#1
+PASS : $ZTRIGGER() returns 1
+PASS : $ZTRIGGER("SELECT") lists 1 trigger(s)
+PASS : the last line of input ran
+
+# Done
