@@ -49,6 +49,13 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# dollarstorage_rlimitdata-gtm9833 limits the data segment size (RLIMIT_DATA), which also limits private writable
+	# mappings. The address sanitizer maps terabytes of shadow memory that way, so no process can start under the limit.
+	setenv subtest_exclude_list "$subtest_exclude_list dollarstorage_rlimitdata-gtm9833"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

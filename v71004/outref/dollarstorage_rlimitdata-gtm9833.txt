@@ -7,36 +7,25 @@
 # $STORAGE reports the correct value when there is a restriction on the data segment limit (RLIMIT_DATA) of a process. Previously, $STORAGE inappropriately returned 2GiB in such a case. (GTM-9833)
 # 
 
-# Test that $STORAGE returns the correct value, based on the current RLIMIT_DATA (data segment size) limit.
-# Running  [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!'] consumes about 680kB
-# of memory. So, $STORAGE should return the specified RLIMIT_DATA limit minus about 680kB.
+# $STORAGE is the data segment size limit (RLIMIT_DATA) minus the memory YottaDB has allocated,
+# which $ZREALSTOR reports, so $STORAGE+$ZREALSTOR should equal the limit in bytes.
 
-# Case 1: Set process data segment size (RLIMIT_DATA) to 2048
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 1470873 and 1330790
-##TEST_AWKPASS: \$STORAGE=13[0-9]*
+# Case 1: Set the data segment size limit (RLIMIT_DATA) to 16384 KiB
+# Run [$gtm_dist/mumps -run %XCMD 'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!']
+# Expect 16777216. Previously, 2147483647.
+$STORAGE+$ZREALSTOR=16777216
 
-# Case 2: Set process data segment size (RLIMIT_DATA) to 4096
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 3672883 and 3323084
-##TEST_AWKPASS: \$STORAGE=34[0-9]*
+# Case 2: Set the data segment size limit (RLIMIT_DATA) to 32768 KiB
+# Run [$gtm_dist/mumps -run %XCMD 'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!']
+# Expect 33554432. Previously, 2147483647.
+$STORAGE+$ZREALSTOR=33554432
 
-# Case 3: Set process data segment size (RLIMIT_DATA) to 16384
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 16884940 and 15276851
-##TEST_AWKPASS: \$STORAGE=16[0-9]*
+# Case 3: Set the data segment size limit (RLIMIT_DATA) to 65536 KiB
+# Run [$gtm_dist/mumps -run %XCMD 'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!']
+# Expect 67108864. Previously, 2147483647.
+$STORAGE+$ZREALSTOR=67108864
 
-# Case 4: Set process data segment size (RLIMIT_DATA) to 32768
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 34501017 and 31215206
-##TEST_AWKPASS: \$STORAGE=32[0-9]*
-
-# Case 5: Set process data segment size (RLIMIT_DATA) to 65536
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 69733171 and 63091916
-##TEST_AWKPASS: \$STORAGE=66[0-9]*
-
-# Case 6: Set process data segment size (RLIMIT_DATA) to 131072
-# Run [$gtm_dist/mumps -r %XCMD 'write $STORAGE,!']
-# Expect $STORAGE to be between 140197478 and 126845337
-##TEST_AWKPASS: \$STORAGE=13[0-9]*
+# Case 4: Set the data segment size limit (RLIMIT_DATA) to 131072 KiB
+# Run [$gtm_dist/mumps -run %XCMD 'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!']
+# Expect 134217728. Previously, 2147483647.
+$STORAGE+$ZREALSTOR=134217728

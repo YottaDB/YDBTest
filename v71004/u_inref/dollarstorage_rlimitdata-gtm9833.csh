@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,28 +22,16 @@ Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_R
 CAT_EOF
 echo
 
-echo '# Test that $STORAGE returns the correct value, based on the current RLIMIT_DATA (data segment size) limit.'
-echo '# Running  [$gtm_dist/mumps -r %XCMD '"'write "'$STORAGE,!'"'] consumes about 680kB"
-echo '# of memory. So, $STORAGE should return the specified RLIMIT_DATA limit minus about 680kB.'
+echo '# $STORAGE is the data segment size limit (RLIMIT_DATA) minus the memory YottaDB has allocated,'
+echo '# which $ZREALSTOR reports, so $STORAGE+$ZREALSTOR should equal the limit in bytes.'
 
-set base = 696320	# 680kB == 680 * 1024
-set sizes = "2048 4096 16384 32768 65536 131072"
 set i = 1
-foreach size ($sizes)
+foreach size (16384 32768 65536 131072)
+	@ bytes = $size * 1024
 	echo
-	echo "# Case ${i}: Set process data segment size (RLIMIT_DATA) to $size"
-	limit datasize $size
-	@ kBsize = $size * 1024
-	@ expected = $kBsize - $base
-	set high = `echo "scale=2; $expected * 1.05" | bc | cut -d '.' -f 1`
-	set low = `echo "scale=2; $expected * 0.95" | bc | cut -d '.' -f 1`
-	echo '# Run [$gtm_dist/mumps -r %XCMD '"'write "'$STORAGE,!'"']"
-	echo '# Expect $STORAGE to be between '"$high and $low"
-	set storage = `$gtm_dist/mumps -r %XCMD 'write $STORAGE'`
-	if (($storage <= $high) && ($storage >= $low)) then
-		echo 'PASS: $STORAGE='"$storage"
-	else
-		echo 'FAIL: $STORAGE='"$storage"
-	endif
+	echo "# Case ${i}: Set the data segment size limit (RLIMIT_DATA) to $size KiB"
+	echo '# Run [$gtm_dist/mumps -run %XCMD '"'"'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!'"'"']'
+	echo "# Expect ${bytes}. Previously, 2147483647."
+	( limit datasize $size ; $gtm_dist/mumps -run %XCMD 'write "$STORAGE+$ZREALSTOR=",$storage+$zrealstor,!' )
 	@ i = $i + 1
 end
