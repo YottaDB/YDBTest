@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,10 +68,15 @@ echo "# We expect ydb_env_set to encounter error while creating YDBAIM region (d
 echo "# We see that it issues appropriate error message for YDBAIM region and returns with non-zero exit status"
 sh $gtm_tst/$tst/u_inref/ydb945.sh >& ydb945.outx
 cat ydb945.outx
-echo "# Currently ydb_env_set does not point us to the first error in this use-case. But it points us"
-echo "# to the directory containing the information. So get that real error out".
-set dir = `grep %YDBENV-F-MUPIPCREATEERR ydb945.outx | $tst_awk '{print $NF}' | sed 's,/MUPIP_YDBAIM.err,,g'`
-grep -E 'YDB-E|YDB-F' $dir/*
+echo "# ydb_env_set now reports the error GDE reported, but not the reason GDE could not write the global"
+echo "# directory. It names the files holding GDE's stdout and stderr, so get that real error out."
+set dir = `$grep %YDBENV-F-GDEERR ydb945.outx | $tst_awk '{print $NF}' | sed 's,/GDE_YDBAIM.err,,g'`
+# Guard against an empty $dir: without it, the grep below would be [grep -E ... /*] and scan the root directory
+if ("$dir" == "") then
+	echo "FAIL : no %YDBENV-F-GDEERR line naming GDE's stderr file in ydb945.outx"
+else
+	$grep -E 'YDB-E|YDB-F' $dir/*
+endif
 
 echo "# Restore write permissions on current directory"
 chmod +w .

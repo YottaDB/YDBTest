@@ -114,7 +114,9 @@ endif
 # The "olderversion" subtest uses ydbinstall to install YottaDB r1.38, r2.00 and r2.02 whose `configure` relies on `ld.gold`.
 # `gold` is no longer maintained by the binutils developers so newer distributions do not install it by default.
 # Disable the subtest on systems where `ld.gold` is not available.
-set ldgold_paths = `where ld.gold`
+# Note that "where" returns a non-zero status when it finds nothing, which would abort this script, as
+# the test framework runs it with "tcsh -e", so do not let the status of "where" escape.
+set ldgold_paths = `where ld.gold || echo ""`
 if (0 == $#ldgold_paths) then
 	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 endif

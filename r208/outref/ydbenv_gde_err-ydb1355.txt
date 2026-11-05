@@ -1,0 +1,87 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1355] ydb_env_set reports GDE command errors instead of silently skipping the bad command    #
+#--------------------------------------------------------------------------------------------------#
+
+# Stage 1 : create an environment with a ./gdedefaults that has a command with a bad qualifier
+# Command : sh ydbenv_gde_err-ydb1355.sh $cwd/stage1/ydbdir, in directory stage1 with a ./gdedefaults whose
+#           DEFAULT section has "change -region default -null_subscripts=always -bogus_qualifier=1"
+# Before the fix : exit status 0, and an environment whose DEFAULT region does not have null subscripts
+# With the fix   : exit status 238 (GLDCREATEERR) naming %GDE-E-KEYWRDBAD, and no environment
+PASS : exit status 238, which is the U238 GLDCREATEERR error
+PASS : GLDCREATEERR names %GDE-E-KEYWRDBAD
+PASS : no global directory
+PASS : no database file
+PASS : the GDE stdout file of ydb_env_set has %GDE-E-KEYWRDBAD
+
+# Stage 2 : create an environment with a valid ./gdedefaults
+# Command : sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage2 with a ./gdedefaults whose
+#           DEFAULT section has "change -region default -null_subscripts=always"
+# Expect : exit status 0, no error message, and a DEFAULT region with null subscripts
+PASS : exit status 0
+PASS : no error message was reported
+PASS : ydb_gbldir is $ydb_dir/$ydb_rel/g/yottadb.gld
+# Command : $gtm_dist/mumps -run show^ydb1355 DEFAULT
+Regions : DEFAULT YDBAIM YDBJNLF YDBOCTO
+DEFAULT : key size 1019, null subscripts ALWAYS
+
+# Stage 3 : source ydb_env_set again for the existing environment, which runs GDE to upgrade the global directory if needed
+# Command : sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage2
+# Expect : exit status 0 and no error message, i.e., no error is reported when GDE reports none
+PASS : exit status 0
+PASS : no error message was reported
+
+# Stage 4 : CreateRegion of YDBOCTO when a name it adds already exists, using $ydb_dist/gdedefaults
+# Command : remove the YDBOCTO region; map %ydbocto* to the YDBAIM region;
+#           sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage4, which has no ./gdedefaults
+# Before the fix : exit status 0, and a YDBOCTO region without the %ydbocto* name
+# With the fix   : exit status 236 (GDEERR) naming %GDE-E-OBJDUP, and the global directory unchanged
+PASS : exit status 236, which is the U236 GDEERR error
+PASS : GDEERR names %GDE-E-OBJDUP when creating region YDBOCTO
+PASS : the global directory is unchanged
+PASS : the GDE stdout file of ydb_env_set has %GDE-E-OBJDUP
+# Command : $gtm_dist/mumps -run show^ydb1355 YDBOCTO
+Regions : DEFAULT YDBAIM YDBJNLF
+YDBOCTO : does not exist
+
+# Stage 5 : CreateRegion of YDBOCTO with a ./gdedefaults whose YDBOCTO section has a command with a bad qualifier
+# Command : remove the %ydbocto* name; sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage5
+#           with a ./gdedefaults whose YDBOCTO section has "change -region ydbocto -bogus_qualifier=1"
+# Before the fix : exit status 0, and a YDBOCTO region created from $ydb_dist/gdedefaults, as ./gdedefaults was not used
+# With the fix   : exit status 236 (GDEERR) naming %GDE-E-KEYWRDBAD, and the global directory unchanged
+PASS : exit status 236, which is the U236 GDEERR error
+PASS : GDEERR names %GDE-E-KEYWRDBAD when creating region YDBOCTO
+PASS : the global directory is unchanged
+PASS : no YDBOCTO database or journal file
+# Command : $gtm_dist/mumps -run show^ydb1355 YDBOCTO
+Regions : DEFAULT YDBAIM YDBJNLF
+YDBOCTO : does not exist
+
+# Stage 6 : CreateRegion of YDBOCTO with a ./gdedefaults whose YDBOCTO section gives a key size of 500
+# Command : sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage6 with a ./gdedefaults whose
+#           YDBOCTO section has -key_size=500 in place of -key_size=1019
+# Before the fix : a YDBOCTO region with a key size of 1019, from $ydb_dist/gdedefaults
+# With the fix   : exit status 0, no error message, and a YDBOCTO region with a key size of 500
+PASS : exit status 0
+PASS : no error message was reported
+PASS : the YDBOCTO database file exists
+# Command : $gtm_dist/mumps -run show^ydb1355 YDBOCTO
+Regions : DEFAULT YDBAIM YDBJNLF YDBOCTO
+YDBOCTO : key size 500, null subscripts ALWAYS
+
+# Stage 7 : CreateRegion of YDBOCTO with a ./gdedefaults that has no "! <region> begin" and "! <region> end" lines
+# Command : remove the YDBOCTO region; sh ydbenv_gde_err-ydb1355.sh $cwd/ydbdir, in directory stage7 with
+#           a ./gdedefaults that is $ydb_dist/gdedefaults without its comment lines
+# Expect : exit status 0, no error message, and a YDBOCTO region created from $ydb_dist/gdedefaults (key size 1019)
+PASS : exit status 0
+PASS : no error message was reported
+# Command : $gtm_dist/mumps -run show^ydb1355 YDBOCTO
+Regions : DEFAULT YDBAIM YDBJNLF YDBOCTO
+YDBOCTO : key size 1019, null subscripts ALWAYS
+
+# Stage 8 : declare the errors stages 1, 4 and 5 provoked, so the framework error scan expects them
+# Command : $gtm_tst/com/check_error_exist.csh stage<N>.out <GLDCREATEERR|GDEERR> SETECODE
+PASS : GLDCREATEERR and SETECODE in stage1.out are now declared expected
+PASS : GDEERR and SETECODE in stage4.out are now declared expected
+PASS : GDEERR and SETECODE in stage5.out are now declared expected
+
+# Done

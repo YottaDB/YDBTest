@@ -110,6 +110,7 @@
 # socket_block_mnemonic-ydb1348		[nars]	Test WRITE /mnemonic to a SOCKET device accepts BLOCK only as the whole mnemonic and does not read past the BLOCK literal
 # qsubscript_env_zero-ydb1349		[nars]	Test $QSUBSCRIPT() and related functions parse a global name whose second environment part is 0 or a $CHAR()
 # zshowvtolcl_key-ydb1354		[nars]	Test ^%ZSHOWVTOLCL restores a node with a string subscript and a string value, or a subscript that contains "="
+# ydbenv_gde_err-ydb1355		[bhaskar]	Test ydb_env_set reports GDE command errors instead of silently skipping the bad command
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -214,6 +215,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zcompile_object_badchar
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_block_mnemonic-ydb1348"
 setenv subtest_list_non_replic	"$subtest_list_non_replic qsubscript_env_zero-ydb1349"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zshowvtolcl_key-ydb1354"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ydbenv_gde_err-ydb1355"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
