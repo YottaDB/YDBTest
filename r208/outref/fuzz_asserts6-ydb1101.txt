@@ -1,0 +1,49 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] A ZTSTART trigger lookup or an INTEG of a doubly allocated block does not assert        #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the commands shown in a new process on a new database, and checks that the output
+# has no fatal error and has the lines expected.
+
+# Stage 1 : two lookups of a trigger routine (ZPRINT, then ZBREAK) inside ZTSTART
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   ztstart
+#   zprint ^x#
+#   zbreak ^x#:"write 1"
+#   write "end",!
+# Before the fix : a Debug build failed an assert in trigger_source_read_andor_verify.c at the second
+#                  lookup
+# With the fix   : expect TPMIXUP 2 time(s)
+PASS : no fatal error in stage1.out
+PASS : stage1.out has TPMIXUP 2 time(s)
+PASS : the last line of input ran
+
+# Stage 2 : the same with ZPRINT, then $TEXT() (which returns an empty string)
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   ztstart
+#   zprint ^x#
+#   write $text(^x#),!
+#   write "end",!
+# Before the fix : a Debug build failed an assert in trigger_source_read_andor_verify.c at the second
+#                  lookup
+# With the fix   : expect TPMIXUP 1 time(s)
+PASS : no fatal error in stage2.out
+PASS : stage2.out has TPMIXUP 1 time(s)
+PASS : the last line of input ran
+
+# Stage 3 : MUPIP INTEG of a database whose root block of ^a points to itself (made with DSE
+# OVERWRITE)
+# Command : $gtm_dist/mupip integ -region DEFAULT
+# Before the fix : a Debug build of MUPIP failed an assert in bml_busy.c
+# With the fix   : expect DBBDBALLOC 1 time(s)
+PASS : no fatal error in stage3.out
+PASS : stage3.out has DBBDBALLOC 1 time(s)
+
+# Stage 4 : MUPIP INTEG of the same database without the DSE OVERWRITE
+# Command : $gtm_dist/mupip integ -region DEFAULT
+# Before the fix : No errors detected by integ (this stage is a control)
+# With the fix   : expect No errors detected by integ 1 time(s)
+PASS : no fatal error in stage4.out
+PASS : stage4.out has No errors detected by integ 1 time(s)
+
+# Done
