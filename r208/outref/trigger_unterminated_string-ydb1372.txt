@@ -1,0 +1,74 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1372] $ZTRIGGER("ITEM") of an item that ends inside a subscript does not read past the item   #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in a new process, and
+# checks that the output has no fatal error and has the lines expected, and the triggers that
+# $ZTRIGGER("SELECT") lists at the end.
+
+# Stage 1 : an item whose string subscript has no closing quote, after a longer item that had the
+# closing quote at the same place
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   write $ztrigger("item","+^b(""ab"") -commands=S -xecute=""write 1"""),!
+#   write $ztrigger("item","-*"),!
+#   write $ztrigger("item","+^b(""ab"),!
+#   write $ztrigger("select"),!
+# Before the fix : the third $ZTRIGGER() added +^b("ab") -commands=S -xecute="write 1", made from the
+#                  bytes of the first item
+# With the fix   : expect Invalid string,
+#                  and 0 trigger(s) listed by $ZTRIGGER("SELECT") at the end
+PASS : no fatal error in stage1.out
+PASS : stage1.out has Invalid string
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+
+# Stage 2 : an item that ends in a local variable name in a subscript, after a longer item with a
+# longer variable name at the same place
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   write $ztrigger("item","+^b(abc=1) -commands=S -xecute=""write 1"""),!
+#   write $ztrigger("item","-*"),!
+#   write $ztrigger("item","+^b(ab"),!
+#   write $ztrigger("select"),!
+# Before the fix : Empty subscript not allowed (the parse went on with the bytes of the first item)
+# With the fix   : expect Invalid variable name in subscript,
+#                  and 0 trigger(s) listed by $ZTRIGGER("SELECT") at the end
+PASS : no fatal error in stage2.out
+PASS : stage2.out has Invalid variable name in subscript
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+
+# Stage 3 : the item of stage 1 as the first item of the process
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   write $ztrigger("item","+^b(""ab"),!
+#   write $ztrigger("select"),!
+# Before the fix : Invalid string, and no trigger (this stage is a control)
+# With the fix   : expect Invalid string,
+#                  and 0 trigger(s) listed by $ZTRIGGER("SELECT") at the end
+PASS : no fatal error in stage3.out
+PASS : stage3.out has Invalid string
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+
+# Stage 4 : the first item of stage 1 alone (a valid item with a string subscript)
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   write $ztrigger("item","+^b(""ab"") -commands=S -xecute=""write 1"""),!
+#   write $ztrigger("select"),!
+# Before the fix : Added SET trigger on ^b named b#1 (this stage is a control)
+# With the fix   : expect Added SET trigger on ^b named b#1,
+#                  and 1 trigger(s) listed by $ZTRIGGER("SELECT") at the end
+PASS : no fatal error in stage4.out
+PASS : stage4.out has Added SET trigger on ^b named b#1
+PASS : $ZTRIGGER("SELECT") lists 1 trigger(s)
+
+# Stage 5 : an item whose string subscript has no closing quote, which is the first part of a longer
+# string ($EXTRACT() of a valid item), so the closing quote of the longer string follows it
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set x="+^b(""ab"") -commands=S -xecute=""write 1""",y=$extract(x,1,7)
+#   write $ztrigger("item",y),!
+#   write $ztrigger("select"),!
+# Before the fix : Invalid string, and no trigger (this stage is a control. GT.M V7.2-001, which parses the
+#                  item where it is, reported Invalid XECUTE string, from the bytes after the item)
+# With the fix   : expect Invalid string,
+#                  and 0 trigger(s) listed by $ZTRIGGER("SELECT") at the end
+PASS : no fatal error in stage5.out
+PASS : stage5.out has Invalid string
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s)
+
+# Done

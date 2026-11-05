@@ -125,6 +125,7 @@
 # next_naked-ydb1368			[nars]	Test a naked global reference after $NEXT() returns -1 uses the right node
 # trans2big_kill-ydb1369		[nars]	Test a TCOMMIT after a KILL that fails with TRANS2BIG does not damage the database
 # dse_find_key_loop-ydb1371		[nars]	Test DSE FIND -KEY reports an error for an index block that points to itself
+# trigger_unterminated_string-ydb1372	[nars]	Test $ZTRIGGER("ITEM") of an item that ends inside a subscript does not read past the item
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -244,6 +245,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ztrigger_noplusminus-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic next_naked-ydb1368"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trans2big_kill-ydb1369"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dse_find_key_loop-ydb1371"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_unterminated_string-ydb1372"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
