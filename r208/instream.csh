@@ -129,6 +129,7 @@
 # fuzz_asserts6-ydb1101			[nars]	Test a ZTSTART trigger lookup or an INTEG of a doubly allocated block does not assert in a Debug build
 # for_new_undef_node-ydb1373		[nars]	Test a FOR with a subscripted control variable leaves no node without a value
 # trigger_subs_two_values-ydb1374	[nars]	Test $ZTRIGGER("ITEM") rejects a trigger subscript with two values next to each other
+# fuzz_asserts7-ydb1101			[nars]	Test $VIEW() with a long invalid global or local name does not fail an assert in a Debug build
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -252,6 +253,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_unterminated_st
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts6-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic for_new_undef_node-ydb1373"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_subs_two_values-ydb1374"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts7-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

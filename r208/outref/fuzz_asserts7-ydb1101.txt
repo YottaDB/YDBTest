@@ -1,0 +1,47 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] $VIEW() with a long invalid global or local name does not fail an assert                #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the lines shown in Direct Mode in a new process, and checks that the output has no
+# fatal error, has the error expected once, and that the last line of input ran.
+
+# Stage 1 : $VIEW("REGION") with an invalid global name of 303 bytes
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set x="^a"_$justify("",300)_"b"
+#   write $view("REGION",x),!
+#   write "end",!
+# Before the fix : a Debug build failed an assert in format2zwr.c. A Release build issued VIEWGVN
+# With the fix   : expect VIEWGVN
+PASS : no fatal error in stage1.out
+PASS : VIEWGVN was issued once, and the next line of input ran
+
+# Stage 2 : $VIEW("REGION") with a global name that has 40 NUL bytes (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x="^a"_$translate($justify("",40)," ",$char(0))_"b"
+#   write $view("REGION",x),!
+#   write "end",!
+# Before the fix : a Debug build failed an assert in format2zwr.c. A Release build issued VIEWGVN
+# With the fix   : expect VIEWGVN
+PASS : no fatal error in stage2.out
+PASS : VIEWGVN was issued once, and the next line of input ran
+
+# Stage 3 : $VIEW("LV_REF") with an invalid local name of 301 bytes
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set y="a"_$translate($justify("",300)," ","#")
+#   write $view("LV_REF",y),!
+#   write "end",!
+# Before the fix : a Debug build failed an assert in format2zwr.c. A Release build issued VIEWLVN
+# With the fix   : expect VIEWLVN
+PASS : no fatal error in stage3.out
+PASS : VIEWLVN was issued once, and the next line of input ran
+
+# Stage 4 : $VIEW("REGION") with a short invalid global name
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   write $view("REGION","^a$"),!
+#   write "end",!
+# Before the fix : VIEWGVN in a Debug build. A Release build issued VIEWGVN (this stage is a control)
+# With the fix   : expect VIEWGVN
+PASS : no fatal error in stage4.out
+PASS : VIEWGVN was issued once, and the next line of input ran
+
+# Done
