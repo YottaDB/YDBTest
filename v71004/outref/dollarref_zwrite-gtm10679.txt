@@ -32,8 +32,8 @@ $REFERENCE=^x
 $REFERENCE=^x
 
 ## Test 4: $REFERENCE updated by OPEN
-set ^socket="socket"
-open ^socket::"SOCKET"
+# set ^socket="socket"
+# open ^socket::"SOCKET"
 # zwrite ^x
 ^x=1
 # Check $REFERENCE: Expect ^x, previously ^socket.
@@ -53,7 +53,7 @@ $REFERENCE=^x
 # Check $REFERENCE: Expect ^x, previously ^socket.
 $REFERENCE=^x
 
-## Test 7: $REFERENCE updated by NEW
+## Test 7: $REFERENCE updated by $DATA
 # if $DATA(^y)
 # zwrite ^x
 ^x=1
@@ -62,9 +62,42 @@ $REFERENCE=^x
 
 ## Test 8: Restore $REFERENCE from variable
 # if ^y
+# set restore=$REFERENCE
 # zwrite ^x
 ^x=1
-# set restore=$REFERENCE
-# if @restore
-# Check $REFERENCE: Expect ^x, previously ^y.
-$REFERENCE=^x
+# if $data(@restore)
+# Check $REFERENCE: Expect ^y, restored after ZWRITE left it at ^x.
+$REFERENCE=^y
+
+## Test 9: $REFERENCE is the last node ZWRITE displays
+# set ^a(1)=1,^a(2)=2,^a(3)=3
+# if ^y
+# zwrite ^a
+^a(1)=1
+^a(2)=2
+^a(3)=3
+# Check $REFERENCE: Expect ^a(3), previously ^y.
+$REFERENCE=^a(3)
+
+## Test 10: A naked reference after ZWRITE uses the last node ZWRITE displays
+# if ^y
+# zwrite ^a
+^a(1)=1
+^a(2)=2
+^a(3)=3
+# Check ^(1): Expect 1 from ^a(1), previously a GVNAKED error, since ^y has no subscripts.
+^(1)=1
+
+## Test 11: $REFERENCE is the last node of a ZWRITE subscript range
+# if ^y
+# zwrite ^a(1:2)
+^a(1)=1
+^a(2)=2
+# Check $REFERENCE: Expect ^a(2), previously ^y.
+$REFERENCE=^a(2)
+
+## Test 12: $REFERENCE is unchanged when ZWRITE displays no nodes
+# if ^y
+# zwrite ^a(5:9)
+# Check $REFERENCE: Expect ^y.
+$REFERENCE=^y
