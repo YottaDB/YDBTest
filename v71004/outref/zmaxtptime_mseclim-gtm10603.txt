@@ -7,115 +7,45 @@
 # $ZMAXTPTIME and its initializing environment variable, $gtm_zmaxtptime, maintain precision to milliseconds (three digits after the decimal point). Also, both ignore values exceeding a maximum of 60 seconds. Previously $ZMAXTPTIME only provided whole seconds, and, while it limited the initial value to 60 seconds, it did not limit the SET value. (GTM-10603)
 # 
 
-### Test 1: Test a variety of sub-second timeout values
-## Test $ZMAXTPTIME=0.001
-# Hang for 0 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .002 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
+### Test 1: $ZMAXTPTIME keeps millisecond precision
+## SET $ZMAXTPTIME
+# SET $ZMAXTPTIME=.001. Expect .001. Previously, whole seconds only.
+$ZMAXTPTIME=.001
+# SET $ZMAXTPTIME=.333. Expect .333. Previously, whole seconds only.
+$ZMAXTPTIME=.333
+# SET $ZMAXTPTIME=59.999. Expect 59.999. Previously, whole seconds only.
+$ZMAXTPTIME=59.999
+## Set gtm_zmaxtptime or ydb_maxtptime before process startup
+# Set the environment variable to .001. Expect .001. Previously, whole seconds only.
+$ZMAXTPTIME=.001
+# Set the environment variable to .333. Expect .333. Previously, whole seconds only.
+$ZMAXTPTIME=.333
+# Set the environment variable to 59.999. Expect 59.999. Previously, whole seconds only.
+$ZMAXTPTIME=59.999
 
-## Test gtm_maxtptime=0.001
-# Hang for 0 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .002 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
+### Test 2: $ZMAXTPTIME ignores values outside 0 to 60 seconds
+## SET $ZMAXTPTIME
+# SET $ZMAXTPTIME=.5. Expect .5.
+$ZMAXTPTIME=.5
+# SET $ZMAXTPTIME=61. Expect .5. Previously, 61.
+$ZMAXTPTIME=.5
+# SET $ZMAXTPTIME=60.001. Expect .5.
+$ZMAXTPTIME=.5
+# SET $ZMAXTPTIME=-1. Expect .5. Previously, 0.
+$ZMAXTPTIME=.5
+# SET $ZMAXTPTIME=60. Expect 60.
+$ZMAXTPTIME=60
+## Set gtm_zmaxtptime or ydb_maxtptime before process startup
+# Set the environment variable to 61. Expect 0, the default.
+$ZMAXTPTIME=0
+# Set the environment variable to 60.001. Expect 0, the default.
+$ZMAXTPTIME=0
+# Set the environment variable to 60. Expect 60.
+$ZMAXTPTIME=60
 
-## Test $ZMAXTPTIME=0.002
-# Hang for .001 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .003 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.002
-# Hang for .001 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .003 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.003
-# Hang for .002 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .004 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.003
-# Hang for .002 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .004 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.011
-# Hang for .01 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .012 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.011
-# Hang for .01 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .012 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.022
-# Hang for .021 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .023 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.022
-# Hang for .021 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .023 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.033
-# Hang for .032 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .034 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.033
-# Hang for .032 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .034 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.111
-# Hang for .11 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .112 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.111
-# Hang for .11 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .112 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.222
-# Hang for .221 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .223 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.222
-# Hang for .221 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .223 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test $ZMAXTPTIME=0.333
-# Hang for .332 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .334 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-## Test gtm_maxtptime=0.333
-# Hang for .332 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
-# Hang for .334 seconds. Expect TPTIMEOUT error.
-150377322,trans+10^gtm10603,%GTM-E-TPTIMEOUT, Transaction timeout
-
-### Test 2: Test $ZMAXTPTIME values > 60 seconds are ignored
-# Hang for 62 seconds. Expect transaction to complete without TPTIMEOUT error.
-PASS: Transaction did not timeout.
+### Test 3: A fractional $ZMAXTPTIME times out a transaction
+# SET $ZMAXTPTIME=.5 and hang for .1 seconds. Expect the transaction to commit.
+Transaction committed
+# SET $ZMAXTPTIME=.5 and hang for 2 seconds. Expect a TPTIMEOUT error. Previously, the .5 was dropped,
+# which left no timeout, so the transaction committed.
+TPTIMEOUT error

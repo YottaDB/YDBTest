@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,36 +11,40 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 gtm10603 ;
-	set timeout=$piece($zcmdline," ",1)
-	set operation=$piece($zcmdline," ",2)
-	set modifier=$piece($zcmdline," ",3)
-	; Set the timeout or $ZMAXTPTIME based on the test case
-	if "env"=timeout  do
-	. ; The timeout is set by gtm_zmaxtptime, so set the timeout accordingly
-	. set timeout=$ZTRNLNM("gtm_zmaxtptime")
-	else  do
-	. ; The timeout is set by an argument to this routine, so set the $ZMAXTPTIME accordingly
-	. set $zmaxtptime=timeout
-	; Set the time to hang in the transaction based on the test case, either more or less than the timeout
-	set:"plus"=operation hangtime=+timeout+modifier
-	set:"minus"=operation hangtime=+timeout-modifier
-	do trans^gtm10603(hangtime,operation,timeout)
 	quit
 
-trans(hangtime,modifier,timeout)
-	set $etrap="write !,$zstatus,! halt"
-	set expectTimeout=("plus"=operation)&(timeout<=60)
+setprec	; SET $ZMAXTPTIME keeps millisecond precision
+	do setone(".001",".001","whole seconds only")
+	do setone(".333",".333","whole seconds only")
+	do setone("59.999","59.999","whole seconds only")
+	quit
+
+setlimit	; SET $ZMAXTPTIME ignores values outside 0 to 60 seconds and keeps the previous value
+	do setone(".5",".5","")
+	do setone("61",".5","61")
+	do setone("60.001",".5","")
+	do setone("-1",".5","0")
+	do setone("60","60","")
+	quit
+
+setone(val,expect,prev)
+	set $zmaxtptime=val
+	write "# SET $ZMAXTPTIME="_val_". Expect "_expect_"."_$select(""=prev:"",1:" Previously, "_prev_"."),!
+	write "$ZMAXTPTIME="_$zmaxtptime,!
+	quit
+
+show	; Display the $ZMAXTPTIME the environment variable set at process startup
+	write "$ZMAXTPTIME="_$zmaxtptime,!
+	quit
+
+timing	; Run a transaction that hangs for the second argument with $ZMAXTPTIME set to the first
+	new hangtime,timeout
+	set timeout=$piece($zcmdline," ",1),hangtime=$piece($zcmdline," ",2)
+	set $etrap="write $select($zstatus[""TPTIMEOUT"":""TPTIMEOUT error"",1:$zstatus),! halt"
+	set $zmaxtptime=timeout
 	tstart ():serial
-	if 3>$trestart trestart
-
-	write "# Hang for "_hangtime_" seconds. "
-	write:expectTimeout "Expect TPTIMEOUT error."
-	write:'expectTimeout "Expect transaction to complete without TPTIMEOUT error.",!
-
+	set ^x=hangtime
 	hang hangtime
-
-	write:expectTimeout "FAIL: "
-	write:'expectTimeout "PASS: "
-	write "Transaction did not timeout.",!
-	tcommit:$tlevel
+	tcommit
+	write "Transaction committed",!
 	quit

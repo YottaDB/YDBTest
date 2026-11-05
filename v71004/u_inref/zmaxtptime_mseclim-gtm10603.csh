@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,28 +24,39 @@ echo
 
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.out
 
-echo "### Test 1: Test a variety of sub-second timeout values"
-foreach timeout ("0.001" "0.002" "0.003" "0.011" "0.022" "0.033" "0.111" "0.222" "0.333")
-	# Test transaction runtimes both over and under the timeout by adding or subtracting from it in the test routine
-	foreach setting ("var" "env")
-		if ("var" == $setting) then
-			echo '## Test $ZMAXTPTIME='"$timeout"
-			foreach modifier ("minus" "plus")
-				$gtm_dist/mumps -r gtm10603 $timeout $modifier "0.001"
-			end
-		else
-			echo '## Test gtm_maxtptime='"$timeout"
-			foreach modifier ("minus" "plus")
-				setenv gtm_zmaxtptime $timeout
-				$gtm_dist/mumps -r gtm10603 "env" $modifier "0.001"
-			end
-		endif
-		echo
-	end
+echo '### Test 1: $ZMAXTPTIME keeps millisecond precision'
+echo '## SET $ZMAXTPTIME'
+$gtm_dist/mumps -run setprec^gtm10603
+echo '## Set gtm_zmaxtptime or ydb_maxtptime before process startup'
+foreach val (".001" ".333" "59.999")
+	echo "# Set the environment variable to ${val}. Expect ${val}. Previously, whole seconds only."
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_maxtptime gtm_zmaxtptime $val
+	$gtm_dist/mumps -run show^gtm10603
 end
+echo
 
-echo '### Test 2: Test $ZMAXTPTIME values > 60 seconds are ignored'
-unsetenv gtm_zmaxtptime $timeout
-$gtm_dist/mumps -r gtm10603 61 "plus" 1
+echo '### Test 2: $ZMAXTPTIME ignores values outside 0 to 60 seconds'
+echo '## SET $ZMAXTPTIME'
+$gtm_dist/mumps -run setlimit^gtm10603
+echo '## Set gtm_zmaxtptime or ydb_maxtptime before process startup'
+foreach val ("61" "60.001" "60")
+	if ("60" == $val) then
+		set expect = "60"
+	else
+		set expect = "0, the default"
+	endif
+	echo "# Set the environment variable to ${val}. Expect ${expect}."
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_maxtptime gtm_zmaxtptime $val
+	$gtm_dist/mumps -run show^gtm10603
+end
+unsetenv ydb_maxtptime gtm_zmaxtptime
+echo
+
+echo '### Test 3: A fractional $ZMAXTPTIME times out a transaction'
+echo '# SET $ZMAXTPTIME=.5 and hang for .1 seconds. Expect the transaction to commit.'
+$gtm_dist/mumps -run timing^gtm10603 .5 .1
+echo '# SET $ZMAXTPTIME=.5 and hang for 2 seconds. Expect a TPTIMEOUT error. Previously, the .5 was dropped,'
+echo '# which left no timeout, so the transaction committed.'
+$gtm_dist/mumps -run timing^gtm10603 .5 2
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.out
