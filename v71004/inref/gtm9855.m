@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,34 +11,39 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 gtm9855 ;
-	new text
-	write "# Job child which will have a connecting LOCAL socket, parent will have a listening LOCAL socket",!
-	set ^stop=0
+	new s,result,test,za
+	write "# Job a child process that connects to a LOCAL socket on which the parent listens",!
+	set s="socket"
+	open s:(LISTEN="socket1:LOCAL":ATTACH="handle1")::"SOCKET"
 	set jmaxwait=0  ; do not wait for child process to finish in "do ^job" invocation below
 	do ^job("child^gtm9855",1,"""""")
-
-	set s="socket"
-	open s:::"SOCKET"
-	open s:(LISTEN="socket1:LOCAL":ATTACH="handle1")::"SOCKET"      ; open a listening socket
-	write "# Do READ * on the child process, but timeout before any data is received to force a READ failure",!
 	use s
 	write /wait     ; when this command returns, a connection has been accepted
-	read *result:0.001,!
-	set test=$TEST
-	close s
-	set ^stop=1
-
 	use $principal
-	write "# Check the result of READ *. Expect -1. Previously, 0 would be issued.",!
+	write !,"# Case 1: READ * times out before the child sends anything",!
+	use s
+	read *result:0
+	set test=$test
+	use $principal
+	write "# Expect READ * to return -1, as before, with $TEST=0",!
 	write "# Result: "_result_" ($TEST: "_test_")",!
+	write !,"# Case 2: The child closes its end of the connection, so READ * fails",!
+	use s
+	write "x"       ; tell the child to close its end
+	read *result:60
+	set test=$test,za=$za
+	close s
+	use $principal
+	write "# Expect READ * to return -1 (previously 0), with $TEST=1 and $ZA=9",!
+	write "# Result: "_result_" ($TEST: "_test_", $ZA: "_za_")",!
 	do wait^job     ; wait for child process to die before returning to caller
 	quit
 
 child   ;
+	new s,x
 	set s="socket"
-	open s:::"SOCKET"
 	open s:(CONNECT="socket1:LOCAL")::"SOCKET"
 	use s
-	for  quit:^stop=1  hang 0.01
-	write "Child process pid = ",$j,!
+	read *x:60      ; wait for the parent to send a character
+	close s
 	quit

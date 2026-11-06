@@ -7,8 +7,13 @@
 # READ * from a socket returns minus one (-1) if the read fails; previously it returned a zero (0) in that case, which was inconsistent with other devices and with the standard. (GTM-9855)
 # 
 
-## Run [gtm9855.m] routine to test the return value of a failed READ * command,!
-# Job child which will have a connecting LOCAL socket, parent will have a listening LOCAL socket
-# Do READ * on the child process, but timeout before any data is received to force a READ failure
-# Check the result of READ *. Expect -1. Previously, 0 would be issued.
+## Run [gtm9855.m] routine to test the return value of a failed READ * command
+# Job a child process that connects to a LOCAL socket on which the parent listens
+
+# Case 1: READ * times out before the child sends anything
+# Expect READ * to return -1, as before, with $TEST=0
 # Result: -1 ($TEST: 0)
+
+# Case 2: The child closes its end of the connection, so READ * fails
+# Expect READ * to return -1 (previously 0), with $TEST=1 and $ZA=9
+# Result: -1 ($TEST: 1, $ZA: 9)

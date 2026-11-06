@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,7 @@ echo
 
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.out
 
-echo "## Run [gtm9855.m] routine to test the return value of a failed READ * command",!
+echo "## Run [gtm9855.m] routine to test the return value of a failed READ * command"
 $gtm_dist/mumps -r gtm9855
 
 $gtm_tst/com/dbcheck.csh mumps >& dbcheck.out
