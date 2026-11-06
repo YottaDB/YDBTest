@@ -104,13 +104,15 @@ foreach file ($filelist)
 	endif
 	# Two kinds of change only add subtests:
 	# 1. An instream.csh change whose lines, other than its copyright line, are all "# <subtest> ... [author]" lines in
-	#    the subtest table or 'setenv subtest_list_<kind> "$subtest_list_<kind> <subtest>"' lines.
+	#    the subtest table, 'setenv subtest_list_<kind> "$subtest_list_<kind> <subtest>"' lines,
+	#    'setenv subtest_exclude_list "$subtest_exclude_list <subtest>"' lines (at any indentation) or other comment
+	#    lines. Removing a subtest takes a removed 'setenv subtest_list_<kind>' line, which no pattern matches.
 	# 2. A new inref file, in a test that refers to no inref files by wildcard.
 	# If u_inref or outref files of the same test change too, run just those subtests, in the loop below.
 	if ( $?test && ("" != "$basecommit") ) then
 		if (0 != `echo $filelist | tr " " "\n" | grep -cE "^$test/(u_inref|outref)/"`) then
 			if ("instream.csh" == "$filename") then
-				set nother = `git -C $gitdir diff -U0 $basecommit -- $file | grep -E '^[-+]' | grep -vE '^(---|[+][+][+])' | grep -v 'Copyright' | grep -vcE '^[+](#[[:space:]]+[^[:space:]]+[[:space:]]+\[|setenv[[:space:]]+subtest_list_[a-z_]+[[:space:]]+"[$]subtest_list_[a-z_]+ [^ ]+"$)'`
+				set nother = `git -C $gitdir diff -U0 $basecommit -- $file | grep -E '^[-+]' | grep -vE '^(---|[+][+][+])' | grep -v 'Copyright' | grep -vE '^[+](#[[:space:]]+[^[:space:]]+[[:space:]]+\[|setenv[[:space:]]+subtest_list_[a-z_]+[[:space:]]+"[$]subtest_list_[a-z_]+ [^ ]+"$)' | grep -vE '^[+][[:space:]]*setenv[[:space:]]+subtest_exclude_list[[:space:]]+"[$]subtest_exclude_list [^ ]+"$' | grep -vcE '^[-+][[:space:]]*#'`
 				@ only_adds = (0 == $nother)
 			else
 				set nadded = `git -C $gitdir diff --name-only --diff-filter=A $basecommit -- $file | wc -l`
