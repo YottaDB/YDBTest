@@ -81,11 +81,6 @@ run-tests:
 docker-ydbtest-image:
   image: docker:latest
   stage: docker-create
-  # Workaround for bug in docker 29.7:
-  # https://gitlab.com/gitlab-org/container-registry/-/work_items/2367
-  # https://github.com/moby/buildkit/issues/7007
-  variables:
-    BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
   services:
     # "docker push" runs up to 5 blob uploads at once (the dockerd default) and registry.gitlab.com
     # has been seen closing one of them mid upload. Push 2 at a time instead: fewer connections are
