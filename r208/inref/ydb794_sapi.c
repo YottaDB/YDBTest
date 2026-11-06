@@ -34,7 +34,7 @@ static void set_node(char *varname, int nsubs, char **subs)
 	YDB_LITERAL_TO_BUFFER("1", &value);
 	status = ydb_set_s(&var, nsubs, subsarray, &value);
 	if (YDB_OK != status)
-		printf("WRONG : ydb_set_s() of %s returned status %d\n", varname, status);
+		printf("FAIL : ydb_set_s() of %s returned status %d\n", varname, status);
 }
 
 /* Call ydb_node_previous_s() on varname(subs...) and check it returns expected_nsubs subscripts
@@ -59,7 +59,7 @@ static void check_previous(char *desc, char *varname, int nsubs, char **subs, in
 	status = ydb_node_previous_s(&var, nsubs, subsarray, &ret_nsubs, retsubs);
 	if (YDB_OK != status)
 	{
-		printf("WRONG : %s returned status %d (%s), expected %d subscript(s)\n", desc, status,
+		printf("FAIL : %s returned status %d (%s), expected %d subscript(s)\n", desc, status,
 			(YDB_ERR_NODEEND == status) ? "YDB_ERR_NODEEND" : "unexpected", expected_nsubs);
 		return;
 	}
@@ -82,7 +82,7 @@ static void check_previous(char *desc, char *varname, int nsubs, char **subs, in
 			return;
 		}
 	}
-	printf("WRONG : %s returned %d subscript(s) : %s, expected %d subscript(s) : %s\n", desc,
+	printf("FAIL : %s returned %d subscript(s) : %s, expected %d subscript(s) : %s\n", desc,
 		ret_nsubs, actual, expected_nsubs, expected[0]);
 }
 
@@ -95,7 +95,7 @@ int main()
 	YDB_LITERAL_TO_BUFFER("^x", &var);
 	status = ydb_delete_s(&var, 0, NULL, YDB_DEL_TREE);
 	if (YDB_OK != status)
-		printf("WRONG : ydb_delete_s() of ^x returned status %d\n", status);
+		printf("FAIL : ydb_delete_s() of ^x returned status %d\n", status);
 	set_node("^x", 0, NULL);
 	set_node("^x", 1, one);
 	set_node("^x", 2, twoone);

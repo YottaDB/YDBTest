@@ -8,7 +8,7 @@
 # interrupted that read(), and the READ waited for more input forever.
 #
 # White-box case 412 makes the READ wait for its timer to pop after each read() that returns input,
-# which makes the race happen every time. Without the fix, stage 2 prints WRONG. Stage 1 is a control
+# which makes the race happen every time. Without the fix, stage 2 prints FAIL. Stage 1 is a control
 # without the white-box case.
 
 # Stage 1 : READ x:5 from a PIPE that writes a partial line and keeps the PIPE open

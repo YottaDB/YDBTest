@@ -18,7 +18,7 @@
 # The point of checking rather than merely printing is that a reference file records whatever happened.
 # A stage that only displays two numbers passes as long as those numbers do not change, so a wrong
 # value baked into a reference file goes on matching itself forever. Naming the expectation in the
-# subtest turns a wrong value into the word WRONG, which no one skims past, and it states in the
+# subtest turns a wrong value into the word FAIL, which no one skims past, and it states in the
 # subtest itself what the stage believes the product should do.
 #
 # A separate script rather than an alias in the caller because tcsh cannot carry a "while" in an alias.
@@ -39,6 +39,6 @@ while ($#argv > 0)
 	if (("$actsize" == "$expsize") && ("$actslots" == "$expslots")) then
 		echo "$reg : Search Index Size $actsize Search Index Slots $actslots : as expected"
 	else
-		echo "$reg : Search Index Size $actsize Search Index Slots $actslots : WRONG, expected size $expsize slots $expslots"
+		echo "$reg : Search Index Size $actsize Search Index Slots $actslots : FAIL, expected size $expsize slots $expslots"
 	endif
 end

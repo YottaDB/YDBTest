@@ -20,7 +20,7 @@ echo '# evaluates the initial value. When that issues LVUNDEF, the error handlin
 echo '# Deleting the nodes above the control variable used a path through their trees left over from the'
 echo '# lookup of the initial value, which damaged the tree of the local variable.'
 echo '# Each stage runs its case in a new process. The case catches the LVUNDEF in $ETRAP, then prints PASS'
-echo '# or WRONG for each check, and the local variable with ZWRITE if it has fewer than 5 nodes.'
+echo '# or FAIL for each check, and the local variable with ZWRITE if it has fewer than 5 nodes.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1334.m .

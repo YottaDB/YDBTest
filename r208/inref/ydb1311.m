@@ -115,8 +115,8 @@ chkline(line) ; Check $QLENGTH() and $QSUBSCRIPT() of the name in one valtab or 
 chkval(desc,expr,expect) ; Check that evaluating expr returns expect without an error
 	new result,zstatus
 	do eval(expr,.result,.zstatus)
-	if ""'=zstatus write "WRONG : ",desc," issued ",$piece(zstatus,",",3,99),", expected ",$$fmt(expect),! quit
-	if result'=expect write "WRONG : ",desc," returned ",$$fmt(result),", expected ",$$fmt(expect),! quit
+	if ""'=zstatus write "FAIL : ",desc," issued ",$piece(zstatus,",",3,99),", expected ",$$fmt(expect),! quit
+	if result'=expect write "FAIL : ",desc," returned ",$$fmt(result),", expected ",$$fmt(expect),! quit
 	write "PASS : ",desc," returned ",$$fmt(result),!
 	quit
 	;
@@ -124,8 +124,8 @@ chkerr(desc,expr,bytes) ; Check that evaluating expr issues BADCHAR naming $ZCHA
 	new expect,result,zstatus
 	set expect="-E-BADCHAR, $ZCHAR("_bytes_") is not a valid character in the UTF-8 encoding form"
 	do eval(expr,.result,.zstatus)
-	if ""=zstatus write "WRONG : ",desc," returned ",$$fmt(result),", expected BADCHAR for $ZCHAR(",bytes,")",! quit
-	if zstatus'[expect write "WRONG : ",desc," issued ",$piece(zstatus,",",3,99),", expected BADCHAR for $ZCHAR(",bytes,")",! quit
+	if ""=zstatus write "FAIL : ",desc," returned ",$$fmt(result),", expected BADCHAR for $ZCHAR(",bytes,")",! quit
+	if zstatus'[expect write "FAIL : ",desc," issued ",$piece(zstatus,",",3,99),", expected BADCHAR for $ZCHAR(",bytes,")",! quit
 	write "PASS : ",desc," issued ",$piece(zstatus,",",3,99),!
 	quit
 	;

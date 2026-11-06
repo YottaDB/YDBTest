@@ -110,6 +110,6 @@ t31	; TSTART with 31 names
 check(n)	; After a TRESTART, each of v1 to v<n> must have its value from before the TSTART
 	new i,ok
 	set ok=1
-	for i=1:1:n if @("v"_i)'=1 set ok=0 write "WRONG : v",i,"=",@("v"_i)," after the restart",!
+	for i=1:1:n if @("v"_i)'=1 set ok=0 write "FAIL : v",i,"=",@("v"_i)," after the restart",!
 	write:ok "PASS : ",n," name",$select(n=1:"",1:"s"),", $TRESTART=",$trestart,", v1 to v",n," restored",!
 	quit

@@ -12,7 +12,7 @@
 #
 # Checks the timer state that YottaDB reports (as a %YDB-I-TEXT) with every %YDB-E-SYSCALL for timer_settime().
 # The process that ran the white-box test did no "fork", so the state must be that of a process using its own timer.
-# Prints one PASS or WRONG line per message, and a WRONG line if a timer_settime() error carried no timer state.
+# Prints one PASS or FAIL line per message, and a FAIL line if a timer_settime() error carried no timer state.
 
 /SYSCALL.*timer_settime\(\)/ {
 	nsyscall++
@@ -44,10 +44,10 @@
 	if ("" == wrong)
 		print "PASS : message " nmsg " : posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid(), time_to_expir is valid"
 	else
-		print "WRONG : message " nmsg " :" wrong
+		print "FAIL : message " nmsg " :" wrong
 }
 
 END {
 	if (nmsg != nsyscall)
-		print "WRONG : " (nsyscall + 0) " timer_settime() errors but " (nmsg + 0) " carried the timer state"
+		print "FAIL : " (nsyscall + 0) " timer_settime() errors but " (nmsg + 0) " carried the timer state"
 }

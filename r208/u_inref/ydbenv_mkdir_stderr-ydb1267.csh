@@ -23,7 +23,7 @@ echo
 #
 # and discarded the reason the OS gave. Each failing stage below therefore asserts that CREATEFAIL
 # names that reason. On a build without the fix for YottaDB/DB/YDB#1267, those two assertions report
-# WRONG while every other assertion here still passes, since the error itself is unchanged.
+# FAIL while every other assertion here still passes, since the error itself is unchanged.
 #
 # ydb_env_set has to be SOURCED from a POSIX shell, so every stage runs it through the sh script
 # ydbenv_mkdir_stderr-ydb1267.sh. That script's output holds absolute path names and the quoting
@@ -41,14 +41,14 @@ set act = `$tst_awk '/^Exit status = /{print $4}' stage1.out`
 if ("$act" == "237") then
 	echo "PASS : exit status 237, which is the U237 CREATEFAIL error"
 else
-	echo "WRONG : expected exit status 237, got [$act] - see stage1.out"
+	echo "FAIL : expected exit status 237, got [$act] - see stage1.out"
 endif
 if (0 != `$grep -c -E 'YDBENV-F-CREATEFAIL.*Permission denied' stage1.out`) then
 	echo "PASS : CREATEFAIL names [Permission denied]"
 else
-	echo "WRONG : CREATEFAIL does not name [Permission denied]. Without the fix it ends"
-	echo "WRONG : at [with error code 1], as in the message below. The full output is in"
-	echo "WRONG : stage1.outx if stage 5 below passed, and in stage1.out if it did not."
+	echo "FAIL : CREATEFAIL does not name [Permission denied]. Without the fix it ends"
+	echo "FAIL : at [with error code 1], as in the message below. The full output is in"
+	echo "FAIL : stage1.outx if stage 5 below passed, and in stage1.out if it did not."
 	$grep -E 'YDBENV-F-CREATEFAIL' stage1.out
 endif
 # Restore write permission so the framework can clean the subtest directory up afterwards.
@@ -63,14 +63,14 @@ set act = `$tst_awk '/^Exit status = /{print $4}' stage2.out`
 if ("$act" == "237") then
 	echo "PASS : exit status 237, which is the U237 CREATEFAIL error"
 else
-	echo "WRONG : expected exit status 237, got [$act] - see stage2.out"
+	echo "FAIL : expected exit status 237, got [$act] - see stage2.out"
 endif
 if (0 != `$grep -c -E 'YDBENV-F-CREATEFAIL.*Not a directory' stage2.out`) then
 	echo "PASS : CREATEFAIL names [Not a directory]"
 else
-	echo "WRONG : CREATEFAIL does not name [Not a directory]. Without the fix it ends"
-	echo "WRONG : at [with error code 1], as in the message below. The full output is in"
-	echo "WRONG : stage2.outx if stage 5 below passed, and in stage2.out if it did not."
+	echo "FAIL : CREATEFAIL does not name [Not a directory]. Without the fix it ends"
+	echo "FAIL : at [with error code 1], as in the message below. The full output is in"
+	echo "FAIL : stage2.outx if stage 5 below passed, and in stage2.out if it did not."
 	$grep -E 'YDBENV-F-CREATEFAIL' stage2.out
 endif
 echo
@@ -83,18 +83,18 @@ set act = `$tst_awk '/^Exit status = /{print $4}' stage3.out`
 if ("$act" == "0") then
 	echo "PASS : exit status 0"
 else
-	echo "WRONG : expected exit status 0, got [$act] - see stage3.out"
+	echo "FAIL : expected exit status 0, got [$act] - see stage3.out"
 endif
 set act = `$grep -c -E '%YDB(ENV)?-[EF]-' stage3.out`
 if ("$act" == "0") then
 	echo "PASS : no error message was reported"
 else
-	echo "WRONG : expected 0 error messages, got $act - see stage3.out"
+	echo "FAIL : expected 0 error messages, got $act - see stage3.out"
 endif
 if (-d goodtmp) then
 	echo 'PASS : $ydb_tmp was created'
 else
-	echo 'WRONG : $ydb_tmp was not created - see stage3.out'
+	echo 'FAIL : $ydb_tmp was not created - see stage3.out'
 endif
 # The $ydb_tmp caller of the "mkdir" label is the only one that passes a umask, so this is where a
 # lost "umask 0;" prefix on the "mkdir -p" command would show. The exact mode is not fixed: it is
@@ -104,7 +104,7 @@ set act = `ls -ld goodtmp |& $tst_awk '{print substr($1,6,1)}'`
 if ("$act" == "w") then
 	echo 'PASS : $ydb_tmp is group writable, so the "umask 0" prefix survived'
 else
-	echo 'WRONG : expected the group write bit set on $ydb_tmp, got ['"$act"'] - see [ls -ld goodtmp]'
+	echo 'FAIL : expected the group write bit set on $ydb_tmp, got ['"$act"'] - see [ls -ld goodtmp]'
 endif
 echo
 
@@ -114,8 +114,8 @@ set act = `cat stage1.out stage2.out stage3.out | $grep -c DEVICEWRITEONLY`
 if ("$act" == "0") then
 	echo "PASS : no DEVICEWRITEONLY error"
 else
-	echo "WRONG : got $act DEVICEWRITEONLY errors - the PIPE device that carries the mkdir stderr"
-	echo "WRONG : cannot be READ while its OPEN also specifies the writeonly deviceparameter"
+	echo "FAIL : got $act DEVICEWRITEONLY errors - the PIPE device that carries the mkdir stderr"
+	echo "FAIL : cannot be READ while its OPEN also specifies the writeonly deviceparameter"
 endif
 
 echo
@@ -134,7 +134,7 @@ foreach stage (stage1 stage2)
 	if ("$act" == "0") then
 		echo "PASS : CREATEFAIL and SETECODE in $stage.out are now declared expected"
 	else
-		echo "WRONG : check_error_exist.csh returned $act for $stage.out - see $stage-check_error.logx"
+		echo "FAIL : check_error_exist.csh returned $act for $stage.out - see $stage-check_error.logx"
 	endif
 end
 

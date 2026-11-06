@@ -25,7 +25,7 @@ set ids = (`$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR Re
 if (("$ids[1]" == "$rcvsem") && ("$ids[2]" == "$rcvshm")) then
 	echo "PASS : the instance file header still has both receive pool ids"
 else
-	echo "WRONG : the instance file header has receive pool ids [$ids], expected [$rcvsem $rcvshm]"
+	echo "FAIL : the instance file header has receive pool ids [$ids], expected [$rcvsem $rcvshm]"
 endif
 echo '# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_'$stage'b.log'
 $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_${stage}b.log >&! srcstart_${stage}b.out
@@ -38,7 +38,7 @@ $gtm_tst/com/check_error_exist.csh rcvstart_${stage}b.out REPLREQROLLBACK ENO22 
 if ((0 != $rcvstat) && (0 == $status)) then
 	echo "PASS : the receiver server did not start, with REPLREQROLLBACK"
 else
-	echo "WRONG : the receiver server start returned status $rcvstat, expected it to fail with REPLREQROLLBACK - see rcvstart_${stage}b.out"
+	echo "FAIL : the receiver server start returned status $rcvstat, expected it to fail with REPLREQROLLBACK - see rcvstart_${stage}b.out"
 	if (0 == $rcvstat) then
 		echo '# Command : $MUPIP replicate -receiver -shutdown -timeout=0'
 		$MUPIP replicate -receiver -shutdown -timeout=0 >&! rcvstop_${stage}b.out

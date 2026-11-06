@@ -28,7 +28,7 @@ gnpcli	;
 	. ; Wait for the file the fake server writes after sending them: if the $QUERY gets there first
 	. ; the bytes arrive with a read outstanding and go through cmj_read_interrupt() instead, which
 	. ; is the path srvbigframe already covers.
-	. if $$FUNC^waitforfilecreate("queued",30,1) write case_" : fake server never queued the announcement - WRONG",! halt
+	. if $$FUNC^waitforfilecreate("queued",30,1) write case_" : fake server never queued the announcement - FAIL",! halt
 	. set q=$query(^etpr)
 	use $principal write case_" : accepted the reply, $QUERY returned "_$zwrite(q),!
 	halt
@@ -46,5 +46,5 @@ trap	; the client rejecting a reply it cannot parse is a normal outcome here, no
 	; announcement: cmj_read_interrupt() for srvbigframe, cmj_read_start() for srvidleframe.
 	if $zfind(v,"BADSRVRNETMSG") write case_" : rejected with BADSRVRNETMSG",!
 	else  if ((case="srvbigframe")!(case="srvidleframe")),$zfind(v,"GVQUERYFAIL") write case_" : the operation failed rather than hanging",!
-	else  write case_" : UNEXPECTED, "_$zpiece(v,",",3)_" - WRONG",!
+	else  write case_" : UNEXPECTED, "_$zpiece(v,",",3)_" - FAIL",!
 	halt

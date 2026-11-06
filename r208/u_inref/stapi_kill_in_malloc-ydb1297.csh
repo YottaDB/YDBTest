@@ -25,7 +25,7 @@ echo "# core nor a YDB_FATAL_ERROR file."
 echo "#"
 echo "# The program below has a main thread that makes no YottaDB call and loops on malloc() and free(), and"
 echo "# a worker thread that makes the YottaDB calls. Without the fix, step 2 of each stage usually prints"
-echo "# WRONG. A Debug build dumps the core without forking in SimpleThreadAPI mode, so the subtest runs"
+echo "# FAIL. A Debug build dumps the core without forking in SimpleThreadAPI mode, so the subtest runs"
 echo "# only with a pro build."
 echo
 
@@ -33,7 +33,7 @@ set file = ydb1297_stapi_kill
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/inref/$file.c
 $gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $file.map
 if ($status) then
-	echo "WRONG : linking $file failed. The linker output follows."
+	echo "FAIL : linking $file failed. The linker output follows."
 	cat $file.map
 	exit 1
 endif
@@ -55,7 +55,7 @@ foreach mode (busy idle)
 	set pid = `cat $mode.pid`
 	$gtm_tst/com/wait_for_log.csh -log $mode.out -message "ready" -duration 120
 	if ($status) then
-		echo "WRONG : the program did not print ready. Its output follows."
+		echo "FAIL : the program did not print ready. Its output follows."
 		cat $mode.out
 	else
 		echo "PASS : the program is ready"
@@ -76,7 +76,7 @@ foreach mode (busy idle)
 	if ($status) then
 		echo "PASS : the process died"
 	else
-		echo "WRONG : the process is still alive 60 seconds after the signal"
+		echo "FAIL : the process is still alive 60 seconds after the signal"
 		kill -9 $pid
 		$gtm_tst/com/wait_for_proc_to_die.csh $pid >& wait_for_proc_to_die_$mode.logx
 	endif
@@ -86,7 +86,7 @@ foreach mode (busy idle)
 	echo "#          expect a core file, a YDB_FATAL_ERROR file and a %YDB-F-KILLBYSIGUINFO message"
 	ls -1 core* >& /dev/null
 	if ($status) then
-		echo "WRONG : no core file"
+		echo "FAIL : no core file"
 	else
 		echo "PASS : core file found"
 		foreach corename (core*)
@@ -95,7 +95,7 @@ foreach mode (busy idle)
 	endif
 	ls -1 YDB_FATAL_ERROR* >& /dev/null
 	if ($status) then
-		echo "WRONG : no YDB_FATAL_ERROR file"
+		echo "FAIL : no YDB_FATAL_ERROR file"
 	else
 		echo "PASS : YDB_FATAL_ERROR file found"
 		foreach fatalname (YDB_FATAL_ERROR*)
@@ -105,7 +105,7 @@ foreach mode (busy idle)
 	# The message holds the pid and uid, so keep the check's output out of the reference file
 	$gtm_tst/com/check_error_exist.csh $mode.out KILLBYSIGUINFO >& check_error_exist_$mode.logx
 	if ($status) then
-		echo "WRONG : no %YDB-F-KILLBYSIGUINFO message. The process output follows."
+		echo "FAIL : no %YDB-F-KILLBYSIGUINFO message. The process output follows."
 		cat $mode.out
 	else
 		echo "PASS : %YDB-F-KILLBYSIGUINFO message seen"

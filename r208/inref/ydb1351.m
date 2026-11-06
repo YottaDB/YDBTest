@@ -10,7 +10,7 @@
 ;#								#
 ;#################################################################
 ; Helper M program used by the r208/zpeek_int8-ydb1351 subtest. Each label calls $$^%PEEKBYNAME() (and so $ZPEEK()) on
-; the 8-byte field node_local.nbb with one format at many stringpool offsets, and prints PASS or WRONG.
+; the 8-byte field node_local.nbb with one format at many stringpool offsets, and prints PASS or FAIL.
 ;
 fmtU	; The "U" (unsigned integer) format
 	do sweep("U")
@@ -21,9 +21,9 @@ fmtI	; The "I" (signed integer) format
 sweep(fmt)	; Vary the stringpool free space with a padding string of k bytes, then peek 200 times for each k
 	new expect,i,k,pad,x
 	set expect=$$^%PEEKBYNAME("node_local.nbb","DEFAULT",fmt)
-	if 11>$length(expect) write "WRONG : node_local.nbb is [",expect,"], expected a value of more than 10 digits",! quit
+	if 11>$length(expect) write "FAIL : node_local.nbb is [",expect,"], expected a value of more than 10 digits",! quit
 	set x=expect
 	for k=1:1:500 quit:x'=expect  set pad=$justify(k,k) for i=1:1:200 set x=$$^%PEEKBYNAME("node_local.nbb","DEFAULT",fmt) quit:x'=expect
-	if x'=expect write "WRONG : format ",fmt," returned [",x,"] at k=",k," i=",i,", expected ",expect,! quit
+	if x'=expect write "FAIL : format ",fmt," returned [",x,"] at k=",k," i=",i,", expected ",expect,! quit
 	write "PASS : format ",fmt," returned ",expect," at every stringpool offset",!
 	quit

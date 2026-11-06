@@ -21,7 +21,7 @@ $gtm_tst/com/ipcs -m | $tst_awk '{print $2}' | $grep -qw "$rcvshm"
 if (0 != $status) then
 	echo "PASS : the receive pool shared memory left behind no longer exists"
 else
-	echo "WRONG : receive pool shared memory $rcvshm still exists"
+	echo "FAIL : receive pool shared memory $rcvshm still exists"
 endif
 echo '# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_'$stage'c.log'
 $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_${stage}c.log >&! srcstart_${stage}c.out
@@ -32,7 +32,7 @@ set rcvstat = $status
 if ((0 == $srcstat) && (0 == $rcvstat)) then
 	echo "PASS : the passive source server and a receiver server started"
 else
-	echo "WRONG : the passive source server start returned $srcstat and the receiver server start $rcvstat, expected 0 and 0 - see srcstart_${stage}c.out and rcvstart_${stage}c.out"
+	echo "FAIL : the passive source server start returned $srcstat and the receiver server start $rcvstat, expected 0 and 0 - see srcstart_${stage}c.out and rcvstart_${stage}c.out"
 endif
 # Remove the shared memory left behind if it still exists (reported above), and check below that the normal shutdown
 # removes the receive pool that the receiver server uses now

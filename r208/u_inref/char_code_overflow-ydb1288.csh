@@ -21,7 +21,7 @@ echo '# stayed positive, so it returned the number modulo 2**32: $C(4294967361) 
 echo '# -pieces=4294967298 as -pieces=2. When the value went negative it stopped, and a debug build failed'
 echo '# an assert, for example on $C(2147483713).'
 echo '#'
-echo '# Without the fix, the checks below of numbers that wrap to a valid code print WRONG, and on a debug'
+echo '# Without the fix, the checks below of numbers that wrap to a valid code print FAIL, and on a debug'
 echo '# build the checks of numbers that go negative, such as 2147483713, fail an assert instead.'
 echo
 

@@ -8,7 +8,7 @@
 # -pieces=4294967298 as -pieces=2. When the value went negative it stopped, and a debug build failed
 # an assert, for example on $C(2147483713).
 #
-# Without the fix, the checks below of numbers that wrap to a valid code print WRONG, and on a debug
+# Without the fix, the checks below of numbers that wrap to a valid code print FAIL, and on a debug
 # build the checks of numbers that go negative, such as 2147483713, fail an assert instead.
 
 # Stage 1 : $ZWRITE(str,1) of a $C() or $ZCH() with an argument too large for an int, and controls

@@ -8,7 +8,7 @@
 # call in the child ran the deferred timer handler, which restarted the system timer with the
 # parent's timer id, and failed with %YDB-E-SYSCALL from timer_settime() (ENO22).
 #
-# Without the fix, stage 2 prints WRONG. Stage 1 is a control that forks before any timer is due.
+# Without the fix, stage 2 prints FAIL. Stage 1 is a control that forks before any timer is due.
 
 # Create a database with regions DEFAULT and AREG (^a maps to AREG)
 # Command : $MUPIP set -flush_time=100 -region "*"

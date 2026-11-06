@@ -38,7 +38,7 @@ if ($status) then
 	cat dbcreate.out
 endif
 if (! -e gtmcrypt.cfg) then
-	echo "WRONG : gtmcrypt.cfg was not created"
+	echo "FAIL : gtmcrypt.cfg was not created"
 endif
 
 source $gtm_tst/com/portno_acquire.csh >>& portno.out	# sets the portno environment variable used by ydb1313.m
@@ -47,14 +47,14 @@ echo
 echo '# Stage 1 : WRITE /TLS("client",1) to a peer that accepts the TCP connection and never answers the handshake'
 echo '# Command : $gtm_dist/mumps -run clienttimeout^ydb1313'
 echo '# Before the fix, WRITE /TLS returned only when the peer gave up, after about 15 seconds, and the second'
-echo '# line below was a WRONG line that reported the time the client handshake took'
+echo '# line below was a FAIL line that reported the time the client handshake took'
 $gtm_dist/mumps -run clienttimeout^ydb1313
 echo
 
 echo '# Stage 2 : WRITE /TLS("server",1) with a TCP client that never starts the handshake'
 echo '# Command : $gtm_dist/mumps -run servertimeout^ydb1313'
 echo '# Before the fix, WRITE /TLS returned only when the peer gave up, after about 15 seconds, and the second'
-echo '# line below was a WRONG line that reported the time the server handshake took'
+echo '# line below was a FAIL line that reported the time the server handshake took'
 $gtm_dist/mumps -run servertimeout^ydb1313
 echo
 
@@ -73,7 +73,7 @@ echo
 echo "# Check that no JOBbed peer reported an error"
 foreach file (*.mje)
 	if (! -z $file) then
-		echo "WRONG : $file is not empty. Its contents follow."
+		echo "FAIL : $file is not empty. Its contents follow."
 		cat $file
 	endif
 end

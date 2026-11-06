@@ -79,7 +79,7 @@ static int check(char *page_end, char *zwr, char *expect)
 	status = ydb_zwr2str_s(&src, &dst);
 	if (YDB_OK != status)
 	{
-		printf("WRONG : ydb_zwr2str_s() of %s returned status %d, expected YDB_OK\n", zwr, status);
+		printf("FAIL : ydb_zwr2str_s() of %s returned status %d, expected YDB_OK\n", zwr, status);
 		return 1;
 	}
 	if ((dst.len_used == strlen(expect)) && !memcmp(out, expect, dst.len_used))
@@ -87,7 +87,7 @@ static int check(char *page_end, char *zwr, char *expect)
 		printf("PASS : ydb_zwr2str_s() of %s returned [%.*s]\n", zwr, (int)dst.len_used, out);
 		return 0;
 	}
-	printf("WRONG : ydb_zwr2str_s() of %s returned [%.*s], expected [%s]\n", zwr, (int)dst.len_used, out, expect);
+	printf("FAIL : ydb_zwr2str_s() of %s returned [%.*s], expected [%s]\n", zwr, (int)dst.len_used, out, expect);
 	return 1;
 }
 
@@ -118,7 +118,7 @@ int main(void)
 			exit(check(pages + pagesize, cases[i].zwr, cases[i].expect));
 		/* check() exits with 0 or 1, so any other outcome means ydb_zwr2str_s() did not return */
 		if ((pid != waitpid(pid, &stat, 0)) || !WIFEXITED(stat) || (1 < WEXITSTATUS(stat)))
-			printf("WRONG : ydb_zwr2str_s() of %s did not return; its process ended with wait status 0x%x\n",
+			printf("FAIL : ydb_zwr2str_s() of %s did not return; its process ended with wait status 0x%x\n",
 				cases[i].zwr, stat);
 	}
 	return 0;

@@ -28,7 +28,7 @@ try(name,valid)
 	do compile(name)
 	if valid,""=err write "PASS : JOB parameter ",name," is accepted",! quit
 	if 'valid,err["JOBPARUNK" write "PASS : JOB parameter ",name," is rejected with JOBPARUNK",! quit
-	write "WRONG : JOB parameter ",name," gave error [",err,"] but ",$select(valid:"no error",1:"JOBPARUNK")," was expected",!
+	write "FAIL : JOB parameter ",name," gave error [",err,"] but ",$select(valid:"no error",1:"JOBPARUNK")," was expected",!
 	quit
 
 compile(name)	; Sets err to the mnemonic of the error that compiling a JOB command with job parameter name gives, if any

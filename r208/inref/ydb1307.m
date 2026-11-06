@@ -62,9 +62,9 @@ random	; Compare $QUERY() of local x with $QUERY() of global ^x holding the same
 	. . set ql=$query(@("x"_ref)),qg=$query(@("^x"_ref)),tot=tot+1
 	. . quit:$select(ql="":qg="",1:("^"_ql)=qg)
 	. . set bad=bad+1
-	. . write:bad<6 "WRONG : $query(x",ref,") is ",ql," but $query(^x",ref,") is ",qg,!
+	. . write:bad<6 "FAIL : $query(x",ref,") is ",ql," but $query(^x",ref,") is ",qg,!
 	if 'bad write "PASS : $query() of all ",tot," references matched the global",!
-	else  write "WRONG : ",bad," of ",tot," references did not match the global",!
+	else  write "FAIL : ",bad," of ",tot," references did not match the global",!
 	quit
 
 rand(m)	; Linear congruential generator, so that every run builds the same trees
@@ -73,5 +73,5 @@ rand(m)	; Linear congruential generator, so that every run builds the same trees
 
 check(actual,expected,what)
 	if actual=expected write "PASS : ",what," is ",actual,!
-	else  write "WRONG : ",what," is ",actual," but expected ",expected,!
+	else  write "FAIL : ",what," is ",actual," but expected ",expected,!
 	quit

@@ -63,11 +63,11 @@ zs(n)	; Return n "z" characters
 check(cut,outa,outb)	; Return 1 if both loads rejected "cut" as the only failed record and gave the same output
 	new i,ok
 	set ok=1
-	if $$failed(outa)'=1 set ok=0 write "WRONG : ",cut," after the full record : expected 1 failed record, got output:",! do show(outa)
-	if $$failed(outb)'=1 set ok=0 write "WRONG : ",cut," after filler : expected 1 failed record, got output:",! do show(outb)
+	if $$failed(outa)'=1 set ok=0 write "FAIL : ",cut," after the full record : expected 1 failed record, got output:",! do show(outa)
+	if $$failed(outb)'=1 set ok=0 write "FAIL : ",cut," after filler : expected 1 failed record, got output:",! do show(outb)
 	if ok,outa'=outb do
 	. set ok=0
-	. write "WRONG : ",cut," : the output depends on the bytes after it. Lines that differ:",!
+	. write "FAIL : ",cut," : the output depends on the bytes after it. Lines that differ:",!
 	. for i=1:1:$length(outa,$char(10)) if $piece(outa,$char(10),i)'=$piece(outb,$char(10),i) do
 	. . write "    after the full record : ",$piece(outa,$char(10),i),!
 	. . write "    after filler          : ",$piece(outb,$char(10),i),!
@@ -111,7 +111,7 @@ noparen	; Entry point: load each record at label "noparenrecs" on its own
 	for i=1:1 set rec=$piece($text(noparenrecs+i),";;",2) quit:""=rec  do
 	. set out=$$loadrecs(rec)
 	. if 1=$$failed(out) write "PASS : ",rec," is the only failed record",! quit
-	. write "WRONG : ",rec," : expected 1 failed record, got output:",!
+	. write "FAIL : ",rec," : expected 1 failed record, got output:",!
 	. do show(out)
 	quit
 	;
@@ -119,7 +119,7 @@ emptykey	; Entry point: load the record "=1" on its own
 	new out
 	set out=$$loadrecs("=1")
 	if (1=$$failed(out))&(out["%YDB-E-NOTGBL") write "PASS : =1 is the only failed record, and is reported as NOTGBL",! quit
-	write "WRONG : =1 : expected 1 failed record, reported as NOTGBL, got output:",!
+	write "FAIL : =1 : expected 1 failed record, reported as NOTGBL, got output:",!
 	do show(out)
 	quit
 	;
@@ -140,7 +140,7 @@ replcheck	; Entry point: check INSTB holds ^good=1, and neither ^zebad nor ^afte
 	new i
 	for i=1:1:300 quit:$data(^good)  hang 1
 	if (1=$get(^good))&'$data(^zebad)&'$data(^after) write "PASS : INSTB holds ^good=1, and neither ^zebad nor ^after",! quit
-	write "WRONG : expected INSTB to hold ^good=1, and neither ^zebad nor ^after. It holds:",!
+	write "FAIL : expected INSTB to hold ^good=1, and neither ^zebad nor ^after. It holds:",!
 	zwrite:$data(^good) ^good  zwrite:$data(^zebad) ^zebad  zwrite:$data(^after) ^after
 	quit
 	;

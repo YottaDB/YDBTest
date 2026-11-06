@@ -60,7 +60,7 @@ chk(expr,expected)	; evaluate EXPR and compare its result with EXPECTED
 	set $etrap="set v=$piece($piece($zstatus,"","",3),""-"",3),$ecode="""" quit:$quit v  quit"
 	set v=$$eval(expr)
 	if v=expected write "PASS : ",expr," is ",v,!
-	else  write "WRONG : ",expr," is ",v,", expected ",expected,!
+	else  write "FAIL : ",expr," is ",v,", expected ",expected,!
 	quit
 eval(expr)	; EXPR's value, with the $ZYSQLNULL value shown as <$ZYSQLNULL>
 	new v

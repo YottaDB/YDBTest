@@ -80,10 +80,10 @@ foreach label (settrig ztrignone ztrigtrig killtrig ztrigitem trigerr intp)
 	timeout 60 $gtm_dist/mumps -run $label^ydb1342 >& $label.out
 	set stat = $status
 	if (124 == $stat) then
-		echo "WRONG : the process did not finish within 60 seconds. Its last lines of output follow."
+		echo "FAIL : the process did not finish within 60 seconds. Its last lines of output follow."
 		tail -5 $label.out
 	else if (0 != $stat) then
-		echo "WRONG : exit status $stat. Output follows."
+		echo "FAIL : exit status $stat. Output follows."
 		cat $label.out
 	else
 		cat $label.out
@@ -105,7 +105,7 @@ set ndump = `ls | grep -c '_JOBEXAM.ZSHOW_DMP_'`
 if ((0 == $stat) && (1 == $ndump)) then
 	echo "PASS : exit status 0 and 1 *_JOBEXAM.ZSHOW_DMP_* file"
 else
-	echo "WRONG : exit status $stat and $ndump *_JOBEXAM.ZSHOW_DMP_* file(s). Output follows."
+	echo "FAIL : exit status $stat and $ndump *_JOBEXAM.ZSHOW_DMP_* file(s). Output follows."
 	cat dflt.out
 endif
 if (1000 < $ndump) then
@@ -141,7 +141,7 @@ set nfatal = `$grep -c -- "-F-" dmode.out`
 if ((0 == $stat) && (1 == $ndump) && (1 == $nafter) && (0 == $nfatal)) then
 	echo "PASS : exit status 0, the line after the TCOMMIT on the principal device, no fatal error and 1 dump file"
 else
-	echo "WRONG : exit status $stat, the line after the TCOMMIT $nafter time(s) on the principal device, $nfatal fatal error(s) and $ndump dump file(s) - see dmode.out"
+	echo "FAIL : exit status $stat, the line after the TCOMMIT $nafter time(s) on the principal device, $nfatal fatal error(s) and $ndump dump file(s) - see dmode.out"
 endif
 if (1000 < $ndump) then
 	# Do not keep thousands of dump files in the test output directory

@@ -43,12 +43,12 @@ ydb1195 ;
 	. set data(handle)=$get(data(handle))_data
 	. set:device["Connection reset" nreset=nreset+1
 	write "# Expect write /wait(1) to return with $key="""" after both connections are reset, within ",maxiter," iterations",!
-	write $select(done:"$key="""" after both connections were reset : as expected",1:"WRONG : nreset="_nreset_" after "_maxiter_" iterations, expected 2 and then $key="""""),!
+	write $select(done:"$key="""" after both connections were reset : as expected",1:"FAIL : nreset="_nreset_" after "_maxiter_" iterations, expected 2 and then $key="""""),!
 	write "# Expect 2 CONNECT events",!
-	write $select(2=nconnect:"2 CONNECT events : as expected",1:"WRONG : "_nconnect_" CONNECT events, expected 2"),!
+	write $select(2=nconnect:"2 CONNECT events : as expected",1:"FAIL : "_nconnect_" CONNECT events, expected 2"),!
 	write "# Expect the line each child job wrote to be read in full from one of the connections",!
 	set handle="" for  set handle=$order(data(handle)) quit:""=handle  set got(data(handle))=""
-	for i=1:1:2 write $select($data(got(expect(i))):"Line from child job "_i_" : as expected",1:"WRONG : line ["_expect(i)_"] from child job "_i_" not read"),!
+	for i=1:1:2 write $select($data(got(expect(i))):"Line from child job "_i_" : as expected",1:"FAIL : line ["_expect(i)_"] from child job "_i_" not read"),!
 	quit
 
 child(port) ;

@@ -59,7 +59,7 @@ foreach label (quote equal other random)
 	case "random":
 		echo '# Stage 4 : 1000 times, ZSHOW "V" of up to 4 random nodes of a local variable, with names and values'
 		echo '#           made of =, ", (, ), comma, a, 1 and space, then restore them'
-		echo '# Before the fix : "Could not extract a valid key" and WRONG within the first few times'
+		echo '# Before the fix : "Could not extract a valid key" and FAIL within the first few times'
 		echo '# With the fix   : expect $$^%ZSHOWVTOLCL to return 1 and ZSHOW "V" after the restore to match'
 		echo '#                  ZSHOW "V" before it every time'
 		breaksw

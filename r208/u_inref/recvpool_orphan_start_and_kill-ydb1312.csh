@@ -33,7 +33,7 @@ set rcvsem = `$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR 
 if (("" != "$rcvpid") && ("" != "$updpid") && ("INVALID" != "$rcvshm") && ("INVALID" != "$rcvsem")) then
 	echo "PASS : the receiver server and update process are running and the receive pool exists"
 else
-	echo "WRONG : receiver server [$rcvpid] update process [$updpid] receive pool shm [$rcvshm] sem [$rcvsem]"
+	echo "FAIL : receiver server [$rcvpid] update process [$updpid] receive pool shm [$rcvshm] sem [$rcvsem]"
 endif
 echo '# Command : $gtm_tst/com/kill9.csh <receiver server pid> ; $gtm_tst/com/kill9.csh <update process pid>'
 $gtm_tst/com/kill9.csh $rcvpid >&! kill9_rcv_$stage.out

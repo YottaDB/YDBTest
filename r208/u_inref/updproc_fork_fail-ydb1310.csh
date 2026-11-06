@@ -46,7 +46,7 @@ set stat3 = $status
 if ((0 == $stat1) && (0 == $stat2) && (0 == $stat3)) then
 	echo "PASS : the instance file, replication and the passive source server are in place"
 else
-	echo "WRONG : the replication setup failed - see instcreate.out, setrepl.out and srcstart.out"
+	echo "FAIL : the replication setup failed - see instcreate.out, setrepl.out and srcstart.out"
 	cat instcreate.out setrepl.out srcstart.out
 endif
 echo '# Command : compile and link ydb1310_forkfail.c into libydb1310_forkfail'
@@ -55,7 +55,7 @@ $gt_ld_shl_linker ${gt_ld_option_output}libydb1310_forkfail${gt_ld_shl_suffix} $
 if (-e libydb1310_forkfail${gt_ld_shl_suffix}) then
 	echo "PASS : libydb1310_forkfail was built"
 else
-	echo "WRONG : libydb1310_forkfail was not built - see forkfail_cc.out and forkfail_ld.out"
+	echo "FAIL : libydb1310_forkfail was not built - see forkfail_cc.out and forkfail_ld.out"
 	cat forkfail_cc.out forkfail_ld.out
 endif
 echo
@@ -76,26 +76,26 @@ $grep -q 'Receiver server exiting' rcv.logx
 if (0 == $status) then
 	echo "PASS : the receiver server exited"
 else
-	echo "WRONG : the receiver server did not exit within 120 seconds - see rcv.logx"
+	echo "FAIL : the receiver server did not exit within 120 seconds - see rcv.logx"
 endif
 $grep -q '%YDB-I-TEXT, Could not fork update process' rcv.logx
 if (0 == $status) then
 	echo "PASS : the receiver server logged that it could not fork the update process"
 else
-	echo "WRONG : no 'Could not fork update process' in rcv.logx"
+	echo "FAIL : no 'Could not fork update process' in rcv.logx"
 endif
 $grep -q ' : %YDB-E-REPLERR, Too many failed attempts to fork Update Process. Aborting...$' rcv.logx
 if (0 == $status) then
 	echo "PASS : the receiver server logged REPLERR with its complete text"
 else
-	echo "WRONG : no complete REPLERR in rcv.logx - its last lines follow"
+	echo "FAIL : no complete REPLERR in rcv.logx - its last lines follow"
 	tail -n 3 rcv.logx
 endif
 ls -1 core* >& /dev/null
 if (0 != $status) then
 	echo "PASS : no core file"
 else
-	echo "WRONG : the receiver server dumped a core"
+	echo "FAIL : the receiver server dumped a core"
 	foreach corename (core*)
 		mv $corename hidden_unexpected_core_$corename
 	end
@@ -111,7 +111,7 @@ $grep -q 'Receive pool shared memory removed' rcvstop.out
 if (0 == $status) then
 	echo "PASS : the receive pool was removed"
 else
-	echo "WRONG : the receive pool was not removed - see rcvstop.out"
+	echo "FAIL : the receive pool was not removed - see rcvstop.out"
 	cat rcvstop.out
 endif
 echo '# Command : $MUPIP replicate -source -shutdown -timeout=0'
@@ -119,7 +119,7 @@ $MUPIP replicate -source -shutdown -timeout=0 >&! srcstop.out
 if (0 == $status) then
 	echo "PASS : the passive source server shut down"
 else
-	echo "WRONG : could not shut down the passive source server - see srcstop.out"
+	echo "FAIL : could not shut down the passive source server - see srcstop.out"
 	cat srcstop.out
 endif
 $gtm_tst/com/portno_release.csh
@@ -127,6 +127,6 @@ $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 if (0 == $status) then
 	echo "PASS : dbcheck.csh found no integrity errors"
 else
-	echo "WRONG : dbcheck.csh failed - see dbcheck.out"
+	echo "FAIL : dbcheck.csh failed - see dbcheck.out"
 	cat dbcheck.out
 endif

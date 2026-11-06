@@ -1,4 +1,4 @@
 set d=1
 tstart (d)  new  set d=2  trestart:$trestart<2
-write $select((1=$trestart)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," d=",$get(d),!
+write $select((1=$trestart)&(1=$get(d)):"PASS",1:"FAIL")," : $TRESTART=",$trestart," d=",$get(d),!
 tcommit

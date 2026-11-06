@@ -30,5 +30,5 @@ set actsisl = `grep -o "SISL= *[A-Za-z0-9]*" gdecheck.out | head -1 | sed 's/SIS
 if (("$actsidx" == "$expsidx") && ("$actsisl" == "$expsisl")) then
 	echo "SIDX=$actsidx SISL=$actsisl : as expected"
 else
-	echo "SIDX=$actsidx SISL=$actsisl : WRONG, expected SIDX=$expsidx SISL=$expsisl"
+	echo "SIDX=$actsidx SISL=$actsisl : FAIL, expected SIDX=$expsidx SISL=$expsisl"
 endif

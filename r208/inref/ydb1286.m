@@ -110,9 +110,9 @@ random(utf8) ; Build random ZWRITE format strings from tokens, and check $ZWRITE
 	. . set expect=$get(valid(k))
 	. . quit:r=expect
 	. . set wrong=wrong+1
-	. . write "WRONG : $zwrite(p,1) with p=",p,", the first ",k," bytes of ",z," returned ",$zwrite(r)
+	. . write "FAIL : $zwrite(p,1) with p=",p,", the first ",k," bytes of ",z," returned ",$zwrite(r)
 	. . write ", expected ",$zwrite(expect),!
-	if wrong write "WRONG : ",wrong," prefix(es) wrong out of ",cnt," checked before stopping",!
+	if wrong write "FAIL : ",wrong," prefix(es) wrong out of ",cnt," checked before stopping",!
 	else  write "PASS : every prefix of ",nstr," random ZWRITE format strings returned its expected value",!
 	quit
 	;
@@ -175,7 +175,7 @@ select()	; Return the trigger definitions $ztrigger("select") writes, without it
 ischar(c) ; Return 1 if the code point c is a character, that is neither a surrogate nor a noncharacter
 	quit '(((55296'>c)&(57343'<c))!((64976'>c)&(65007'<c))!(65533<(c#65536)))
 	;
-chk(desc,actual,expect) ; Print PASS if actual is expect, and WRONG otherwise
+chk(desc,actual,expect) ; Print PASS if actual is expect, and FAIL otherwise
 	if actual=expect write "PASS : ",desc," returned ",$zwrite(actual),! quit
-	write "WRONG : ",desc," returned ",$zwrite(actual),", expected ",$zwrite(expect),!
+	write "FAIL : ",desc," returned ",$zwrite(actual),", expected ",$zwrite(expect),!
 	quit

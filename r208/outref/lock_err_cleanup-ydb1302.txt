@@ -8,7 +8,7 @@
 # did not count it, and returned success without acquiring it. The simpleAPI error handler also left
 # lks_this_cmd set, so the next simpleAPI lock call issued BADLOCKNEST.
 #
-# Without the fix, stages 1 to 3 and 5 each print WRONG for the lock taken after the error: a timed LOCK +
+# Without the fix, stages 1 to 3 and 5 each print FAIL for the lock taken after the error: a timed LOCK +
 # sets $TEST to 1, and an untimed one returns at once, without acquiring the lock (even if another process
 # holds it), and a simpleAPI lock call returns BADLOCKNEST, or YDB_OK without acquiring the lock.
 

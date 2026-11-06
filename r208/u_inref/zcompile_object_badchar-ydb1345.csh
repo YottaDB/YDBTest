@@ -63,7 +63,7 @@ foreach stage (1 2 3)
 	if ("" == "$objs") then
 		echo "PASS: no object file was produced"
 	else
-		echo "WRONG: $objs was produced"
+		echo "FAIL : $objs was produced"
 		rm -f $objs
 	endif
 	echo
@@ -97,7 +97,7 @@ set objs = `ls | $grep '\.o$'`
 if ("" == "$objs") then
 	echo "PASS: no object file was produced"
 else
-	echo "WRONG: $objs was produced"
+	echo "FAIL : $objs was produced"
 	rm -f $objs
 endif
 echo
@@ -111,7 +111,7 @@ $gtm_dist/mumps -object=ab x.m
 if (-e ab.o) then
 	echo "PASS: ab.o was produced"
 else
-	echo "WRONG: ab.o was not produced"
+	echo "FAIL : ab.o was not produced"
 endif
 $gtm_dist/mumps -run ab
 rm -f ab.o
@@ -128,13 +128,13 @@ $gtm_dist/mumps -object="$val" x.m >& stage8.out
 if (`$grep -c 'NOTMNAME, a\.\.\.A is not a valid M name' stage8.out`) then
 	echo "PASS: NOTMNAME is for a...A"
 else
-	echo "WRONG: NOTMNAME for a...A not seen - see stage8.out(x)"
+	echo "FAIL : NOTMNAME for a...A not seen - see stage8.out(x)"
 endif
 $gtm_tst/com/check_error_exist.csh stage8.out NOTMNAME ZLNOOBJECT
 set objs = `ls | $grep '\.o$'`
 if ("" == "$objs") then
 	echo "PASS: no object file was produced"
 else
-	echo "WRONG: $objs was produced"
+	echo "FAIL : $objs was produced"
 	rm -f $objs
 endif

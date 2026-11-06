@@ -25,7 +25,7 @@ echo "#"
 echo "# This subtest stops a MUPIP JOURNAL -RECOVER -BACKWARD while its worker threads run, limits its"
 echo "# address space to what it is using, and sends it SIGTERM. Its worker threads then call pthread_exit()."
 echo "#"
-echo "# Without the fix, a Release build prints WRONG and MUPIP aborts with that glibc message. A Debug build"
+echo "# Without the fix, a Release build prints FAIL and MUPIP aborts with that glibc message. A Debug build"
 echo "# passes either way, since it loads libgcc_s.so.1 at startup to record which code allocates each block"
 echo "# of memory."
 echo
@@ -93,14 +93,14 @@ cat $file.out
 echo "#   expect it to be stopped while it had worker threads"
 $grep -q "^Stopped the MUPIP process while it had worker threads" $file.out
 if ($status) then
-	echo "WRONG : it was not stopped while it had worker threads, so this stage tested nothing"
+	echo "FAIL : it was not stopped while it had worker threads, so this stage tested nothing"
 else
 	echo "PASS : it was stopped while it had worker threads"
 endif
 echo "#   expect libgcc_s to be mapped into it before its worker threads exit"
 $grep -q "^libgcc_s is mapped into it" $file.out
 if ($status) then
-	echo "WRONG : libgcc_s was not mapped into it"
+	echo "FAIL : libgcc_s was not mapped into it"
 else
 	echo "PASS : libgcc_s was mapped into it"
 endif
@@ -109,12 +109,12 @@ $grep "libgcc_s.so.* must be installed" recover1.out
 if ($status) then
 	echo "PASS : no glibc message about libgcc_s.so.1"
 else
-	echo "WRONG : glibc aborted MUPIP because it could not load libgcc_s.so.1"
+	echo "FAIL : glibc aborted MUPIP because it could not load libgcc_s.so.1"
 endif
 echo "#   expect MUPIP to exit with status 241, the status of %YDB-F-FORCEDHALT"
 $grep -q "^MUPIP exited with status 241" $file.out
 if ($status) then
-	echo "WRONG : MUPIP did not exit with status 241"
+	echo "FAIL : MUPIP did not exit with status 241"
 else
 	echo "PASS : MUPIP exited with status 241"
 endif
@@ -133,7 +133,7 @@ echo '# Command : $MUPIP journal -recover -backward -since=<time before the upda
 $MUPIP journal -recover -backward "-since=$since" "*" >&! recover2.out
 $grep -q "YDB-S-JNLSUCCESS" recover2.out
 if ($status) then
-	echo "WRONG : the recovery did not succeed. Output follows."
+	echo "FAIL : the recovery did not succeed. Output follows."
 	cat recover2.out
 else
 	echo "PASS : %YDB-S-JNLSUCCESS"

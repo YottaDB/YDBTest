@@ -12,7 +12,7 @@
 ;
 ; Helper routines for the r208/trig_empty_pattern-ydb1341 subtest. Each label loads triggers whose subscript is a
 ; pattern, then checks the value $ZTRIGGER() returns and how many times the trigger runs for SETs of the global.
-; It prints PASS or WRONG for each check.
+; It prints PASS or FAIL for each check.
 ;
 ydb1341	;
 	quit
@@ -51,7 +51,7 @@ load(pat,expok)
 
 update(sub)
 	new $etrap
-	set $etrap="write ""WRONG : SET ^x("",$zwrite(sub),"")=1 issued "",$zstatus,! set $ecode="""""
+	set $etrap="write ""FAIL : SET ^x("",$zwrite(sub),"")=1 issued "",$zstatus,! set $ecode="""""
 	set ^x(sub)=1
 	quit
 
@@ -67,5 +67,5 @@ trgfile	; write a trigger file with the patterns that are not valid
 
 check(got,exp,what)
 	if got=exp write "PASS : ",what," is ",got,! quit
-	write "WRONG : ",what," is ",got,", expected ",exp,!
+	write "FAIL : ",what," is ",got,", expected ",exp,!
 	quit

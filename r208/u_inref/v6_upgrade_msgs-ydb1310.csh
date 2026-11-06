@@ -44,7 +44,7 @@ source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 echo '# Stage 1 : create a V6 database with a prior V6 version, then run MUPIP UPGRADE on it with this version'
 $gtm_tst/com/random_ver.csh -type V6 >&! prior_ver.txt
 if (0 != $status) then
-	echo "WRONG : no prior V6 version is available - see prior_ver.txt"
+	echo "FAIL : no prior V6 version is available - see prior_ver.txt"
 	exit 1
 endif
 set prior_ver = `cat prior_ver.txt`
@@ -55,7 +55,7 @@ $gtm_tst/com/dbcreate.csh mumps 1 255 1024 4096 >&! dbcreate.out
 if (0 == $status) then
 	echo "PASS : the V6 database was created"
 else
-	echo "WRONG : dbcreate.csh failed - see dbcreate.out"
+	echo "FAIL : dbcreate.csh failed - see dbcreate.out"
 	cat dbcreate.out
 endif
 echo '# Command : $gtm_exe/mumps -run %XCMD '"'"'for i=1:1:5000 set ^a(i)=$justify(i,200)'"'"'   (with the prior version)'
@@ -63,7 +63,7 @@ $gtm_exe/mumps -run %XCMD 'for i=1:1:5000 set ^a(i)=$justify(i,200)' >&! fill.ou
 if ((0 == $status) && (-z fill.out)) then
 	echo "PASS : 5000 nodes were set, so ^a has index blocks"
 else
-	echo "WRONG : the updates failed - see fill.out"
+	echo "FAIL : the updates failed - see fill.out"
 	cat fill.out
 endif
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
@@ -76,7 +76,7 @@ $grep -q 'MUPIP MASTERMAP UPGRADE of .* completed' upgrade.out
 if (0 == $status) then
 	echo "PASS : MUPIP UPGRADE completed, leaving the index blocks and local bit maps to MUPIP REORG -UPGRADE"
 else
-	echo "WRONG : MUPIP UPGRADE did not complete - see upgrade.out"
+	echo "FAIL : MUPIP UPGRADE did not complete - see upgrade.out"
 	cat upgrade.out
 endif
 echo '# Command : $MUPIP set -access_method=MM -region DEFAULT'
@@ -91,7 +91,7 @@ set stat3 = $status
 if ((0 == $stat1) && (0 == $stat2) && (0 == $stat3)) then
 	echo "PASS : the database is now MM with the READ_ONLY flag set"
 else
-	echo "WRONG : could not make the database MM and READ_ONLY - see set_mm.out, set_nostats.out and set_read_only.out"
+	echo "FAIL : could not make the database MM and READ_ONLY - see set_mm.out, set_nostats.out and set_read_only.out"
 	cat set_mm.out set_nostats.out set_read_only.out
 endif
 echo
@@ -104,7 +104,7 @@ $tst_awk '(1 == NR) && /^%YDB-E-DBFILERDONLY, / {d++} (2 == NR) && /^%YDB-I-TEXT
 if (0 == $status) then
 	echo "PASS : the process reported DBFILERDONLY followed by TEXT, and no other message"
 else
-	echo "WRONG : expected exactly DBFILERDONLY then TEXT - see read.out"
+	echo "FAIL : expected exactly DBFILERDONLY then TEXT - see read.out"
 	cat read_msgs.logx
 endif
 $gtm_tst/com/check_error_exist.csh read.out DBFILERDONLY >&! check_read.logx
@@ -118,7 +118,7 @@ $tst_awk '(1 == NR) && /^%YDB-E-DBFILERDONLY, / {d++} (2 == NR) && /^%YDB-I-TEXT
 if (0 == $status) then
 	echo "PASS : DSE reported DBFILERDONLY followed by TEXT, and no other message"
 else
-	echo "WRONG : expected exactly DBFILERDONLY then TEXT - see dse_dump.out"
+	echo "FAIL : expected exactly DBFILERDONLY then TEXT - see dse_dump.out"
 	cat dse_msgs.logx
 endif
 $gtm_tst/com/check_error_exist.csh dse_dump.out DBFILERDONLY >&! check_dse.logx
@@ -130,7 +130,7 @@ $MUPIP set -noread_only -region DEFAULT >&! set_noread_only.out
 if (0 == $status) then
 	echo "PASS : the READ_ONLY flag is cleared"
 else
-	echo "WRONG : could not clear the READ_ONLY flag - see set_noread_only.out"
+	echo "FAIL : could not clear the READ_ONLY flag - see set_noread_only.out"
 	cat set_noread_only.out
 endif
 cat > gdb_reorg.cmd << EOF
@@ -148,7 +148,7 @@ $tst_awk '(1 == NR) && /^%YDB-E-MUUPGRDNRDY, / {m++} (2 == NR) && /^%YDB-I-REORG
 if (0 == $status) then
 	echo "PASS : MUPIP REORG -UPGRADE reported MUUPGRDNRDY, then REORGCTRLY and MUNOFINISH, and no other message"
 else
-	echo "WRONG : expected exactly MUUPGRDNRDY, REORGCTRLY, MUNOFINISH - see reorg_gdb.out"
+	echo "FAIL : expected exactly MUUPGRDNRDY, REORGCTRLY, MUNOFINISH - see reorg_gdb.out"
 	cat reorg_msgs.logx
 endif
 $gtm_tst/com/check_error_exist.csh reorg_gdb.out MUUPGRDNRDY MUNOFINISH >&! check_reorg.logx
@@ -158,6 +158,6 @@ $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 if (0 == $status) then
 	echo "PASS : dbcheck.csh found no integrity errors"
 else
-	echo "WRONG : dbcheck.csh failed - see dbcheck.out"
+	echo "FAIL : dbcheck.csh failed - see dbcheck.out"
 	cat dbcheck.out
 endif

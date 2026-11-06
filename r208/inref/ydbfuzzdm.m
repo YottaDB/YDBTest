@@ -60,6 +60,6 @@ cycles(n,on,off)	; Returns n pairs of lines "on" then "off"
 	quit lines
 
 report(case,ok,verb,text)
-	write $select(ok:"PASS",1:"WRONG")," : ",case," output ",verb," ",text,!
+	write $select(ok:"PASS",1:"FAIL")," : ",case," output ",verb," ",text,!
 	quit
 

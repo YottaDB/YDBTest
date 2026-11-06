@@ -86,7 +86,7 @@ endif
 echo "# expect the $side server to exit, reporting NOTGBL for the "'$ze(...)'" key, and not to be killed by a signal"
 $gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 if ($status) then
-	echo "WRONG : the $side server is still alive"
+	echo "FAIL : the $side server is still alive"
 else
 	echo "PASS : the $side server exited"
 endif
@@ -94,7 +94,7 @@ $grep -q KILLBYSIG $log
 if ($status) then
 	echo "PASS : the $side server was not killed by a signal"
 else
-	echo "WRONG : the $side server was killed by a signal :"
+	echo "FAIL : the $side server was killed by a signal :"
 	$grep -E -A 1 KILLBYSIG $log
 endif
 $gtm_tst/com/check_error_exist.csh $log NOTGBL

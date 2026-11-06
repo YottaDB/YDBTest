@@ -52,16 +52,16 @@ judge(want)	; read the server's answer to the malformed message and classify it
 	if got'="" do
 	. if $zascii(got,1)=1 do  quit
 	. . if $zfind($zextract(got,14,$zlength(got)),"BADGTMNETMSG") set v="rejected with BADGTMNETMSG" quit
-	. . set v="rejected, but not with BADGTMNETMSG - WRONG"
-	. set v="ACCEPTED, server replied with message type "_$zascii(got,1)_" - WRONG"
+	. . set v="rejected, but not with BADGTMNETMSG - FAIL"
+	. set v="ACCEPTED, server replied with message type "_$zascii(got,1)_" - FAIL"
 	else  if e<(rdtmo*500000) set v="link closed by the server"
-	else  set v="link left hanging, no reply and no close - WRONG"
+	else  set v="link left hanging, no reply and no close - FAIL"
 	; whatever happened to this connection, the server has to still be serving other clients
-	if v'["WRONG",'$$serving() set v=v_", but SERVER NO LONGER SERVING - WRONG"
-	if v'["WRONG" do
-	. if (want="reject")&(v'["rejected") set v=v_" - WRONG, expected a rejection"
-	. if (want="close")&(v'["closed") set v=v_" - WRONG, expected the link to be closed"
-	if v'["WRONG" set v=v_", server still serving"
+	if v'["FAIL",'$$serving() set v=v_", but SERVER NO LONGER SERVING - FAIL"
+	if v'["FAIL" do
+	. if (want="reject")&(v'["rejected") set v=v_" - FAIL, expected a rejection"
+	. if (want="close")&(v'["closed") set v=v_" - FAIL, expected the link to be closed"
+	if v'["FAIL" set v=v_", server still serving"
 	do verdict(v)
 	quit
 	;
@@ -163,8 +163,8 @@ sanity	; a well formed exchange, so a failure below means the message and not th
 	set regnum=$$setup()
 	if regnum<0 do noreg() quit
 	do snd($zchar(17)_$$us(1+$zlength($$key("x")))_$zchar(regnum)_$$key("x"))
-	if $zascii($$rcv(),1)'=32 do verdict("a $GET of undefined ^x did not return CMMS_R_UNDEF - WRONG") quit
-	if '$$serving() do verdict("server stopped serving after a valid exchange - WRONG") quit
+	if $zascii($$rcv(),1)'=32 do verdict("a $GET of undefined ^x did not return CMMS_R_UNDEF - FAIL") quit
+	if '$$serving() do verdict("server stopped serving after a valid exchange - FAIL") quit
 	do verdict("valid handshake, INITREG and $GET all answered, server still serving")
 	quit
 	;
@@ -343,8 +343,8 @@ shortjpv	; gtcmtr_initproc() : a handshake carrying less of a jnl_process_vector
 	; fired and the whole 88 bytes were copied out of a partly filled buffer.
 	if '$$conn() do verdict("could not connect - TEST SETUP FAILED") quit
 	do snd($zchar(33)_$$proto()_$$zeros(40))
-	if $zascii($$rcv(),1)'=37 do verdict("a handshake carrying 40 of 88 jpv bytes was refused - WRONG") quit
-	if '$$serving() do verdict("server stopped serving after a short handshake - WRONG") quit
+	if $zascii($$rcv(),1)'=37 do verdict("a handshake carrying 40 of 88 jpv bytes was refused - FAIL") quit
+	if '$$serving() do verdict("server stopped serving after a short handshake - FAIL") quit
 	do verdict("short INITPROC accepted, server still serving")
 	quit
 	;
@@ -497,8 +497,8 @@ bigreply(op,want,sub)	; "op" on ^big(<sub>), whose neighbouring subscript is lon
 	set blob=$$us(1024)_$$us($zlength(b)-1)_$$us($zlength("big")+1)_b
 	do snd($zchar(op)_$$us(1+$zlength(blob))_$zchar(regnum)_blob)
 	set r=$$rcv()
-	if $zascii(r,1)'=want do verdict("expected reply type "_want_", got "_$zascii(r,1)_" - WRONG") quit
-	if $zlength(r)'>532 do verdict("reply was only "_$zlength(r)_" bytes, the buffer was not grown - WRONG") quit
-	if '$$serving() do verdict("server stopped serving after a large reply - WRONG") quit
+	if $zascii(r,1)'=want do verdict("expected reply type "_want_", got "_$zascii(r,1)_" - FAIL") quit
+	if $zlength(r)'>532 do verdict("reply was only "_$zlength(r)_" bytes, the buffer was not grown - FAIL") quit
+	if '$$serving() do verdict("server stopped serving after a large reply - FAIL") quit
 	do verdict("reply larger than the message buffer returned intact, server still serving")
 	quit

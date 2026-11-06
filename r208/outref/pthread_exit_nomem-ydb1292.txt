@@ -12,7 +12,7 @@
 # This subtest stops a MUPIP JOURNAL -RECOVER -BACKWARD while its worker threads run, limits its
 # address space to what it is using, and sends it SIGTERM. Its worker threads then call pthread_exit().
 #
-# Without the fix, a Release build prints WRONG and MUPIP aborts with that glibc message. A Debug build
+# Without the fix, a Release build prints FAIL and MUPIP aborts with that glibc message. A Debug build
 # passes either way, since it loads libgcc_s.so.1 at startup to record which code allocates each block
 # of memory.
 

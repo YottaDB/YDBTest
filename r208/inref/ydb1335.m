@@ -41,5 +41,5 @@ grow	; Use enough string space that the string pool is expanded, and garbage col
 
 check(expect,cmd)
 	if $system=expect write "PASS : after ",cmd," $SYSTEM is the expected value",! quit
-	write "WRONG : after ",cmd," $SYSTEM is ",$zwrite($system)," but expected ",$zwrite(expect),!
+	write "FAIL : after ",cmd," $SYSTEM is ",$zwrite($system)," but expected ",$zwrite(expect),!
 	quit

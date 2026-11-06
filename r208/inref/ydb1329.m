@@ -55,7 +55,7 @@ excio	; READ past the end of an empty file, which invokes the device EXCEPTION. 
 report(zstatus,err,what)
 	new ok
 	set ok=(zstatus[err)&(zstatus["DIVZERO")
-	write $select(ok:"PASS",1:"WRONG")," : $ZSTATUS ",what," has ",err," and DIVZERO"
+	write $select(ok:"PASS",1:"FAIL")," : $ZSTATUS ",what," has ",err," and DIVZERO"
 	write:'ok " : $ZSTATUS is ",zstatus
 	write !
 	quit

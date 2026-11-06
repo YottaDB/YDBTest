@@ -61,8 +61,8 @@ echo ""
 
 # Each case sends one message and prints one verdict line. All cases share one server, so a case
 # that kills the server leaves the ones after it reporting TEST SETUP FAILED rather than testing
-# anything. That is loud enough to diagnose from, and the first WRONG verdict names the message that
-# did it. A verdict containing WRONG is a failure; the reference file holds the expected verdicts, so
+# anything. That is loud enough to diagnose from, and the first FAIL verdict names the message that
+# did it. A verdict containing FAIL is a failure; the reference file holds the expected verdicts, so
 # a changed verdict shows up as a diff. "sanity" runs first: if the harness itself cannot complete a
 # valid exchange the rest means nothing.
 #
@@ -155,7 +155,7 @@ $gtm_tst/com/is_proc_alive.csh $srvpid >&! isprocalive.out
 if (0 == $status) then
 	echo "GT.CM server process is still alive : as expected"
 else
-	echo "GT.CM server process is GONE : WRONG, expected it to survive every malformed message"
+	echo "GT.CM server process is GONE : FAIL, expected it to survive every malformed message"
 endif
 echo ""
 
@@ -174,7 +174,7 @@ set wantbadmsg = 37	# one per case that expects a rejection; the rest expect an 
 if ("$wantbadmsg" == "$badmsgcnt") then
 	echo "BADGTMNETMSG count in the server log is $wantbadmsg : as expected"
 else
-	echo "BADGTMNETMSG count in the server log is $badmsgcnt : WRONG, expected $wantbadmsg"
+	echo "BADGTMNETMSG count in the server log is $badmsgcnt : FAIL, expected $wantbadmsg"
 endif
 # The cases that expect a closed link rather than a rejection, bigframe and splitframe, are refused
 # at the framing layer, before there is a message to name in an error. The server drops the link and
@@ -186,7 +186,7 @@ set allmsgcnt = `$grep -c "%YDB-" $cmerrlog`
 if ("$wantallmsg" == "$allmsgcnt") then
 	echo "total message count in the server log is $wantallmsg : as expected"
 else
-	echo "total message count in the server log is $allmsgcnt : WRONG, expected $wantallmsg"
+	echo "total message count in the server log is $allmsgcnt : FAIL, expected $wantallmsg"
 endif
 # These errors are expected, so hide the log from errors.csh rather than leaving it to be flagged.
 # Its output quotes the matching log lines, which carry timestamps, so send it to a file and assert
@@ -199,7 +199,7 @@ $gtm_tst/com/check_error_exist.csh $cmerrlog BADGTMNETMSG FORCEDHALT >&! check_e
 if (0 == $status) then
 	echo "BADGTMNETMSG and FORCEDHALT both found in the server log : as expected"
 else
-	echo "expected errors missing from the server log : WRONG, see check_error_exist.logx"
+	echo "expected errors missing from the server log : FAIL, see check_error_exist.logx"
 endif
 echo ""
 
@@ -254,7 +254,7 @@ foreach spec ("`cat srvcases.list`")
 		sleep 1
 		@ waited = $waited + 1
 	end
-	if (! -e ready) echo "fake server did not start for $case : WRONG"
+	if (! -e ready) echo "fake server did not start for $case : FAIL"
 	echo "# $case : $want"
 	echo '$gtm_exe/mumps -run gnpcli '"$case"
 	$gtm_exe/mumps -run gnpcli "$case" < /dev/null
@@ -264,7 +264,7 @@ foreach spec ("`cat srvcases.list`")
 		sleep 1
 		@ waited = $waited + 1
 	end
-	if (! -e done) echo "fake server did not exit for $case : WRONG"
+	if (! -e done) echo "fake server did not exit for $case : FAIL"
 end
 cd ..
 setenv gtmgbldir $PWD/mumps.gld

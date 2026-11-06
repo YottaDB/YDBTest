@@ -26,7 +26,7 @@ echo '# $EXTRACT() and $ZEXTRACT() return a string that shares memory with their
 echo '# ZWRITE format string taken that way is followed in memory by the rest of the string, and a read past'
 echo '# its end finds the byte that makes it valid. In stage 5 a read past the end gets a SIGSEGV.'
 echo '#'
-echo '# Without the fix, every check below prints WRONG except the controls, whose expected result is not'
+echo '# Without the fix, every check below prints FAIL except the controls, whose expected result is not'
 echo '# the empty string, and the invalid strings "X"_$C(65)Y and _"X". In stage 5 the six strings in the'
 echo '# first group each end the process with a SIGSEGV.'
 echo

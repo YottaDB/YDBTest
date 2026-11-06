@@ -35,7 +35,7 @@ PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument
 # Command : $gtm_dist/mumps -run single^ydb1316
 #   expect all 20000 calls to return 1 and none to change its argument
 # Before the fix, a Release build had a few of the calls return 0 with "Error : Newline allowed only
-# inside multi-line xecute in $ztrigger ITEM", so the first line below was a WRONG line, and a Debug
+# inside multi-line xecute in $ztrigger ITEM", so the first line below was a FAIL line, and a Debug
 # build failed an assert in trigger_update.c
 PASS : 20000 of 20000 $ZTRIGGER calls returned 1
 PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument
@@ -68,7 +68,7 @@ PASS : 0 of 4 triggers ran a wrong XECUTE string
 # Command : $gtm_dist/mumps -run reorder^ydb1316
 #   expect all 20000 calls to return 1 and none to change its argument
 # Before the fix, every call changed its argument to the definition with -name=reorder moved ahead of
-# -xecute, so the second line below was a WRONG line for all 20000 calls, and a Debug build also
+# -xecute, so the second line below was a FAIL line for all 20000 calls, and a Debug build also
 # terminated with KILLBYSIGSINFO1 when a garbage collection moved the definition
 PASS : 20000 of 20000 $ZTRIGGER calls returned 1
 PASS : 0 of 20000 $ZTRIGGER calls changed the value of their argument

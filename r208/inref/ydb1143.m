@@ -123,7 +123,7 @@ peek(reg,want)	; report whether THIS process holds a search index for region REG
 	; a NULL base is what SEARCHIDX_AVAILABLE tests, and is how the feature reads as off
 	set on='(base=0)&'(base="0x0000000000000000")
 	write "search index in this process : ",$select(on:"present",1:"absent")
-	write $select(on=want:", as expected",1:", WRONG, expected "_$select(want:"present",1:"absent"))
+	write $select(on=want:", as expected",1:", FAIL, expected "_$select(want:"present",1:"absent"))
 	write !
-	if on write "slot size ",size," slot mask ",mask,$select((size>0)&(mask>0):" : both set, as expected",1:" : WRONG, expected both above zero"),!
+	if on write "slot size ",size," slot mask ",mask,$select((size>0)&(mask>0):" : both set, as expected",1:" : FAIL, expected both above zero"),!
 	quit

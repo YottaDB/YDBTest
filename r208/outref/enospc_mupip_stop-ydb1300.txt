@@ -12,7 +12,7 @@
 # chosen point in process A. Each stage then stops A with MUPIP STOP while it waits for disk space,
 # checks that A terminates with FORCEDHALT and no assert failure, and that process B can then update
 # the same globals. Without the fix, A fails an assert in secshr_db_clnup() in stage 1, and the state
-# that leaves makes the later stages report WRONG as well.
+# that leaves makes the later stages report FAIL as well.
 
 # Start the source and receiver servers
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==

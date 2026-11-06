@@ -53,7 +53,7 @@ static void *worker(void *arg)
 		status = ydb_set_st(YDB_NOTTP, NULL, &var, 0, NULL, &val);
 		if (YDB_OK != status)
 		{
-			printf("WRONG : ydb_set_st() returned %d\n", status);
+			printf("FAIL : ydb_set_st() returned %d\n", status);
 			fflush(stdout);
 			exit(1);
 		}
@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	memset(ptrs, 0, sizeof(ptrs));
 	if (0 != pthread_create(&thread, NULL, worker, NULL))
 	{
-		printf("WRONG : pthread_create() failed\n");
+		printf("FAIL : pthread_create() failed\n");
 		return 1;
 	}
 	while (!worker_ready)

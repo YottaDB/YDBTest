@@ -22,7 +22,7 @@ PASS : ydb1314_nogrow was built
 #           of the kernel killing the process with the default action of SIGSEGV (exit status 139)
 # Command : ./ydb1314_nogrow
 # Before the fix, the process was killed by the default action of SIGSEGV with no message, so the two
-# lines below were WRONG lines, one for its exit status, followed by its output, and one for the
+# lines below were FAIL lines, one for its exit status, followed by its output, and one for the
 # missing messages
 PASS : the process was not killed by the default action of SIGSEGV
 PASS : the process reported %YDB-F-KILLBYSIGSINFO1 and %YDB-F-SIGMAPERR

@@ -19,7 +19,7 @@ echo "# header says the file is corrupt. It then skips that region and goes on t
 echo "# held crit on the skipped region, so in a Debug build freezing the next region with -NOONLINE failed an"
 echo "# assert in region_freeze.c. Each stage runs MUPIP INTEG on two regions, of which the first (AREG) is"
 echo "# marked corrupt, checks that it integs the second (DEFAULT) without an assert failure, and prints PASS"
-echo "# or WRONG."
+echo "# or FAIL."
 echo
 
 # Online INTEG uses a snapshot, which MM does not support, so use BG.
@@ -58,17 +58,17 @@ foreach qual (-noonline -online)
 	if ($status) then
 		echo "PASS : no assert failure"
 	else
-		echo "WRONG : assert failure, see integ$stage.out"
+		echo "FAIL : assert failure, see integ$stage.out"
 	endif
 	$grep -q "^Integ of region DEFAULT" integ$stage.out
 	if ($status) then
-		echo "WRONG : MUPIP INTEG did not integ DEFAULT, see integ$stage.out"
+		echo "FAIL : MUPIP INTEG did not integ DEFAULT, see integ$stage.out"
 	else
 		set noerrs = `$grep -c "^No errors detected by integ." integ$stage.out`
 		if (1 == $noerrs) then
 			echo "PASS : DEFAULT has no errors"
 		else
-			echo "WRONG : $noerrs regions instead of 1 have no errors, see integ$stage.out"
+			echo "FAIL : $noerrs regions instead of 1 have no errors, see integ$stage.out"
 		endif
 	endif
 	echo '# Expected errors : DBFLCORRP for AREG (also at exit, from the rundown of AREG), MUNOTALLINTEG, NOTALLDBRNDWN'

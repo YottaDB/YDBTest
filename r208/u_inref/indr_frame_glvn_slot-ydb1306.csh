@@ -38,7 +38,7 @@ cp $gtm_tst/$tst/inref/ydb1306.m .
 echo '# Stage 1 : an error inside XECUTE while $ORDER(@ref,-1) saves its indirect reference, 100000 times'
 echo '#   xecute "set z=$order(@ref,-1)" with ref="x(undefv)" and undefv undefined, in a function with $ETRAP'
 echo '# Command : $gtm_dist/mumps -run errxord^ydb1306'
-echo '# Before the fix, a Release build grew $ZREALSTOR by about 44MB, so the line below was a WRONG line,'
+echo '# Before the fix, a Release build grew $ZREALSTOR by about 44MB, so the line below was a FAIL line,'
 echo '# and a Debug build failed an assert in glvn_pool.c, so the line below was missing'
 $gtm_dist/mumps -run errxord^ydb1306
 echo
@@ -55,7 +55,7 @@ echo '#   for b(1)=1:1:2 set cnt=cnt+1'
 echo '#   run 100000 times as XECUTE, $ETRAP, $ZTRAP and ZBREAK action code, and 5000 times as the $ZTIMEOUT'
 echo '#   vector and as $ZINTERRUPT (sent to the process itself by $ZSIGPROC)'
 echo '# Before the fix, a Release build grew $ZREALSTOR by about 51MB for 100000 runs and 3MB for 5000, so'
-echo '# each line below was a WRONG line, and a Debug build failed an assert in glvn_pool.c, so each line'
+echo '# each line below was a FAIL line, and a Debug build failed an assert in glvn_pool.c, so each line'
 echo '# below was missing'
 foreach label (forxec foretrap forztrap forzbrk forztout forzint)
 	echo "# Command : "'$gtm_dist/mumps -run '"${label}^ydb1306"
@@ -69,7 +69,7 @@ echo '#   also with indirect control variables, and with the inner FOR in the $Z
 echo '#   $ZINTERRUPT, which interrupt the outer FOR'
 echo '#   expect the inner FOR to run 6 times in all and the outer FOR to end with a(1)=3'
 echo '# Before the fix, the outer FOR stepped b(1), which the inner FOR reset each time, so it never ended'
-echo '# until "quit:cnt>20", and each line below was a WRONG line with the inner FOR run 22 times and a(1)=1'
+echo '# until "quit:cnt>20", and each line below was a FAIL line with the inner FOR run 22 times and a(1)=1'
 foreach label (nestxec nestind nestztout nestzint)
 	echo "# Command : "'$gtm_dist/mumps -run '"${label}^ydb1306"
 	$gtm_dist/mumps -run ${label}^ydb1306

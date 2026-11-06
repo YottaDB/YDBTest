@@ -68,8 +68,8 @@ if ("$act" == "22") then
 	echo "PASS : returned EINVAL (22)"
 	set stage1ok = 1
 else
-	echo "WRONG : expected retcode 22 (EINVAL), got [$act] - see zsig_pid0.out"
-	echo "WRONG : a retcode of 0 means the pid check is absent and kill(0,...) was reached"
+	echo "FAIL : expected retcode 22 (EINVAL), got [$act] - see zsig_pid0.out"
+	echo "FAIL : a retcode of 0 means the pid check is absent and kill(0,...) was reached"
 endif
 echo
 
@@ -81,8 +81,8 @@ if ("$act" == "22") then
 	echo "PASS : returned EINVAL (22)"
 	set stage2ok = 1
 else
-	echo "WRONG : expected retcode 22 (EINVAL), got [$act] - see zsig_pidneg.out"
-	echo "WRONG : a retcode of 0 means the pid check is absent and kill(-1,...) was reached"
+	echo "FAIL : expected retcode 22 (EINVAL), got [$act] - see zsig_pidneg.out"
+	echo "FAIL : a retcode of 0 means the pid check is absent and kill(-1,...) was reached"
 endif
 echo
 
@@ -99,7 +99,7 @@ set act = `$tst_awk -F= '/retcode=/{print $2}' zsig_live.out`
 if ("$act" == "0") then
 	echo "PASS : a live process returned 0"
 else
-	echo "WRONG : expected retcode 0 for a live process, got [$act] - see zsig_live.out"
+	echo "FAIL : expected retcode 0 for a live process, got [$act] - see zsig_live.out"
 endif
 # This kill is of a pid this subtest just created and holds in a variable, never a searched-for or
 # computed one.
@@ -112,7 +112,7 @@ set act = `$tst_awk -F= '/retcode=/{print $2}' zsig_dead.out`
 if ("$act" == "3") then
 	echo "PASS : a process that has gone away returned ESRCH (3)"
 else
-	echo "WRONG : expected retcode 3 (ESRCH) for a dead process, got [$act] - see zsig_dead.out"
+	echo "FAIL : expected retcode 3 (ESRCH) for a dead process, got [$act] - see zsig_dead.out"
 endif
 echo
 
@@ -134,21 +134,21 @@ else
 	if (0 == $st) then
 		echo "PASS : the calling process survived"
 	else
-		echo "WRONG : expected exit status 0, got $st - 138 means it was killed by SIGUSR1"
+		echo "FAIL : expected exit status 0, got $st - 138 means it was killed by SIGUSR1"
 	endif
 	set report = `ls -t %YDBPROCSTUCKEXEC*BUFRDTIMEOUT*.out |& $grep -v "No match" | head -1`
 	if ("$report" == "") then
-		echo "WRONG : %YDBPROCSTUCKEXEC wrote no report"
+		echo "FAIL : %YDBPROCSTUCKEXEC wrote no report"
 	else
 		if (0 == `$grep -c "Sending USR1" "$report"`) then
 			echo "PASS : the report shows no signal was sent"
 		else
-			echo "WRONG : the report shows a signal was sent"
+			echo "FAIL : the report shows a signal was sent"
 		endif
 		if (0 != `$grep -c "does not name a process" "$report"`) then
 			echo "PASS : the report says why it collected nothing"
 		else
-			echo "WRONG : the report does not explain why it collected nothing"
+			echo "FAIL : the report does not explain why it collected nothing"
 		endif
 	endif
 endif
@@ -164,21 +164,21 @@ else
 	if (0 == $st) then
 		echo "PASS : the calling process survived"
 	else
-		echo "WRONG : expected exit status 0, got $st - 138 means it was killed by SIGUSR1"
+		echo "FAIL : expected exit status 0, got $st - 138 means it was killed by SIGUSR1"
 	endif
 	set report = `ls -t %YDBPROCSTUCKEXEC*BUFRDTIMEOUT*.out |& $grep -v "No match" | head -1`
 	if ("$report" == "") then
-		echo "WRONG : %YDBPROCSTUCKEXEC wrote no report"
+		echo "FAIL : %YDBPROCSTUCKEXEC wrote no report"
 	else
 		if (0 == `$grep -c "Sending USR1" "$report"`) then
 			echo "PASS : the report shows no signal was sent"
 		else
-			echo "WRONG : the report shows a signal was sent"
+			echo "FAIL : the report shows a signal was sent"
 		endif
 		if (0 != `$grep -c "does not name a process" "$report"`) then
 			echo "PASS : the report says why it collected nothing"
 		else
-			echo "WRONG : the report does not explain why it collected nothing"
+			echo "FAIL : the report does not explain why it collected nothing"
 		endif
 	endif
 endif

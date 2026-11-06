@@ -21,7 +21,7 @@ echo "# and the record that a POSIX timer was created, but not the POSIX timer i
 echo "# call in the child ran the deferred timer handler, which restarted the system timer with the"
 echo "# parent's timer id, and failed with %YDB-E-SYSCALL from timer_settime() (ENO22)."
 echo "#"
-echo "# Without the fix, stage 2 prints WRONG. Stage 1 is a control that forks before any timer is due."
+echo "# Without the fix, stage 2 prints FAIL. Stage 1 is a control that forks before any timer is due."
 echo
 
 # The fork times below rely on the flush timers of a BG database coming due 1 second after an update

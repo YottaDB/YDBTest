@@ -35,7 +35,7 @@ echo '# Stage 1 : the example in YDB#1308, with the two $DATA() values joined:'
 echo '#   set y="y",v=$data(@"x(@y)")_$data(@"z(p,1)")'
 echo '# Command : $gtm_dist/mumps -run short^ydb1308'
 echo '#   expect 00'
-echo '# Before the fix, LVUNDEF, so the line below was a WRONG line'
+echo '# Before the fix, LVUNDEF, so the line below was a FAIL line'
 $gtm_dist/mumps -run short^ydb1308
 echo
 
@@ -53,21 +53,21 @@ echo
 echo '# Stage 3 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a defined'
 echo '# Command : $gtm_dist/mumps -run nested^ydb1308'
 echo '#   expect 0'
-echo '# Before the fix, LVUNDEF, so the second line below was a WRONG line'
+echo '# Before the fix, LVUNDEF, so the second line below was a FAIL line'
 $gtm_dist/mumps -run nested^ydb1308
 echo
 
 echo '# Stage 4 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a undefined, which issues an error'
 echo '# Command : $gtm_dist/mumps -run nestederr^ydb1308'
 echo '#   expect 0'
-echo '# Before the fix, LVUNDEF, so the second line below was a WRONG line'
+echo '# Before the fix, LVUNDEF, so the second line below was a FAIL line'
 $gtm_dist/mumps -run nestederr^ydb1308
 echo
 
 echo '# Stage 5 : the same after $DATA(@ref) with ref="x(1,@y)", y="a" and a defined'
 echo '# Command : $gtm_dist/mumps -run nested2^ydb1308'
 echo '#   expect 0'
-echo '# Before the fix, LVUNDEF, so the second line below was a WRONG line'
+echo '# Before the fix, LVUNDEF, so the second line below was a FAIL line'
 $gtm_dist/mumps -run nested2^ydb1308
 echo
 

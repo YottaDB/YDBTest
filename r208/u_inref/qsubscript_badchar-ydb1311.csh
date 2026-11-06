@@ -24,9 +24,9 @@ echo '#'
 echo '# $ZCOLLATE(name,0) and $VIEW("YGVN2GDS",name) use the same check, but do not issue BADCHAR, because the'
 echo '# reverse $ZCOLLATE(key,0,1) returns a name holding the bytes of a subscript inside quotes as they are.'
 echo '#'
-echo '# Without the fix, stage 1 prints WRONG for its first $QLENGTH() and then ends the process with a SIG-11'
+echo '# Without the fix, stage 1 prints FAIL for its first $QLENGTH() and then ends the process with a SIG-11'
 echo '# (an assert failure in a Debug build) at its first $QSUBSCRIPT(), stage 2 ends the same way at its'
-echo '# first $QSUBSCRIPT(), stage 4 prints WRONG with NOCANONICNAME for $ZCH(224), where the step over'
+echo '# first $QSUBSCRIPT(), stage 4 prints FAIL with NOCANONICNAME for $ZCH(224), where the step over'
 echo '# the byte skips the closing quote, and stages 3 and 5 PASS.'
 echo
 

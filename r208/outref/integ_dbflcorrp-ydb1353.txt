@@ -7,7 +7,7 @@
 # held crit on the skipped region, so in a Debug build freezing the next region with -NOONLINE failed an
 # assert in region_freeze.c. Each stage runs MUPIP INTEG on two regions, of which the first (AREG) is
 # marked corrupt, checks that it integs the second (DEFAULT) without an assert failure, and prints PASS
-# or WRONG.
+# or FAIL.
 
 # Create a database with two regions, AREG (a.dat) and DEFAULT (mumps.dat)
 

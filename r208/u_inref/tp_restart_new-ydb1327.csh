@@ -23,7 +23,7 @@ echo '# without adjusting the pointers the transaction keeps into it, which stag
 echo '#'
 echo '# Each case of stages 1 and 2 runs in its own process. It records the local variables it sees in the'
 echo '# transaction after the restart and after the transaction, compares them with the values the restart'
-echo '# rules give, and prints PASS or WRONG.'
+echo '# rules give, and prints PASS or FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1327.m .

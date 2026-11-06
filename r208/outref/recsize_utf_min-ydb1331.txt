@@ -9,12 +9,12 @@
 # as it was. The STDERR device of a PIPE, whose RECORDSIZE was 0, now gets the RECORDSIZE of the PIPE.
 #
 # Each case names the error it expects, or the bytes in hex that the file must hold, and prints PASS or
-# WRONG.
+# FAIL.
 
 # Stage 1 : devices with a UTF-8 or UTF-16 CHSET, in UTF-8 mode
 # Command : $gtm_dist/mumps -run utf^ydb1331
 # Before the fix, each OPEN and USE with a RECORDSIZE of 1 to 3 worked (except RECORDSIZE=3 with UTF-16,
-# which issued RECSIZENOTEVEN), so the cases that expect RECSIZETOOSMALL printed WRONG, and the pipeerr
+# which issued RECSIZENOTEVEN), so the cases that expect RECSIZETOOSMALL printed FAIL, and the pipeerr
 # READ returned an empty string (an assert failure in iorm_readfl.c in a Debug build). recsize0, pipeerrvar
 # and pipeerrrec had the same result
 #   expect RECSIZETOOSMALL for a RECORDSIZE of 1 to 3, leaving a device that is open as it was, RECORDSIZE=4

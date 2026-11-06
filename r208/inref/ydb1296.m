@@ -22,9 +22,9 @@ ydb1296
 	use $principal
 	close p
 	if "DSE> "=x write "# x is ""DSE> "" as expected",!
-	else  write "WRONG : x is ",$zwrite(x),", expected ""DSE> """,!
+	else  write "FAIL : x is ",$zwrite(x),", expected ""DSE> """,!
 	if 0=t write "# $TEST is 0 as expected",!
-	else  write "WRONG : $TEST is ",t,", expected 0",!
+	else  write "FAIL : $TEST is ",t,", expected 0",!
 	if 60>elapsed write "# READ took less than 60 seconds as expected",!
-	else  write "WRONG : READ took ",elapsed," seconds, expected less than 60",!
+	else  write "FAIL : READ took ",elapsed," seconds, expected less than 60",!
 	quit

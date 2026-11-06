@@ -20,7 +20,7 @@ echo '# have up to 20 digits. When less free space than the number of digits was
 echo '# written past the end of the stringpool, which failed an assert in a Debug build and wrote past the'
 echo '# end of the allocated memory in a Release build. %PEEKBYNAME() uses $ZPEEK() so it had the same problem.'
 echo '# Each stage peeks at node_local.nbb (19 digits when no backup is in progress) 100000 times, with the'
-echo '# stringpool free space varied by a padding string, in a new process, and prints PASS or WRONG.'
+echo '# stringpool free space varied by a padding string, in a new process, and prints PASS or FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1351.m .

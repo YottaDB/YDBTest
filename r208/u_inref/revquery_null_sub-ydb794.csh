@@ -23,7 +23,7 @@ echo '# node at that level too, when ^x(...,"") has no value. When it has a valu
 echo '# $QUERY() returned it, it is looked up as is, so a reverse $QUERY() loop that returned it moves on to'
 echo '# the node before it, even if the loop killed it.'
 echo '#'
-echo '# Without the fix, stages 1, 2 and 3 print WRONG. Stages 4 and 5 pass without the fix too; they check'
+echo '# Without the fix, stages 1, 2 and 3 print FAIL. Stages 4 and 5 pass without the fix too; they check'
 echo '# that locals and GT.M null collation are unchanged. Each check names the result it expects.'
 echo '#'
 echo '# Each stage runs in its own process.'

@@ -10,7 +10,7 @@
 ;#								#
 ;#################################################################
 ; Helper M program used by the r208/socket_block_mnemonic-ydb1348 subtest. Each label does one WRITE /mnemonic to a
-; listening socket and prints PASS or WRONG, depending on whether it issued the expected error (or no error).
+; listening socket and prints PASS or FAIL, depending on whether it issued the expected error (or no error).
 ;
 long	; A mnemonic that starts with BLOCK and is longer than it
 	do check("/BLOCKG121","INVCTLMNE")
@@ -42,5 +42,5 @@ check(mnemonic,expect)
 	use $principal
 	close s
 	if err=expect write "PASS : WRITE ",mnemonic," issued ",$select(""=err:"no error",1:err),!
-	else  write "WRONG : WRITE ",mnemonic," issued ",$select(""=err:"no error",1:err)," instead of ",$select(""=expect:"no error",1:expect),!
+	else  write "FAIL : WRITE ",mnemonic," issued ",$select(""=err:"no error",1:err)," instead of ",$select(""=expect:"no error",1:expect),!
 	quit

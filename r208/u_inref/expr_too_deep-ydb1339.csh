@@ -18,7 +18,7 @@ echo '# The compiler processes an expression with recursive C functions. Tens of
 echo '# expression items (unary operators, parentheses, function arguments, subscripts), or a chain of tens of'
 echo '# thousands of binary operators, used up the C stack and the process terminated with a SIG-11.'
 echo '# The compiler now issues EXPRTOODEEP beyond 1024 levels of nested expression items or 4096 levels of'
-echo '# operators. Each stage runs its case in a new process, and prints PASS or WRONG for each check.'
+echo '# operators. Each stage runs its case in a new process, and prints PASS or FAIL for each check.'
 echo '# Stages 1 to 6 compile the expression with argument indirection (SET @arg), which accepts an argument'
 echo '# longer than the maximum line length of 32766 bytes, then check that a later SET @arg still works.'
 echo

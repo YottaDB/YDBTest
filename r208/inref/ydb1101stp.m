@@ -20,7 +20,7 @@ ydb1101stp	;
 	write "#   expect the process to complete, with piece 2 (bytes in use) at least 4.4 billion",!
 	for i=1:1:n set x(i)=$justify(0,1000)
 	set v=$view("SPSIZE")
-	write $select($piece(v,",",2)'<live:"PASS",1:"WRONG")," : piece 2 of $VIEW(""SPSIZE"") is at least 4.4 billion"
+	write $select($piece(v,",",2)'<live:"PASS",1:"FAIL")," : piece 2 of $VIEW(""SPSIZE"") is at least 4.4 billion"
 	write:$piece(v,",",2)<live " (got ",v,")"
 	write !
 	quit

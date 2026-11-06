@@ -57,7 +57,7 @@ set stat2 = $status
 if ((0 == $stat1) && (0 == $stat2)) then
 	echo "PASS : the instance file was created and replication is on"
 else
-	echo "WRONG : the replication setup failed - see instcreate.out and setrepl.out"
+	echo "FAIL : the replication setup failed - see instcreate.out and setrepl.out"
 	cat instcreate.out setrepl.out
 endif
 echo
@@ -70,7 +70,7 @@ set ids = (`$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR Re
 if (("$ids[1]" == "$rcvsem") && ("$ids[2]" == "$rcvshm")) then
 	echo "PASS : the instance file header still has the receive pool ids"
 else
-	echo "WRONG : the instance file header has receive pool ids [$ids], expected the ids of the pool left behind"
+	echo "FAIL : the instance file header has receive pool ids [$ids], expected the ids of the pool left behind"
 endif
 echo '# Command : $MUPIP rundown -region "*"'
 $MUPIP rundown -region "*" >&! rundown_stage2.out
@@ -78,7 +78,7 @@ $grep -q "MURPOOLRNDWNSUC, Recvpool section (id = $rcvshm)" rundown_stage2.out
 if (0 == $status) then
 	echo "PASS : MUPIP RUNDOWN reported MURPOOLRNDWNSUC for the receive pool shared memory"
 else
-	echo "WRONG : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rundown_stage2.out"
+	echo "FAIL : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rundown_stage2.out"
 endif
 source $gtm_tst/$tst/u_inref/recvpool_orphan_check_gone-ydb1312.csh
 echo
@@ -95,7 +95,7 @@ $grep -q "Attached to existing recvpool with shmid = \[$rcvshm\]" rcv_stage3b.lo
 if (0 == $status) then
 	echo "PASS : the receiver server attached to the existing receive pool"
 else
-	echo "WRONG : the receiver server did not attach to receive pool $rcvshm - its recvpool line follows"
+	echo "FAIL : the receiver server did not attach to receive pool $rcvshm - its recvpool line follows"
 	$grep 'recvpool with shmid' rcv_stage3b.log | sed 's/^.* : //'
 endif
 echo '# Command : $MUPIP replicate -receiver -shutdown -timeout=0'
@@ -115,7 +115,7 @@ set ids = (`$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR Re
 if ("$ids" == "INVALID INVALID") then
 	echo "PASS : the instance file header receive pool ids were reset"
 else
-	echo "WRONG : the instance file header has receive pool ids [$ids], expected INVALID INVALID"
+	echo "FAIL : the instance file header has receive pool ids [$ids], expected INVALID INVALID"
 endif
 echo '# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage4b.log'
 $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage4b.log >&! srcstart_stage4b.out
@@ -124,7 +124,7 @@ $MUPIP replicate -receiver -start -listenport=$portno -log=rcv_stage4b.log -buff
 if (0 == $status) then
 	echo "PASS : a receiver server started"
 else
-	echo "WRONG : the receiver server did not start - see rcvstart_stage4b.out"
+	echo "FAIL : the receiver server did not start - see rcvstart_stage4b.out"
 	cat rcvstart_stage4b.out
 endif
 echo '# Command : $MUPIP replicate -receiver -shutdown -timeout=0'
@@ -145,13 +145,13 @@ $grep -q "JNLSUCCESS, Rollback successful" rollback_stage5a.out
 if ((0 == $rbstat) && (0 == $status)) then
 	echo "PASS : MUPIP JOURNAL -ROLLBACK succeeded"
 else
-	echo "WRONG : MUPIP JOURNAL -ROLLBACK returned status $rbstat - see rollback_stage5a.out"
+	echo "FAIL : MUPIP JOURNAL -ROLLBACK returned status $rbstat - see rollback_stage5a.out"
 endif
 $grep -q "MURPOOLRNDWNSUC, Recvpool section (id = $rcvshm)" rollback_stage5a.out
 if (0 == $status) then
 	echo "PASS : MUPIP JOURNAL -ROLLBACK reported MURPOOLRNDWNSUC for the receive pool shared memory"
 else
-	echo "WRONG : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rollback_stage5a.out"
+	echo "FAIL : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rollback_stage5a.out"
 endif
 source $gtm_tst/$tst/u_inref/recvpool_orphan_restart-ydb1312.csh stage5a
 echo
@@ -166,7 +166,7 @@ $grep -q "MURPOOLRNDWNSUC, Recvpool section (id = $rcvshm)" rundown_stage5b.out
 if (0 == $status) then
 	echo "PASS : MUPIP RUNDOWN reported MURPOOLRNDWNSUC for the receive pool shared memory"
 else
-	echo "WRONG : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rundown_stage5b.out"
+	echo "FAIL : no MURPOOLRNDWNSUC for receive pool shared memory $rcvshm - see rundown_stage5b.out"
 endif
 source $gtm_tst/$tst/u_inref/recvpool_orphan_restart-ydb1312.csh stage5b
 echo
@@ -183,7 +183,7 @@ set ids = (`$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR Re
 if (("$ids[1]" == "$rcvsem") && ("$ids[2]" == "INVALID")) then
 	echo "PASS : the instance file header has the receive pool semaphore id and an INVALID shared memory id"
 else
-	echo "WRONG : the instance file header has receive pool ids [$ids], expected [$rcvsem INVALID]"
+	echo "FAIL : the instance file header has receive pool ids [$ids], expected [$rcvsem INVALID]"
 endif
 echo '# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage6b.log'
 $MUPIP replicate -source -start -passive -instsecondary=INSTA -log=src_stage6b.log >&! srcstart_stage6b.out
@@ -192,14 +192,14 @@ $MUPIP replicate -receiver -start -listenport=$portno -log=rcv_stage6b.log -buff
 if (0 == $status) then
 	echo "PASS : a receiver server started"
 else
-	echo "WRONG : the receiver server did not start - see rcvstart_stage6b.out"
+	echo "FAIL : the receiver server did not start - see rcvstart_stage6b.out"
 	cat rcvstart_stage6b.out
 endif
 set ids = (`$MUPIP replicate -editinstance -show mumps.repl |& $tst_awk '/HDR Receive Pool (Sem|Shm) Id/ {print $6}'`)
 if (("$ids[1]" == "$rcvsem") && ("$ids[2]" != "INVALID") && ("$ids[2]" != "$rcvshm")) then
 	echo "PASS : the receive pool uses the semaphore that was left and a new shared memory"
 else
-	echo "WRONG : the receive pool ids are [$ids], expected semaphore $rcvsem and a new shared memory"
+	echo "FAIL : the receive pool ids are [$ids], expected semaphore $rcvsem and a new shared memory"
 endif
 # The new shared memory, and the semaphore that was left, are what the check below expects to be gone
 if ("$ids[2]" != "INVALID") set rcvshm = $ids[2]
@@ -215,6 +215,6 @@ $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 if (0 == $status) then
 	echo "PASS : dbcheck.csh found no integrity errors"
 else
-	echo "WRONG : dbcheck.csh failed - see dbcheck.out"
+	echo "FAIL : dbcheck.csh failed - see dbcheck.out"
 	cat dbcheck.out
 endif

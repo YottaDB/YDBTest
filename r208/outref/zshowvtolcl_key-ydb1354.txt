@@ -45,7 +45,7 @@ PASS : x("p")="""=""" is restored
 
 # Stage 4 : 1000 times, ZSHOW "V" of up to 4 random nodes of a local variable, with names and values
 #           made of =, ", (, ), comma, a, 1 and space, then restore them
-# Before the fix : "Could not extract a valid key" and WRONG within the first few times
+# Before the fix : "Could not extract a valid key" and FAIL within the first few times
 # With the fix   : expect $$^%ZSHOWVTOLCL to return 1 and ZSHOW "V" after the restore to match
 #                  ZSHOW "V" before it every time
 # Command : $gtm_dist/mumps -run random^ydb1354

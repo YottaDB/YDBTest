@@ -36,7 +36,7 @@ $gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sy
 if ((0 == $ccstat) && (0 == $status) && (-x $file)) then
 	echo "PASS : $file was built"
 else
-	echo "WRONG : $file was not built - see ${file}_cc.out and $file.map"
+	echo "FAIL : $file was not built - see ${file}_cc.out and $file.map"
 	cat ${file}_cc.out $file.map
 endif
 echo
@@ -46,7 +46,7 @@ echo "#           expect the YottaDB SIGSEGV handler to run and report KILLBYSIG
 echo "#           of the kernel killing the process with the default action of SIGSEGV (exit status 139)"
 echo '# Command : ./ydb1314_nogrow'
 echo "# Before the fix, the process was killed by the default action of SIGSEGV with no message, so the two"
-echo "# lines below were WRONG lines, one for its exit status, followed by its output, and one for the"
+echo "# lines below were FAIL lines, one for its exit status, followed by its output, and one for the"
 echo "# missing messages"
 # Run it in a subshell that also saves its exit status. With a second command, the subshell does not just exec
 # the program, so the "Segmentation fault" message of the shell that sees it killed by the signal goes to
@@ -54,23 +54,23 @@ echo "# missing messages"
 (./$file >& $file.out ; echo $status >&! $file.status) >& ${file}_shell.logx
 set rc = `cat $file.status`
 if (139 == $rc) then
-	echo "WRONG : the process was killed by the default action of SIGSEGV (exit status 139). Its output follows."
+	echo "FAIL : the process was killed by the default action of SIGSEGV (exit status 139). Its output follows."
 	cat $file.out
 else if (0 == $rc) then
-	echo "WRONG : the process exited with status 0. Its output follows."
+	echo "FAIL : the process exited with status 0. Its output follows."
 	cat $file.out
 else
 	echo "PASS : the process was not killed by the default action of SIGSEGV"
 endif
 $grep -q '^FAIL' $file.out
 if (0 == $status) then
-	echo "WRONG : the program reported a failure. Its output follows."
+	echo "FAIL : the program reported a failure. Its output follows."
 	cat $file.out
 endif
 # The messages hold the pid and addresses, so keep the check's output out of the reference file
 $gtm_tst/com/check_error_exist.csh $file.out KILLBYSIGSINFO1 SIGMAPERR >& check_error_exist.logx
 if ($status) then
-	echo "WRONG : no %YDB-F-KILLBYSIGSINFO1 and %YDB-F-SIGMAPERR messages from the process - see check_error_exist.logx"
+	echo "FAIL : no %YDB-F-KILLBYSIGSINFO1 and %YDB-F-SIGMAPERR messages from the process - see check_error_exist.logx"
 else
 	echo "PASS : the process reported %YDB-F-KILLBYSIGSINFO1 and %YDB-F-SIGMAPERR"
 endif

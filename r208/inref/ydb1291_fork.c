@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 	if (2 != argc)
 	{
-		printf("WRONG : usage: %s <msec>\n", argv[0]);
+		printf("FAIL : usage: %s <msec>\n", argv[0]);
 		return 1;
 	}
 	pthread_atfork(spin_prepare, NULL, NULL);
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuff, sizeof(errbuff));
-		printf("WRONG : parent ydb_set_s(^x) returned %d : %s\n", status, errbuff);
+		printf("FAIL : parent ydb_set_s(^x) returned %d : %s\n", status, errbuff);
 		return 1;
 	}
 	nanosleep(&halfsec, NULL);
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuff, sizeof(errbuff));
-		printf("WRONG : parent ydb_set_s(^a) returned %d : %s\n", status, errbuff);
+		printf("FAIL : parent ydb_set_s(^a) returned %d : %s\n", status, errbuff);
 		return 1;
 	}
 	fflush(stdout);
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 	pid = fork();
 	if (-1 == pid)
 	{
-		perror("WRONG : fork()");
+		perror("FAIL : fork()");
 		return 1;
 	}
 	if (0 == pid)
@@ -110,9 +110,9 @@ int main(int argc, char *argv[])
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuff, sizeof(errbuff));
-			printf("WRONG : child ydb_get_s(^x) returned %d : %s, expected YDB_OK\n", status, errbuff);
+			printf("FAIL : child ydb_get_s(^x) returned %d : %s, expected YDB_OK\n", status, errbuff);
 		} else if ((1 != value.len_used) || ('1' != value.buf_addr[0]))
-			printf("WRONG : child ydb_get_s(^x) returned [%.*s], expected [1]\n", value.len_used, value.buf_addr);
+			printf("FAIL : child ydb_get_s(^x) returned [%.*s], expected [1]\n", value.len_used, value.buf_addr);
 		else
 			printf("PASS : child ydb_get_s(^x) returned YDB_OK and [1]\n");
 		fflush(stdout);
@@ -123,11 +123,11 @@ int main(int argc, char *argv[])
 		ret = waitpid(pid, &wstatus, 0);
 	while ((-1 == ret) && (EINTR == errno));
 	if (-1 == ret)
-		perror("WRONG : waitpid()");
+		perror("FAIL : waitpid()");
 	else if (!WIFEXITED(wstatus))
-		printf("WRONG : child was killed by signal %d, expected it to exit with status 0\n", WTERMSIG(wstatus));
+		printf("FAIL : child was killed by signal %d, expected it to exit with status 0\n", WTERMSIG(wstatus));
 	else if (0 != WEXITSTATUS(wstatus))
-		printf("WRONG : child exited with status %d, expected 0\n", WEXITSTATUS(wstatus));
+		printf("FAIL : child exited with status %d, expected 0\n", WEXITSTATUS(wstatus));
 	else
 		printf("PASS : child exited with status 0\n");
 	return 0;

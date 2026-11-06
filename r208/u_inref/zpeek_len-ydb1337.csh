@@ -21,7 +21,7 @@ echo '# stack. $ZPEEK() now copies into a buffer of 63 bytes (31 for the mnemoni
 echo '# the argument), so a first argument of 32 to 63 bytes gets the same BADZPEEKARG as before, and'
 echo '# $ZPEEK() issues BADZPEEKARG with "length" (the length of the first argument) for a longer first'
 echo '# argument.'
-echo '# Each stage runs its case in a new process and prints PASS or WRONG.'
+echo '# Each stage runs its case in a new process and prints PASS or FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1337.m .
@@ -57,7 +57,7 @@ foreach label (len100000 len64 len63 len32 arglong valid gdrreg31 critreg31 gdrr
 	case "len64":
 		echo '# Stage 2 : $ZPEEK(<64 bytes, no colon>,0,0)'
 		echo '# Before the fix : BADZPEEKARG with "mnemonic type", after the copy overwrote the stack, so the'
-		echo '#                  line below was a WRONG line'
+		echo '#                  line below was a FAIL line'
 		echo '# With the fix   : expect BADZPEEKARG with "length"'
 		breaksw
 	case "len63":
@@ -74,7 +74,7 @@ foreach label (len100000 len64 len63 len32 arglong valid gdrreg31 critreg31 gdrr
 		breaksw
 	case "arglong":
 		echo '# Stage 5 : $ZPEEK("GDRREG:<57 bytes>",0,0), a first argument of 64 bytes with a valid mnemonic'
-		echo '# Before the fix : BADZPEEKARG with "mnemonic argument", so the line below was a WRONG line'
+		echo '# Before the fix : BADZPEEKARG with "mnemonic argument", so the line below was a FAIL line'
 		echo '# With the fix   : expect BADZPEEKARG with "length"'
 		breaksw
 	case "valid":

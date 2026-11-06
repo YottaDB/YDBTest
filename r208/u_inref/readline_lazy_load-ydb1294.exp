@@ -63,7 +63,7 @@ switch -- $step {
 		if {([string first "BACK" $out] >= 0) && ([string first "ydb_ci returned 0" $out] >= 0)} {
 			puts "PASS: the call-in entered direct mode, wrote QZ, and returned 0 after zcontinue"
 		} else {
-			puts "WRONG: expected BACK and ydb_ci returned 0 after zcontinue, got \[$out\]"
+			puts "FAIL : expected BACK and ydb_ci returned 0 after zcontinue, got \[$out\]"
 		}
 	}
 }

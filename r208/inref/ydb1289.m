@@ -41,9 +41,9 @@ check	; Check that ^a(1) to ^a(1000) hold the value of the last record that set 
 	set n=$$nrecs
 	for i=n-999:1:n set exp(i#1000+1)=$char(97+(i#26))
 	set errs=0
-	for j=1:1:1000 if $get(^a(j))'=exp(j) set errs=errs+1 if errs'>5 write "WRONG : ^a(",j,") is ",$zwrite($get(^a(j))),", expected ",$zwrite(exp(j)),!
+	for j=1:1:1000 if $get(^a(j))'=exp(j) set errs=errs+1 if errs'>5 write "FAIL : ^a(",j,") is ",$zwrite($get(^a(j))),", expected ",$zwrite(exp(j)),!
 	set cnt=0,j="" for  set j=$order(^a(j)) quit:""=j  set cnt=cnt+1
-	if 1000'=cnt set errs=errs+1 write "WRONG : ^a has ",cnt," subscripts, expected 1000",!
+	if 1000'=cnt set errs=errs+1 write "FAIL : ^a has ",cnt," subscripts, expected 1000",!
 	if 0=errs write "PASS : ^a has 1000 subscripts and each holds the value of the last record that set it",!
 	quit
 	;

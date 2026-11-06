@@ -9,7 +9,7 @@
 # (r2.02 and earlier). Other platforms were not affected.
 # Each stage runs its case in a new process. The case sets v1 to v<n> to 1, does a TSTART that names
 # them, sets them to 2 and does a TRESTART, then prints PASS if the restart restored all of them to 1,
-# or WRONG for each one that it did not restore.
+# or FAIL for each one that it did not restore.
 
 # Stage 1 : TSTART with 1, 2, 3, 4 and 5 names, which all fit in registers
 # Before the fix : the same result (these cases are controls)

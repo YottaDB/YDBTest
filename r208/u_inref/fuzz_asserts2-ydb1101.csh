@@ -49,7 +49,7 @@ end
 echo 'write "after the TRESTART commands, $tlevel=",$tlevel,!' >> stage10.inp
 echo 'set a(1)="for a(2)=1:1:3 if $increment(a) xecute a(1)"' > stage11.inp
 echo 'xecute a(1)' >> stage11.inp
-echo 'write $select(a>1024:"PASS : more than 1024",1:"WRONG : only "_a)," levels of XECUTE were active when the stack ran low",!' >> stage11.inp
+echo 'write $select(a>1024:"PASS : more than 1024",1:"FAIL : only "_a)," levels of XECUTE were active when the stack ran low",!' >> stage11.inp
 echo 'set f="t.file" tstart ()' > stage12.inp
 echo 'open f:newversion use f write "x"' >> stage12.inp
 echo 'open f:readonly' >> stage12.inp
@@ -140,7 +140,7 @@ foreach stage (1 2 3 4 5 6 7 8 9 10 11 12)
 	set ncoreafter = `ls -1 | $grep -c "^core"`
 	@ ncore = $ncoreafter - $ncorebefore
 	if (`$grep -c -- "-F-" stage$stage.out`) then
-		echo "WRONG : stage$stage.out has a fatal error"
+		echo "FAIL : stage$stage.out has a fatal error"
 	else
 		echo "PASS : no fatal error in stage$stage.out"
 	endif
@@ -151,7 +151,7 @@ foreach stage (1 2 3 4 5 6 7 8 9 10 11 12)
 		if (2 == $ntpmixup) then
 			echo "PASS : TPMIXUP was issued 2 times, once for each SET"
 		else
-			echo "WRONG : TPMIXUP was issued $ntpmixup times but 2 (once for each SET) were expected"
+			echo "FAIL : TPMIXUP was issued $ntpmixup times but 2 (once for each SET) were expected"
 		endif
 	endif
 	if (10 == $stage) then
@@ -160,7 +160,7 @@ foreach stage (1 2 3 4 5 6 7 8 9 10 11 12)
 		if (4 == $ntrestnot) then
 			echo "PASS : TRESTNOT was issued 4 times, once for each TRESTART"
 		else
-			echo "WRONG : TRESTNOT was issued $ntrestnot times but 4 (once for each TRESTART) were expected"
+			echo "FAIL : TRESTNOT was issued $ntrestnot times but 4 (once for each TRESTART) were expected"
 		endif
 	endif
 	if (11 == $stage) $grep "levels of XECUTE" stage$stage.out
@@ -168,7 +168,7 @@ foreach stage (1 2 3 4 5 6 7 8 9 10 11 12)
 		if (0 == $ncore) then
 			echo "PASS : the process exited without creating a core file"
 		else
-			echo "WRONG : the process created $ncore core files at exit"
+			echo "FAIL : the process created $ncore core files at exit"
 		endif
 	endif
 	if (4 == $stage) then

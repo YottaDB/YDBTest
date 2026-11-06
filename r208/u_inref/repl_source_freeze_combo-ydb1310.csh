@@ -41,7 +41,7 @@ foreach qual ($quals)
 	if ("$firstline" =~ "${expected}*") then
 		echo "PASS : rejected with CLIERR"
 	else
-		echo "WRONG : expected [$expected...] - see $outfile"
+		echo "FAIL : expected [$expected...] - see $outfile"
 		echo "$firstline"
 	endif
 	$gtm_tst/com/check_error_exist.csh $outfile CLIERR >&! ${outfile:r}_check.logx

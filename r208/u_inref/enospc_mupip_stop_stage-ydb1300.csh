@@ -30,7 +30,7 @@ $grep -q "Freeze: OFF" freeze_before_$stage.logx
 if (! $status) then
 	echo "# The instance is not frozen before the stage : as expected"
 else
-	echo "# The instance is not frozen before the stage : WRONG, see freeze_before_$stage.logx"
+	echo "# The instance is not frozen before the stage : FAIL, see freeze_before_$stage.logx"
 endif
 
 # The gdb breakpoints below are on function names, not source lines, so that the test does not depend on line numbers.
@@ -119,7 +119,7 @@ endif
 if ("$where" == "$expect") then
 	echo "# $where : as expected"
 else
-	echo "# gdb reported [$where] : WRONG, expected [$expect]"
+	echo "# gdb reported [$where] : FAIL, expected [$expect]"
 endif
 
 # Wait (at most 120 seconds) for A to freeze the instance from wait_for_disk_space()
@@ -138,13 +138,13 @@ end
 if ($frozen) then
 	echo "# The instance is frozen : as expected"
 else
-	echo "# The instance is frozen : WRONG, it did not freeze within 120 seconds"
+	echo "# The instance is frozen : FAIL, it did not freeze within 120 seconds"
 endif
 set apid = 0
 if (-e $stage.pid) then
 	set apid = `cat $stage.pid`
 else
-	echo "# Process A wrote its pid : WRONG, $stage.pid does not exist"
+	echo "# Process A wrote its pid : FAIL, $stage.pid does not exist"
 endif
 if ("blocked" == "$stage") then
 	# wait_for_disk_space() sends DSKNOSPCBLOCKED just before it waits for the freeze to be lifted, and A can leave that
@@ -166,7 +166,7 @@ if ("blocked" == "$stage") then
 	if ($blocked) then
 		echo "# Process A reported DSKNOSPCBLOCKED : as expected"
 	else
-		echo "# Process A reported DSKNOSPCBLOCKED : WRONG, no DSKNOSPCBLOCKED message from process A in syslog within 120 seconds"
+		echo "# Process A reported DSKNOSPCBLOCKED : FAIL, no DSKNOSPCBLOCKED message from process A in syslog within 120 seconds"
 	endif
 endif
 
@@ -178,22 +178,22 @@ if ("$apid" =~ [1-9]*) then
 	if (! $status) then
 		echo "# Process A terminated : as expected"
 	else
-		echo "# Process A terminated : WRONG, it is still alive after 120 seconds"
+		echo "# Process A terminated : FAIL, it is still alive after 120 seconds"
 	endif
 else
-	echo "# Process A terminated : WRONG, no pid of process A to stop"
+	echo "# Process A terminated : FAIL, no pid of process A to stop"
 endif
 # gdb ends once A has terminated (it has already detached, except in the crit stage)
 $gtm_tst/com/wait_for_proc_to_die.csh $gdbpid 120 . nolog 1 >& wait_for_gdb_to_die_$stage.out
 if ($status) then
-	echo "# gdb for process A ended : WRONG, it is still alive after 120 seconds"
+	echo "# gdb for process A ended : FAIL, it is still alive after 120 seconds"
 endif
 
 $grep -q "ASSERT" gdb_a_$stage.out
 if ($status) then
 	echo "# Process A had no assert failure : as expected"
 else
-	echo "# Process A had no assert failure : WRONG, see gdb_a_$stage.out"
+	echo "# Process A had no assert failure : FAIL, see gdb_a_$stage.out"
 endif
 $gtm_tst/com/check_error_exist.csh gdb_a_$stage.out FORCEDHALT
 
@@ -207,6 +207,6 @@ $grep -q "^B updated" gdb_b_$stage.out
 if ((! $status) && (0 == $bstatus)) then
 	echo "# Process B updated ^x, ^y and ^z(1) and exited : as expected"
 else
-	echo "# Process B updated ^x, ^y and ^z(1) and exited : WRONG, exit status $bstatus, see gdb_b_$stage.out"
+	echo "# Process B updated ^x, ^y and ^z(1) and exited : FAIL, exit status $bstatus, see gdb_b_$stage.out"
 endif
 echo

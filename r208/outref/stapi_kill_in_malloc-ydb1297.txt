@@ -12,7 +12,7 @@
 #
 # The program below has a main thread that makes no YottaDB call and loops on malloc() and free(), and
 # a worker thread that makes the YottaDB calls. Without the fix, step 2 of each stage usually prints
-# WRONG. A Debug build dumps the core without forking in SimpleThreadAPI mode, so the subtest runs
+# FAIL. A Debug build dumps the core without forking in SimpleThreadAPI mode, so the subtest runs
 # only with a pro build.
 
 # Stage 1 : the worker thread loops on ydb_set_st(), so a thread usually holds the engine lock

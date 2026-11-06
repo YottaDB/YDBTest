@@ -10,7 +10,7 @@
 # TSTART is such a TSTART and an argumentless NEW followed it, and TRESTNOT and TRESTLOC, also before it
 # unwinds anything, if the outermost TSTART is such a TSTART with no NEW after it.
 # A QUIT with an argument that issues TPQUIT in Direct Mode leaves Direct Mode running in such a frame.
-# Direct Mode prompts and blank lines are removed from the output below. Each check prints PASS or WRONG.
+# Direct Mode prompts and blank lines are removed from the output below. Each check prints PASS or FAIL.
 
 # Stage 1 : Direct Mode, TSTART and QUIT 1 (TPQUIT), then TSTART (d) and an argumentless NEW, then TRESTART
 # Before the fix : GTMASSERT2 in tp_unwind.c (curr_symval == tp_pointer->sym)
@@ -19,7 +19,7 @@
 tstart  quit 1
 tstart (d)  new
 trestart
-write $select(2=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+write $select(2=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TRESTNEW",!
 trollback
 # Command : $gtm_dist/mumps -direct < stage1.inp
 %YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
@@ -35,9 +35,9 @@ PASS : $TLEVEL=2 after TRESTNEW
 # Input :
 tstart (d)  new
 trestart
-write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+write $select(1=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TRESTNEW",!
 trollback
-write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TROLLBACK",!
+write $select(0=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TROLLBACK",!
 halt
 # Command : $gtm_dist/mumps -run ztrap^ydb1338 < stage2.inp
 %YDB-E-DIVZERO, Attempt to divide by zero
@@ -53,7 +53,7 @@ PASS : $TLEVEL=0 after TROLLBACK
 # Input :
 set d=1
 tstart (d)  set d=2  trestart
-write $select((1=$tlevel)&(2=d):"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
+write $select((1=$tlevel)&(2=d):"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
 trollback
 halt
 # Command : timeout 60 $gtm_dist/mumps -run ztrap^ydb1338 < stage3.inp
@@ -70,7 +70,7 @@ PASS : $TLEVEL=1 d=2 after TRESTNOT
 tstart  quit
 tstart (d)  new
 trestart
-write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNOT",!
+write $select(1=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TRESTNOT",!
 trollback
 # Command : $gtm_dist/mumps -direct < stage4.inp
 %YDB-E-TRESTNOT, Cannot TRESTART, transaction is not restartable,%YDB-E-TRESTLOC, Transaction start: +1^GTM$DMOD, Transaction failure: +1^GTM$DMOD
@@ -84,7 +84,7 @@ PASS : $TLEVEL=1 after TRESTNOT
 tstart  quit 1
 tstart (d)  new d
 trestart
-write $select(1=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNOT",!
+write $select(1=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TRESTNOT",!
 trollback
 # Command : $gtm_dist/mumps -direct < stage5.inp
 %YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
@@ -103,7 +103,7 @@ tstart (a)
 quit 1
 tstart (d)  set a=2
 trestart
-write $select((1=$trestart)&(1=$tlevel)&(1=a):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a,!
+write $select((1=$trestart)&(1=$tlevel)&(1=a):"PASS",1:"FAIL")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a,!
 trollback
 # Command : $gtm_dist/mumps -direct < stage6.inp
 %YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
@@ -116,7 +116,7 @@ PASS : $TRESTART=1 $TLEVEL=1 a=1
 # Input :
 set d=1
 tstart (d)  new  set d=2  trestart:$trestart<2
-write $select((1=$trestart)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," d=",$get(d),!
+write $select((1=$trestart)&(1=$get(d)):"PASS",1:"FAIL")," : $TRESTART=",$trestart," d=",$get(d),!
 tcommit
 # Command : $gtm_dist/mumps -direct < stage7.inp
 PASS : $TRESTART=1 d=1
@@ -152,7 +152,7 @@ set a=1,d=1
 tstart (a)
 quit 1
 tstart (d)  set a=2,d=2  do newdo^ydb1338
-write $select((1=$trestart)&(1=$tlevel)&(1=a)&(1=$get(d)):"PASS",1:"WRONG")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a," d=",$get(d),!
+write $select((1=$trestart)&(1=$tlevel)&(1=a)&(1=$get(d)):"PASS",1:"FAIL")," : $TRESTART=",$trestart," $TLEVEL=",$tlevel," a=",a," d=",$get(d),!
 trollback
 # Command : $gtm_dist/mumps -direct < stage10.inp
 %YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
@@ -167,7 +167,7 @@ PASS : $TRESTART=1 $TLEVEL=1 a=1 d=1
 set d=1
 break
 tstart (d)  set d=2  trestart
-write $select((1=$tlevel)&(2=d):"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
+write $select((1=$tlevel)&(2=d):"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
 trollback
 # Command : $gtm_dist/mumps -direct < stage11.inp
 %YDB-I-BREAK, Break instruction encountered
@@ -186,9 +186,9 @@ PASS : $TLEVEL=1 d=2 after TRESTNOT
 set d=1
 tstart (d)  new
 trestart
-write $select(2=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TRESTNEW",!
+write $select(2=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TRESTNEW",!
 trollback
-write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TROLLBACK",!
+write $select(0=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TROLLBACK",!
 halt
 # Command : $gtm_dist/mumps -run ztrapo^ydb1338 < stage12.inp
 %YDB-E-DIVZERO, Attempt to divide by zero

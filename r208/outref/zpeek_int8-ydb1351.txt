@@ -8,7 +8,7 @@
 # written past the end of the stringpool, which failed an assert in a Debug build and wrote past the
 # end of the allocated memory in a Release build. %PEEKBYNAME() uses $ZPEEK() so it had the same problem.
 # Each stage peeks at node_local.nbb (19 digits when no backup is in progress) 100000 times, with the
-# stringpool free space varied by a padding string, in a new process, and prints PASS or WRONG.
+# stringpool free space varied by a padding string, in a new process, and prints PASS or FAIL.
 
 # Create a database (the stages peek at its node_local structure)
 

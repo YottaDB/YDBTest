@@ -79,7 +79,7 @@ echo '# With the fix   : expect an error for each entry, MUNOACTION, and an exit
 $gtm_dist/mumps -run trgfile^ydb1341
 $gtm_dist/mupip trigger -triggerfile=badpat.trg -noprompt >& mupip.out
 set stat = $status
-echo "# MUPIP TRIGGER exit status is not 0 : `test 0 != $stat && echo PASS || echo WRONG $stat`"
+echo "# MUPIP TRIGGER exit status is not 0 : `test 0 != $stat && echo PASS || echo FAIL $stat`"
 $gtm_tst/com/check_error_exist.csh mupip.out MUNOACTION
 echo '# mupip.out (renamed to mupip.outx by check_error_exist.csh), without the MUNOACTION line :'
 grep -v MUNOACTION mupip.outx

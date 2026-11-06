@@ -25,7 +25,7 @@ static void check_status(char *what, int status, int expected, char *expname)
 	if (expected == status)
 		printf("PASS : %s returned %s\n", what, expname);
 	else
-		printf("WRONG : %s returned status %d, expected %s\n", what, status, expname);
+		printf("FAIL : %s returned status %d, expected %s\n", what, status, expname);
 }
 
 /* Check that another process finds the lock on name held */
@@ -44,7 +44,7 @@ static void check_held(char *what, char *name)
 	if (0 == strcmp(result, "held\n"))
 		printf("PASS : after %s, another process finds %s held\n", what, name);
 	else
-		printf("WRONG : after %s, another process finds %s %s", what, name, result);
+		printf("FAIL : after %s, another process finds %s %s", what, name, result);
 }
 
 /* Inside TP, release a lock acquired before the transaction started, which issues TPLOCK */

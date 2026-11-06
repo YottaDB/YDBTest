@@ -15,7 +15,7 @@
 #   set y="y",v=$data(@"x(@y)")_$data(@"z(p,1)")
 # Command : $gtm_dist/mumps -run short^ydb1308
 #   expect 00
-# Before the fix, LVUNDEF, so the line below was a WRONG line
+# Before the fix, LVUNDEF, so the line below was a FAIL line
 PASS : short : $data(@"x(@y)")_$data(@"z(p,1)") with y="y" : 00 (expected 00)
 
 # Stages 2 to 6 are variations of stage 1: the second reference is $DATA(@ref) with ref="z(p,n)",
@@ -30,21 +30,21 @@ PASS : nofirst : $data(@ref) with ref=z(p,n) : 0 (expected 0)
 # Stage 3 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a defined
 # Command : $gtm_dist/mumps -run nested^ydb1308
 #   expect 0
-# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# Before the fix, LVUNDEF, so the second line below was a FAIL line
 # nested : $data(@ref) with ref=x(@y) : 0
 PASS : nested : $data(@ref) with ref=z(p,n) : 0 (expected 0)
 
 # Stage 4 : the same after $DATA(@ref) with ref="x(@y)", y="a" and a undefined, which issues an error
 # Command : $gtm_dist/mumps -run nestederr^ydb1308
 #   expect 0
-# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# Before the fix, LVUNDEF, so the second line below was a FAIL line
 # nestederr : $data(@ref) with ref=x(@y) : an error
 PASS : nestederr : $data(@ref) with ref=z(p,n) : 0 (expected 0)
 
 # Stage 5 : the same after $DATA(@ref) with ref="x(1,@y)", y="a" and a defined
 # Command : $gtm_dist/mumps -run nested2^ydb1308
 #   expect 0
-# Before the fix, LVUNDEF, so the second line below was a WRONG line
+# Before the fix, LVUNDEF, so the second line below was a FAIL line
 # nested2 : $data(@ref) with ref=x(1,@y) : 0
 PASS : nested2 : $data(@ref) with ref=z(p,n) : 0 (expected 0)
 

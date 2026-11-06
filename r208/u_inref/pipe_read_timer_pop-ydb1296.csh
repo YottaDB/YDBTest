@@ -21,7 +21,7 @@ echo "# popped after one read() returned a partial line and before the next read
 echo "# interrupted that read(), and the READ waited for more input forever."
 echo "#"
 echo "# White-box case 412 makes the READ wait for its timer to pop after each read() that returns input,"
-echo "# which makes the race happen every time. Without the fix, stage 2 prints WRONG. Stage 1 is a control"
+echo "# which makes the race happen every time. Without the fix, stage 2 prints FAIL. Stage 1 is a control"
 echo "# without the white-box case."
 echo
 
@@ -45,7 +45,7 @@ foreach stage (1 2)
 	set stat = $status
 	cat stage$stage.out
 	if (0 != $stat) then
-		echo "WRONG : mumps exited with status $stat, expected 0 (124 means it was still running after 120 seconds)"
+		echo "FAIL : mumps exited with status $stat, expected 0 (124 means it was still running after 120 seconds)"
 	endif
 	echo
 end

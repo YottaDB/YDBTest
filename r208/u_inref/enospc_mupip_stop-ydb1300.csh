@@ -25,7 +25,7 @@ echo "# This test needs a Debug build: gdb turns on the debug-only fake ENOSPC a
 echo "# chosen point in process A. Each stage then stops A with MUPIP STOP while it waits for disk space,"
 echo "# checks that A terminates with FORCEDHALT and no assert failure, and that process B can then update"
 echo "# the same globals. Without the fix, A fails an assert in secshr_db_clnup() in stage 1, and the state"
-echo "# that leaves makes the later stages report WRONG as well."
+echo "# that leaves makes the later stages report FAIL as well."
 echo
 
 # The fake ENOSPC is set from gdb below, so turn off the random fake ENOSPC done by the source server.

@@ -21,7 +21,7 @@ echo '# An error that interrupted the LOCK left the flags set, so a later increm
 echo '# did not count it, and returned success without acquiring it. The simpleAPI error handler also left'
 echo '# lks_this_cmd set, so the next simpleAPI lock call issued BADLOCKNEST.'
 echo '#'
-echo '# Without the fix, stages 1 to 3 and 5 each print WRONG for the lock taken after the error: a timed LOCK +'
+echo '# Without the fix, stages 1 to 3 and 5 each print FAIL for the lock taken after the error: a timed LOCK +'
 echo '# sets $TEST to 1, and an untimed one returns at once, without acquiring the lock (even if another process'
 echo '# holds it), and a simpleAPI lock call returns BADLOCKNEST, or YDB_OK without acquiring the lock.'
 echo
@@ -65,7 +65,7 @@ echo '#   (lckclr()) without lckclr() stopping at the end of the list gets a SIG
 $MUPIP set -region AREG -lck_shares_db_crit >& mupip_set_lck_shares_db_crit.out
 $grep -q "now has LOCK sharing crit with DB  TRUE" mupip_set_lck_shares_db_crit.out
 if ($status) then
-	echo "WRONG : MUPIP SET -LCK_SHARES_DB_CRIT did not report TRUE. Output follows."
+	echo "FAIL : MUPIP SET -LCK_SHARES_DB_CRIT did not report TRUE. Output follows."
 	cat mupip_set_lck_shares_db_crit.out
 else
 	echo "PASS : MUPIP SET -LCK_SHARES_DB_CRIT reported TRUE for AREG"

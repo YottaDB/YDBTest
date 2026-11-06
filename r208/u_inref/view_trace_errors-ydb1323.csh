@@ -57,13 +57,13 @@ foreach case (vtcert vtgarbage)
 	endif
 	$dm $case VIEWNOTFOUND
 	echo '# Command : $gtm_dist/mumps -run %XCMD '"'"'write $data(^trace)'"'"
-	$gtm_dist/mumps -run %XCMD 'write $select(10=$data(^trace):"PASS",1:"WRONG")," : $data(^trace) is ",$data(^trace),!'
+	$gtm_dist/mumps -run %XCMD 'write $select(10=$data(^trace):"PASS",1:"FAIL")," : $data(^trace) is ",$data(^trace),!'
 	echo '# Command : $gtm_dist/mupip integ -region "*"'
 	$gtm_dist/mupip integ -region "*" >& integ_$case.out
 	if ({ $grep -q "No errors detected by integ" integ_$case.out }) then
 		echo "PASS : MUPIP INTEG found no errors"
 	else
-		echo "WRONG : MUPIP INTEG found errors. See integ_$case.out"
+		echo "FAIL : MUPIP INTEG found errors. See integ_$case.out"
 	endif
 	echo
 end

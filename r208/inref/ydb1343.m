@@ -10,7 +10,7 @@
 ;#								#
 ;#################################################################
 ; Helper M program used by the r208/invdlrcval_value-ydb1343 subtest (UTF-8 mode). Each label checks one case and
-; prints PASS or WRONG.
+; prints PASS or FAIL.
 ;
 xecute	; XECUTE of a $CHAR() with a literal argument that is not a valid code point
 	new err
@@ -38,5 +38,5 @@ check(err,value)	; Check that "err" is INVDLRCVAL with the given value
 	new want
 	set want="%YDB-E-INVDLRCVAL, Invalid $CHAR() value "_value
 	if $piece(err,",",3,99)=want write "PASS : the error is ",want,! quit
-	write "WRONG : the error is [",$piece(err,",",3,99),"], expected ",want,!
+	write "FAIL : the error is [",$piece(err,",",3,99),"], expected ",want,!
 	quit

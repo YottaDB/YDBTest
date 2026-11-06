@@ -47,7 +47,7 @@ short	; the example in YDB#1308, with the two $DATA() values joined:
 	;	set y="y" write $data(@"x(@y)"),$data(@"z(p,1)"),!
 	new y,v,err
 	do shtry
-	write $select((""=err)&("00"=v):"PASS",1:"WRONG")," : short : $data(@""x(@y)"")_$data(@""z(p,1)"") with y=""y"" : "
+	write $select((""=err)&("00"=v):"PASS",1:"FAIL")," : short : $data(@""x(@y)"")_$data(@""z(p,1)"") with y=""y"" : "
 	write $select(""'=err:err,1:v)," (expected 00)",!
 	quit
 
@@ -63,7 +63,7 @@ check(what,first)
 	set y="a",n=1
 	if ""'=first set ref=first do try write "# ",what," : $data(@ref) with ref=",ref," : ",$select(""'=err:"an error",1:v),!
 	set ref="z(p,n)" do try
-	write $select((""=err)&(0=v):"PASS",1:"WRONG")," : ",what," : $data(@ref) with ref=",ref," : "
+	write $select((""=err)&(0=v):"PASS",1:"FAIL")," : ",what," : $data(@ref) with ref=",ref," : "
 	write $select(""'=err:err,1:v)," (expected 0)",!
 	quit
 

@@ -34,7 +34,7 @@ set stat = $status
 if ((0 == $stat) && (-z ztexithalt.out)) then
 	echo "PASS : exit status 0 and no output"
 else
-	echo "WRONG : exit status $stat, output follows"
+	echo "FAIL : exit status $stat, output follows"
 	cat ztexithalt.out
 endif
 echo
@@ -55,13 +55,13 @@ set stat = $status
 if ((0 == $stat) && (-z ztexitlock.out)) then
 	echo "PASS : exit status 0 and no output"
 else
-	echo "WRONG : exit status $stat, output follows"
+	echo "FAIL : exit status $stat, output follows"
 	cat ztexitlock.out
 endif
 echo '# Command : $gtm_dist/lke show -all, which reports a LOCK of an exited process without removing it'
 $gtm_dist/lke show -all >& lke_show.outx
 if ({ $grep -q "Owned by" lke_show.outx }) then
-	echo "WRONG : a LOCK is left in the lock space. See lke_show.outx"
+	echo "FAIL : a LOCK is left in the lock space. See lke_show.outx"
 else
 	echo "PASS : no LOCK is left in the lock space"
 endif

@@ -44,11 +44,11 @@ valued	; The node above the control variable has a value, so only the control va
 	set abc(1)=1,abc(2)=2,abc(3)=3
 	do run("for abc(1,1)=abc(4)")
 	set abc(5)=5,abc(6)=6
-	write $select(ecode[",M6,":"PASS",1:"WRONG")," : the FOR issued LVUNDEF",!
+	write $select(ecode[",M6,":"PASS",1:"FAIL")," : the FOR issued LVUNDEF",!
 	set node="abc",n=0
 	for  set node=$query(@node) quit:(""=node)!(10<n)  set n=n+1
-	write $select(5=n:"PASS",1:"WRONG")," : $QUERY visits the 5 nodes",!
-	write $select(1=$get(abc(1)):"PASS",1:"WRONG")," : abc(1) still has its value",!
+	write $select(5=n:"PASS",1:"FAIL")," : $QUERY visits the 5 nodes",!
+	write $select(1=$get(abc(1)):"PASS",1:"FAIL")," : abc(1) still has its value",!
 	quit
 otherchild	; The node above the control variable has no value but has another child, so only the control variable node is
 	; deleted, and the tree of the first level subscripts keeps its lastLookup clue. The SETs right after the FOR use
@@ -57,25 +57,25 @@ otherchild	; The node above the control variable has no value but has another ch
 	set abc(1,2)=1,abc(2)=2,abc(3)=3
 	do run("for abc(1,1)=abc(4)")
 	set abc(5)=5,abc(6)=6
-	write $select(ecode[",M6,":"PASS",1:"WRONG")," : the FOR issued LVUNDEF",!
+	write $select(ecode[",M6,":"PASS",1:"FAIL")," : the FOR issued LVUNDEF",!
 	set node="abc",n=0
 	for  set node=$query(@node) quit:(""=node)!(10<n)  set n=n+1
-	write $select(5=n:"PASS",1:"WRONG")," : $QUERY visits the 5 nodes",!
-	write $select(1=$get(abc(1,2)):"PASS",1:"WRONG")," : abc(1,2) still has its value",!
+	write $select(5=n:"PASS",1:"FAIL")," : $QUERY visits the 5 nodes",!
+	write $select(1=$get(abc(1,2)):"PASS",1:"FAIL")," : abc(1,2) still has its value",!
 	quit
 try(code,gone)	; Run "code" (or each "code(i)"), which must issue LVUNDEF, then check the tree
 	new n1,n2,ecode,node,i,ok
 	set n1=$$count,ok=1
 	if $data(code)#2 do run(code) set ok=ecode[",M6,"
 	else  for i=1:1 quit:'$data(code(i))  do run(code(i)) set:'(ecode[",M6,") ok=0
-	write $select(ok:"PASS",1:"WRONG")," : the FOR issued LVUNDEF",!
-	write $select('$data(@gone):"PASS",1:"WRONG")," : $data(",gone,")=0",!
+	write $select(ok:"PASS",1:"FAIL")," : the FOR issued LVUNDEF",!
+	write $select('$data(@gone):"PASS",1:"FAIL")," : $data(",gone,")=0",!
 	set n2=$$count
-	write $select(n1=n2:"PASS",1:"WRONG")," : $QUERY visits the same ",n1," nodes as before the FOR",!
+	write $select(n1=n2:"PASS",1:"FAIL")," : $QUERY visits the same ",n1," nodes as before the FOR",!
 	zwrite:n1<5 abc
 	set node="abc" for i=1:1 set node=$query(@node) quit:""=node  set @node=-i
 	set node="abc" for  set node=$query(@node) quit:""=node  kill @node
-	write $select('$data(abc):"PASS",1:"WRONG")," : every node could be set and killed",!
+	write $select('$data(abc):"PASS",1:"FAIL")," : every node could be set and killed",!
 	quit
 run(code)	; Run "code" with an error trap that records $ECODE and returns
 	new $etrap

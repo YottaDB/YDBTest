@@ -35,7 +35,7 @@ $gtm_tst/com/dbcreate.csh mumps >&! dbcreate.out
 if (0 == $status) then
 	echo "PASS : the encrypted database was created"
 else
-	echo "WRONG : dbcreate.csh failed - see dbcreate.out"
+	echo "FAIL : dbcreate.csh failed - see dbcreate.out"
 	cat dbcreate.out
 endif
 echo '# Command : $gtm_exe/mumps -run %XCMD '"'"'for i=1:1:10 set ^a(i)=i'"'"
@@ -46,7 +46,7 @@ $grep -q 'RECORDSTAT, TOTAL:.*Key cnt: 10 ' extract.out
 if (0 == $status) then
 	echo "PASS : 10 records were extracted"
 else
-	echo "WRONG : the extract did not report 10 records - see extract.out"
+	echo "FAIL : the extract did not report 10 records - see extract.out"
 	cat extract.out
 endif
 echo '# Command : perl $gtm_tst/$tst/inref/ydb1310_patch_handle.pl extr.bin 99'
@@ -54,7 +54,7 @@ perl $gtm_tst/$tst/inref/ydb1310_patch_handle.pl extr.bin 99 >&! patch.out
 if (0 == $status) then
 	echo "PASS : the handle index of the first data block is now 99"
 else
-	echo "WRONG : could not patch the extract - see patch.out"
+	echo "FAIL : could not patch the extract - see patch.out"
 	cat patch.out
 endif
 echo '# Command : $gtm_exe/mumps -run %XCMD '"'"'kill ^a'"'"
@@ -69,7 +69,7 @@ $tst_awk '(1 == NR) && /^%YDB-F-RECLOAD, Error loading record number: 2$/ {r++} 
 if (0 == $status) then
 	echo "PASS : MUPIP LOAD reported RECLOAD followed by TEXT with the expected handle range, and no other message"
 else
-	echo "WRONG : expected exactly RECLOAD then TEXT - see load.out"
+	echo "FAIL : expected exactly RECLOAD then TEXT - see load.out"
 	cat load_msgs.logx
 endif
 $gtm_tst/com/check_error_exist.csh load.out RECLOAD >&! check_load.logx
@@ -78,7 +78,7 @@ set ncores = `ls -1 core* |& $grep -c '^core'`
 if (1 == $ncores) then
 	echo "PASS : the one core file that bin_load() forks was found"
 else
-	echo "WRONG : expected 1 core file, found $ncores"
+	echo "FAIL : expected 1 core file, found $ncores"
 endif
 foreach corename (`ls -1 core* |& $grep '^core'`)
 	mv $corename hidden_expected_core_$corename
@@ -89,6 +89,6 @@ $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 if (0 == $status) then
 	echo "PASS : dbcheck.csh found no integrity errors"
 else
-	echo "WRONG : dbcheck.csh failed - see dbcheck.out"
+	echo "FAIL : dbcheck.csh failed - see dbcheck.out"
 	cat dbcheck.out
 endif

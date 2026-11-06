@@ -38,6 +38,6 @@ run(rtn,expect)	; DO ^rtn and check that line 3 issues the error expect
 	set lvl=$zlevel,zs=""
 	set $etrap="set zs=$zstatus,$ecode="""" zgoto "_lvl_":done^ydb1344"
 	do @("^"_rtn)
-done	if ""=zs write "WRONG: ^",rtn," did not issue an error",! quit
-	write $select(zs[(",%YDB-E-"_expect_","):"PASS",1:"WRONG"),": line 3 of ^",rtn," issues ",$piece($piece(zs,",",3),"-",3),!
+done	if ""=zs write "FAIL : ^",rtn," did not issue an error",! quit
+	write $select(zs[(",%YDB-E-"_expect_","):"PASS",1:"FAIL"),": line 3 of ^",rtn," issues ",$piece($piece(zs,",",3),"-",3),!
 	quit

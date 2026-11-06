@@ -46,22 +46,22 @@ brk	; BREAK in a routine, so Direct Mode runs on top of this counted frame. A TR
 	; routine right after the BREAK.
 	set d=1
 	break
-	write $select((1=$trestart)&(1=$get(d)):"PASS",1:"WRONG")," : the transaction restarted once and d was restored"
+	write $select((1=$trestart)&(1=$get(d)):"PASS",1:"FAIL")," : the transaction restarted once and d was restored"
 	write " ($TRESTART=",$trestart," d=",$get(d),")",!
 	tcommit
-	write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TCOMMIT",!
+	write $select(0=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TCOMMIT",!
 	quit
 	;
 rtn	; TSTART, argumentless NEW and TRESTART in a routine (no Direct Mode)
 	set d=1
 	tstart (d)
-	write:$trestart $select(1=$get(d):"PASS",1:"WRONG")," : d=",$get(d)," at the start of retry ",$trestart,!
+	write:$trestart $select(1=$get(d):"PASS",1:"FAIL")," : d=",$get(d)," at the start of retry ",$trestart,!
 	new
 	set d=2
 	if $trestart<2 trestart
-	write $select(2=$trestart:"PASS",1:"WRONG")," : $TRESTART=",$trestart,!
+	write $select(2=$trestart:"PASS",1:"FAIL")," : $TRESTART=",$trestart,!
 	tcommit
-	write $select(0=$tlevel:"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," after TCOMMIT",!
+	write $select(0=$tlevel:"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," after TCOMMIT",!
 	quit
 	;
 newdo	; Argumentless NEW in a routine called by a DO, then TRESTART while that routine is still active

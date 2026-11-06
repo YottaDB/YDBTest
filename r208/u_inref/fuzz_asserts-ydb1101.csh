@@ -71,7 +71,7 @@ source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instance gtm_repl_instance
 echo '# Command : $gtm_dist/mupip journal -rollback -backward -online "*"'
 $gtm_dist/mupip journal -rollback -backward -online "*" >& rollback.out
 if ({ $grep -q -- "-F-" rollback.out }) then
-	echo "WRONG : MUPIP issued a fatal error. See rollback.out"
+	echo "FAIL : MUPIP issued a fatal error. See rollback.out"
 else
 	echo "PASS : MUPIP issued no fatal error"
 endif

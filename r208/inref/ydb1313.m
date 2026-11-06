@@ -30,7 +30,7 @@ clienttimeout	; WRITE /TLS("client",1) to a peer that accepts the TCP connection
 	set pid=$zjob
 	do waitready(1)
 	open s:(connect="127.0.0.1:"_port_":TCP":attach="client"):10:"SOCKET"
-	else  write "WRONG : could not connect to the peer",! do stoppeer(1,pid) quit
+	else  write "FAIL : could not connect to the peer",! do stoppeer(1,pid) quit
 	use s
 	do checkblocking(s,"before WRITE /TLS")
 	set t0=$zut
@@ -47,14 +47,14 @@ servertimeout	; WRITE /TLS("server",1) with a TCP client that never starts the h
 	set $etrap="do etrap^ydb1313"
 	set port=$ztrnlnm("portno"),s="server"
 	open s:(listen=port_":TCP":attach="listener"):10:"SOCKET"
-	else  write "WRONG : could not listen on the port",! quit
+	else  write "FAIL : could not listen on the port",! quit
 	job silentclient(port,2):(output="silentclient.mjo":error="silentclient.mje")
 	set pid=$zjob
 	use s
 	write /listen(1)
 	write /wait(30)
 	set key=$key
-	if "CONNECT"'=$piece(key,"|") use $principal write "WRONG : no connection from the peer, $KEY is [",key,"]",! do stoppeer(2,pid) quit
+	if "CONNECT"'=$piece(key,"|") use $principal write "FAIL : no connection from the peer, $KEY is [",key,"]",! do stoppeer(2,pid) quit
 	do checkblocking(s,"before WRITE /TLS")
 	set t0=$zut
 	write /tls("server",1,"server")
@@ -71,7 +71,7 @@ handshake(timeout)	; A TLS server and a JOBbed TLS client complete the handshake
 	set $etrap="do etrap^ydb1313"
 	set port=$ztrnlnm("portno"),s="server",stage=$select(""=timeout:4,1:3)
 	open s:(listen=port_":TCP":attach="listener"):10:"SOCKET"
-	else  write "WRONG : could not listen on the port",! quit
+	else  write "FAIL : could not listen on the port",! quit
 	; The output and error file names of a JOB must be literals, so build the JOB argument with indirection
 	job @("tlsclient(port,stage,timeout):(output=""tlsclient"_stage_".mjo"":error=""tlsclient"_stage_".mje"")")
 	set pid=$zjob
@@ -79,24 +79,24 @@ handshake(timeout)	; A TLS server and a JOBbed TLS client complete the handshake
 	write /listen(1)
 	write /wait(30)
 	set key=$key
-	if "CONNECT"'=$piece(key,"|") use $principal write "WRONG : no connection from the peer, $KEY is [",key,"]",! do stoppeer(stage,pid) quit
+	if "CONNECT"'=$piece(key,"|") use $principal write "FAIL : no connection from the peer, $KEY is [",key,"]",! do stoppeer(stage,pid) quit
 	if ""=timeout write /tls("server",,"server") set tst=1
 	else  write /tls("server",timeout,"server") set tst=$test
 	use $principal
 	if tst write "PASS : the server handshake succeeded",!
-	else  write "WRONG : the server handshake timed out, expected $TEST to be 1",!
+	else  write "FAIL : the server handshake timed out, expected $TEST to be 1",!
 	use s
 	do checkblocking(s,"after the server handshake")
 	read line:30
 	use $principal
 	if $test,"ping from client"=line write "PASS : the server read [",line,"]",!
-	else  write "WRONG : the server read [",line,"], expected [ping from client]",!
+	else  write "FAIL : the server read [",line,"], expected [ping from client]",!
 	use s
 	write "pong from server",!
 	do waitpeer(stage,pid)
 	close s
 	use $principal
-	write $get(^result(stage),"WRONG : the client did not report its result"),!
+	write $get(^result(stage),"FAIL : the client did not report its result"),!
 	quit
 	;
 silentserver(port,stage)	; accept one TCP connection and never answer the handshake
@@ -125,24 +125,24 @@ tlsclient(port,stage,timeout)	; connect, complete the client handshake, then sen
 	new line,result,s,tst
 	set s="client"
 	open s:(connect="127.0.0.1:"_port_":TCP":attach="client"):30:"SOCKET"
-	else  set ^result(stage)="WRONG : the client could not connect" quit
+	else  set ^result(stage)="FAIL : the client could not connect" quit
 	use s
 	if ""=timeout write /tls("client",,"client") set tst=1
 	else  write /tls("client",timeout,"client") set tst=$test
-	if 'tst set ^result(stage)="WRONG : the client handshake timed out, expected $TEST to be 1" close s quit
-	if 0'=$$nonblock(s) set ^result(stage)="WRONG : the client socket is nonblocking (or its flags are unknown) after the client handshake" close s quit
+	if 'tst set ^result(stage)="FAIL : the client handshake timed out, expected $TEST to be 1" close s quit
+	if 0'=$$nonblock(s) set ^result(stage)="FAIL : the client socket is nonblocking (or its flags are unknown) after the client handshake" close s quit
 	write "ping from client",!
 	read line:30
 	if $test,"pong from server"=line set result="PASS : the client handshake succeeded, its socket is blocking, and the client read ["_line_"]"
-	else  set result="WRONG : the client read ["_line_"], expected [pong from server]"
+	else  set result="FAIL : the client read ["_line_"], expected [pong from server]"
 	set ^result(stage)=result
 	close s
 	quit
 	;
 checktimeout(side,tst,el)	; WRITE /TLS must return $TEST=0 after its 1 second timeout, not after the peer gives up
 	use $principal
-	if 0'=tst write "WRONG : the ",side," handshake returned $TEST=",tst,", expected 0",!
-	else  if (el<900000)!(el>10000000) write "WRONG : the ",side," handshake returned after ",$justify(el/1000000,0,3)," seconds, expected 0.9 to 10 seconds",!
+	if 0'=tst write "FAIL : the ",side," handshake returned $TEST=",tst,", expected 0",!
+	else  if (el<900000)!(el>10000000) write "FAIL : the ",side," handshake returned after ",$justify(el/1000000,0,3)," seconds, expected 0.9 to 10 seconds",!
 	else  write "PASS : the ",side," handshake timed out with $TEST=0 after about 1 second",!
 	quit
 	;
@@ -151,8 +151,8 @@ checkblocking(s,when)	; the file descriptor of the current socket of device s mu
 	set saveio=$io
 	set nonblock=$$nonblock(s)
 	use $principal
-	if -1=nonblock write "WRONG : no flags for the socket in /proc/",$job,"/fdinfo",!
-	else  if nonblock write "WRONG : the socket is nonblocking ",when,", expected it to be blocking",!
+	if -1=nonblock write "FAIL : no flags for the socket in /proc/",$job,"/fdinfo",!
+	else  if nonblock write "FAIL : the socket is nonblocking ",when,", expected it to be blocking",!
 	else  write "PASS : the socket is blocking ",when,!
 	use saveio
 	quit
@@ -190,11 +190,11 @@ stoppeer(stage,pid)	; tell the peer to stop, then wait for it to exit
 waitpeer(stage,pid)	; wait for the peer to exit, for at most 60 seconds
 	new i
 	for i=1:1:600 quit:'$zgetjpi(pid,"isprocalive")  hang 0.1
-	if $zgetjpi(pid,"isprocalive") use $principal write "WRONG : the peer of stage ",stage," did not exit",!
+	if $zgetjpi(pid,"isprocalive") use $principal write "FAIL : the peer of stage ",stage," did not exit",!
 	quit
 	;
 etrap	;
 	use $principal
-	write "WRONG : unexpected error : ",$zstatus,!
+	write "FAIL : unexpected error : ",$zstatus,!
 	set $ecode=""
 	halt

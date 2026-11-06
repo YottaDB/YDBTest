@@ -10,12 +10,12 @@
 # GTMASSERT2 in emit_code.c (an assert failure in emit_code.c in a Debug build).
 #
 # Without the fix, stages 1, 2 and 5 end the compile with GTMASSERT2 (or the assert failure), and print
-# WRONG, and stages 3, 4 and 6 PASS.
+# FAIL, and stages 3, 4 and 6 PASS.
 
 # Stage 1 : line 3 is [ w $length($zbar x]: INVSVN and then RPARENMISSING
 # Command : $gtm_dist/mumps ydb1344a.m
 # Before the fix, the compile issued INVSVN and RPARENMISSING and then ended with GTMASSERT2 in emit_code.c
-# (an assert failure in emit_code.c in a Debug build), and the WRONG lines below were printed
+# (an assert failure in emit_code.c in a Debug build), and the FAIL lines below were printed
 #   expect the errors (INVSVN RPARENMISSING), no GTMASSERT2 or assert failure, and ydb1344a.o to be produced
 ----------
 Error INVSVN seen in ydb1344a.cmp as expected:
@@ -35,7 +35,7 @@ PASS: line 3 of ^ydb1344a issues INVSVN
 # Stage 2 : line 3 is [ w $zfoo,a(1)_","_a(2)_","_ ... _","_a(128)]: INVSVN and then MAXARGCNT
 # Command : $gtm_dist/mumps ydb1344b.m
 # Before the fix, the compile issued INVSVN and MAXARGCNT and then ended with GTMASSERT2 in emit_code.c
-# (an assert failure in emit_code.c in a Debug build), and the WRONG lines below were printed
+# (an assert failure in emit_code.c in a Debug build), and the FAIL lines below were printed
 #   expect the errors (INVSVN MAXARGCNT), no GTMASSERT2 or assert failure, and ydb1344b.o to be produced
 ----------
 Error INVSVN seen in ydb1344b.cmp as expected:
@@ -89,7 +89,7 @@ PASS: line 3 of ^ydb1344e issues INVSVN
 # Stage 5 : DO ^ydb1344d, whose line 3 is [ w $length($zbar x], compiles it with the automatic ZLINK
 # Command : $gtm_dist/mumps -run %XCMD 'do run^ydb1344("ydb1344d","INVSVN")'
 # Before the fix, the automatic ZLINK issued INVSVN and RPARENMISSING and then ended with GTMASSERT2 in
-# emit_code.c (an assert failure in emit_code.c in a Debug build), and the WRONG line below was printed
+# emit_code.c (an assert failure in emit_code.c in a Debug build), and the FAIL line below was printed
 #   expect the compile to issue INVSVN and RPARENMISSING with no GTMASSERT2 or assert failure, line 2
 #   to run and line 3 to issue INVSVN
 ----------

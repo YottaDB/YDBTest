@@ -46,7 +46,7 @@ reclaim	; VIEW "STP_GCOL" still reclaims garbage
 	;
 chk(ok,what,detail)
 	; The actual values depend on the build and the environment, so they appear only when a check fails.
-	write $select(ok:"PASS",1:"WRONG")," : ",what
+	write $select(ok:"PASS",1:"FAIL")," : ",what
 	write:'ok " (",detail,")"
 	write !
 	quit

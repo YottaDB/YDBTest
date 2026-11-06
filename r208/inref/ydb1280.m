@@ -67,7 +67,7 @@ ydb1280	;
 chk(ok,what,v)
 	; The actual values vary with the garbage collection mode and the stringpool growth pattern, so they
 	; appear in the output only when a check fails.
-	write $select(ok:"PASS",1:"WRONG")," : ",what
+	write $select(ok:"PASS",1:"FAIL")," : ",what
 	write:'ok " (got ",v,")"
 	write !
 	quit

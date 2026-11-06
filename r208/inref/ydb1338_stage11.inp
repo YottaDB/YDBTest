@@ -1,5 +1,5 @@
 set d=1
 break
 tstart (d)  set d=2  trestart
-write $select((1=$tlevel)&(2=d):"PASS",1:"WRONG")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
+write $select((1=$tlevel)&(2=d):"PASS",1:"FAIL")," : $TLEVEL=",$tlevel," d=",d," after TRESTNOT",!
 trollback

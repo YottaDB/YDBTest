@@ -44,7 +44,7 @@ bigger	; multi-line -xecute, each definition more than twice as long as the one 
 	do run("bigger",4,0)
 	set nbad=0
 	for i=1:1:4 set ^E(i)=i kill ^E(i) if $get(^F(i))'=(i**3*30) set nbad=nbad+1
-	write $select(nbad:"WRONG",1:"PASS")," : ",nbad," of 4 triggers ran a wrong XECUTE string",!
+	write $select(nbad:"FAIL",1:"PASS")," : ",nbad," of 4 triggers ran a wrong XECUTE string",!
 	quit
 
 run(stage,n,grow)
@@ -63,10 +63,10 @@ run(stage,n,grow)
 	. if 'ok set nfail=nfail+1
 	. if rec'=orig set nchanged=nchanged+1
 	close log
-	write $select(nfail:"WRONG",1:"PASS")," : ",n-nfail," of ",n," $ZTRIGGER calls returned 1"
+	write $select(nfail:"FAIL",1:"PASS")," : ",n-nfail," of ",n," $ZTRIGGER calls returned 1"
 	write:nfail " (see ",log,")"
 	write !
-	write $select(nchanged:"WRONG",1:"PASS")," : ",nchanged," of ",n," $ZTRIGGER calls changed the value of their argument",!
+	write $select(nchanged:"FAIL",1:"PASS")," : ",nchanged," of ",n," $ZTRIGGER calls changed the value of their argument",!
 	quit
 
 rec(stage,i)
@@ -97,8 +97,8 @@ verify(n)
 	. set nseen=nseen+1
 	. if (line1'=(" set ^B="_i))!(line2'=(" set ^C="_i)) set nbad=nbad+1
 	close file
-	write $select(nseen=n:"PASS",1:"WRONG")," : $ZTRIGGER(""SELECT"") shows ",nseen," of ",n," triggers",!
-	write $select(nbad:"WRONG",1:"PASS")," : ",nbad," of ",nseen," triggers have a wrong XECUTE string"
+	write $select(nseen=n:"PASS",1:"FAIL")," : $ZTRIGGER(""SELECT"") shows ",nseen," of ",n," triggers",!
+	write $select(nbad:"FAIL",1:"PASS")," : ",nbad," of ",nseen," triggers have a wrong XECUTE string"
 	write:nbad " (see ",file,")"
 	write !
 	quit

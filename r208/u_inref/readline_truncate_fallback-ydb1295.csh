@@ -40,7 +40,7 @@ foreach step (1 2 3)
 	mkdir home$step
 	seq 1 3000 | $tst_awk '{print "write " $1}' > home$step/.ydb_YottaDB_history
 end
-# The checks are done by readline_histcheck-ydb1295.csh, which prints PASS or WRONG
+# The checks are done by readline_histcheck-ydb1295.csh, which prints PASS or FAIL
 set check = "$gtm_tst/$tst/u_inref/readline_histcheck-ydb1295.csh"
 set expscript = "$gtm_tst/$tst/u_inref/readline_truncate_fallback-ydb1295.exp"
 

@@ -27,7 +27,7 @@ znoop	; the example in YDB#1319 (routine ZNOOP), with its handler checking the o
 
 znooph	set s="1" for i=2:1:22 set s=s_",1"
 	set (@("x("_s_")"),@("y("_s_")"),@("w("_s_")"))=1
-	write $select(($ecode[",M9,")&(1=@("x("_s_")"))&(1=@("y("_s_")"))&(1=@("w("_s_")")):"PASS",1:"WRONG")
+	write $select(($ecode[",M9,")&(1=@("x("_s_")"))&(1=@("y("_s_")"))&(1=@("w("_s_")")):"PASS",1:"FAIL")
 	write " : znoop : DIVZERO raised, then $ETRAP set x, y and w with 22 subscripts each",!
 	set $ecode="" quit
 
@@ -41,7 +41,7 @@ zpre	; stage 1 with default settings, after freeing an I/O buffer that held 0x55
 
 zpreh	set s="1" for i=2:1:22 set s=s_",1"
 	set (@("x("_s_")"),@("y("_s_")"),@("w("_s_")"))=1
-	write $select(($ecode[",M9,")&(1=@("x("_s_")"))&(1=@("y("_s_")"))&(1=@("w("_s_")")):"PASS",1:"WRONG")
+	write $select(($ecode[",M9,")&(1=@("x("_s_")"))&(1=@("y("_s_")"))&(1=@("w("_s_")")):"PASS",1:"FAIL")
 	write " : zpre : DIVZERO raised, then $ETRAP set x, y and w with 22 subscripts each",!
 	set $ecode="" quit
 
@@ -50,7 +50,7 @@ setind	; SET @ref=...
 	set z=0,ref="a(1/z)"
 	set $etrap="do grow^ydb1319(""setind"")"
 	set @ref=1
-	write "WRONG : setind : SET @ref=1 did not raise DIVZERO",!
+	write "FAIL : setind : SET @ref=1 did not raise DIVZERO",!
 	quit
 
 ordind	; $ORDER(@ref,-1)
@@ -58,7 +58,7 @@ ordind	; $ORDER(@ref,-1)
 	set z=0,ref="a(1/z)"
 	set $etrap="do grow^ydb1319(""ordind"")"
 	set y=$order(@ref,-1)
-	write "WRONG : ordind : $ORDER(@ref,-1) did not raise DIVZERO",!
+	write "FAIL : ordind : $ORDER(@ref,-1) did not raise DIVZERO",!
 	quit
 
 mrgind	; MERGE @ref=...
@@ -66,18 +66,18 @@ mrgind	; MERGE @ref=...
 	set z=0,ref="a(1/z)",b(1)=1
 	set $etrap="do grow^ydb1319(""mrgind"")"
 	merge @ref=b
-	write "WRONG : mrgind : MERGE @ref=b did not raise DIVZERO",!
+	write "FAIL : mrgind : MERGE @ref=b did not raise DIVZERO",!
 	quit
 
 grow(how)	; $ETRAP handler: save three indirect references with 30 subscripts each in one SET
 	new s,i,x,y,w,ok
-	if $ecode'[",M9," write "WRONG : ",how," : expected DIVZERO, got $ECODE=",$ecode," $ZSTATUS=",$zstatus,! set $ecode="" quit
+	if $ecode'[",M9," write "FAIL : ",how," : expected DIVZERO, got $ECODE=",$ecode," $ZSTATUS=",$zstatus,! set $ecode="" quit
 	set s="" for i=1:1:30 set s=s_","_i
 	set s=$extract(s,2,$length(s))
 	set x="x("_s_")",y="y("_s_")",w="w("_s_")"
 	set (@x,@y,@w)=how
 	set ok=(@x=how)&(@y=how)&(@w=how)
-	write $select(ok:"PASS",1:"WRONG")," : ",how," : DIVZERO raised, then $ETRAP set x(1,...,30), y(1,...,30) and w(1,...,30)"
+	write $select(ok:"PASS",1:"FAIL")," : ",how," : DIVZERO raised, then $ETRAP set x(1,...,30), y(1,...,30) and w(1,...,30)"
 	write $select(ok:"",1:" but they do not all hold "_how),!
 	set $ecode=""
 	quit

@@ -20,14 +20,14 @@ Error INVDLRCVAL, Invalid .CHAR.. value 10000000$ seen in stage1.out as expected
 
 # Stage 2 : XECUTE "write $char(1114112)" from a routine
 # Command : $gtm_dist/mumps -run xecute^ydb1343
-# Before the fix : INVDLRCVAL with the value 0, so the line below was a WRONG line
+# Before the fix : INVDLRCVAL with the value 0, so the line below was a FAIL line
 # With the fix   : expect INVDLRCVAL with the value 1114112
 PASS : the error is %YDB-E-INVDLRCVAL, Invalid $CHAR() value 1114112
 
 # Stage 3 : compile a routine with the line "set x=$char(65,1114112)", then run that line
 # Command : $gtm_dist/mumps ydb1343bad.m
 # Before the fix : the same warning, but running the line issued INVDLRCVAL with the value 0, so the
-#                  last line below was a WRONG line
+#                  last line below was a FAIL line
 # With the fix   : expect the compiler to issue the INVDLRCVAL warning with the value 1114112, and
 #                  running the line to issue INVDLRCVAL with the value 1114112
 		set x=$char(65,1114112)

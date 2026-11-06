@@ -149,7 +149,7 @@ Error TRESTNOT seen in stage10.out as expected:
 # Command : $gtm_dist/mumps -direct < stage11.inp, where stage11.inp has these lines
 #   set a(1)="for a(2)=1:1:3 if $increment(a) xecute a(1)"
 #   xecute a(1)
-#   write $select(a>1024:"PASS : more than 1024",1:"WRONG : only "_a)," levels of XECUTE were active when the stack ran low",!
+#   write $select(a>1024:"PASS : more than 1024",1:"FAIL : only "_a)," levels of XECUTE were active when the stack ran low",!
 # Before the fix, a Debug build failed an assert in glvn_pool.c (beyond 1024 levels) in place of the
 # STACKCRIT error below
 PASS : no fatal error in stage11.out

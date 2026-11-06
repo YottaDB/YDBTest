@@ -37,7 +37,7 @@ case(line)	; Restore "line" as the only ZSHOW "V" line in ^zv, then check that Z
 	set ^zv("V",1)=line
 	do restore
 	if (1=^zr)&(line=$get(^zw("V",1)))&'$data(^zw("V",2)) write "PASS : ",line," is restored",! quit
-	write "WRONG : ",line," is not restored; ^%ZSHOWVTOLCL returned ",^zr,!
+	write "FAIL : ",line," is not restored; ^%ZSHOWVTOLCL returned ",^zr,!
 	zwrite:$data(^zw) ^zw
 	quit
 restore	; Restore the locals in ^zv into a frame with no other locals, return the result in ^zr and ZSHOW "V" in ^zw
@@ -52,8 +52,8 @@ random	; ZSHOW "V" of random local variables, then restore them, 1000 times
 	. kill ^zv,^zw,^zr
 	. do randvars
 	. do restore
-	. if 1'=^zr set fail=1 write "WRONG : ^%ZSHOWVTOLCL returned ",^zr,!
-	. else  if '$$same set fail=1 write "WRONG : ZSHOW ""V"" after the restore differs",!
+	. if 1'=^zr set fail=1 write "FAIL : ^%ZSHOWVTOLCL returned ",^zr,!
+	. else  if '$$same set fail=1 write "FAIL : ZSHOW ""V"" after the restore differs",!
 	. if fail write "ZSHOW ""V"" before the restore :",! zwrite ^zv write "ZSHOW ""V"" after the restore :",! zwrite:$data(^zw) ^zw
 	write:'fail "PASS : 1000 sets of random local variables are restored",!
 	quit

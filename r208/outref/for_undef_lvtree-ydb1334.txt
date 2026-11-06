@@ -8,7 +8,7 @@
 # Deleting the nodes above the control variable used a path through their trees left over from the
 # lookup of the initial value, which damaged the tree of the local variable.
 # Each stage runs its case in a new process. The case catches the LVUNDEF in $ETRAP, then prints PASS
-# or WRONG for each check, and the local variable with ZWRITE if it has fewer than 5 nodes.
+# or FAIL for each check, and the local variable with ZWRITE if it has fewer than 5 nodes.
 
 # Stage 1 : SET abc(2)=1, then FOR abc(1,1)=abc(3)
 #   expect LVUNDEF, abc(1) not to exist, and abc(2) to be intact

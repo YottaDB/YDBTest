@@ -25,7 +25,7 @@ echo
 # of $ZHOROLOG is small. That is what makes this deterministic, where rollback_A/full_qual reaches the window
 # only by chance and so fails on rare occasions, at roughly 1.6 runs in 1000.
 #
-# On a build carrying the defect this subtest reports WRONG for nearly every record. On a fixed build both
+# On a build carrying the defect this subtest reports FAIL for nearly every record. On a fixed build both
 # assertions hold by construction rather than by luck: the journal time is read strictly after the $HOROLOG
 # it is compared against, from the same non decreasing clock, so it can never be lower; and HANG 1 sleeps on
 # that same clock until it has passed, so the second must have advanced.
@@ -48,7 +48,7 @@ $MUPIP set -journal=enable,on,before -region "*" >&! jnlon.log
 if (0 == $status) then
 	echo "PASS : journaling is enabled"
 else
-	echo "WRONG : could not enable journaling - see jnlon.log"
+	echo "FAIL : could not enable journaling - see jnlon.log"
 	cat jnlon.log
 endif
 echo
@@ -61,7 +61,7 @@ $gtm_dist/mumps -run update^ydb1258 >&! update.log
 if (0 == $status) then
 	echo "PASS : the update program completed"
 else
-	echo "WRONG : the update program failed - see update.log"
+	echo "FAIL : the update program failed - see update.log"
 	cat update.log
 endif
 echo
@@ -71,7 +71,7 @@ $MUPIP journal -extract=jnlext.mjf -forward mumps.mjl >&! jnlext.log
 if (0 == $status) then
 	echo "PASS : the journal extract succeeded"
 else
-	echo "WRONG : the journal extract failed - see jnlext.log"
+	echo "FAIL : the journal extract failed - see jnlext.log"
 	cat jnlext.log
 endif
 echo

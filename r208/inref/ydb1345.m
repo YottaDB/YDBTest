@@ -18,9 +18,9 @@ zc(val)	; ZCOMPILE x.m with -object=val and check that it issues NOTMNAME and pr
 	set lvl=$zlevel,zs=""
 	set $etrap="set zs=$zstatus,$ecode="""" zgoto "_lvl_":done^ydb1345"
 	zcompile "-object="_val_" x.m"
-done	write $select(zs[",%YDB-E-NOTMNAME,":"PASS",1:"WRONG"),": ZCOMPILE issues "
+done	write $select(zs[",%YDB-E-NOTMNAME,":"PASS",1:"FAIL"),": ZCOMPILE issues "
 	write $select(""=zs:"no error",1:$piece($piece(zs,",",3),"-",3)),!
 	; Look for an object file other than ydb1345.o (which running this routine creates)
 	for  set obj=$zsearch("*.o",1) quit:""=obj  quit:"ydb1345"'=$zparse(obj,"NAME")
-	write $select(""=obj:"PASS: no object file was produced",1:"WRONG: "_$zparse(obj,"NAME")_".o was produced"),!
+	write $select(""=obj:"PASS: no object file was produced",1:"FAIL : "_$zparse(obj,"NAME")_".o was produced"),!
 	quit

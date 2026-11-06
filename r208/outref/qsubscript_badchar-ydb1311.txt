@@ -11,9 +11,9 @@
 # $ZCOLLATE(name,0) and $VIEW("YGVN2GDS",name) use the same check, but do not issue BADCHAR, because the
 # reverse $ZCOLLATE(key,0,1) returns a name holding the bytes of a subscript inside quotes as they are.
 #
-# Without the fix, stage 1 prints WRONG for its first $QLENGTH() and then ends the process with a SIG-11
+# Without the fix, stage 1 prints FAIL for its first $QLENGTH() and then ends the process with a SIG-11
 # (an assert failure in a Debug build) at its first $QSUBSCRIPT(), stage 2 ends the same way at its
-# first $QSUBSCRIPT(), stage 4 prints WRONG with NOCANONICNAME for $ZCH(224), where the step over
+# first $QSUBSCRIPT(), stage 4 prints FAIL with NOCANONICNAME for $ZCH(224), where the step over
 # the byte skips the closing quote, and stages 3 and 5 PASS.
 
 # Stage 1 : UTF-8 mode, VIEW "BADCHAR"

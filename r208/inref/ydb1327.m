@@ -14,7 +14,7 @@
 ;
 ; $gtm_dist/mumps -run one^ydb1327 <case> runs the label <case>, which records in ^r(<case>,"in") what it sees in the
 ; transaction after the restart, and in ^r(<case>,"after") what it sees after the transaction, as ^r survives the end of
-; the NEW. It then compares them with the values the table below gives for the case, and prints PASS or WRONG.
+; the NEW. It then compares them with the values the table below gives for the case, and prints PASS or FAIL.
 ;
 ; Table lines are ;<case>;<expected in the transaction>;<expected after it>;<description>
 ;
@@ -28,7 +28,7 @@ one	;
 	kill ^r(case)
 	do @case
 	set got=$get(^r(case,"in"),"-")_";"_$get(^r(case,"after"),"-")
-	write $select(got=exp:"PASS",1:"WRONG")," : ",case," : ",desc,!
+	write $select(got=exp:"PASS",1:"FAIL")," : ",case," : ",desc,!
 	write "       in the transaction, then after it : ",$translate(got,";","|")
 	write:got'=exp " (expected ",$translate(exp,";","|"),")"
 	write !

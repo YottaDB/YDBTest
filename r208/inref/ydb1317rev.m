@@ -58,9 +58,9 @@ walk	; Walk 400 random trees with forward and reverse $QUERY() loops, allocating
 	. . set @("x("_s_")")=i
 	. set n=0,q="x" for  set q=$query(@q) quit:q=""  set n=n+1,f(n)=q,junk=$justify("",300000) quit:n>100
 	. set r=0,q="x(""zzz"")" for  set q=$query(@q,-1) quit:(q="")!(q="x")  set r=r+1,r(r)=q,junk=$justify("",300000) quit:r>100
-	. if n'=r set bad=bad+1 write:bad<4 "WRONG : tree ",t," forward visits ",n," nodes, reverse ",r,! quit
-	. for i=1:1:n if f(i)'=r(n+1-i) set bad=bad+1 write:bad<4 "WRONG : tree ",t," node ",i," forward ",f(i)," reverse ",r(n+1-i),! quit
-	write $select(bad:"WRONG",1:"PASS")," : ",bad," of 400 trees walked differently forward and reverse",!
+	. if n'=r set bad=bad+1 write:bad<4 "FAIL : tree ",t," forward visits ",n," nodes, reverse ",r,! quit
+	. for i=1:1:n if f(i)'=r(n+1-i) set bad=bad+1 write:bad<4 "FAIL : tree ",t," node ",i," forward ",f(i)," reverse ",r(n+1-i),! quit
+	write $select(bad:"FAIL",1:"PASS")," : ",bad," of 400 trees walked differently forward and reverse",!
 	quit
 
 rand(m)	; Linear congruential generator, so that every run builds the same trees

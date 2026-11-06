@@ -12,7 +12,7 @@
 #################################################################
 
 
-# Checks a readline history file for the readline_truncate_fallback-ydb1295 subtest and prints PASS or WRONG.
+# Checks a readline history file for the readline_truncate_fallback-ydb1295 subtest and prints PASS or FAIL.
 #	$1 = the history file
 #	$2 = the number of lines it must hold
 #	$3 = its first line
@@ -23,24 +23,24 @@ set nlines = `wc -l < $hist`
 if ($2 == $nlines) then
 	echo "PASS: $hist holds $nlines lines"
 else
-	echo "WRONG: $hist holds $nlines lines, expected $2"
+	echo "FAIL : $hist holds $nlines lines, expected $2"
 endif
 set first = "`head -n 1 $hist`"
 if ("$3" == "$first") then
 	echo "PASS: its first line is [$first]"
 else
-	echo "WRONG: its first line is [$first], expected [$3]"
+	echo "FAIL : its first line is [$first], expected [$3]"
 endif
 set last = "`tail -n 1 $hist`"
 if ("$4" == "$last") then
 	echo "PASS: its last line is [$last]"
 else
-	echo "WRONG: its last line is [$last], expected [$4]"
+	echo "FAIL : its last line is [$last], expected [$4]"
 endif
 if (5 <= $#argv) then
 	set nfound = `grep -cFx -- "$5" $hist`
 	if (0 == $nfound) then
-		echo "WRONG: it does not hold the line [$5]"
+		echo "FAIL : it does not hold the line [$5]"
 	else
 		echo "PASS: it holds the line [$5]"
 	endif

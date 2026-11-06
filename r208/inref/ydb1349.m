@@ -10,7 +10,7 @@
 ;#								#
 ;#################################################################
 ; Helper M program used by the r208/qsubscript_env_zero-ydb1349 subtest. Each label checks the results of functions
-; that parse a global name with an environment, and prints PASS or WRONG.
+; that parse a global name with an environment, and prints PASS or FAIL.
 ;
 envzero	; Second environment part is the number 0
 	do check("^[1,0]a(5)","1|1|^a|5")
@@ -36,14 +36,14 @@ zcollate	; $ZCOLLATE() of such a name, converted back to a name
 	. set $etrap="set act=$piece($zstatus,"","",3),$ecode="""" quit"
 	. set act=$zcollate($zcollate(n,0),0,1)
 	if "^a(5,6)"=act write "PASS : $ZCOLLATE($ZCOLLATE(""",n,""",0),0,1) returned ",act,!
-	else  write "WRONG : $ZCOLLATE($ZCOLLATE(""",n,""",0),0,1) returned ",act," instead of ^a(5,6)",!
+	else  write "FAIL : $ZCOLLATE($ZCOLLATE(""",n,""",0),0,1) returned ",act," instead of ^a(5,6)",!
 	; $VIEW("YGVN2GDS") uses the same conversion of a name to its database form as $ZCOLLATE()
 	do
 	. new $etrap
 	. set $etrap="set act=$piece($zstatus,"","",3),$ecode="""" quit"
 	. set act=$view("YGDS2GVN",$view("YGVN2GDS",n))
 	if "^a(5,6)"=act write "PASS : $VIEW(""YGDS2GVN"",$VIEW(""YGVN2GDS"",""",n,""")) returned ",act,!
-	else  write "WRONG : $VIEW(""YGDS2GVN"",$VIEW(""YGVN2GDS"",""",n,""")) returned ",act," instead of ^a(5,6)",!
+	else  write "FAIL : $VIEW(""YGDS2GVN"",$VIEW(""YGVN2GDS"",""",n,""")) returned ",act," instead of ^a(5,6)",!
 	quit
 unchanged	; Names that already gave the right results
 	do check("^[1,2]a(5)","1|1|^a|5")
@@ -64,11 +64,11 @@ check(n,expect)
 	set act=$qlength(n)
 	for i=-1:1:$qlength(n) set act=act_"|"_$qsubscript(n,i)
 	if act=expect write "PASS : ",n," : $QLENGTH and $QSUBSCRIPT(-1 to ",$qlength(n),") are ",act,!
-	else  write "WRONG : ",n," : $QLENGTH and $QSUBSCRIPT(-1 to ",$qlength(n),") are ",act," instead of ",expect,!
+	else  write "FAIL : ",n," : $QLENGTH and $QSUBSCRIPT(-1 to ",$qlength(n),") are ",act," instead of ",expect,!
 	quit
 checkname(n,depth,expect)
 	new act
 	set act=$name(@n,depth)
 	if act=expect write "PASS : $NAME(@""",n,""",",depth,") is ",act,!
-	else  write "WRONG : $NAME(@""",n,""",",depth,") is ",act," instead of ",expect,!
+	else  write "FAIL : $NAME(@""",n,""",",depth,") is ",act," instead of ",expect,!
 	quit

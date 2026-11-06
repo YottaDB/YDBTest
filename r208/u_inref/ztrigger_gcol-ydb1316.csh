@@ -61,7 +61,7 @@ echo '#   +^X(sub=1) -command=S -name=single -xecute="set y=1"<newline>'
 echo '# Command : $gtm_dist/mumps -run single^ydb1316'
 echo '#   expect all 20000 calls to return 1 and none to change its argument'
 echo '# Before the fix, a Release build had a few of the calls return 0 with "Error : Newline allowed only'
-echo '# inside multi-line xecute in $ztrigger ITEM", so the first line below was a WRONG line, and a Debug'
+echo '# inside multi-line xecute in $ztrigger ITEM", so the first line below was a FAIL line, and a Debug'
 echo '# build failed an assert in trigger_update.c'
 $gtm_dist/mumps -run single^ydb1316
 echo
@@ -92,7 +92,7 @@ if ($gtm_exe:h:t =~ V*_R*) then
 	echo '# Command : $gtm_dist/mumps -run reorder^ydb1316'
 	echo '#   expect all 20000 calls to return 1 and none to change its argument'
 	echo '# Before the fix, every call changed its argument to the definition with -name=reorder moved ahead of'
-	echo '# -xecute, so the second line below was a WRONG line for all 20000 calls, and a Debug build also'
+	echo '# -xecute, so the second line below was a FAIL line for all 20000 calls, and a Debug build also'
 	echo '# terminated with KILLBYSIGSINFO1 when a garbage collection moved the definition'
 	$gtm_dist/mumps -run reorder^ydb1316
 	echo

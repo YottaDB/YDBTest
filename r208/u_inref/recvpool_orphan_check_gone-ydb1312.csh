@@ -26,5 +26,5 @@ endif
 if ("" == "$leftover") then
 	echo "PASS : the receive pool left behind in this stage no longer exists"
 else
-	echo "WRONG : the receive pool left behind in this stage still existed (${leftover:s/ //}), removed it with ipcrm"
+	echo "FAIL : the receive pool left behind in this stage still existed (${leftover:s/ //}), removed it with ipcrm"
 endif

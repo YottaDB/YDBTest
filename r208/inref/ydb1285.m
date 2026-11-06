@@ -86,5 +86,5 @@ ref(name,subs,nsubs,depth)	; A reference to name with depth subscripts chosen at
 	;
 chk(expr,actual,expected)
 	if actual=expected write "PASS : ",expr," returned ",actual,! quit
-	write "WRONG : ",expr," returned [",actual,"], expected [",expected,"]",!
+	write "FAIL : ",expr," returned [",actual,"], expected [",expected,"]",!
 	quit

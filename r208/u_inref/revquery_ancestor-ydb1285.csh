@@ -20,7 +20,7 @@ echo '# An ancestor of a node collates immediately before it. When the starting 
 echo '# ancestor of it has a value but no descendants, that ancestor is the result. op_fnreversequery.c'
 echo '# skipped it, and returned the node before it, or the empty string if there was none.'
 echo '#'
-echo '# Without the fix, every check below prints WRONG except the controls: $query(x("a",4),-1) and'
+echo '# Without the fix, every check below prints FAIL except the controls: $query(x("a",4),-1) and'
 echo '# ydb_node_previous_s() once x("a") has a descendant, $query(b(1,2),-1) with only b defined, and the'
 echo '# $order() that confirms the collation in stage 3.'
 echo

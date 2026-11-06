@@ -88,14 +88,14 @@ check	;
 	. . set seenx=seenx+1
 	. . quit:jsec'<hsec
 	. . set badx=badx+1
-	. . write "WRONG : ^x(",s,") journal record time ",t," is BEHIND the $HOROLOG ",$get(hor(key))," read just before the update",!
+	. . write "FAIL : ^x(",s,") journal record time ",t," is BEHIND the $HOROLOG ",$get(hor(key))," read just before the update",!
 	. if g="y" do
 	. . set seeny=seeny+1
 	. . quit:jsec>hsec
 	. . set bady=bady+1
-	. . write "WRONG : ^y(",s,") journal record time ",t," is not later than the $HOROLOG ",$get(hor(key))," read before HANG 1",!
-	if seenx'=10 write "WRONG : expected 10 journal records for ^x, found ",seenx,!
+	. . write "FAIL : ^y(",s,") journal record time ",t," is not later than the $HOROLOG ",$get(hor(key))," read before HANG 1",!
+	if seenx'=10 write "FAIL : expected 10 journal records for ^x, found ",seenx,!
 	else  if 'badx write "PASS : all 10 ^x journal records are at or after the $HOROLOG read just before the update",!
-	if seeny'=3 write "WRONG : expected 3 journal records for ^y, found ",seeny,!
+	if seeny'=3 write "FAIL : expected 3 journal records for ^y, found ",seeny,!
 	else  if 'bady write "PASS : all 3 ^y journal records are later than the $HOROLOG read before HANG 1",!
 	quit

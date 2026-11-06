@@ -31,7 +31,7 @@ setenv gtmgbldir $PWD/mumps.gld
 # DSE prints the size and the slot count on ONE line, so a single grep shows both. The spacing is
 # squeezed out so the reference file does not depend on column positions.
 # Both aliases CHECK rather than display : each call names the pair it expects, so a wrong value
-# reads as the word WRONG in the output instead of as a plausible number nobody questions.
+# reads as the word FAIL in the output instead of as a plausible number nobody questions.
 alias check_idx '$gtm_tst/$tst/u_inref/search_index_check-ydb1143.csh DEFAULT'
 alias check_gde '$gtm_tst/$tst/u_inref/search_index_gdecheck-ydb1143.csh'
 
@@ -223,7 +223,7 @@ foreach pair (LOCK_SPACE=500 EXTENSION_COUNT=777 SEARCH_INDEX_SIZE=512 SEARCH_IN
 	if ("$qual=$act" == "$pair") then
 		echo "MM template $qual=$act : as expected"
 	else
-		echo "MM template $qual=$act : WRONG, expected $pair"
+		echo "MM template $qual=$act : FAIL, expected $pair"
 	endif
 end
 echo

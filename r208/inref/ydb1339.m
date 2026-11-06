@@ -42,9 +42,9 @@ xecute	; XECUTE of a SET with 30,000 unary minus operators (within the maximum X
 	new status,y
 	set status=""
 	do tryx("set x="_$$rep("-",30000)_"1")
-	write $select(status["EXPRTOODEEP":"PASS",1:"WRONG")," : XECUTE issues EXPRTOODEEP : $ZSTATUS=",status,!
+	write $select(status["EXPRTOODEEP":"PASS",1:"FAIL")," : XECUTE issues EXPRTOODEEP : $ZSTATUS=",status,!
 	do tryx("set y=-1")
-	write $select((""=status)&(-1=$get(y)):"PASS",1:"WRONG")," : a later XECUTE works : $ZSTATUS=",status,!
+	write $select((""=status)&(-1=$get(y)):"PASS",1:"FAIL")," : a later XECUTE works : $ZSTATUS=",status,!
 	quit
 
 routine	; a routine with 2 lines nested too deeply, then 2 lines at exactly the maximum depths. The later lines
@@ -65,35 +65,35 @@ routine	; a routine with 2 lines nested too deeply, then 2 lines at exactly the 
 	zlink file
 	write "# Run deep1339; expect lines 2, 5 and 6 to run and lines 3 and 4 to issue EXPRTOODEEP",!
 	do tryrtn("^deep1339")
-	write $select((status["EXPRTOODEEP")&(status["deep1339+2^deep1339"):"PASS",1:"WRONG")," : line 3 issues EXPRTOODEEP : $ZSTATUS=",status,!
-	write $select(1=$get(line(2)):"PASS",1:"WRONG")," : line 2 ran",!
+	write $select((status["EXPRTOODEEP")&(status["deep1339+2^deep1339"):"PASS",1:"FAIL")," : line 3 issues EXPRTOODEEP : $ZSTATUS=",status,!
+	write $select(1=$get(line(2)):"PASS",1:"FAIL")," : line 2 ran",!
 	do tryrtn("deep1339+3^deep1339")
-	write $select((status["EXPRTOODEEP")&(status["deep1339+3^deep1339"):"PASS",1:"WRONG")," : line 4 issues EXPRTOODEEP : $ZSTATUS=",status,!
+	write $select((status["EXPRTOODEEP")&(status["deep1339+3^deep1339"):"PASS",1:"FAIL")," : line 4 issues EXPRTOODEEP : $ZSTATUS=",status,!
 	do tryrtn("deep1339+4^deep1339")
-	write $select((""=status)&(1=$get(line(5))):"PASS",1:"WRONG")," : line 5 (1,024 unary minus operators) runs and sets 1 : $ZSTATUS=",status,!
-	write $select((""=status)&(4096=$get(line(6))):"PASS",1:"WRONG")," : line 6 (a chain of 4,095 + operators) runs and sets 4096 : $ZSTATUS=",status,!
+	write $select((""=status)&(1=$get(line(5))):"PASS",1:"FAIL")," : line 5 (1,024 unary minus operators) runs and sets 1 : $ZSTATUS=",status,!
+	write $select((""=status)&(4096=$get(line(6))):"PASS",1:"FAIL")," : line 6 (a chain of 4,095 + operators) runs and sets 4096 : $ZSTATUS=",status,!
 	quit
 
 limits	; expressions just inside the limits compile and evaluate correctly
 	new status,x
 	set status=""
 	do try("x="_$$rep("(",1000)_"5"_$$rep(")",1000))
-	write $select((""=status)&(5=$get(x)):"PASS",1:"WRONG")," : 1,000 levels of parentheses evaluate to 5 : $ZSTATUS=",status,!
+	write $select((""=status)&(5=$get(x)):"PASS",1:"FAIL")," : 1,000 levels of parentheses evaluate to 5 : $ZSTATUS=",status,!
 	kill x
 	do try("x=1"_$$rep("+1",4000))
-	write $select((""=status)&(4001=$get(x)):"PASS",1:"WRONG")," : a chain of 4,000 + operators evaluates to 4001 : $ZSTATUS=",status,!
+	write $select((""=status)&(4001=$get(x)):"PASS",1:"FAIL")," : a chain of 4,000 + operators evaluates to 4001 : $ZSTATUS=",status,!
 	kill x
 	do try("x=1"_$$rep("&1",2000))
-	write $select((""=status)&(1=$get(x)):"PASS",1:"WRONG")," : a chain of 2,000 & operators evaluates to 1 : $ZSTATUS=",status,!
+	write $select((""=status)&(1=$get(x)):"PASS",1:"FAIL")," : a chain of 2,000 & operators evaluates to 1 : $ZSTATUS=",status,!
 	quit
 
 deep(arg)	; SET @arg must issue EXPRTOODEEP, after which a SET with argument indirection must still compile and run
 	new status,y
 	set status=""
 	do try(arg)
-	write $select(status["EXPRTOODEEP":"PASS",1:"WRONG")," : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=",status,!
+	write $select(status["EXPRTOODEEP":"PASS",1:"FAIL")," : SET with argument indirection issues EXPRTOODEEP : $ZSTATUS=",status,!
 	do try("y=2+3")
-	write $select((""=status)&(5=$get(y)):"PASS",1:"WRONG")," : a later SET with argument indirection works : $ZSTATUS=",status,!
+	write $select((""=status)&(5=$get(y)):"PASS",1:"FAIL")," : a later SET with argument indirection works : $ZSTATUS=",status,!
 	quit
 
 	; Each try* label leaves out the error number at the start of $ZSTATUS, so the reference file does not

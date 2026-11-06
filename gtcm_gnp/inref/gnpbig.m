@@ -38,14 +38,14 @@ namelevel	; a name level $ORDER over a global name of exactly MAX_MIDENT_LEN byt
 	new g
 	use $principal
 	set g=$order(^abcdefghijklmnopqrstuvwxyz01234)
-	if g'="^abcdefghijklmnopqrstuvwxyz01235" write "name level $ORDER returned ",$zwrite(g)," - WRONG",! quit
+	if g'="^abcdefghijklmnopqrstuvwxyz01235" write "name level $ORDER returned ",$zwrite(g)," - FAIL",! quit
 	write "name level $ORDER over a 31 byte global name returned the next name",!
 	quit
 	;
 one(what,got,want)	; report on one oversized reply without printing the subscript itself
 	use $principal
-	if $length(got)'=want write what," returned ",$length(got)," bytes, expected ",want," - WRONG",! quit
-	if got'=$translate($justify("",want)," ","a") write what," returned ",want," bytes but not the ones stored - WRONG",! quit
+	if $length(got)'=want write what," returned ",$length(got)," bytes, expected ",want," - FAIL",! quit
+	if got'=$translate($justify("",want)," ","a") write what," returned ",want," bytes but not the ones stored - FAIL",! quit
 	write what," returned its ",want," byte subscript intact",!
 	quit
 	;
@@ -54,5 +54,5 @@ trap	; any error here is a failure: these two replies are well formed, just larg
 	set v=$zstatus
 	set $ecode=""
 	use $principal
-	write "UNEXPECTED, ",$zpiece(v,",",3)," - WRONG",!
+	write "UNEXPECTED, ",$zpiece(v,",",3)," - FAIL",!
 	halt

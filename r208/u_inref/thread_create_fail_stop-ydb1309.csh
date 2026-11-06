@@ -63,7 +63,7 @@ $gt_ld_shl_linker ${gt_ld_option_output}libydb1309_threadfail${gt_ld_shl_suffix}
 if (-e libydb1309_threadfail${gt_ld_shl_suffix}) then
 	echo "PASS : libydb1309_threadfail was built"
 else
-	echo "WRONG : libydb1309_threadfail was not built - see threadfail_cc.out and threadfail_ld.out"
+	echo "FAIL : libydb1309_threadfail was not built - see threadfail_cc.out and threadfail_ld.out"
 	cat threadfail_cc.out threadfail_ld.out
 endif
 echo
@@ -79,7 +79,7 @@ set mupip_status = $status
 echo "#   expect the third worker thread to fail to be created after SIGTERM was sent"
 $grep -q "^ydb1309_threadfail : sent SIGTERM and failed pthread_create() for worker thread 3" recover1.out
 if ($status) then
-	echo "WRONG : no worker thread failed to be created, so this stage tested nothing"
+	echo "FAIL : no worker thread failed to be created, so this stage tested nothing"
 else
 	echo "PASS : the third worker thread failed to be created after SIGTERM was sent"
 endif
@@ -87,7 +87,7 @@ echo "#   expect MUPIP to exit with status 241, the status of %YDB-F-FORCEDHALT"
 if (241 == $mupip_status) then
 	echo "PASS : MUPIP exited with status 241"
 else
-	echo "WRONG : MUPIP exited with status $mupip_status, expected 241"
+	echo "FAIL : MUPIP exited with status $mupip_status, expected 241"
 endif
 echo "#   expect exactly these messages, each at the start of a line and in this order : SYSCALL for"
 echo "#   pthread_create() followed by its ENO11 (Resource temporarily unavailable), FORCEDHALT and MUNOACTION"
@@ -97,7 +97,7 @@ set actual_all = `$grep -oE '%[A-Z]+-[EFW]-[A-Z0-9]+' recover1.out`
 if (("$expected" == "$actual") && ("$expected" == "$actual_all")) then
 	echo "PASS : SYSCALL, ENO11, FORCEDHALT and MUNOACTION, each at the start of a line"
 else
-	echo "WRONG : expected [$expected], got [$actual_all], of which these start a line : [$actual]"
+	echo "FAIL : expected [$expected], got [$actual_all], of which these start a line : [$actual]"
 endif
 # The SYSCALL message names the source file and line of the call, and is followed by the ENO11 (EAGAIN) message
 # for it. Both were checked above, so remove them. Keep the output as it was in recover1_all.outx.
@@ -111,7 +111,7 @@ echo '# Command : $MUPIP journal -recover -backward -since=<time before the upda
 $MUPIP journal -recover -backward "-since=$since" "*" >&! recover2.out
 $grep -q "YDB-S-JNLSUCCESS" recover2.out
 if ($status) then
-	echo "WRONG : the recovery did not succeed. Output follows."
+	echo "FAIL : the recovery did not succeed. Output follows."
 	cat recover2.out
 else
 	echo "PASS : %YDB-S-JNLSUCCESS"

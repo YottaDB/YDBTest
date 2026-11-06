@@ -54,7 +54,7 @@ saves	; SET, multiple SET, SET $PIECE and $EXTRACT, FOR, MERGE, KILL and $INCREM
 	. . do init,run(qc,qr_" ") do snap(.qb)
 	. . set qcnt=qcnt+1
 	. . if $$same(.qa,.qb) quit
-	. . set qbad=qbad+1 write "WRONG : ",qc," with R=",qr," leaves different variables than compiled",! zwrite qa,qb
+	. . set qbad=qbad+1 write "FAIL : ",qc," with R=",qr," leaves different variables than compiled",! zwrite qa,qb
 	do verdict("saves")
 	quit
 	;
@@ -95,9 +95,9 @@ lits	; string literals from unique indirect compilations must survive cache evic
 	. if 0=(qi#1000) view "STP_GCOL"
 	view "STP_GCOL"
 	for qi=1:1:qn do
-	. if x(qi)'=("lit"_qi_"A") set qbad=qbad+1 write:qbad<10 "WRONG : x(",qi,")=",x(qi),", expected lit",qi,"A",!
-	. if y(qi)'=("dflt"_qi) set qbad=qbad+1 write:qbad<10 "WRONG : y(",qi,")=",y(qi),", expected dflt",qi,!
-	. if w(qi)'=("xl"_qi) set qbad=qbad+1 write:qbad<10 "WRONG : w(",qi,")=",w(qi),", expected xl",qi,!
+	. if x(qi)'=("lit"_qi_"A") set qbad=qbad+1 write:qbad<10 "FAIL : x(",qi,")=",x(qi),", expected lit",qi,"A",!
+	. if y(qi)'=("dflt"_qi) set qbad=qbad+1 write:qbad<10 "FAIL : y(",qi,")=",y(qi),", expected dflt",qi,!
+	. if w(qi)'=("xl"_qi) set qbad=qbad+1 write:qbad<10 "FAIL : w(",qi,")=",w(qi),", expected xl",qi,!
 	write $select(qbad:"FAIL : "_qbad_" values are wrong",1:"PASS : all "_(3*qn)_" values hold what was assigned"),!
 	quit
 	;
@@ -143,7 +143,7 @@ cmp(qform,qref)	; compare QFORM through @ref (the fast path if it applies) with 
 	new qfast,qslow
 	set qfast=$$try(qform,qref),qslow=$$try(qform,qref_" ")
 	set qcnt=qcnt+1
-	if qfast'=qslow set qbad=qbad+1 write "WRONG : ",$$subst(qform,qref)," gives ",qfast,", but compiled ",qslow,!
+	if qfast'=qslow set qbad=qbad+1 write "FAIL : ",$$subst(qform,qref)," gives ",qfast,", but compiled ",qslow,!
 	quit
 try(qform,qval)	; value of QFORM with @R standing for @ref, ref being QVAL, or the error it raises. Each form has its
 	; own label rather than being run by XECUTE, since an error raised inside XECUTE while an indirect reference
@@ -176,7 +176,7 @@ ncmp(qform,qtgt,qsub)	; compare QFORM on @r@(qsub) with the compiled form of the
 	set r=qtgt,i=1,qfast=$$ntry(qf1)
 	set i=1,qslow=$$try(qf2,qcomp)
 	set qcnt=qcnt+1
-	if qfast'=qslow set qbad=qbad+1 write "WRONG : ",qf1," with r=",qtgt," gives ",qfast,", but compiled ",qslow,!
+	if qfast'=qslow set qbad=qbad+1 write "FAIL : ",qf1," with r=",qtgt," gives ",qfast,", but compiled ",qslow,!
 	quit
 ntry(qform)	; value of QFORM, or the error it raises
 	new $etrap,qv

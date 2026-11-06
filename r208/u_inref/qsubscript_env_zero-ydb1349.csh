@@ -19,7 +19,7 @@ echo '# When the second part of the environment of a global name was the number 
 echo '# or a $CHAR() or $ZCHAR(), the parser of the name recorded an end offset with no start offset for it,'
 echo '# so every later component got the wrong offsets. $QSUBSCRIPT() returned ^ as the name and wrong'
 echo '# subscripts, $ZCOLLATE() issued DBBADNSUB, and a Debug build failed an assert in is_canonic_name.c.'
-echo '# Each stage runs its checks in a new process and prints PASS or WRONG.'
+echo '# Each stage runs its checks in a new process and prints PASS or FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1349.m .
@@ -47,7 +47,7 @@ foreach label (envzero envzerozero envchar name zcollate unchanged)
 		breaksw
 	case "zcollate":
 		echo '# Stage 5 : $ZCOLLATE() and $VIEW("YGVN2GDS") of ^[1,0]a(5,6), converted back to a name'
-		echo '# Before the fix : DBBADNSUB (Release), or an assert failure (Debug), so the lines below were WRONG'
+		echo '# Before the fix : DBBADNSUB (Release), or an assert failure (Debug), so the lines below were FAIL'
 		echo '#                  lines'
 		echo '# With the fix   : expect ^a(5,6) for both'
 		breaksw

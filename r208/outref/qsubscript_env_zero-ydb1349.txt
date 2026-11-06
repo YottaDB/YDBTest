@@ -7,7 +7,7 @@
 # or a $CHAR() or $ZCHAR(), the parser of the name recorded an end offset with no start offset for it,
 # so every later component got the wrong offsets. $QSUBSCRIPT() returned ^ as the name and wrong
 # subscripts, $ZCOLLATE() issued DBBADNSUB, and a Debug build failed an assert in is_canonic_name.c.
-# Each stage runs its checks in a new process and prints PASS or WRONG.
+# Each stage runs its checks in a new process and prints PASS or FAIL.
 
 # Stage 1 : $QLENGTH() and $QSUBSCRIPT() of ^[1,0]a(5)
 # Before the fix : the name ^ and an empty subscript (Release), or an assert failure (Debug)
@@ -38,7 +38,7 @@ PASS : $NAME(@"^[1,0]a(5,6)",0) is ^[1,0]a
 PASS : $NAME(@"^[1,$C(65)]a(5,6)",1) is ^[1,"A"]a(5)
 
 # Stage 5 : $ZCOLLATE() and $VIEW("YGVN2GDS") of ^[1,0]a(5,6), converted back to a name
-# Before the fix : DBBADNSUB (Release), or an assert failure (Debug), so the lines below were WRONG
+# Before the fix : DBBADNSUB (Release), or an assert failure (Debug), so the lines below were FAIL
 #                  lines
 # With the fix   : expect ^a(5,6) for both
 # Command : $gtm_dist/mumps -run zcollate^ydb1349

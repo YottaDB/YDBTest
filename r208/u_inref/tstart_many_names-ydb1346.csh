@@ -21,7 +21,7 @@ echo '# terminated with a SIG-11 (YottaDB r2.04 and later) or did not restore th
 echo '# (r2.02 and earlier). Other platforms were not affected.'
 echo '# Each stage runs its case in a new process. The case sets v1 to v<n> to 1, does a TSTART that names'
 echo '# them, sets them to 2 and does a TRESTART, then prints PASS if the restart restored all of them to 1,'
-echo '# or WRONG for each one that it did not restore.'
+echo '# or FAIL for each one that it did not restore.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1346.m .

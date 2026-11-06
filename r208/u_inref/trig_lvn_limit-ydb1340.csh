@@ -73,7 +73,7 @@ if ((1 == `grep -c "^Too many subscripts" one200.out`) && (1 == `grep -c "^PASS 
 		&& (3 == `grep -vc '^$' one200.out`)) then
 	echo "PASS : one200.out has the error, the trigger definition, the return value check and nothing else"
 else
-	echo "WRONG : one200.out follows"
+	echo "FAIL : one200.out follows"
 	cat one200.out
 endif
 echo
@@ -90,7 +90,7 @@ if ((1 == `grep -c "^File trig200.trg, Line 1: Too many subscripts" mupip200.out
 		&& (1 == `grep -c "^1 trigger file entries have errors" mupip200.out`) && (0 != $stat)) then
 	echo "PASS : MUPIP TRIGGER reported the error for the entry, and its exit status is not 0"
 else
-	echo "WRONG : MUPIP TRIGGER exit status is $stat. mupip200.out follows"
+	echo "FAIL : MUPIP TRIGGER exit status is $stat. mupip200.out follows"
 	cat mupip200.out
 endif
 echo '# With the fix, expect MUNOACTION, as no trigger file entry was applied'

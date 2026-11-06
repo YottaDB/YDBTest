@@ -12,7 +12,7 @@
 ;
 ; Helper routines for the r208/trig_lvn_limit-ydb1340 subtest. Each label loads a trigger whose subscripts have local
 ; variable names, then checks the value $ZTRIGGER() returns and, if the trigger loaded, the local variables the
-; trigger code sees. It prints PASS or WRONG for each check.
+; trigger code sees. It prints PASS or FAIL for each check.
 ;
 ydb1340	;
 	quit
@@ -73,5 +73,5 @@ trgfile	; write a trigger file with 200 chained names in one subscript
 
 check(got,exp,what)
 	if got=exp write "PASS : ",what," is ",got,! quit
-	write "WRONG : ",what," is ",got,", expected ",exp,!
+	write "FAIL : ",what," is ",got,", expected ",exp,!
 	quit

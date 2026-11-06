@@ -59,8 +59,8 @@ random	; $ZWRITE("$C(n)",1) for 1000 values of n = k*2**32+c, where c is a valid
 	. set r=$zwrite("$C("_n_")",1)
 	. quit:""=r
 	. set wrong=wrong+1
-	. write "WRONG : $zwrite(""$C(",n,")"",1) returned ",$zwrite(r),", expected """"",!
-	if wrong write "WRONG : ",wrong," value(s) accepted",!
+	. write "FAIL : $zwrite(""$C(",n,")"",1) returned ",$zwrite(r),", expected """"",!
+	if wrong write "FAIL : ",wrong," value(s) accepted",!
 	else  write "PASS : $zwrite(""$C(n)"",1) returned """" for 1000 values of n = k*2**32+c, with c from 0 to 255",!
 	quit
 	;
@@ -114,7 +114,7 @@ expect(codes) ; Return the string whose characters have the comma separated code
 	set s="" for i=1:1:$length(codes,",") quit:""=$piece(codes,",",i)  set s=s_$char($piece(codes,",",i))
 	quit s
 	;
-chk(desc,actual,expect) ; Print PASS if actual is expect, and WRONG otherwise
+chk(desc,actual,expect) ; Print PASS if actual is expect, and FAIL otherwise
 	if actual=expect write "PASS : ",desc," returned ",$zwrite(actual),! quit
-	write "WRONG : ",desc," returned ",$zwrite(actual),", expected ",$zwrite(expect),!
+	write "FAIL : ",desc," returned ",$zwrite(actual),", expected ",$zwrite(expect),!
 	quit

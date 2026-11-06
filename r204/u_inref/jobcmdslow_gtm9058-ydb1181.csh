@@ -39,7 +39,7 @@ foreach pid (`sed -n 's/^clone3*(.*SIGCHLD.* = \([0-9]*\)$/\1/p' trace.out.*`)
 	if (! $status) set middle = ($middle trace.out.$pid)
 end
 if (1 != $#middle) then
-	echo "WRONG : expected 1 [trace.out.*] file of a forked process that itself forks but found $#middle : [$middle]"
+	echo "FAIL : expected 1 [trace.out.*] file of a forked process that itself forks but found $#middle : [$middle]"
 else
 	grep -A 1 "sendto(" $middle | grep -B 1 -A 1 "sendto.* = 8264"
 endif

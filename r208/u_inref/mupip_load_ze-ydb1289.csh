@@ -44,7 +44,7 @@ set nrecs = `$grep -Ec '^[$]ze[(]\^a[(][0-9]+[)],0,1[)]="[a-z]"$' ze.zwr`
 if ((3000002 == $nlines) && (3000000 == $nrecs)) then
 	echo "PASS : ze.zwr has 3000002 lines, 3000000 of them records of the expected form"
 else
-	echo "WRONG : ze.zwr has $nlines lines and $nrecs records of the expected form, expected 3000002 and 3000000"
+	echo "FAIL : ze.zwr has $nlines lines and $nrecs records of the expected form, expected 3000002 and 3000000"
 endif
 echo
 
@@ -58,18 +58,18 @@ set keycnt = `$tst_awk '/^LOAD TOTAL/ {print $5}' load.out`
 if (0 == $loadstat) then
 	echo "PASS : MUPIP LOAD exited with status 0"
 else
-	echo "WRONG : MUPIP LOAD exited with status $loadstat, expected 0"
+	echo "FAIL : MUPIP LOAD exited with status $loadstat, expected 0"
 endif
 if (0 == $nerrs) then
 	echo "PASS : MUPIP LOAD issued no error or warning message"
 else
-	echo "WRONG : MUPIP LOAD issued $nerrs error or warning messages, expected none. The first few follow."
+	echo "FAIL : MUPIP LOAD issued $nerrs error or warning messages, expected none. The first few follow."
 	$grep -E -- '-[EFW]-' load.out | head -5
 endif
 if ("3000000" == "$keycnt") then
 	echo "PASS : MUPIP LOAD reported a key count of 3000000"
 else
-	echo "WRONG : MUPIP LOAD reported a key count of [$keycnt], expected 3000000"
+	echo "FAIL : MUPIP LOAD reported a key count of [$keycnt], expected 3000000"
 endif
 echo
 

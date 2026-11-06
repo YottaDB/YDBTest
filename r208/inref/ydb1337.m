@@ -10,7 +10,7 @@
 ;#								#
 ;#################################################################
 ; Helper M program used by the r208/zpeek_len-ydb1337 subtest. Each label checks the result of one $ZPEEK() call and
-; prints PASS or WRONG.
+; prints PASS or FAIL.
 ;
 len100000	; A first argument of 100000 bytes with no colon
 	do check($translate($justify("",100000)," ","A"),"100000 bytes","length")
@@ -31,20 +31,20 @@ valid	; A valid mnemonic and argument. The first field of the region structure i
 	new x
 	set x=$zpeek("GDRREG:DEFAULT",0,2,"U")
 	if 7=x write "PASS : $ZPEEK(""GDRREG:DEFAULT"",0,2,""U"") returned 7, the length of the region name DEFAULT",! quit
-	write "WRONG : $ZPEEK(""GDRREG:DEFAULT"",0,2,""U"") returned [",x,"], expected 7, the length of the region name DEFAULT",!
+	write "FAIL : $ZPEEK(""GDRREG:DEFAULT"",0,2,""U"") returned [",x,"], expected 7, the length of the region name DEFAULT",!
 	quit
 gdrreg31	; GDRREG with a region name of 31 bytes (the maximum). The first field of the region structure is the length of the
 	; region name.
 	new x
 	set x=$zpeek("GDRREG:RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",0,2,"U")
 	if 31=x write "PASS : $ZPEEK(""GDRREG:<31-byte region name>"",0,2,""U"") returned 31, the length of the region name",! quit
-	write "WRONG : $ZPEEK(""GDRREG:<31-byte region name>"",0,2,""U"") returned [",x,"], expected 31",!
+	write "FAIL : $ZPEEK(""GDRREG:<31-byte region name>"",0,2,""U"") returned [",x,"], expected 31",!
 	quit
 critreg31	; CRITREG with a region name of 31 bytes, a first argument of 39 bytes, the longest valid first argument
 	new x
 	set x=$zpeek("CRITREG:RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",0,2,"U")
 	if x?1.N write "PASS : $ZPEEK(""CRITREG:<31-byte region name>"",0,2,""U"") returned a number",! quit
-	write "WRONG : $ZPEEK(""CRITREG:<31-byte region name>"",0,2,""U"") returned [",x,"], expected a number",!
+	write "FAIL : $ZPEEK(""CRITREG:<31-byte region name>"",0,2,""U"") returned [",x,"], expected a number",!
 	quit
 gdrreg32	; GDRREG with a region name of 32 bytes, 1 more than the maximum
 	do check("GDRREG:RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","39 bytes (GDRREG: and a 32-byte region name)","mnemonic argument")
@@ -55,7 +55,7 @@ check(arg,desc,expect)	; Call $ZPEEK(arg,0,0) and check that it issues BADZPEEKA
 	do peek(arg,.err)
 	set want="%YDB-E-BADZPEEKARG, Missing, invalid or surplus "_expect_" parameter for $ZPEEK()"
 	if $piece(err,",",3,99)=want write "PASS : a first argument of ",desc," issued ",want,! quit
-	write "WRONG : a first argument of ",desc," issued [",$piece(err,",",3,99),"], expected ",want,!
+	write "FAIL : a first argument of ",desc," issued [",$piece(err,",",3,99),"], expected ",want,!
 	quit
 peek(arg,err)	; Call $ZPEEK(arg,0,0) and return its error in "err"
 	new $etrap,x

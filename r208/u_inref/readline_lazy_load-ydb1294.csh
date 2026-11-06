@@ -42,7 +42,7 @@ endif
 cp $gtm_tst/$tst/inref/rl1294.m .
 $gtm_tst/com/dbcreate.csh mumps
 # Every step runs with HOME pointing to a directory of its own, so the history files a step finds were created
-# by that step. The checks are done by readline_histcheck-ydb1294.csh, which prints PASS or WRONG.
+# by that step. The checks are done by readline_histcheck-ydb1294.csh, which prints PASS or FAIL.
 set check = "$gtm_tst/$tst/u_inref/readline_histcheck-ydb1294.csh"
 
 echo
@@ -81,7 +81,7 @@ set nperm = `grep -c READLINEFILEPERM step4.out`
 if (0 == $nperm) then
 	echo "PASS: no READLINEFILEPERM warning"
 else
-	echo "WRONG: $nperm READLINEFILEPERM warning(s), expected none"
+	echo "FAIL : $nperm READLINEFILEPERM warning(s), expected none"
 endif
 chmod 755 home4
 

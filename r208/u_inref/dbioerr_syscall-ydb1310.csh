@@ -48,7 +48,7 @@ $gtm_tst/com/dbcreate.csh mumps -block_size=4096 -asyncio >&! dbcreate.out
 if (0 == $status) then
 	echo "PASS : the database was created"
 else
-	echo "WRONG : dbcreate.csh failed - see dbcreate.out"
+	echo "FAIL : dbcreate.csh failed - see dbcreate.out"
 	cat dbcreate.out
 endif
 
@@ -58,7 +58,7 @@ $grep -q 'Async IO  *ON' dse_dump.out
 if (0 == $status) then
 	echo "PASS : the database file header shows Async IO ON"
 else
-	echo "WRONG : the database file header does not show Async IO ON - see dse_dump.out"
+	echo "FAIL : the database file header does not show Async IO ON - see dse_dump.out"
 	$grep 'Async IO' dse_dump.out
 endif
 
@@ -68,7 +68,7 @@ $gt_ld_shl_linker ${gt_ld_option_output}libydb1310_iosubmit${gt_ld_shl_suffix} $
 if (-e libydb1310_iosubmit${gt_ld_shl_suffix}) then
 	echo "PASS : libydb1310_iosubmit was built"
 else
-	echo "WRONG : libydb1310_iosubmit was not built - see iosubmit_cc.out and iosubmit_ld.out"
+	echo "FAIL : libydb1310_iosubmit was not built - see iosubmit_cc.out and iosubmit_ld.out"
 	cat iosubmit_cc.out iosubmit_ld.out
 endif
 echo
@@ -90,7 +90,7 @@ $grep -q 'YDB-F-ASSERT' updates.out
 if (0 != $status) then
 	echo "PASS : the process did not fail an assert"
 else
-	echo "WRONG : the process failed an assert - see updates.out"
+	echo "FAIL : the process failed an assert - see updates.out"
 	$grep 'YDB-F-ASSERT' updates.out
 endif
 # The write errors are also reported when the process runs the database down at exit
@@ -98,7 +98,7 @@ $gtm_tst/com/check_error_exist.csh updates.out DBIOERR ENO2 YDB-E-NOTALLDBRNDWN 
 if (0 == $status) then
 	echo "PASS : the process reported DBIOERR, ENO2, NOTALLDBRNDWN and GVRUNDOWN at exit"
 else
-	echo "WRONG : expected DBIOERR, ENO2, NOTALLDBRNDWN and GVRUNDOWN in updates.out - see check_updates.logx"
+	echo "FAIL : expected DBIOERR, ENO2, NOTALLDBRNDWN and GVRUNDOWN in updates.out - see check_updates.logx"
 	cat check_updates.logx
 endif
 echo
@@ -113,14 +113,14 @@ $grep "YDB-E-DBIOERR.*$dbpath" syslog.txt >&! dbioerr_syslog.logx
 if (! -z dbioerr_syslog.logx) then
 	echo "PASS : the operator log has a DBIOERR for this database file"
 else
-	echo "WRONG : no DBIOERR for this database file in the operator log - see syslog.txt and getoper.logx"
+	echo "FAIL : no DBIOERR for this database file in the operator log - see syslog.txt and getoper.logx"
 endif
 set dbioerr = "`head -1 dbioerr_syslog.logx`"
 echo "$dbioerr" | $grep -q 'YDB-E-DBIOERR, Error while doing write operation on region DEFAULT ([^)]*mumps.dat), %YDB-E-SYSCALL, Error received from system call io_submit() -- called from module [^ ]*wcs_wterror.c at line [0-9]*, %SYSTEM-E-ENO2, No such file or directory -- generated from'
 if (0 == $status) then
 	echo "PASS : the DBIOERR is followed by SYSCALL for io_submit() from wcs_wterror.c and by ENO2, with nothing else"
 else
-	echo "WRONG : the DBIOERR does not read DBIOERR, SYSCALL io_submit() from wcs_wterror.c, ENO2 - see dbioerr_syslog.logx"
+	echo "FAIL : the DBIOERR does not read DBIOERR, SYSCALL io_submit() from wcs_wterror.c, ENO2 - see dbioerr_syslog.logx"
 	echo "$dbioerr"
 endif
 echo
@@ -129,6 +129,6 @@ $gtm_tst/com/dbcheck.csh >&! dbcheck.out
 if (0 == $status) then
 	echo "PASS : dbcheck.csh found no integrity errors"
 else
-	echo "WRONG : dbcheck.csh failed - see dbcheck.out"
+	echo "FAIL : dbcheck.csh failed - see dbcheck.out"
 	cat dbcheck.out
 endif

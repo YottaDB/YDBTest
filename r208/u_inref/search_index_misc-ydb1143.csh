@@ -147,7 +147,7 @@ set sslots = `awk '/statsdb slots/{print $NF}' statsdb.out`
 if (("$ssize" == "0") && ("$sslots" == "0")) then
 	echo "statsDB carries no search index, as expected"
 else
-	echo "WRONG : statsDB has size $ssize and slots $sslots, expected 0 and 0"
+	echo "FAIL : statsDB has size $ssize and slots $sslots, expected 0 and 0"
 endif
 echo "# against the base region, which has them"
 echo "# mumps -run %XCMD, reading sgmnt_data.search_idx_size and search_idx_slots"
@@ -159,7 +159,7 @@ set bslots = `awk '/base    slots/{print $NF}' basedb.out`
 if (("$bsize" == "1024") && ("$bslots" == "1024")) then
 	echo "base region carries one, as expected"
 else
-	echo "WRONG : base region has size $bsize and slots $bslots, expected 1024 and 1024"
+	echo "FAIL : base region has size $bsize and slots $bslots, expected 1024 and 1024"
 endif
 setenv ydb_statshare 0
 setenv gtm_statshare 0

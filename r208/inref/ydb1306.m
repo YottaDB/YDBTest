@@ -59,10 +59,10 @@ leak(how,n)
 	for i=1:1:n do @(how_"1") set:i=(n\10) base=$zrealstor
 	set grow=$zrealstor-base
 	; 9n/10 runs that each leak a slot grow $ZREALSTOR by more than 50 bytes per run
-	write $select(grow<(n*5):"PASS",1:"WRONG")," : ",how," : $ZREALSTOR grew by "
+	write $select(grow<(n*5):"PASS",1:"FAIL")," : ",how," : $ZREALSTOR grew by "
 	write $select(grow<(n*5):"less than "_(n*5),1:grow)," bytes from run ",n\10," to run ",n,!
 	; each how except errxord and errxset runs the FOR over b(1) twice per run
-	if (how'["errx")&(cnt'=(2*n)) write "WRONG : ",how," : cnt is ",cnt,", expected ",2*n,!
+	if (how'["errx")&(cnt'=(2*n)) write "FAIL : ",how," : cnt is ",cnt,", expected ",2*n,!
 	quit
 
 errxord1	new $etrap set $etrap="set $ecode="""" quit:$quit """"  quit"
@@ -127,6 +127,6 @@ nestchk(what,cnt,last)
 	; The FOR over a(1) runs 3 times and the FOR over b(1) twice each time: 6 in all, ending with a(1)=3.
 	; If the inner FOR takes over the slot of the outer one, the outer one steps b(1) instead, never ends,
 	; and the "quit:cnt>20" ends it.
-	write $select((6=cnt)&(3=last):"PASS",1:"WRONG")," : ",what," : the inner FOR ran ",cnt," times"
+	write $select((6=cnt)&(3=last):"PASS",1:"FAIL")," : ",what," : the inner FOR ran ",cnt," times"
 	write " (expected 6) and the outer control variable ended at ",last," (expected 3)",!
 	quit

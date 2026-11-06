@@ -28,5 +28,5 @@ gtmfwd	; Forward $QUERY() with GT.M null collation
 
 check(actual,expected,what)
 	if actual=expected write "PASS : ",what," is ",actual,!
-	else  write "WRONG : ",what," is ",actual," but expected ",expected,!
+	else  write "FAIL : ",what," is ",actual," but expected ",expected,!
 	quit

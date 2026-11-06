@@ -21,7 +21,7 @@ echo '# subscripts of different lengths as equal, and it compared a saved subscr
 echo '# such as "b", with the input subscript b. So a $QUERY() of y("b","") right after a $QUERY() that'
 echo '# returned y("aa","") took y("b","") for that result and returned a wrong node.'
 echo '#'
-echo '# Each check names the result it expects. Stages 1 to 3 print WRONG for the checks right after a'
+echo '# Each check names the result it expects. Stages 1 to 3 print FAIL for the checks right after a'
 echo '# $QUERY() that returned y("aa","") without the fix. Stages 4 and 5 pass without the fix too; they'
 echo '# check that a $QUERY() loop still continues from the previous result now that the saved subscripts'
 echo '# are kept in their unformatted form across garbage collections. Stages 2 to 5 use reverse $QUERY(),'

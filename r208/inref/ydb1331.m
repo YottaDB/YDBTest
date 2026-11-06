@@ -29,7 +29,7 @@ run(table)
 	for i=1:1 set line=$text(@table+i) quit:line'[";"  do
 	. set case=$piece(line,";",2),exp=$piece(line,";",3),desc=$piece(line,";",4)
 	. set got=$$try(case)
-	. write $select(got=exp:"PASS",1:"WRONG")," : ",case," : ",desc," : ",got
+	. write $select(got=exp:"PASS",1:"FAIL")," : ",case," : ",desc," : ",got
 	. write:got'=exp " (expected ",exp,")"
 	. write !
 	quit

@@ -9,7 +9,7 @@
 # the argument), so a first argument of 32 to 63 bytes gets the same BADZPEEKARG as before, and
 # $ZPEEK() issues BADZPEEKARG with "length" (the length of the first argument) for a longer first
 # argument.
-# Each stage runs its case in a new process and prints PASS or WRONG.
+# Each stage runs its case in a new process and prints PASS or FAIL.
 
 # Create a database (stage 6 peeks at its region)
 # Create a global directory r31.gld with a region whose name has 31 bytes, the maximum, and its
@@ -23,7 +23,7 @@ PASS : a first argument of 100000 bytes issued %YDB-E-BADZPEEKARG, Missing, inva
 
 # Stage 2 : $ZPEEK(<64 bytes, no colon>,0,0)
 # Before the fix : BADZPEEKARG with "mnemonic type", after the copy overwrote the stack, so the
-#                  line below was a WRONG line
+#                  line below was a FAIL line
 # With the fix   : expect BADZPEEKARG with "length"
 # Command : $gtm_dist/mumps -run len64^ydb1337
 PASS : a first argument of 64 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus length parameter for $ZPEEK()
@@ -43,7 +43,7 @@ PASS : a first argument of 63 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid 
 PASS : a first argument of 32 bytes issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic type parameter for $ZPEEK()
 
 # Stage 5 : $ZPEEK("GDRREG:<57 bytes>",0,0), a first argument of 64 bytes with a valid mnemonic
-# Before the fix : BADZPEEKARG with "mnemonic argument", so the line below was a WRONG line
+# Before the fix : BADZPEEKARG with "mnemonic argument", so the line below was a FAIL line
 # With the fix   : expect BADZPEEKARG with "length"
 # Command : $gtm_dist/mumps -run arglong^ydb1337
 PASS : a first argument of 64 bytes (GDRREG: and a region name) issued %YDB-E-BADZPEEKARG, Missing, invalid or surplus length parameter for $ZPEEK()

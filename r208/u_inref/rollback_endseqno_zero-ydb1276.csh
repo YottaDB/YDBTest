@@ -62,7 +62,7 @@ echo
 # raises for a journal file whose own header says replication was off.
 #
 # Stages 4 and 5 assert the FIXED behaviour, so this subtest fails on a build carrying the defect: stage 4 reports
-# WRONG because the header holds an end_seqno of 0, and stage 5 reports WRONG because the next rollback gets
+# FAIL because the header holds an end_seqno of 0, and stage 5 reports FAIL because the next rollback gets
 # BEGSEQGTENDSEQ. On a fixed build both print PASS.
 #
 # Sequence numbers are deliberately not printed, only compared. The values depend on how many updates the test
@@ -91,7 +91,7 @@ $MUPIP replicate -instance_create -name=$instname >&! instcreate.log
 if (0 == $status) then
 	echo "PASS : the replication instance file was created"
 else
-	echo "WRONG : could not create the replication instance file - see instcreate.log"
+	echo "FAIL : could not create the replication instance file - see instcreate.log"
 	cat instcreate.log
 endif
 
@@ -100,7 +100,7 @@ $MUPIP set -replication=on -journal=enable,on,before -region "*" >&! setrepl.log
 if (0 == $status) then
 	echo "PASS : replication and before-image journaling are on"
 else
-	echo "WRONG : could not turn on replication and journaling - see setrepl.log"
+	echo "FAIL : could not turn on replication and journaling - see setrepl.log"
 	cat setrepl.log
 endif
 
@@ -113,7 +113,7 @@ $MUPIP replicate -source -start -passive -updok -instsecondary=$secname -log=src
 if (0 == $status) then
 	echo "PASS : the passive source server started, so the journal pool exists"
 else
-	echo "WRONG : the passive source server did not start - see srcstart.log and src.log"
+	echo "FAIL : the passive source server did not start - see srcstart.log and src.log"
 	cat srcstart.log
 endif
 
@@ -122,7 +122,7 @@ $gtm_dist/mumps -run %XCMD 'for i=1:1:100 set ^a(i)=i' >&! update.log
 if (0 == $status) then
 	echo "PASS : 100 updates were applied"
 else
-	echo "WRONG : the updates failed - see update.log"
+	echo "FAIL : the updates failed - see update.log"
 	cat update.log
 endif
 
@@ -133,7 +133,7 @@ set endseq   = `$tst_awk '/End Region Sequence Number/ {print $5}' jnlhdr_before
 if (("" != "$startseq") && ("" != "$endseq") && (0 < $startseq) && ($endseq >= $startseq)) then
 	echo "PASS : the journal file header starts with a non-zero start seqno and an end seqno at or above it"
 else
-	echo "WRONG : baseline header is not as expected - start seqno [$startseq] end seqno [$endseq]"
+	echo "FAIL : baseline header is not as expected - start seqno [$startseq] end seqno [$endseq]"
 	cat jnlhdr_before.logx
 endif
 echo
@@ -146,7 +146,7 @@ $gtm_tst/com/kill9.csh $srcpid >&! kill9.log
 if (0 == $status) then
 	echo "PASS : the source server was killed with SIGKILL"
 else
-	echo "WRONG : could not kill the source server - see kill9.log"
+	echo "FAIL : could not kill the source server - see kill9.log"
 	cat kill9.log
 endif
 
@@ -156,7 +156,7 @@ set crashflag = `$tst_awk '/^ Crash/ {print $2}' jnlhdr_crashed.logx`
 if ("TRUE" == "$crashflag") then
 	echo "PASS : the journal file is marked as crashed, so nothing has closed it cleanly yet"
 else
-	echo "WRONG : the journal file Crash flag is [$crashflag], expected TRUE"
+	echo "FAIL : the journal file Crash flag is [$crashflag], expected TRUE"
 	cat jnlhdr_crashed.logx
 endif
 echo
@@ -177,7 +177,7 @@ unsetenv gtm_white_box_test_case_count
 if (0 != $rbstat) then
 	echo "PASS : the rollback exited with an error, as this stage intends"
 else
-	echo "WRONG : the rollback unexpectedly succeeded, so the rest of this subtest proves nothing"
+	echo "FAIL : the rollback unexpectedly succeeded, so the rest of this subtest proves nothing"
 	cat rollback_fail.out
 endif
 # White box case 160 sets save_errno to 98 before issuing REPLCOMM, and white box cases exist only in a
@@ -192,7 +192,7 @@ $gtm_tst/com/check_error_exist.csh rollback_fail.out $experr >&! check_rollback_
 if (0 == $status) then
 	echo "PASS : the rollback failed with the expected error messages [$experr]"
 else
-	echo "WRONG : expected [$experr] in rollback_fail.out - see check_rollback_fail.logx"
+	echo "FAIL : expected [$experr] in rollback_fail.out - see check_rollback_fail.logx"
 	cat check_rollback_fail.logx
 endif
 echo
@@ -215,7 +215,7 @@ end
 if (0 == $nbad) then
 	echo "PASS : no journal file has a start sequence number greater than its end sequence number"
 else
-	echo "WRONG : $nbad journal file generation(s) have a start sequence number greater than the end"
+	echo "FAIL : $nbad journal file generation(s) have a start sequence number greater than the end"
 	echo "        sequence number - see jnlhdr_bad.logx"
 endif
 echo
@@ -227,7 +227,7 @@ set rb2stat = $status
 if (0 == $rb2stat) then
 	echo "PASS : the instance was rolled back successfully"
 else
-	echo "WRONG : the rollback failed. Error mnemonics it reported :"
+	echo "FAIL : the rollback failed. Error mnemonics it reported :"
 	$grep -o 'YDB-[EF]-[A-Z0-9]*' rollback2.out | $tst_awk -F- '{print "        "$3}' | sort -u
 endif
 echo

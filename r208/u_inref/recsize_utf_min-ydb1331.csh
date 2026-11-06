@@ -21,7 +21,7 @@ echo '# RECSIZETOOSMALL for such a device, and a USE, or an OPEN of an open devi
 echo '# as it was. The STDERR device of a PIPE, whose RECORDSIZE was 0, now gets the RECORDSIZE of the PIPE.'
 echo '#'
 echo '# Each case names the error it expects, or the bytes in hex that the file must hold, and prints PASS or'
-echo '# WRONG.'
+echo '# FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1331.m .
@@ -29,7 +29,7 @@ cp $gtm_tst/$tst/inref/ydb1331.m .
 echo '# Stage 1 : devices with a UTF-8 or UTF-16 CHSET, in UTF-8 mode'
 echo '# Command : $gtm_dist/mumps -run utf^ydb1331'
 echo '# Before the fix, each OPEN and USE with a RECORDSIZE of 1 to 3 worked (except RECORDSIZE=3 with UTF-16,'
-echo '# which issued RECSIZENOTEVEN), so the cases that expect RECSIZETOOSMALL printed WRONG, and the pipeerr'
+echo '# which issued RECSIZENOTEVEN), so the cases that expect RECSIZETOOSMALL printed FAIL, and the pipeerr'
 echo '# READ returned an empty string (an assert failure in iorm_readfl.c in a Debug build). recsize0, pipeerrvar'
 echo '# and pipeerrrec had the same result'
 echo '#   expect RECSIZETOOSMALL for a RECORDSIZE of 1 to 3, leaving a device that is open as it was, RECORDSIZE=4'

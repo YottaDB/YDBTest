@@ -8,7 +8,7 @@
 # (which an ASAN build reports as a global-buffer-overflow), and any prefix of BLOCK was accepted as
 # BLOCK. The mnemonic now has to be BLOCK (in any case), as LISTEN, WAIT, PASS, ACCEPT and TLS already
 # have to be the whole mnemonic, and any other mnemonic issues INVCTLMNE.
-# Each stage does its WRITE to a listening socket in a new process and prints PASS or WRONG.
+# Each stage does its WRITE to a listening socket in a new process and prints PASS or FAIL.
 
 # Stage 1 : WRITE /BLOCKG121, a mnemonic that starts with BLOCK and is longer than it
 # Before the fix : INVCTLMNE too, but memcmp() read past the end of "BLOCK", which an ASAN build
@@ -19,13 +19,13 @@ PASS : WRITE /BLOCKG121 issued INVCTLMNE
 
 # Stage 2 : WRITE /B("OFF"), the 1-character prefix of BLOCK
 # Before the fix : taken as WRITE /BLOCK("OFF"), which issues SOCKBLOCKERR on a listening socket, so
-#                  the line below was a WRONG line
+#                  the line below was a FAIL line
 # With the fix   : expect INVCTLMNE
 # Command : $gtm_dist/mumps -run b^ydb1348
 PASS : WRITE /B("OFF") issued INVCTLMNE
 
 # Stage 3 : WRITE /BLO("CLEAR"), a 3-character prefix of BLOCK
-# Before the fix : taken as WRITE /BLOCK("CLEAR"), with no error, so the line below was a WRONG line
+# Before the fix : taken as WRITE /BLOCK("CLEAR"), with no error, so the line below was a FAIL line
 # With the fix   : expect INVCTLMNE
 # Command : $gtm_dist/mumps -run blo^ydb1348
 PASS : WRITE /BLO("CLEAR") issued INVCTLMNE

@@ -40,14 +40,14 @@ foreach case (a b c)
 	timeout -k 10 60 $gtm_dist/mumps -run ydb1332 $case < /dev/null >& $case.out
 	set stat = $status
 	if ((124 == $stat) || (137 == $stat)) then
-		echo "WRONG : case $case did not end within 60 seconds"
+		echo "FAIL : case $case did not end within 60 seconds"
 	else
 		echo "PASS : case $case ended by itself"
 	endif
 	if ({ $grep -q "E-$err.*E-TPQUIT" $case.out }) then
 		echo "PASS : case $case issued $err with TPQUIT"
 	else
-		echo "WRONG : case $case did not issue $err with TPQUIT. See $case.out"
+		echo "FAIL : case $case did not issue $err with TPQUIT. See $case.out"
 	endif
 	$gtm_tst/com/check_error_exist.csh $case.out $err
 end
@@ -85,7 +85,7 @@ foreach case (d e f g h i)
 	if ({ $grep -qF "$exp" $case.out }) then
 		echo "PASS : case $case output has $exp"
 	else
-		echo "WRONG : case $case output does not have $exp. See $case.out"
+		echo "FAIL : case $case output does not have $exp. See $case.out"
 	endif
 	if ("" != "$err") $gtm_tst/com/check_error_exist.csh $case.out $err
 end

@@ -11,7 +11,7 @@
 #
 # Each case of stages 1 and 2 runs in its own process. It records the local variables it sees in the
 # transaction after the restart and after the transaction, compares them with the values the restart
-# rules give, and prints PASS or WRONG.
+# rules give, and prints PASS or FAIL.
 
 # Stage 1 : TSTART and an argumentless or exclusive NEW in the same XECUTE, then a restart
 # Before the fix, each case except xn2, whose NEW is in an inner XECUTE, ended with GTMASSERT2 in tp_restart.c

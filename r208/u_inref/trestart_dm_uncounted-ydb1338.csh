@@ -22,7 +22,7 @@ echo '# a restart cannot undo it. TRESTART now issues TRESTNEW and TRESTLOC, bef
 echo '# TSTART is such a TSTART and an argumentless NEW followed it, and TRESTNOT and TRESTLOC, also before it'
 echo '# unwinds anything, if the outermost TSTART is such a TSTART with no NEW after it.'
 echo '# A QUIT with an argument that issues TPQUIT in Direct Mode leaves Direct Mode running in such a frame.'
-echo '# Direct Mode prompts and blank lines are removed from the output below. Each check prints PASS or WRONG.'
+echo '# Direct Mode prompts and blank lines are removed from the output below. Each check prints PASS or FAIL.'
 echo
 
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.out

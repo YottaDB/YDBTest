@@ -19,7 +19,7 @@ echo "# This test simulates, via a white-box logic, an error return from timer_c
 echo "# start a new system timer or cancel an existing one. We expect appropriate error messages to be printed in the console."
 echo "# Each %YDB-E-SYSCALL for timer_settime() must carry the timer state as a %YDB-I-TEXT. No fork happens here, so that state"
 echo "# must say posix_timer_created is 1, fork_after_ydb_init is 0, process_id is getpid(), posix_timer_thread_id is gettid()"
-echo "# and time_to_expir is a valid expiry time. setitimer_fail_check.awk checks this and prints PASS or WRONG per message."
+echo "# and time_to_expir is a valid expiry time. setitimer_fail_check.awk checks this and prints PASS or FAIL per message."
 
 echo "# Set the white-box test that simulates an error return from timer_create()/setitimer()."
 set echo

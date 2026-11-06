@@ -100,9 +100,9 @@ random	; Compare $QUERY(lvn,-1) with $QUERY(gvn,-1) of the same random tree in ^
 	. . set junk=$query(^zzznone),qg=$query(@(gvn_ref),-1),tot=tot+1
 	. . quit:$select(ql="":qg="",1:(gvn_$extract(ql,2,$length(ql)))=qg)
 	. . set bad=bad+1
-	. . write:bad<6 "WRONG : $query(x",ref,",-1) is ",ql," but $query(",gvn,ref,",-1) is ",qg,!
+	. . write:bad<6 "FAIL : $query(x",ref,",-1) is ",ql," but $query(",gvn,ref,",-1) is ",qg,!
 	if 'bad write "PASS : $query(,-1) of all ",tot," references matched the global",!
-	else  write "WRONG : ",bad," of ",tot," references did not match the global",!
+	else  write "FAIL : ",bad," of ",tot," references did not match the global",!
 	quit
 
 rand(m)	; Linear congruential generator, so that every run builds the same trees
@@ -111,5 +111,5 @@ rand(m)	; Linear congruential generator, so that every run builds the same trees
 
 check(actual,expected,what)
 	if actual=expected write "PASS : ",what," is ",actual,!
-	else  write "WRONG : ",what," is ",actual," but expected ",expected,!
+	else  write "FAIL : ",what," is ",actual," but expected ",expected,!
 	quit

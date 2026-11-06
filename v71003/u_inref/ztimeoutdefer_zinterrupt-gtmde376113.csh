@@ -53,14 +53,14 @@ while ($run < $runs)
 	grep -q '^PASS' run${run}-mumps.out
 	if (0 != $status) then
 		@ fails = $fails + 1
-		echo "WRONG : run $run did not keep the timeout firing to the end of its window"
+		echo "FAIL : run $run did not keep the timeout firing to the end of its window"
 		grep -E '^(PASS|FAIL)' run${run}-mumps.out
 	endif
 end
 if (0 == $fails) then
 	echo "PASS : every run kept its last timeout in the final part of the 10 second window"
 else
-	echo "WRONG : $fails of $runs runs stopped early"
+	echo "FAIL : $fails of $runs runs stopped early"
 endif
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.out

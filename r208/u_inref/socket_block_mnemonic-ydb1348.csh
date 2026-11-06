@@ -20,7 +20,7 @@ echo '# in the WRITE. A mnemonic longer than BLOCK made memcmp() read past the e
 echo '# (which an ASAN build reports as a global-buffer-overflow), and any prefix of BLOCK was accepted as'
 echo '# BLOCK. The mnemonic now has to be BLOCK (in any case), as LISTEN, WAIT, PASS, ACCEPT and TLS already'
 echo '# have to be the whole mnemonic, and any other mnemonic issues INVCTLMNE.'
-echo '# Each stage does its WRITE to a listening socket in a new process and prints PASS or WRONG.'
+echo '# Each stage does its WRITE to a listening socket in a new process and prints PASS or FAIL.'
 echo
 
 cp $gtm_tst/$tst/inref/ydb1348.m .
@@ -35,12 +35,12 @@ foreach label (long b blo blocks block)
 	case "b":
 		echo '# Stage 2 : WRITE /B("OFF"), the 1-character prefix of BLOCK'
 		echo '# Before the fix : taken as WRITE /BLOCK("OFF"), which issues SOCKBLOCKERR on a listening socket, so'
-		echo '#                  the line below was a WRONG line'
+		echo '#                  the line below was a FAIL line'
 		echo '# With the fix   : expect INVCTLMNE'
 		breaksw
 	case "blo":
 		echo '# Stage 3 : WRITE /BLO("CLEAR"), a 3-character prefix of BLOCK'
-		echo '# Before the fix : taken as WRITE /BLOCK("CLEAR"), with no error, so the line below was a WRONG line'
+		echo '# Before the fix : taken as WRITE /BLOCK("CLEAR"), with no error, so the line below was a FAIL line'
 		echo '# With the fix   : expect INVCTLMNE'
 		breaksw
 	case "blocks":
