@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,47 +22,45 @@ GT.M uses TPNOTACID behavior for all external calls and for ZEDIT; previously, e
 CAT_EOF
 echo
 
+setenv ydb_msgprefix "GTM"
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 
-echo "### Test 1: TPNOTACID call issued to syslog when ZEDIT called within a transaction"
+# ZEDIT runs $EDITOR after the TPNOTACID check, so use an editor that does nothing and returns at once
+setenv EDITOR `which true`
+
+# Build the external call to the gtm10099() C function. Its object file is named gtm10099xc.o, since a gtm10099.o
+# in the current directory would be taken as the object file of the gtm10099.m routine.
+$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/gtm10099.c -o gtm10099xc.o >& gtm10099_cc.out
+$gt_ld_shl_linker ${gt_ld_option_output}gtm10099xc${gt_ld_shl_suffix} $gt_ld_shl_options gtm10099xc.o $gt_ld_syslibs >& gtm10099_ld.out
+echo "`pwd`/gtm10099xc${gt_ld_shl_suffix}" > gtm10099.tab
+echo "gtm10099: void gtm10099()" >> gtm10099.tab
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_xc GTMXC gtm10099.tab
+
+echo "### Test 1: ZEDIT in the final retry of a transaction sends a TPNOTACID warning to the syslog"
+echo "# Run [gtm10099.m], which restarts a transaction 3 times and then runs ZEDIT"
+echo "# Expect a TPNOTACID warning for ZEDIT. Previously, ZEDIT sent no TPNOTACID message."
 set test_num = T1
-# Set EDITOR to non-interactive editor for call to ZEDIT
-setenv EDITOR `which sed`
-echo 'extcall write "TEST",! quit' >& extcall.m
-set syslog_begin = `date +"%b %e %H:%M:%S"`
-echo "syslog_begin = $syslog_begin" > syslog_time1
-echo "# Call [gtm10099.m] routine to run ZEDIT in a transcation to produce TPNOTACID in syslog"
-($gtm_dist/mumps -r gtm10099 $test_num >& $test_num.out &; echo $! >&! $test_num.pid) >& ${test_num}mumps.out
-set syslog_end = `date +"%b %e %H:%M:%S"`
-echo "syslog_end = $syslog_end" >> syslog_time1
-echo "# Confirm TPNOTACID appeared in syslog output for ZEDIT call"
-echo "# Previously, no TPNOTACID message would appear for the ZEDIT call in gtm10099.m."
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" ${test_num}syslog.txt
-set mpid = `cat $test_num.pid`
-grep ".*\[$mpid\].*TPNOTACID, ZEDIT" ${test_num}syslog.txt
+set t = `date +"%b %e %H:%M:%S"`
+# The process runs in the background only to note its pid, so that only its own syslog messages are checked
+($gtm_dist/mumps -run gtm10099 $test_num >& $test_num.out &; echo $! >& $test_num.pid) >& ${test_num}_bckg.out
+set pid = `cat $test_num.pid`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+cat $test_num.out
+$gtm_tst/com/getoper.csh "$t" "" ${test_num}_syslog.txt "" "\[\<$pid\>\].*TPNOTACID"
+$grep "\[\<$pid\>\].*TPNOTACID" ${test_num}_syslog.txt | sed 's/.*%GTM-W-TPNOTACID/%GTM-W-TPNOTACID/; s/ -- generated from .*//'
 echo
 
-echo "### Test 2: TPNOTACID call issued to syslog when external call made within a transaction"
+echo "### Test 2: An external call in the final retry of a transaction sends a TPNOTACID warning to the syslog"
+echo "# Run [gtm10099.m], which restarts a transaction 3 times and then calls the gtm10099() C function"
+echo "# Expect EXT CALL from the function, and a TPNOTACID warning for the call. Previously, an external call sent no"
+echo "# TPNOTACID message."
 set test_num = T2
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtm10099.c
-$gt_ld_shl_linker ${gt_ld_option_output}gtm10099${gt_ld_shl_suffix} $gt_ld_shl_options gtm10099.o $gt_ld_syslibs
-setenv	GTMXC gtmxc.tab
-echo "`pwd`/gtm10099.so" > $GTMXC
-cat >> $GTMXC << CAT_EOF
-gtm10099:	void	gtm10099()
-CAT_EOF
-set syslog_begin = `date +"%b %e %H:%M:%S"`
-echo "syslog_begin = $syslog_begin" > syslog_time1
-echo "# Call [gtm10099.m] routine to make external call to the gtm10099() C function in a transaction to produce TPNOTACID in syslog"
-cp $gtm_tst/$tst/inref/gtm10099.m .
-$gtm_dist/mumps gtm10099.m
-($gtm_dist/mumps -r gtm10099 $test_num >& $test_num.out &; echo $! >&! $test_num.pid) >& ${test_num}mumps.out
-set syslog_end = `date +"%b %e %H:%M:%S"`
-echo "syslog_end = $syslog_end" >> syslog_time1
-echo "# Confirm TPNOTACID appeared in syslog output for external call"
-echo "# Previously, no TPNOTACID message would appear for the external call in gtm10099.m."
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" ${test_num}syslog.txt
-set mpid = `cat $test_num.pid`
-grep ".*\[$mpid\].*TPNOTACID, CALL OUT" ${test_num}syslog.txt
+set t = `date +"%b %e %H:%M:%S"`
+($gtm_dist/mumps -run gtm10099 $test_num >& $test_num.out &; echo $! >& $test_num.pid) >& ${test_num}_bckg.out
+set pid = `cat $test_num.pid`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+cat $test_num.out
+$gtm_tst/com/getoper.csh "$t" "" ${test_num}_syslog.txt "" "\[\<$pid\>\].*TPNOTACID"
+$grep "\[\<$pid\>\].*TPNOTACID" ${test_num}_syslog.txt | sed 's/.*%GTM-W-TPNOTACID/%GTM-W-TPNOTACID/; s/ -- generated from .*//'
 
 $gtm_tst/com/dbcheck.csh mumps >& dbcheck.log

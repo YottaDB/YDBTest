@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -18,7 +18,7 @@ gtm10099 ;
 trans(test)
 	tstart ():serial
 	if 3>$trestart trestart
-	if ("T1"=test)  do
+	if "T1"=test do
 	. zedit "extcall"
 	else  do
 	. do &gtm10099()

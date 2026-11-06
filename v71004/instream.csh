@@ -19,7 +19,7 @@
 # dbperms_umask-gtm9272		[jon]	Test create database files with permissions from umask
 # dollarstorage_rlimitdata-gtm9833	[jon]	Test $STORAGE reports the correct value when there is a restriction on the data segment limit (RLIMIT_DATA) of a process
 # readsocket_minusone-gtm9855		[jon]	Test READ * from a socket returns -1 if the read fails
-# zeditextcall_tpnotacid-gtm10099	[jon]	Check ZEDIT and external calls for TPNOACID issues
+# zeditextcall_tpnotacid-gtm10099	[jon]	Check ZEDIT and external calls for TPNOTACID issues
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
