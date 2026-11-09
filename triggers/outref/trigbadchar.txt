@@ -56,10 +56,13 @@ Error : Parsing NAME string: "badtrignamefail१bbb"
                                                                PASS
 
 Use high 127 character in the trigger name
-Added SET trigger on ^a named badtrignamepassccc
+The bad char is kept in the name, so the name is rejected
+Trigger name has non-alphanumeric character
+Error : Parsing NAME string: "badtrignamepass"_$ZCH(224,161)_"ccc"
                                                                PASS
-Add another trigger to use in a delete by name
-Added SET trigger on ^a named badtrignamepassddd
+Try to add another trigger to use in a delete by name
+Trigger name has non-alphanumeric character
+Error : Parsing NAME string: "badtrignamepass"_$ZCH(224,161)_"ddd"
                                                                PASS
 
 SELECT with the bogus name
@@ -71,10 +74,6 @@ Invalid name entry in SELECT list: "badtrignamepass"_$ZCH(224,161)_"ddd"
                                                                PASS
 
 SELECT with an asterix
-;trigger name: badtrignamepassccc (region DEFAULT)  cycle: 3
-+^a -name=badtrignamepassccc -commands=S -xecute="do mrtn^trigbadchar set fail=1"
-;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 3
-+^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
                                                                PASS
 
 Use unicode in the trigger name and try to DELETE
@@ -83,7 +82,8 @@ Error : Parsing NAME string: "badtrignamefail१bbb"
                                                                PASS
 
 Use high 127 character in the trigger name and try to DELETE
-Deleted SET trigger on ^a named badtrignamepassccc
+Trigger name has non-alphanumeric character
+Error : Parsing NAME string: "badtrignamepass"_$ZCH(224,161)_"ccc"
                                                                PASS
 DELETE trigger by name
 Invalid trigger NAME string: "badtrignamepass"_$ZCH(224,161)_"ddd"
@@ -115,10 +115,12 @@ Error : In parsing input:
 "^a -commands=S१ -xecute=""set x=3"" -name=badcharcmd3"
                                                                PASS
 Use high 127 character in the trigger command
-Without comma the bad char gets silently dropped
-Added SET trigger on ^a named badcharcmd4
+Even without comma the bad char is kept, so the command is rejected
+Error : In parsing input:
+"^a -commands=S"_$ZCH(224,161)_" -xecute=""set x=4"" -name=badcharcmd4"
                                                                PASS
-Deleted SET trigger on ^a named badcharcmd4
+Error : In parsing input:
+"^a -commands=S"_$ZCH(224,161)_" -xecute=""set x=4"" -name=badcharcmd4"
                                                                PASS
 ###################################################################
 ###################################################################
@@ -152,7 +154,8 @@ Deleted SET trigger on ^a named badcharzdelim
 ###################################################################
 ###################################################################
 Testing bad characters in the XECUTE
-dropping in random bytes into the spec get silently discarded, so these pass
+A random byte in the XECUTE string is kept. Inside a string literal, the trigger is added with the byte in
+its code. Outside a string literal, the XECUTE string does not compile, so the trigger is rejected
 
 Use unicode in the XECUTE string without quotes
 	 do mrtn^trigbadchar set x=à write x,!
@@ -163,19 +166,62 @@ Error : Parsing XECUTE string: " do mrtn^trigbadchar set x=à write x,!"
                                                                PASS
 
 Use high 127 character in the XECUTE string
-In each test, we add and delete the same trigger with the stray bytesAdded SET trigger on ^a named disappearingbadchar1
+In each test, we try to add and delete the same trigger with the stray bytes
+	 do mrtn^trigbadchar set x="." write x,!
+	                            ^-----
+##TEST_AWK		At column 29, line 1, source module /.*/trgtmp.*
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(224)
+	 do mrtn^trigbadchar set x="." write x,!
+	                            ^-----
+##TEST_AWK		At column 29, line 1, source module /.*/trgtmp.*
+%YDB-W-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
+Added SET trigger on ^a named disappearingbadchar1
                                                                PASS
-Added SET trigger on ^a named disappearingbadchar2
+	 do mrtn^trigbadchar set x="." write x,!
+	                            ^-----
+##TEST_AWK		At column 29, line 1, source module /.*/trgtmp.*
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(224)
+	 do mrtn^trigbadchar set x="." write x,!
+	                            ^-----
+##TEST_AWK		At column 29, line 1, source module /.*/trgtmp.*
+%YDB-W-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
+Deleted SET trigger on ^a named disappearingbadchar1
                                                                PASS
-Deleted SET trigger on ^a named disappearingbadchar2
+	 do mrtn^trigbadchar set x=.99 write x,!
+	                           ^-----
+##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " do mrtn^trigbadchar set x="_$ZCH(224)_"99 write x,!"
                                                                PASS
-Added SET trigger on ^a named disappearingbadchar3
+	 do mrtn^trigbadchar set x=.99 write x,!
+	                           ^-----
+##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " do mrtn^trigbadchar set x="_$ZCH(224)_"99 write x,!"
                                                                PASS
-Deleted SET trigger on ^a named disappearingbadchar3
+	 do mrtn^trigbadchar write .!
+	                           ^-----
+##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " do mrtn^trigbadchar write "_$ZCH(224)_"!"
                                                                PASS
-Added SET trigger on ^a named disappearingbadchar4
+	 do mrtn^trigbadchar write .!
+	                           ^-----
+##TEST_AWK		At column 28, line 1, source module /.*/trgtmp.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " do mrtn^trigbadchar write "_$ZCH(224)_"!"
                                                                PASS
-Deleted SET trigger on ^a named disappearingbadchar4
+	 do mrtn^trig.badchar write !
+	             ^-----
+##TEST_AWK		At column 14, line 1, source module /.*/trgtmp.*
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+Error : Parsing XECUTE string: " do mrtn^trig"_$ZCH(224)_"badchar write !"
+                                                               PASS
+	 do mrtn^trig.badchar write !
+	             ^-----
+##TEST_AWK		At column 14, line 1, source module /.*/trgtmp.*
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+Error : Parsing XECUTE string: " do mrtn^trig"_$ZCH(224)_"badchar write !"
                                                                PASS
 
 Use high 127 character in the XECUTE string without quotation marks
@@ -206,14 +252,8 @@ Invalid global variable name in SELECT list: "^a१"
 
 ###################################################################
 Output File: 
-;trigger name: badcharsubscript (region DEFAULT)  cycle: 22
-+^a($ZCH(224,165)) -name=badcharsubscript -commands=S -xecute="do mrtn^trigbadchar"
-;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 22
-+^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
-;trigger name: disappearingbadchar1 (region DEFAULT)  cycle: 22
-+^a -name=disappearingbadchar1 -commands=S -xecute="do mrtn^trigbadchar set x="""" write x,!"
-;trigger name: badcharinxecute (region DEFAULT)  cycle: 22
-+^a -name=badcharinxecute -commands=S -xecute="do mrtn^trigbadchar set x=$zchar(224,161) write x,! "
+Invalid global variable name in SELECT list: "^a"_$ZCH(224)
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 ###################################################################
 Output File: 
@@ -222,12 +262,14 @@ Invalid name entry in SELECT list: "bad१"
 
 ###################################################################
 Output File: 
+Invalid name entry in SELECT list: "bad"_$ZCH(224)
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 ###################################################################
 ###################################################################
 ###################################################################
 Testing bad characters placed in the CLI options
-dropping in random bytes into the spec get silently discarded, so most pass
+A random byte in the spec is kept, so each option with a bad char is rejected
 Since the CLI parser should treat badchars the same for each option,
 bad chars are placed right before and after the '-', right before the '=',
 in the middle of the opt and just as a stray character
@@ -246,15 +288,18 @@ Error : In parsing input:
                                                                PASS
 
 bad char NAME - bad char after the '-'
-Added SET trigger on ^a named badcharcli4
+Error : In parsing input:
+"^a -commands=SET -xecute=""do mrtn^trigbadchar set x=4"" -"_$ZCH(224)_"name=badcharcli4"
                                                                PASS
 
 bad char DELIM - bad char right before the '='
-Added SET trigger on ^a named badcharcli5
+Error : In parsing input:
+"^a -commands=SET -xecute=""do mrtn^trigbadchar set x=5"" -delim"_$ZCH(224)_"=$char(9) -name=badcharcli5"
                                                                PASS
 
 bad char PIECE - bad char in the middle the cli option
-Added SET trigger on ^a named badcharcli6
+Error : In parsing input:
+"^a -commands=SET -xecute=""do mrtn^trigbadchar set x=6"" -delim=$char(9) -pie"_$ZCH(224)_"ce=1 -name=badcharcli6"
                                                                PASS
 
 bad char OPTION - bad char as a stray byte in the cli
@@ -264,46 +309,24 @@ Error : In parsing input:
 
 ###################################################################
 ###################################################################
-;trigger name: badcharsubscript (region DEFAULT)  cycle: 27
+;trigger name: badcharsubscript (region DEFAULT)  cycle: 14
 +^a($ZCH(224,165)) -name=badcharsubscript -commands=S -xecute="do mrtn^trigbadchar"
-;trigger name: badtrignamepassddd (region DEFAULT)  cycle: 27
-+^a -name=badtrignamepassddd -commands=S -xecute="do mrtn^trigbadchar set fail=2"
-;trigger name: disappearingbadchar1 (region DEFAULT)  cycle: 27
-+^a -name=disappearingbadchar1 -commands=S -xecute="do mrtn^trigbadchar set x="""" write x,!"
-;trigger name: badcharinxecute (region DEFAULT)  cycle: 27
+;trigger name: badcharinxecute (region DEFAULT)  cycle: 14
 +^a -name=badcharinxecute -commands=S -xecute="do mrtn^trigbadchar set x=$zchar(224,161) write x,! "
-;trigger name: badcharcli1 (region DEFAULT)  cycle: 27
+;trigger name: badcharcli1 (region DEFAULT)  cycle: 14
 +^a -name=badcharcli1 -commands=S -xecute="do mrtn^trigbadchar set x=1"
-;trigger name: badcharcli2 (region DEFAULT)  cycle: 27
+;trigger name: badcharcli2 (region DEFAULT)  cycle: 14
 +^a -name=badcharcli2 -commands=S -xecute="do mrtn^trigbadchar set x=2"
-;trigger name: badcharcli4 (region DEFAULT)  cycle: 27
-+^a -name=badcharcli4 -commands=S -xecute="do mrtn^trigbadchar set x=4"
-;trigger name: badcharcli5 (region DEFAULT)  cycle: 27
-+^a -name=badcharcli5 -commands=S -delim=$C(9) -xecute="do mrtn^trigbadchar set x=5"
-;trigger name: badcharcli6 (region DEFAULT)  cycle: 27
-+^a -name=badcharcli6 -commands=S -delim=$C(9) -pieces=1 -xecute="do mrtn^trigbadchar set x=6"
 150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
-
 ^fired("+1^badcharcli1#")="executions=1.$reference=^a"
 ^fired("+1^badcharcli2#")="executions=1.$reference=^a"
-^fired("+1^badcharcli4#")="executions=1.$reference=^a"
-^fired("+1^badcharcli5#")="executions=1.$reference=^a"
-^fired("+1^badcharcli6#")="executions=1.$reference=^a"
 ^fired("+1^badcharinxecute#")="executions=1.$reference=^a"
-^fired("+1^badtrignamepassddd#")="executions=1.$reference=^a"
-^fired("+1^disappearingbadchar1#")="executions=1.$reference=^a"
 ###################################################################
 Run time test
 150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
-
 ^fired("+1^badcharcli1#")="executions=1.$reference=^a"
 ^fired("+1^badcharcli2#")="executions=1.$reference=^a"
-^fired("+1^badcharcli4#")="executions=1.$reference=^a"
-^fired("+1^badcharcli5#")="executions=1.$reference=^a"
-^fired("+1^badcharcli6#")="executions=1.$reference=^a"
 ^fired("+1^badcharinxecute#")="executions=1.$reference=^a"
-^fired("+1^badtrignamepassddd#")="executions=1.$reference=^a"
-^fired("+1^disappearingbadchar1#")="executions=1.$reference=^a"
 ###################################################################
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -317,5 +340,9 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(224)
+%YDB-W-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(224)
+%YDB-W-BADCHAR, $ZCHAR(224) is not a valid character in the UTF-8 encoding form
 150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form
 150381066,+1^badcharinxecute#,%YDB-E-BADCHAR, $ZCHAR(224,161) is not a valid character in the UTF-8 encoding form

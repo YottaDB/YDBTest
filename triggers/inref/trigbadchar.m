@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	; do I need to use VIEW "NOBADCHAR" to load these triggers?
 	; apparently not
 
@@ -90,9 +101,10 @@ badchartrigname
 	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=0"" -name=badtrignamefail"_$char(2407)_"bbb",0)
 
 	write !,"Use high 127 character in the trigger name",!
-	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=1"" -name=badtrignamepass"_$zchar(224,161)_"ccc",1)
-	write "Add another trigger to use in a delete by name",!
-	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=2"" -name=badtrignamepass"_$zchar(224,161)_"ddd",1)
+	write "The bad char is kept in the name, so the name is rejected",!
+	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=1"" -name=badtrignamepass"_$zchar(224,161)_"ccc",0)
+	write "Try to add another trigger to use in a delete by name",!
+	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=2"" -name=badtrignamepass"_$zchar(224,161)_"ddd",0)
 
 	write !,"SELECT with the bogus name",!
 	do select("badtrignamefail"_$char(2407)_"bbb",0)
@@ -106,7 +118,7 @@ badchartrigname
 	do item("-^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=0"" -name=badtrignamefail"_$char(2407)_"bbb",0)
 
 	write !,"Use high 127 character in the trigger name and try to DELETE",!
-	do item("-^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=1"" -name=badtrignamepass"_$zchar(224,161)_"ccc",1)
+	do item("-^a -commands=SET -xecute=""do mrtn^trigbadchar set fail=1"" -name=badtrignamepass"_$zchar(224,161)_"ccc",0)
 	write "DELETE trigger by name",!
 	do item("-badtrignamepass"_$zchar(224,161)_"ddd",0)
 
@@ -131,9 +143,9 @@ badcharcmd
 	do item("-^a -commands=S"_$char(2407)_" -xecute=""set x=3"" -name=badcharcmd"_badcharcmd,0)
 
 	write "Use high 127 character in the trigger command",!
-	write "Without comma the bad char gets silently dropped",!
-	do item("+^a -commands=S"_$zchar(224,161)_" -xecute=""set x=4"" -name=badcharcmd"_$incr(badcharcmd),1)
-	do item("-^a -commands=S"_$zchar(224,161)_" -xecute=""set x=4"" -name=badcharcmd"_badcharcmd,1)
+	write "Even without comma the bad char is kept, so the command is rejected",!
+	do item("+^a -commands=S"_$zchar(224,161)_" -xecute=""set x=4"" -name=badcharcmd"_$incr(badcharcmd),0)
+	do item("-^a -commands=S"_$zchar(224,161)_" -xecute=""set x=4"" -name=badcharcmd"_badcharcmd,0)
 
 	do ^echoline
 	quit
@@ -168,7 +180,8 @@ badchardelim
 badcharxecute
 	do ^echoline
 	write "Testing bad characters in the XECUTE",!
-	write "dropping in random bytes into the spec get silently discarded, so these pass",!
+	write "A random byte in the XECUTE string is kept. Inside a string literal, the trigger is added with the byte in",!
+	write "its code. Outside a string literal, the XECUTE string does not compile, so the trigger is rejected",!
 	write !
 
 	set addspec="+^a -commands=SET -xecute="
@@ -180,16 +193,17 @@ badcharxecute
 	do item(addspec_trigcmn_" set x="_$char(224)_" write x,!"" -name=goodcharxecute",0)
 
 	write !,"Use high 127 character in the XECUTE string",!
-	write "In each test, we add and delete the same trigger with the stray bytes"
+	write "In each test, we try to add and delete the same trigger with the stray bytes",!
 	do item(addspec_trigcmn_" set x="_$zchar(34,34,224,34,34)_" write x,!"""_name_$incr(disappear),1)
-	do item(addspec_trigcmn_" set x="_$zchar(224)_"99 write x,!"""_name_$incr(disappear),1)
-	do item(delspec_trigcmn_" set x="_$zchar(224)_"99 write x,!"""_name_disappear,1)
+	do item(delspec_trigcmn_" set x="_$zchar(34,34,224,34,34)_" write x,!"""_name_disappear,1)
+	do item(addspec_trigcmn_" set x="_$zchar(224)_"99 write x,!"""_name_$incr(disappear),0)
+	do item(delspec_trigcmn_" set x="_$zchar(224)_"99 write x,!"""_name_disappear,0)
 
-	do item(addspec_trigcmn_" write "_$zchar(224)_"!"""_name_$incr(disappear),1)
-	do item(delspec_trigcmn_" write "_$zchar(224)_"!"""_name_disappear,1)
+	do item(addspec_trigcmn_" write "_$zchar(224)_"!"""_name_$incr(disappear),0)
+	do item(delspec_trigcmn_" write "_$zchar(224)_"!"""_name_disappear,0)
 
-	do item(addspec_"""do mrtn^trig"_$zchar(224)_"badchar write !"""_name_$incr(disappear),1)
-	do item(delspec_"""do mrtn^trig"_$zchar(224)_"badchar write !"""_name_disappear,1)
+	do item(addspec_"""do mrtn^trig"_$zchar(224)_"badchar write !"""_name_$incr(disappear),0)
+	do item(delspec_"""do mrtn^trig"_$zchar(224)_"badchar write !"""_name_disappear,0)
 
 	write !,"Use high 127 character in the XECUTE string without quotation marks",!
 	write "Leave this trigger in to see the trigger hit a badchar during the run time test",!
@@ -236,7 +250,7 @@ badcharselect
 badcharcli
 	do ^echoline
 	write "Testing bad characters placed in the CLI options",!
-	write "dropping in random bytes into the spec get silently discarded, so most pass",!
+	write "A random byte in the spec is kept, so each option with a bad char is rejected",!
 	write "Since the CLI parser should treat badchars the same for each option,",!
 	write "bad chars are placed right before and after the '-', right before the '=',",!
 	write "in the middle of the opt and just as a stray character",!
@@ -251,13 +265,13 @@ badcharcli
 	do item("+^a -commands=SET "_$zchar(224)_"-xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -name=badcharcli"_badcli,0)
 
 	write !,"bad char NAME - bad char after the '-'",!
-	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -"_$zchar(224)_"name=badcharcli"_badcli,1)
+	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -"_$zchar(224)_"name=badcharcli"_badcli,0)
 
 	write !,"bad char DELIM - bad char right before the '='",!
-	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -delim"_$zchar(224)_"=$char(9) -name=badcharcli"_badcli,1)
+	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -delim"_$zchar(224)_"=$char(9) -name=badcharcli"_badcli,0)
 
 	write !,"bad char PIECE - bad char in the middle the cli option",!
-	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -delim=$char(9) -pie"_$zchar(224)_"ce=1 -name=badcharcli"_badcli,1)
+	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -delim=$char(9) -pie"_$zchar(224)_"ce=1 -name=badcharcli"_badcli,0)
 
 	write !,"bad char OPTION - bad char as a stray byte in the cli",!
 	do item("+^a -commands=SET -xecute=""do mrtn^trigbadchar set x="_$incr(badcli)_""" -option=i "_$zchar(224)_" -name=badcharcli"_badcli,0)
