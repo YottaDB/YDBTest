@@ -1,0 +1,35 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1376] $ZTRIGGER("SELECT") and MUPIP TRIGGER -SELECT of a 31-character global name and *       #
+#----------------------------------------------------------------------------------------------------#
+
+# The database has a trigger on a global of 31 characters (^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa). Each
+# stage runs the command shown in a new process, and checks that the output has no fatal error and
+# lists the trigger once.
+
+# Stage 1 : $ZTRIGGER("SELECT") of the 31-character name followed by *
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set x=$ztrigger("select","^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*")
+#   write "end",!
+# Before the fix : a Debug build failed an assert in trigger_select.c, and a Release build was killed
+#                  by signal 6 (buffer overflow)
+# With the fix   : expect the trigger to be listed once
+PASS : no fatal error in stage1.out
+PASS : the trigger is listed once, and the command finished
+
+# Stage 2 : $ZTRIGGER("SELECT") of the first 30 characters of the name followed by *
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x=$ztrigger("select","^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*")
+#   write "end",!
+# Before the fix : the trigger was listed once (this stage is a control)
+# With the fix   : expect the trigger to be listed once
+PASS : no fatal error in stage2.out
+PASS : the trigger is listed once, and the command finished
+
+# Stage 3 : MUPIP TRIGGER -SELECT of the 31-character name followed by *
+# Command : $gtm_exe/mupip trigger -select="^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*" stage3.trg
+# Before the fix : a Debug build failed an assert in trigger_select.c, and a Release build was killed
+#                  by signal 6 (buffer overflow)
+# With the fix   : expect the trigger to be listed once
+PASS : no fatal error in stage3.out
+PASS : the trigger is listed once, and the command finished
+
