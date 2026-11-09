@@ -1,0 +1,129 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1377] $ZTRIGGER("ITEM") of trigger code with an invalid command with a postconditional       #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in Direct Mode in a new
+# process, and checks that the output has no fatal error, has the INVCMD error (or none), the value
+# that $ZTRIGGER() returns, and the number of triggers that $ZTRIGGER("SELECT") lists. Stage 7 does
+# the same with MUPIP TRIGGER.
+
+# Stage 1 : a FOR with a variable increment, then an invalid command with an empty postconditional
+# (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""f k=1:st repeat1:""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : Debug and Release builds failed with GTMASSERT2 (or an assert) in emit_code.c
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage1.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 2 : a FOR with a literal increment, then an invalid command with an empty postconditional
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""f k=1:2 repeat1:""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : INVCMD as a warning (-W-), and no trigger
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage2.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 3 : only an invalid command with an empty postconditional
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""repeat1:""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : INVCMD as a warning (-W-), and no trigger
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage3.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 4 : an invalid command with a postconditional, then a valid command
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""repeat1:1 set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : INVCMD as a warning (-W-), and no trigger
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage4.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 5 : a FOR, then an invalid command without a postconditional
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""f k=1:2 zz""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : INVCMD as an error, and no trigger (this stage is a control)
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage5.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 6 : valid trigger code
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   set x=$ztrigger("item","+^c -commands=S -xecute=""set y=1""")
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : the trigger was added (this stage is a control)
+# With the fix   : expect no INVCMD and the trigger to be added
+PASS : no fatal error in stage6.out
+PASS : INVCMD was issued as an error 0 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 1 trigger(s), and the last line of input ran
+
+# Stage 7 : MUPIP TRIGGER -TRIGGERFILE with the trigger code of stage 1
+# Command : $gtm_exe/mupip trigger -triggerfile=stage7.trg -noprompt, where stage7.trg has this line
+#   +^c -commands=S -xecute="f k=1:st repeat1:"
+# Before the fix : MUPIP TRIGGER failed with GTMASSERT2 in emit_code.c
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage7.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 8 : an invalid command with the postconditional y, then $CHAR(255) (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage8.inp, where stage8.inp has these lines
+#   set t="+^c -commands=S -xecute=""zzz:y "_$char(255)_""""
+#   set x=$ztrigger("item",t)
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11, and a Debug build failed an assert in
+#                  jmp_opto.c
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage8.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+
+# Stage 9 : an invalid command with the postconditional $ztlevel=1, then $CHAR(127) (from fuzz
+# testing)
+# Command : $gtm_dist/mumps -direct < stage9.inp, where stage9.inp has these lines
+#   set t="+^c -commands=S -xecute=""sxt:$ztlevel=1 ^%im"_$char(127)_"odtrigintp=10"""
+#   set x=$ztrigger("item",t)
+#   write "x=",x,!
+#   write $ztrigger("select"),!
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11, and a Debug build failed an assert in
+#                  jmp_opto.c
+# With the fix   : expect INVCMD as an error once and no trigger
+PASS : no fatal error in stage9.out
+PASS : INVCMD was issued as an error 1 time(s)
+PASS : the trigger load returned the expected status
+PASS : $ZTRIGGER("SELECT") lists 0 trigger(s), and the last line of input ran
+

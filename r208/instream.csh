@@ -133,6 +133,7 @@
 # trigger_number_past_end-ydb1372	[nars]	Test $ZTRIGGER("ITEM") of an item that ends in a number subscript does not read past the item
 # trigger_stackcrit_symval-ydb1375	[nars]	Test a STACKCRIT error inside nested triggers leaves the symbol table of the caller unchanged
 # trigger_select_name_wildcard-ydb1376	[nars]	Test $ZTRIGGER("SELECT") of a 31-character global name followed by * lists the triggers of the global
+# trigger_invcmd_postcond-ydb1377	[nars]	Test $ZTRIGGER("ITEM") rejects trigger code with an invalid command with a postconditional
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -260,6 +261,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts7-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_number_past_end-ydb1372"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_stackcrit_symval-ydb1375"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_select_name_wildcard-ydb1376"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_invcmd_postcond-ydb1377"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
