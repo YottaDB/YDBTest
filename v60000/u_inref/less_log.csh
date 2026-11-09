@@ -119,7 +119,7 @@ echo "============Test3 ends=========="
 ## Test 4 is to test that logging period will no longer increase when it exceeds the threshold
 ## It is also to test that the servers can run normally with very large soft tries period (larger than maximum logging period)
 echo
-echo "# Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=310"
+echo "# Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=305"
 $echoline
 
 ## Turn off INST1-source"
@@ -130,8 +130,13 @@ $gtm_tst/com/wait_for_proc_to_die.csh $pidsrc 120
 if ($status) then
 	echo "TEST-E-ERROR source server $pidsrc did not die."
 endif
-## Turn on INST1-source,set the soft tries period as 155 seconds and alert period as 310 seconds
-$MUPIP replic -source -start -log=src4.log -secondary="$HOST":"$portno" -log=src4.log -buf=1 $gtm_test_instsecondary -conn=2,500,155,310,15,60 >>&inst1_activity.out
+## Turn on INST1-source,set the soft tries period as 155 seconds and alert period as 305 seconds
+## The REPLALERT check runs after each soft tries sleep and compares whole-second time() values, and the receiver is
+## started (below) so that the source server connects at the third attempt, right after the second soft tries sleep.
+## With an alert period of exactly two soft tries periods (310), that check could see 309 seconds and issue no REPLALERT
+## before the connection. An alert period a few seconds less than 310 (but more than one soft tries period) makes that
+## check issue the REPLALERT every time.
+$MUPIP replic -source -start -log=src4.log -secondary="$HOST":"$portno" -log=src4.log -buf=1 $gtm_test_instsecondary -conn=2,500,155,305,15,60 >>&inst1_activity.out
 
 ## Wait up to 175 seconds before starting the receiver server, during which time the source server should have two soft tries. The value of 175 was chosen to (safely)
 ## exceed the following: hard tries time (2 * 0.5) + 155 + hard tries time (2 * 0.5) = 157 seconds.
@@ -144,11 +149,12 @@ $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -start -listen="$portno" -log=rc
 $gtm_tst/com/wait_for_log.csh -log src4.log -message "Connection information" -duration 175
 
 echo "src4.log:"
-## Note the first REPLALERT in this subtest does not pop for at least 310 seconds (soft interval is 155 so two soft intervals
-## is 310 seconds). Generally 311 is the expected value as there's also a hard spin that takes a second thus giving us the
-## expected value of 311. Because of this, set our "last message" base value to 310; the filter allows the soft
-## tries period plus 10 seconds on top of that, so values up to 475 are acceptable.
-$gtm_dist/mumps -r filterSRClog^lesslog src4.log 310
+## Note the first REPLALERT in this subtest does not pop until after the second soft tries sleep, at about 310 seconds
+## (soft interval is 155 so two soft intervals is 310 seconds), as the alert period (305) is more than one soft interval.
+## Generally 311 is the expected value as there's also a hard spin that takes a second thus giving us the expected value
+## of 311. Because of this, set our "last message" base value to 305. The filter accepts a value up to that base value
+## plus the soft tries period plus 10 seconds, i.e. up to 305 + 155 + 10 = 470 seconds.
+$gtm_dist/mumps -r filterSRClog^lesslog src4.log 305
 ## In src4.log, there will be no "3 soft connection attempt failed", which would mean that the source server connects to the
 ## receiver after more than 310 seconds. In the src4.log, the alert message  "Could not connect to secondary in 311 seconds"
 ## indicates that two logs take 155+155+1 seconds, i.e. the logging period does not increase.

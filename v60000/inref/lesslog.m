@@ -28,7 +28,7 @@
 ; costs. The check below therefore allows the soft tries period this source server reports, read from its
 ; own log, plus "maxmsgdiff" below, a fixed 10 second allowance for the cost of that pass. Both periods are
 ; -conn parameters and differ per test: Tests #2 and #3 use a soft tries period of 1 and an alert period of
-; 2, Test #4 uses 155 and 310. If the progression fails, an error is noted.
+; 2, Test #4 uses 155 and 305. If the progression fails, an error is noted.
 ;
 ; Because source servers are not shutdown immediately after the final message we want to see is generated (no messages
 ; after '64 soft connection attempt failed' should be in the reference file), we look for this. We still check the time
@@ -96,7 +96,7 @@ filterSRClog
 	. . . ; routine: the alert is only tested once per pass of the connect loop, and each pass sleeps the
 	. . . ; soft tries period, so a value up to a full period beyond the expected one is the message being
 	. . . ; emitted on the next boundary rather than any change in behaviour. A fixed margin cannot do this:
-	. . . ; 10 seconds is five times the 2 second period Tests #2 and #3 use and 3.2% of the 310 second
+	. . . ; 10 seconds is five times the 2 second period Tests #2 and #3 use and 3.3% of the 305 second
 	. . . ; period Test #4 uses.
 	. . . ;
 	. . . set cursecs=$zpiece(line," ",12)			; Grab the seconds field of the REPLALERT line
