@@ -1,0 +1,19 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1375] A STACKCRIT error inside nested triggers leaves the symbol table of the caller          #
+# unchanged                                                                                          #
+#----------------------------------------------------------------------------------------------------#
+
+# A trigger on ^c sets ^c again, so a SET of ^c nests triggers until the M stack is nearly full and
+# the next trigger invocation fails with a STACKCRIT error. The M stack is set to the minimum size
+# (gtm_mstack_size=25) so that happens after a few nested triggers. ydb1375.m replaces the trigger
+# with one whose code has 0 to 200 more SET commands (which changes how much M stack each trigger
+# level uses, and so the point in the trigger invocation where the STACKCRIT error occurs), sets ^c
+# twice for each size and catches the errors with $ETRAP. After each size, ydb1375.m checks that the
+# local variable "top", set before the first trigger, is still visible.
+
+# Command : $gtm_dist/mumps -run ydb1375
+# Before the fix : a Release build shows $data(@"top")=0, and a Debug build fails an assert in
+#                  unw_mv_ent.c
+# With the fix   : PASS
+PASS : no fatal error in ydb1375.out
+PASS : $data(@"top")=1 after the trigger errors for all trigger code sizes
