@@ -103,6 +103,8 @@ echo ""
 # "Silently" is a claim about what is NOT written, so this runs below the final retry, where no TPNOTACID message is
 # due, and expects the process to have written nothing at all. The grep deliberately matches any message from the
 # process rather than TPNOTACID ones, since a complaint about the rejected value need not be a TPNOTACID message.
+# The one exception is the SHMHUGETLB warning, which any process writes when huge pages are turned on randomly by the
+# test framework but cannot back shared memory, whether the system has too few (ENO12) or does not permit them (ENO1).
 echo "### Test ${test_num}: an unsupported gtm_tpnotacidtries reverts to the default silently"
 echo '# Tests 4, 5, and 6 showed that the default limit takes effect. Nothing may be said about the rejected value.'
 foreach badvalue (3 101 abc)
@@ -115,8 +117,8 @@ foreach badvalue (3 101 abc)
 	cat notacid_silent${badvalue}.out
 	sleep 1
 	$gtm_tst/com/getoper.csh "$t" "" syslog_silent${badvalue}.txt
-	echo "# Count of syslog messages of any kind from that process:"
-	$grep -c "MUMPS\[\<$pid\>\]" syslog_silent${badvalue}.txt
+	echo "# Count of syslog messages of any kind from that process, except a SHMHUGETLB warning:"
+	$grep "MUMPS\[\<$pid\>\]" syslog_silent${badvalue}.txt | $grep -vc 'SHMHUGETLB, Could not back shared memory'
 end
 echo ""
 @ test_num = $test_num + 1

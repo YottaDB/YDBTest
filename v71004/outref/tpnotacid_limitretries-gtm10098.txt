@@ -72,15 +72,15 @@ Committed without a TPNOTACID error
 # Tests 4, 5, and 6 showed that the default limit takes effect. Nothing may be said about the rejected value.
 # With gtm_tpnotacidtries=3, stdout and stderr hold this and nothing else:
 Committed without a TPNOTACID error
-# Count of syslog messages of any kind from that process:
+# Count of syslog messages of any kind from that process, except a SHMHUGETLB warning:
 0
 # With gtm_tpnotacidtries=101, stdout and stderr hold this and nothing else:
 Committed without a TPNOTACID error
-# Count of syslog messages of any kind from that process:
+# Count of syslog messages of any kind from that process, except a SHMHUGETLB warning:
 0
 # With gtm_tpnotacidtries=abc, stdout and stderr hold this and nothing else:
 Committed without a TPNOTACID error
-# Count of syslog messages of any kind from that process:
+# Count of syslog messages of any kind from that process, except a SHMHUGETLB warning:
 0
 
 ### Test 11: TPNOTACID syslog messages are suppressed only when the operation does not change
