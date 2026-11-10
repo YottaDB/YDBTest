@@ -1,0 +1,123 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1379] ZWRITE of a naked reference                                                             #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database in its own directory, runs the lines shown in Direct Mode in a new
+# process, and checks that the output has no fatal error, has the lines expected, and that the last
+# line of input ran.
+
+# Stage 1 : ZWRITE of a naked reference in a transaction, after a SET before the transaction
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set ^d(1)=1,^d(2)=2
+#   tstart ()
+#   zwrite ^(2)
+#   tcommit
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11 in gvcst_search(), and a Debug build
+#                  failed an assert in gvcst_data.c
+# With the fix   : expect the lines ^d(2)=2
+PASS : no fatal error in stage1.out
+PASS : stage1.out has ^d(2)=2
+PASS : the last line of input ran
+
+# Stage 2 : the same with ^(*)
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set ^d(1)=1,^d(2)=2
+#   tstart ()
+#   zwrite ^(*)
+#   tcommit
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11 in gvcst_search(), and a Debug build
+#                  failed an assert in gvcst_data.c
+# With the fix   : expect the lines ^d(1)=1 ^d(2)=2
+PASS : no fatal error in stage2.out
+PASS : stage2.out has ^d(1)=1
+PASS : stage2.out has ^d(2)=2
+PASS : the last line of input ran
+
+# Stage 3 : ZWRITE of a naked reference in a transaction after a MERGE from an undefined global (from
+# fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set ^d(1)=1 kill ^d
+#   merge ^d(4)=^aglobalvar(1)
+#   tstart ()
+#   zwrite ^(2,"",1)
+#   tcommit
+#   write "end",!
+# Before the fix : a Release build terminated with a SIG-11 in gvcst_search(), and a Debug build
+#                  failed an assert in gvcst_data.c
+# With the fix   : expect GVUNDEF once
+PASS : no fatal error in stage3.out
+PASS : GVUNDEF was issued once
+PASS : the last line of input ran
+
+# Stage 4 : ZWRITE of a naked reference with no transaction
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set ^d(1)=1,^d(2)=2
+#   zwrite ^(2)
+#   write "end",!
+# Before the fix : ^d(2)=2 (this stage is a control)
+# With the fix   : expect the lines ^d(2)=2
+PASS : no fatal error in stage4.out
+PASS : stage4.out has ^d(2)=2
+PASS : the last line of input ran
+
+# Stage 5 : ZWRITE of a naked reference to a global that another process created after the previous
+# reference found it undefined
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   write $data(^d(1)),!
+#   zsystem "$gtm_dist/mumps -run %XCMD ""set ^d(1)=5"""
+#   zwrite ^(1)
+#   write "end",!
+# Before the fix : GVUNDEF
+# With the fix   : expect the lines ^d(1)=5
+PASS : no fatal error in stage5.out
+PASS : stage5.out has ^d(1)=5
+PASS : the last line of input ran
+
+# Stage 6 : the same in a transaction
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   write $data(^d(1)),!
+#   zsystem "$gtm_dist/mumps -run %XCMD ""set ^d(1)=5"""
+#   tstart ()
+#   zwrite ^(1)
+#   tcommit
+#   write "end",!
+# Before the fix : GVUNDEF
+# With the fix   : expect the lines ^d(1)=5
+PASS : no fatal error in stage6.out
+PASS : stage6.out has ^d(1)=5
+PASS : the last line of input ran
+
+# Stage 7 : ZWRITE of a naked reference after a $ORDER() with a null last subscript, on a region
+# with null subscripts NEVER (the key that ZWRITE uses, ^d("a",2), has no null subscript)
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   set ^d("a",2)=3
+#   write $order(^d("a","")),!
+#   zwrite ^(2)
+#   write "end",!
+# Before the fix : NULSUBSC
+# With the fix   : expect the lines 2 ^d("a",2)=3
+PASS : no fatal error in stage7.out
+PASS : stage7.out has 2
+PASS : stage7.out has ^d("a",2)=3
+PASS : the last line of input ran
+
+# Stage 8 : ZWRITE of naked references whose key has a null last subscript, ^d(""), and a null
+# subscript that is not the last, ^d("",1), on a region with null subscripts ALWAYS
+# Command : $gtm_dist/mumps -direct < stage8.inp, where stage8.inp has these lines
+#   set ^d("",2)=3,^d("",1,2)=4
+#   write $order(^d("","")),!
+#   zwrite ^(2)
+#   write $order(^d("",1,"")),!
+#   zwrite ^(2)
+#   write "end",!
+# Before the fix : ^d("",2)=3 and ^d("",1,2)=4 (this stage is a control)
+# With the fix   : expect the lines 1 ^d("",2)=3 2 ^d("",1,2)=4
+PASS : no fatal error in stage8.out
+PASS : stage8.out has 1
+PASS : stage8.out has ^d("",2)=3
+PASS : stage8.out has 2
+PASS : stage8.out has ^d("",1,2)=4
+PASS : the last line of input ran
+
