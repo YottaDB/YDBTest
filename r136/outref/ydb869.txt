@@ -75,8 +75,10 @@ YDB#869 : Test boolean expressions involving huge numeric literals issue NUMOFLO
 
 #################################################################################################
 # Test 2 : Test that [mumps -direct] with NUMOFLOW expressions does not assert fail or SIG-11
-# Note that NUMOFLOW errors will be printed once per expression.
-# Since we have 22 expressions in 21 lines, we expect 21 NUMOFLOW errors below.
+# Note that an error will be printed once per line, as when the lines run in a routine (Test 3).
+# Since we have 21 lines, we expect 21 errors below. 12 are NUMOFLOW errors. The other lines get another
+# error before the NUMOFLOW error: ZLINKFILE for the 6 lines that first call $$^truZQUIT (which does not
+# exist), and RPARENMISSING for the 3 lines with $zbitfind (which have no right parenthesis).
 # Running [grep -v ^;' ##IN_TEST_PATH##/inref/ydb869.m | ##SOURCE_PATH##/mumps -direct >& direct_ydb869.outx]
 # Running [grep -B 1 -E "^##|^GTM>|^%GTM-" direct_ydb869.outx | grep -v FILENOTFND]
 
@@ -89,27 +91,22 @@ GTM>
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-RPARENMISSING, Right parenthesis expected
 --
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 
@@ -118,27 +115,22 @@ GTM>
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-RPARENMISSING, Right parenthesis expected
 --
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 
@@ -147,27 +139,22 @@ GTM>
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-NUMOFLOW, Numeric overflow
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-ZLINKFILE, Error while zlinking "truZQUIT"
+
+GTM>
+%GTM-E-RPARENMISSING, Right parenthesis expected
 --
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
-
-GTM>
-%GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 
@@ -176,15 +163,12 @@ GTM>
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 %GTM-E-NUMOFLOW, Numeric overflow
---
 
 GTM>
 

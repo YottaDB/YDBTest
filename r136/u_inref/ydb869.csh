@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,8 +33,10 @@ grep -B 1 NUMOFLOW $logfile
 echo ""
 echo "#################################################################################################"
 echo "# Test 2 : Test that [mumps -direct] with NUMOFLOW expressions does not assert fail or SIG-11"
-echo "# Note that NUMOFLOW errors will be printed once per expression."
-echo "# Since we have 22 expressions in 21 lines, we expect 21 NUMOFLOW errors below."
+echo "# Note that an error will be printed once per line, as when the lines run in a routine (Test 3)."
+echo "# Since we have 21 lines, we expect 21 errors below. 12 are NUMOFLOW errors. The other lines get another"
+echo "# error before the NUMOFLOW error: ZLINKFILE for the 6 lines that first call \$\$^truZQUIT (which does not"
+echo "# exist), and RPARENMISSING for the 3 lines with \$zbitfind (which have no right parenthesis)."
 set logfile = direct_ydb869.outx
 echo "# Running [grep -v ^;' $gtm_tst/$tst/inref/ydb869.m | $ydb_dist/mumps -direct >& $logfile]"
 grep -v '^;' $gtm_tst/$tst/inref/ydb869.m | $ydb_dist/mumps -direct >& $logfile

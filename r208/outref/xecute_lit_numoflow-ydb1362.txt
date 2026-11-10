@@ -1,0 +1,98 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1362] A routine that XECUTEs a string literal with a complement of a number that is too     #
+# large compiles, and the XECUTE issues NUMOFLOW when it runs                                      #
+#--------------------------------------------------------------------------------------------------#
+
+# When the argument of an XECUTE is one string literal, the compiler tries to compile the M code in
+# the literal as part of the routine, with run_time set to TRUE. If that trial compile fails, the
+# compiler compiles the XECUTE as usual, and the M code is compiled when the XECUTE runs.
+# bx_boollit() issued NUMOFLOW with rts_error_csa() for a number that is too large under a complement
+# in a Boolean expression. With run_time TRUE, that error was a real error, which abandoned the
+# compilation of the whole routine, so no object file was produced. A - or + in place of the
+# complement worked, because unary_tail() issues NUMOFLOW with stx_error(), which makes the XECUTE
+# issue the error when it runs. $ZYCOMPILE() of a line with such a complement (with or without
+# XECUTE) returned before setting its result, so the use of the result issued LVUNDEF.
+#
+# Stage 1 compiles and runs one routine per case. Each routine XECUTEs a string literal and writes
+# the mnemonic of the error the XECUTE issues, or the value the XECUTE sets. Stages 2 and 3 run
+# $ZYCOMPILE() of a line with such a complement, with and without XECUTE. Without the fix, the cases
+# com, comonly, comcom, comneg and ifcom of stage 1 and stages 2 and 3 print FAIL, and the other
+# cases of stage 1 PASS.
+
+# Stage 1 : compile and run x<case>.m for each case
+# Before the fix : for com, comonly, comcom, comneg and ifcom, the compile issued NUMOFLOW and
+#                  produced no object file, so the routine could not run (ZLINKFILE, ZLNOOBJECT)
+# With the fix   : expect each routine to compile with no error and produce an object file, and the
+#                  XECUTE to issue NUMOFLOW when it runs (the result 0 for comsmall, whose number is
+#                  not too large)
+# Case com : xecute "set got=1&('""1E47""!0)"
+# Command : $gtm_dist/mumps xcom.m
+PASS: compiling xcom.m issued no error
+PASS: xcom.o was produced
+# Command : $gtm_dist/mumps -run xcom
+PASS: xcom wrote %YDB-E-NUMOFLOW
+# Case comonly : xecute "set got=('""1E47"")&1"
+# Command : $gtm_dist/mumps xcomonly.m
+PASS: compiling xcomonly.m issued no error
+PASS: xcomonly.o was produced
+# Command : $gtm_dist/mumps -run xcomonly
+PASS: xcomonly wrote %YDB-E-NUMOFLOW
+# Case comcom : xecute "set got=1&(''""1E47""!0)"
+# Command : $gtm_dist/mumps xcomcom.m
+PASS: compiling xcomcom.m issued no error
+PASS: xcomcom.o was produced
+# Command : $gtm_dist/mumps -run xcomcom
+PASS: xcomcom wrote %YDB-E-NUMOFLOW
+# Case comneg : xecute "set got=1&('-""1E47""!0)"
+# Command : $gtm_dist/mumps xcomneg.m
+PASS: compiling xcomneg.m issued no error
+PASS: xcomneg.o was produced
+# Command : $gtm_dist/mumps -run xcomneg
+PASS: xcomneg wrote %YDB-E-NUMOFLOW
+# Case ifcom : xecute "if '""1E47""!0 set got=1"
+# Command : $gtm_dist/mumps xifcom.m
+PASS: compiling xifcom.m issued no error
+PASS: xifcom.o was produced
+# Command : $gtm_dist/mumps -run xifcom
+PASS: xifcom wrote %YDB-E-NUMOFLOW
+# Case neg : xecute "set got=1&(-""1E47""!0)"
+# Command : $gtm_dist/mumps xneg.m
+PASS: compiling xneg.m issued no error
+PASS: xneg.o was produced
+# Command : $gtm_dist/mumps -run xneg
+PASS: xneg wrote %YDB-E-NUMOFLOW
+# Case num : xecute "set got=1&(+""1E47""!0)"
+# Command : $gtm_dist/mumps xnum.m
+PASS: compiling xnum.m issued no error
+PASS: xnum.o was produced
+# Command : $gtm_dist/mumps -run xnum
+PASS: xnum wrote %YDB-E-NUMOFLOW
+# Case negcom : xecute "set got=1&(-'""1E47""!0)"
+# Command : $gtm_dist/mumps xnegcom.m
+PASS: compiling xnegcom.m issued no error
+PASS: xnegcom.o was produced
+# Command : $gtm_dist/mumps -run xnegcom
+PASS: xnegcom wrote %YDB-E-NUMOFLOW
+# Case comsmall : xecute "set got=1&('""1""!0)"
+# Command : $gtm_dist/mumps xcomsmall.m
+PASS: compiling xcomsmall.m issued no error
+PASS: xcomsmall.o was produced
+# Command : $gtm_dist/mumps -run xcomsmall
+PASS: xcomsmall wrote 0
+
+# Stage 2 : $ZYCOMPILE() of a line that XECUTEs a string literal with a complement of a number that
+#           is too large
+# Before the fix : $ZYCOMPILE() left the result undefined, so the SET of the result issued LVUNDEF
+# With the fix   : expect "", as the XECUTE issues NUMOFLOW when it runs
+# Command : $gtm_dist/mumps -run zycx^ydb1362
+# $ZYCOMPILE(" xecute ""set y=1&('""""1E47""""!0)""") : expect ""
+PASS : $ZYCOMPILE returned ""
+
+# Stage 3 : $ZYCOMPILE() of a line with a complement of a number that is too large (no XECUTE)
+# Before the fix : $ZYCOMPILE() left the result undefined, so the SET of the result issued LVUNDEF
+# With the fix   : expect the NUMOFLOW error at column 21
+# Command : $gtm_dist/mumps -run zycs^ydb1362
+# $ZYCOMPILE(" set y=1&('""1E47""!0)") : expect "21,%YDB-E-NUMOFLOW,Numeric overflow"
+PASS : $ZYCOMPILE returned "21,%YDB-E-NUMOFLOW,Numeric overflow"
+
+# Done
