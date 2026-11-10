@@ -1,0 +1,54 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] SET * of an undefined alias container with VIEW "NOUNDEF" does not fail                 #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the lines shown in Direct Mode in a new process, and checks that the output has no
+# fatal error, has the number of ALIASEXPECTED errors expected, and that the last line of input ran.
+
+# Stage 1 : SET *alias=container with VIEW "NOUNDEF" and an undefined container (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   view "NOUNDEF"
+#   set *kk=c(2)
+#   write "end",!
+# Before the fix : a Debug build failed with a SIG-11 in op_setalsctin2als.c. A Release build issued
+#                  ALIASEXPECTED
+# With the fix   : expect 1 ALIASEXPECTED error(s)
+PASS : no fatal error in stage1.out
+PASS : ALIASEXPECTED was issued 1 time(s), and the last line of input ran
+
+# Stage 2 : SET *container=container with VIEW "NOUNDEF" and an undefined source container
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   view "NOUNDEF"
+#   set *a(1)=c(2)
+#   write "end",!
+# Before the fix : a Debug build failed with a SIG-11 in op_setalsct2alsct.c. A Release build issued
+#                  ALIASEXPECTED
+# With the fix   : expect 1 ALIASEXPECTED error(s)
+PASS : no fatal error in stage2.out
+PASS : ALIASEXPECTED was issued 1 time(s), and the last line of input ran
+
+# Stage 3 : the same SET commands with a source that is defined but not an alias container
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set c(2)=1
+#   set *kk=c(2)
+#   set *a(1)=c(2)
+#   write "end",!
+# Before the fix : ALIASEXPECTED twice (this stage is a control)
+# With the fix   : expect 2 ALIASEXPECTED error(s)
+PASS : no fatal error in stage3.out
+PASS : ALIASEXPECTED was issued 2 time(s), and the last line of input ran
+
+# Stage 4 : the same SET commands with an alias container
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set d=5
+#   set *c(2)=d
+#   set *kk=c(2)
+#   set *a(1)=c(2)
+#   write "kk=",kk," $zdata(kk)=",$zdata(kk),!
+#   write "end",!
+# Before the fix : no error (this stage is a control)
+# With the fix   : expect 0 ALIASEXPECTED error(s)
+PASS : no fatal error in stage4.out
+PASS : ALIASEXPECTED was issued 0 time(s), and the last line of input ran
+PASS : kk is an alias of d
+

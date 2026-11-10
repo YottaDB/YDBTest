@@ -135,6 +135,7 @@
 # trigger_select_name_wildcard-ydb1376	[nars]	Test $ZTRIGGER("SELECT") of a 31-character global name followed by * lists the triggers of the global
 # trigger_invcmd_postcond-ydb1377	[nars]	Test $ZTRIGGER("ITEM") rejects trigger code with an invalid command with a postconditional
 # zyencode_chunk_key_size-ydb1378	[nars]	Test ZYENCODE to a global variable issues GVSUBOFLOW when a chunk node key would be too long
+# fuzz_asserts8-ydb1101			[nars]	Test SET * of an undefined alias container with VIEW "NOUNDEF" does not fail in a Debug build
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -264,6 +265,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_stackcrit_symva
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_select_name_wildcard-ydb1376"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_invcmd_postcond-ydb1377"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_chunk_key_size-ydb1378"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts8-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
