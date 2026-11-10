@@ -1,0 +1,78 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1378] ZYENCODE to a global variable whose chunk node key is longer than the maximum key size  #
+#----------------------------------------------------------------------------------------------------#
+
+# ZYENCODE to a global variable stores the JSON string in chunk nodes, with the chunk number as an
+# added subscript. Each stage runs stage<N>^ydb1378 in a new process on a separate database (maximum
+# key size 64, maximum record size 256), which checks the error that ZYENCODE issues (if any) and what
+# ZYENCODE stored, and then checks the database with MUPIP INTEG (dbcheck.csh).
+
+# Stage 1 : ZYENCODE ^gvn=lvn, with a destination key that is too long once the chunk number is added
+# (from fuzz testing)
+# Command : $gtm_dist/mumps -run stage1^ydb1378
+# Before the fix : a Debug build failed an assert in op_gvput.c; a Release build stored the node and
+#                  INTEG reported DBGTDBMAX
+# With the fix   : expect GVSUBOFLOW, nothing stored, no INTEG error
+PASS : GVSUBOFLOW as expected
+PASS : $data(^j)=0 (nothing was stored)
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 2 : ZYENCODE ^gvn=^gvn, with the same destination key
+# Command : $gtm_dist/mumps -run stage2^ydb1378
+# Before the fix : a Debug build failed an assert in op_gvput.c; a Release build stored the node and
+#                  INTEG reported DBGTDBMAX
+# With the fix   : expect GVSUBOFLOW, nothing stored, no INTEG error
+PASS : GVSUBOFLOW as expected
+PASS : $data(^j)=0 (nothing was stored)
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 3 : ZYENCODE of a JSON string of 371 chunks, where only the keys of the later chunks are too
+# long. The key of the last chunk, ^j(s,371), is 65 bytes, one byte more than the maximum key size.
+# Command : $gtm_dist/mumps -run stage3^ydb1378
+# Before the fix : a Debug build failed an assert in op_gvput.c; a Release build stored the nodes and
+#                  INTEG reported DBGTDBMAX
+# With the fix   : expect GVSUBOFLOW for a key of 65 bytes (maximum 64), nothing stored, no INTEG error
+PASS : GVSUBOFLOW as expected
+PASS : $data(^j)=0 (nothing was stored)
+PASS : GVSUBOFLOW reports a key of 65 bytes, maximum 64
+PASS : GVSUBOFLOW reports the key of the last chunk (371)
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 4 : ZYENCODE with the destination of stage 3 and a JSON string of 1 chunk. The key of that
+# chunk, ^j(s,1), is 64 bytes, exactly the maximum key size.
+# Command : $gtm_dist/mumps -run stage4^ydb1378
+# Before the fix : ZYENCODE stored the JSON string, and INTEG was clean (this stage is a control)
+# With the fix   : expect no error, the JSON string stored, no INTEG error
+PASS : the key of ^j(s,1) is 64 bytes
+PASS : no error as expected
+PASS : ^j(s,1) has the JSON string
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 5 : ZYENCODE ^gvn=lvn as in stage 1, with a subscripted source
+# Command : $gtm_dist/mumps -run stage5^ydb1378
+# Before the fix : a Debug build failed an assert in op_gvput.c; a Release build stored the node and
+#                  INTEG reported DBGTDBMAX
+# With the fix   : expect GVSUBOFLOW, nothing stored, no INTEG error
+PASS : GVSUBOFLOW as expected
+PASS : $data(^j)=0 (nothing was stored)
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 6 : ZYENCODE ^gvn=^gvn as in stage 2, with a subscripted source
+# Command : $gtm_dist/mumps -run stage6^ydb1378
+# Before the fix : a Debug build failed an assert in op_gvput.c; a Release build stored the node and
+#                  INTEG reported DBGTDBMAX
+# With the fix   : expect GVSUBOFLOW, nothing stored, no INTEG error
+PASS : GVSUBOFLOW as expected
+PASS : $data(^j)=0 (nothing was stored)
+PASS : dbcheck.csh found no database integrity errors
+
+# Stage 7 : ZYENCODE ^gvn=^gvn as in stage 4, so the key of the one chunk, ^j(s,1), is exactly the
+# maximum key size
+# Command : $gtm_dist/mumps -run stage7^ydb1378
+# Before the fix : ZYENCODE stored the JSON string, and INTEG was clean (this stage is a control)
+# With the fix   : expect no error, the JSON string stored, no INTEG error
+PASS : the key of ^j(s,1) is 64 bytes
+PASS : no error as expected
+PASS : ^j(s,1) has the JSON string
+PASS : dbcheck.csh found no database integrity errors
+

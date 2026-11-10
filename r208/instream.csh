@@ -134,6 +134,7 @@
 # trigger_stackcrit_symval-ydb1375	[nars]	Test a STACKCRIT error inside nested triggers leaves the symbol table of the caller unchanged
 # trigger_select_name_wildcard-ydb1376	[nars]	Test $ZTRIGGER("SELECT") of a 31-character global name followed by * lists the triggers of the global
 # trigger_invcmd_postcond-ydb1377	[nars]	Test $ZTRIGGER("ITEM") rejects trigger code with an invalid command with a postconditional
+# zyencode_chunk_key_size-ydb1378	[nars]	Test ZYENCODE to a global variable issues GVSUBOFLOW when a chunk node key would be too long
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -262,6 +263,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_number_past_end
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_stackcrit_symval-ydb1375"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_select_name_wildcard-ydb1376"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_invcmd_postcond-ydb1377"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_chunk_key_size-ydb1378"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
