@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -78,9 +78,9 @@ endif
 setenv subtest_exclude_list	""
 # Filter out tests that cannot run on platforms that don't support triggers
 
-if ("dbg" == "$tst_image") then 
-	setenv subtest_exclude_list "$subtest_exclude_list gtm7254" 
-endif 
+if ("dbg" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7254"
+endif
 
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7497_trig gtm7355 gtm7495"
@@ -88,6 +88,12 @@ endif
 # filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list concbkup gtm7454"
+endif
+# v60001/gtm_posix runs the test of the ydbposix plugin, which checks the syslog only if process 1 is systemd and
+# otherwise prints a SKIP line that the reference file does not allow. So skip the subtest in that case, as in a
+# container without systemd such as the pipeline's.
+if ("systemd" != "`cat /proc/1/comm`") then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm_posix"
 endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
