@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -33,7 +33,7 @@ dbfill;
 bufferfill;
 	for i=1:1:300 set char="^"_$zch(65+(i#26)) set char=char_"("_i_")" set tmp=@char
 	for i=1:1:300 set char="^"_$zch(65+(i#26)) set char=char_"("_i_")" set @char=$j(i*2,900)
-	zsy "mupip replic -source -freeze=on -comment=FROZEN"
+	zsy "$gtm_dist/mupip replic -source -freeze=on -comment=FROZEN"
 	write "----------------------------------------------------------------------------------------"
-	zsy "mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! freeze.out1 ; unsetenv gtm_extract_nocol; unsetenv ydb_extract_nocol; mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! freeze.out2 ; setenv gtm_extract_nocol 1 ; mupip replic -source -freeze=off ; mv mumps.dat mumps.bak ; mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! dbmissing.out1 ; unsetenv gtm_extract_nocol; mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! dbmissing.out2"
+	zsy "$gtm_dist/mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! freeze.out1 ; unsetenv gtm_extract_nocol; unsetenv ydb_extract_nocol; $gtm_dist/mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! freeze.out2 ; setenv gtm_extract_nocol 1 ; $gtm_dist/mupip replic -source -freeze=off ; mv mumps.dat mumps.bak ; $gtm_dist/mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! dbmissing.out1 ; unsetenv gtm_extract_nocol; $gtm_dist/mupip journal -extract=mumps.mjf -noverify -detail -for -fences=none mumps.mjl >&! dbmissing.out2"
 	quit

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -14,6 +14,6 @@
 gtm7553
 	write "$Job = ",$job,!		; Useful in debugging to identify messages in log as THIS process
 	lock ^a
-	zsystem "lke show -mem"
+	zsystem "$gtm_dist/lke show -mem"
 	lock
 	quit

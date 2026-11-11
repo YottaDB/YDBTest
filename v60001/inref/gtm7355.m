@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2012, 2013 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -107,12 +110,12 @@ case1a
 	Quit
 case1b
 	Kill ^x
-   	Set %=$ZTRIGGER("ITEM","-*")
-   	Set %=$ZTRIGGER("ITEM","+^x -command=Set -xecute=""Do trigdo^"_$Text(+0)_"""")
+	Set %=$ZTRIGGER("ITEM","-*")
+	Set %=$ZTRIGGER("ITEM","+^x -command=Set -xecute=""Do trigdo^"_$Text(+0)_"""")
 	Set ^caseend=$ZLevel_":case1end"
-   	Set ^x="value"
+	Set ^x="value"
 case1end
-   	Quit
+	Quit
 
 ;
 ; Case 2: Explicit TP due to TSTART
@@ -126,12 +129,12 @@ case2a
 case2b
 	TStart ():serial
 	Write:($TLevel&(0<$TRestart)) "(Re)"
-       	Write "Starting transaction",!
+	Write "Starting transaction",!
 	Set ^caseend=$ZLevel_":case2end"
-       	Do sub1
+	Do sub1
 case2end
 	TRollback:($TLevel)
-       	Quit
+	Quit
 
 ;
 ; Case 3: Same as #1 but with a null $ETRAP set in main level
@@ -175,15 +178,15 @@ case7
 	Quit
 case7a
 	New $ETrap
-   	Set $ETrap=^etrapflavor
+	Set $ETrap=^etrapflavor
 	Kill ^x
-      	Set %=$ZTRIGGER("ITEM","-*")
-       	Set %=$ZTRIGGER("ITEM","+^x -command=Set -xecute=""Do ^notexist""")
+	Set %=$ZTRIGGER("ITEM","-*")
+	Set %=$ZTRIGGER("ITEM","+^x -command=Set -xecute=""Do ^notexist""")
 	Set ^caseend=$ZLevel_":case7end"
-       	Set ^x="value"
+	Set ^x="value"
 case7end
 	TRollback:($TLevel)
-        Quit
+	Quit
 
 ;
 ; Case 8: Similar to #5 but with a trigger that drives a routine that does not exist
@@ -201,10 +204,10 @@ case8
 trigdo
 sub1
 	New $ETrap
-   	Set $ETrap=^etrapflavor
-   	;Set $ECode=",U14,"		; Avoiding for now since this error will change in future and prefer not to re-do reference file
+	Set $ETrap=^etrapflavor
+	;Set $ECode=",U14,"		; Avoiding for now since this error will change in future and prefer not to re-do reference file
 	Set xx=yy			; Should cause an undef error
-   	Quit
+	Quit
 
 ;
 ; Error handler for main routine should errors unwind all the way back to it
@@ -269,7 +272,7 @@ etr2
 	; Invoke $ZInterrupt frame
 	;
 	Set waitforint=0
-	ZSystem "mupip intrpt "_$Job_" >>& zintr.out"
+	ZSystem "$gtm_dist/mupip intrpt "_$Job_" >>& zintr.out"
 	For i=1:1:100000 Quit:(0<waitforint)  Hang 0.01	; Loop waiting for interrupt
 	Write:(100000=i) "Failed to get $zinterrupt",!
 	Write "Returned from $ZInterrupt - ZGoto back to main from etr2^",$Text(+0),!

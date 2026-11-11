@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -17,7 +17,7 @@ gtm7525
 	set jmaxwait=0
 	set jdetach=1
 	set jnodisp=1
-	set cmdstr="lke show -wait >& jwait_queue.list"
+	set cmdstr="$gtm_dist/lke show -wait >& jwait_queue.list"
 	set ^received=0
 	new sigval
 	lock a

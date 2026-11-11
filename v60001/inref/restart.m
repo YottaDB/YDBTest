@@ -3,7 +3,7 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -31,7 +31,7 @@ viewdelta(iter,flag,val);
 tprestart;
 	tstart ():serial
 	set ^a($job)=1
-	zsystem "mumps -r %XCMD ""set ^a("_$job_")=2"""
+	zsystem "$gtm_dist/mumps -r %XCMD ""set ^a("_$job_")=2"""
 	tcommit
 	quit
 tpbitmaprestart;
