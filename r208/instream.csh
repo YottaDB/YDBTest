@@ -150,6 +150,7 @@
 # fuzz_asserts10-ydb1101		[nars]	Test a ZMESSAGE with more parameters than the text of the message has directives does not fail an assert
 # tp_restart_lock-ydb1383		[nars]	Test a TP restart that interrupts a LOCK does not make the next LOCK +, LOCK -, ZALLOCATE or ZDEALLOCATE issue BADLOCKNEST
 # goto_postcond_unterm-ydb1387		[nars]	Test GOTO or ZGOTO with a TRUE literal postconditional followed by a string with no closing quote issues SPOREOL
+# job_zro_hang-ydb1388			[nars]	Test JOB issues JOBFAIL when the routine is in ydb_routines but not in the $ZROUTINES of the parent
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -294,6 +295,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts9-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts10-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tp_restart_lock-ydb1383"
 setenv subtest_list_non_replic	"$subtest_list_non_replic goto_postcond_unterm-ydb1387"
+setenv subtest_list_non_replic	"$subtest_list_non_replic job_zro_hang-ydb1388"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

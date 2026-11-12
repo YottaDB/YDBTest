@@ -1,0 +1,40 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1388] JOB issues JOBFAIL instead of hanging forever when the routine is not in the $ZROUTINES   #
+# of the parent but is in the ydb_routines that the job process starts with                          #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the lines shown in Direct Mode in a new process, and checks that the process ended
+# by itself within 120 seconds, that the output has no fatal error, has the number of JOBFAIL errors
+# expected, and that the last line of input ran. If the process is still running after 120 seconds,
+# the stage kills its JOB middle process (the only child of the process), which ends the hang.
+
+# Create routine jr.m that the stages JOB, and directory empty, which has no routines
+# Stage 1 : JOB a routine that is not in $ZROUTINES but is in ydb_routines (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   open "stage1.pid":newversion use "stage1.pid" write $job,! close "stage1.pid"
+#   set $zroutines="empty"
+#   job ^jr
+#   write "$zjob=",$zjob,!
+#   write "end",!
+# Before the fix : Debug and Release builds hung forever (the JOB middle process waited for the job
+#                  process, which waited for more job parameters from the middle process)
+# With the fix   : expect 1 JOBFAIL error, and the job process does not run
+PASS : the process ended by itself
+PASS : no fatal error in stage1.out
+PASS : JOBFAIL was issued 1 time(s), and the last line of input ran
+PASS : $ZJOB is 0
+PASS : the job process did not run
+
+# Stage 2 : JOB the same routine with $ZROUTINES unchanged
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   open "stage2.pid":newversion use "stage2.pid" write $job,! close "stage2.pid"
+#   job ^jr
+#   write "$zjob=",$zjob,!
+#   write "end",!
+# Before the fix : the job process ran (this stage is a control)
+# With the fix   : expect no error, and the job process runs
+PASS : the process ended by itself
+PASS : no fatal error in stage2.out
+PASS : JOBFAIL was issued 0 time(s), and the last line of input ran
+PASS : the job process ran, and its $JOB is the $ZJOB of the parent
+
