@@ -1,0 +1,39 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1272] MUPIP STOP stops a process in a long pattern match                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# Routine pt.m matches $char(17,17)_"PP" followed by n copies of "je" and $char(13) against the pattern
+# .3C2e3.(2.2(.(2."je",."t")))0.C0.C of YDB#1272, which has nested alternations. The time the match
+# takes doubles with every 2 more copies of "je". The routine writes its $JOB to the file pt.pid before
+# the match, and the match result and "end" after the match.
+
+# Stage 1 : $gtm_dist/mumps -run pt 10 (a control)
+# Before the fix : the match ended at once with a match (this stage is a control)
+# With the fix   : expect the match to end at once with a match
+PASS : the pattern matched, and the routine ended
+
+# Stage 2 : $gtm_dist/mumps -run pt 60 in the background, and after 90 seconds, while the match is still
+# running, MUPIP STOP the process. The match would take far longer than this test runs. If the process
+# is still running 60 seconds after the MUPIP STOP, the stage kills it with SIGKILL.
+# Before the fix : Debug and Release builds did not stop, because nothing in the match handled the
+#                  deferred SIGTERM of the MUPIP STOP once the pattern cache stopped growing
+# With the fix   : expect the process to stop within 60 seconds with a FORCEDHALT error
+PASS : the match was still running after 90 seconds
+PASS : the process stopped within 60 seconds of the MUPIP STOP
+PASS : the process issued FORCEDHALT once and no other fatal error, and the match did not end
+
+# Routine pn.m matches n copies of "a" followed by e with acute accent, then "a", against a pattern of 16
+# copies of .E."e with acute accent" then 1.N, which has no alternation. The routine builds the pattern at
+# run time with $zchar(195,169) (the UTF-8 bytes of e with acute accent). The string literal with a
+# non-ASCII character keeps the pattern from being compiled to a DFA, so do_pattern() tries every
+# permutation of the 33 pattern atoms. The match with 8 copies takes far longer than this test runs.
+
+# Stage 3 : $gtm_dist/mumps -run pn 8 in the background, and after 10 seconds, while the match is still
+# running, MUPIP STOP the process. If the process is still running 60 seconds after the MUPIP STOP, the
+# stage kills it with SIGKILL.
+# Before the fix : Debug and Release builds did not stop, because nothing in a match without an
+#                  alternation handled the deferred SIGTERM of the MUPIP STOP
+# With the fix   : expect the process to stop within 60 seconds with a FORCEDHALT error
+PASS : the match was still running after 10 seconds
+PASS : the process stopped within 60 seconds of the MUPIP STOP
+PASS : the process issued FORCEDHALT once and no other fatal error, and the match did not end

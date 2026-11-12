@@ -153,6 +153,7 @@
 # job_zro_hang-ydb1388			[nars]	Test JOB issues JOBFAIL when the routine is in ydb_routines but not in the $ZROUTINES of the parent
 # naked_suboflow-ydb1389		[nars]	Test a naked reference whose subscripts are too long issues GVSUBOFLOW with the correct GVIS message
 # socket_use_listen_empty-ydb1392	[nars]	Test USE of a SOCKET device with an empty LISTEN address issues INVPORTSPEC, not ADDRTOOLONG
+# pattern_mupip_stop-ydb1272		[nars]	Test MUPIP STOP stops a process in a long pattern match
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -300,6 +301,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic goto_postcond_unterm-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic job_zro_hang-ydb1388"
 setenv subtest_list_non_replic	"$subtest_list_non_replic naked_suboflow-ydb1389"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_listen_empty-ydb1392"
+setenv subtest_list_non_replic	"$subtest_list_non_replic pattern_mupip_stop-ydb1272"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
