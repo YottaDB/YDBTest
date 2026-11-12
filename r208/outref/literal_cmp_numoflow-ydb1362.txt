@@ -1,0 +1,65 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1362] A comparison with < or > of a number and a string literal that is a number that is    #
+# too large issues NUMOFLOW                                                                        #
+#--------------------------------------------------------------------------------------------------#
+
+# When both operands of a < or > (or of their negations) are literals, the compiler computes the
+# comparison at compile time. It did not check that a string literal is a valid number, so a string
+# literal that is a number that is too large, like "1E47", compared as if it had a value, and the
+# comparison gave 0 or 1 instead of issuing NUMOFLOW, as the comparison does when the string is in a
+# variable. Stages 1 to 4 run in one process, and stages 5 and 6 compile and run a routine.
+
+# Stage 1 : each comparison, compiled at run time (as in Direct Mode)
+# Before the fix : the comparisons gave 0, 1, 1, 1 and 0
+# With the fix   : expect NUMOFLOW for each
+# Command : $gtm_dist/mumps -run stage1^ydb1362cmp
+PASS : write 1<"1E47",! : NUMOFLOW
+PASS : write 1>"1E47",! : NUMOFLOW
+PASS : write "1E47"<1,! : NUMOFLOW
+PASS : write 1'<"1E47",! : NUMOFLOW
+PASS : write 1'>"1E47",! : NUMOFLOW
+
+# Stage 2 : the comparison in a Boolean expression
+# Before the fix : 1&(1<"1E47") gave 0
+# With the fix   : expect NUMOFLOW
+# Command : $gtm_dist/mumps -run stage2^ydb1362cmp
+PASS : write 1&(1<"1E47"),! : NUMOFLOW
+
+# Stage 3 : $ZYCOMPILE() of a line with the comparison
+# Before the fix : $ZYCOMPILE() returned "" (no error)
+# With the fix   : expect NUMOFLOW
+# Command : $gtm_dist/mumps -run stage3^ydb1362cmp
+PASS : $ZYCOMPILE() returned NUMOFLOW
+
+# Stage 4 : a string literal that is a number that is not too large, and a string in a variable
+# Before the fix : no error for the four comparisons, and NUMOFLOW for the variable (this stage is a
+#                  control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage4^ydb1362cmp
+PASS : write 1<"1E46",! : no error
+PASS : write "1E46">1,! : no error
+PASS : write 1'>"1E46",! : no error
+PASS : write 1'<"1E46",! : no error
+PASS : write 1<x,! : NUMOFLOW
+
+# Stage 5 : compile and run a routine with the comparison
+#   xcmp	write 1<"1E47",!
+# Before the fix : the routine compiled with no error, and wrote 0 and line 2
+# With the fix   : expect the compile to issue NUMOFLOW (a compile time warning) and produce an object
+#                  file, and the routine to issue NUMOFLOW when it runs
+# Command : $gtm_dist/mumps xcmp.m
+PASS : compiling xcmp.m issued NUMOFLOW once
+PASS : xcmp.o was produced
+# Command : $gtm_dist/mumps -run xcmp
+PASS : xcmp issued NUMOFLOW at the comparison
+
+# Stage 6 : compile and run a routine that XECUTEs a string literal with the comparison
+#   xcmpx	xecute "write 1<""1E47"",!"
+# Before the fix : the routine compiled with no error, and wrote 0 and line 2
+# With the fix   : expect the compile to issue no error and produce an object file, and the XECUTE
+#                  to issue NUMOFLOW when it runs
+# Command : $gtm_dist/mumps xcmpx.m
+PASS : compiling xcmpx.m issued no error
+PASS : xcmpx.o was produced
+# Command : $gtm_dist/mumps -run xcmpx
+PASS : xcmpx issued NUMOFLOW at the XECUTE

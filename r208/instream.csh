@@ -143,6 +143,7 @@
 # zcontinue_tpquit-ydb1357		[nars]	Test a ZCONTINUE that would QUIT the frame of a transaction started in Direct Mode leaves the transaction active
 # zstep_queued_ztimeout-ydb1380		[nars]	Test a $ZTIMEOUT, MUPIP INTRPT or TP timeout pending at a ZSTEP runs after the ZSTEP action
 # updhelper_statsdb-ydb1384		[nars]	Test update helper processes do not exit when the statistics database of a region cannot be created or opened
+# literal_cmp_numoflow-ydb1362		[nars]	Test a comparison with < or > of a number and a string literal that is a too large number issues NUMOFLOW
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -280,6 +281,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zycompile_param-ydb1363
 setenv subtest_list_non_replic	"$subtest_list_non_replic zcontinue_tpquit-ydb1357"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zstep_queued_ztimeout-ydb1380"
 setenv subtest_list_non_replic	"$subtest_list_non_replic updhelper_statsdb-ydb1384"
+setenv subtest_list_non_replic	"$subtest_list_non_replic literal_cmp_numoflow-ydb1362"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
