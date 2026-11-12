@@ -1,0 +1,88 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1384] Update helper processes exit when the statistics database of a region cannot be         #
+# created or opened                                                                                  #
+#----------------------------------------------------------------------------------------------------#
+
+# At startup, the update helper processes opened every region of the global directory with
+# gvcst_init(), including the statistics database regions. When statistics were not shared and a
+# statistics database could not be created or opened, for example because the directory that
+# gtm_statsdir names is not writable, that was an error and the helper exited. A Release build
+# reported DBOPNERR, and a Debug build also failed an assert in gvcst_init.c and dumped a core. Other
+# processes open a statistics database only when statistics are shared, through gvcst_init_statsDB(),
+# which turns off statistics for the region if the open fails.
+#
+# Each stage starts a passive source server and a receiver server with one reader and one writer
+# helper, and checks that both helpers are alive, whether they share statistics for region DEFAULT
+# (ygs^ydb1384 checks ^%YGS for the pid of the helper), and the logs of the helpers and of the update
+# process.
+
+# Stage 1 : make this instance a secondary
+# Command : $MUPIP replicate -instance_create -name=INSTB
+# Command : $MUPIP set -replication=on -region DEFAULT
+PASS : the instance file was created and replication is on
+
+# Stage 2 : gtm_statsdir names a directory that is not writable, and gtm_statshare is not set
+# Commands: chmod 555 statsdir_ro
+#           setenv gtm_statsdir $PWD/statsdir_ro
+# Before the fix : both helpers exited at startup, after DBOPNERR in their logs (and an assert failure
+#                  and a core in a Debug build)
+# With the fix   : expect both helpers to start and stay alive, without statistics
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -buffsize=1048576 \
+#           -log=src_stage2.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -buffsize=1048576 -helpers=2,1 \
+#           -log=rcv_stage2.log
+PASS : the helper reader started and is alive
+PASS : the helper reader does not share statistics for region DEFAULT
+PASS : the helper writer started and is alive
+PASS : the helper writer does not share statistics for region DEFAULT
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the log of the helper reader has no error
+PASS : the log of the helper writer has no error
+PASS : the log of the update process has no error
+
+# Stage 3 : gtm_statsdir names a directory that is not writable, and gtm_statshare is set (this stage
+#           is a control)
+# Command : setenv gtm_statshare 1
+# Before the fix : both helpers started and stayed alive, without statistics, with DBOPNERR in the
+#                  logs of the helpers and of the update process. When statistics are shared, the open
+#                  of region DEFAULT tries to open the statistics database first and turns off
+#                  statistics for the region when that fails, so the helpers did not open the
+#                  statistics database region later.
+# With the fix   : expect both helpers to start and stay alive, without statistics, as the statistics
+#                  database cannot be created. The logs of the helpers and of the update process
+#                  report DBOPNERR for the statistics database.
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -buffsize=1048576 \
+#           -log=src_stage3.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -buffsize=1048576 -helpers=2,1 \
+#           -log=rcv_stage3.log
+PASS : the helper reader started and is alive
+PASS : the helper reader does not share statistics for region DEFAULT
+PASS : the helper writer started and is alive
+PASS : the helper writer does not share statistics for region DEFAULT
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the log of the helper reader has only DBOPNERR (ENO13), for the statistics database
+PASS : the log of the helper writer has only DBOPNERR (ENO13), for the statistics database
+PASS : the log of the update process has only DBOPNERR (ENO13), for the statistics database
+
+# Stage 4 : gtm_statsdir names a writable directory, and gtm_statshare is set (this stage is a
+#           control)
+# Command : setenv gtm_statsdir $PWD/statsdir_rw
+# Before the fix : both helpers started and stayed alive, sharing statistics
+# With the fix   : expect both helpers to start and stay alive, sharing statistics
+# Command : $MUPIP replicate -source -start -passive -instsecondary=INSTA -buffsize=1048576 \
+#           -log=src_stage4.log
+# Command : $MUPIP replicate -receiver -start -listenport=<port> -buffsize=1048576 -helpers=2,1 \
+#           -log=rcv_stage4.log
+PASS : the helper reader started and is alive
+PASS : the helper reader shares statistics for region DEFAULT
+PASS : the helper writer started and is alive
+PASS : the helper writer shares statistics for region DEFAULT
+# Command : $MUPIP replicate -receiver -shutdown -timeout=0
+# Command : $MUPIP replicate -source -shutdown -timeout=0
+PASS : the log of the helper reader has no error
+PASS : the log of the helper writer has no error
+PASS : the log of the update process has no error
+
+# Done
