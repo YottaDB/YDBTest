@@ -1,0 +1,62 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1389] A naked reference whose subscripts are too long issues GVSUBOFLOW with the correct global  #
+# variable in the GVIS message                                                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the lines shown in Direct Mode in a new process, and checks that the output has no
+# fatal error, has the number of GVSUBOFLOW errors expected, has the GVIS line expected (when there is
+# a GVSUBOFLOW error), and that the last line of input ran.
+
+# Create database
+# Stage 1 : a naked reference that replaces the only subscript with one that is too long (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   set ^b(1)="x" set ^($justify(9,2525))="y"
+#   write "end",!
+# Before the fix : a Debug build failed an assert in mval2subsc.c. A Release build issued GVSUBOFLOW
+#                  with bytes from past the end of the key in the GVIS message
+# With the fix   : expect 1 GVSUBOFLOW error, with ^b... in the GVIS message
+PASS : no fatal error in stage1.out
+PASS : GVSUBOFLOW was issued 1 time(s), and the last line of input ran
+PASS : the GVIS message is for ^b...
+
+# Stage 2 : a naked reference that replaces the second subscript with one that is too long
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   set ^b("a","b")="x" set ^($justify(9,2525))="y"
+#   write "end",!
+# Before the fix : a Debug build failed an assert in mval2subsc.c. A Release build issued GVSUBOFLOW
+#                  with bytes from past the end of the key in the GVIS message
+# With the fix   : expect 1 GVSUBOFLOW error, with ^b("a"... in the GVIS message
+PASS : no fatal error in stage2.out
+PASS : GVSUBOFLOW was issued 1 time(s), and the last line of input ran
+PASS : the GVIS message is for ^b("a"...
+
+# Stage 3 : the global variable of stage 1 without a naked reference
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   set ^b($justify(9,2525))="y"
+#   write "end",!
+# Before the fix : GVSUBOFLOW (this stage is a control)
+# With the fix   : expect 1 GVSUBOFLOW error, with ^b... in the GVIS message
+PASS : no fatal error in stage3.out
+PASS : GVSUBOFLOW was issued 1 time(s), and the last line of input ran
+PASS : the GVIS message is for ^b...
+
+# Stage 4 : the global variable of stage 2 without a naked reference
+# Command : $gtm_dist/mumps -direct < stage4.inp, where stage4.inp has these lines
+#   set ^b("a",$justify(9,2525))="y"
+#   write "end",!
+# Before the fix : GVSUBOFLOW (this stage is a control)
+# With the fix   : expect 1 GVSUBOFLOW error, with ^b("a"... in the GVIS message
+PASS : no fatal error in stage4.out
+PASS : GVSUBOFLOW was issued 1 time(s), and the last line of input ran
+PASS : the GVIS message is for ^b("a"...
+
+# Stage 5 : a naked reference whose subscripts fit
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   set ^b(1,2)="x" set ^(3)="y" write "^b(1,3)=",^b(1,3),!
+#   write "end",!
+# Before the fix : no error (this stage is a control)
+# With the fix   : expect no error, and ^b(1,3) is y
+PASS : no fatal error in stage5.out
+PASS : GVSUBOFLOW was issued 0 time(s), and the last line of input ran
+PASS : ^b(1,3) is y
+
