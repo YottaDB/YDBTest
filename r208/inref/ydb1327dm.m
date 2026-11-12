@@ -22,6 +22,7 @@ tpzcont
 	;inp:"write ""$tlevel="",$tlevel,!"
 	;inp:"trollback:$tlevel"
 	;has:TPQUIT
+	;has:$tlevel=1
 tpzcontnew
 	;inp:"break"
 	;inp:"tstart ()"
@@ -31,6 +32,7 @@ tpzcontnew
 	;inp:"write ""$tlevel="",$tlevel,!"
 	;inp:"trollback:$tlevel"
 	;has:TPQUIT
+	;has:$tlevel=1
 tptrestart
 	;inp:"break"
 	;inp:"tstart"

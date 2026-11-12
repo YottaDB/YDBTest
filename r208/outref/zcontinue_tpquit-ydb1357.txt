@@ -1,0 +1,159 @@
+#-----------------------------------------------------------------------------------------------#
+# [YDB#1357] A ZCONTINUE that would QUIT the frame of an active transaction started in Direct   #
+# Mode issues TPQUIT once and leaves the transaction active                                     #
+#-----------------------------------------------------------------------------------------------#
+
+# A TSTART in Direct Mode makes the frame under the Direct Mode frame the frame of the transaction.
+# After a BREAK typed in Direct Mode, or a BREAK in $ZTRAP code or in a ZBREAK, ZSTEP or device
+# EXCEPTION action, that frame is not a counted frame, and ZCONTINUE resumes that frame, which then
+# QUITs with the transaction active and gets TPQUIT. Before the fix, the error handling after that
+# TPQUIT rolled back the transaction (stages 1 to 3, and stage 8, which also left Direct Mode in
+# $ZTRAP code), or left Direct Mode in $ZTRAP code with $ECODE set and the transaction active
+# (stages 6 and 7, and stages 1 to 3 in YottaDB r2.06 and earlier, which issued TPQUIT twice). With
+# the fix, the ZCONTINUE issues TPQUIT before the ZCONTINUE unwinds anything, so the transaction
+# stays active and Direct Mode stays at the same level. After a TCOMMIT or TROLLBACK, ZCONTINUE
+# works.
+#
+# Without the fix, stages 1 to 3 and 6 to 8 print FAIL, and stages 4 and 5 PASS.
+
+# Stage 1 : ZCONTINUE after a BREAK in Direct Mode and a TSTART, then TCOMMIT and ZCONTINUE
+# Before the fix : TPQUIT, and the transaction was rolled back, so the next line ran with $TLEVEL 0
+#                  and the TCOMMIT issued TLVLZERO
+# With the fix   : expect TPQUIT once, the next line to run with $TLEVEL 1, and the ZCONTINUE after
+#                  the TCOMMIT to work
+# Command : $gtm_dist/mumps -direct < zcont.inp, where zcont.inp has these lines
+#   break
+#   tstart ()
+#   zcontinue
+#   write "after the first ZCONTINUE $tlevel=",$tlevel,!
+#   tcommit
+#   zcontinue
+#   write "after the second ZCONTINUE $tlevel=",$tlevel,!
+PASS : zcont output has after the first ZCONTINUE $tlevel=1
+PASS : zcont output has after the second ZCONTINUE $tlevel=0
+PASS : zcont output does not have TLVLZERO
+PASS : zcont output does not have a fatal error (-F-)
+# TPQUIT was issued 1 times
+
+# Stage 2 : the same with code after the BREAK on the line, and TROLLBACK in place of TCOMMIT
+# Before the fix : the rest of the BREAK line ran with $TLEVEL 1, then TPQUIT and the roll back, so
+#                  the TROLLBACK issued TLVLZERO
+# With the fix   : expect TPQUIT once, the next line to run with $TLEVEL 1, and the rest of the BREAK
+#                  line to run with $TLEVEL 0 after the TROLLBACK and the second ZCONTINUE
+# Command : $gtm_dist/mumps -direct < zcontline.inp, where zcontline.inp has these lines
+#   break  write "rest of the BREAK line $tlevel=",$tlevel,!
+#   tstart ()
+#   zcontinue
+#   write "after the first ZCONTINUE $tlevel=",$tlevel,!
+#   trollback
+#   zcontinue
+PASS : zcontline output has after the first ZCONTINUE $tlevel=1
+PASS : zcontline output has rest of the BREAK line $tlevel=0
+PASS : zcontline output does not have TLVLZERO
+PASS : zcontline output does not have a fatal error (-F-)
+# TPQUIT was issued 1 times
+
+# Stage 3 : ZCONTINUE after the BREAK that $ZTRAP gives for an error in a routine, and a TSTART
+# Before the fix : TPQUIT, and the next line ran with $TLEVEL 0
+# With the fix   : expect DIVZERO, TPQUIT once, and the next line to run with $TLEVEL 1
+# Command : $gtm_dist/mumps -direct < ztrap.inp, where ztrap.inp has these lines
+#   do ^ydb1357x
+#   tstart ()
+#   zcontinue
+#   write "after the ZCONTINUE $tlevel=",$tlevel,!
+#   trollback
+PASS : ztrap output has DIVZERO
+PASS : ztrap output has after the ZCONTINUE $tlevel=1
+PASS : ztrap output does not have a fatal error (-F-)
+# DIVZERO was issued 1 times
+# TPQUIT was issued 1 times
+
+# Stage 4 : control, ZCONTINUE after a BREAK in a routine and a TSTART
+# Before the fix : the routine resumed in the transaction and committed the transaction, with no
+#                  TPQUIT (this stage is a control)
+# With the fix   : expect the routine to resume in the transaction and commit the transaction, with
+#                  no TPQUIT
+# Command : $gtm_dist/mumps -direct < rtn.inp, where rtn.inp has these lines
+#   do ^ydb1357r
+#   tstart ()
+#   zcontinue
+#   write "after the ZCONTINUE $tlevel=",$tlevel,!
+PASS : rtn output has in ydb1357r after the BREAK $tlevel=1
+PASS : rtn output has after the ZCONTINUE $tlevel=0
+PASS : rtn output does not have TPQUIT
+PASS : rtn output does not have a fatal error (-F-)
+
+# Stage 5 : control, TSTART and TCOMMIT at the prompt of a BREAK in Direct Mode, then ZCONTINUE
+# Before the fix : no TPQUIT, and the next line ran with $TLEVEL 0 (this stage is a control)
+# With the fix   : expect no TPQUIT, and the next line to run with $TLEVEL 0
+# Command : $gtm_dist/mumps -direct < prompt.inp, where prompt.inp has these lines
+#   break
+#   tstart ()
+#   tcommit
+#   zcontinue
+#   write "after the ZCONTINUE $tlevel=",$tlevel,!
+PASS : prompt output has after the ZCONTINUE $tlevel=0
+PASS : prompt output does not have TPQUIT
+PASS : prompt output does not have a fatal error (-F-)
+
+# Stage 6 : ZCONTINUE after the BREAK of a ZBREAK action and a TSTART, then TROLLBACK and ZCONTINUE
+# Before the fix : ERRWZBRK with TPQUIT, and Direct Mode was left in $ZTRAP code with $ECODE set
+#                  (the transaction stayed active)
+# With the fix   : expect TPQUIT once, the next line to run with $TLEVEL 1 and an empty $ECODE, no
+#                  $ZTRAP frame, and the routine to finish after the TROLLBACK and the ZCONTINUE
+# Command : $gtm_dist/mumps -direct < zbrk.inp, where zbrk.inp has these lines
+#   zbreak ydb1357z^ydb1357z:"break"
+#   do ^ydb1357z
+#   tstart ()
+#   zcontinue
+#   write "after the ZCONTINUE $tlevel=",$tlevel," $ecode=[",$ecode,"]",!
+#   zshow "s"
+#   trollback
+#   zcontinue
+PASS : zbrk output has BREAKZBA
+PASS : zbrk output has after the ZCONTINUE $tlevel=1 $ecode=[]
+PASS : zbrk output has line2
+PASS : zbrk output does not have ERRWZBRK
+PASS : zbrk output does not have ($ZTRAP)
+PASS : zbrk output does not have a fatal error (-F-)
+# TPQUIT was issued 1 times
+
+# Stage 7 : the same after the BREAK of a ZSTEP action
+# Before the fix : ERRWEXC with TPQUIT, and Direct Mode was left in $ZTRAP code with $ECODE set (the
+#                  transaction stayed active)
+# With the fix   : expect TPQUIT once, the next line to run with $TLEVEL 1 and an empty $ECODE, no
+#                  $ZTRAP frame, and the routine to finish after the TROLLBACK and the ZCONTINUE
+# Command : $gtm_dist/mumps -direct < zstp.inp, where zstp.inp has these lines
+#   zbreak ydb1357z^ydb1357z
+#   do ^ydb1357z
+#   zstep
+#   tstart ()
+#   ... (9 lines in all)
+PASS : zstp output has BREAKZST
+PASS : zstp output has after the ZCONTINUE $tlevel=1 $ecode=[]
+PASS : zstp output has line2
+PASS : zstp output does not have ERRWEXC
+PASS : zstp output does not have ($ZTRAP)
+PASS : zstp output does not have a fatal error (-F-)
+# TPQUIT was issued 1 times
+
+# Stage 8 : ZCONTINUE after the BREAK of a device EXCEPTION action (for a READ past the end of a
+#           file) and a TSTART
+# Before the fix : ERRWIOEXC with TPQUIT, the transaction was rolled back, and Direct Mode was left in
+#                  $ZTRAP code
+# With the fix   : expect TPQUIT once, the next line to run with $TLEVEL 1, and no $ZTRAP frame
+# Command : $gtm_dist/mumps -direct < exc.inp, where exc.inp has these lines
+#   do ^ydb1357e
+#   tstart ()
+#   zcontinue
+#   write "after the ZCONTINUE $tlevel=",$tlevel,!
+#   zshow "s"
+#   trollback
+PASS : exc output has BREAKDEA
+PASS : exc output has after the ZCONTINUE $tlevel=1
+PASS : exc output does not have ERRWIOEXC
+PASS : exc output does not have ($ZTRAP)
+PASS : exc output does not have a fatal error (-F-)
+# TPQUIT was issued 1 times
+
+# Done

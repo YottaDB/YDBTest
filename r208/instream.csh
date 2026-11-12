@@ -140,6 +140,7 @@
 # xecute_lit_numoflow-ydb1362		[nars]	Test a routine that XECUTEs a string literal with a complement of a number that is too large compiles
 # trigger_subs_too_long-ydb1356		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER reject a trigger whose subscript is too long to fit in a key
 # zycompile_param-ydb1363		[nars]	Test $ZYCOMPILE() returns the text of a compile error with the values of its parameters
+# zcontinue_tpquit-ydb1357		[nars]	Test a ZCONTINUE that would QUIT the frame of a transaction started in Direct Mode leaves the transaction active
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -274,6 +275,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zwrite_naked_tp-ydb1379
 setenv subtest_list_non_replic	"$subtest_list_non_replic xecute_lit_numoflow-ydb1362"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_subs_too_long-ydb1356"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zycompile_param-ydb1363"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zcontinue_tpquit-ydb1357"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

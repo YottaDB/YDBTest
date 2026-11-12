@@ -111,7 +111,8 @@ Error TRESTLOC seen in trnewdmimp.out as expected:
 
 # Stage 5 : ZCONTINUE after a BREAK and a TSTART
 # Before the fix, the same result
-#   expect TPQUIT, as the ZCONTINUE would QUIT the frame where the transaction started
+#   expect TPQUIT once, as the ZCONTINUE would QUIT the frame where the transaction started, and the
+#   transaction to stay active (YDB#1357)
 # Command : $gtm_dist/mumps -direct < tpzcont.inp, where tpzcont.inp has these lines
 #   break
 #   tstart ()
@@ -119,6 +120,7 @@ Error TRESTLOC seen in trnewdmimp.out as expected:
 #   write "$tlevel=",$tlevel,!
 #   trollback:$tlevel
 PASS : tpzcont output has TPQUIT
+PASS : tpzcont output has $tlevel=1
 PASS : tpzcont output does not have a fatal error (-F-)
 ----------
 Error TPQUIT seen in tpzcont.out as expected:
@@ -137,6 +139,7 @@ Error TPQUIT seen in tpzcont.out as expected:
 #   write "$tlevel=",$tlevel,!
 #   trollback:$tlevel
 PASS : tpzcontnew output has TPQUIT
+PASS : tpzcontnew output has $tlevel=1
 PASS : tpzcontnew output does not have a fatal error (-F-)
 ----------
 Error TPQUIT seen in tpzcontnew.out as expected:

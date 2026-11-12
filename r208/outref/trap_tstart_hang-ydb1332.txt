@@ -64,15 +64,16 @@ PASS : case i output has after tcommit ^i=1
 # Stage 3 : in Direct Mode, an error in a routine, then TSTART and ZCONTINUE at the BREAK it gives
 # Before the fix : the process looped in the error trap code until it was stopped
 # With the fix   : expect DIVZERO, then TPQUIT for the ZCONTINUE, and the next line to run with
-#                  $TLEVEL 0
+#                  $TLEVEL 1, as the ZCONTINUE leaves the transaction active (YDB#1357)
 # Command : $gtm_dist/mumps -direct < trapdm.inp, where trapdm.inp has these lines
 #   do ^ydb1332x
 #   tstart
 #   zcontinue
 #   write "next $tlevel=",$tlevel,!
+#   trollback
 PASS : trapdm output has DIVZERO
 PASS : trapdm output has TPQUIT
-PASS : trapdm output has next $tlevel=0
+PASS : trapdm output has next $tlevel=1
 PASS : trapdm output does not have a fatal error (-F-)
 ----------
 Error DIVZERO seen in trapdm.out as expected:

@@ -94,7 +94,7 @@ echo
 echo '# Stage 3 : in Direct Mode, an error in a routine, then TSTART and ZCONTINUE at the BREAK it gives'
 echo '# Before the fix : the process looped in the error trap code until it was stopped'
 echo '# With the fix   : expect DIVZERO, then TPQUIT for the ZCONTINUE, and the next line to run with'
-echo '#                  $TLEVEL 0'
+echo '#                  $TLEVEL 1, as the ZCONTINUE leaves the transaction active (YDB#1357)'
 set dm = "$tst_tcsh $gtm_tst/$tst/u_inref/ydbfuzzdm.csh ydb1332dm"
 $dm trapdm DIVZERO TPQUIT
 echo

@@ -68,7 +68,8 @@ echo
 
 echo '# Stage 5 : ZCONTINUE after a BREAK and a TSTART'
 echo '# Before the fix, the same result'
-echo '#   expect TPQUIT, as the ZCONTINUE would QUIT the frame where the transaction started'
+echo '#   expect TPQUIT once, as the ZCONTINUE would QUIT the frame where the transaction started, and the'
+echo '#   transaction to stay active (YDB#1357)'
 $dm tpzcont TPQUIT
 echo
 

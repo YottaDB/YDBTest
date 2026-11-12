@@ -23,6 +23,7 @@ trapdm
 	;inp:"tstart"
 	;inp:"zcontinue"
 	;inp:"write ""next $tlevel="",$tlevel,!"
+	;inp:"trollback"
 	;has:DIVZERO
 	;has:TPQUIT
-	;has:next $tlevel=0
+	;has:next $tlevel=1
