@@ -1,0 +1,105 @@
+#-----------------------------------------------------------------------------------------------#
+# [YDB#1380] A $ZTIMEOUT that expires before a ZSTEP runs after the ZSTEP action, and a FOR     #
+# loop after the ZSTEP does not fail an assert                                                  #
+#-----------------------------------------------------------------------------------------------#
+
+# ZSTEP queues the events that are pending, to run after the ZSTEP action, but left the event that
+# outofband names (a $ZTIMEOUT, the job interrupt of a MUPIP INTRPT, or a TP timeout) in outofband
+# and in the transfer table entries of FOR loops. An event in the queue is replayed only when
+# outofband is no_event, so the event never ran. A FOR loop after the ZSTEP recognized the queued
+# event. For a $ZTIMEOUT, a Debug build failed an assert in ztimeout_routines.c, and a Release build
+# ran the $ZTIMEOUT vector before the ZSTEP action. For a job interrupt, $ZINTERRUPT ran before the
+# ZSTEP action in both builds. For a TP timeout, a Debug build failed an assert in tp_timeout.c, and
+# a Release build issued TPTIMEOUT before the ZSTEP action. With the fix, ZSTEP also takes such an
+# event out of outofband and the transfer table, so the event runs after the ZSTEP action.
+#
+# Each case records what runs, in order: S@<place> for a ZSTEP action, Z@<place> for the $ZTIMEOUT
+# vector, J@<place> for $ZINTERRUPT, E@<place>=<mnemonic> for an error and L<n> for line <n> of the
+# case (see r208/inref/ydb1380.m). After an event, the ZSTEP is reinstated, so a ZSTEP action
+# follows the line of the event.
+#
+# Without the fix, stages 1, 2 and 5 to 10 print FAIL, stage 4 prints FAIL in a Debug build (where
+# stages 2, 4 and 10 fail an assert), and stage 3 PASSes.
+
+# Stage 1 : a $ZTIMEOUT that expires at once, then ZSTEP INTO, and no FOR loop
+# Before the fix : the $ZTIMEOUT vector never ran
+# With the fix   : expect the $ZTIMEOUT vector to run once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run nofor^ydb1380
+PASS : nofor ran [S@nofor+3^ydb1380 L3 Z@nofor+4^ydb1380 L4 S@nofor+5^ydb1380 S@done+2^ydb1380 ]
+
+# Stage 2 : the same with a FOR loop on the line of the ZSTEP
+# Before the fix : assert failure in ztimeout_routines.c (Debug), the vector ran before the ZSTEP
+#                  action (Release)
+# With the fix   : expect the $ZTIMEOUT vector to run once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run for^ydb1380
+PASS : for ran [S@for+3^ydb1380 L3 Z@for+4^ydb1380 L4 S@for+5^ydb1380 S@done+2^ydb1380 ]
+
+# Stage 3 : control, the same as stage 1 without the ZSTEP
+# Before the fix : the $ZTIMEOUT vector ran at once (this stage is a control)
+# With the fix   : expect the $ZTIMEOUT vector to run at once
+# Command : $gtm_dist/mumps -run nozstep^ydb1380
+PASS : nozstep ran [Z@nozstep+3^ydb1380 L3 L4 ]
+
+# Stage 4 : in Direct Mode, a $ZTIMEOUT that expires at once, then ZSTEP and a FOR loop
+# Before the fix : assert failure in ztimeout_routines.c (Debug), ZTIMEOUT (Release)
+# With the fix   : expect ZTIMEOUT, then the next line to run
+# Command : $gtm_dist/mumps -direct < dmfor.inp, where dmfor.inp has these lines
+#   set $ztimeout=0
+#   zstep
+#   for  set x=1
+#   write "after the FOR",!
+PASS : dmfor output has ZTIMEOUT
+PASS : dmfor output has after the FOR
+PASS : dmfor output does not have a fatal error (-F-)
+----------
+Error ZTIMEOUT seen in dmfor.out as expected:
+%YDB-W-ZTIMEOUT, Time expired
+----------
+
+# Stage 5 : in Direct Mode, a $ZTIMEOUT with a vector that expires at once, then ZSTEP and a DO of a
+#           routine
+# Before the fix : the $ZTIMEOUT vector never ran
+# With the fix   : expect the $ZTIMEOUT vector to run when the routine starts
+# Command : $gtm_dist/mumps -direct < dmrtn.inp, where dmrtn.inp has these lines
+#   set $ztimeout="0:write ""ZT vector"",!"
+#   zstep
+#   do ^ydb1380r
+#   write "after the DO",!
+PASS : dmrtn output has ZT vector
+PASS : dmrtn output has in ydb1380r
+PASS : dmrtn output has after the DO
+PASS : dmrtn output does not have a fatal error (-F-)
+
+# Stage 6 : the case of stage 1, then a later $ZTIMEOUT and a job interrupt
+# Before the fix : the first $ZTIMEOUT vector never ran, and the later vector and $ZINTERRUPT ran once
+# With the fix   : expect each $ZTIMEOUT vector and $ZINTERRUPT to run once
+# Command : $gtm_dist/mumps -run later^ydb1380
+PASS : later ran [S@later+4^ydb1380 L4 Z@later+5^ydb1380 S@later+6^ydb1380 Z2@later+6^ydb1380 S@later+7^ydb1380 J@later+8^ydb1380 S@later+9^ydb1380 S@done+2^ydb1380 ]
+
+# Stage 7 : a MUPIP INTRPT of the process (through ZSYSTEM), then ZSTEP INTO, and no FOR loop
+# Before the fix : $ZINTERRUPT never ran
+# With the fix   : expect $ZINTERRUPT to run once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run jinofor^ydb1380
+PASS : jinofor ran [S@jinofor+4^ydb1380 L4 J@jinofor+5^ydb1380 L5 S@jinofor+6^ydb1380 S@done+2^ydb1380 ]
+
+# Stage 8 : the same with a FOR loop on the line of the ZSTEP
+# Before the fix : $ZINTERRUPT ran in the FOR loop, before the ZSTEP action
+# With the fix   : expect $ZINTERRUPT to run once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run jifor^ydb1380
+PASS : jifor ran [S@jifor+4^ydb1380 L4 J@jifor+5^ydb1380 L5 S@jifor+6^ydb1380 S@done+2^ydb1380 ]
+
+# Stage 9 : a TP timeout ($ZMAXTPTIME) that expires during a ZSYSTEM in a transaction, then ZSTEP INTO,
+#           and no FOR loop
+# Before the fix : TPTIMEOUT was never issued, and the transaction went on
+# With the fix   : expect TPTIMEOUT once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run tpnofor^ydb1380
+PASS : tpnofor ran [S@tpnofor+5^ydb1380 L5 E@tpnofor+6^ydb1380=TPTIMEOUT ]
+
+# Stage 10 : the same with a FOR loop on the line of the ZSTEP
+# Before the fix : assert failure in tp_timeout.c (Debug), TPTIMEOUT in the FOR loop, before the ZSTEP
+#                  action (Release)
+# With the fix   : expect TPTIMEOUT once, at the line start after the ZSTEP action
+# Command : $gtm_dist/mumps -run tpfor^ydb1380
+PASS : tpfor ran [S@tpfor+4^ydb1380 L4 E@tpfor+5^ydb1380=TPTIMEOUT ]
+
+# Done
