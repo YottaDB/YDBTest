@@ -1,0 +1,49 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1101] A socket OPEN with an empty LISTEN or CONNECT address does not fail an assert           #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs a label of ydb1101addr.m in a new process, checks that the output has no fatal
+# error, and checks the lines that the stage writes. ydb1101addr.m writes "error=<mnemonic>" for an
+# error, and each stage writes "end" at the end.
+
+# Stage 1 : an OPEN of a socket with LISTEN=""
+# Command : $gtm_dist/mumps -run stage1^ydb1101addr, where the label has these lines
+#   stage1	; OPEN of a socket with an empty LISTEN address
+#   	new s
+#   	set $etrap="do err^ydb1101addr"
+#   	set s="socdev"
+#   	do open1(s)
+#   	write "end",!
+#   	quit
+#   open1(s)	; the OPEN in a frame of its own, so that the stage goes on after the error
+#   	open s:(listen="")::"socket"
+#   	quit
+# Before the fix : a Release build wrote the lines expected. A Debug build failed an assert in
+#                  iosocket_open.c
+# With the fix   : expect each of these lines once : error=INVPORTSPEC end
+PASS : no fatal error in stage1.out
+PASS : stage1.out has error=INVPORTSPEC
+PASS : stage1.out has end
+PASS : stage1.out has no other line
+
+# Stage 2 : an OPEN of a socket with CONNECT=""
+# Command : $gtm_dist/mumps -run stage2^ydb1101addr, where the label has these lines
+#   stage2	; OPEN of a socket with an empty CONNECT address
+#   	new s
+#   	set $etrap="do err^ydb1101addr"
+#   	set s="socdev"
+#   	do open2(s)
+#   	write "end",!
+#   	quit
+#   open2(s)	; the OPEN in a frame of its own, so that the stage goes on after the error
+#   	open s:(connect="")::"socket"
+#   	quit
+# Before the fix : a Release build wrote the lines expected. A Debug build failed an assert in
+#                  iosocket_open.c
+# With the fix   : expect each of these lines once : error=INVPORTSPEC end
+PASS : no fatal error in stage2.out
+PASS : stage2.out has error=INVPORTSPEC
+PASS : stage2.out has end
+PASS : stage2.out has no other line
+
+# Done
