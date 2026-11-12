@@ -147,6 +147,7 @@
 # fuzz_asserts11-ydb1101		[nars]	Test JOB or an OPEN of a PIPE device with no file descriptor free does not fail an assert in a Debug build
 # fnname_extref-ydb1386			[nars]	Test $NAME() of an indirect extended reference with no environment issues EXPR, not INDRCOMPFAIL
 # fuzz_asserts9-ydb1101			[nars]	Test a socket OPEN with an empty LISTEN or CONNECT address does not fail an assert in a Debug build
+# fuzz_asserts10-ydb1101		[nars]	Test a ZMESSAGE with more parameters than the text of the message has directives does not fail an assert
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -288,6 +289,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic literal_cmp_numoflow-yd
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts11-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fnname_extref-ydb1386"
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts9-ydb1101"
+setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts10-ydb1101"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
