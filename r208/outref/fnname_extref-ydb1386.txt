@@ -1,0 +1,45 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1386] $NAME() of an indirect extended reference with no environment issues EXPR               #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs a label of ydb1386.m in a new process, checks that the output has no fatal error,
+# and checks the lines that the stage writes. ydb1386.m writes "error=<mnemonic>" for an error, and each
+# stage writes "end" at the end.
+
+# Stage 1 : $NAME(@x) with x="^["
+# Command : $gtm_dist/mumps -run stage1^ydb1386, where the label has these lines
+#   stage1	; $NAME() of an indirect global name with an extended reference that has no environment
+#   	set $etrap="do err^ydb1386"
+#   	do name("^[")
+#   	write "end",!
+#   	quit
+#   name(x)	; the $NAME() in a frame of its own, so that the stage goes on after the error
+#   	write $name(@x),!
+#   	quit
+# Before the fix : a Release build wrote error=INDRCOMPFAIL. A Debug build failed an assert in
+#                  comp_fini.c
+# With the fix   : expect each of these lines once : error=EXPR end
+PASS : no fatal error in stage1.out
+PASS : stage1.out has error=EXPR
+PASS : stage1.out has end
+PASS : stage1.out has no other line
+
+# Stage 2 : $NAME(@x) with x="^[1,"
+# Command : $gtm_dist/mumps -run stage2^ydb1386, where the label has these lines
+#   stage2	; $NAME() of an indirect global name with an extended reference that has no second environment
+#   	set $etrap="do err^ydb1386"
+#   	do name("^[1,")
+#   	write "end",!
+#   	quit
+#   name(x)	; the $NAME() in a frame of its own, so that the stage goes on after the error
+#   	write $name(@x),!
+#   	quit
+# Before the fix : a Release build wrote error=INDRCOMPFAIL. A Debug build failed an assert in
+#                  comp_fini.c
+# With the fix   : expect each of these lines once : error=EXPR end
+PASS : no fatal error in stage2.out
+PASS : stage2.out has error=EXPR
+PASS : stage2.out has end
+PASS : stage2.out has no other line
+
+# Done
