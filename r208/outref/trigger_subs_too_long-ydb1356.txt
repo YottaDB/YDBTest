@@ -1,0 +1,217 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1356] $ZTRIGGER() and MUPIP TRIGGER reject a trigger whose subscript is a string too long to  #
+# fit in a key                                                                                       #
+#----------------------------------------------------------------------------------------------------#
+
+# $ZTRIGGER() and MUPIP TRIGGER did not check the length of a string subscript in a trigger
+# specification. The first update of the global loads the trigger, and gvtr_process_range() converts
+# each subscript to the key form with mval2subsc(), which issued GVSUBOFLOW for a subscript too long
+# to fit in a key. So every SET of the global failed with GVSUBOFLOW until the trigger was deleted. A
+# Debug build failed an assert in stp_gcol_src.h instead. With the fix, $ZTRIGGER() and MUPIP TRIGGER
+# reject such a trigger with "Subscript too long to fit in a key".
+#
+# The region has the largest possible key size (1019 bytes). A key whose only subscript is a string of
+# n bytes has n + 5 bytes with a one character global name (and one more byte for each byte that is
+# 0x00 or 0x01), so the longest string that fits in a key as the only subscript is 1014 bytes.
+#
+# Each stage runs in a new process. Without the fix, stages 1, 2, 4, 5, 7, 8, 10, 11, 13, 15, 16 and 18
+# print FAIL (in a Debug build, the SET of ^a(1) in stages 1, 4 and 16, of ^b(1) in stage 8, of ^c(1) in
+# stage 11 and of ^d(1) in stage 13 fails an assert in stp_gcol_src.h), and stages 3, 6, 9, 12, 14 and 17
+# PASS.
+
+# Stage 1 : $ZTRIGGER("ITEM") of [+^a("xxx...") -commands=S -xecute="set ^cnt=^cnt+1"] with 1030 x's
+# Before the fix : $ZTRIGGER returned 1, and SET ^a(1) issued GVSUBOFLOW
+# With the fix   : expect $ZTRIGGER to return 0 with "Subscript too long to fit in a key", and SET
+#                  ^a(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 1
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+
+# Stage 2 : the same with 1015 x's (the shortest string subscript that does not fit in a key)
+# Before the fix : $ZTRIGGER returned 1 (for a trigger that can never be invoked), and SET ^a(1)
+#                  worked, as the subscript fits in the buffer that gvtr_process_range() uses
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^a(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 2
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+
+# Stage 3 : the same with 1014 x's (the longest string subscript that fits in a key)
+# Before the fix : $ZTRIGGER returned 1, SET ^a(1) worked, and the SET of ^a("xxx...") invoked the
+#                  trigger (this stage is a control)
+# With the fix   : expect $ZTRIGGER to return 1, SET ^a(1) to work, and a SET of ^a("xxx...") to
+#                  invoke the trigger
+# Command : $gtm_dist/mumps -run stage^ydb1356 3
+# First line of the $ZTRIGGER output : Added SET trigger on ^a named a#1
+PASS : $ZTRIGGER returned 1 (expected 1)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+PASS : SET ^a(<node>) invoked the trigger 1 times (expected 1)
+
+# Stage 4 : the same with the range "a":"xxx..." with 1030 x's
+# Before the fix : $ZTRIGGER returned 1, and SET ^a(1) issued GVSUBOFLOW
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^a(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 4
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+
+# Stage 5 : the same with $CHAR(1,1,...,1) with 508 1's (1016 bytes in the key)
+# Before the fix : $ZTRIGGER returned 1 (for a trigger that can never be invoked), and SET ^a(1)
+#                  worked, as the subscript fits in the buffer that gvtr_process_range() uses
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^a(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 5
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+
+# Stage 6 : the same with $CHAR(1,1,...,1) with 507 1's (1014 bytes in the key)
+# Before the fix : $ZTRIGGER returned 1, SET ^a(1) worked, and the SET of ^a($CHAR(1,1,...)) invoked
+#                  the trigger (this stage is a control)
+# With the fix   : expect $ZTRIGGER to return 1, SET ^a(1) to work, and a SET of ^a($CHAR(1,1,...))
+#                  to invoke the trigger
+# Command : $gtm_dist/mumps -run stage^ydb1356 6
+# First line of the $ZTRIGGER output : Added SET trigger on ^a named a#1
+PASS : $ZTRIGGER returned 1 (expected 1)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+PASS : SET ^a(<node>) invoked the trigger 1 times (expected 1)
+
+# Stage 7 : MUPIP TRIGGER -TRIGGERFILE of a file with [+^b("xxx...") -commands=S -xecute="set y=1"]
+#           with 1030 x's
+# Before the fix : MUPIP TRIGGER added the trigger
+# With the fix   : expect "Subscript too long to fit in a key" and MUNOACTION
+# Command : $gtm_dist/mupip trigger -triggerfile=big.trg
+PASS : MUPIP TRIGGER issued "Subscript too long to fit in a key"
+----------
+Error MUNOACTION seen in mupip_trigger.out as expected:
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+----------
+
+# Stage 8 : SET ^b(1)
+# Before the fix : GVSUBOFLOW
+# With the fix   : expect the SET to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 8
+PASS : SET ^b(1) worked
+
+# Stages 9 to 15 use a test collation (r208/inref/col_double.c) as collation 1, in which each byte of
+# a string is stored twice. With it, a key with a string subscript of n bytes has 2n + 5 bytes, so the
+# longest string subscript that fits in a key is 507 bytes. The trigger load converts each subscript
+# with the collation of the global, and $ZTRIGGER() and MUPIP TRIGGER now check the subscripts with that
+# collation too.
+
+# Stage 9 : $ZTRIGGER("ITEM") of [+^c("xxx...") -commands=S -xecute="set ^cnt=^cnt+1"] with 507 x's,
+#           where ^c has collation 1 (the longest string subscript that fits in a key)
+# Before the fix : $ZTRIGGER returned 1, SET ^c(1) worked, and the SET of ^c("xxx...") invoked the
+#                  trigger (this stage is a control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage^ydb1356 9
+# First line of the $ZTRIGGER output : Added SET trigger on ^c named c#1
+PASS : $ZTRIGGER returned 1 (expected 1)
+PASS : SET ^c(1) worked, and the trigger was invoked 0 times
+PASS : SET ^c(<node>) invoked the trigger 1 times (expected 1)
+
+# Stage 10 : the same with 508 x's (the shortest string subscript that does not fit in a key)
+# Before the fix : $ZTRIGGER returned 1 (for a trigger that can never be invoked), and SET ^c(1)
+#                  worked
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^c(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 10
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^c(1) worked, and the trigger was invoked 0 times
+
+# Stage 11 : the same with 600 x's (whose key form does not fit in the buffer of the collation)
+# Before the fix : $ZTRIGGER returned 1, and SET ^c(1) failed with the error of the collation routine
+#                  (an assert in stp_gcol_src.h in a Debug build)
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^c(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 11
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^c(1) worked, and the trigger was invoked 0 times
+
+# Stage 12 : $ZTRIGGER("ITEM") of [+^d("xxx...") -commands=S -xecute="set ^cnt=^cnt+1"] with 600 x's,
+#            and of the same with ^e("xxx...":"z") (a range whose left end has 600 x's) and
+#            ^f("a":"xxx...") (a range whose right end has 600 x's), while each global has the
+#            standard collation, then give each global collation 1 with ^%GBLDEF
+# Before the fix : $ZTRIGGER returned 1 for each trigger
+# With the fix   : expect the same, as each subscript fits in a key with the standard collation
+# Command : $gtm_dist/mumps -run stage^ydb1356 12
+PASS : $ZTRIGGER of the trigger on ^d returned 1 (expected 1)
+PASS : ^d has collation 1
+PASS : $ZTRIGGER of the trigger on ^e returned 1 (expected 1)
+PASS : ^e has collation 1
+PASS : $ZTRIGGER of the trigger on ^f returned 1 (expected 1)
+PASS : ^f has collation 1
+
+# Stage 13 : in a new process, SET ^d(1), ^e(1) and ^f(1), each of which loads the trigger of stage 12
+#            on that global with collation 1, then delete the triggers and SET each node again
+# Before the fix : each first SET failed with the error of the collation routine (an assert in
+#                  stp_gcol_src.h at SET ^d(1) in a Debug build)
+# With the fix   : expect each first SET to issue TRIGSUBS2BIG and store nothing, and each SET after
+#                  the triggers are deleted to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 13
+PASS : SET ^d(1) issued [TRIGSUBS2BIG] (expected TRIGSUBS2BIG)
+PASS : SET ^d(1) stored nothing
+PASS : SET ^e(1) issued [TRIGSUBS2BIG] (expected TRIGSUBS2BIG)
+PASS : SET ^e(1) stored nothing
+PASS : SET ^f(1) issued [TRIGSUBS2BIG] (expected TRIGSUBS2BIG)
+PASS : SET ^f(1) stored nothing
+PASS : SET ^d(1) worked after the triggers were deleted
+PASS : SET ^e(1) worked after the triggers were deleted
+PASS : SET ^f(1) worked after the triggers were deleted
+
+# Stage 14 : $ZTRIGGER("ITEM") of a trigger on ^c with two subscripts, ?1(1"a,",1"b") and
+#            x="a""b":"xxx...";"c";:"d" with 507 x's (a pattern with parentheses, a local
+#            variable name, a string with a double-quote, ranges, one with an open side, and
+#            alternations)
+# Before the fix : $ZTRIGGER returned 1, SET ^c(1) worked, and the SET of ^c("b","c") invoked the
+#                  trigger (this stage is a control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage^ydb1356 14
+# First line of the $ZTRIGGER output : Added SET trigger on ^c named c#1
+PASS : $ZTRIGGER returned 1 (expected 1)
+PASS : SET ^c(1) worked, and the trigger was invoked 0 times
+PASS : SET ^c(<node>) invoked the trigger 1 times (expected 1)
+
+# Stage 15 : the same with 508 x's at the end of the range
+# Before the fix : $ZTRIGGER returned 1, and SET ^c(1) worked
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^c(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 15
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^c(1) worked, and the trigger was invoked 0 times
+
+# Stage 16 : $ZTRIGGER("ITEM") of [+^a("xxx...":"z") -commands=S -xecute="set ^cnt=^cnt+1"] with
+#            1030 x's (a range whose left end does not fit in a key), where ^a has the standard
+#            collation
+# Before the fix : $ZTRIGGER returned 1, and SET ^a(1) issued GVSUBOFLOW (an assert in stp_gcol_src.h
+#                  in a Debug build)
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^a(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 16
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^a(1) worked, and the trigger was invoked 0 times
+
+# Stage 17 : $ZTRIGGER("ITEM") of a trigger on ^abcdefghijklmnopqrstuvwxyzabcde("xxx...") with 984
+#            x's (the longest string subscript that fits in a key of a global with a name of 31
+#            characters)
+# Before the fix : $ZTRIGGER returned 1, SET ^abcdefghijklmnopqrstuvwxyzabcde(1) worked, and the SET of
+#                  ^abcdefghijklmnopqrstuvwxyzabcde("xxx...") invoked the trigger (this stage is a
+#                  control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage^ydb1356 17
+# First line of the $ZTRIGGER output : Added SET trigger on ^abcdefghijklmnopqr
+PASS : $ZTRIGGER returned 1 (expected 1)
+PASS : SET ^abcdefghijklmnopqrstuvwxyzabcde(1) worked, and the trigger was invoked 0 times
+PASS : SET ^abcdefghijklmnopqrstuvwxyzabcde(<node>) invoked the trigger 1 times (expected 1)
+
+# Stage 18 : the same with 985 x's (the shortest string subscript that does not fit in a key of
+#            that global, but fits in a key of a global with a shorter name)
+# Before the fix : $ZTRIGGER returned 1 (for a trigger that can never be invoked), and SET
+#                  ^abcdefghijklmnopqrstuvwxyzabcde(1) worked
+# With the fix   : expect $ZTRIGGER to return 0, and SET ^abcdefghijklmnopqrstuvwxyzabcde(1) to work
+# Command : $gtm_dist/mumps -run stage^ydb1356 18
+# First line of the $ZTRIGGER output : Subscript too long to fit in a key
+PASS : $ZTRIGGER returned 0 (expected 0)
+PASS : SET ^abcdefghijklmnopqrstuvwxyzabcde(1) worked, and the trigger was invoked 0 times
+
+# Done

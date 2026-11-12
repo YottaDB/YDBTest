@@ -138,6 +138,7 @@
 # fuzz_asserts8-ydb1101			[nars]	Test SET * of an undefined alias container with VIEW "NOUNDEF" does not fail in a Debug build
 # zwrite_naked_tp-ydb1379		[nars]	Test ZWRITE of a naked reference does not SIG-11 in a transaction or issue a wrong GVUNDEF or NULSUBSC
 # xecute_lit_numoflow-ydb1362		[nars]	Test a routine that XECUTEs a string literal with a complement of a number that is too large compiles
+# trigger_subs_too_long-ydb1356		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER reject a trigger whose subscript is too long to fit in a key
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -270,6 +271,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_chunk_key_size
 setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts8-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zwrite_naked_tp-ydb1379"
 setenv subtest_list_non_replic	"$subtest_list_non_replic xecute_lit_numoflow-ydb1362"
+setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_subs_too_long-ydb1356"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
