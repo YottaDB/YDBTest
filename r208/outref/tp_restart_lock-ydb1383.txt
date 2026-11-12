@@ -1,0 +1,196 @@
+#----------------------------------------------------------------------------------------------#
+# [YDB#1383] [YDB#1302] A TP restart or a ZGOTO that abandons a LOCK command makes the next    #
+# lock command issue BADLOCKNEST, and a LOCK that resumes after a transaction or an error in an #
+# extrinsic that a lock name calls terminates with a SIG-11 or does not acquire every name      #
+#----------------------------------------------------------------------------------------------#
+
+# While a LOCK is processed, lks_this_cmd counts its names and the trans flag of each name is set.
+# A TP restart from inside the LOCK resumes at the outermost TSTART, so the LOCK never completes, but
+# the restart left lks_this_cmd and the flags set. The next lock command that starts with op_lkinit()
+# (LOCK +, LOCK -, ZALLOCATE, ZDEALLOCATE, and the simpleAPI ydb_lock_incr_s() and ydb_lock_decr_s())
+# then issued BADLOCKNEST. A ZGOTO out of an extrinsic that a lock name calls abandons the LOCK the same
+# way. And a LOCK whose lock name calls an extrinsic resumes when the extrinsic returns: a transaction
+# in the extrinsic deleted the list entries of the names that the LOCK had not yet acquired, which
+# terminated the process with a SIG-11 when the LOCK resumed, and an error that the $ETRAP of the
+# extrinsic handles cleared those names (YDB#1302), so the LOCK did not acquire them.
+#
+# Each stage runs in a new process, with ^x in region DEFAULT and ^a in region AREG. The transaction
+# restarts with TRESTART until the final retry, where the process holds crit on DEFAULT. There, a
+# LOCK of ^x and ^a has to open region AREG, and opening a region while holding crit restarts the
+# transaction. Each stage checks the transaction restarted this way, then runs its command as the
+# first lock command of the restarted try, and checks the locks the process holds after TCOMMIT.
+
+# Stage 1 : LOCK +(^x,^a) after the restart
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'lock +(^x,^a)|^a=1,^x=1|'
+# Before the fix : BADLOCKNEST from LOCK +(^x,^a)
+# With the fix   : expect no error, and the process to hold ^a and ^x at level 1
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : lock +(^x,^a) after the restart did not issue an error
+PASS : the process holds ^a=1,^x=1
+PASS : another process finds ^a held
+PASS : another process finds ^x held
+
+# Stage 2 : LOCK +^x before TSTART, then LOCK +^x after the restart. The interrupted LOCK named ^x,
+#           so it set the trans flag of ^x, which was already locked.
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'lock +^x|^x=2|lock +^x'
+# Before the fix : BADLOCKNEST from LOCK +^x
+# With the fix   : expect no error, and the process to hold ^x at level 2. If the restart reset
+#                  lks_this_cmd but left the trans flag of ^x set, LOCK +^x would not count ^x, and
+#                  ^x would stay at level 1.
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : lock +^x after the restart did not issue an error
+PASS : the process holds ^x=2
+PASS : another process finds ^x held
+
+# Stage 3 : LOCK -^x after the restart, with no lock held
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'lock -^x||'
+# Before the fix : BADLOCKNEST from LOCK -^x
+# With the fix   : expect no error, and the process to hold no locks
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : lock -^x after the restart did not issue an error
+PASS : the process holds no locks
+
+# Stage 4 : ZALLOCATE ^x after the restart
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'zallocate ^x|^x=ZAL|'
+# Before the fix : BADLOCKNEST from ZALLOCATE ^x
+# With the fix   : expect no error, and the process to hold ^x with ZALLOCATE
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : zallocate ^x after the restart did not issue an error
+PASS : the process holds ^x=ZAL
+PASS : another process finds ^x held
+
+# Stage 5 : ZDEALLOCATE ^x after the restart, with no lock held
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'zdeallocate ^x||'
+# Before the fix : BADLOCKNEST from ZDEALLOCATE ^x
+# With the fix   : expect no error, and the process to hold no locks
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : zdeallocate ^x after the restart did not issue an error
+PASS : the process holds no locks
+
+# Stage 6 : LOCK (^x,^a) after the restart (this stage is a control). A LOCK without + or -
+#           first releases all locks, which resets lks_this_cmd, so it is not affected.
+# Command : $gtm_dist/mumps -run lockcmd^ydb1383 'lock (^x,^a)|^a=1,^x=1|'
+# Before the fix : no error, and the process held ^a and ^x at level 1
+# With the fix   : expect no error, and the process to hold ^a and ^x at level 1
+PASS : the transaction restarted from inside LOCK +(^x,^a) in the final retry
+PASS : lock (^x,^a) after the restart did not issue an error
+PASS : the process holds ^a=1,^x=1
+PASS : another process finds ^a held
+PASS : another process finds ^x held
+
+# Stages 7 and 8 use the simpleAPI. The final retry of ydb_tp_s() calls ydb_lock_s(^x, ^a), which
+# restarts the transaction the same way.
+
+# Stage 7 : ydb_lock_incr_s(^a) after the restart
+# Command : ./ydb1383_sapi incr
+# Before the fix : ydb_lock_incr_s(^a) returned YDB_ERR_BADLOCKNEST, and ^a was free
+# With the fix   : expect YDB_OK, and another process to find ^a held
+PASS : ydb_lock_incr_s(^a) after the restart returned YDB_OK
+PASS : ydb_tp_s() returned YDB_OK
+PASS : the transaction restarted from inside ydb_lock_s(^x, ^a) in the final retry
+PASS : another process finds ^a held
+
+# Stage 8 : ydb_lock_decr_s(^a) after the restart, with no lock held
+# Command : ./ydb1383_sapi decr
+# Before the fix : ydb_lock_decr_s(^a) returned YDB_ERR_BADLOCKNEST
+# With the fix   : expect YDB_OK, and another process to find ^a free
+PASS : ydb_lock_decr_s(^a) after the restart returned YDB_OK
+PASS : ydb_tp_s() returned YDB_OK
+PASS : the transaction restarted from inside ydb_lock_s(^x, ^a) in the final retry
+PASS : another process finds ^a free
+
+# Stages 9 to 17 : a LOCK whose lock name calls an extrinsic. The LOCK is in progress while the extrinsic
+# runs, and resumes when the extrinsic returns, unless execution goes on in the frame of the LOCK or an
+# older frame (after a ZGOTO, a TP restart or an error), which abandons the LOCK.
+
+# Stage 9 : ZGOTO out of the extrinsic of LOCK +(a,b($$zgf)), to the frame of the caller, then LOCK +a
+# Command : $gtm_dist/mumps -run zg^ydb1383
+# Before the fix : BADLOCKNEST from LOCK +a
+# With the fix   : expect no error, and the process to hold a at level 1
+PASS : LOCK +a after the ZGOTO did not issue an error
+PASS : the process holds a=1
+PASS : another process finds a held
+
+# Stage 10 : the same from Direct Mode, after a BREAK in the extrinsic, with ZGOTO 1 and LOCK +c
+# Before the fix : BADLOCKNEST from LOCK +c
+# With the fix   : expect no error, and the process to hold c at level 1
+# Command : $gtm_dist/mumps -direct < dmzg.inp, where dmzg.inp has these lines
+#   do dmx^ydb1383
+#   zgoto 1
+#   lock +c  write "lock +c done",!
+#   zshow "l"
+PASS : dmzg output has BREAK
+PASS : dmzg output has lock +c done
+PASS : dmzg output has LOCK c LEVEL=1
+PASS : dmzg output does not have BADLOCKNEST
+PASS : dmzg output does not have a fatal error (-F-)
+
+# Stage 11 : TSTART and TCOMMIT in the extrinsic of LOCK +(a,b($$tpcf)), which returns 1
+# Before the fix : the LOCK resumed and terminated the process with a SIG-11, as the TCOMMIT had deleted
+#                  the list entry of a, which the LOCK had not yet acquired
+# With the fix   : expect the LOCK to resume, and the process to hold a and b(1)
+# Command : $gtm_dist/mumps -run tpc^ydb1383
+PASS : the LOCK resumed after the extrinsic returned
+PASS : the process holds a=1,b(1)=1
+PASS : another process finds a held
+Badly placed ()'s.
+
+# Stage 12 : TSTART and TRESTART in the extrinsic of LOCK +(a,b($$tprf)). The restart resumes at the
+#            TSTART in the extrinsic, so the LOCK resumes.
+# Before the fix : the LOCK resumed and terminated the process with a SIG-11
+# With the fix   : expect the LOCK to resume, and the process to hold a and b(1)
+# Command : $gtm_dist/mumps -run tpr^ydb1383
+PASS : the LOCK resumed after the extrinsic returned
+PASS : the process holds a=1,b(1)=1
+PASS : another process finds a held
+Badly placed ()'s.
+
+# Stage 13 : TSTART and TROLLBACK in the extrinsic of LOCK +(a,b($$tpbf))
+# Before the fix : the LOCK resumed and terminated the process with a SIG-11
+# With the fix   : expect the LOCK to resume, and the process to hold a and b(1)
+# Command : $gtm_dist/mumps -run tpb^ydb1383
+PASS : the LOCK resumed after the extrinsic returned
+PASS : the process holds a=1,b(1)=1
+PASS : another process finds a held
+Badly placed ()'s.
+
+# Stage 14 : an error in the extrinsic of LOCK +(a,b($$ehf)), handled by the $ETRAP of the extrinsic,
+#            which returns 2. The LOCK resumes.
+# Before the fix : the LOCK completed holding only b(2), and another process got a
+# With the fix   : expect the process to hold a and b(2)
+# Command : $gtm_dist/mumps -run eh^ydb1383
+PASS : the LOCK resumed after the extrinsic returned
+PASS : the process holds a=1,b(2)=1
+PASS : another process finds a held
+Badly placed ()'s.
+
+# Stage 15 : a ZGOTO that stays in the frames of the extrinsic of LOCK +(a,b($$zginf)), which returns 3
+#            (this stage is a control)
+# Before the fix : the LOCK resumed, and the process held a and b(3)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run zgin^ydb1383
+PASS : the LOCK resumed after the extrinsic returned
+PASS : the process holds a=1,b(3)=1
+PASS : another process finds a held
+Badly placed ()'s.
+
+# Stage 16 : an error in the extrinsic of LOCK +(a,b($$euf)) that reaches the frame of the LOCK, whose
+#            $ETRAP goes on after the LOCK, then LOCK +a (this stage is a control)
+# Before the fix : no error from LOCK +a, and the process held a at level 1
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run eu^ydb1383
+PASS : the error reached the frame of the LOCK
+PASS : LOCK +a after the error did not issue an error
+PASS : the process holds a=1
+PASS : another process finds a held
+
+# Stage 17 : a LOCK +c in the extrinsic of LOCK +(a,b($$nestf)), then LOCK +a (this stage is a control)
+# Before the fix : BADLOCKNEST from LOCK +c, no error from LOCK +a, and the process held a at level 1
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run nest^ydb1383
+PASS : BADLOCKNEST from the LOCK in the extrinsic
+PASS : LOCK +a after the BADLOCKNEST did not issue an error
+PASS : the process holds a=1
+PASS : another process finds a held
+
+# Done
