@@ -139,6 +139,7 @@
 # zwrite_naked_tp-ydb1379		[nars]	Test ZWRITE of a naked reference does not SIG-11 in a transaction or issue a wrong GVUNDEF or NULSUBSC
 # xecute_lit_numoflow-ydb1362		[nars]	Test a routine that XECUTEs a string literal with a complement of a number that is too large compiles
 # trigger_subs_too_long-ydb1356		[nars]	Test $ZTRIGGER() and MUPIP TRIGGER reject a trigger whose subscript is too long to fit in a key
+# zycompile_param-ydb1363		[nars]	Test $ZYCOMPILE() returns the text of a compile error with the values of its parameters
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -272,6 +273,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic fuzz_asserts8-ydb1101"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zwrite_naked_tp-ydb1379"
 setenv subtest_list_non_replic	"$subtest_list_non_replic xecute_lit_numoflow-ydb1362"
 setenv subtest_list_non_replic	"$subtest_list_non_replic trigger_subs_too_long-ydb1356"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zycompile_param-ydb1363"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -316,6 +318,10 @@ endif
 # zcompile_object_badchar-ydb1345 tests UTF-8 mode, so exclude it where UTF-8 mode is not supported
 if ("TRUE" != "$gtm_test_unicode_support") then
 	setenv subtest_exclude_list "$subtest_exclude_list zcompile_object_badchar-ydb1345"
+endif
+# zycompile_param-ydb1363 tests UTF-8 mode in its last stage, so exclude it where UTF-8 mode is not supported
+if ("TRUE" != "$gtm_test_unicode_support") then
+	setenv subtest_exclude_list "$subtest_exclude_list zycompile_param-ydb1363"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
