@@ -1,0 +1,84 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1387] GOTO or ZGOTO with a TRUE literal postconditional followed by a string with no closing    #
+# quote issues SPOREOL instead of looping forever in the compiler                                    #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage runs the command shown in a new process (killed after 120 seconds), and checks that the
+# process ended by itself, that the output has no fatal error, has the number of SPOREOL errors
+# expected, and that the last line of input ran.
+
+# Create routine gx.m that GOTO jumps to
+# Stage 1 : GOTO with a TRUE literal postconditional, then a string with no closing quote (from fuzz testing)
+# Command : $gtm_dist/mumps -direct < stage1.inp, where stage1.inp has these lines
+#   goto x^gx:1 write "
+#   write "end",!
+# Before the fix : Debug and Release builds looped forever in m_goto_postcond.c (SIGTERM did not stop them)
+# With the fix   : expect 1 SPOREOL error
+PASS : the process ended by itself
+PASS : no fatal error in stage1.out
+PASS : SPOREOL was issued 1 time(s), and the last line of input ran
+
+# Stage 2 : the same with ZGOTO
+# Command : $gtm_dist/mumps -direct < stage2.inp, where stage2.inp has these lines
+#   zgoto 1:x^gx:1 write "
+#   write "end",!
+# Before the fix : Debug and Release builds looped forever in m_goto_postcond.c (SIGTERM did not stop them)
+# With the fix   : expect 1 SPOREOL error
+PASS : the process ended by itself
+PASS : no fatal error in stage2.out
+PASS : SPOREOL was issued 1 time(s), and the last line of input ran
+
+# Stage 3 : the same line as stage 1 in an XECUTE
+# Command : $gtm_dist/mumps -direct < stage3.inp, where stage3.inp has these lines
+#   xecute "goto x^gx:1 write """
+#   write "end",!
+# Before the fix : Debug and Release builds looped forever in m_goto_postcond.c (SIGTERM did not stop them)
+# With the fix   : expect 1 SPOREOL error
+PASS : the process ended by itself
+PASS : no fatal error in stage3.out
+PASS : SPOREOL was issued 1 time(s), and the last line of input ran
+
+# Stage 4 : the same line as stage 1 in a routine that is compiled
+# Command : $gtm_dist/mumps gp.m, where gp.m has these lines
+#   gp	goto x^gx:1 write "
+#   	quit
+# Before the fix : Debug and Release builds looped forever in m_goto_postcond.c (SIGTERM did not stop them)
+# With the fix   : expect 1 SPOREOL error
+PASS : the process ended by itself
+PASS : no fatal error in stage4.out
+PASS : SPOREOL was issued once, and the compiler produced gp.o
+
+# Stage 5 : the same line as stage 1 with a FALSE literal postconditional
+# Command : $gtm_dist/mumps -direct < stage5.inp, where stage5.inp has these lines
+#   goto x^gx:0 write "
+#   write "end",!
+# Before the fix : SPOREOL (this stage is a control)
+# With the fix   : expect 1 SPOREOL error
+PASS : the process ended by itself
+PASS : no fatal error in stage5.out
+PASS : SPOREOL was issued 1 time(s), and the last line of input ran
+
+# Stage 6 : an invalid character after a TRUE literal postconditional is dead code and not checked
+# Command : $gtm_dist/mumps -direct < stage6.inp, where stage6.inp has these lines
+#   xecute "goto x^gx:1 write ~"
+#   write "end",!
+# Before the fix : GOTO jumped to x^gx with no error (this stage is a control)
+# With the fix   : expect no error, and the GOTO jumps to x^gx
+PASS : the process ended by itself
+PASS : no fatal error in stage6.out
+PASS : SPOREOL was issued 0 time(s), and the last line of input ran
+PASS : the GOTO jumped to x^gx
+
+# Stage 7 : "*", "]" or "@" followed by a byte above 127 after a TRUE literal postconditional
+# Command : $gtm_dist/mumps -direct < stage7.inp, where stage7.inp has these lines
+#   (cat -v shows the 2 bytes above 127 as M-C M-))
+#   goto x^gx:1 write 1*M-CM-)
+#   goto x^gx:1 write 1]M-CM-)
+#   goto x^gx:1 write 1@M-CM-)
+#   write "end",!
+# Before the fix : Debug and Release builds looped forever in m_goto_postcond.c (SIGTERM did not stop them)
+# With the fix   : expect 3 SPOREOL errors (one for each line)
+PASS : the process ended by itself
+PASS : no fatal error in stage7.out
+PASS : SPOREOL was issued 3 time(s), and the last line of input ran
+
