@@ -154,6 +154,7 @@
 # naked_suboflow-ydb1389		[nars]	Test a naked reference whose subscripts are too long issues GVSUBOFLOW with the correct GVIS message
 # socket_use_listen_empty-ydb1392	[nars]	Test USE of a SOCKET device with an empty LISTEN address issues INVPORTSPEC, not ADDRTOOLONG
 # pattern_mupip_stop-ydb1272		[nars]	Test MUPIP STOP stops a process in a long pattern match
+# literal_bool_int_numoflow-ydb1391	[nars]	Test a string literal that is a too large number issues NUMOFLOW as a condition or an integer argument
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -302,6 +303,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic job_zro_hang-ydb1388"
 setenv subtest_list_non_replic	"$subtest_list_non_replic naked_suboflow-ydb1389"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_listen_empty-ydb1392"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pattern_mupip_stop-ydb1272"
+setenv subtest_list_non_replic	"$subtest_list_non_replic literal_bool_int_numoflow-ydb1391"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

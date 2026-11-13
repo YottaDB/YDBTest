@@ -1,0 +1,77 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1391] A string literal that is a number that is too large issues NUMOFLOW as a Boolean      #
+# condition or an integer argument                                                                 #
+#--------------------------------------------------------------------------------------------------#
+
+# The compiler computes the truth value of a literal condition (of IF, a postconditional or $SELECT())
+# and the value of a literal integer argument of a function at compile time. It did not check that a
+# string literal is a valid number, so a string literal that is a number that is too large, like
+# "1E47", was true as a condition and 0 as an integer argument, instead of issuing NUMOFLOW, as the
+# same code does when the string is in a variable. Stages 1 to 4 run in one process, and stage 5
+# compiles and runs a routine.
+
+# Stage 1 : the literal as a Boolean condition, compiled at run time (as in Direct Mode)
+# Before the fix : no error for each, as the literal was true
+# With the fix   : expect NUMOFLOW for each
+# Command : $gtm_dist/mumps -run stage1^ydb1391
+PASS : if "1E47" set y=1 : NUMOFLOW
+PASS : set:"1E47" y=1 : NUMOFLOW
+PASS : set y=$select("1E47":1,1:2) : NUMOFLOW
+PASS : xecute:"1E47" "set y=1" : NUMOFLOW
+PASS : do lbl:"1E47" : NUMOFLOW
+
+# Stage 2 : the literal as an integer argument of a function, compiled at run time
+# Before the fix : no error for each, as the literal was 0
+# With the fix   : expect NUMOFLOW for each
+# Command : $gtm_dist/mumps -run stage2^ydb1391
+PASS : set y=$extract("abc","1E47") : NUMOFLOW
+PASS : set y=$extract("abc",1,"1E47") : NUMOFLOW
+PASS : set y=$piece("a;b",";","1E47") : NUMOFLOW
+PASS : set y=$justify(1,"1E47") : NUMOFLOW
+
+# Stage 3 : $ZYCOMPILE() of a line with the literal as a condition and as an integer argument
+# Before the fix : $ZYCOMPILE() returned "" (no error)
+# With the fix   : expect NUMOFLOW
+# Command : $gtm_dist/mumps -run stage3^ydb1391
+PASS : $ZYCOMPILE(" if ""1E47"" set y=1") returned NUMOFLOW
+PASS : $ZYCOMPILE(" set y=$extract(""abc"",""1E47"")") returned NUMOFLOW
+
+# Stage 4 : literals that are numbers that are not too large, a string that is not a number,
+#           conditions that the compiler turns into a literal, the literal in a variable, and
+#           $CHAR() of the literal
+# Before the fix : the values below, and NUMOFLOW for the variable and for $CHAR() (this stage is
+#                  a control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage4^ydb1391
+PASS : set y=0 if "1E46" set y=1 : no error, y=1
+PASS : set y=0 if "abc" set y=1 : no error, y=0
+PASS : set y=0 if '0 set y=1 : no error, y=1
+PASS : set y=0 if 1-1 set y=1 : no error, y=0
+PASS : set y=$select("0":1,"1E46":2) : no error, y=2
+PASS : set y=$select(1:3,"1E47":4) : no error, y=3
+PASS : set y=$extract("abc","2") : no error, y=b
+PASS : set y=$piece("a;b",";","2E0") : no error, y=b
+PASS : if x set y=1 : NUMOFLOW
+PASS : set y=$extract("abc",x) : NUMOFLOW
+PASS : set y=$char("1E47") : NUMOFLOW
+
+# Stage 5 : compile and run a routine with one label for each line of stages 1 and 2, and one for
+#           $CHAR() of the literal
+# Before the fix : the routine compiled with NUMOFLOW only for the $CHAR() line, and each label but
+#                  the $CHAR() one ran with no error
+# With the fix   : expect the compile to issue NUMOFLOW (a compile time warning) once for each label
+#                  and produce an object file, and each label to issue NUMOFLOW when it runs
+# Command : $gtm_dist/mumps xlit.m
+PASS : compiling xlit.m issued NUMOFLOW once for each of the 10 labels
+PASS : xlit.o was produced
+# Command : $gtm_dist/mumps -run stage5^ydb1391 10
+PASS : do c1^xlit : NUMOFLOW
+PASS : do c2^xlit : NUMOFLOW
+PASS : do c3^xlit : NUMOFLOW
+PASS : do c4^xlit : NUMOFLOW
+PASS : do c5^xlit : NUMOFLOW
+PASS : do c6^xlit : NUMOFLOW
+PASS : do c7^xlit : NUMOFLOW
+PASS : do c8^xlit : NUMOFLOW
+PASS : do c9^xlit : NUMOFLOW
+PASS : do c10^xlit : NUMOFLOW

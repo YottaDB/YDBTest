@@ -321,6 +321,10 @@ Subtest tst15.m
 		                       ^-----
 		At column 25, line 1, source module ##TEST_PATH##/tst15.m
 %YDB-E-NUMOFLOW, Numeric overflow
+		kill z set (z,$p(x,"|",1E48))=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+		                                                       ^-----
+		At column 57, line 1, source module ##TEST_PATH##/tst15.m
+%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
 %YDB-E-NUMOFLOW, Numeric overflow
@@ -342,10 +346,14 @@ Subtest tst16.m
 	                       ^-----
 		At column 24, line 1, source module ##TEST_PATH##/tst16.m
 %YDB-E-INVSVN, Invalid special variable name
+	        kill z set (z,$iv)=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+	                                                    ^-----
+		At column 53, line 1, source module ##TEST_PATH##/tst16.m
+%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
 true
-%YDB-E-INVSVN, Invalid special variable name
+%YDB-E-NUMOFLOW, Numeric overflow
 		At M source location +1^tst16
 
 YDB>
@@ -354,7 +362,7 @@ YDB>
 
 YDB>
 true
-%YDB-E-INVSVN, Invalid special variable name
+%YDB-E-NUMOFLOW, Numeric overflow
 
 YDB>
 -----------------------------------------------
