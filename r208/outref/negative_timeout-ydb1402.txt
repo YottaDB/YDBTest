@@ -1,0 +1,43 @@
+#--------------------------------------------------------------------------------------------------------#
+# [YDB#1402] Test that LOCK, ZALLOCATE, and READ with a negative timeout return at once with $TEST=0     #
+# GT.M treats a negative timeout as 0. In YottaDB, a negative timeout that an integer mval holds, which  #
+# includes values with up to three decimal places, waited indefinitely, because the conversion to        #
+# nanoseconds tested the sign of an unsigned value. A process holds LOCK l and ZALLOCATE l. Each command #
+# below tries them, or a READ from a PIPE device that writes nothing, with the timeouts -1, -1.5, -0.125 #
+# (three decimal places), and -0.0001 (four decimal places, which already returned at once).             #
+#--------------------------------------------------------------------------------------------------------#
+
+# Start a process that holds LOCK l and ZALLOCATE l
+# mumps -run start^negtmo1402
+PASS : the holding process has LOCK l and ZALLOCATE l
+
+# Each command runs in its own process, which is stopped if the command has not returned within 30 seconds
+# Expect $TEST=0, returned within 5 seconds, for each
+# mumps -run try^negtmo1402 LOCK -1
+LOCK with timeout -1 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 LOCK -1.5
+LOCK with timeout -1.5 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 LOCK -0.125
+LOCK with timeout -0.125 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 LOCK -0.0001
+LOCK with timeout -0.0001 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 ZALLOCATE -1
+ZALLOCATE with timeout -1 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 ZALLOCATE -1.5
+ZALLOCATE with timeout -1.5 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 ZALLOCATE -0.125
+ZALLOCATE with timeout -0.125 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 ZALLOCATE -0.0001
+ZALLOCATE with timeout -0.0001 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 READ -1
+READ with timeout -1 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 READ -1.5
+READ with timeout -1.5 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 READ -0.125
+READ with timeout -0.125 : $TEST=0, returned within 5 seconds
+# mumps -run try^negtmo1402 READ -0.0001
+READ with timeout -0.0001 : $TEST=0, returned within 5 seconds
+
+# Stop the process that holds LOCK l and ZALLOCATE l
+# mumps -run stop^negtmo1402
+PASS : the holding process exited

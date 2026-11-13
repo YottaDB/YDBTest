@@ -159,6 +159,7 @@
 # zintr_dmode_error-ydb1400		[nars]	Test an error in or after $ZINTERRUPT or $ZTIMEOUT code that interrupts a direct mode READ drives $ETRAP or $ZTRAP
 # ctrap_zintr-ydb1393			[nars]	Test a CTRAP character typed while a $ZINTERRUPT handler runs gives a CTRAP error in the handler
 # tpnotacid_dmode-ydb1090		[david]	Test direct mode does not loop once a transaction passes the TPNOTACID retry limit
+# negative_timeout-ydb1402		[david]	Test LOCK, ZALLOCATE, and READ with a negative timeout return at once with $TEST=0
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -312,6 +313,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_many_gbls-ydb1240
 setenv subtest_list_non_replic	"$subtest_list_non_replic zintr_dmode_error-ydb1400"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ctrap_zintr-ydb1393"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_dmode-ydb1090"
+setenv subtest_list_non_replic	"$subtest_list_non_replic negative_timeout-ydb1402"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
