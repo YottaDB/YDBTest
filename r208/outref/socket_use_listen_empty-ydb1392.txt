@@ -1,0 +1,26 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1392] USE of a SOCKET device with an empty LISTEN address issues INVPORTSPEC                 #
+#--------------------------------------------------------------------------------------------------#
+
+# USE of a SOCKET device with LISTEN="" issued ADDRTOOLONG, which said that an address of length 0
+# was longer than the maximum permissible length, while USE with CONNECT="" and OPEN with LISTEN=""
+# issue INVPORTSPEC. Each stage runs in a new process.
+
+# Stage 1 : USE with LISTEN="" of a socket device that listens on a LOCAL socket
+# Before the fix : ADDRTOOLONG
+# With the fix   : expect INVPORTSPEC
+# Command : $gtm_dist/mumps -run stage1^ydb1392
+PASS : use s:(listen="") : INVPORTSPEC
+PASS : stage1.out has no other line
+
+# Stage 2 : USE with CONNECT="", with a LISTEN address that is too long (128 bytes) and with a
+#           valid LISTEN address, and OPEN with LISTEN=""
+# Before the fix : the results below (this stage is a control)
+# With the fix   : expect the same
+# Command : $gtm_dist/mumps -run stage2^ydb1392
+PASS : use s:(connect="") : INVPORTSPEC
+PASS : use s:(listen=$translate($justify("",128)," ","x")) : ADDRTOOLONG
+PASS : use s:(listen="ydb1392c.s:LOCAL") : no error
+PASS : open "sock3":(listen=""):5:"socket" : INVPORTSPEC
+PASS : stage2.out has no other line
+
