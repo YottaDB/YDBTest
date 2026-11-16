@@ -322,6 +322,9 @@ endif
 # Attempt to encrypt every region.
 echo
 echo "Encrypt regions."
+# Case 1 ran MUPIP REORG -ENCRYPT on databases with the same names, and the syslog windows below start at a whole second,
+# so wait for the second of the last of those runs to pass, so its messages are not in the first window.
+sleep 1
 rm ${gtm_dbkeys}.new
 set datkey_pairs = `$tst_awk -F '/' 'NR%2{printf $NF" ";next} {print $NF}' ${gtm_dbkeys}.orig`
 @ datkey_pairs_count = $#datkey_pairs
