@@ -198,7 +198,7 @@
  get option with $ZSOCKET(s,"KEEPALIVE",0): "101;1"
  get option with $ZSOCKET(s,"KEEPALIVE",1): "101;1"
  get option with $ZSOCKET(s,"KEEPALIVE",2): "102;1"
-# wrtest-1: filtered trace-1-indv.out
+# wrtest-1: filtered trace-1-indv.outx
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
  getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
@@ -213,7 +213,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPALIVE=101"
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPALIVE=101"
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=102"
-# wrtest-1: filtered trace-1-opts.out
+# wrtest-1: filtered trace-1-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
@@ -227,7 +227,7 @@
 # wrtest-2-indv: get options using individual option names
  get option with $ZSOCKET(s,"KEEPALIVE",0): "101;1"
  get option with $ZSOCKET(s,"KEEPALIVE",2): "102;1"
-# wrtest-2: filtered trace-2-indv.out
+# wrtest-2: filtered trace-2-indv.outx
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
  getsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
@@ -242,7 +242,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPALIVE=101"
  get option with $ZSOCKET(s,"OPTIONS",1): ""
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=102"
-# wrtest-2: filtered trace-2-opts.out
+# wrtest-2: filtered trace-2-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [101], <masked>) = 0
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [102], <masked>) = 0
@@ -260,7 +260,7 @@
  get option with $ZSOCKET(s,"KEEPALIVE",2): "2;1"
  get option with $ZSOCKET(s,"KEEPIDLE",1): "99"
  get option with $ZSOCKET(s,"KEEPIDLE",2): "2"
-# wrtest-3: filtered trace-3-indv.out
+# wrtest-3: filtered trace-3-indv.outx
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [0], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [99], <masked>) = 0
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [2], <masked>) = 0
@@ -280,7 +280,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): ""
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPALIVE=0"
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPALIVE=2,KEEPIDLE=2"
-# wrtest-3: filtered trace-3-opts.out
+# wrtest-3: filtered trace-3-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [0], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPIDLE, [99], <masked>) = 0
@@ -298,7 +298,7 @@
 # wrtest-4-indv: get options using individual option names
  get option with $ZSOCKET(s,"KEEPCNT",1): "101"
  get option with $ZSOCKET(s,"KEEPCNT",2): "102"
-# wrtest-4: filtered trace-4-indv.out
+# wrtest-4: filtered trace-4-indv.outx
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [102], <masked>) = 0
  getsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
@@ -313,7 +313,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): ""
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPCNT=101"
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPCNT=102"
-# wrtest-4: filtered trace-4-opts.out
+# wrtest-4: filtered trace-4-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [101], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [102], <masked>) = 0
@@ -327,7 +327,7 @@
  get option with $ZSOCKET(s,"KEEPINTVL",0): "202"
  get option with $ZSOCKET(s,"KEEPINTVL",1): "208"
  get option with $ZSOCKET(s,"KEEPINTVL",2): "202"
-# wrtest-5: filtered trace-5-indv.out
+# wrtest-5: filtered trace-5-indv.outx
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
  getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
@@ -342,7 +342,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPINTVL=202"
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPINTVL=208"
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPINTVL=202"
-# wrtest-5: filtered trace-5-opts.out
+# wrtest-5: filtered trace-5-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
@@ -356,7 +356,7 @@
 # wrtest-6-indv: get options using individual option names
  get option with $ZSOCKET(s,"KEEPINTVL",0): "202"
  get option with $ZSOCKET(s,"KEEPINTVL",1): "208"
-# wrtest-6: filtered trace-6-indv.out
+# wrtest-6: filtered trace-6-indv.outx
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
  getsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
@@ -371,7 +371,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPINTVL=202"
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPINTVL=208"
  get option with $ZSOCKET(s,"OPTIONS",2): ""
-# wrtest-6: filtered trace-6-opts.out
+# wrtest-6: filtered trace-6-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [202], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPINTVL, [208], <masked>) = 0
@@ -387,7 +387,7 @@
  get option with $ZSOCKET(s,"SNDBUF",0): "304;[sysvalue>0:masked]"
  get option with $ZSOCKET(s,"SNDBUF",1): "304;[sysvalue>0:masked]"
  get option with $ZSOCKET(s,"SNDBUF",2): "304;[sysvalue>0:masked]"
-# wrtest-7: filtered trace-7-indv.out
+# wrtest-7: filtered trace-7-indv.outx
 # notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
  setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
@@ -405,7 +405,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPCNT=3,SNDBUF=304"
  get option with $ZSOCKET(s,"OPTIONS",1): "KEEPCNT=3,SNDBUF=304"
  get option with $ZSOCKET(s,"OPTIONS",2): "KEEPCNT=3,SNDBUF=304"
-# wrtest-7: filtered trace-7-opts.out
+# wrtest-7: filtered trace-7-opts.outx
 # notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
@@ -419,7 +419,7 @@
 # wrtest-8-indv: get options using individual option names
  get option with $ZSOCKET(s,"KEEPCNT",0): "3"
  get option with $ZSOCKET(s,"SNDBUF",0): "304;[sysvalue>0:masked]"
-# wrtest-8: filtered trace-8-indv.out
+# wrtest-8: filtered trace-8-indv.outx
 # notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
  setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [3], <masked>) = 0
@@ -434,7 +434,7 @@
  get option with $ZSOCKET(s,"OPTIONS",0): "KEEPCNT=3,SNDBUF=304"
  get option with $ZSOCKET(s,"OPTIONS",1): ""
  get option with $ZSOCKET(s,"OPTIONS",2): ""
-# wrtest-8: filtered trace-8-opts.out
+# wrtest-8: filtered trace-8-opts.outx
 # notice: getsockopt(SO_SNDBUF) value (4th arg) is masked due to the OS rounding mechanism (the value get may differ from the value set)
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_SNDBUF, [304], <masked>) = 0
@@ -451,7 +451,7 @@
  error during setting option: Invalid argument
  set ZIBFSIZE with USE: index="2", value="401"
  error during setting option: Invalid argument
-# wrtest-9: filtered trace-9-indv.out
+# wrtest-9: filtered trace-9-indv.outx
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [402], <masked>) = -1 EINVAL (Invalid argument)
  setsockopt(<masked>, SOL_SOCKET, SO_RCVBUF, [401], <masked>) = 0
@@ -464,7 +464,7 @@
  error during setting option: Invalid argument
  set ZIBFSIZE with USE: index="2", value="401"
  error during setting option: Invalid argument
-# wrtest-9: filtered trace-9-opts.out
+# wrtest-9: filtered trace-9-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_SOCKET, SO_KEEPALIVE, [1], <masked>) = 0
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [402], <masked>) = -1 EINVAL (Invalid argument)
@@ -478,7 +478,7 @@
  server received incoming connection, index=2
  set OPTIONS with USE: index="2", value="KEEPCNT=509"
  error during setting option: Invalid argument
-# wrtest-10: filtered trace-10-indv.out
+# wrtest-10: filtered trace-10-indv.outx
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [509], <masked>) = -1 EINVAL (Invalid argument)
 # wrtest-10-opts: starting test case, options="2:KEEPCNT=509", command="USE", readback="opts"
 # wrtest-10-opts: listening, no OPEN options set
@@ -486,7 +486,7 @@
  server received incoming connection, index=2
  set OPTIONS with USE: index="2", value="KEEPCNT=509"
  error during setting option: Invalid argument
-# wrtest-10: filtered trace-10-opts.out
+# wrtest-10: filtered trace-10-opts.outx
 # notice: $ZSOCKET(s,"OPTIONS",i) reports only the value specified by the user, so that's why there are no getsockopt() calls in the strace log
  setsockopt(<masked>, SOL_TCP, TCP_KEEPCNT, [509], <masked>) = -1 EINVAL (Invalid argument)
 #

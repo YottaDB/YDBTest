@@ -210,8 +210,8 @@ foreach options ( \
 					echo "TEST-E-CHECKPOINT wrtest-$case-$readback did not run, a process never reached its checkpoint"
 					cat client1-$case-$readback.out client2-$case-$readback.out strace-$case-$readback.status ${readback}-server-bg.out
 				endif
-				cat raw-$case-$readback.outx | grep -v "access.*hugepages.*EACCES" > trace-$case-$readback.out  # SUSE filter
-				$gtm_dist/mumps -run parse^gtmf135169 $portno wrtest-$case parse - $options trace-$case-$readback.out $readback >>& filtered-$case-$readback.out
+				cat raw-$case-$readback.outx | grep -v "access.*hugepages.*EACCES" > trace-$case-$readback.outx  # SUSE filter (.outx: strace output, not scanned for errors)
+				$gtm_dist/mumps -run parse^gtmf135169 $portno wrtest-$case parse - $options trace-$case-$readback.outx $readback >>& filtered-$case-$readback.out
 				$gtm_dist/mumps -run chkrst^gtmf135169 $portno
 				cat filtered-$case-$readback.out >>& server.out
 
