@@ -264,7 +264,13 @@ foreach type (V7 V6)
 	echo "## Stage 7 with a $type database, in directory stage7_$type"
 	mkdir stage7_$type
 	cd stage7_$type
-	$gtm_tst/com/random_ver.csh -type $type >&! prior_ver_$type.txt
+	# A V6 version before V63000A would make ydb_prior_ver_check.csh switch the rest of the subtest to M mode, and the
+	# later stages would then fail to ZLINK the ydb1231.o that an earlier stage compiled in UTF-8 mode.
+	if ("V6" == $type) then
+		$gtm_tst/com/random_ver.csh -gte V63000A -lt V70000 >&! prior_ver_$type.txt
+	else
+		$gtm_tst/com/random_ver.csh -type $type >&! prior_ver_$type.txt
+	endif
 	if (0 != $status) then
 		echo "TEST-I-SKIP, No suitable prior $type version available, skipping this part of stage 7."
 		cd ..
