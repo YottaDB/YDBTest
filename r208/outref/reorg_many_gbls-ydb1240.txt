@@ -1,0 +1,26 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1240] The instructions MUPIP REORG executes grow linearly with the number of globals           #
+#----------------------------------------------------------------------------------------------------#
+
+# Each stage creates a database with 1 KiB blocks, sets the globals ^g1 to ^gN (one node each), and counts
+# the instructions that MUPIP REORG executes on the database with perf.
+# Before the fix : MUPIP REORG compared each global name in the directory tree with the list of selected
+#                  globals from its start, so the instructions grew with the square of the number of globals
+# With the fix   : expect the instructions to grow linearly with the number of globals
+
+# Stage 1 : 10000 globals
+# Run [dbcreate.csh g10000 -block_size=1024]
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:10000 set @("^g"_i)=1']
+PASS : the database has the 10000 globals
+# Run [perf stat $gtm_dist/mupip reorg]
+PASS : MUPIP REORG reorganized the 10000 globals without an error
+
+# Stage 2 : 40000 globals
+# Run [dbcreate.csh g40000 -block_size=1024]
+# Run [$gtm_dist/mumps -run %XCMD 'for i=1:1:40000 set @("^g"_i)=1']
+PASS : the database has the 40000 globals
+# Run [perf stat $gtm_dist/mupip reorg]
+PASS : MUPIP REORG reorganized the 40000 globals without an error
+
+# Stage 3 : the ratio of the instructions with 40000 globals to those with 10000 globals is at most 6
+PASS : the instructions grew at most 6x from 10000 to 40000 globals

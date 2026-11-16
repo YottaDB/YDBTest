@@ -155,6 +155,7 @@
 # socket_use_listen_empty-ydb1392	[nars]	Test USE of a SOCKET device with an empty LISTEN address issues INVPORTSPEC, not ADDRTOOLONG
 # pattern_mupip_stop-ydb1272		[nars]	Test MUPIP STOP stops a process in a long pattern match
 # literal_bool_int_numoflow-ydb1391	[nars]	Test a string literal that is a too large number issues NUMOFLOW as a condition or an integer argument
+# reorg_many_gbls-ydb1240		[nars]	Test the instructions MUPIP REORG executes grow linearly with the number of globals
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -304,6 +305,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic naked_suboflow-ydb1389"
 setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_listen_empty-ydb1392"
 setenv subtest_list_non_replic	"$subtest_list_non_replic pattern_mupip_stop-ydb1272"
 setenv subtest_list_non_replic	"$subtest_list_non_replic literal_bool_int_numoflow-ydb1391"
+setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_many_gbls-ydb1240"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -334,6 +336,14 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list pthread_exit_nomem-ydb1292"
 	# stp_expand_4gib-ydb1101 peaks at about 10GiB of memory, which the ASAN allocator would about double.
 	setenv subtest_exclude_list "$subtest_exclude_list stp_expand_4gib-ydb1101"
+endif
+
+# reorg_many_gbls-ydb1240 counts the instructions MUPIP REORG executes with perf, so run it only where the other perf
+# subtests run: with perf, in a Release build that is not an ASAN build, on x86_64, and built with GCC.
+set perf_missing = `which perf >/dev/null; echo $status`
+if ($perf_missing || $gtm_test_libyottadb_asan_enabled || ("pro" != "$tst_image") || ("x86_64" != `uname -m`)	\
+		|| ("GCC" != $gtm_test_yottadb_compiler)) then
+	setenv subtest_exclude_list "$subtest_exclude_list reorg_many_gbls-ydb1240"
 endif
 
 # qsubscript_badchar-ydb1311, recsize_utf_min-ydb1331, invdlrcval_value-ydb1343 and utf8_read_cr_badchar-ydb1364 test UTF-8
