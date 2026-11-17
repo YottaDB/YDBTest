@@ -156,6 +156,7 @@
 # pattern_mupip_stop-ydb1272		[nars]	Test MUPIP STOP stops a process in a long pattern match
 # literal_bool_int_numoflow-ydb1391	[nars]	Test a string literal that is a too large number issues NUMOFLOW as a condition or an integer argument
 # reorg_many_gbls-ydb1240		[nars]	Test the instructions MUPIP REORG executes grow linearly with the number of globals
+# zintr_dmode_error-ydb1400		[nars]	Test an error in or after $ZINTERRUPT or $ZTIMEOUT code that interrupts a direct mode READ drives $ETRAP or $ZTRAP
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -306,6 +307,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic socket_use_listen_empty
 setenv subtest_list_non_replic	"$subtest_list_non_replic pattern_mupip_stop-ydb1272"
 setenv subtest_list_non_replic	"$subtest_list_non_replic literal_bool_int_numoflow-ydb1391"
 setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_many_gbls-ydb1240"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zintr_dmode_error-ydb1400"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

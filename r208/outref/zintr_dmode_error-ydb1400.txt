@@ -1,0 +1,67 @@
+#-------------------------------------------------------------------------------------------------------------#
+# [YDB#1400] An error in or after $ZINTERRUPT or $ZTIMEOUT code that interrupts a direct mode READ from a      #
+# device that is not a terminal drives $ETRAP or $ZTRAP                                                       #
+#-------------------------------------------------------------------------------------------------------------#
+
+# Each stage runs drive^ydb1400, which starts child^ydb1400 with a PIPE device as the principal device of the
+# child. The child sets $ZTRAP (or $ETRAP) to code that writes the error and halts, sets $ZINTERRUPT (or
+# $ZTIMEOUT), and does a BREAK. Direct mode in the child then reads commands from the PIPE. The driver waits
+# for the direct mode prompt, sends the child a MUPIP INTRPT (stage 4 has a 2 second $ZTIMEOUT instead), and
+# writes each line of the output of the child after "child : ". The prompt is taken out of that output.
+
+# Stage 1 : $ZINTERRUPT code calls a routine that divides by zero, with $ZTRAP set
+# Command : $gtm_dist/mumps -run drive^ydb1400 1, where the child does : set $zinterrupt="do err^ydb1400"
+# Before the fix : the trap code did not run. A Release build ended with GTMASSERT2 and a Debug build
+#                  failed an assert, both in trans_code_cleanup.c
+# With the fix   : expect the child to write [in err^ydb1400] and then [$ZTRAP code ran, error is DIVZERO]
+child : %YDB-I-BREAK, Break instruction encountered
+child : 		At M source location child+10^ydb1400
+child : in err^ydb1400
+child : $ZTRAP code ran, error is DIVZERO
+PASS : stage 1
+
+# Stage 2 : $ZINTERRUPT code calls a routine that divides by zero, with $ETRAP set
+# Command : $gtm_dist/mumps -run drive^ydb1400 2, where the child does : set $zinterrupt="do err^ydb1400"
+# Before the fix : the trap code did not run. A Release build ended with GTMASSERT2 and a Debug build
+#                  failed an assert, both in trans_code_cleanup.c
+# With the fix   : expect the child to write [in err^ydb1400] and then [$ETRAP code ran, error is DIVZERO]
+child : %YDB-I-BREAK, Break instruction encountered
+child : 		At M source location child+10^ydb1400
+child : in err^ydb1400
+child : $ETRAP code ran, error is DIVZERO
+PASS : stage 2
+
+# Stage 3 : $ZINTERRUPT code leaves with a ZGOTO to level 1, where the routine divides by zero
+# Command : $gtm_dist/mumps -run drive^ydb1400 3, where the child does : set $zinterrupt="zgoto 1:after^ydb1400"
+# Before the fix : the trap code did not run. A Release build ended with GTMASSERT2 and a Debug build
+#                  failed an assert, both in trans_code_cleanup.c
+# With the fix   : expect the child to write [at after^ydb1400] and then [$ZTRAP code ran, error is DIVZERO]
+child : %YDB-I-BREAK, Break instruction encountered
+child : 		At M source location child+10^ydb1400
+child : at after^ydb1400
+child : $ZTRAP code ran, error is DIVZERO
+PASS : stage 3
+
+# Stage 4 : $ZTIMEOUT code calls a routine that divides by zero, with $ZTRAP set
+# Command : $gtm_dist/mumps -run drive^ydb1400 4, where the child does : set $ztimeout="2:do err^ydb1400"
+# Before the fix : the trap code did not run. A Release build ended with GTMASSERT2 and a Debug build
+#                  failed an assert, both in trans_code_cleanup.c
+# With the fix   : expect the child to write [in err^ydb1400] and then [$ZTRAP code ran, error is DIVZERO]
+child : %YDB-I-BREAK, Break instruction encountered
+child : 		At M source location child+10^ydb1400
+child : in err^ydb1400
+child : $ZTRAP code ran, error is DIVZERO
+PASS : stage 4
+
+# Stage 5 : $ZINTERRUPT code itself divides by zero. Direct mode reports the error and prompts again
+# Command : $gtm_dist/mumps -run drive^ydb1400 5, where the child does : set $zinterrupt="write 1/0"
+# Before the fix : the same result
+# With the fix   : expect DIVZERO and ERRWZINTR from direct mode, then "typed command ran" from the
+#                  command sent to the next prompt
+child : %YDB-I-BREAK, Break instruction encountered
+child : 		At M source location child+10^ydb1400
+child : %YDB-E-DIVZERO, Attempt to divide by zero
+child : %YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+child : typed command ran
+PASS : stage 5
+
