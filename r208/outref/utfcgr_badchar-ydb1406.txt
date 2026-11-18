@@ -1,0 +1,83 @@
+#--------------------------------------------------------------------------------------------------#
+# [YDB#1406] $FIND() and $EXTRACT() of a string with BADCHARs in UTF-8 mode give the same result   #
+# after an earlier $FIND() or $EXTRACT() of the string as they give without one                    #
+#--------------------------------------------------------------------------------------------------#
+
+# In UTF-8 mode, $FIND() with a start position and $EXTRACT() of a string longer than 33 bytes keep a
+# cache of the groups of ASCII characters, multi-byte characters and BADCHARs in the string, which
+# later calls with the same string use. A call that stopped at a BADCHAR left a group in the cache
+# that did not describe the string, and a call whose position was a BADCHAR just after the cached
+# groups, or in a group of BADCHARs cached with VIEW "NOBADCHAR", returned the BADCHAR. So a later
+# call failed an assert, stopped the process with GTMASSERT2 or returned a value where the same call
+# in a new process issues BADCHAR. Each stage below runs in its own process.
+
+# Stage 1 : $FIND() with start positions 1 to 5 of a string that starts with a BADCHAR, with
+#           VIEW "BADCHAR", and then $EXTRACT() and $FIND() of the string with VIEW "NOBADCHAR"
+# Before the fix : BADCHAR for positions 1 and 2, and then, in a Debug build, an assert failure in
+#                  utfcgr.c for position 3. In a Release build, the lines were as below.
+# With the fix   : expect BADCHAR for each call with VIEW "BADCHAR", and the BADCHAR as a character
+#                  with VIEW "NOBADCHAR"
+# Command : $gtm_dist/mumps -run stage1^ydb1406
+# VIEW "BADCHAR"
+PASS : $find(s,",",1) : ERR BADCHAR
+PASS : $find(s,",",2) : ERR BADCHAR
+PASS : $find(s,",",3) : ERR BADCHAR
+PASS : $find(s,",",4) : ERR BADCHAR
+PASS : $find(s,",",5) : ERR BADCHAR
+# VIEW "NOBADCHAR"
+PASS : $extract(s,1) : VAL $ZCH(220)
+PASS : $extract(s,2) : VAL "a"
+PASS : $find(s,",",1) : VAL 29
+PASS : $find(s,",",5) : VAL 29
+
+# Stage 2 : $EXTRACT() of the third character (the last of three ASCII characters), and then
+#           $EXTRACT() and $FIND() at and after the fourth character, which is a BADCHAR, with
+#           VIEW "BADCHAR", and then with VIEW "NOBADCHAR"
+# Before the fix : $EXTRACT(s,4) returned the BADCHAR and $EXTRACT(s,3,4) returned "c" and the
+#                  BADCHAR with VIEW "BADCHAR". The other lines were as below.
+# With the fix   : expect BADCHAR for each call at or after the fourth character with
+#                  VIEW "BADCHAR", and the BADCHAR as a character with VIEW "NOBADCHAR"
+# Command : $gtm_dist/mumps -run stage2^ydb1406
+# VIEW "BADCHAR"
+PASS : $extract(s,3) : VAL "c"
+PASS : $extract(s,4) : ERR BADCHAR
+PASS : $extract(s,3,4) : ERR BADCHAR
+PASS : $extract(s,5) : ERR BADCHAR
+PASS : $find(s,",",4) : ERR BADCHAR
+PASS : $find(s,",",5) : ERR BADCHAR
+PASS : $extract(s,2,3) : VAL "bc"
+# VIEW "NOBADCHAR"
+PASS : $extract(s,4) : VAL $ZCH(200)
+PASS : $extract(s,3,4) : VAL "c"_$ZCH(200)
+PASS : $extract(s,5) : VAL "d"
+PASS : $find(s,",",4) : VAL 29
+
+# Stage 3 : $EXTRACT() and $FIND() of a string with three BADCHARs after three ASCII characters,
+#           with VIEW "NOBADCHAR" and then with VIEW "BADCHAR"
+# Before the fix : after VIEW "BADCHAR", $EXTRACT() of the fourth, fifth and sixth characters each
+#                  returned the BADCHAR. The other lines were as below.
+# With the fix   : expect the BADCHAR as a character with VIEW "NOBADCHAR", and after
+#                  VIEW "BADCHAR", BADCHAR for each call at or after the fourth character
+# Command : $gtm_dist/mumps -run stage3^ydb1406
+# VIEW "NOBADCHAR"
+PASS : $extract(s,6) : VAL $ZCH(202)
+PASS : $extract(s,7) : VAL "d"
+PASS : $find(s,",",6) : VAL 31
+# VIEW "BADCHAR"
+PASS : $extract(s,3) : VAL "c"
+PASS : $extract(s,4) : ERR BADCHAR
+PASS : $extract(s,5) : ERR BADCHAR
+PASS : $extract(s,6) : ERR BADCHAR
+PASS : $extract(s,7) : ERR BADCHAR
+PASS : $find(s,",",6) : ERR BADCHAR
+
+# Stage 4 : random $FIND() and $EXTRACT() calls of 500 random strings of ASCII characters, multi-byte
+#           characters and BADCHARs, with VIEW "BADCHAR" or VIEW "NOBADCHAR" at random. Each call is
+#           made with the string, which can use the cache of the earlier calls, and with a new copy
+#           of the string, which has no cache.
+# Before the fix : an assert failure in utfcgr.c in a Debug build, and GTMASSERT2 in utfcgr.c or
+#                  calls with different results in a Release build
+# With the fix   : expect every call to give the same result for the string and for the new copy
+# Command : $gtm_dist/mumps -run stage4^ydb1406
+PASS : each of the random $FIND() and $EXTRACT() calls of 500 random strings gave the same result for the string and for a new copy of the string
+

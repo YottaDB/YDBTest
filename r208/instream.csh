@@ -161,6 +161,7 @@
 # tpnotacid_dmode-ydb1090		[david]	Test direct mode does not loop once a transaction passes the TPNOTACID retry limit
 # negative_timeout-ydb1402		[david]	Test LOCK, ZALLOCATE, and READ with a negative timeout return at once with $TEST=0
 # zyencode_prefix_buffer-ydb1407	[david]	Test ZYENCODE does not corrupt memory after many values that are JSON strings of canonical numbers
+# utfcgr_badchar-ydb1406		[nars]	Test $FIND() and $EXTRACT() of a string with BADCHARs in UTF-8 mode after an earlier call cached the string
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -316,6 +317,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic ctrap_zintr-ydb1393"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_dmode-ydb1090"
 setenv subtest_list_non_replic	"$subtest_list_non_replic negative_timeout-ydb1402"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_prefix_buffer-ydb1407"
+setenv subtest_list_non_replic	"$subtest_list_non_replic utfcgr_badchar-ydb1406"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 
@@ -372,6 +374,10 @@ endif
 # zycompile_param-ydb1363 tests UTF-8 mode in its last stage, so exclude it where UTF-8 mode is not supported
 if ("TRUE" != "$gtm_test_unicode_support") then
 	setenv subtest_exclude_list "$subtest_exclude_list zycompile_param-ydb1363"
+endif
+# utfcgr_badchar-ydb1406 tests UTF-8 mode, so exclude it where UTF-8 mode is not supported
+if ("TRUE" != "$gtm_test_unicode_support") then
+	setenv subtest_exclude_list "$subtest_exclude_list utfcgr_badchar-ydb1406"
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
