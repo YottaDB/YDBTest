@@ -1,0 +1,51 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [YDB#1393] Test a CTRAP character typed while a $ZINTERRUPT handler runs gives a CTRAP error in the handler         #
+# A process sets a CTRAP character on its principal device and a $ZINTERRUPT, and an expect script sends it a MUPIP   #
+# INTRPT and types the CTRAP character while the $ZINTERRUPT handler runs. The handler has an $ETRAP that reports     #
+# the error. The subtest checks that the handler gets a CTRAP error, and that the process then ends normally.         #
+#   1. <CTRL-C> typed while the handler runs a loop with no READ, which YDB#1393 lost in a Release build              #
+#   2. <CTRL-A> typed during a READ in the handler                                                                    #
+#   3. <CTRL-C> typed during a READ in the handler                                                                    #
+#   4. case 3 with a line typed right after the <CTRL-C>                                                              #
+#   5. with no $ZINTERRUPT, each of <CTRL-A>, <CTRL-B>, <CTRL-D> and <CTRL-C> typed during a READ that has it as the  #
+#      CTRAP character, then a FOR loop that checks that no event is recognized later                                 #
+# Before the fix, a Debug build fails an assert in every case.                                                        #
+#---------------------------------------------------------------------------------------------------------------------#
+
+# Case 1 : $gtm_dist/mumps -run loop^ydb1393, then $gtm_dist/mupip intrpt <pid>. The $ZINTERRUPT handler
+#          runs a loop of 4 seconds with no READ, during which <CTRL-C> ($C(3), in the CTRAP list) is typed
+# Before the fix : no CTRAP error in a Release build (the CTRAP is lost), and an assert failure in a Debug build
+# With the fix   : a CTRAP error at the next M line of the handler
+PASS: the $ZINTERRUPT handler got a CTRAP error for <CTRL-C>
+PASS: the process continued after the $ZINTERRUPT handler and ended normally
+
+# Case 2 : $gtm_dist/mumps -run read1^ydb1393, then $gtm_dist/mupip intrpt <pid>. The $ZINTERRUPT handler
+#          does a READ, in which <CTRL-A> ($C(1), in the CTRAP list) is typed
+# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build
+# With the fix   : a CTRAP error in the READ
+PASS: the $ZINTERRUPT handler got a CTRAP error for <CTRL-A>
+PASS: the process continued after the $ZINTERRUPT handler and ended normally
+
+# Case 3 : $gtm_dist/mumps -run read3^ydb1393, then $gtm_dist/mupip intrpt <pid>. The $ZINTERRUPT handler
+#          does a READ, in which <CTRL-C> ($C(3), in the CTRAP list) is typed
+# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build
+# With the fix   : a CTRAP error in the READ
+PASS: the $ZINTERRUPT handler got a CTRAP error for <CTRL-C>
+PASS: the process continued after the $ZINTERRUPT handler and ended normally
+
+# Case 4 : as case 3, with the line 'echo AFTER LINE' typed right after the <CTRL-C>
+# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build
+# With the fix   : a CTRAP error in the READ
+PASS: the $ZINTERRUPT handler got a CTRAP error for <CTRL-C>
+PASS: the process continued after the $ZINTERRUPT handler and ended normally
+
+# Case 5 : $gtm_dist/mumps -run plain^ydb1393, with no $ZINTERRUPT. Each of <CTRL-A>, <CTRL-B>, <CTRL-D> and
+#          <CTRL-C> ($C(1), $C(2), $C(4) and $C(3)) is typed during a READ that has it as the CTRAP character,
+#          then a FOR loop of 200000 iterations runs, in which an event that a CTRAP left queued would be recognized
+# Before the fix : a CTRAP error in each READ in a Release build, and an assert failure on <CTRL-A> in a Debug build
+# With the fix   : a CTRAP error in each READ, and no event recognized in the FOR loop
+PASS: the READ got a CTRAP error for <CTRL-A>
+PASS: the READ got a CTRAP error for <CTRL-B>
+PASS: the READ got a CTRAP error for <CTRL-D>
+PASS: the READ got a CTRAP error for <CTRL-C>
+PASS: no event was recognized in the FOR loop after the four READs

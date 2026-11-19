@@ -1,0 +1,176 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 30
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# The session output is matched by the "expect"s below but is not echoed to the reference file, as the $ZSTATUS of a
+# CTRAP error names the M line the handler was at, which depends on timing. Only the lines this script writes make up
+# the reference output.
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+
+# Waits for the shell prompt after a case, with a marker command so that output left over from the case (for example a
+# line typed after a CTRAP character that the shell then runs) cannot be taken for the prompt of the next case.
+proc sync_shell {} {
+	send -- "echo CASE_END\r"
+	expect -re {\nCASE_END\r\nSHELL}
+}
+
+# Runs one case: starts "mumps -run <entry>^ydb1393", sends the process a MUPIP INTRPT, waits for the $ZINTERRUPT
+# handler to write <ready>, types <key> (then <after>, if not empty) and checks that the handler gets a CTRAP error,
+# and that the process then ends normally with no second CTRAP error.
+proc run_case {entry ready key keyname {after ""}} {
+	send -- "\$gtm_dist/mumps -run $entry^ydb1393\r"
+	expect {
+		-re {PID=([0-9]+)} { set pid $expect_out(1,string) }
+		timeout {
+			puts "FAIL: mumps -run $entry^ydb1393 did not write its pid"
+			return
+		}
+	}
+	catch {exec $::env(gtm_dist)/mupip intrpt $pid} mupip_out
+	expect {
+		-exact $ready { }
+		timeout {
+			puts "FAIL: the \$ZINTERRUPT handler did not start"
+			return
+		}
+	}
+	if {"ZINT READ" == $ready} {
+		# Wait for the READ to put the terminal in its mode, so that <key> reaches the READ
+		system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+	} else {
+		# Let the handler get into its loop
+		sleep 1
+	}
+	send -- $key
+	if {"" != $after} {
+		send -- $after
+	}
+	expect {
+		-re {ETRAP: [^\r\n]*-E-CTRAP} {
+			puts "PASS: the \$ZINTERRUPT handler got a CTRAP error for $keyname"
+		}
+		-re {ZINT (LOOP|READ) DONE} {
+			puts "FAIL: the \$ZINTERRUPT handler ended with no CTRAP error for $keyname"
+		}
+		-re {-F-ASSERT} {
+			# The process is gone, so there is nothing more to check in this case
+			puts "FAIL: assert failure after $keyname"
+			sync_shell
+			return
+		}
+		timeout {
+			puts "FAIL: timed out waiting for the CTRAP error for $keyname"
+		}
+	}
+	expect {
+		-re {-E-CTRAP} {
+			puts "FAIL: a second CTRAP error after the one for $keyname"
+		}
+		-exact "MAIN END" {
+			puts "PASS: the process continued after the \$ZINTERRUPT handler and ended normally"
+		}
+		timeout {
+			puts "FAIL: timed out waiting for the process to end"
+		}
+	}
+	sync_shell
+}
+
+# Runs the case with no $ZINTERRUPT: starts "mumps -run plain^ydb1393", types each CTRAP character during the READ that
+# has it as the CTRAP character, and checks that each READ gets a CTRAP error, and that no event is recognized in the
+# FOR loop that follows.
+proc run_plain {} {
+	send -- "\$gtm_dist/mumps -run plain^ydb1393\r"
+	foreach {c key keyname} {1 "\001" "<CTRL-A>" 2 "\002" "<CTRL-B>" 4 "\004" "<CTRL-D>" 3 "\003" "<CTRL-C>"} {
+		expect {
+			-exact "PLAIN READ $c\r" { }
+			timeout {
+				puts "FAIL: the READ for $keyname did not start"
+				sync_shell
+				return
+			}
+		}
+		# Wait for the READ to put the terminal in its mode, so that <key> reaches the READ
+		system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+		send -- $key
+		expect {
+			-re {ETRAP: [^\r\n]*-E-CTRAP} {
+				puts "PASS: the READ got a CTRAP error for $keyname"
+			}
+			-exact "PLAIN READ DONE $c" {
+				puts "FAIL: the READ ended with no CTRAP error for $keyname"
+			}
+			-re {-F-ASSERT} {
+				puts "FAIL: assert failure after $keyname"
+				sync_shell
+				return
+			}
+			timeout {
+				puts "FAIL: timed out waiting for the CTRAP error for $keyname"
+				sync_shell
+				return
+			}
+		}
+	}
+	expect {
+		-re {LATE ETRAP|-E-CTRAP|-F-ASSERT} {
+			puts "FAIL: an event was recognized after the four READs"
+		}
+		-exact "LOOP DONE" {
+			puts "PASS: no event was recognized in the FOR loop after the four READs"
+		}
+		timeout {
+			puts "FAIL: timed out waiting for the FOR loop to end"
+		}
+	}
+	sync_shell
+}
+
+puts "# Case 1 : \$gtm_dist/mumps -run loop^ydb1393, then \$gtm_dist/mupip intrpt <pid>. The \$ZINTERRUPT handler"
+puts "#          runs a loop of 4 seconds with no READ, during which <CTRL-C> (\$C(3), in the CTRAP list) is typed"
+puts "# Before the fix : no CTRAP error in a Release build (the CTRAP is lost), and an assert failure in a Debug build"
+puts "# With the fix   : a CTRAP error at the next M line of the handler"
+run_case loop "ZINT LOOP" "\003" "<CTRL-C>"
+
+puts ""
+puts "# Case 2 : \$gtm_dist/mumps -run read1^ydb1393, then \$gtm_dist/mupip intrpt <pid>. The \$ZINTERRUPT handler"
+puts "#          does a READ, in which <CTRL-A> (\$C(1), in the CTRAP list) is typed"
+puts "# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build"
+puts "# With the fix   : a CTRAP error in the READ"
+run_case read1 "ZINT READ" "\001" "<CTRL-A>"
+
+puts ""
+puts "# Case 3 : \$gtm_dist/mumps -run read3^ydb1393, then \$gtm_dist/mupip intrpt <pid>. The \$ZINTERRUPT handler"
+puts "#          does a READ, in which <CTRL-C> (\$C(3), in the CTRAP list) is typed"
+puts "# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build"
+puts "# With the fix   : a CTRAP error in the READ"
+run_case read3 "ZINT READ" "\003" "<CTRL-C>"
+
+puts ""
+puts "# Case 4 : as case 3, with the line 'echo AFTER LINE' typed right after the <CTRL-C>"
+puts "# Before the fix : a CTRAP error in the READ in a Release build, and an assert failure in a Debug build"
+puts "# With the fix   : a CTRAP error in the READ"
+run_case read3 "ZINT READ" "\003" "<CTRL-C>" "echo AFTER LINE\r"
+
+puts ""
+puts "# Case 5 : \$gtm_dist/mumps -run plain^ydb1393, with no \$ZINTERRUPT. Each of <CTRL-A>, <CTRL-B>, <CTRL-D> and"
+puts "#          <CTRL-C> (\$C(1), \$C(2), \$C(4) and \$C(3)) is typed during a READ that has it as the CTRAP character,"
+puts "#          then a FOR loop of 200000 iterations runs, in which an event that a CTRAP left queued would be recognized"
+puts "# Before the fix : a CTRAP error in each READ in a Release build, and an assert failure on <CTRL-A> in a Debug build"
+puts "# With the fix   : a CTRAP error in each READ, and no event recognized in the FOR loop"
+run_plain
+
+send -- "exit\r"
+expect eof
+exit
