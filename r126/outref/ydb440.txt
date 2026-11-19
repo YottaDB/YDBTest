@@ -15,8 +15,8 @@
           17     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
           20     PUSHAB      B^0(r9)                                  ;OC_WRITE
           22     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          23     JSB         @B^xf_ret(R11)                           ;OC_RET
-          24     JSB         @B^xf_ret(R11)                           ;OC_RET
+          23     JMP         @B^xf_ret(R11)                           ;OC_RET
+          24     JMP         @B^xf_ret(R11)                           ;OC_RET
 
 # mumps -machine -lis=xecutebug.lis xecutebugB.m
 # greping for "OC_" should not see "OC_COMMARG" in the output if compiled correctly
@@ -28,8 +28,8 @@
           10     PUSHAB      @GTM$LITERAL+0x40                        ;OC_LITC
           13     PUSHL       I^#19 [0x13]                             ;OC_COMMARG
           16     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          17     JSB         @B^xf_ret(R11)                           ;OC_RET
-          18     JSB         @B^xf_ret(R11)                           ;OC_RET
+          17     JMP         @B^xf_ret(R11)                           ;OC_RET
+          18     JMP         @B^xf_ret(R11)                           ;OC_RET
 ##SUSPEND_OUTPUT DYNAMIC_LITERALS
 ##ALLOW_OUTPUT NODYNAMIC_LITERALS
 # mumps -machine -lis=xecutebug.lis xecutebugA.m
@@ -42,8 +42,8 @@
           9      PUSHL       I^#1 [0x1]                               ;OC_WTEOL
           11     PUSHAB      @GTM$LITERAL+0x0                         ;OC_WRITE
           13     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          14     JSB         @B^xf_ret(R11)                           ;OC_RET
-          15     JSB         @B^xf_ret(R11)                           ;OC_RET
+          14     JMP         @B^xf_ret(R11)                           ;OC_RET
+          15     JMP         @B^xf_ret(R11)                           ;OC_RET
 
 # mumps -machine -lis=xecutebug.lis xecutebugB.m
 # greping for "OC_" should not see "OC_COMMARG" in the output if compiled correctly
@@ -53,5 +53,5 @@
           5      PUSHAB      @GTM$LITERAL+0x60                        ;OC_WRITE
           7      PUSHL       I^#19 [0x13]                             ;OC_COMMARG
           10     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          11     JSB         @B^xf_ret(R11)                           ;OC_RET
-          12     JSB         @B^xf_ret(R11)                           ;OC_RET
+          11     JMP         @B^xf_ret(R11)                           ;OC_RET
+          12     JMP         @B^xf_ret(R11)                           ;OC_RET
