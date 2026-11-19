@@ -160,6 +160,7 @@
 # ctrap_zintr-ydb1393			[nars]	Test a CTRAP character typed while a $ZINTERRUPT handler runs gives a CTRAP error in the handler
 # tpnotacid_dmode-ydb1090		[david]	Test direct mode does not loop once a transaction passes the TPNOTACID retry limit
 # negative_timeout-ydb1402		[david]	Test LOCK, ZALLOCATE, and READ with a negative timeout return at once with $TEST=0
+# zyencode_prefix_buffer-ydb1407	[david]	Test ZYENCODE does not corrupt memory after many values that are JSON strings of canonical numbers
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -314,6 +315,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zintr_dmode_error-ydb14
 setenv subtest_list_non_replic	"$subtest_list_non_replic ctrap_zintr-ydb1393"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_dmode-ydb1090"
 setenv subtest_list_non_replic	"$subtest_list_non_replic negative_timeout-ydb1402"
+setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_prefix_buffer-ydb1407"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

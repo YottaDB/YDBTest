@@ -1,0 +1,46 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1407] ZYENCODE does not corrupt memory after JSON strings that are canonical numbers          #
+#----------------------------------------------------------------------------------------------------#
+
+# ZYDECODE stores a JSON string that is a canonical number, such as "123", with a $CHAR(0) prefix, so
+# that M does not treat it as a number. ZYENCODE reads each value at one level into one buffer, and
+# to write such a value without its prefix it moved the start of that buffer past the prefix and
+# left it there. So each such value moved the buffer one byte further, while its size stayed the
+# same, and a long value after enough of them was written past the end of the buffer, corrupting
+# the heap and terminating the process.
+#
+# Each stage sets 20000 such values and then a value of 1048000 bytes at the same level, encodes it
+# with ZYENCODE, decodes the JSON with ZYDECODE, and checks that every node comes back unchanged. A
+# JSON object and a JSON array are encoded by different code, and ZYENCODE sizes its buffer
+# differently for a local and for a global variable, so each runs with both. Every stage fails
+# without the fix.
+
+# Stage 1 : object, local variable
+# Command : $ydb_dist/yottadb -run object^ydb1407 0
+# Before the fix : glibc "corrupted size vs. prev_size", then an assert (Debug) or KILLBYSIGSINFO1 (Release)
+# With the fix   : expect the JSON object, and PASS for the decoded JSON
+ZYENCODE done; the JSON starts with {"1": "1", "2": "2", "3": "3",
+PASS : the decoded JSON matches the source (20001 nodes)
+
+# Stage 2 : object, global variable
+# Command : $ydb_dist/yottadb -run object^ydb1407 1
+# Before the fix : glibc "double free or corruption (!prev)", then an assert (Debug) or KILLBYSIGSINFO1 (Release)
+# With the fix   : expect the JSON object, and PASS for the decoded JSON
+ZYENCODE done; the JSON starts with {"1": "1", "2": "2", "3": "3",
+PASS : the decoded JSON matches the source (20001 nodes)
+
+# Stage 3 : array, local variable
+# Command : $ydb_dist/yottadb -run array^ydb1407 0
+# Before the fix : glibc "corrupted size vs. prev_size", then an assert (Debug) or KILLBYSIGSINFO1 (Release)
+# With the fix   : expect the JSON array, and PASS for the decoded JSON
+ZYENCODE done; the JSON starts with ["0", "1", "2", "3", "4", "5",
+PASS : the decoded JSON matches the source (20001 nodes)
+
+# Stage 4 : array, global variable
+# Command : $ydb_dist/yottadb -run array^ydb1407 1
+# Before the fix : glibc "double free or corruption (!prev)", then an assert (Debug) or KILLBYSIGSINFO1 (Release)
+# With the fix   : expect the JSON array, and PASS for the decoded JSON
+ZYENCODE done; the JSON starts with ["0", "1", "2", "3", "4", "5",
+PASS : the decoded JSON matches the source (20001 nodes)
+
+# Done
