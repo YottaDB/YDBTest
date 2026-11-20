@@ -60,8 +60,12 @@ while ($round_no < 7)
 	else if ($round_no != 6) then
 		if ($change_permission) then
 			stopfindfile
+			# try_error.csh creates "baktmp" and points ydb_baktmpdir or gtm_baktmpdir (chosen at random) at "baktmp"
+			set back_dir = baktmp
+		else
+			# try_stop.csh sets GTM_BAKTMPDIR
+			set back_dir = $GTM_BAKTMPDIR
 		endif
-		set back_dir = $GTM_BAKTMPDIR
 		stopsubtest >>& stoptest_{$round_no}.log
 		$gtm_tst/com/backup_dbjnl.csh round{$round_no} "*.dat *.gld *.mjl* *.log* *.txt time* *csh *.repl* *.out"
 		mv *online1 $back_dir round{$round_no}		# backup_dbjnl.csh only works on regular files
