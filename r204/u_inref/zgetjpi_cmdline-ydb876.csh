@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2024-2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2024-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,6 +31,10 @@ echo "# Starting process with more than 1024 length command line"
 set smallpid = `cat sleep0.pid`
 set exact1024pid = `cat sleep1.pid`
 set exact1025pid = `cat sleep2.pid`
+# Wait for each background process to exec "sh" before reading the command line of the process
+foreach pid ($smallpid $exact1024pid $exact1025pid)
+	$gtm_tst/$tst/u_inref/ydb876_wait_cmdline.csh $pid '^sh -c sleep 15 '
+end
 echo
 echo '# Now testing $ZGETJPI'
 echo "# Running with small command line"
@@ -85,7 +89,8 @@ $gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sy
 echo "# Run the compiled ydb876.c program:"
 ($PWD/$file 1 & ; echo $! >&! cpro.pid)  >&! cpro.outx
 set cpid = `cat cpro.pid`
-sleep .5
+# Wait for the program to replace the "1" in the command line of the program with a space
+$gtm_tst/$tst/u_inref/ydb876_wait_cmdline.csh $cpid '/ydb876 +$'
 echo "# Getting the CMDLINE"
 $gtm_dist/mumps -run %XCMD 'write $zgetjpi('$cpid',"cmdline")'
 kill $cpid
