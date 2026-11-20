@@ -2,12 +2,5 @@
 # Create a new empty database so we can run an M program.
 # Run 50000 transactions
 # Shutdown the servers and verify they match.
-# Validate that the sequence numbers in REPL INFO messages are approximately 10000 transactions apart.
-# From GT.M V7.1-003 onwards (due most likely to GTM-F228991), these numbers have been observed to be as
-# much as 11500 apart when the source server reads from the journal file (instead of the journal pool).
-# We treat up to 12000 apart difference to be a PASS and anything more to be a FAIL below .
-##TEST_AWKSeqno \[[0-9]*\] in expected range \[0,2000\]
-##TEST_AWKSeqno \[[0-9]*\] in expected range \[10000,14000\]
-##TEST_AWKSeqno \[[0-9]*\] in expected range \[20000,26000\]
-##TEST_AWKSeqno \[[0-9]*\] in expected range \[30000,38000\]
-##TEST_AWKSeqno \[[0-9]*\] in expected range \[40000,50000\]
+# Validate that consecutive REPL INFO lines in the source server log are 10000 to 12000 transactions apart
+PASS : every REPL INFO line is 10000 to 12000 transactions after the previous one
