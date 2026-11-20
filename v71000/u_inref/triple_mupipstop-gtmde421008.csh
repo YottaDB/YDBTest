@@ -34,7 +34,7 @@ $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 $gtm_dist/mumps -run gtmde421008^gtmde421008
 
 # On an ASAN build, a process that MUPIP STOP terminates can core inside ASAN itself rather than in
-# YottaDB code. Two such aborts have been seen, each with its own signature.
+# YottaDB code. Three such cores have been seen, each with its own signature.
 #
 # The first lands while ASAN is inside its own "free" interceptor, which allocates through
 # DlSymAllocator, and ASAN responds by calling Die() and aborting:
@@ -62,11 +62,21 @@ $gtm_dist/mumps -run gtmde421008^gtmde421008
 # stack below the allocator is torn and no YottaDB frame can be attributed to it. A torn stack and a
 # garbage allocation size are what "stopping a process at points that may not be safe" produces.
 #
-# In both cases YottaDB frames DO appear in the core, at #0 and #2, but only as the signal handler
-# reacting to the abort: every frame that led to it is ASAN's, and no YottaDB frame appears below
-# them. So the core says nothing about the MUPIP STOP behaviour this subtest verifies.
+# The third lands while ASAN is inside its "free" interceptor too, but no abort is involved. ASAN
+# gets a SIGSEGV while recording the stack of the free() call in its stack depot as it moves the
+# freed chunk to quarantine:
 #
-# The test is for those two named frames, not merely for the presence of __sanitizer:: or __asan::
+#	#3  ydb_os_signal_handler (sig=11)
+#	#4  <signal handler called>
+#	#5  __sanitizer::StackDepotBase<...>::Put(...)
+#	#6  __asan::Allocator::QuarantineChunk(...)
+#	#7  __interceptor_free()
+#
+# In all three cases YottaDB frames DO appear in the core, at the top of the stack, but only as the
+# signal handler reacting to the abort or the SIGSEGV: every frame that led to it is ASAN's. So the
+# core says nothing about the MUPIP STOP behaviour this subtest verifies.
+#
+# The test is for those three named frames, not merely for the presence of __sanitizer:: or __asan::
 # frames. An ASAN-DETECTED YottaDB bug - a heap buffer overflow, say - also unwinds through those on
 # its way to Die(), and hiding those would hide a real defect. If some other ASAN-internal abort
 # shows up later it will fail the subtest, which is the right way round: a failure gets looked at, a
@@ -80,7 +90,7 @@ if ($gtm_test_libyottadb_asan_enabled) then
 		# this subtest's own diagnostic output as a core file.
 		set stackfile = "asan_stack_$corefile:t.outx"
 		$gtm_tst/com/get_dbx_c_stack_trace.csh $corefile $coreexe >& $stackfile
-		$grep -q -e "DlSymAllocator" -e "ReportAllocationSizeTooBig" $stackfile
+		$grep -q -e "DlSymAllocator" -e "ReportAllocationSizeTooBig" -e "QuarantineChunk" $stackfile
 		if (0 == $status) then
 			mv $corefile hidden_expected_asan_core_$corefile:t
 			# Record it in a .outx file: this is nondeterministic, so it must not reach the compared output
