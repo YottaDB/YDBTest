@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,14 +20,24 @@ manylocks
 	set minit=0
 	set its($increment(it))=0
 	set start=$h,cur=start,prev=start,previ=0,t=$$^difftime(cur,start)
-	for i=1:1 do  quit:(t>30)
+	; Count LOCK commands per second of CPU time used by this process, not per second of elapsed time.
+	; On a loaded system this process gets a varying share of each elapsed second, so a count per elapsed second
+	; can more than halve from one second to the next even though the cost of each LOCK command is unchanged.
+	; $ZGETJPI(,"CPUTIM") is in units of 1/100 second. Compute a rate only after at least 50 such units of CPU time
+	; were used since the previous rate, and keep going past 30 seconds until at least 5 rates are computed.
+	set prevcpu=$zgetjpi($job,"CPUTIM")
+	for i=1:1 do  quit:(t>30)&(it>5)
 	. lock ^a(i#max):0
 	. set cur=$h,diff=$$^difftime(cur,prev)
-	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
-	. . set its($increment(it))=i-previ
-	. . if i-previ<minit set minit=i-previ
-	. . if i-previ>maxit set maxit=i-previ,minit=i-previ
-	write "# Max Iterations in a second=",maxit,!
+	. quit:diff'>0
+	. set prev=cur,t=$$^difftime(cur,start)
+	. set cpu=$zgetjpi($job,"CPUTIM")
+	. quit:(cpu-prevcpu)<50
+	. set rate=(i-previ)*100\(cpu-prevcpu),prevcpu=cpu,previ=i
+	. set its($increment(it))=rate
+	. if rate<minit set minit=rate
+	. if rate>maxit set maxit=rate,minit=rate
+	write "# Max Iterations in a CPU second=",maxit,!
 	write "# Min Iterations after max=",minit,!
 	if (maxit<(minit*2))  write "# No Significant Slowdown Experienced",!
 	else  do

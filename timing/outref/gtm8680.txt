@@ -1,13 +1,13 @@
 # Running test with 1 process that creates 100000 lock names
 # Locking ^a in child function and attempting to lock ^a(i) in parent
-##TEST_AWK# Max Iterations in a second=[0-9]*
+##TEST_AWK# Max Iterations in a CPU second=[0-9]*
 ##TEST_AWK# Min Iterations after max=[0-9]*
 # No Significant Slowdown Experienced
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: [0-9]*/[0-9]*
 
 # Running test with 100 processes, each holding 1000 locks
 # Locking ^a(1)-^a(100000) in child processes, attempting to lock ^a(i) in parent
-##TEST_AWK# Max Iterations in a second=[0-9]*
+##TEST_AWK# Max Iterations in a CPU second=[0-9]*
 ##TEST_AWK# Min Iterations after max=[0-9]*
 # No Significant Slowdown Experienced
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: [0-9]*/[0-9]*
