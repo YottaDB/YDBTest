@@ -1,0 +1,67 @@
+#---------------------------------------------------------------------------------------------------------------------#
+# [YDB#1270] Test MUPIP INTRPT and other signals do not lose input typed at a readline direct mode prompt             #
+# Direct mode reads through the readline library when ydb_readline is set. Stages 1 to 8 run mumps -direct under      #
+# gdb, stop the process at a chosen point inside libreadline while a typed line is being read, deliver a signal at    #
+# that point and verify that the typed line still runs as typed, that the process does not terminate and that the     #
+# signal was acted on ($ZINTERRUPT for SIGUSR1, the SIGWINCH action for SIGWINCH). The points are                     #
+#   1. the entry of rl_insert(), where libreadline has read the first character of the line but not yet stored it     #
+#   2. the entry of rl_deprep_terminal(), where libreadline has processed the <CR> but not yet returned the line      #
+#   3. the 5th entry of rl_insert(), for a character in the middle of the line                                        #
+#   4. the entry of rl_newline(), where libreadline has read the <CR> but not yet acted on it                         #
+#   5. rl_free_undo_list() after the undo list of the line is freed but before rl_undo_list is cleared                #
+#   6. rl_set_prompt() at the second prompt, after the previous prompt is freed but before rl_prompt is set           #
+#   7. the entry of rl_insert() with SIGINT, where the CTRLC message must follow the output of the line               #
+#   8. the entry of rl_insert() with SIGWINCH, after a SIGWINCH action is set up                                      #
+# Stage 9 runs mumps -direct without gdb and sends a MUPIP INTRPT between the bytes of the up arrow key.              #
+#---------------------------------------------------------------------------------------------------------------------#
+
+# Stage 1 : deliver SIGUSR1 at the entry of rl_insert(), i.e. when libreadline has read the 'w' of the typed line
+#           but not yet stored the 'w'. Expect the line to write abcdef and $ZINTERRUPT to have run once
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 2 : deliver SIGUSR1 at the entry of rl_deprep_terminal(), i.e. when libreadline has processed the <CR>
+#           but not yet returned the line. Expect the line to write abcdef and $ZINTERRUPT to have run once
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 3 : type the line one character at a time and deliver SIGUSR1 at the 5th entry of rl_insert(), i.e. when
+#           libreadline has read the 'e' of 'write' but not yet stored the 'e'. Expect the line to write abcdef
+#           and $ZINTERRUPT to have run once
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 4 : deliver SIGUSR1 at the entry of rl_newline(), i.e. when libreadline has read the <CR> but not yet
+#           acted on it. Expect the line to write abcdef and $ZINTERRUPT to have run once
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 5 : deliver SIGUSR1 in rl_free_undo_list() after _rl_free_undo_list() returns, i.e. when libreadline has
+#           freed the undo list of the line but not yet cleared rl_undo_list. Expect the line to write abcdef
+#           and $ZINTERRUPT to have run once (and the undo list not to be freed a second time)
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 6 : deliver SIGUSR1 in rl_set_prompt() for the second prompt, after the free() of the previous prompt,
+#           i.e. when libreadline has freed rl_prompt but not yet set it to the new prompt. Expect the line typed
+#           at the second prompt to write abcdef and $ZINTERRUPT to have run once (and the prompt not to be
+#           freed a second time)
+PASS: the typed line ran as typed
+PASS: ZINTCNT=1 ZWINCNT=0
+
+# Stage 7 : deliver SIGINT at the entry of rl_insert(). Expect the line to write abcdef, then the CTRLC message
+PASS: the typed line ran as typed
+PASS: the CTRLC message followed the output of the line
+PASS: ZINTCNT=0 ZWINCNT=0
+
+# Stage 8 : set up a SIGWINCH action at the first prompt and deliver SIGWINCH at the entry of rl_insert() for the
+#           line typed at the second prompt. Expect the line to write abcdef and the SIGWINCH action to have run
+#           once
+PASS: the typed line ran as typed
+PASS: ZINTCNT=0 ZWINCNT=1
+
+# Stage 9 : run mumps -direct (no gdb), type the first two bytes of the up arrow key (ESC [), send a MUPIP INTRPT,
+#           then type the last byte (A) and <CR>. Expect the up arrow key to recall the previous line, which
+#           writes 2, and $ZINTERRUPT to have run once
+PASS: the up arrow key recalled the previous line
+PASS: ZINTCNT=1 ZWINCNT=0

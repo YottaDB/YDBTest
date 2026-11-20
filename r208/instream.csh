@@ -162,6 +162,7 @@
 # negative_timeout-ydb1402		[david]	Test LOCK, ZALLOCATE, and READ with a negative timeout return at once with $TEST=0
 # zyencode_prefix_buffer-ydb1407	[david]	Test ZYENCODE does not corrupt memory after many values that are JSON strings of canonical numbers
 # utfcgr_badchar-ydb1406		[nars]	Test $FIND() and $EXTRACT() of a string with BADCHARs in UTF-8 mode after an earlier call cached the string
+# intrpt_readline_lost_input-ydb1270	[nars]	Test MUPIP INTRPT does not lose input typed at a readline direct mode prompt
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -318,6 +319,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_dmode-ydb1090
 setenv subtest_list_non_replic	"$subtest_list_non_replic negative_timeout-ydb1402"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_prefix_buffer-ydb1407"
 setenv subtest_list_non_replic	"$subtest_list_non_replic utfcgr_badchar-ydb1406"
+setenv subtest_list_non_replic	"$subtest_list_non_replic intrpt_readline_lost_input-ydb1270"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

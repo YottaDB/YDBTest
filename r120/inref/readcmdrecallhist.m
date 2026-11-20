@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2026 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -18,7 +18,6 @@ start	;
 	quit
 
 child	;
-	quit:$ztrnlnm("ydb_readline")=1
 	; Find out signal # for SIGUSR1 from posix plugin
 	if $&ydbposix.signalval("SIGUSR1",.sigval)
 	; Send SIGUSR1 to parent process with random sleep in between until parent signals us to stop interrupting

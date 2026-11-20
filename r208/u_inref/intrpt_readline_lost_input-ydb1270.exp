@@ -1,0 +1,211 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 60
+# -noecho since the spawn line would otherwise be the one line of session output in the reference file
+spawn -noecho /usr/local/bin/tcsh -f
+# Everything the session writes is matched by the "expect"s below but none of it is echoed to the
+# reference file: readline redraws the prompt and the input line with terminal dependent escape
+# sequences, so only the PASS/FAIL lines this script writes make up the reference output.
+log_user 0
+source $::env(gtm_tst)/com/expectinit.exp
+
+# The line typed at the YDB> prompt in every gdb stage. Note the text typed is deliberately not the text the
+# line writes, so that expecting the latter cannot match the echo of the former.
+set line "write \"abc\",\"def\",!"
+
+# Check that the typed line ran as typed. If "ctrlc" is 1, also check that the CTRLC message follows the output of
+# the line. Returns 0 if the process is gone (for example it aborted), 1 otherwise.
+proc check_line {ctrlc} {
+	set timeout 10
+	expect {
+		-exact "abcdef" {
+			puts "PASS: the typed line ran as typed"
+			if {$ctrlc} {
+				expect {
+					-exact "%YDB-I-CTRLC" {
+						puts "PASS: the CTRLC message followed the output of the line"
+						expect -exact "YDB>"
+					}
+					-exact "YDB>" {
+						puts "FAIL: no CTRLC message followed the output of the line"
+					}
+				}
+			} else {
+				expect -exact "YDB>"
+			}
+		}
+		-exact "%YDB-E-" {
+			puts "FAIL: the typed line got an error, so the line that ran is not the line that was typed"
+			expect -exact "YDB>"
+		}
+		-exact "SHELL" {
+			puts "FAIL: the process terminated before the typed line ran"
+			set timeout 60
+			return 0
+		}
+		timeout {
+			puts "FAIL: the typed line did not run"
+			# Press Enter again so that the session continues at a YDB> prompt
+			send -- "\r"
+			expect -exact "YDB>"
+		}
+	}
+	set timeout 60
+	return 1
+}
+
+# Check the number of times $ZINTERRUPT ran and the number of times the SIGWINCH action ran, then halt
+proc check_counts {zint zwinch} {
+	send -- "write \"ZINT\",\"CNT=\",\$get(zintcnt,0),\" ZWIN\",\"CNT=\",\$get(zwincnt,0),!\r"
+	expect {
+		-re {ZINTCNT=([0-9]+) ZWINCNT=([0-9]+)} {
+			set got "ZINTCNT=$expect_out(1,string) ZWINCNT=$expect_out(2,string)"
+			if {$got eq "ZINTCNT=$zint ZWINCNT=$zwinch"} {
+				puts "PASS: $got"
+			} else {
+				puts "FAIL: expected ZINTCNT=$zint ZWINCNT=$zwinch but got $got"
+			}
+		}
+	}
+	expect -exact "YDB>"
+	send -- "halt\r"
+	expect -exact "SHELL"
+}
+
+# Run one stage under gdb with the command file gdb_<name>.cmd, which stops the process at a point inside
+# libreadline and delivers a signal there. "typing" is how the line is typed:
+#   fast	the whole line at once
+#   slow	one character every 50 milliseconds, so that libreadline reads and inserts each character on its own
+#   second	after a first line that sets up a SIGWINCH action, so that the signal arrives while the second line is typed
+#   two		after a first line that writes 2, so that the signal arrives at the second prompt
+# "zint" and "zwinch" are the expected numbers of times $ZINTERRUPT and the SIGWINCH action ran. "ctrlc" is 1 if the
+# CTRLC message is expected after the output of the line.
+proc run_gdb_stage {name typing zint zwinch {ctrlc 0}} {
+	global line
+	send -- "gdb -nx -q -batch -x gdb_$name.cmd \$gtm_dist/mumps\r"
+	expect -exact "YDB>"
+	switch $typing {
+		fast {
+			send -- "$line\r"
+		}
+		slow {
+			foreach c [split "$line\r" ""] {
+				send -- $c
+				sleep 0.05
+			}
+		}
+		second {
+			send -- "use \$principal:sigwinch=\"set zwincnt=\$get(zwincnt,0)+1\"\r"
+			expect -exact "YDB>"
+			sleep 0.5
+			send -- "$line\r"
+		}
+		two {
+			# The signal arrives as libreadline sets up the second prompt, so do not wait for that prompt
+			send -- "write 1+1,!\r"
+			expect -re {\r\n2\r\n}
+			sleep 0.5
+			send -- "$line\r"
+		}
+	}
+	if {[check_line $ctrlc]} {
+		check_counts $zint $zwinch
+	}
+}
+
+puts "# Stage 1 : deliver SIGUSR1 at the entry of rl_insert(), i.e. when libreadline has read the 'w' of the typed line"
+puts "#           but not yet stored the 'w'. Expect the line to write abcdef and \$ZINTERRUPT to have run once"
+run_gdb_stage rl_insert fast 1 0
+
+puts ""
+puts "# Stage 2 : deliver SIGUSR1 at the entry of rl_deprep_terminal(), i.e. when libreadline has processed the <CR>"
+puts "#           but not yet returned the line. Expect the line to write abcdef and \$ZINTERRUPT to have run once"
+run_gdb_stage rl_deprep_terminal fast 1 0
+
+puts ""
+puts "# Stage 3 : type the line one character at a time and deliver SIGUSR1 at the 5th entry of rl_insert(), i.e. when"
+puts "#           libreadline has read the 'e' of 'write' but not yet stored the 'e'. Expect the line to write abcdef"
+puts "#           and \$ZINTERRUPT to have run once"
+run_gdb_stage rl_insert_5th slow 1 0
+
+puts ""
+puts "# Stage 4 : deliver SIGUSR1 at the entry of rl_newline(), i.e. when libreadline has read the <CR> but not yet"
+puts "#           acted on it. Expect the line to write abcdef and \$ZINTERRUPT to have run once"
+run_gdb_stage rl_newline fast 1 0
+
+puts ""
+puts "# Stage 5 : deliver SIGUSR1 in rl_free_undo_list() after _rl_free_undo_list() returns, i.e. when libreadline has"
+puts "#           freed the undo list of the line but not yet cleared rl_undo_list. Expect the line to write abcdef"
+puts "#           and \$ZINTERRUPT to have run once (and the undo list not to be freed a second time)"
+run_gdb_stage undo_list fast 1 0
+
+puts ""
+puts "# Stage 6 : deliver SIGUSR1 in rl_set_prompt() for the second prompt, after the free() of the previous prompt,"
+puts "#           i.e. when libreadline has freed rl_prompt but not yet set it to the new prompt. Expect the line typed"
+puts "#           at the second prompt to write abcdef and \$ZINTERRUPT to have run once (and the prompt not to be"
+puts "#           freed a second time)"
+run_gdb_stage set_prompt two 1 0
+
+puts ""
+puts "# Stage 7 : deliver SIGINT at the entry of rl_insert(). Expect the line to write abcdef, then the CTRLC message"
+run_gdb_stage rl_insert_sigint fast 0 0 1
+
+puts ""
+puts "# Stage 8 : set up a SIGWINCH action at the first prompt and deliver SIGWINCH at the entry of rl_insert() for the"
+puts "#           line typed at the second prompt. Expect the line to write abcdef and the SIGWINCH action to have run"
+puts "#           once"
+run_gdb_stage rl_insert_sigwinch second 0 1
+
+puts ""
+puts "# Stage 9 : run mumps -direct (no gdb), type the first two bytes of the up arrow key (ESC \[), send a MUPIP INTRPT,"
+puts "#           then type the last byte (A) and <CR>. Expect the up arrow key to recall the previous line, which"
+puts "#           writes 2, and \$ZINTERRUPT to have run once"
+send -- "\$gtm_dist/mumps -direct\r"
+expect -exact "YDB>"
+send -- "write \"PID\",\"=\",\$job,!\r"
+expect -re {PID=([0-9]+)}
+set pid $expect_out(1,string)
+expect -exact "YDB>"
+send -- "write 1+1,!\r"
+expect -exact "YDB>"
+sleep 0.5
+send -- "\x1b\["
+sleep 0.5
+catch {exec $::env(gtm_dist)/mupip intrpt $pid 2>@1}
+sleep 0.5
+send -- "A"
+sleep 0.5
+send -- "\r"
+set timeout 10
+expect {
+	-re {\r\n2\r\n} {
+		puts "PASS: the up arrow key recalled the previous line"
+		expect -exact "YDB>"
+	}
+	-exact "%YDB-E-" {
+		puts "FAIL: the line got an error, so the up arrow key was not read as one key"
+		expect -exact "YDB>"
+	}
+	timeout {
+		puts "FAIL: the recalled line did not run"
+		send -- "\r"
+		expect -exact "YDB>"
+	}
+}
+set timeout 60
+check_counts 1 0
+
+send -- "exit\r"
+expect eof
+
+exit
