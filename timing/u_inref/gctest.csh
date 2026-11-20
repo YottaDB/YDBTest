@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,8 +21,12 @@
 # With a O(nlogn) algorithm in stpg_sort, we expect almost linear growth (i.e. 2x to 2.5x output for 2x input).
 #
 
+# The check below compares the user CPU times of the 4 runs with each other, so run all 4 on one CPU (the CPU
+# that this script is on now). The CPUs of a system can differ in speed (performance and efficiency cores, for
+# example), and runs on CPUs of different speeds take user CPU times that are not comparable.
+set cpu = `ps -o psr= -p $$`
 foreach value (10000 20000 40000 80000)
-	(time $gtm_dist/mumps -run gctest $value >& $value.out ) >& time.$value
+	(time taskset -c $cpu $gtm_dist/mumps -run gctest $value >& $value.out ) >& time.$value
 	set curcpu = `awk -Fu '{print $1}' time.$value`
 	echo $curcpu >>! curcpu.txt
 end
