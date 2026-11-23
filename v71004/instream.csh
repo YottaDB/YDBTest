@@ -24,6 +24,7 @@
 # dollarref_zwrite-gtm10679	[jon]	Test maintain $REFERENCE to the last node it successfully processed for ZWRITE of a gvn
 # zmaxtptime_mseclim-gtm10603	[jon]	Test provide millisecond accuracy and 60 second limit for $ZMAXTPTIME
 # tpnotacid_limitretries-gtm10098	[jon]	Test limit TPNOTACID retries
+# sleepstats_nonzero-gtm10554		[nars]	Test the JNS, JCS, WPCS and WFCS sleep time statistics increase when a process waits for a write by another process
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -41,6 +42,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic incrstat-gtm10123"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dollarref_zwrite-gtm10679"
 setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_mseclim-gtm10603"
 setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_limitretries-gtm10098"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sleepstats_nonzero-gtm10554"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -53,8 +55,9 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	# The below subtest uses a white-box test case, which only a debug build has
+	# The below subtests use white-box test cases, which only a debug build has
 	setenv subtest_exclude_list "$subtest_exclude_list ztrapexception_stpgcol-gtm10688"
+	setenv subtest_exclude_list "$subtest_exclude_list sleepstats_nonzero-gtm10554"
 endif
 
 if ("dbg" == "$tst_image") then
