@@ -1,7 +1,26 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The update process on this instance has to apply every transaction that the primary instance committed. With
+! random spanning region maps that differ between the instances, almost all updates of one transaction can map to
+! one region here. A BG region gets a TRANS2BIG error once a transaction uses half the global buffers of the region.
+! One transaction of stress.m sets about 9000 nodes (9 globals, ^prime=1009 in lhuge^initdat). Regions with a block
+! size of up to 4096 need about one block per node, i.e. up to about 9000 blocks for one transaction. 32768 global
+! buffers give a TRANS2BIG limit of 16384 blocks, which is more than those 9000 blocks. The region with a block size
+! of 31744 holds at least 10 nodes per block, i.e. about 900 blocks for one transaction. 4096 global buffers give a
+! TRANS2BIG limit of 2048 blocks, which is more than those 900 blocks.
 change -segment DEFAULT -file_name=mumps.dat
 change -segment DEFAULT -block_size=2048
 change -segment DEFAULT -allocation=1000
-change -segment DEFAULT -global_buffer_count=4096
+change -segment DEFAULT -global_buffer_count=32768
 change -segment DEFAULT -extension_count=1000
 change -region DEFAULT -record_size=1010
 change -region DEFAULT -key_size=255
@@ -11,7 +30,7 @@ add -region areg -dyn=aseg
 add -segment aseg -file=a.dat
 change -segment aseg -block_size=4096
 change -segment aseg -allocation=1000
-change -segment aseg -global_buffer_count=3072
+change -segment aseg -global_buffer_count=32768
 change -segment aseg -extension_count=1000
 change -region areg -record_size=1010
 change -region areg -key_size=255
@@ -21,7 +40,7 @@ add -region regionhaslongname9012345678901b -dyn=bseg
 add -segment bseg -file=b234567890123456789012345678901.dat
 change -segment bseg -block_size=3072
 change -segment bseg -allocation=1000
-change -segment bseg -global_buffer_count=4096
+change -segment bseg -global_buffer_count=32768
 change -segment bseg -extension_count=1000
 change -region regionhaslongname9012345678901b -record_size=1010
 change -region regionhaslongname9012345678901b -key_size=255
@@ -32,7 +51,7 @@ add -region regionhaslongname9012345678901c -dyn=cseg
 add -segment cseg -file=cpct1.dat
 change -segment cseg -block_size=4096
 change -segment cseg -allocation=1000
-change -segment cseg -global_buffer_count=3072
+change -segment cseg -global_buffer_count=32768
 change -segment cseg -extension_count=1000
 change -region regionhaslongname9012345678901c -record_size=1010
 change -region regionhaslongname9012345678901c -key_size=255
@@ -42,7 +61,7 @@ add -region dregionnamelong6789012345678901 -dyn=dseg
 add -segment dseg -file=d.dat
 change -segment dseg -block_size=31744
 change -segment dseg -allocation=1000
-change -segment dseg -global_buffer_count=250
+change -segment dseg -global_buffer_count=4096
 change -segment dseg -extension_count=1000
 change -region dregionnamelong6789012345678901 -record_size=1010
 change -region dregionnamelong6789012345678901 -key_size=255
@@ -54,7 +73,7 @@ add -region efreg -dyn=efseg
 add -segment efseg -file=ef_longGGGGGGGGGGGGGGGGGGGGGGGG.dat
 change -segment efseg -block_size=4096
 change -segment efseg -allocation=1000
-change -segment efseg -global_buffer_count=4096
+change -segment efseg -global_buffer_count=32768
 change -segment efseg -extension_count=1000
 change -region efreg -record_size=1010
 change -region efreg -key_size=255
