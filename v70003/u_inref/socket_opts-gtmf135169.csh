@@ -201,6 +201,10 @@ foreach options ( \
 				# server.out while the server is still writing to it interleaves the two. Waiting here also
 				# keeps chkrst below from killing ^checkpoint while a process is still using it.
 				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-server.pid`
+				if ($status) then
+					# The server is stuck. Record where, then wait until someone ends the server.
+					$gtm_tst/$tst/u_inref/gtmf135169_server_hang.csh `cat ${readback}-server.pid` $case-$readback
+				endif
 				$gtm_tst/com/wait_for_proc_to_die.csh `cat ${readback}-client.pid`
 				# gtmf135169.m gives up if a process never reaches a checkpoint and reports that into the
 				# output file of whichever client timed out first, and neither client file is compared

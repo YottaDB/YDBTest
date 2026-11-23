@@ -41,8 +41,11 @@ cleanup	; common cleanup: wait background processes
 	if runmode="fg" do
 	.do sig
 	.write "waiting for background processes to finish",!
-	.lock +(^bgprocrun(port))
-	.lock -(^bgprocrun(port))
+	.; Do not wait forever. A background process that is stuck never releases ^bgprocrun(port,procid), and the script can
+	.; record where that process is stuck only after this foreground process returns.
+	.lock +(^bgprocrun(port)):120
+	.if $test lock -(^bgprocrun(port))
+	.else  do sig write "background processes still alive after 120 seconds, not waiting any longer",!
 	;
 	quit
 
