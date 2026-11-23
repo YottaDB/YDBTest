@@ -23,7 +23,9 @@ if ($?test_replic) then
 	# size (and the journal pool buffer size too since it is controlled by the same test system env var) to 128Mb.
 	setenv tst_buffsize 134217728 # i.e. 128*1024*1024
 endif
-# We have seen occasional TRANS2BIG errors with global buffers as high as 16Kb so current setting is at 32Kb
+# We have seen occasional TRANS2BIG errors with global buffers as high as 16Kb so current setting is at 32Kb.
+# No number of global buffers rules TRANS2BIG out though (see the comment before trans2big() in the Go program),
+# so the Go program rolls back a transaction that gets TRANS2BIG and continues.
 $gtm_tst/com/dbcreate.csh mumps -global_buffer=32768 -gld_has_db_fullpath >>& dbcreate.out || \
 	echo "# dbcreate failed. Output of dbcreate.out follows" && cat dbcreate.out
 if ($?test_replic) then

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	//
+// Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	//
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -81,6 +81,19 @@ func genName() []string {
 	return ret
 }
 
+/* TRANS2BIG is an expected error in this program. A transaction here can kill and set the same global many times.
+ * Each such kill and set uses one more global buffer of the transaction, and nothing limits how many of them one
+ * transaction does, so a transaction can need more global buffers than the database file has.
+ * Returns YDB_ERR_TRANS2BIG if "err" is that error and 0 otherwise. runProc() returns a non-zero value all the way
+ * up to the outermost transaction, which gets rolled back as a result.
+ */
+func trans2big(err error) int32 {
+	if err != nil && yottadb.ErrorCode(err) == yottadb.YDB_ERR_TRANS2BIG {
+		return yottadb.YDB_ERR_TRANS2BIG
+	}
+	return 0
+}
+
 /* randomly attempts various SimpleAPI functions with a generated variable
  * see header comment for details
  */
@@ -110,6 +123,8 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
 			switch errcode {
+			case yottadb.YDB_ERR_TRANS2BIG:
+				return yottadb.YDB_ERR_TRANS2BIG
 			case yottadb.YDB_ERR_GVUNDEF:
 				Ok()
 			case yottadb.YDB_ERR_INVSVN:
@@ -176,6 +191,9 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 			err = varname.DeleteST(tptoken, errstr, yottadb.YDB_DEL_TREE)
 		} else {
 			err = varname.DeleteST(tptoken, errstr, yottadb.YDB_DEL_NODE)
+		}
+		if rc := trans2big(err); rc != 0 {
+			return rc
 		}
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
@@ -263,6 +281,9 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		incrVal.Alloc(2)
 		incrVal.SetValStr(tptoken, errstr, incr_amount)
 		err := varname.IncrST(tptoken, errstr, &incrVal, nil)
+		if rc := trans2big(err); rc != 0 {
+			return rc
+		}
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
@@ -390,19 +411,29 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 			err = tpBuf.TpST(tptoken, errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 				n := rand.Int() % 20
 				for i := 0; i < n; i++ {
-					runProc(tptoken, errstr, settings, curDepth+1)
+					rc := runProc(tptoken, errstr, settings, curDepth+1)
+					if rc != 0 {
+						return rc
+					}
 				}
 				return 0
 			}, "BATCH")
 		} else {
 			var wg sync.WaitGroup
+			var rcMutex sync.Mutex
+			var rc int32
 			for i := 0; i < THREADS_TO_MAKE; i++ {
 				wg.Add(1)
 				go func() {
 					countMutex.Lock()
 					rtnCount++
 					countMutex.Unlock()
-					runProc(tptoken, errstr, testSettings{MAX_DEPTH, NEST_RATE / 2}, curDepth+1)
+					r := runProc(tptoken, errstr, testSettings{MAX_DEPTH, NEST_RATE / 2}, curDepth+1)
+					if r != 0 {
+						rcMutex.Lock()
+						rc = r
+						rcMutex.Unlock()
+					}
 					countMutex.Lock()
 					rtnCount--
 					countMutex.Unlock()
@@ -410,6 +441,14 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 				}()
 			}
 			wg.Wait()
+			return rc
+		}
+		if rc := trans2big(err); rc != 0 {
+			if tptoken != yottadb.NOTTP {
+				// This transaction is nested in another transaction, which has to be rolled back too
+				return rc
+			}
+			// This was the outermost transaction and is rolled back now
 			return 0
 		}
 		if err != nil {
