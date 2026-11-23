@@ -1,0 +1,24 @@
+# ********************************************************************************************
+# GTM-9815 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959409815)
+# 
+# Processes in Direct Mode handle local variables appropriately when interrupted by SIGINT or SIGUSR1 signals. Previously, processing such signals in Direct Mode leaked stack space, potentially causing STACKCRIT and/or STACKOFLOW errors. (GTM-9815)
+# 
+
+# The leak happens each time a signal interrupts a process that waits for input at the Direct Mode prompt of a
+# terminal. This subtest starts such a process with the smallest M stack (gtm_mstack_size=25, in KiB), and
+# interrupts the process 1000 times with SIGUSR1 (what MUPIP INTRPT sends) and then 1000 times with <CTRL-C>
+# (SIGINT). Each SIGUSR1 runs $ZINTERRUPT code that increments ^cnt.
+# Before the fix : STACKCRIT after about 250 SIGUSR1 signals, and a fatal STACKOFLOW error in the <CTRL-C> stage.
+# With the fix   : the process handles all 2000 interrupts and $ZSTATUS is empty at the end.
+
+# Run [expect dmode_intrpt_stackleak-gtm9815.exp 1000]
+# Expect no TEST-E-FAIL, STACKCRIT or STACKOFLOW in the expect output
+# Expect 1000 CTRLC messages in the expect output
+1000
+# Expect result.txt (written by the Direct Mode process at the end) to show 1000 and an empty $ZSTATUS
+Number of times the $ZINTERRUPT code ran : 1000
+$ZSTATUS : 
+

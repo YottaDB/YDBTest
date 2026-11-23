@@ -1,0 +1,71 @@
+#################################################################
+#								#
+# Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# Usage : expect dmode_intrpt_stackleak-gtm9815.exp <count>
+# Starts a Direct Mode process, interrupts that process <count> times with SIGUSR1 and then <count> times with
+# <CTRL-C> while the process waits at the Direct Mode prompt, and has the process write result.txt at the end.
+
+set timeout 120
+set count [lindex $argv 0]
+set prompt "(YDB|GTM)>"
+
+proc fail {msg} {
+	puts "\nTEST-E-FAIL : $msg"
+	exit 1
+}
+
+spawn $env(gtm_dist)/mumps -direct
+expect {
+	-re $prompt {}
+	timeout { fail "no Direct Mode prompt at startup" }
+}
+send "set \$zinterrupt=\"set ^cnt=\$get(^cnt)+1\"\r"
+expect -re $prompt
+send "write \"pid=\",\$job,!\r"
+expect {
+	-re "pid=(\[0-9\]+)" { set pid $expect_out(1,string) }
+	timeout { fail "could not get the process id" }
+}
+expect -re $prompt
+
+# Stage 1 : SIGUSR1. The helper routine returns after the $ZINTERRUPT code has run <count> times.
+puts "\n# Sending SIGUSR1"
+set status [catch {exec $env(gtm_dist)/mumps -run intrpt^gtm9815 $pid $count} output]
+puts "\n$output"
+send "\r"
+expect {
+	-re $prompt {}
+	timeout { fail "no Direct Mode prompt after the SIGUSR1 stage" }
+	eof { fail "Direct Mode process terminated in the SIGUSR1 stage" }
+}
+
+# Stage 2 : <CTRL-C>. Wait for the CTRLC message and the prompt after each one.
+puts "\n# Sending <CTRL-C>"
+for {set i 1} {$i <= $count} {incr i} {
+	send "\003"
+	expect {
+		-re "CTRL_C encountered.*$prompt" {}
+		timeout { fail "no CTRLC message and prompt after <CTRL-C> number $i" }
+		eof { fail "Direct Mode process terminated at <CTRL-C> number $i" }
+	}
+}
+
+send "set file=\"result.txt\" open file:newversion use file\r"
+expect -re $prompt
+send "write \"Number of times the \$ZINTERRUPT code ran : \",^cnt,! write \"\$ZSTATUS : \",\$zstatus,! close file\r"
+expect {
+	-re $prompt {}
+	timeout { fail "no Direct Mode prompt after writing result.txt" }
+	eof { fail "Direct Mode process terminated while writing result.txt" }
+}
+send "halt\r"
+expect eof
