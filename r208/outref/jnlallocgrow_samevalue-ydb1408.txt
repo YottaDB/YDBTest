@@ -1,0 +1,30 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1408] MUPIP CREATE does not issue JNLALLOCGROW if journal ALLOCATION equals AUTOSWITCHLIMIT   #
+#----------------------------------------------------------------------------------------------------#
+
+# GDE, MUPIP SET -JOURNAL and MUPIP CREATE increase the journal ALLOCATION to the AUTOSWITCHLIMIT, with a
+# JNLALLOCGROW message, if the ALLOCATION plus the EXTENSION is greater than the AUTOSWITCHLIMIT. MUPIP CREATE
+# issued the message even if the ALLOCATION in the global directory was already the same as the AUTOSWITCHLIMIT,
+# in which case the message showed the same value as the old and the new ALLOCATION.
+
+# Stage 1 : ALLOCATION in the global directory is the same as the AUTOSWITCHLIMIT
+# Command : GDE change -region DEFAULT -journal=(nobefore_image,allocation=16384,autoswitchlimit=16384)
+# Expect no JNLALLOCGROW message from GDE
+# Command : mupip create
+# Before the fix : JNLALLOCGROW, Increased Journal ALLOCATION from [16384 blocks] to [16384 blocks]
+# With the fix   : expect no JNLALLOCGROW message
+# Expect Journal Allocation 16384 and Journal AutoSwitchLimit 16384 in the database file header
+Journal Allocation 16384
+Journal AutoSwitchLimit 16384
+
+# Stage 2 : GDE increases the ALLOCATION to the AUTOSWITCHLIMIT
+# Command : GDE change -region DEFAULT -journal=(nobefore_image,allocation=4096,extension=32768,autoswitchlimit=32768)
+# Expect JNLALLOCGROW from [4096 blocks] to [32768 blocks] from GDE
+%GDE-I-JNLALLOCGROW, Increased Journal ALLOCATION from [4096 blocks] to [32768 blocks] to match AUTOSWITCHLIMIT for region DEFAULT
+# Command : mupip create
+# Before the fix : JNLALLOCGROW, Increased Journal ALLOCATION from [32768 blocks] to [32768 blocks]
+# With the fix   : expect no JNLALLOCGROW message
+# Expect Journal Allocation 32768 and Journal AutoSwitchLimit 32768 in the database file header
+Journal Allocation 32768
+Journal AutoSwitchLimit 32768
+
