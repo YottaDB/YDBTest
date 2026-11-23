@@ -3,6 +3,9 @@
 ; Copyright (c) 2012, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2026 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -29,6 +32,10 @@ roller
 	set job=$$getjobpid("trigger_triginstallorlbk0.mjo1")
 	for i=1:1:100 quit:$get(^%triggerlock,0)  hang 1
 	tcommit
+	; ^%triggerlock is set before the trigger job starts MUPIP TRIGGER. An online rollback that finishes before
+	; MUPIP TRIGGER opens the database file does not interrupt the trigger load, which then runs to the end.
+	; So wait until MUPIP TRIGGER has a database file open before the first online rollback.
+	zsystem "$gtm_tst/$tst/u_inref/triginstallorlbk_wait.csh"
 	do roll^trigorlbk(2)
 	hang 1
 	do roll^trigorlbk(1)
