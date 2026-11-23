@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -150,6 +150,10 @@ while ($i <= $count)
 	# Creating copy of GNUPGHOME
 	setenv GNUPGHOME_OLD $GNUPGHOME
 	setenv GNUPGHOME ${GNUPGHOME_OLD}2
+	# Other subtests of this test (e.g. sym_key_management) leave a directory of the same name behind, with the key
+	# deleted from the keyring. Remove any such directory as otherwise the "cp -r" below would copy the keyring into a
+	# subdirectory of the leftover directory and the first iteration below would run with the leftover keyring.
+	rm -rf $GNUPGHOME
 	cp -r $GNUPGHOME_OLD $GNUPGHOME
 
 	echo "=========> TEST $i <===========" >> $file
@@ -224,7 +228,7 @@ while ($i <= $count)
 		endif
 	else if ($emptySymkeyFlag == 1) then
 		if ("$printed" =~ "*mumps.key: System error*" && "$expected" =~ "*mumps.key: No data*") then
- 			set varSymkeyFlag = 1
+			set varSymkeyFlag = 1
 			echo "Diff error msg accepted for empty sym key" >> $file
 		endif
 	endif
@@ -249,7 +253,7 @@ while ($i <= $count)
 	endif
 
 	@ i = $i + 1
-        setenv GNUPGHOME $GNUPGHOME_OLD
+	setenv GNUPGHOME $GNUPGHOME_OLD
 end
 
 if (0 == $failed) then

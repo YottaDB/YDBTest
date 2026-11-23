@@ -91,6 +91,8 @@ endif
 $gtm_tst/com/check_error_exist.csh test1.out YDB-E-CRYPTKEYFETCHFAILED
 
 $gtm_tst/com/reset_gpg_agent.csh
+# Remove the copy of GNUPGHOME, whose keyring no longer has the key, so that no later subtest finds this directory
+rm -rf $GNUPGHOME
 setenv GNUPGHOME $GNUPGHOME_OLD
 mv mumps_dat_key mumps_dat_key_1
 echo
@@ -131,6 +133,8 @@ else
 endif
 
 $gtm_tst/com/reset_gpg_agent.csh
+# Remove the copy of GNUPGHOME, whose keyring no longer has the key, so that no later subtest finds this directory
+rm -rf $GNUPGHOME
 setenv GNUPGHOME $GNUPGHOME_OLD
 mv mumps_dat_key mumps_dat_key_2
 mv mumps.dat mumps.dat.2
@@ -161,7 +165,11 @@ setenv gtmcrypt_config `pwd`/gtmcrypt-orig.cfg
 echo "# Produce a symmetric cipher key of arbitrary length within [1;128]."
 @ sym_key_len = `$gtm_dist/mumps -run rand 128 1 1`
 echo $sym_key_len > sym_key_len3.txt
-$gpg --homedir=$GNUPGHOME --gen-random 0 $sym_key_len | $gpg --homedir=$GNUPGHOME --armor --encrypt --default-recipient gtm@fnis.com --comment "gtm" --output mumps_dat_key
+# Run the two gpg commands one after the other (not as a pipeline). Each gpg process briefly takes the keyring lock at
+# startup and, when two of them run at the same time, the one that waits for the lock can print a harmless
+# "gpg: lockfile disappeared" line, which would show up in the output of this subtest.
+$gpg --homedir=$GNUPGHOME --gen-random 0 $sym_key_len > sym_key3.bin
+$gpg --homedir=$GNUPGHOME --armor --encrypt --default-recipient gtm@fnis.com --comment "gtm" --output mumps_dat_key < sym_key3.bin
 
 echo "# Either try creating a database, or set a global, or try writing to a file."
 if ("mupip_create" == $operation) then
