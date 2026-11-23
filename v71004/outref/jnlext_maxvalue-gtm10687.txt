@@ -1,0 +1,91 @@
+# ********************************************************************************************
+# GTM-10687 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410687)
+# 
+# GDE and MUPIP report a more appropriate maximum value for journal file extension. This does not change the way the extension logic works, only the value reported by the GDE VALTOOBIG or MUPIP JNLINVEXT messages. Previously the messages reported a maximum that had no relationship with the maximum size of a journal file. (GTM-10687)
+# 
+
+# The maximum size of a journal file is the maximum journal AUTOSWITCHLIMIT, 8388607 blocks.
+# Before the fix : the maximum journal EXTENSION was 1073741823 (in the check and in the VALTOOBIG and JNLINVEXT
+#                  messages), which is not the maximum AUTOSWITCHLIMIT.
+# With the fix   : the maximum journal EXTENSION is 8388607, the same as the maximum AUTOSWITCHLIMIT (Tests 5 and 6).
+
+# Test 1 : GDE accepts a journal EXTENSION of 8388607. Expect no error and [Extension : 8388607] from GDE SHOW.
+# Run [GDE change -region DEFAULT -journal=(nobefore_image,extension=8388607)]
+Extension : 8388607
+
+# Test 2 : GDE rejects a journal EXTENSION of 8388608. Expect VALTOOBIG (maximum of 8388607) and OBJNOTCHG.
+# Run [GDE change -region DEFAULT -journal=(nobefore_image,extension=8388608)]
+----------
+Error GDE-I-VALTOOBIG seen in gde2.out as expected:
+%GDE-I-VALTOOBIG, 8388608 is larger than the maximum of 8388607 for a EXTENSION
+----------
+----------
+Error GDE-E-OBJNOTCHG seen in gde2.out as expected:
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+----------
+
+# Test 3 : MUPIP SET -JOURNAL accepts an EXTENSION of 8388607.
+#          Expect no error and [Journal Extension 8388607] from DSE DUMP -FILEHEADER.
+# Run [mupip set -journal=enable,on,nobefore,alloc=3000,auto=1049575,extension=8388607 -region DEFAULT]
+Journal Extension 8388607
+
+# Test 4 : MUPIP SET -JOURNAL rejects an EXTENSION of 8388608. Expect JNLINVEXT (maximum of 8388607) and MUPCLIERR.
+# Run [mupip set -journal=enable,on,nobefore,alloc=3000,auto=1049575,extension=8388608 -region DEFAULT]
+----------
+Error YDB-W-JNLINVEXT seen in mupip4.out as expected:
+%YDB-W-JNLINVEXT, Journal file extension 8388608 is greater than the maximum allowed size of 8388607.  Journal file not created.
+----------
+----------
+Error YDB-E-MUPCLIERR seen in mupip4.out as expected:
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+# Expect [Journal Extension 8388607] from DSE DUMP -FILEHEADER (that is, unchanged from Test 3).
+Journal Extension 8388607
+
+# Test 5 : GDE reports the same maximum for a journal EXTENSION as for a journal AUTOSWITCHLIMIT.
+#          Expect VALTOOBIG for both, and the two maximums in the VALTOOBIG messages to be the same.
+# Run [GDE change -region DEFAULT -journal=(nobefore_image,extension=1073741824)]
+----------
+Error GDE-I-VALTOOBIG seen in gde5ext.out as expected:
+%GDE-I-VALTOOBIG, 1073741824 is larger than the maximum of 8388607 for a EXTENSION
+----------
+----------
+Error GDE-E-OBJNOTCHG seen in gde5ext.out as expected:
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+----------
+# Run [GDE change -region DEFAULT -journal=(nobefore_image,autoswitchlimit=1073741824)]
+----------
+Error GDE-I-VALTOOBIG seen in gde5auto.out as expected:
+%GDE-I-VALTOOBIG, 1073741824 is larger than the maximum of 8388607 for a AUTOSWITCHLIMIT
+----------
+----------
+Error GDE-E-OBJNOTCHG seen in gde5auto.out as expected:
+%GDE-E-OBJNOTCHG, Not changing region DEFAULT
+----------
+PASS : GDE maximum EXTENSION [8388607] is the same as the GDE maximum AUTOSWITCHLIMIT [8388607]
+
+# Test 6 : MUPIP SET -JOURNAL reports the same maximum for a journal EXTENSION as for a journal AUTOSWITCHLIMIT.
+#          Expect JNLINVEXT and JNLINVSWITCHLMT, and the two maximums in those messages to be the same.
+# Run [mupip set -journal=enable,on,nobefore,alloc=3000,auto=1049575,extension=1073741824 -region DEFAULT]
+----------
+Error YDB-W-JNLINVEXT seen in mupip6ext.out as expected:
+%YDB-W-JNLINVEXT, Journal file extension 1073741824 is greater than the maximum allowed size of 8388607.  Journal file not created.
+----------
+----------
+Error YDB-E-MUPCLIERR seen in mupip6ext.out as expected:
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+# Run [mupip set -journal=enable,on,nobefore,alloc=3000,auto=1073741824 -region DEFAULT]
+----------
+Error YDB-E-JNLINVSWITCHLMT seen in mupip6auto.out as expected:
+%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [1073741824] falls outside of allowed limits [16384] and [8388607]
+----------
+----------
+Error YDB-E-MUPCLIERR seen in mupip6auto.out as expected:
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+----------
+PASS : MUPIP maximum EXTENSION [8388607] is the same as the MUPIP maximum AUTOSWITCHLIMIT [8388607]
+

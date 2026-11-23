@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2025 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2025-2026 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -21,6 +22,7 @@ echo "v71004 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"$subtest_list_non_replic jnlext_maxvalue-gtm10687"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
