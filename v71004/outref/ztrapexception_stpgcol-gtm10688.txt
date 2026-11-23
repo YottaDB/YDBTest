@@ -1,0 +1,35 @@
+# ********************************************************************************************
+# GTM-10688 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410688)
+# 
+# SET $ZTRAP appropriately validates the code string provided as a new value. GTM-9480/GTM-DE304273 in V7.0-004, which addressed an issue with $ZTRAP maintenance, introduced a possibility that the compilation of a $ZTRAP during a "SET $ZTRAP=x" operation could result in assigning a garbage value to $ZTRAP. A similar issue, dating to V6.3-001A, also affects certain I/O exception handlers specified as exception device parameters. If your application always uses code vectors rather than labels, a workaround for both issues is to set the gtm_ztrap_form environment variable to "adaptive", which prevents the assignment operation from validating the code. (GTM-10688)
+# 
+
+# The garbage value is possible only if a garbage collection of the stringpool happens while SET $ZTRAP or the
+# EXCEPTION device parameter validates (compiles) the new value. White-box test case 188 (WBTEST_ZTTEST), which
+# V7.1-004 added, forces a garbage collection at exactly that point. So this subtest enables that white-box test
+# case, and for each of SET $ZTRAP, OPEN with EXCEPTION and USE with EXCEPTION checks that
+#   1. a garbage collection did happen inside the command (the stringpool has fewer bytes in use afterwards),
+#   2. $ZTRAP or the EXCEPTION of the device (from ZSHOW "D") has the value that was set, and
+#   3. an error then invokes that $ZTRAP or EXCEPTION.
+# YottaDB already protected SET $ZTRAP and EXCEPTION against such a garbage collection before the V7.1-004 merge, so
+# this subtest guards against a regression.
+
+# Run [mumps -run gtm10688]
+# Test 1 : SET $ZTRAP
+Garbage collection happened inside SET $ZTRAP : PASS
+$ZTRAP has the value that was set : PASS
+# Divide by zero. Expect ZTRAP to be invoked with a DIVZERO error
+ZTRAP invoked : %YDB-E-DIVZERO
+# Test 2 : OPEN with the EXCEPTION device parameter
+Garbage collection happened inside OPEN : PASS
+EXCEPTION has the value that was set : PASS
+# Read from the empty file. Expect EXCEPTION to be invoked with an IOEOF error
+EXCEPTION invoked : %YDB-E-IOEOF
+# Test 3 : USE with the EXCEPTION device parameter
+Garbage collection happened inside USE : PASS
+EXCEPTION has the value that was set : PASS
+# Read from the empty file. Expect EXCEPTION to be invoked with an IOEOF error
+EXCEPTION invoked : %YDB-E-IOEOF

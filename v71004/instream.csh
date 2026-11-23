@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
+# ztrapexception_stpgcol-gtm10688	[nars]	Test SET $ZTRAP and EXCEPTION keep the right value if a garbage collection happens while they are validated
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v71004 test starts..."
@@ -23,6 +24,7 @@ echo "v71004 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlext_maxvalue-gtm10687"
+setenv subtest_list_non_replic	"$subtest_list_non_replic ztrapexception_stpgcol-gtm10688"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -35,7 +37,8 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	# The below subtest uses a white-box test case, which only a debug build has
+	setenv subtest_exclude_list "$subtest_exclude_list ztrapexception_stpgcol-gtm10688"
 endif
 
 if ("dbg" == "$tst_image") then
