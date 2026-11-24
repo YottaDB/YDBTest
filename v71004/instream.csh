@@ -16,6 +16,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # dmode_intrpt_stackleak-gtm9815	[nars]	Test SIGUSR1 and SIGINT at the Direct Mode prompt do not leak M stack space
 # dollartext_dbrolledback-gtm10150	[nars]	Test $TEXT() of a trigger issues DBROLLEDBACK after an online rollback
+# epochtaper_loneupdater-gtm10623	[nars]	Test epoch tapering is inhibited if only one process does updates
 # jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
 # ztrapexception_stpgcol-gtm10688	[nars]	Test SET $ZTRAP and EXCEPTION keep the right value if a garbage collection happens while they are validated
 # dbperms_umask-gtm9272		[jon]	Test create database files with permissions from umask
@@ -35,6 +36,7 @@ echo "v71004 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	""
 setenv subtest_list_non_replic	"$subtest_list_non_replic dmode_intrpt_stackleak-gtm9815"
+setenv subtest_list_non_replic	"$subtest_list_non_replic epochtaper_loneupdater-gtm10623"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlext_maxvalue-gtm10687"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ztrapexception_stpgcol-gtm10688"
 setenv subtest_list_non_replic	"$subtest_list_non_replic dbperms_umask-gtm9272"

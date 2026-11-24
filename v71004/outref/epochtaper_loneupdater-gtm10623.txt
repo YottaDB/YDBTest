@@ -1,0 +1,26 @@
+# ********************************************************************************************
+# GTM-10623 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410623)
+# 
+# GT.M inhibits epoch tapering when epoch tapering is enabled and only one process actively does updates. Previously, in this situation, epoch tapering could reduce performance. (GTM-10623)
+# 
+
+# Epoch tapering happens in the last quarter of each epoch interval, with before-image journaling. While a process
+# tapers, the epoch_taper_start_dbuffs field of the shared memory of the region is not zero. V7.1-004 added the
+# epoch_taper_last_pid field (the process that last ran the epoch tapering code), and a process skips the epoch
+# tapering code if that field is the process itself. This subtest uses an EPOCH_INTERVAL of 10 seconds and
+# samples both fields with %PEEKBYNAME for 25 seconds (at least two epochs) while updaters run.
+
+# Stage 1 : one updater
+# Before the fix : the updater tapered, so some samples had a non-zero epoch_taper_start_dbuffs
+# With the fix   : expect zero such samples, and 1 process seen in epoch_taper_last_pid
+Number of samples with a non-zero epoch_taper_start_dbuffs : zero
+Number of updater processes seen in epoch_taper_last_pid : 1
+
+# Stage 2 (a control) : two updaters. Each one tapers after the other one did.
+# Expect more than zero samples with a non-zero epoch_taper_start_dbuffs, and 2 processes in epoch_taper_last_pid
+Number of samples with a non-zero epoch_taper_start_dbuffs : more than zero
+Number of updater processes seen in epoch_taper_last_pid : 2
+
