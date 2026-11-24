@@ -1,0 +1,27 @@
+# ********************************************************************************************
+# GTM-9653 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959409653)
+# 
+# MLKHASHRESIZE, MLKHASHRESIZEFAIL and MLKREHASH messages include region and database file names. Previously, these error messages did not provide the region and database file names. (GTM-9653)
+# 
+
+# The three messages go to the operator log (syslog) and not to the terminal. The LKE REHASH command rebuilds the
+# LOCK hash table of a region, which issues MLKREHASH, and the LKE GROWHASH command increases the size of the LOCK
+# hash table, which issues MLKHASHRESIZE. This subtest runs both commands and checks the two messages in the
+# operator log. MLKHASHRESIZEFAIL is issued only if an entry cannot be placed in the larger hash table, which this
+# subtest does not attempt to cause because that needs LOCK names whose hash values collide even in the larger hash
+# table, and such names are not easy to create.
+# Before the fix : MLKREHASH had only the region name and MLKHASHRESIZE had neither name
+# With the fix   : expect both messages to have [for region DEFAULT (##TEST_PATH##/mumps.dat)]
+
+# Run [lke rehash -region=DEFAULT]
+Rehash of lock completed for region DEFAULT (seed = 1)
+# Run [lke growhash -region=DEFAULT]
+Resize of lock hash memory succeeded for region DEFAULT
+
+# Messages for this database file in the operator log (sizes and the shared memory id replaced by N)
+%YDB-I-MLKREHASH, LOCK hash table rebuilt for region DEFAULT (##TEST_PATH##/mumps.dat) (seed = 1)
+%YDB-I-MLKHASHRESIZE, LOCK hash table for region DEFAULT (##TEST_PATH##/mumps.dat) increased in size from N to N and placed in shared memory (id = N)
+
