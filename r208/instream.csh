@@ -164,6 +164,7 @@
 # utfcgr_badchar-ydb1406		[nars]	Test $FIND() and $EXTRACT() of a string with BADCHARs in UTF-8 mode after an earlier call cached the string
 # jnlallocgrow_samevalue-ydb1408	[nars]	Test MUPIP CREATE does not issue JNLALLOCGROW if journal ALLOCATION equals AUTOSWITCHLIMIT
 # intrpt_readline_lost_input-ydb1270	[nars]	Test MUPIP INTRPT does not lose input typed at a readline direct mode prompt
+# encplugin_build_type-ydb1410		[nars]	Test the encryption and TLS plugin has asserts only with a Debug build of YottaDB
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r208 test starts..."
@@ -322,6 +323,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zyencode_prefix_buffer-
 setenv subtest_list_non_replic	"$subtest_list_non_replic utfcgr_badchar-ydb1406"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlallocgrow_samevalue-ydb1408"
 setenv subtest_list_non_replic	"$subtest_list_non_replic intrpt_readline_lost_input-ydb1270"
+setenv subtest_list_non_replic	"$subtest_list_non_replic encplugin_build_type-ydb1410"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

@@ -1,0 +1,20 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1410] The encryption and TLS plugin is a debug build (with asserts) only for a Debug build of #
+# YottaDB                                                                                            #
+#----------------------------------------------------------------------------------------------------#
+
+# The plugin Makefile builds a debug plugin for a Debug build of YottaDB and a production plugin, which
+# has no asserts, otherwise. A file of the plugin that has asserts references the C library function
+# __assert_fail(), which nm -D lists. So with a Debug build of YottaDB each file below has to reference
+# __assert_fail(), and with a Release build none of them may.
+#
+# Before the fix : make built a debug plugin unless image=PRO was specified, so this subtest failed with
+#                  a Release build of YottaDB, with a FAIL line for each file below
+# With the fix   : expect a PASS line for each file with a Debug and with a Release build of YottaDB
+
+# Command : nm -D $gtm_dist/plugin/<file> | grep -c __assert_fail, for each of the 5 files below
+PASS : libgtmtls.so matches the build type of YottaDB
+PASS : libgtmcryptutil.so matches the build type of YottaDB
+PASS : libgtmcrypt_gcrypt_AES256CFB.so matches the build type of YottaDB
+PASS : libgtmcrypt_openssl_AES256CFB.so matches the build type of YottaDB
+PASS : gtmcrypt/maskpass matches the build type of YottaDB
