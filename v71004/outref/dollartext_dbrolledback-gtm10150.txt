@@ -1,0 +1,23 @@
+# ********************************************************************************************
+# GTM-10150 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959410150)
+# 
+# $TEXT() recognizes and reports DBROLLEDBACK error. Previously $TEXT() ignored and did not report DBROLLEDBACK errors. This was only seen in development environments and was never reported by a customer. (GTM-10150)
+# 
+
+# Install a trigger named gtm10150trig and do 1000 updates
+Added SET trigger on ^b named gtm10150trig
+
+# Stage 1 (a control) : $TEXT() of the trigger with no online rollback. Expect the first line of the trigger.
+$TEXT(+1^gtm10150trig#) returned [ set ^c=1]
+
+# Stage 2 : a process does an update, then MUPIP JOURNAL -ONLINE -ROLLBACK -BACKWARD -RESYNC=800 takes the
+# database back by about 200 updates, and then the process does $TEXT() of the trigger, which has to read the
+# trigger from the database file and so notices the online rollback.
+# Before the fix : $TEXT() ignored the DBROLLEDBACK error and returned an empty string
+# With the fix   : expect a DBROLLEDBACK error from $TEXT(), and $TEXT() to work after the error
+PASS : $TEXT(+1^gtm10150trig#) issued DBROLLEDBACK
+$TEXT(+1^gtm10150trig#) after the error returned [ set ^c=1]
+

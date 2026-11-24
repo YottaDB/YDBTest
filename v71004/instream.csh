@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # dmode_intrpt_stackleak-gtm9815	[nars]	Test SIGUSR1 and SIGINT at the Direct Mode prompt do not leak M stack space
+# dollartext_dbrolledback-gtm10150	[nars]	Test $TEXT() of a trigger issues DBROLLEDBACK after an online rollback
 # jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
 # ztrapexception_stpgcol-gtm10688	[nars]	Test SET $ZTRAP and EXCEPTION keep the right value if a garbage collection happens while they are validated
 # dbperms_umask-gtm9272		[jon]	Test create database files with permissions from umask
@@ -46,6 +47,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic zmaxtptime_mseclim-gtm1
 setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_limitretries-gtm10098"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sleepstats_nonzero-gtm10554"
 setenv subtest_list_replic	""
+setenv subtest_list_replic	"$subtest_list_replic dollartext_dbrolledback-gtm10150"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
