@@ -17,6 +17,7 @@
 # dmode_intrpt_stackleak-gtm9815	[nars]	Test SIGUSR1 and SIGINT at the Direct Mode prompt do not leak M stack space
 # dollartext_dbrolledback-gtm10150	[nars]	Test $TEXT() of a trigger issues DBROLLEDBACK after an online rollback
 # epochtaper_loneupdater-gtm10623	[nars]	Test epoch tapering is inhibited if only one process does updates
+# srcsrv_jnlfilemem-gtm9141		[nars]	Test the Source Server returns the memory used for older journal files to the operating system
 # jnlext_maxvalue-gtm10687		[nars]	Test GDE and MUPIP report the maximum journal file size as the maximum journal extension
 # ztrapexception_stpgcol-gtm10688	[nars]	Test SET $ZTRAP and EXCEPTION keep the right value if a garbage collection happens while they are validated
 # dbperms_umask-gtm9272		[jon]	Test create database files with permissions from umask
@@ -50,6 +51,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic tpnotacid_limitretries-
 setenv subtest_list_non_replic	"$subtest_list_non_replic sleepstats_nonzero-gtm10554"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic dollartext_dbrolledback-gtm10150"
+setenv subtest_list_replic	"$subtest_list_replic srcsrv_jnlfilemem-gtm9141"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -75,6 +77,9 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# dollarstorage_rlimitdata-gtm9833 limits the data segment size (RLIMIT_DATA), which also limits private writable
 	# mappings. The address sanitizer maps terabytes of shadow memory that way, so no process can start under the limit.
 	setenv subtest_exclude_list "$subtest_exclude_list dollarstorage_rlimitdata-gtm9833"
+	# The below subtest checks how much memory a process returns to the operating system. An ASAN build keeps
+	# freed memory in quarantine for some time, which changes those numbers.
+	setenv subtest_exclude_list "$subtest_exclude_list srcsrv_jnlfilemem-gtm9141"
 endif
 
 # Submit the list of subtests

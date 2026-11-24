@@ -1,0 +1,23 @@
+# ********************************************************************************************
+# GTM-9141 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.1-004_Release_Notes.html#GTM-DE1959409141)
+# 
+# A Source Server more reliably returns memory used to manage journal files to the operating system as it moves from older to newer journal files for a region. The Source Server uses the mmap() and munmap() services rather than malloc() and free(), which may affect the memory limits for the process or the system. Previously, the Source Server deallocated memory for older journal files, but malloc() and free() rely on a system heap implementation that can interfere with attempts to return memory from the process to the operating system. (GTM-9141)
+# 
+
+# The Source Server allocates buffers (of the ALIGNSIZE, 8 MiB here) for each journal file that the Source
+# Server reads, and releases the buffers of a journal file when done with that file. This subtest makes the Source
+# Server read a backlog of about 400 MiB from more than 20 journal files, and checks, from VmRSS and VmHWM (the
+# peak of VmRSS) in /proc/<pid>/status of the Source Server, that
+#   1. the memory of the Source Server grew by 40 MiB or more while the Source Server read the backlog, and
+#   2. after the backlog is cleared, the Source Server keeps less than 15% of that growth.
+
+# Start the Source Server only (no Receiver Server yet)
+# Do 400000 updates of 1000 bytes each, which the Source Server cannot send yet
+# Number of journal files is 20 or more : PASS
+# Start the Receiver Server and wait for the backlog to clear
+# Memory of the Source Server grew by 40 MiB or more while reading the backlog : PASS
+# Source Server keeps less than 15% of that growth : PASS
+
