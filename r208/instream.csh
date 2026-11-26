@@ -18,6 +18,7 @@
 # etc_mtab_eofline-ydb1228		[jon]	Test $ZEOF works correctly for files which are soft links to files in the /proc file system
 # reorg_trunc_concurrent-ydb1245	[nars]	Test MUPIP REORG -TRUNCATE frees up space even in the presence of concurrent updates
 # reorg_trunc_hidden_gbl-ydb1240	[nars]	Test MUPIP REORG -TRUNCATE processes globals in .dat files that are hidden by the .gld
+# reorg_trunc_killed_gbls-ydb1415	[nars]	Test MUPIP REORG -TRUNCATE does not restart once for each killed global whose root it moves
 # zwrite_alias_orphan-ydb1101		[sam]	Test ZWRITE of an orphaned alias container does not overflow its subscript work array
 # pipe_parse_cmdlen-ydb1101		[sam]	Test PIPE OPEN with PARSE bounds the copy of an over-long unresolvable command word
 # pipe_parse_longpath-ydb1101		[sam]	Test PIPE OPEN with PARSE does not read past the end of its $PATH buffer
@@ -324,6 +325,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic utfcgr_badchar-ydb1406"
 setenv subtest_list_non_replic	"$subtest_list_non_replic jnlallocgrow_samevalue-ydb1408"
 setenv subtest_list_non_replic	"$subtest_list_non_replic intrpt_readline_lost_input-ydb1270"
 setenv subtest_list_non_replic	"$subtest_list_non_replic encplugin_build_type-ydb1410"
+setenv subtest_list_non_replic	"$subtest_list_non_replic reorg_trunc_killed_gbls-ydb1415"
 setenv subtest_list_replic	""
 setenv subtest_list_replic	"$subtest_list_replic enospc_mupip_stop-ydb1300"
 

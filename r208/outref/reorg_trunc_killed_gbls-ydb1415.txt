@@ -1,0 +1,32 @@
+#----------------------------------------------------------------------------------------------------#
+# [YDB#1415] MUPIP REORG -TRUNCATE does not restart once for each killed global whose root it moves  #
+#----------------------------------------------------------------------------------------------------#
+
+# Each restart of MUPIP REORG -TRUNCATE resets the root and clue of every global that the REORG has
+# accessed, so a restart for each root block moved makes the time of the REORG grow with the square
+# of the number of such globals. The subtest counts the restarts (the NR0 statistic of the region)
+# instead of timing the REORG.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Command : $ydb_dist/yottadb -run init^ydb1415reorg, where
+#   init	; set a node in each of the globals ^g1 to ^g1000, then kill each global, which leaves
+#   	; an empty tree (a root block and an empty data block) for each global
+#   	new i
+#   	for i=1:1:1000 set @("^g"_i)=i
+#   	for i=1:1:1000 kill @("^g"_i)
+#   	quit
+# Command : $ydb_dist/yottadb -run nr^ydb1415reorg (before the REORG)
+# Command : $MUPIP reorg -truncate -region DEFAULT
+PASS : MUPIP REORG -TRUNCATE exited with status 0
+# Command : $ydb_dist/yottadb -run nr^ydb1415reorg (after the REORG)
+# Before the fix : a Debug or Release build restarted about 900 times, about once for each of the 1000
+#                  globals
+# With the fix   : expect fewer than 100 restarts (the number of restarts is in restarts.txt)
+PASS : fewer than 100 restarts
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
